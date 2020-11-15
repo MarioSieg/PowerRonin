@@ -1,0 +1,48 @@
+// Warning! This is an engine system file! 
+// Any changes could break internal systems!
+// Standard: C++20
+// File: renderer.hpp
+// Author: Mario
+// Solution: 
+// Project: DreamcastSDK
+// Created: 04.11.2020 00:34
+
+#pragma once
+
+#include "../../include/dce/core/kernel.hpp"
+#include "../flycam.hpp"
+#include "gpu.hpp"
+
+namespace dce {
+	class MeshRenderer;
+	class Transform;
+
+	namespace renderer {
+
+		class Renderer final : public core::ISubsystem {
+		public:
+			/* Constructors, assignment operators, destructor */
+			Renderer();
+			Renderer(const Renderer &) = delete;
+			Renderer(Renderer &&) = delete;
+			auto operator=(const Renderer &) -> Renderer& = delete;
+			auto operator=(Renderer &&) -> Renderer& = delete;
+			~Renderer() override = default;
+
+		private:
+			/* Required kernel events */
+			static constexpr auto EVENTS = core::ServiceEvents::PRE_STARTUP | core::ServiceEvents::PRE_TICK |
+				core::ServiceEvents::POST_TICK | core::ServiceEvents::POST_SHUTDOWN;
+
+			/* Kernel events */
+			virtual auto on_pre_startup(State & /*_state*/) -> bool override;
+			virtual auto on_pre_tick(State & /*_state*/) -> bool override;
+			virtual auto on_post_tick(State & /*unused*/) -> bool override;
+			virtual auto on_post_shutdown(State & /*unused*/) -> bool override;
+
+			FlyCam fly_cam_ = {};
+			std::uint64_t tick_prev_ = 0;
+			GPU gpu_ = {};
+		};
+	} // namespace dce::renderer // namespace dce::renderer
+}

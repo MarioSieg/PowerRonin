@@ -1,0 +1,85 @@
+// Warning! This is an engine system file! 
+// Any changes could break internal systems!
+// Standard: C++20
+// File: stats.cpp
+// Author: Mario
+// Solution: 
+// Project: DreamcastSDK
+// Created: 14.11.2020 13:59
+
+#include "stats.hpp"
+
+#include "../../include/dce/proto.hpp"
+#include "../../include/dce/diagnostics.hpp"
+#include "../../extern/bgfx/bgfx/include/bgfx/bgfx.h"
+
+namespace dce::renderer {
+	void get_limits(Diagnostics &_diag) noexcept {
+		const auto &limits = bgfx::getCaps()->limits;
+		_diag.graphics.max_vram = bgfx::getStats()->gpuMemoryMax;
+		_diag.graphics.max_draw_calls = limits.maxDrawCalls;
+		_diag.graphics.max_blit_calls = limits.maxComputeBindings;
+		_diag.graphics.max_textures = limits.maxTextures;
+		_diag.graphics.max_shaders = limits.maxShaders;
+		_diag.graphics.max_programs = limits.maxPrograms;
+		_diag.graphics.max_uniforms = limits.maxUniforms;
+		_diag.graphics.max_vertex_buffers = limits.maxVertexBuffers;
+		_diag.graphics.max_index_buffers = limits.maxIndexBuffers;
+		_diag.graphics.max_dynamic_vertex_buffers = limits.maxDynamicVertexBuffers;
+		_diag.graphics.max_dynamic_index_buffers = limits.maxDynamicIndexBuffers;
+		_diag.graphics.max_frame_buffers = limits.maxFrameBuffers;
+	}
+
+	void dump_limits(AsyncProtocol &_proto) {
+		const auto *const caps = bgfx::getCaps();
+		_proto.info("Supported flags: {:B}", caps->supported);
+		_proto.info("Vendor ID: {}", caps->vendorId);
+		_proto.info("Device ID: {}", caps->deviceId);
+		_proto.info("(NDC [-1, 1]) Homogeneous depth: {}", caps->homogeneousDepth);
+		_proto.info("(NDC bottom left) Origin bottom left: {}", caps->originBottomLeft);
+		_proto.info("GPU count: {}", caps->numGPUs);
+		_proto.info("GPU vendor ID: {}", caps->gpu->vendorId);
+		_proto.info("GPU device ID: {}", caps->gpu->deviceId);
+
+		_proto.info("Max draw calls: {}", caps->limits.maxDrawCalls);
+		_proto.info("Max blits: {}", caps->limits.maxBlits);
+		_proto.info("Max texture sizes: {}", caps->limits.maxTextureSize);
+		_proto.info("Max texture layers: {}", caps->limits.maxTextureLayers);
+		_proto.info("Max views: {}", caps->limits.maxViews);
+		_proto.info("Max frame buffers: {}", caps->limits.maxFrameBuffers);
+		_proto.info("Max frame buffer attachments: {}", caps->limits.maxFBAttachments);
+		_proto.info("Max programs: {}", caps->limits.maxPrograms);
+		_proto.info("Max shaders: {}", caps->limits.maxShaders);
+		_proto.info("Max textures: {}", caps->limits.maxTextures);
+		_proto.info("Max texture samplers: {}", caps->limits.maxTextureSamplers);
+		_proto.info("Max compute bindings: {}", caps->limits.maxComputeBindings);
+		_proto.info("Max vertex layouts: {}", caps->limits.maxVertexLayouts);
+		_proto.info("Max vertex streams: {}", caps->limits.maxVertexStreams);
+		_proto.info("Max index buffers: {}", caps->limits.maxIndexBuffers);
+		_proto.info("Max vertex buffers: {}", caps->limits.maxVertexBuffers);
+		_proto.info("Max dyn index buffers: {}", caps->limits.maxDynamicIndexBuffers);
+		_proto.info("Max dyn vertex buffers: {}", caps->limits.maxDynamicVertexBuffers);
+		_proto.info("Max uniforms: {}", caps->limits.maxUniforms);
+		_proto.info("Max occlusion queries: {}", caps->limits.maxOcclusionQueries);
+		_proto.info("Max encoder threads: {}", caps->limits.maxEncoders);
+		_proto.info("Min resource command buffer size: {}", caps->limits.minResourceCbSize);
+		_proto.info("Max transient vertex buffer size: {}", caps->limits.transientVbSize);
+		_proto.info("Max transient index buffer size: {}", caps->limits.transientIbSize);
+	}
+
+	void get_runtime_stats(Diagnostics &_diag) noexcept {
+		const auto &stats = *bgfx::getStats();
+		_diag.graphics.used_vram = stats.gpuMemoryUsed;
+		_diag.graphics.used_draw_calls = stats.numDraw;
+		_diag.graphics.used_blit_calls = stats.numBlit;
+		_diag.graphics.used_textures = stats.numTextures;
+		_diag.graphics.used_shaders = stats.numShaders;
+		_diag.graphics.used_programs = stats.numPrograms;
+		_diag.graphics.used_uniforms = stats.numUniforms;
+		_diag.graphics.used_vertex_buffers = stats.numVertexBuffers;
+		_diag.graphics.used_index_buffers = stats.numIndexBuffers;
+		_diag.graphics.used_dynamic_vertex_buffers = stats.numDynamicVertexBuffers;
+		_diag.graphics.used_dynamic_index_buffers = stats.numDynamicIndexBuffers;
+		_diag.graphics.used_frame_buffers = stats.numFrameBuffers;
+	}
+}

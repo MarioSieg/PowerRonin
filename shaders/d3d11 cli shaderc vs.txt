@@ -1,0 +1,1 @@
+.\shaderc.exe -f src/vs_mesh.shader -o bin/vs_mesh.bin --platform windows -p vs_5_0 --varyingdef src/varying.def.shader --type vertex
