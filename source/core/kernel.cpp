@@ -185,7 +185,7 @@ namespace dce::core {
 
 		const auto tok = std::chrono::high_resolution_clock::now();
 		const auto duration = std::chrono::duration_cast<std::chrono::microseconds>(tok - tik).count();
-		proto.info("Terminated runtime! Cycles: ", cycles);
+		proto.info("Terminated runtime! Cycles: {}", cycles);
 
 		return {true, cycles, 0, duration};
 	}
