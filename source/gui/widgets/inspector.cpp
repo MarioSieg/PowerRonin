@@ -30,12 +30,12 @@ namespace dce::gui::widgets {
 					auto &meta = _registry.get<CMetaData>(_entity);
 					[[likely]] if (CollapsingHeader(ICON_FA_COGS " Metadata")) {
 
-						std::strncpy(this->string_buffer_.data(), meta.name.c_str(), BUFFER_SIZE);
+						meta.name.copy(this->string_buffer_.data(), BUFFER_SIZE);
 						if (InputText("Name", this->string_buffer_.data(), BUFFER_SIZE)) {
 							meta.name = this->string_buffer_.data();
 						}
 
-						std::strncpy(this->string_buffer_.data(), meta.description.c_str(), BUFFER_SIZE);
+						meta.description.copy(this->string_buffer_.data(), BUFFER_SIZE);
 						if (InputText("Description", this->string_buffer_.data(), BUFFER_SIZE)) {
 							meta.description = this->string_buffer_.data();
 						}

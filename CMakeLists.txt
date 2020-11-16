@@ -91,7 +91,6 @@ add_library(
     "source/resource.cpp" 
     "source/gui/widgets/shader_merger.hpp" 
     "source/gui/widgets/shader_merger.cpp" 
-    "include/dce/core/publish.hpp"
     "source/gui/file_dialog_tool.hpp"
     "source/gui/file_dialog_tool.cpp" 
     "source/gui/widgets/ram_editor.hpp" 

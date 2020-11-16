@@ -35,7 +35,7 @@ namespace dce::gui {
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0F, 0.0F));
 		}
 
-		ImGui::Begin("DockSpace", nullptr, window_flags);
+		ImGui::Begin("##dock", nullptr, window_flags);
 
 		if constexpr (!IS_PADDING_DOCKSPACE) {
 			ImGui::PopStyleVar();

@@ -10,8 +10,6 @@
 #include "gui.hpp"
 #include "dockspace.hpp"
 #include "theme.hpp"
-#include "font_headers.hpp"
-#include "../../include/dce/core/publish.hpp"
 
 namespace dce::gui {
 	Gui::Gui() : ISubsystem("OverlayGui", EVENTS) { }
@@ -79,15 +77,11 @@ namespace dce::gui {
 		io.DisplaySize = {static_cast<float>(_width), static_cast<float>(_height)};
 		this->gui_input_.update();
 		ImGui::NewFrame();
-		if constexpr (!IS_PUBLISHED) {
-			//begin_dockspace();
-		}
+		begin_dockspace();
 	}
 
 	void Gui::end() const {
-		if constexpr (!IS_PUBLISHED) {
-			//end_dockspace();
-		}
+		end_dockspace();
 		ImGui::EndFrame();
 		ImGui::Render();
 		const ImDrawData *const data = ImGui::GetDrawData();
