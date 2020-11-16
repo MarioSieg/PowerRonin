@@ -42,11 +42,11 @@ namespace dce {
 		return this->command_db_;
 	}
 
-	auto State::importeur() & noexcept -> ResourceManager& {
+	auto State::resource_manager() & noexcept -> ResourceManager& {
 		return this->importeur_;
 	}
 
-	auto State::importeur() const & noexcept -> const ResourceManager& {
+	auto State::resource_manager() const & noexcept -> const ResourceManager& {
 		return this->importeur_;
 	}
 

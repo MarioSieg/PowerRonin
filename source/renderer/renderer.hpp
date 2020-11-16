@@ -14,8 +14,8 @@
 #include "gpu.hpp"
 
 namespace dce {
-	class MeshRenderer;
-	class Transform;
+	class CMeshRenderer;
+	class CTransform;
 
 	namespace renderer {
 

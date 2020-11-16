@@ -8,14 +8,14 @@
 // Created: 15.11.2020 21:36
 
 #include "terminal.hpp"
-#include "../font_headers.hpp"
-#include "../gui_headers.hpp"
-#include "../../../include/dce/state.hpp"
+#include "font_headers.hpp"
+#include "gui_headers.hpp"
+#include "../../include/dce/state.hpp"
 #include <algorithm>
 
 using namespace ImGui;
 
-namespace dce::gui::widgets {
+namespace dce::gui {
 	void Terminal::clear_buffer() {
 		this->buffer_.fill(0);
 	}
@@ -27,8 +27,8 @@ namespace dce::gui::widgets {
 	void Terminal::update(bool &_show, State &_state) {
 		SetNextWindowSize({800, 600}, ImGuiCond_FirstUseEver);
 		[[likely]] if (Begin(ICON_FA_TERMINAL " Terminal", &_show, ImGuiWindowFlags_NoScrollbar)) {
-			const auto footerHeightToReserve = GetStyle().ItemSpacing.y + GetFrameHeightWithSpacing();
-			if (BeginChild("", {.0, -footerHeightToReserve}, false)) {
+			const auto footer_height_to_reserve = GetStyle().ItemSpacing.y + GetFrameHeightWithSpacing();
+			if (BeginChild("", {.0, -footer_height_to_reserve}, false)) {
 				PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 1));
 
 				[[likely]] if (this->sink_ != nullptr) {

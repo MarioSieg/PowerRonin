@@ -5,7 +5,7 @@
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 05.11.2020 20:09
+// Created: 15.11.2020 21:36
 
 #pragma once
 
@@ -21,8 +21,7 @@ namespace dce {
 	template <typename Resource> requires std::is_base_of_v<IResource, Resource>using ResourceCache = entt::resource_cache<
 		Resource>;
 
-	template <typename Resource> requires std::is_base_of_v<IResource, Resource>using ResourceHandle = entt::resource_handle<
-		Resource>;
+	template <typename Resource> requires std::is_base_of_v<IResource, Resource>using RRef = entt::resource_handle<Resource>;
 
 	class IResource {
 	public:

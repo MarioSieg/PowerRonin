@@ -25,7 +25,7 @@ namespace dce::gui::widgets {
 			Separator();
 			Spacing();
 			if (CollapsingHeader(ICON_FA_IMAGES " Textures")) {
-				_importeur.texture_cache.each([&](const ResourceHandle<Texture> &_texture) {
+				_importeur.texture_cache.each([&](const RRef<Texture> &_texture) {
 					TextUnformatted(ICON_FA_IMAGE);
 					SameLine();
 					TextUnformatted(_texture->get_file_path().filename().string().c_str());
@@ -47,7 +47,7 @@ namespace dce::gui::widgets {
 				});
 			}
 			[[likely]] if (CollapsingHeader(ICON_FA_CUBES " Meshes")) {
-				_importeur.mesh_cache.each([](const ResourceHandle<Mesh> &_mesh) {
+				_importeur.mesh_cache.each([](const RRef<Mesh> &_mesh) {
 					TextUnformatted(ICON_FA_CUBE);
 					SameLine();
 					TextUnformatted(_mesh->get_file_path().filename().string().c_str());
@@ -65,7 +65,7 @@ namespace dce::gui::widgets {
 				});
 			}
 			[[likely]] if (CollapsingHeader(ICON_FA_EYE " Shaders")) {
-				_importeur.shader_cache.each([](const ResourceHandle<Shader> &_shader) {
+				_importeur.shader_cache.each([](const RRef<Shader> &_shader) {
 					TextUnformatted(ICON_FA_EYE);
 					SameLine();
 					TextUnformatted(_shader->get_file_path().filename().string().c_str());

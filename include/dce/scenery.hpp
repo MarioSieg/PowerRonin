@@ -5,11 +5,12 @@
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 08.11.2020 19:24
+// Created: 15.11.2020 21:36
 
 #pragma once
 
 #include "ecs.hpp"
+#include "comcollections.hpp"
 
 namespace dce {
 	class ResourceManager;

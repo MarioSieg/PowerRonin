@@ -5,7 +5,7 @@
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 13.11.2020 22:56
+// Created: 15.11.2020 21:36
 
 #pragma once
 
@@ -14,11 +14,11 @@
 #include "texture.hpp"
 
 namespace dce {
-	class MeshRenderer final {
+	class CMeshRenderer final {
 	public:
-		ResourceHandle<Mesh> mesh = {};
-		ResourceHandle<Shader> shader = {};
-		ResourceHandle<Texture> texture = {};
+		RRef<Mesh> mesh = {};
+		RRef<Shader> shader = {};
+		RRef<Texture> texture = {};
 		bool is_visible = true;
 	};
 }

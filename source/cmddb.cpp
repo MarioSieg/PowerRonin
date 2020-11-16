@@ -114,10 +114,13 @@ namespace dce {
 	}
 
 	void register_common_commands(CmdDB &_cdb) {
-		auto reg = [&](Command &&_cmd) {
-			const auto token = _cmd.token;
-			const auto _ = _cdb.register_command(_cmd);
-		};
+		struct {
+			CmdDB &db;
+
+			inline void operator+=(const Command &_cmd) const {
+				const auto _ = this->db.register_command(_cmd);
+			}
+		} registry = {_cdb};
 
 		/* help */
 		{
@@ -130,13 +133,14 @@ namespace dce {
 					proto.info("\"{}\":", cmd.first);
 					proto.info("\tDescription: \"{}\"", cmd.second.help);
 					proto.info("\tRequires root: {}", cmd.second.requires_root);
+					proto.info("\tRequires args: {}", cmd.second.requires_args);
 				}
 				return true;
 			};
 
-			reg(Command{
+			registry += Command{
 				.token = "help", .help = "Displays all registered commands with a short help message.", .functor = functor,
-			});
+			};
 		}
 
 		/* config */
@@ -147,7 +151,7 @@ namespace dce {
 
 				proto.separator();
 				JsonStream stream;
-				if (!cfg.serialize(stream)) {
+				[[unlikely]] if (!cfg.serialize(stream)) {
 					return false;
 				}
 				proto.info("Current system config:\n{}", stream.dump(4));
@@ -155,13 +159,13 @@ namespace dce {
 				return true;
 			};
 
-			reg(Command{.token = "cfg", .help = "Displays the current configuration as JSON.", .functor = functor,});
+			registry += Command{.token = "cfg", .help = "Displays the current configuration as JSON.", .functor = functor};
 		}
 
 		/* style */
 		{
 			auto functor = [ ]([[maybe_unused]] State &, std::string &&arg) -> bool {
-				if (arg.starts_with("dark")) {
+				[[likely]] if (arg.starts_with("dark")) {
 					gui::style_dark();
 				}
 				else if (arg.starts_with("light")) {
@@ -180,10 +184,10 @@ namespace dce {
 				return true;
 			};
 
-			reg(Command{
+			registry += Command{
 				.token = "theme", .help = "Change the current theme of the system overlay.", .functor = functor
 				, .requires_args = true,
-			});
+			};
 		}
 
 		/* style_alpha */
@@ -191,7 +195,7 @@ namespace dce {
 			auto functor = [ ]([[maybe_unused]] State &, std::string &&_arg) -> bool {
 				float x = std::stof(_arg);
 
-				if (x == .0f) {
+				[[unlikely]] if (x == .0f) {
 					x = .1f;
 				}
 
@@ -200,10 +204,34 @@ namespace dce {
 				return true;
 			};
 
-			reg(Command{
-				.token = "alpha", .help = "Changes the transparency of the whole system overlay.", .functor = functor
+			registry += Command{
+				.token = "alpha", .help = "Changes transparency of the whole system overlay.", .functor = functor
 				, .requires_args = true
-			});
+			};
+		}
+
+		/* entity report */
+		{
+			auto functor = [ ](State &_state, [[maybe_unused]] std::string &&_arg) -> bool {
+				const auto &registry = _state.scenery().registry();
+				auto &proto = _state.protocol();
+				proto.separator();
+				proto.info("{} entities registered:", registry.size());
+				registry.each([&](const ERef _entity) {
+					proto.info("\t{:#08X}", _entity);
+				});
+				return true;
+			};
+			registry += Command{.token = "erep", .help = "Entity report.", .functor = functor,};
+		}
+
+		/* reload system resources */
+		{
+			auto functor = [ ](State &_state, [[maybe_unused]] std::string &&_args) -> bool {
+				_state.resource_manager().load_system_resources();
+				return true;
+			};
+			registry += Command{.token = "relsysres", .help = "Reload system resources.", .functor = functor};
 		}
 	}
 } // namespace dce // namespace dce

@@ -45,9 +45,10 @@ namespace dce::gui {
 			return false;
 		}
 
-		this->memory_editor_.OptShowDataPreview = true;
+		this->terminal_.initialize(_state.protocol().sink_to_terminal());
+		this->editor_.initialize(_state);
 
-		return this->terminal_.initialize(_state.protocol().sink_to_terminal());
+		return true;
 	}
 
 	auto Gui::on_pre_tick(State &_state) -> bool {
@@ -58,32 +59,10 @@ namespace dce::gui {
 	}
 
 	auto Gui::on_post_tick(State &_state) -> bool {
-		if constexpr (!IS_PUBLISHED) {
-			[[likely]] if (this->show_menu_) {
-				this->main_menu();
-			}
-
-			[[likely]] if (this->show_resource_viewer_) {
-				this->resource_viewer_.update(this->show_resource_viewer_, _state.importeur());
-			}
-
-			[[likely]] if (this->show_profiler_) {
-				this->profiler_.update(this->show_profiler_, _state.diagnostics(), _state.chrono());
-			}
-
-			[[likely]] if (this->show_shader_merger_) {
-				this->shader_merger_.update(this->show_shader_merger_, _state.protocol());
-			}
-
-			[[likely]] if (this->memory_editor_.Open) {
-				this->memory_editor_.DrawWindow(ICON_FA_MEMORY " Memory Editor", &_state, sizeof(State));
-			}
-		}
-
+		this->editor_.update(_state, this->show_terminal_);
 		[[unlikely]] if (this->show_terminal_) {
 			this->terminal_.update(this->show_terminal_, _state);
 		}
-
 		this->end();
 
 		return true;
@@ -114,38 +93,6 @@ namespace dce::gui {
 		const ImDrawData *const data = ImGui::GetDrawData();
 		[[unlikely]] if (data != nullptr) {
 			this->gui_renderer_.render(data);
-		}
-	}
-
-	void Gui::main_menu() {
-		using namespace ImGui;
-		[[likely]] if (BeginMainMenuBar()) {
-			[[unlikely]] if (BeginMenu("File")) {
-				if (MenuItem("New")) {}
-				if (MenuItem("Open")) {}
-				if (MenuItem("Save")) {}
-				if (MenuItem("Exit")) {}
-				EndMenu();
-			}
-			[[unlikely]] if (BeginMenu("Tools")) {
-				[[unlikely]] if (MenuItem(ICON_FA_TERMINAL " Terminal")) {
-					this->show_terminal_ = true;
-				}
-				[[unlikely]] if (MenuItem(ICON_FA_DATABASE " Resources")) {
-					this->show_resource_viewer_ = true;
-				}
-				[[unlikely]] if (MenuItem(ICON_FA_CLOCK " Profiler")) {
-					this->show_profiler_ = true;
-				}
-				[[unlikely]] if (MenuItem(ICON_FA_EYE " Shader Merger")) {
-					this->show_shader_merger_ = true;
-				}
-				[[unlikely]] if (MenuItem(ICON_FA_MEMORY " Memory Editor")) {
-					this->memory_editor_.Open = true;
-				}
-				EndMenu();
-			}
-			EndMainMenuBar();
 		}
 	}
 } // namespace dce::gui // namespace dce::gui

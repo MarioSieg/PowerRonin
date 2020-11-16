@@ -105,16 +105,15 @@ namespace dce {
 				throw std::runtime_error("Failed to load texture from file!");
 			}
 
-
 			const auto texel_count = static_cast<std::size_t>(width) * height * STBI_rgb_alpha;
 
 			self->texels_.reserve(texel_count);
 
 			/*
 			tbb::parallel_for(tbb::blocked_range<std::size_t>(0, texel_count), [&texels, image_data](const tbb::blocked_range<size_t>& r) {
-					for (std::size_t i = r.begin(); i < r.end(); ++i) {
-							texels.push_back(*reinterpret_cast<std::byte*>(image_data + i));
-					}
+			                for (std::size_t i = r.begin(); i < r.end(); ++i) {
+			                                texels.push_back(*reinterpret_cast<std::byte*>(image_data + i));
+			                }
 			});
 			*/
 
@@ -139,7 +138,7 @@ namespace dce {
 
 		/*
 		if(info.storageSize != t_texels.size() * sizeof(std::byte)) {
-			throw std::runtime_error("Failed to load texture from file!");
+		        throw std::runtime_error("Failed to load texture from file!");
 		}
 		*/
 

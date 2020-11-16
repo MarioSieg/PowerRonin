@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "../../terminal_sink.hpp"
+#include "../terminal_sink.hpp"
 #include <array>
 
 namespace dce {
@@ -17,7 +17,7 @@ namespace dce {
 	class CmdDB;
 	class AsyncProtocol;
 
-	namespace gui::widgets {
+	namespace gui {
 		class Terminal final {
 		public:
 			static constexpr auto BUFFER_SIZE = 32;

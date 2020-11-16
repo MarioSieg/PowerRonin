@@ -5,7 +5,7 @@
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 04.11.2020 00:34
+// Created: 15.11.2020 21:36
 
 #pragma once
 
@@ -39,9 +39,9 @@ namespace dce {
 
 		[[nodiscard]] auto command_db() const & noexcept -> const CmdDB&;
 
-		[[nodiscard]] auto importeur() & noexcept -> ResourceManager&;
+		[[nodiscard]] auto resource_manager() & noexcept -> ResourceManager&;
 
-		[[nodiscard]] auto importeur() const & noexcept -> const ResourceManager&;
+		[[nodiscard]] auto resource_manager() const & noexcept -> const ResourceManager&;
 
 		[[nodiscard]] auto diagnostics() const & noexcept -> const Diagnostics&;
 

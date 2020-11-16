@@ -5,7 +5,7 @@
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 06.11.2020 18:32
+// Created: 15.11.2020 21:36
 
 #pragma once
 
@@ -19,13 +19,13 @@ namespace dce {
 		friend class State;
 	public:
 		struct {
-			ResourceHandle<Texture> black_texture = {};
-			ResourceHandle<Texture> white_texture = {};
-			ResourceHandle<Texture> invalid_texture = {};
-			ResourceHandle<Texture> checkerboard_texture = {};
-			ResourceHandle<Mesh> cube_mesh = {};
-			ResourceHandle<Mesh> invalid_mesh = {};
-			ResourceHandle<Shader> basic_shader = {};
+			RRef<Texture> black_texture = {};
+			RRef<Texture> white_texture = {};
+			RRef<Texture> invalid_texture = {};
+			RRef<Texture> checkerboard_texture = {};
+			RRef<Mesh> cube_mesh = {};
+			RRef<Mesh> invalid_mesh = {};
+			RRef<Shader> basic_shader = {};
 		} system_resources = {};
 
 		ResourceCache<Texture> texture_cache = {};
@@ -33,9 +33,9 @@ namespace dce {
 		ResourceCache<Shader> shader_cache = {};
 
 		[[nodiscard]] auto gen_id() noexcept -> std::uint32_t;
+		void load_system_resources();
 
 	private:
-		void load_system_resources();
 		std::uint32_t id_counter_ = 0;
 	};
 

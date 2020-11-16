@@ -87,7 +87,7 @@ namespace dce::renderer {
 		bgfx::setViewTransform(_view_id, value_ptr(_view), value_ptr(_proj));
 	}
 
-	void GPU::render_mesh(const Transform &_transform, const MeshRenderer &_renderer) const {
+	void GPU::render_mesh(const CTransform &_transform, const CMeshRenderer &_renderer) const {
 		this->set_states();
 		this->set_transform(_transform);
 		this->set_mesh(_renderer.mesh);
@@ -95,11 +95,11 @@ namespace dce::renderer {
 		this->submit(_renderer.shader);
 	}
 
-	void GPU::set_transform(const Transform &_transform) const noexcept {
+	void GPU::set_transform(const CTransform &_transform) const noexcept {
 		bgfx::setTransform(value_ptr(_transform.calculate_matrix()));
 	}
 
-	void GPU::set_mesh(const ResourceHandle<Mesh> &_mesh) const noexcept {
+	void GPU::set_mesh(const RRef<Mesh> &_mesh) const noexcept {
 		const auto vb_id = bgfx::VertexBufferHandle{_mesh->get_vertex_buffer_id()};
 		const auto ib_id = bgfx::IndexBufferHandle{_mesh->get_index_buffer_id()};
 		assert(_mesh->is_uploaded());
@@ -109,7 +109,7 @@ namespace dce::renderer {
 		setIndexBuffer(ib_id);
 	}
 
-	void GPU::set_texture(const std::uint16_t _sampler, const ResourceHandle<Texture> &_texture) const noexcept {
+	void GPU::set_texture(const std::uint16_t _sampler, const RRef<Texture> &_texture) const noexcept {
 		assert(_texture->is_uploaded());
 		const auto texture_handle = bgfx::TextureHandle{_texture->get_texel_buffer_id()};
 		assert(bgfx::isValid(texture_handle));
@@ -118,7 +118,7 @@ namespace dce::renderer {
 		setTexture(0, sampler_handle, texture_handle);
 	}
 
-	void GPU::submit(const ResourceHandle<Shader> &_shader, const std::uint8_t _view_id) const noexcept {
+	void GPU::submit(const RRef<Shader> &_shader, const std::uint8_t _view_id) const noexcept {
 		assert(_shader->is_uploaded());
 		const auto program_handle = bgfx::ProgramHandle{_shader->get_program_id()};
 		assert(bgfx::isValid(program_handle));

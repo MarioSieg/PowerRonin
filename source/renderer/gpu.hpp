@@ -17,8 +17,8 @@
 #include "../../include/dce/texture.hpp"
 
 namespace dce {
-	class Transform;
-	class MeshRenderer;
+	class CTransform;
+	class CMeshRenderer;
 	class Diagnostics;
 	class Config;
 	class AsyncProtocol;
@@ -54,19 +54,19 @@ namespace dce::renderer {
 		void set_camera(const Matrix4x4 &_view, const Matrix4x4 &_proj, const std::uint8_t _view_id = 0) const noexcept;
 
 		/* High level mesh renderer. */
-		void render_mesh(const Transform &_transform, const MeshRenderer &_renderer) const;
+		void render_mesh(const CTransform &_transform, const CMeshRenderer &_renderer) const;
 
 		/* Set mesh world transform matrix. */
-		void set_transform(const Transform &_transform) const noexcept;
+		void set_transform(const CTransform &_transform) const noexcept;
 
 		/* Set mesh. */
-		void set_mesh(const ResourceHandle<Mesh> &_mesh) const noexcept;
+		void set_mesh(const RRef<Mesh> &_mesh) const noexcept;
 
 		/* Set texture. */
-		void set_texture(const std::uint16_t _sampler, const ResourceHandle<Texture> &_texture) const noexcept;
+		void set_texture(const std::uint16_t _sampler, const RRef<Texture> &_texture) const noexcept;
 
 		/* Render mesh. */
-		void submit(const ResourceHandle<Shader> &_shader, const std::uint8_t _view_id = 0) const noexcept;
+		void submit(const RRef<Shader> &_shader, const std::uint8_t _view_id = 0) const noexcept;
 
 		/* Set render states. */
 		void set_states() const noexcept;

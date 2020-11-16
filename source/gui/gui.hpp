@@ -13,13 +13,9 @@
 #include "../platform/input.hpp"
 #include "../renderer/gui_renderer.hpp"
 
-#include "widgets/profiler.hpp"
-#include "widgets/resource_viewer.hpp"
-#include "widgets/terminal.hpp"
-#include "widgets/shader_merger.hpp"
-
 #include "gui_headers.hpp"
-#include "ram_editor.hpp"
+#include "terminal.hpp"
+#include "editor.hpp"
 
 namespace dce::gui {
 	class Gui final : public core::ISubsystem {
@@ -45,24 +41,13 @@ namespace dce::gui {
 
 		void begin(std::uint16_t _width, std::uint16_t _height);
 		void end() const;
-		void main_menu();
 
 		renderer::GuiRenderer gui_renderer_ = {};
 		platform::GuiInput gui_input_ = {};
 		ImGuiContext *gui_context_ = nullptr;
 		ImPlotContext *plot_context_ = nullptr;
-
-		/* Widgets: */
-		widgets::Terminal terminal_ = {};
-		widgets::ResourceViewer resource_viewer_ = {};
-		widgets::Profiler profiler_ = {};
-		widgets::ShaderMerger shader_merger_ = {};
-		MemoryEditor memory_editor_ = {};
-
-		bool show_menu_ = true;
+		Terminal terminal_ = {};
 		bool show_terminal_ = false;
-		bool show_resource_viewer_ = false;
-		bool show_profiler_ = false;
-		bool show_shader_merger_ = false;
+		Editor editor_ = {};
 	};
 } // namespace dce::gui // namespace dce::gui

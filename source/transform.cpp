@@ -10,7 +10,7 @@
 #include "../../include/dce/transform.hpp"
 
 namespace dce {
-	auto Transform::calculate_matrix() const noexcept -> Matrix4x4 {
+	auto CTransform::calculate_matrix() const noexcept -> Matrix4x4 {
 		auto transform = math::identity<Matrix4x4>();
 		transform = math::scale(transform, this->scale);
 		transform *= mat4_cast(this->rotation);

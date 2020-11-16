@@ -1,18 +1,14 @@
 // Warning! This is an engine system file! 
 // Any changes could break internal systems!
 // Standard: C++20
-// File: main.hpp
+// File: comcollections.hpp
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 15.11.2020 21:36
+// Created: 16.11.2020 11:50
 
 #pragma once
 
-#include "../env.hpp"
-
-#if SYS_WINDOWS
-#define RONAPI_ENTRY WinMain
-#else
-#define RONAPI_ENTRY main
-#endif
+#include "entity_meta.hpp"
+#include "transform.hpp"
+#include "mesh_renderer.hpp"

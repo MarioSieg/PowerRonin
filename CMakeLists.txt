@@ -58,13 +58,13 @@ add_library(
     "source/platform/platform_headers.hpp"
     "source/platform/callback_hooks.hpp" 
     "source/platform/callback_hooks.cpp"
-    "source/gui/widgets/terminal.hpp"
-    "source/gui/widgets/terminal.cpp" 
+    "source/gui/terminal.hpp"
+    "source/gui/terminal.cpp" 
     "include/dce/core/main.hpp"
     "source/terminal_sink.hpp"    
     "source/half.cpp"   
-    "include/dce/texture.hpp" 
     "source/texture.cpp" 
+    "include/dce/texture.hpp" 
     "source/gui/utils.hpp" 
     "include/dce/resource_manager.hpp" 
     "source/resource_manager.cpp"  
@@ -94,7 +94,7 @@ add_library(
     "include/dce/core/publish.hpp"
     "source/gui/file_dialog_tool.hpp"
     "source/gui/file_dialog_tool.cpp" 
-    "source/gui/ram_editor.hpp" 
+    "source/gui/widgets/ram_editor.hpp" 
     "source/flycam.hpp" 
     "source/flycam.cpp" 
     "include/dce/chrono.hpp" 
@@ -112,7 +112,15 @@ add_library(
     "source/renderer/clocks.cpp" 
     "source/texture_runtime.cpp" 
     "source/mesh_runtime.cpp" 
-    "source/shader_runtime.cpp")
+    "source/shader_runtime.cpp" 
+    "include/dce/entity_meta.hpp" 
+    "include/dce/comcollections.hpp" 
+    "source/gui/editor.hpp" 
+    "source/gui/editor.cpp" 
+    "source/gui/widgets/hierarchy.hpp" 
+    "source/gui/widgets/hierarchy.cpp"
+    "source/gui/widgets/inspector.hpp"
+    "source/gui/widgets/inspector.cpp")
 
 include("extern/CMakeLists.txt")
 

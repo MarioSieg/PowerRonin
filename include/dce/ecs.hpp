@@ -5,7 +5,7 @@
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 08.11.2020 19:14
+// Created: 15.11.2020 21:36
 
 #pragma once
 
@@ -18,5 +18,5 @@ namespace dce {
 
 	using Registry = entt::registry;
 
-	using EntityHandle = entt::entity;
+	using ERef = entt::entity;
 } // namespace dce
