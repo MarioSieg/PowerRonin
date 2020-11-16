@@ -5,7 +5,7 @@
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 04.11.2020 00:34
+// Created: 15.11.2020 21:36
 
 #include "platform.hpp"
 #include "../../extern/infoware/include/infoware/infoware.hpp"
@@ -15,7 +15,7 @@
 #include <iostream>
 
 #define GLFW_NATIVE
-#include "glfw_headers.hpp"
+#include "platform_headers.hpp"
 
 namespace {
 	void error_callback(const int _error, const char *const _info) {

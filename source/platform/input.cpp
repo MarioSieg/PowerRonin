@@ -1,17 +1,17 @@
 // Warning! This is an engine system file! 
 // Any changes could break internal systems!
 // Standard: C++20
-// File: imgui_input.cpp
+// File: input.cpp
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 04.11.2020 00:34
+// Created: 15.11.2020 21:36
 
-#include "imgui_input.hpp"
+#include "input.hpp"
 #include "callback_hooks.hpp"
-#include "glfw_headers.hpp"
+#include "platform_headers.hpp"
 #include "math.h"
-#include "../gui/imgui_headers.hpp"
+#include "../gui/gui_headers.hpp"
 #include <limits>
 
 #define HAS_NEW_CURSORS (GLFW_VERSION_MAJOR * 1000 + GLFW_VERSION_MINOR * 100 >= 3400)

@@ -5,11 +5,11 @@
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 06.11.2020 22:18
+// Created: 15.11.2020 21:36
 
 #include "resource_viewer.hpp"
 #include "../font_headers.hpp"
-#include "../imgui_headers.hpp"
+#include "../gui_headers.hpp"
 #include "../utils.hpp"
 #include "../../../include/dce/resource_manager.hpp"
 

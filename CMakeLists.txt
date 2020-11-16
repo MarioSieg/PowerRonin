@@ -41,9 +41,9 @@ add_library(
     "source/state.cpp" 
     "source/renderer/embedded_shaders.hpp" 
     "source/renderer/embedded_shaders.cpp" 
-    "source/renderer/imgui_renderer.hpp" 
-    "source/renderer/imgui_renderer.cpp" 
-    "source/renderer/bgfx_headers.hpp" 
+    "source/renderer/gui_renderer.hpp" 
+    "source/renderer/gui_renderer.cpp" 
+    "source/renderer/gl_headers.hpp" 
     "source/gui/font_headers.hpp" 
     "source/renderer/utils.cpp" 
     "source/renderer/utils.hpp"  
@@ -53,9 +53,9 @@ add_library(
     "source/gui/theme.cpp" 
     "source/gui/dockspace.hpp" 
     "source/gui/dockspace.cpp"
-    "source/platform/imgui_input.hpp" 
-    "source/platform/imgui_input.cpp" 
-    "source/platform/glfw_headers.hpp"
+    "source/platform/input.hpp" 
+    "source/platform/input.cpp" 
+    "source/platform/platform_headers.hpp"
     "source/platform/callback_hooks.hpp" 
     "source/platform/callback_hooks.cpp"
     "source/gui/widgets/terminal.hpp"
@@ -77,7 +77,7 @@ add_library(
     "source/scenery.cpp" 
     "include/dce/mesh.hpp"
     "source/mesh.cpp" 
-    "source/gui/imgui_headers.hpp"
+    "source/gui/gui_headers.hpp"
     "include/dce/mathlib.hpp" 
     "source/gui/widgets/profiler.hpp"
     "source/gui/widgets/profiler.cpp" 
@@ -110,7 +110,9 @@ add_library(
     "source/transform.cpp" 
     "source/renderer/clocks.hpp" 
     "source/renderer/clocks.cpp" 
-    "source/texture_runtime.cpp" "source/mesh_runtime.cpp" "source/shader_runtime.cpp")
+    "source/texture_runtime.cpp" 
+    "source/mesh_runtime.cpp" 
+    "source/shader_runtime.cpp")
 
 include("extern/CMakeLists.txt")
 

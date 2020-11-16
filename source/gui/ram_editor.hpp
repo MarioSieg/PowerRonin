@@ -5,7 +5,7 @@
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 13.11.2020 11:12
+// Created: 15.11.2020 21:36
 
 #pragma once
 
@@ -133,8 +133,8 @@ struct MemoryEditor {
 		s.PosAsciiStart = s.PosAsciiEnd = s.PosHexEnd;
 		if (OptShowAscii) {
 			s.PosAsciiStart = s.PosHexEnd + s.GlyphWidth * 1;
-			if (OptMidColsCount > 0) s.PosAsciiStart += static_cast<float>((Cols + OptMidColsCount - 1) / OptMidColsCount) * s.
-				SpacingBetweenMidCols;
+			if (OptMidColsCount > 0)
+				s.PosAsciiStart += static_cast<float>((Cols + OptMidColsCount - 1) / OptMidColsCount) * s.SpacingBetweenMidCols;
 			s.PosAsciiEnd = s.PosAsciiStart + Cols * s.GlyphWidth;
 		}
 		s.WindowWidth = s.PosAsciiEnd + style.ScrollbarSize + style.WindowPadding.x * 2 + s.GlyphWidth;
@@ -266,8 +266,8 @@ struct MemoryEditor {
 						addr + 1 < HighlightMax || HighlightFn && HighlightFn(mem_data, addr + 1));
 					if (is_next_byte_highlighted || n + 1 == Cols) {
 						highlight_width = s.HexCellWidth;
-						if (OptMidColsCount > 0 && n > 0 && n + 1 < Cols && (n + 1) % OptMidColsCount == 0) highlight_width += s
-							.SpacingBetweenMidCols;
+						if (OptMidColsCount > 0 && n > 0 && n + 1 < Cols && (n + 1) % OptMidColsCount == 0)
+							highlight_width += s.SpacingBetweenMidCols;
 					}
 					draw_list->AddRectFilled(pos, ImVec2(pos.x + highlight_width, pos.y + s.LineHeight), HighlightColor);
 				}
@@ -309,10 +309,10 @@ struct MemoryEditor {
 						ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll |
 						ImGuiInputTextFlags_NoHorizontalScroll | ImGuiInputTextFlags_AlwaysInsertMode |
 						ImGuiInputTextFlags_CallbackAlways;
-					if (ImGui::InputText("##data", DataInputBuf, 32, flags, UserData::Callback, &user_data)) data_write =
-						data_next = true;
-					else if (!DataEditingTakeFocus && !ImGui::IsItemActive()) DataEditingAddr = data_editing_addr_next =
-						static_cast<size_t>(-1);
+					if (ImGui::InputText("##data", DataInputBuf, 32, flags, UserData::Callback, &user_data))
+						data_write = data_next = true;
+					else if (!DataEditingTakeFocus && !ImGui::IsItemActive())
+						DataEditingAddr = data_editing_addr_next = static_cast<size_t>(-1);
 					DataEditingTakeFocus = false;
 					ImGui::PopItemWidth();
 					if (user_data.CursorPos >= 2) data_write = data_next = true;
@@ -460,8 +460,8 @@ struct MemoryEditor {
 		ImGui::PushItemWidth(s.GlyphWidth * 10.0f + style.FramePadding.x * 2.0f + style.ItemInnerSpacing.x);
 		if (ImGui::BeginCombo("##combo_type", DataTypeGetDesc(PreviewDataType), ImGuiComboFlags_HeightLargest)) {
 			for (int n = 0; n < ImGuiDataType_COUNT; n++)
-				if (ImGui::Selectable(DataTypeGetDesc(static_cast<ImGuiDataType>(n)), PreviewDataType == n)) PreviewDataType =
-					static_cast<ImGuiDataType>(n);
+				if (ImGui::Selectable(DataTypeGetDesc(static_cast<ImGuiDataType>(n)), PreviewDataType == n))
+					PreviewDataType = static_cast<ImGuiDataType>(n);
 			ImGui::EndCombo();
 		}
 		ImGui::PopItemWidth();

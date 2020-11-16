@@ -1,19 +1,19 @@
 // Warning! This is an engine system file! 
 // Any changes could break internal systems!
 // Standard: C++20
-// File: imgui_renderer.cpp
+// File: gui_renderer.cpp
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 04.11.2020 00:34
+// Created: 15.11.2020 21:36
 
-#include "imgui_renderer.hpp"
+#include "gui_renderer.hpp"
 #include "embedded_shaders.hpp"
 #include "renderer.hpp"
 #include "utils.hpp"
 #include "../../include/dce/mathlib.hpp"
 #include "../gui/font_headers.hpp"
-#include "../gui/imgui_headers.hpp"
+#include "../gui/gui_headers.hpp"
 #include "bgfx/embedded_shader.h"
 
 #include <algorithm>
@@ -114,7 +114,7 @@ namespace dce::renderer {
 			const auto vertex_count = draw_list->VtxBuffer.size();
 			const auto index_count = draw_list->IdxBuffer.size();
 
-			if (!check_available_transient_buffers(vertex_count, index_count, &layout)) {
+			[[unlikely]] if (!check_available_transient_buffers(vertex_count, index_count, &layout)) {
 				break;
 			}
 
@@ -124,15 +124,15 @@ namespace dce::renderer {
 			allocTransientVertexBuffer(&tvb, vertex_count, layout);
 			allocTransientIndexBuffer(&tib, index_count);
 
-			auto & _Notnull_ vertices = *reinterpret_cast<ImDrawVert *>(tvb.data);
-			auto & _Notnull_ indices = *reinterpret_cast<ImDrawIdx *>(tib.data);
+			auto &vertices = *reinterpret_cast<ImDrawVert *const>(tvb.data);
+			auto &indices = *reinterpret_cast<ImDrawIdx *const>(tib.data);
 
 			memcpy(&vertices, draw_list->VtxBuffer.begin(), vertex_count * sizeof(ImDrawVert));
 			memcpy(&indices, draw_list->IdxBuffer.begin(), index_count * sizeof(ImDrawIdx));
 
 			std::uint32_t offset = 0;
 			for (const auto *cmd = draw_list->CmdBuffer.begin(), *end = draw_list->CmdBuffer.end(); cmd != end; ++cmd) {
-				if (cmd->UserCallback != nullptr) {
+				[[unlikely]] if (cmd->UserCallback != nullptr) {
 					cmd->UserCallback(draw_list, cmd);
 				}
 				else if (cmd->ElemCount != 0u) {
@@ -140,8 +140,7 @@ namespace dce::renderer {
 
 					auto textureHandle = this->texture;
 					auto program = this->gui_program;
-
-					if (cmd->TextureId != nullptr) {
+					[[likely]] if (cmd->TextureId != nullptr) {
 						const union {
 							ImTextureID ptr;
 
@@ -155,9 +154,9 @@ namespace dce::renderer {
 							         ? BGFX_STATE_BLEND_FUNC(BGFX_STATE_BLEND_SRC_ALPHA, BGFX_STATE_BLEND_INV_SRC_ALPHA)
 							         : BGFX_STATE_NONE;
 						textureHandle = texture.data.handle;
-						if (texture.data.mip != 0u) {
-							const float lodEnabled[4] = {static_cast<float>(texture.data.mip), 1.F, .0F, .0F};
-							setUniform(this->image_lod_enabled, lodEnabled);
+						[[unlikely]] if (texture.data.mip != 0u) {
+							const float lod_enabled[4] = {static_cast<float>(texture.data.mip), 1.F, .0F, .0F};
+							setUniform(this->image_lod_enabled, lod_enabled);
 							program = this->gui_image_program;
 						}
 					}

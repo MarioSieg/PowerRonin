@@ -5,13 +5,13 @@
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 06.11.2020 18:17
+// Created: 15.11.2020 21:36
 
 #pragma once
 
-#include "imgui_headers.hpp"
+#include "gui_headers.hpp"
 #include "../../include/dce/texture.hpp"
-#include "../renderer/bgfx_headers.hpp"
+#include "../renderer/gl_headers.hpp"
 #include <cstdint>
 
 namespace dce::gui {

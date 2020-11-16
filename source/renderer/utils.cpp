@@ -5,10 +5,10 @@
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 04.11.2020 00:34
+// Created: 15.11.2020 21:36
 
 #include "utils.hpp"
-#include "bgfx_headers.hpp"
+#include "gl_headers.hpp"
 
 namespace dce::renderer {
 	auto check_available_transient_buffers(const std::uint32_t vertex_count, const std::uint32_t index_count

@@ -5,20 +5,20 @@
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 04.11.2020 00:34
+// Created: 15.11.2020 21:36
 
 #pragma once
 
 #include "../../include/dce/core/kernel.hpp"
-#include "../platform/imgui_input.hpp"
-#include "../renderer/imgui_renderer.hpp"
+#include "../platform/input.hpp"
+#include "../renderer/gui_renderer.hpp"
 
 #include "widgets/profiler.hpp"
 #include "widgets/resource_viewer.hpp"
 #include "widgets/terminal.hpp"
 #include "widgets/shader_merger.hpp"
 
-#include "imgui_headers.hpp"
+#include "gui_headers.hpp"
 #include "ram_editor.hpp"
 
 namespace dce::gui {

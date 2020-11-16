@@ -5,7 +5,7 @@
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 05.11.2020 20:57
+// Created: 15.11.2020 21:36
 
 #include "../include/dce/texture.hpp"
 

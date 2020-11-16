@@ -5,12 +5,12 @@
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 04.11.2020 00:34
+// Created: 15.11.2020 21:36
 
 #include "callback_hooks.hpp"
-#include "glfw_headers.hpp"
+#include "platform_headers.hpp"
 #include "../../include/dce/env.hpp"
-#include "../gui/imgui_headers.hpp"
+#include "../gui/gui_headers.hpp"
 
 namespace dce::platform {
 	bool (*MOUSE_STATES)[5] = nullptr;
@@ -19,7 +19,8 @@ namespace dce::platform {
 	                           , [[maybe_unused]] const int _button, [[maybe_unused]] const int _action
 	                           , [[maybe_unused]] const int /*mods*/) noexcept {
 		assert(MOUSE_STATES);
-		if (_action == GLFW_PRESS && _button >= 0 && _button < static_cast<int>(sizeof *MOUSE_STATES / sizeof **MOUSE_STATES)) {
+		[[likely]] if (_action == GLFW_PRESS && _button >= 0 && _button < static_cast<int>(sizeof *MOUSE_STATES / sizeof **
+			MOUSE_STATES)) {
 			*MOUSE_STATES[_button] = true;
 		}
 	}
@@ -34,8 +35,7 @@ namespace dce::platform {
 	void key_callback([[maybe_unused]] GLFWwindow *const /*win*/, const int _key, [[maybe_unused]] const int /*scancode*/
 	                  , const int _action, [[maybe_unused]] const int /*mods*/) noexcept {
 		auto &io = ImGui::GetIO();
-		[[likely]]
-		if (_action == GLFW_PRESS) {
+		[[likely]] if (_action == GLFW_PRESS) {
 			io.KeysDown[_key] = true;
 		}
 		else if (_action == GLFW_RELEASE) {

@@ -5,11 +5,11 @@
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 15.11.2020 20:16
+// Created: 15.11.2020 21:36
 
 #include "../include/dce/shader.hpp"
 #include "../include/dce/blob.hpp"
-#include "renderer/bgfx_headers.hpp"
+#include "renderer/gl_headers.hpp"
 #include <fstream>
 
 namespace dce {

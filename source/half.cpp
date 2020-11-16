@@ -5,7 +5,7 @@
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 05.11.2020 00:14
+// Created: 15.11.2020 21:36
 
 #include "../include/dce/half.hpp"
 
