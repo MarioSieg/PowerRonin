@@ -22,6 +22,8 @@
 #include "../../extern/glm/glm/ext/matrix_common.hpp"
 #include "../../extern/glm/glm/ext/matrix_transform.hpp"
 #include "../../extern/glm/glm/gtc/type_ptr.hpp"
+#include "../../extern/glm/glm/gtx/transform.hpp"
+#include "../../extern/glm/glm/gtx/matrix_decompose.hpp"
 
 namespace dce {
 	using Vec2 = glm::vec2;

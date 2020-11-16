@@ -17,6 +17,8 @@
 #include "../../include/dce/transform.hpp"
 #include "../../include/dce/mesh_renderer.hpp"
 
+const float *VIEW, *PROJ;
+
 namespace dce::renderer {
 	Renderer::Renderer() : ISubsystem("Renderer", EVENTS) { }
 
@@ -46,7 +48,8 @@ namespace dce::renderer {
 		this->gpu_.sort_drawcalls();
 		{
 			this->fly_cam_.update(static_cast<float>(_state.chrono().delta_time));
-
+			VIEW = value_ptr(this->fly_cam_.get_view_matrix());
+			PROJ = value_ptr(this->fly_cam_.get_projection_matrix());
 			this->gpu_.set_camera(this->fly_cam_.get_view_matrix(), this->fly_cam_.get_projection_matrix());
 
 			auto &registry = _state.scenery().registry();

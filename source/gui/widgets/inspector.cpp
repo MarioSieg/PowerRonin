@@ -14,6 +14,9 @@
 
 using namespace ImGui;
 
+// Pls fix :'(
+extern const float *VIEW, *PROJ;
+
 namespace dce::gui::widgets {
 
 	void Inspector::update(bool &_show, Registry &_registry, const ERef _entity) {
@@ -29,13 +32,12 @@ namespace dce::gui::widgets {
 				[[likely]] if (_registry.has<CMetaData>(_entity)) {
 					auto &meta = _registry.get<CMetaData>(_entity);
 					[[likely]] if (CollapsingHeader(ICON_FA_COGS " Metadata")) {
-
-						meta.name.copy(this->string_buffer_.data(), BUFFER_SIZE);
+						std::strncpy(this->string_buffer_.data(), meta.name.data(), BUFFER_SIZE);
 						if (InputText("Name", this->string_buffer_.data(), BUFFER_SIZE)) {
 							meta.name = this->string_buffer_.data();
 						}
 
-						meta.description.copy(this->string_buffer_.data(), BUFFER_SIZE);
+						std::strncpy(this->string_buffer_.data(), meta.description.data(), BUFFER_SIZE);
 						if (InputText("Description", this->string_buffer_.data(), BUFFER_SIZE)) {
 							meta.description = this->string_buffer_.data();
 						}
@@ -54,6 +56,21 @@ namespace dce::gui::widgets {
 				[[likely]] if (_registry.has<CTransform>(_entity)) {
 					auto &transform = _registry.get<CTransform>(_entity);
 					[[likely]] if (CollapsingHeader(ICON_FA_MAP_MARKER_ALT " Transform ")) {
+
+						[[unlikely]] if (Button(ICON_FA_ARROWS)) {
+							this->modifier_ = ImGuizmo::TRANSLATE;
+						}
+						SameLine();
+						[[unlikely]] if (Button(ICON_FA_SYNC)) {
+							this->modifier_ = ImGuizmo::ROTATE;
+						}
+						SameLine();
+						[[unlikely]] if (Button(ICON_FA_EXPAND)) {
+							this->modifier_ = ImGuizmo::SCALE;
+						}
+
+						Separator();
+
 						DragFloat3("Position", value_ptr(transform.position));
 
 						Vec3 euler_angles = eulerAngles(transform.rotation);
@@ -65,6 +82,19 @@ namespace dce::gui::widgets {
 							euler_angles.y = math::radians(euler_angles.y);
 							euler_angles.z = math::radians(euler_angles.z);
 							transform.rotation = Quaternion(euler_angles);
+						}
+
+						DragFloat3("Scale ", value_ptr(transform.scale));
+
+						auto matrix = transform.calculate_matrix();
+						ImGuizmo::Enable(true);
+						ImGuizmo::BeginFrame();
+						auto &io = GetIO();
+						ImGuizmo::SetRect(.0f, .0f, io.DisplaySize.x, io.DisplaySize.y);
+						[[unlikely]] if (Manipulate(VIEW, PROJ, this->modifier_, ImGuizmo::WORLD, value_ptr(matrix))) {
+							glm::vec3 skew;
+							glm::vec4 perspective;
+							decompose(matrix, transform.scale, transform.rotation, transform.position, skew, perspective);
 						}
 					}
 				}

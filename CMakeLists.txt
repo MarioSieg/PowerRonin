@@ -51,8 +51,8 @@ add_library(
     "source/gui/gui.cpp" 
     "source/gui/theme.hpp" 
     "source/gui/theme.cpp" 
-    "source/gui/dockspace.hpp" 
-    "source/gui/dockspace.cpp"
+     
+    
     "source/platform/input.hpp" 
     "source/platform/input.cpp" 
     "source/platform/platform_headers.hpp"

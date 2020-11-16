@@ -13,6 +13,9 @@
 #include "../flycam.hpp"
 #include "gpu.hpp"
 
+// UGLYY AAAA
+extern const float *VIEW, *PROJ;
+
 namespace dce {
 	class CMeshRenderer;
 	class CTransform;

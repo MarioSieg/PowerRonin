@@ -71,7 +71,7 @@ namespace dce::renderer {
 	}
 
 	void GPU::begin_frame() const noexcept {
-		bgfx::setViewClear(0, BGFX_CLEAR_DEPTH | BGFX_CLEAR_COLOR, 0, 1.F, 0);
+		bgfx::setViewClear(0, BGFX_CLEAR_DEPTH | BGFX_CLEAR_COLOR, 0xFFFFFFFF, 1.F, 0);
 		bgfx::setViewRect(0, 0, 0, this->width_, this->height_);
 	}
 

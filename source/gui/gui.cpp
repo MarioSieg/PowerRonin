@@ -8,7 +8,6 @@
 // Created: 15.11.2020 21:36
 
 #include "gui.hpp"
-#include "dockspace.hpp"
 #include "theme.hpp"
 
 namespace dce::gui {
@@ -77,11 +76,10 @@ namespace dce::gui {
 		io.DisplaySize = {static_cast<float>(_width), static_cast<float>(_height)};
 		this->gui_input_.update();
 		ImGui::NewFrame();
-		begin_dockspace();
+		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 	}
 
 	void Gui::end() const {
-		end_dockspace();
 		ImGui::EndFrame();
 		ImGui::Render();
 		const ImDrawData *const data = ImGui::GetDrawData();

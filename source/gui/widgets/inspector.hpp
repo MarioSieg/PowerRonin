@@ -10,7 +10,8 @@
 #pragma once
 
 #include "../../../include/dce/ecs.hpp"
-
+#include "../gui_headers.hpp"
+#include "../../extern/imgui/ImGuizmo.h"
 #include <array>
 
 namespace dce::gui::widgets {
@@ -21,5 +22,6 @@ namespace dce::gui::widgets {
 
 	private:
 		std::array<char, BUFFER_SIZE> string_buffer_ = {};
+		ImGuizmo::OPERATION modifier_ = {};
 	};
 }
