@@ -34,7 +34,13 @@ namespace dce::platform {
 	void key_callback([[maybe_unused]] GLFWwindow *const /*win*/, const int _key, [[maybe_unused]] const int /*scancode*/
 	                  , const int _action, [[maybe_unused]] const int /*mods*/) noexcept {
 		auto &io = ImGui::GetIO();
-		io.KeysDown[_key] = _action == GLFW_PRESS;
+		[[likely]]
+		if (_action == GLFW_PRESS) {
+			io.KeysDown[_key] = true;
+		}
+		else if (_action == GLFW_RELEASE) {
+			io.KeysDown[_key] = false;
+		}
 		io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
 		io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
 		io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
