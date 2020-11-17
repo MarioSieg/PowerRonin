@@ -9,8 +9,6 @@
 
 #pragma once
 
-#include "../../../include/dce/ecs.hpp"
-
 #include "gui_headers.hpp"
 
 #include "widgets/profiler.hpp"

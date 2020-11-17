@@ -114,7 +114,7 @@ namespace dce::platform {
 		auto *const win = static_cast<GLFWwindow *>(this->window);
 		auto &io = ImGui::GetIO();
 
-		for (auto i = 0; i < sizeof io.MouseDown / sizeof *io.MouseDown; i++) {
+		for (std::size_t i = 0; i < sizeof io.MouseDown / sizeof *io.MouseDown; i++) {
 			io.MouseDown[i] = this->mouse_buttons[i] || glfwGetMouseButton(win, i) != 0;
 			this->mouse_buttons[i] = false;
 		}

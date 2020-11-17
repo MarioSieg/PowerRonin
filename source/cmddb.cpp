@@ -139,7 +139,7 @@ namespace dce {
 			};
 
 			registry += Command{
-				.token = "help", .help = "Displays all registered commands with a short help message.", .functor = functor,
+				.token = "help", .help = "Displays all registered commands with a short help message.", .functor = +functor,
 			};
 		}
 
@@ -159,7 +159,7 @@ namespace dce {
 				return true;
 			};
 
-			registry += Command{.token = "cfg", .help = "Displays the current configuration as JSON.", .functor = functor};
+			registry += Command{.token = "cfg", .help = "Displays the current configuration as JSON.", .functor = +functor};
 		}
 
 		/* style */
@@ -185,7 +185,7 @@ namespace dce {
 			};
 
 			registry += Command{
-				.token = "theme", .help = "Change the current theme of the system overlay.", .functor = functor
+				.token = "theme", .help = "Change the current theme of the system overlay.", .functor = +functor
 				, .requires_args = true,
 			};
 		}
@@ -205,7 +205,7 @@ namespace dce {
 			};
 
 			registry += Command{
-				.token = "alpha", .help = "Changes transparency of the whole system overlay.", .functor = functor
+				.token = "alpha", .help = "Changes transparency of the whole system overlay.", .functor = +functor
 				, .requires_args = true
 			};
 		}
@@ -213,11 +213,11 @@ namespace dce {
 		/* entity report */
 		{
 			auto functor = [ ](State &_state, [[maybe_unused]] std::string &&_arg) -> bool {
-				const auto &registry = _state.scenery().registry();
+				const auto &scene_registry = _state.scenery().registry();
 				auto &proto = _state.protocol();
 				proto.separator();
-				proto.info("{} entities registered:", registry.size());
-				registry.each([&](const ERef _entity) {
+				proto.info("{} entities registered:", scene_registry.size());
+				scene_registry.each([&](const ERef _entity) {
 					proto.info("\t{:#08X}", _entity);
 				});
 				return true;
@@ -231,7 +231,7 @@ namespace dce {
 				_state.resource_manager().load_system_resources();
 				return true;
 			};
-			registry += Command{.token = "relsysres", .help = "Reload system resources.", .functor = functor};
+			registry += Command{.token = "relsysres", .help = "Reload system resources.", .functor = +functor};
 		}
 	}
 } // namespace dce // namespace dce

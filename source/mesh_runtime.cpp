@@ -36,8 +36,9 @@ namespace dce {
 
 		static const auto VERTEX_LAYOUT = create_vertex_layout();
 
-		const auto *const index_buffer_mem = bgfx::makeRef(this->indices_.data(), sizeof(std::uint16_t) * this->indices_.size()
-		                                                   , nullptr, nullptr);
+		const auto *const index_buffer_mem = bgfx::makeRef(this->indices_.data()
+		                                                   , static_cast<std::uint32_t>(sizeof(std::uint16_t) * this->indices_.
+			                                                   size()), nullptr, nullptr);
 
 		if (index_buffer_mem == nullptr) {
 			throw std::runtime_error("Failed to upload mesh!");
@@ -50,8 +51,8 @@ namespace dce {
 		}
 
 		const auto *const vertex_buffer_mem = bgfx::makeRef(this->vertices_.data()
-		                                                    , this->vertices_.size() * VERTEX_LAYOUT.getStride(), nullptr
-		                                                    , nullptr);
+		                                                    , static_cast<std::uint32_t>(this->vertices_.size() * VERTEX_LAYOUT.
+			                                                    getStride()), nullptr, nullptr);
 
 		if (vertex_buffer_mem == nullptr) {
 			throw std::runtime_error("Failed to upload mesh!");

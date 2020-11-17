@@ -10,6 +10,7 @@
 #pragma once
 
 #include "../../../include/dce/ecs.hpp"
+// ReSharper disable once CppUnusedIncludeDirective
 #include "../gui_headers.hpp"
 #include "../../extern/imgui/ImGuizmo.h"
 #include <array>

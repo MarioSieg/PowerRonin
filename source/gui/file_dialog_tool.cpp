@@ -9,6 +9,7 @@
 
 #include "file_dialog_tool.hpp"
 #include "../../extern/nativefiledialog/src/include/nfd.h"
+#include <cstddef>
 
 namespace dce::gui {
 

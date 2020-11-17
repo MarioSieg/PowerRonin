@@ -9,8 +9,6 @@
 
 #pragma once
 
-#include "../../../include/dce/texture.hpp"
-
 namespace dce {
 	class ResourceManager;
 

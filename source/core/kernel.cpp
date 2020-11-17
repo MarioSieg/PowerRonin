@@ -61,7 +61,7 @@ namespace dce::core {
 
 		proto.separator();
 
-		for (auto i = 0; i < this->core->services.size(); ++i) {
+		for (std::size_t i = 0; i < this->core->services.size(); ++i) {
 			const auto &entry = this->core->services[i];
 			const auto id = std::get<0>(entry);
 			const auto &sys = std::get<1>(entry);
@@ -271,7 +271,7 @@ namespace dce::core {
 
 	auto Kernel::uninstall_subsystem(const std::uint_fast16_t id) const -> bool {
 		/* Check if subsystem with id already exists: */
-		for (auto i = 0; i < this->core->services.size(); ++i) {
+		for (std::size_t i = 0; i < this->core->services.size(); ++i) {
 			/* If it exists, remove it */
 			[[likely]] if (std::get<1>(this->core->services[i])->id == id) {
 				this->core->services.erase(this->core->services.begin() + i);

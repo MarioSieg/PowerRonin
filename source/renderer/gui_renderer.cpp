@@ -102,7 +102,6 @@ namespace dce::renderer {
 		const auto width = static_cast<std::uint16_t>(io.DisplaySize.x);
 		const auto height = static_cast<std::uint16_t>(io.DisplaySize.y);
 		setViewMode(VIEW_ID, bgfx::ViewMode::Sequential);
-		const auto &caps = *bgfx::getCaps();
 		{
 			Matrix4x4 ortho = math::ortho(.0F, static_cast<float>(width), static_cast<float>(height), .0F, .0F, 1000.F);
 			bgfx::setViewTransform(VIEW_ID, nullptr, &ortho[0]);
@@ -149,13 +148,13 @@ namespace dce::renderer {
 								std::uint8_t flags;
 								std::uint8_t mip;
 							} data;
-						} texture = {cmd->TextureId};
-						state |= (0x01 & texture.data.flags) != 0
+						} texture1 = {cmd->TextureId};
+						state |= (0x01 & texture1.data.flags) != 0
 							         ? BGFX_STATE_BLEND_FUNC(BGFX_STATE_BLEND_SRC_ALPHA, BGFX_STATE_BLEND_INV_SRC_ALPHA)
 							         : BGFX_STATE_NONE;
-						textureHandle = texture.data.handle;
-						[[unlikely]] if (texture.data.mip != 0u) {
-							const float lod_enabled[4] = {static_cast<float>(texture.data.mip), 1.F, .0F, .0F};
+						textureHandle = texture1.data.handle;
+						[[unlikely]] if (texture1.data.mip != 0u) {
+							const float lod_enabled[4] = {static_cast<float>(texture1.data.mip), 1.F, .0F, .0F};
 							setUniform(this->image_lod_enabled, lod_enabled);
 							program = this->gui_image_program;
 						}

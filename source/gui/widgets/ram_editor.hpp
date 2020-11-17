@@ -275,7 +275,7 @@ struct MemoryEditor {
 				if (DataEditingAddr == addr) {
 					// Display text input on current byte
 					bool data_write = false;
-					ImGui::PushID((void *)addr);
+					ImGui::PushID(reinterpret_cast<void*>(addr));
 					if (DataEditingTakeFocus) {
 						ImGui::SetKeyboardFocusHere();
 						ImGui::CaptureKeyboardFromApp(true);
@@ -427,7 +427,7 @@ struct MemoryEditor {
 		ImGui::SameLine();
 		ImGui::Text(format_range, s.AddrDigitsCount, base_display_addr, s.AddrDigitsCount, base_display_addr + mem_size - 1);
 		ImGui::SameLine();
-		ImGui::PushItemWidth((s.AddrDigitsCount + 1) * s.GlyphWidth + style.FramePadding.x * 2.0f);
+		ImGui::PushItemWidth(static_cast<float>((s.AddrDigitsCount + 1) * s.GlyphWidth + style.FramePadding.x * 2.0f));
 		if (ImGui::InputText("##addr", AddrInputBuf, 32
 		                     , ImGuiInputTextFlags_CharsHexadecimal | ImGuiInputTextFlags_EnterReturnsTrue)) {
 			size_t goto_addr;
@@ -441,7 +441,7 @@ struct MemoryEditor {
 		if (GotoAddr != static_cast<size_t>(-1)) {
 			if (GotoAddr < mem_size) {
 				ImGui::BeginChild("##scrolling");
-				ImGui::SetScrollFromPosY(ImGui::GetCursorStartPos().y + GotoAddr / Cols * ImGui::GetTextLineHeight());
+				ImGui::SetScrollFromPosY(static_cast<float>(ImGui::GetCursorStartPos().y + GotoAddr / Cols * ImGui::GetTextLineHeight()));
 				ImGui::EndChild();
 				DataEditingAddr = DataPreviewAddr = GotoAddr;
 				DataEditingTakeFocus = true;
@@ -552,7 +552,7 @@ struct MemoryEditor {
 		static char out_buf[64 + 8 + 1];
 		const int n = width / 8;
 		for (int j = n - 1; j >= 0; --j) {
-			for (int i = 0; i < 8; ++i) out_buf[out_n++] = buf[j] & 1 << 7 - i ? '1' : '0';
+			for (int i = 0; i < 8; ++i) out_buf[out_n++] = buf[j] & 1 << (7 - i) ? '1' : '0';
 			out_buf[out_n++] = ' ';
 		}
 		IM_ASSERT(out_n < IM_ARRAYSIZE(out_buf));
@@ -686,11 +686,11 @@ struct MemoryEditor {
 			float float32 = 0.0f;
 			EndianessCopy(&float32, buf, size);
 			if (data_format == DataFormat_Dec) {
-				ImSnprintf(out_buf, out_buf_size, "%f", float32);
+				ImSnprintf(out_buf, out_buf_size, "%f", static_cast<double>(float32));
 				return;
 			}
 			if (data_format == DataFormat_Hex) {
-				ImSnprintf(out_buf, out_buf_size, "%a", float32);
+				ImSnprintf(out_buf, out_buf_size, "%a", static_cast<double>(float32));
 				return;
 			}
 			break;

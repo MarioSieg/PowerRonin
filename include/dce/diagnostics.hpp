@@ -10,7 +10,6 @@
 #pragma once
 
 #include <cstddef>
-#include <cstdint>
 
 namespace dce {
 	class Diagnostics final {

@@ -77,6 +77,7 @@ enum class Compiler {
 	case System::LINUX: return "Linux";
 	case System::WINDOWS: return "Windows";
 	case System::MAC: return "Mac";
+	default: return "Unknown";
 	}
 }
 

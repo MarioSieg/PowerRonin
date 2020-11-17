@@ -30,7 +30,7 @@ namespace dce::gui {
 			} data;
 
 			ImTextureID id;
-		} tex{};
+		} tex;
 		tex.data.handle_s = handle;
 		tex.data.flags_s = flags;
 		tex.data.mip_s = mip;

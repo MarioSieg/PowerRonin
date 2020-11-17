@@ -46,6 +46,7 @@ namespace dce::gui {
 						case LogLevel::WARN: PushStyleColor(ImGuiCol_Text, COLOR_WARN);
 							++this->warning_messages_count_;
 							break;
+						default: case LogLevel::OFF: ;
 						}
 						TextUnformatted(std::get<0>(msg).c_str());
 						PopStyleColor();

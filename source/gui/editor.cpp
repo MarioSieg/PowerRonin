@@ -17,7 +17,7 @@ using namespace ImGui;
 
 namespace dce::gui {
 
-	void Editor::initialize(State &_state) {
+	void Editor::initialize([[maybe_unused]] State &_state) {
 		this->memory_editor_.OptShowDataPreview = true;
 	}
 

@@ -21,7 +21,7 @@ namespace dce::physics {
 		Physics(Physics &&) = delete;
 		auto operator=(const Physics &) -> Physics& = delete;
 		auto operator=(Physics &&) -> Physics& = delete;
-		~Physics() = default;
+		~Physics() override = default;
 
 	private:
 		/* Required kernel events */

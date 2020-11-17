@@ -68,7 +68,7 @@ namespace {
 		case iware::system::kernel_t::windows_nt: return "Windows NT";
 		case iware::system::kernel_t::linux: return "Linux";
 		case iware::system::kernel_t::darwin: return "Darwin";
-		default: return "Unknown";
+		case iware::system::kernel_t::unknown: default: return "Unknown";
 		}
 	}
 
@@ -88,7 +88,7 @@ namespace {
 		case iware::cpu::architecture_t::arm: return "ARM";
 		case iware::cpu::architecture_t::itanium: return "Itanium";
 		case iware::cpu::architecture_t::x86: return "x86";
-		default: return "Unknown";
+		case iware::cpu::architecture_t::unknown: default: return "Unknown";
 		}
 	}
 

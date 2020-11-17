@@ -19,7 +19,7 @@ namespace dce {
 			/* Box collider data. */
 			struct {
 				Vec3 half_extents;
-			} box;
+			} box = {};
 
 			/* Sphere collider data. */
 			struct {

@@ -11,7 +11,6 @@
 #include "terminal_sink.hpp"
 #include "../extern/spdlog/include/spdlog/async.h"
 #include "../extern/spdlog/include/spdlog/sinks/basic_file_sink.h"
-#include "../extern/spdlog/include/spdlog/sinks/basic_file_sink.h"
 
 #include <array>
 #include <iomanip>

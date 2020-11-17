@@ -8,6 +8,7 @@
 // Created: 15.11.2020 21:36
 
 #include "scroll_roll_buffer.hpp"
+#include <cmath>
 
 namespace dce::gui {
 

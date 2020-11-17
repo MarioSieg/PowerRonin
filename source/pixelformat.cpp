@@ -637,9 +637,11 @@ namespace dce {
 		// - https://web.archive.org/web/20181126040035/https://www.khronos.org/commands/opengl/extensions/ext/ext_texture_shared_exponent.txt
 		//
 		const std::int32_t expmax = (1 << expbits) - 1;
-		const std::int32_t expbias = (1 << expbits - 1) - 1;
-		const float sharedexpmax = static_cast<float>(expmax) / static_cast<float>(expmax + 1) * static_cast<float>(1 << expmax
-			- expbias);
+		// ReSharper disable once CppRedundantParentheses
+		const std::int32_t expbias = (1 << (expbits - 1)) - 1;
+		// ReSharper disable once CppRedundantParentheses
+		const float sharedexpmax = static_cast<float>(expmax) / static_cast<float>(expmax + 1) * static_cast<float>(1 << (expmax
+			- expbias));
 
 		const float rr = std::clamp(src1[0], 0.0F, sharedexpmax);
 		const float gg = std::clamp(src1[1], 0.0F, sharedexpmax);
@@ -667,7 +669,8 @@ namespace dce {
 
 	template <std::int32_t mantissabits, std::int32_t expbits>
 	void decodergbe(float *dst1, const float *src1) noexcept {
-		const std::int32_t expbias = (1 << expbits - 1) - 1;
+		// ReSharper disable once CppRedundantParentheses
+		const std::int32_t expbias = (1 << (expbits - 1)) - 1;
 		const float exponent = src1[3] - static_cast<float>(expbias - mantissabits);
 		const float scale = std::pow(2.0F, exponent);
 		dst1[0] = src1[0] * scale;

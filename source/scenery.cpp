@@ -27,10 +27,10 @@ namespace dce {
 			const auto cube = this->registry_.create();
 
 			auto &meta = this->registry_.emplace<CMetaData>(cube);
-			auto &transform = this->registry_.emplace<Transform>(cube);
+			[[maybe_unused]] auto &transform = this->registry_.emplace<Transform>(cube);
 			auto &renderer = this->registry_.emplace<CMeshRenderer>(cube);
-			auto &collider = this->registry_.emplace<Collider>(cube);
-			auto &rigidbody = this->registry_.emplace<Rigidbody>(cube);
+			[[maybe_unused]] auto &collider = this->registry_.emplace<Collider>(cube);
+			[[maybe_unused]] auto &rigidbody = this->registry_.emplace<Rigidbody>(cube);
 
 			meta.name = "Cube";
 
