@@ -53,8 +53,8 @@ namespace dce::gui::widgets {
 						}
 					}
 				}
-				[[likely]] if (_registry.has<CTransform>(_entity)) {
-					auto &transform = _registry.get<CTransform>(_entity);
+				[[likely]] if (_registry.has<Transform>(_entity)) {
+					auto &transform = _registry.get<Transform>(_entity);
 					[[likely]] if (CollapsingHeader(ICON_FA_MAP_MARKER_ALT " Transform ")) {
 
 						[[unlikely]] if (Button(ICON_FA_ARROWS)) {
@@ -96,6 +96,13 @@ namespace dce::gui::widgets {
 							glm::vec4 perspective;
 							decompose(matrix, transform.scale, transform.rotation, transform.position, skew, perspective);
 						}
+					}
+				}
+				[[likely]] if (_registry.has<Rigidbody>(_entity)) {
+					auto &rigidbody = _registry.get<Rigidbody>(_entity);
+					[[likely]] if (CollapsingHeader(ICON_FA_GLOBE " Rigidbody")) {
+						DragFloat("Mass", &rigidbody.mass);
+						Checkbox("Is Kinematic", &rigidbody.is_kinematic);
 					}
 				}
 				EndChild();

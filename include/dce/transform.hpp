@@ -12,7 +12,7 @@
 #include "mathlib.hpp"
 
 namespace dce {
-	class CTransform final {
+	class Transform final {
 	public:
 		Vec3 position = {.0f, .0f, .0f};
 		Quaternion rotation = {.0f, .0f, .0f, .0f};

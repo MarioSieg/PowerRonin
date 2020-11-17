@@ -51,8 +51,6 @@ add_library(
     "source/gui/gui.cpp" 
     "source/gui/theme.hpp" 
     "source/gui/theme.cpp" 
-     
-    
     "source/platform/input.hpp" 
     "source/platform/input.cpp" 
     "source/platform/platform_headers.hpp"
@@ -119,7 +117,13 @@ add_library(
     "source/gui/widgets/hierarchy.hpp" 
     "source/gui/widgets/hierarchy.cpp"
     "source/gui/widgets/inspector.hpp"
-    "source/gui/widgets/inspector.cpp")
+    "source/gui/widgets/inspector.cpp" 
+    "include/dce/input.hpp" 
+    "source/physics/physics.hpp" 
+    "source/physics/physics.cpp" 
+    "include/dce/collider.hpp" 
+    "include/dce/rigidbody.hpp" 
+    "source/physics/physics_headers.hpp" )
 
 include("extern/CMakeLists.txt")
 

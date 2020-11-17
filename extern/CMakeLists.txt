@@ -32,3 +32,8 @@ target_link_libraries("dreamcast_runtime" "infoware")
 
 add_subdirectory("extern/nativefiledialog")
 target_link_libraries("dreamcast_runtime" "nativefiledialog")
+
+add_subdirectory("extern/bullet3")
+target_link_libraries("dreamcast_runtime" "BulletDynamics")
+target_link_libraries("dreamcast_runtime" "BulletCollision")
+target_link_libraries("dreamcast_runtime" "LinearMath")

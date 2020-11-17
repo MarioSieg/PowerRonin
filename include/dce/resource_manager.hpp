@@ -23,8 +23,7 @@ namespace dce {
 			RRef<Texture> white_texture = {};
 			RRef<Texture> invalid_texture = {};
 			RRef<Texture> checkerboard_texture = {};
-			RRef<Mesh> cube_mesh = {};
-			RRef<Mesh> invalid_mesh = {};
+			RRef<Mesh> error_mesh = {};
 			RRef<Shader> basic_shader = {};
 		} system_resources = {};
 

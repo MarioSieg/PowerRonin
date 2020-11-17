@@ -17,7 +17,7 @@
 #include "../../include/dce/texture.hpp"
 
 namespace dce {
-	class CTransform;
+	class Transform;
 	class CMeshRenderer;
 	class Diagnostics;
 	class Config;
@@ -54,10 +54,10 @@ namespace dce::renderer {
 		void set_camera(const Matrix4x4 &_view, const Matrix4x4 &_proj, const std::uint8_t _view_id = 0) const noexcept;
 
 		/* High level mesh renderer. */
-		void render_mesh(const CTransform &_transform, const CMeshRenderer &_renderer) const;
+		void render_mesh(const Transform &_transform, const CMeshRenderer &_renderer) const;
 
 		/* Set mesh world transform matrix. */
-		void set_transform(const CTransform &_transform) const noexcept;
+		void set_transform(const Transform &_transform) const noexcept;
 
 		/* Set mesh. */
 		void set_mesh(const RRef<Mesh> &_mesh) const noexcept;

@@ -78,7 +78,7 @@ namespace dce {
 	auto MeshImporteur::load(std::filesystem::path &&_path) const -> std::shared_ptr<Mesh> {
 		Assimp::Importer importer;
 
-		constexpr unsigned flags = aiProcess_JoinIdenticalVertices | aiProcess_Triangulate;
+		constexpr unsigned flags = aiProcess_JoinIdenticalVertices | aiProcess_Triangulate | aiProcess_GenUVCoords;
 
 		/* We should add some flags here! */
 		const aiScene *const scene = importer.ReadFile(_path.string().c_str(), flags);

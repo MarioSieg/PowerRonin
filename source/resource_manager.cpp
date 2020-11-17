@@ -20,8 +20,7 @@ namespace dce {
 		this->system_resources.checkerboard_texture = this->texture_cache.load<TextureImporteur>(
 			this->gen_id(), "textures/common/checkerboard.dds");
 
-		this->system_resources.cube_mesh = this->mesh_cache.load<MeshImporteur>(this->gen_id(), "meshes/common/cube.obj");
-		this->system_resources.invalid_mesh = this->mesh_cache.load<MeshImporteur>(this->gen_id(), "meshes/common/invalid.obj");
+		this->system_resources.error_mesh = this->mesh_cache.load<MeshImporteur>(this->gen_id(), "meshes/common/invalid.obj");
 		this->system_resources.basic_shader = this->shader_cache.load<ShaderImporteur>(
 			this->gen_id(), "shaders/bin/dx11/mesh.cshader");
 	}

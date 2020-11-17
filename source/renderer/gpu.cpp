@@ -87,7 +87,7 @@ namespace dce::renderer {
 		bgfx::setViewTransform(_view_id, value_ptr(_view), value_ptr(_proj));
 	}
 
-	void GPU::render_mesh(const CTransform &_transform, const CMeshRenderer &_renderer) const {
+	void GPU::render_mesh(const Transform &_transform, const CMeshRenderer &_renderer) const {
 		this->set_states();
 		this->set_transform(_transform);
 		this->set_mesh(_renderer.mesh);
@@ -95,7 +95,7 @@ namespace dce::renderer {
 		this->submit(_renderer.shader);
 	}
 
-	void GPU::set_transform(const CTransform &_transform) const noexcept {
+	void GPU::set_transform(const Transform &_transform) const noexcept {
 		bgfx::setTransform(value_ptr(_transform.calculate_matrix()));
 	}
 

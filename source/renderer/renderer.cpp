@@ -53,8 +53,8 @@ namespace dce::renderer {
 			this->gpu_.set_camera(this->fly_cam_.get_view_matrix(), this->fly_cam_.get_projection_matrix());
 
 			auto &registry = _state.scenery().registry();
-			registry.view<CTransform, CMeshRenderer>().each(
-				[&gpu = this->gpu_](CTransform &_transform, CMeshRenderer &_mesh_renderer) {
+			registry.view<Transform, CMeshRenderer>().each(
+				[&gpu = this->gpu_](Transform &_transform, CMeshRenderer &_mesh_renderer) {
 					[[likely]] if (_mesh_renderer.is_visible) {
 						gpu.render_mesh(_transform, _mesh_renderer);
 					}

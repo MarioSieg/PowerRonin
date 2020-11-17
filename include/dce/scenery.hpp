@@ -35,6 +35,6 @@ namespace dce {
 	private:
 		Registry registry_ = {};
 		void initialize();
-		void new_default(const ResourceManager &_resource_manager);
+		void new_default(ResourceManager &_resource_manager);
 	};
 } // namespace dce // namespace dce

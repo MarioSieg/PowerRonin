@@ -22,17 +22,39 @@ namespace dce {
 
 	void Scenery::initialize() { }
 
-	void Scenery::new_default(const ResourceManager &_resource_manager) {
-		const auto cube = this->registry_.create();
+	void Scenery::new_default(ResourceManager &_resource_manager) {
+		{
+			const auto cube = this->registry_.create();
 
-		auto &meta = this->registry_.emplace<CMetaData>(cube);
-		auto &transform = this->registry_.emplace<CTransform>(cube);
-		auto &renderer = this->registry_.emplace<CMeshRenderer>(cube);
+			auto &meta = this->registry_.emplace<CMetaData>(cube);
+			auto &transform = this->registry_.emplace<Transform>(cube);
+			auto &renderer = this->registry_.emplace<CMeshRenderer>(cube);
+			auto &collider = this->registry_.emplace<Collider>(cube);
+			auto &rigidbody = this->registry_.emplace<Rigidbody>(cube);
 
-		meta.name = "Bunny";
+			meta.name = "Cube";
 
-		renderer.texture = _resource_manager.system_resources.checkerboard_texture;
-		renderer.mesh = _resource_manager.system_resources.cube_mesh;
-		renderer.shader = _resource_manager.system_resources.basic_shader;
+			renderer.texture = _resource_manager.system_resources.checkerboard_texture;
+			renderer.mesh = _resource_manager.mesh_cache.load<MeshImporteur>(
+				_resource_manager.gen_id(), "meshes/common/cube.obj");
+			renderer.shader = _resource_manager.system_resources.basic_shader;
+		}
+		{
+			const auto platform = this->registry_.create();
+
+			auto &meta = this->registry_.emplace<CMetaData>(platform);
+			auto &transform = this->registry_.emplace<Transform>(platform);
+			auto &renderer = this->registry_.emplace<CMeshRenderer>(platform);
+
+			meta.name = "Platform";
+			transform.position.y = -1.f;
+			transform.scale *= 3.f;
+
+			renderer.texture = _resource_manager.system_resources.checkerboard_texture;
+			renderer.mesh = _resource_manager.mesh_cache.load<MeshImporteur>(
+				_resource_manager.gen_id(), "meshes/common/platform.obj");
+			renderer.shader = _resource_manager.system_resources.basic_shader;
+		}
+
 	}
 } // namespace dce

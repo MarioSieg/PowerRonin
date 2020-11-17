@@ -36,12 +36,12 @@ namespace dce::platform {
 		static constexpr std::string_view TITLE = "Dreamcast Engine";
 
 		/* Kernel events */
-		virtual auto on_pre_startup(State & /*_state*/) -> bool override;
-		virtual auto on_post_startup(State & /*unused*/) -> bool override;
-		virtual auto on_pre_tick(State & /*unused*/) -> bool override;
-		virtual auto on_post_tick(State & /*unused*/) -> bool override;
-		virtual auto on_pre_shutdown(State & /*unused*/) -> bool override;
-		virtual auto on_post_shutdown(State & /*unused*/) -> bool override;
+		virtual auto on_pre_startup([[maybe_unused]] State & /*_state*/) -> bool override;
+		virtual auto on_post_startup([[maybe_unused]] State & /*unused*/) -> bool override;
+		virtual auto on_pre_tick([[maybe_unused]] State & /*unused*/) -> bool override;
+		virtual auto on_post_tick([[maybe_unused]] State & /*unused*/) -> bool override;
+		virtual auto on_pre_shutdown([[maybe_unused]] State & /*unused*/) -> bool override;
+		virtual auto on_post_shutdown([[maybe_unused]] State & /*unused*/) -> bool override;
 
 		/* Main handles */
 		void *window_ = nullptr;

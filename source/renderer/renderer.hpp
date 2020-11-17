@@ -18,7 +18,7 @@ extern const float *VIEW, *PROJ;
 
 namespace dce {
 	class CMeshRenderer;
-	class CTransform;
+	class Transform;
 
 	namespace renderer {
 
