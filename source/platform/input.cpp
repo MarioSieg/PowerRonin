@@ -10,7 +10,6 @@
 #include "input.hpp"
 #include "callback_hooks.hpp"
 #include "platform_headers.hpp"
-#include "math.h"
 #include "../gui/gui_headers.hpp"
 #include <limits>
 

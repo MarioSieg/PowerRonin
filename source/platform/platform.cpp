@@ -8,7 +8,6 @@
 // Created: 15.11.2020 21:36
 
 #include "platform.hpp"
-#include "../../extern/infoware/include/infoware/infoware.hpp"
 #include "../../include/dce/config.hpp"
 #include "../../include/dce/env.hpp"
 #include <cmath>

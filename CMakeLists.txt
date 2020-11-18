@@ -92,8 +92,7 @@ add_library(
     "source/gui/file_dialog_tool.hpp"
     "source/gui/file_dialog_tool.cpp" 
     "source/gui/widgets/ram_editor.hpp" 
-    "source/flycam.hpp" 
-    "source/flycam.cpp" 
+    "include/dce/flycam.hpp" 
     "include/dce/chrono.hpp" 
     "source/sysclock.hpp" 
     "source/sysclock.cpp" 
@@ -119,11 +118,13 @@ add_library(
     "source/gui/widgets/inspector.hpp"
     "source/gui/widgets/inspector.cpp" 
     "include/dce/input.hpp" 
+    "source/input.cpp" 
     "source/physics/physics.hpp" 
     "source/physics/physics.cpp" 
     "include/dce/collider.hpp" 
     "include/dce/rigidbody.hpp" 
-    "source/physics/physics_headers.hpp" )
+    "source/physics/physics_headers.hpp"
+    "source/flycam.cpp")
 
 include("extern/CMakeLists.txt")
 

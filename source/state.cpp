@@ -66,6 +66,14 @@ namespace dce {
 		return this->scenery_;
 	}
 
+	auto State::input() const & noexcept -> const Input& {
+		return this->input_;
+	}
+
+	auto State::input() & noexcept -> Input& {
+		return this->input_;
+	}
+
 	void State::start() {
 		this->command_db_.install_common_commands();
 		this->importeur_.load_system_resources();

@@ -14,7 +14,7 @@
 #include "texture.hpp"
 
 namespace dce {
-	class CMeshRenderer final {
+	class MeshRenderer final {
 	public:
 		RRef<Mesh> mesh = {};
 		RRef<Shader> shader = {};

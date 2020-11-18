@@ -29,8 +29,8 @@ namespace dce::gui::widgets {
 			}
 			const auto footer_height_to_reserve = GetStyle().ItemSpacing.y + GetFrameHeightWithSpacing();
 			[[likely]] if (BeginChild("", {.0, -footer_height_to_reserve}, false)) {
-				[[likely]] if (_registry.has<CMetaData>(_entity)) {
-					auto &meta = _registry.get<CMetaData>(_entity);
+				[[likely]] if (_registry.has<MetaData>(_entity)) {
+					auto &meta = _registry.get<MetaData>(_entity);
 					[[likely]] if (CollapsingHeader(ICON_FA_COGS " Metadata")) {
 						std::strncpy(this->string_buffer_.data(), meta.name.data(), BUFFER_SIZE);
 						if (InputText("Name", this->string_buffer_.data(), BUFFER_SIZE)) {

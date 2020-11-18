@@ -87,7 +87,7 @@ namespace dce::renderer {
 		bgfx::setViewTransform(_view_id, value_ptr(_view), value_ptr(_proj));
 	}
 
-	void GPU::render_mesh(const Transform &_transform, const CMeshRenderer &_renderer) const {
+	void GPU::render_mesh(const Transform &_transform, const MeshRenderer &_renderer) const {
 		this->set_states();
 		this->set_transform(_transform);
 		this->set_mesh(_renderer.mesh);

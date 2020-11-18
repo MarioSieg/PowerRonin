@@ -47,14 +47,14 @@ namespace dce::renderer {
 	auto Renderer::on_post_tick(State &_state) -> bool {
 		this->gpu_.sort_drawcalls();
 		{
-			this->fly_cam_.update(static_cast<float>(_state.chrono().delta_time));
+			this->fly_cam_.update(_state);
 			VIEW = value_ptr(this->fly_cam_.get_view_matrix());
 			PROJ = value_ptr(this->fly_cam_.get_projection_matrix());
 			this->gpu_.set_camera(this->fly_cam_.get_view_matrix(), this->fly_cam_.get_projection_matrix());
 
 			auto &registry = _state.scenery().registry();
-			registry.view<Transform, CMeshRenderer>().each(
-				[&gpu = this->gpu_](Transform &_transform, CMeshRenderer &_mesh_renderer) {
+			registry.view<Transform, MeshRenderer>().each(
+				[&gpu = this->gpu_](Transform &_transform, MeshRenderer &_mesh_renderer) {
 					[[likely]] if (_mesh_renderer.is_visible) {
 						gpu.render_mesh(_transform, _mesh_renderer);
 					}

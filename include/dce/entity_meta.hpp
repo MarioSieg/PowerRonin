@@ -13,7 +13,7 @@
 
 namespace dce {
 	/* Base metadata component for entities. */
-	class CMetaData final {
+	class MetaData final {
 	public:
 		std::string name = {};
 		std::string description = {};

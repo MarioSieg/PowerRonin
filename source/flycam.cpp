@@ -5,10 +5,10 @@
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 15.11.2020 21:36
+// Created: 18.11.2020 13:48
 
-#include "flycam.hpp"
-#include "gui/gui_headers.hpp"
+#include "../../include/dce/flycam.hpp"
+#include "../../include/dce/state.hpp"
 
 namespace dce {
 
@@ -36,21 +36,24 @@ namespace dce {
 		this->eye_ = _position;
 	}
 
-	void FlyCam::update(const float _delta_time) {
-		auto &io = ImGui::GetIO();
-		const auto mouse = ImGui::GetMousePos();
+	void FlyCam::update(const State &_state) {
+		const auto &input = _state.input();
+		const auto mouse = input.get_mouse_position();
+		const auto viewport_x = _state.config().display.width;
+		const auto viewport_y = _state.config().display.height;
+		const auto delta_time = static_cast<float>(_state.chrono().delta_time);
 
-		const float speed = io.KeyMods & ImGuiKeyModFlags_Shift ? this->fast_move_speed : this->move_speed;
+		const float speed = this->move_speed;
 
-		[[unlikely]] if (ImGui::IsMouseDown(ImGuiMouseButton_Right)) {
+		[[unlikely]] if (input.is_mouse_button_down(MouseButton::RIGHT)) {
 
 			const auto delta_x = mouse.x - this->mouse_prev_.x;
 			const auto delta_y = mouse.y - this->mouse_prev_.y;
 
-			this->mouse_angles_.x += delta_x * sensitivity * _delta_time;
-			this->mouse_angles_.y -= delta_y * sensitivity * _delta_time;
+			this->mouse_angles_.x += delta_x * sensitivity * delta_time;
+			this->mouse_angles_.y -= delta_y * sensitivity * delta_time;
 
-			Vec3 dir = {
+			this->dir_ = {
 				math::cos(math::radians(this->mouse_angles_.y)) * math::sin(math::radians(this->mouse_angles_.x))
 				, math::sin(math::radians(this->mouse_angles_.y))
 				, math::cos(math::radians(this->mouse_angles_.y)) * math::cos(math::radians(this->mouse_angles_.x))
@@ -59,33 +62,34 @@ namespace dce {
 			this->mouse_prev_.x = mouse.x;
 			this->mouse_prev_.y = mouse.y;
 
-			this->forward_ = normalize(dir);
-			this->left_ = normalize(cross(this->forward_, this->up_));
-			this->at_ = this->eye_ + dir;
 		}
 		else {
 			mouse_prev_.x = mouse.x;
 			mouse_prev_.y = mouse.y;
 		}
 
-		[[unlikely]] if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_UpArrow))) {
-			this->eye_ += Vec3{speed * _delta_time} * this->forward_;
+		this->forward_ = normalize(this->dir_);
+		this->left_ = normalize(cross(this->forward_, this->up_));
+		this->at_ = this->eye_ + dir_;
+
+		[[unlikely]] if (input.is_key_down(Key::W)) {
+			this->eye_ += Vec3{speed * delta_time} * this->forward_;
 		}
 
-		[[unlikely]] if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_DownArrow))) {
-			this->eye_ -= Vec3{speed * _delta_time} * this->forward_;
+		[[unlikely]] if (input.is_key_down(Key::A)) {
+			this->eye_ += Vec3{speed * delta_time} * this->left_;
 		}
 
-		[[unlikely]] if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftArrow))) {
-			this->eye_ += Vec3{speed * _delta_time} * this->left_;
+		[[unlikely]] if (input.is_key_down(Key::S)) {
+			this->eye_ -= Vec3{speed * delta_time} * this->forward_;
 		}
 
-		[[unlikely]] if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_RightArrow))) {
-			this->eye_ -= Vec3{speed * _delta_time} * this->left_;
+		[[unlikely]] if (input.is_key_down(Key::D)) {
+			this->eye_ -= Vec3{speed * delta_time} * this->left_;
 		}
 
 		this->view_ = lookAtLH(this->eye_, this->at_, this->up_);
-		this->proj_ = math::perspectiveFovLH<float>(math::radians(this->fov), io.DisplaySize.x, io.DisplaySize.y
-		                                            , this->near_clip, this->far_clip);
+		this->proj_ = math::perspectiveFovLH<float>(math::radians(this->fov), viewport_x, viewport_y, this->near_clip
+		                                            , this->far_clip);
 	}
 }

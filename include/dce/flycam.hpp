@@ -9,10 +9,12 @@
 
 #pragma once
 
-#include "../include/dce/mathlib.hpp"
+#include "mathlib.hpp"
 
 namespace dce {
-	/* Helper class for a flying editor camera. */
+	class State;
+
+	/* Header only helper class for a flying editor camera. */
 	class FlyCam final {
 	public:
 		float move_speed = 3.f;
@@ -34,7 +36,7 @@ namespace dce {
 
 		[[nodiscard]] auto get_upwards_vector() const noexcept -> const Vec3&;
 
-		void update(const float _delta_time);
+		void update(const State &_state);
 
 	private:
 		Matrix4x4 view_ = {};
@@ -44,6 +46,7 @@ namespace dce {
 		Vec3 up_ = {.0f, 1.f, .0f};
 		Vec3 forward_ = {};
 		Vec3 left_ = {};
+		Vec3 dir_ = {.0f, .0f, 1.f};
 		Vec2 mouse_prev_ = {};
 		Vec2 mouse_angles_ = {};
 	};

@@ -18,7 +18,7 @@
 
 namespace dce {
 	class Transform;
-	class CMeshRenderer;
+	class MeshRenderer;
 	class Diagnostics;
 	class Config;
 	class AsyncProtocol;
@@ -54,7 +54,7 @@ namespace dce::renderer {
 		void set_camera(const Matrix4x4 &_view, const Matrix4x4 &_proj, const std::uint8_t _view_id = 0) const noexcept;
 
 		/* High level mesh renderer. */
-		void render_mesh(const Transform &_transform, const CMeshRenderer &_renderer) const;
+		void render_mesh(const Transform &_transform, const MeshRenderer &_renderer) const;
 
 		/* Set mesh world transform matrix. */
 		void set_transform(const Transform &_transform) const noexcept;

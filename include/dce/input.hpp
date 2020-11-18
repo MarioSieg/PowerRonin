@@ -10,15 +10,9 @@
 #pragma once
 
 #include <cstdint>
+#include "mathlib.hpp"
 
 namespace dce {
-	/* Represents a mouse or key press action. */
-	enum class Action : std::uint_fast8_t {
-		RELEASE = 0
-		, PRESS = 1
-		, REPEAT = 2
-	};
-
 	/* Represents a keyboard key. */
 	enum class Key : std::int_fast16_t {
 		UNKNOWN = - 1
@@ -148,5 +142,23 @@ namespace dce {
 		, RIGHT_ALT = 346
 		, RIGHT_SUPER = 347
 		, MENU = 348
+	};
+
+	/* Represents a mouse button. */
+	enum class MouseButton : std::uint_fast8_t {
+		LEFT = 0
+		, RIGHT = 1
+		, MIDDLE = 2
+		,
+	};
+
+	/* Contains input methods and helpers. */
+	class Input final {
+	public:
+		[[nodiscard]] auto is_key_down(const Key _key) const noexcept -> bool;
+
+		[[nodiscard]] auto is_mouse_button_down(const MouseButton _mb) const noexcept -> bool;
+
+		[[nodiscard]] auto get_mouse_position() const noexcept -> Vec2;
 	};
 }

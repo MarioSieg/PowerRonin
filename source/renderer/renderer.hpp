@@ -10,14 +10,14 @@
 #pragma once
 
 #include "../../include/dce/core/kernel.hpp"
-#include "../flycam.hpp"
+#include "../../include/dce/flycam.hpp"
 #include "gpu.hpp"
 
 // UGLYY AAAA
 extern const float *VIEW, *PROJ;
 
 namespace dce {
-	class CMeshRenderer;
+	class MeshRenderer;
 	class Transform;
 
 	namespace renderer {

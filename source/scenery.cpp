@@ -26,9 +26,9 @@ namespace dce {
 		{
 			const auto cube = this->registry_.create();
 
-			auto &meta = this->registry_.emplace<CMetaData>(cube);
+			auto &meta = this->registry_.emplace<MetaData>(cube);
 			[[maybe_unused]] auto &transform = this->registry_.emplace<Transform>(cube);
-			auto &renderer = this->registry_.emplace<CMeshRenderer>(cube);
+			auto &renderer = this->registry_.emplace<MeshRenderer>(cube);
 			[[maybe_unused]] auto &collider = this->registry_.emplace<Collider>(cube);
 			[[maybe_unused]] auto &rigidbody = this->registry_.emplace<Rigidbody>(cube);
 
@@ -42,9 +42,9 @@ namespace dce {
 		{
 			const auto platform = this->registry_.create();
 
-			auto &meta = this->registry_.emplace<CMetaData>(platform);
+			auto &meta = this->registry_.emplace<MetaData>(platform);
 			auto &transform = this->registry_.emplace<Transform>(platform);
-			auto &renderer = this->registry_.emplace<CMeshRenderer>(platform);
+			auto &renderer = this->registry_.emplace<MeshRenderer>(platform);
 
 			meta.name = "Platform";
 			transform.position.y = -1.f;
