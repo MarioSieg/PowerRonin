@@ -83,15 +83,15 @@ namespace dce::renderer {
 		bgfx::frame();
 	}
 
-	void GPU::set_camera(const Matrix4x4 &_view, const Matrix4x4 &_proj, const std::uint8_t _view_id) const noexcept {
+	void GPU::set_camera(const Matrix4x4<> &_view, const Matrix4x4<> &_proj, const std::uint8_t _view_id) const noexcept {
 		bgfx::setViewTransform(_view_id, value_ptr(_view), value_ptr(_proj));
 	}
 
 	void GPU::render_mesh(const Transform &_transform, const MeshRenderer &_renderer) const {
 		this->set_states();
+		this->set_texture("s_texColor", _renderer.shader, _renderer.texture);
 		this->set_transform(_transform);
 		this->set_mesh(_renderer.mesh);
-		this->set_texture(_renderer.shader->get_sampler_id(), _renderer.texture);
 		this->submit(_renderer.shader);
 	}
 
@@ -109,11 +109,14 @@ namespace dce::renderer {
 		setIndexBuffer(ib_id);
 	}
 
-	void GPU::set_texture(const std::uint16_t _sampler, const RRef<Texture> &_texture) const noexcept {
+	void GPU::set_texture(const std::string_view _sampler_uniform, const RRef<Shader> &_shader
+	                      , const RRef<Texture> &_texture) const noexcept {
 		assert(_texture->is_uploaded());
 		const auto texture_handle = bgfx::TextureHandle{_texture->get_texel_buffer_id()};
 		assert(bgfx::isValid(texture_handle));
-		const auto sampler_handle = bgfx::UniformHandle{_sampler};
+		const auto [type, id] = _shader->get_uniforms().at(_sampler_uniform);
+		assert(type == UniformType::SAMPLER);
+		const auto sampler_handle = bgfx::UniformHandle{id};
 		assert(bgfx::isValid(sampler_handle));
 		setTexture(0, sampler_handle, texture_handle);
 	}

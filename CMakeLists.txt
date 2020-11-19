@@ -87,8 +87,8 @@ add_library(
     "include/dce/blob.hpp"
     "source/blob.cpp" 
     "source/resource.cpp" 
-    "source/gui/widgets/shader_merger.hpp" 
-    "source/gui/widgets/shader_merger.cpp" 
+     
+     
     "source/gui/file_dialog_tool.hpp"
     "source/gui/file_dialog_tool.cpp" 
     "source/gui/widgets/ram_editor.hpp" 
@@ -124,7 +124,7 @@ add_library(
     "include/dce/collider.hpp" 
     "include/dce/rigidbody.hpp" 
     "source/physics/physics_headers.hpp"
-    "source/flycam.cpp")
+    "source/flycam.cpp" "include/dce/light.hpp")
 
 include("extern/CMakeLists.txt")
 

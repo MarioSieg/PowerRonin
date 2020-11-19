@@ -13,12 +13,60 @@
 #include <fstream>
 
 namespace dce {
+	void Shader::set_uniform(const std::string_view _name, const Matrix3x3<> &_value) const noexcept {
+		assert(this->volatile_upload_data_.uniforms.contains(_name));
+		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
+		assert(bgfx::isValid(handle));
+		setUniform(handle, value_ptr(_value));
+	}
+
+	void Shader::set_uniform(const std::string_view _name, const Matrix4x4<> &_value) const noexcept {
+		assert(this->volatile_upload_data_.uniforms.contains(_name));
+		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
+		assert(bgfx::isValid(handle));
+		setUniform(handle, value_ptr(_value));
+	}
+
+	void Shader::set_uniform(const std::string_view _name, const Vector4<> &_value) const noexcept {
+		assert(this->volatile_upload_data_.uniforms.contains(_name));
+		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
+		assert(bgfx::isValid(handle));
+		setUniform(handle, value_ptr(_value));
+	}
+
+	void Shader::set_uniform(const std::string_view _name, const float ( &_value)[4]) const noexcept {
+		assert(this->volatile_upload_data_.uniforms.contains(_name));
+		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
+		assert(bgfx::isValid(handle));
+		setUniform(handle, &*_value);
+	}
+
+	void Shader::set_uniform(const std::string_view _name, const float ( &_value)[9]) const noexcept {
+		assert(this->volatile_upload_data_.uniforms.contains(_name));
+		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
+		assert(bgfx::isValid(handle));
+		setUniform(handle, &*_value);
+	}
+
+	void Shader::set_uniform(const std::string_view _name, const float ( &_value)[16]) const noexcept {
+		assert(this->volatile_upload_data_.uniforms.contains(_name));
+		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
+		assert(bgfx::isValid(handle));
+		setUniform(handle, &*_value);
+	}
+
+	auto Shader::get_uniform_handle(const std::string_view _name) const noexcept -> std::uint16_t {
+		assert(this->volatile_upload_data_.uniforms.contains(_name));
+		return std::get<1>(this->volatile_upload_data_.uniforms.at(_name));
+	}
+
 	void Shader::upload() {
-		if (this->uploaded_) {
+		[[unlikely]] if (this->uploaded_) {
 			this->offload();
 		}
 
-		if (this->vertex_shader_bytecode_.empty() || this->fragment_shader_bytecode_.empty()) {
+		[[unlikely]] if (this->vertex_shader_bytecode_.empty() || this->fragment_shader_bytecode_ && (*this->
+			fragment_shader_bytecode_).empty()) {
 			throw std::runtime_error("Failed to upload shader!");
 		}
 
@@ -26,111 +74,116 @@ namespace dce {
 		                                         , static_cast<std::uint32_t>(this->vertex_shader_bytecode_.size() * sizeof(
 			                                         std::byte)), nullptr, nullptr);
 
-		if (!vs_mem) {
+		[[unlikely]] if (!vs_mem) {
 			throw std::runtime_error("Failed to upload shader!");
 		}
 
 		const bgfx::ShaderHandle vs = createShader(vs_mem);
-		if (!isValid(vs)) {
+		[[unlikely]] if (!isValid(vs)) {
 			throw std::runtime_error("Failed to upload shader!");
 		}
 
-		const auto *const fs_mem = bgfx::makeRef(this->fragment_shader_bytecode_.data()
-		                                         , static_cast<std::uint32_t>(this->fragment_shader_bytecode_.size() * sizeof(
-			                                         std::byte)), nullptr, nullptr);
+		auto fs = bgfx::ShaderHandle{bgfx::kInvalidHandle};
 
-		if (!fs_mem) {
-			throw std::runtime_error("Failed to upload shader!");
-		}
+		[[likely]] if (this->fragment_shader_bytecode_) {
 
-		const bgfx::ShaderHandle fs = createShader(fs_mem);
-		if (!isValid(fs)) {
-			throw std::runtime_error("Failed to upload shader!");
+			const auto *const fs_mem = bgfx::makeRef((*this->fragment_shader_bytecode_).data()
+			                                         , static_cast<std::uint32_t>((*this->fragment_shader_bytecode_).size() *
+				                                         sizeof(std::byte)), nullptr, nullptr);
+
+			[[unlikely]] if (!fs_mem) {
+				throw std::runtime_error("Failed to upload shader!");
+			}
+
+			fs = createShader(fs_mem);
+			[[unlikely]] if (!isValid(fs)) {
+				throw std::runtime_error("Failed to upload shader!");
+			}
+
 		}
 
 		const bgfx::ProgramHandle shader = createProgram(vs, fs, true);
-		if (!isValid(shader)) {
+		[[unlikely]] if (!isValid(shader)) {
 			throw std::runtime_error("Failed to upload shader!");
 		}
 
-		const bgfx::UniformHandle sampler_uniform = createUniform("s_texColor", bgfx::UniformType::Sampler);
-		if (!isValid(sampler_uniform)) {
-			throw std::runtime_error("Failed to upload shader!");
+		for (auto &[key, value] : this->volatile_upload_data_.uniforms) {
+			[[unlikely]] if (key.empty()) {
+				throw std::runtime_error("Failed to upload shader!");
+			}
+			bgfx::UniformType::Enum type = bgfx::UniformType::Sampler;
+			switch (std::get<0>(value)) {
+			case UniformType::SAMPLER: type = bgfx::UniformType::Sampler;
+				break;
+			case UniformType::VEC_4: type = bgfx::UniformType::Vec4;
+				break;
+			case UniformType::MATRIX_3x3: type = bgfx::UniformType::Mat3;
+				break;
+			case UniformType::MATRIX_4x4: type = bgfx::UniformType::Mat4;
+				break;
+			}
+			const auto uniform_handle = createUniform(key.data(), type);
+			[[unlikely]] if (!isValid(uniform_handle)) {
+				throw std::runtime_error("Failed to upload shader!");
+			}
+			std::get<1>(value) = uniform_handle.idx;
 		}
 
 		this->volatile_upload_data_.program_id = shader.idx;
-		this->volatile_upload_data_.sampler_uniform_id = sampler_uniform.idx;
 
 		this->uploaded_ = true;
 	}
 
 	void Shader::offload() {
-		destroy(bgfx::ProgramHandle{this->volatile_upload_data_.program_id});
-		destroy(bgfx::UniformHandle{this->volatile_upload_data_.sampler_uniform_id});
+		const auto program_handle = bgfx::ProgramHandle{this->volatile_upload_data_.program_id};
+		[[likely]] if (isValid(program_handle)) {
+			destroy(program_handle);
+		}
+		this->volatile_upload_data_.program_id = bgfx::kInvalidHandle;
+
+		for (auto &uniform : this->volatile_upload_data_.uniforms) {
+			const auto uniform_handle = bgfx::UniformHandle{std::get<1>(uniform.second)};
+			[[likely]] if (isValid(uniform_handle)) {
+				destroy(uniform_handle);
+				std::get<1>(uniform.second) = bgfx::kInvalidHandle;
+			}
+		}
 		this->uploaded_ = false;
 	}
 
-	auto Shader::combine_shader_files(const std::filesystem::path &_vs_path, const std::filesystem::path &_fs_path
-	                                  , const std::filesystem::path &_target) -> bool {
-		const Blob vs = blob_from_disk(_vs_path);
-		if (vs.empty()) {
-			return false;
-		}
-		const Blob fs = blob_from_disk(_fs_path);
-		if (fs.empty()) {
-			return false;
-		}
+	auto ShaderImporteur::load(std::filesystem::path &&_path
+	                           , std::unordered_map<std::string_view, std::tuple<UniformType, std::uint16_t>> &&_uniforms) const
+	-> std::shared_ptr<Shader> {
 
-		std::ofstream stream(_target, std::ios::binary | std::ios::out);
-		if (!stream) {
-			return false;
-		}
-
-		const auto vs_bytes_count = static_cast<std::uint64_t>(vs.size());
-		const auto fs_bytes_count = static_cast<std::uint64_t>(fs.size());
-
-		stream.write(reinterpret_cast<const char * const>(&vs_bytes_count), sizeof(std::uint64_t));
-		stream.write(reinterpret_cast<const char * const>(&fs_bytes_count), sizeof(std::uint64_t));
-		stream.write(reinterpret_cast<const char * const>(vs.data()), vs_bytes_count * sizeof(std::byte));
-		stream.write(reinterpret_cast<const char * const>(fs.data()), fs_bytes_count * sizeof(std::byte));
-
-		return true;
-	}
-
-	auto ShaderImporteur::load(std::filesystem::path &&_path) const -> std::shared_ptr<Shader> {
-		std::ifstream stream(_path, std::ios::in | std::ios::binary);
-		if (!stream) {
-			throw std::runtime_error("Failed to load shader from file!");
-		}
-		std::uint64_t vs_bytes_count = 0;
-		std::uint64_t fs_bytes_count = 0;
-
-		stream.read(reinterpret_cast<char * const>(&vs_bytes_count), sizeof(std::uint64_t));
-		stream.read(reinterpret_cast<char * const>(&fs_bytes_count), sizeof(std::uint64_t));
-
-		if (!vs_bytes_count || !fs_bytes_count) {
+		[[unlikely]] if (_path.extension() != Shader::FILE_EXTENSIONS[0]) {
 			throw std::runtime_error("Failed to load shader from file!");
 		}
 
-		std::vector<std::byte> vs_bytecode = {};
-		vs_bytecode.resize(vs_bytes_count / sizeof(std::byte));
-		stream.read(reinterpret_cast<char * const>(vs_bytecode.data()), vs_bytes_count * sizeof(std::byte));
-		if (!stream) {
+		const std::ifstream stream(_path, std::ios::in | std::ios::binary);
+		[[unlikely]] if (!stream) {
 			throw std::runtime_error("Failed to load shader from file!");
 		}
 
-		std::vector<std::byte> fs_bytecode = {};
-		fs_bytecode.resize(fs_bytes_count / sizeof(std::byte));
-		stream.read(reinterpret_cast<char * const>(fs_bytecode.data()), fs_bytes_count * sizeof(std::byte));
-		if (!stream) {
+		Blob vs_bytecode = blob_from_disk(_path);
+		[[unlikely]] if (vs_bytecode.empty()) {
 			throw std::runtime_error("Failed to load shader from file!");
+		}
+
+		Blob fs_bytecode = {};
+		const auto fragment_file = _path.replace_filename("fragment.shc");
+		[[likely]] if (is_regular_file(fragment_file)) {
+			fs_bytecode = blob_from_disk(fragment_file);
 		}
 
 		auto self = IResource::allocate<Shader>();
 		self->file_path_ = std::move(_path);
 		self->vertex_shader_bytecode_ = std::move(vs_bytecode);
+		self->volatile_upload_data_.uniforms = std::move(_uniforms);
 		self->vertex_shader_textcode_ = std::nullopt;
-		self->fragment_shader_bytecode_ = std::move(fs_bytecode);
+		self->fragment_shader_bytecode_ = std::nullopt;
+		[[likely]] if (!fs_bytecode.empty()) {
+			self->fragment_shader_bytecode_ = std::move(fs_bytecode);
+		}
 		self->fragment_shader_textcode_ = std::nullopt;
 
 		self->upload();

@@ -73,10 +73,31 @@ namespace dce::gui::widgets {
 						BeginTooltip();
 						TextUnformatted(_shader->is_uploaded() ? "Uploaded: yes" : "Uploaded: no");
 						const auto vs_size = _shader->get_vertex_shader_bytecode().size() * sizeof(std::byte);
-						const auto fs_size = _shader->get_fragment_shader_bytecode().size() * sizeof(std::byte);
 						Text("Vertex Shader Size: %zuB", vs_size);
-						Text("Fragment Shader Size: %zuB", fs_size);
+						std::size_t fs_size = 0;
+						[[likely]] if (_shader->get_fragment_shader_bytecode()) {
+							fs_size = (*_shader->get_fragment_shader_bytecode()).size() * sizeof(std::byte);
+							Text("Fragment Shader Size: %zuB", fs_size);
+						}
 						Text("Total Size: %zuB", vs_size + fs_size);
+						Text("Uniforms: %zu", _shader->get_uniforms().size());
+						Separator();
+						for (const auto &uniform : _shader->get_uniforms()) {
+							TextUnformatted(uniform.first.data());
+							SameLine();
+							const char *type = "";
+							switch (std::get<0>(uniform.second)) {
+							default: case UniformType::SAMPLER: type = ": Sampler";
+								break;
+							case UniformType::MATRIX_3x3: type = ": Matrix3x3";
+								break;
+							case UniformType::MATRIX_4x4: type = ": Matrix4x4";
+								break;
+							case UniformType::VEC_4: type = ": Vector4";
+								break;
+							}
+							TextUnformatted(type);
+						}
 						EndTooltip();
 					}
 					Separator();

@@ -73,7 +73,7 @@ namespace dce::core {
 			proto.info("\tTypename: {}", name);
 			proto.info("\tHash: {:#x}", hash);
 			proto.info("\tName: {}", sys->name);
-			proto.info("\tEventmask: {:#08b}", sys->subscribed_events);
+			proto.info("\tMask: {:#08b}", sys->subscribed_events);
 		}
 		/* Invoke "on_pre_startup()" on all subsystems, which have this event registered. */
 		for (auto sys = this->core->services.begin(); sys != this->core->services.end(); ++sys) {
@@ -142,7 +142,7 @@ namespace dce::core {
 		std::uint_fast32_t cycles = 0;
 
 		// Tick proc:
-		auto tick = [&]()-> bool {
+		auto tick = [&]() mutable -> bool {
 			++cycles;
 
 			/* Invoke "on_pre_tick()" on all subsystems, which have this event registered. */

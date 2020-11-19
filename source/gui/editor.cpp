@@ -18,6 +18,7 @@ using namespace ImGui;
 namespace dce::gui {
 
 	void Editor::initialize([[maybe_unused]] State &_state) {
+		this->inspector_.initialize();
 		this->memory_editor_.OptShowDataPreview = true;
 	}
 
@@ -38,12 +39,9 @@ namespace dce::gui {
 			this->profiler_.update(this->show_profiler_, _state.diagnostics(), _state.chrono());
 		}
 
-		[[unlikely]] if (this->show_shader_merger_) {
-			this->shader_merger_.update(this->show_shader_merger_, _state.protocol());
-		}
-
 		[[likely]] if (this->show_inspector_) {
-			this->inspector_.update(this->show_inspector_, _state.scenery().registry(), this->hierarchy_.get_selected());
+			this->inspector_.update(this->show_inspector_, _state.scenery().registry(), _state.resource_manager()
+			                        , this->hierarchy_.get_selected());
 		}
 
 		[[unlikely]] if (this->memory_editor_.Open) {
@@ -76,9 +74,6 @@ namespace dce::gui {
 				}
 				if (MenuItem(ICON_FA_CLOCK " Profiler")) {
 					this->show_profiler_ = true;
-				}
-				if (MenuItem(ICON_FA_EYE " Shader Merger")) {
-					this->show_shader_merger_ = true;
 				}
 				if (MenuItem(ICON_FA_SITEMAP " Hierarchy")) {
 					this->show_hierarchy_viewer_ = true;

@@ -1,6 +1,6 @@
-$input v_texcoord0, v_normal
+$input v_texcoord0
 
-#include "../common.shader"
+#include "../../common.shader"
 
 SAMPLER2D(s_texColor,  0);
 

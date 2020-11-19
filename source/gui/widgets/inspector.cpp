@@ -11,6 +11,8 @@
 #include "../gui_headers.hpp"
 #include "../font_headers.hpp"
 #include "../../include/dce/comcollections.hpp"
+#include "../../include/dce/resource_manager.hpp"
+#include "../file_dialog_tool.hpp"
 
 using namespace ImGui;
 
@@ -19,7 +21,11 @@ extern const float *VIEW, *PROJ;
 
 namespace dce::gui::widgets {
 
-	void Inspector::update(bool &_show, Registry &_registry, const ERef _entity) {
+	void Inspector::initialize() {
+		this->current_path_ = std::filesystem::current_path().string();
+	}
+
+	void Inspector::update(bool &_show, Registry &_registry, ResourceManager &_resource_manager, const ERef _entity) {
 		SetNextWindowSize({300, 800}, ImGuiCond_FirstUseEver);
 		[[likely]] if (Begin(ICON_FA_SLIDERS_H " Inspector", &_show)) {
 			[[unlikely]] if (!_registry.valid(_entity)) {
@@ -68,7 +74,7 @@ namespace dce::gui::widgets {
 						[[unlikely]] if (Button(ICON_FA_EXPAND)) {
 							this->modifier_ = ImGuizmo::SCALE;
 						}
-
+						/*
 						Separator();
 
 						DragFloat3("Position", value_ptr(transform.position));
@@ -85,7 +91,7 @@ namespace dce::gui::widgets {
 						}
 
 						DragFloat3("Scale ", value_ptr(transform.scale));
-
+						*/
 						auto matrix = transform.calculate_matrix();
 						ImGuizmo::Enable(true);
 						ImGuizmo::BeginFrame();
@@ -95,6 +101,23 @@ namespace dce::gui::widgets {
 							glm::vec3 skew;
 							glm::vec4 perspective;
 							decompose(matrix, transform.scale, transform.rotation, transform.position, skew, perspective);
+						}
+					}
+				}
+				[[likely]] if (_registry.has<MeshRenderer>(_entity)) {
+					auto &renderer = _registry.get<MeshRenderer>(_entity);
+					[[likely]] if (CollapsingHeader(ICON_FA_CUBE " Mesh Renderer")) {
+						Checkbox("Visible", &renderer.is_visible);
+						const auto file_name = renderer.mesh->get_file_path().filename().string();
+						TextUnformatted(file_name.c_str());
+						SameLine();
+						if (SmallButton(ICON_FA_FOLDER_OPEN "##mesh")) {
+							char *path = nullptr;
+							open_file_dialog(path, MESH_FILE_FILTER, this->current_path_.c_str());
+							[[likely]] if (path) {
+								renderer.mesh = _resource_manager.mesh_cache.load<MeshImporteur>(
+									_resource_manager.gen_id(), path);
+							}
 						}
 					}
 				}

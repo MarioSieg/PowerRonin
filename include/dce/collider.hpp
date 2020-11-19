@@ -18,7 +18,7 @@ namespace dce {
 		union ColliderData {
 			/* Box collider data. */
 			struct {
-				Vec3 half_extents;
+				Vector3<> half_extents;
 			} box = {};
 
 			/* Sphere collider data. */

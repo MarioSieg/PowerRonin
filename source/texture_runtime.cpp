@@ -18,28 +18,28 @@
 
 namespace dce {
 	void Texture::upload() {
-		if (this->uploaded_) {
+		[[unlikely]] if (this->uploaded_) {
 			this->offload();
 		}
 
-		if (this->texels_.empty() || this->width_ == 0u || this->height_ == 0u) {
+		[[unlikely]] if (this->texels_.empty() || this->width_ == 0u || this->height_ == 0u) {
 			throw std::runtime_error("Failed to upload texture!");
 		}
 
 		const auto format = static_cast<bgfx::TextureFormat::Enum>(this->format_);
 
 		const auto *const mem = bgfx::makeRef(this->texels_.data(), static_cast<std::uint32_t>(this->size_), nullptr, nullptr);
-		if (mem == nullptr) {
+		[[unlikely]] if (mem == nullptr) {
 			throw std::runtime_error("Failed to upload texture!");
 		}
 
-		if (!isTextureValid(1, false, 1, format, BGFX_TEXTURE_NONE)) {
+		[[unlikely]] if (!isTextureValid(1, false, 1, format, BGFX_TEXTURE_NONE)) {
 			throw std::runtime_error("Failed to upload texture!");
 		}
 
 		const bgfx::TextureHandle texture_handle = createTexture2D(this->width_, this->height_, this->mipmap_count_ > 1, 0
 		                                                           , format, 0, mem);
-		if (!isValid(texture_handle)) {
+		[[unlikely]] if (!isValid(texture_handle)) {
 			throw std::runtime_error("Failed to upload texture!");
 		}
 
@@ -49,7 +49,11 @@ namespace dce {
 	}
 
 	void Texture::offload() {
-		destroy(bgfx::TextureHandle{this->volatile_upload_data_.gpu_buffer_id});
+		const auto texture_handle = bgfx::TextureHandle{this->volatile_upload_data_.gpu_buffer_id};
+		[[likely]] if (isValid(texture_handle)) {
+			destroy(texture_handle);
+			this->volatile_upload_data_.gpu_buffer_id = bgfx::kInvalidHandle;
+		}
 		this->uploaded_ = false;
 	}
 
@@ -58,10 +62,10 @@ namespace dce {
 		auto self = IResource::allocate<Texture>();
 
 		const auto ext = _path.extension();
-		if (ext == ".dds" || ext == ".ktx") {
+		[[likely]] if (ext == ".dds" || ext == ".ktx") {
 
 			Blob blob = blob_from_disk(_path);
-			if (blob.empty()) {
+			[[unlikely]] if (blob.empty()) {
 				throw std::runtime_error("Failed to load texture from file!");
 			}
 
@@ -71,7 +75,7 @@ namespace dce {
 				                                                          , static_cast<std::uint32_t>(blob.size()), nullptr)
 				                                    : bimg::imageParseKtx(&allocator, blob.data()
 				                                                          , static_cast<std::uint32_t>(blob.size()), nullptr);
-			if (!image) {
+			[[unlikely]] if (!image) {
 				throw std::runtime_error("Failed to load texture from file!");
 			}
 
@@ -101,7 +105,7 @@ namespace dce {
 			//stbi_set_flip_vertically_on_load_thread(true);
 			unsigned char *image_data = stbi_load(_path.string().c_str(), &width, &height, &channels, STBI_rgb_alpha);
 
-			if (image_data == nullptr || width == 0 || height == 0) {
+			[[unlikely]] if (image_data == nullptr || width == 0 || height == 0) {
 				throw std::runtime_error("Failed to load texture from file!");
 			}
 

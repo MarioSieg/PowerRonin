@@ -34,53 +34,53 @@ namespace dce {
 		auto separator() -> AsyncProtocol&;
 
 		template <typename T>
-		auto log(LogLevel level, T &&msg) -> AsyncProtocol&;
+		auto log(LogLevel _level, T &&_msg) -> AsyncProtocol&;
 
 		template <typename T, typename... Q>
-		auto log(LogLevel level, T &&msg, Q &&... args) -> AsyncProtocol&;
+		auto log(LogLevel _level, T &&_msg, Q &&... _args) -> AsyncProtocol&;
 
 		template <typename T>
-		auto trace(T &&msg) -> AsyncProtocol&;
+		auto trace(T &&_msg) -> AsyncProtocol&;
 
 		template <typename T, typename ...Q>
-		auto trace(T &&msg, Q &&... args) -> AsyncProtocol&;
+		auto trace(T &&_msg, Q &&... _args) -> AsyncProtocol&;
 
 		template <typename T>
-		auto debug(T &&msg) -> AsyncProtocol&;
+		auto debug(T &&_msg) -> AsyncProtocol&;
 
 		template <typename T, typename ...Q>
-		auto debug(T &&msg, Q &&... args) -> AsyncProtocol&;
+		auto debug(T &&_msg, Q &&... _args) -> AsyncProtocol&;
 
 		template <typename T>
-		auto info(T &&msg) -> AsyncProtocol&;
+		auto info(T &&_msg) -> AsyncProtocol&;
 
 		template <typename T, typename ...Q>
-		auto info(T &&msg, Q &&... args) -> AsyncProtocol&;
+		auto info(T &&_msg, Q &&... _args) -> AsyncProtocol&;
 
 		template <typename T>
-		auto warn(T &&msg) -> AsyncProtocol&;
+		auto warn(T &&_msg) -> AsyncProtocol&;
 
 		template <typename T, typename ...Q>
-		auto warn(T &&msg, Q &&... args) -> AsyncProtocol&;
+		auto warn(T &&_msg, Q &&... _args) -> AsyncProtocol&;
 
 		template <typename T>
-		auto error(T &&msg) -> AsyncProtocol&;
+		auto error(T &&_msg) -> AsyncProtocol&;
 
 		template <typename T, typename ...Q>
-		auto error(T &&msg, Q &&... args) -> AsyncProtocol&;
+		auto error(T &&_msg, Q &&... _args) -> AsyncProtocol&;
 
 		template <typename T>
-		auto critical(T &&msg) -> AsyncProtocol&;
+		auto critical(T &&_msg) -> AsyncProtocol&;
 
 		template <typename T, typename ...Q>
-		auto critical(T &&msg, Q &&... args) -> AsyncProtocol&;
+		auto critical(T &&_msg, Q &&... _args) -> AsyncProtocol&;
 
 		[[nodiscard]] auto sink_to_file() const noexcept -> const spdlog::sink_ptr&;
 
 		[[nodiscard]] auto sink_to_terminal() const noexcept -> const spdlog::sink_ptr&;
 
 		AsyncProtocol();
-		explicit AsyncProtocol(const std::string &name);
+		explicit AsyncProtocol(const std::string &_name);
 		AsyncProtocol(const AsyncProtocol &) noexcept = default;
 		AsyncProtocol(AsyncProtocol &&) noexcept = default;
 		auto operator=(const AsyncProtocol &) noexcept -> AsyncProtocol& = default;
@@ -99,75 +99,75 @@ namespace dce {
 	}
 
 	template <typename T>
-	auto AsyncProtocol::log(const LogLevel level, T &&msg) -> AsyncProtocol& {
-		this->core->log(spdlog::source_loc{}, static_cast<spdlog::level::level_enum>(level), msg);
+	auto AsyncProtocol::log(const LogLevel _level, T &&_msg) -> AsyncProtocol& {
+		this->core->log(spdlog::source_loc{}, static_cast<spdlog::level::level_enum>(_level), _msg);
 		return *this;
 	}
 
 	template <typename T, typename... Q>
-	auto AsyncProtocol::log(const LogLevel level, T &&msg, Q &&... args) -> AsyncProtocol& {
-		this->core->log(spdlog::source_loc{}, static_cast<spdlog::level::level_enum>(level), msg, args...);
+	auto AsyncProtocol::log(const LogLevel _level, T &&_msg, Q &&... _args) -> AsyncProtocol& {
+		this->core->log(spdlog::source_loc{}, static_cast<spdlog::level::level_enum>(_level), _msg, _args...);
 		return *this;
 	}
 
 	template <typename T>
-	auto AsyncProtocol::trace(T &&msg) -> AsyncProtocol& {
-		return this->log(LogLevel::TRACE, msg);
+	auto AsyncProtocol::trace(T &&_msg) -> AsyncProtocol& {
+		return this->log(LogLevel::TRACE, _msg);
 	}
 
 	template <typename T, typename ...Q>
-	auto AsyncProtocol::trace(T &&msg, Q &&... args) -> AsyncProtocol& {
-		return this->log(LogLevel::TRACE, msg, args...);
+	auto AsyncProtocol::trace(T &&_msg, Q &&... _args) -> AsyncProtocol& {
+		return this->log(LogLevel::TRACE, _msg, _args...);
 	}
 
 	template <typename T>
-	auto AsyncProtocol::debug(T &&msg) -> AsyncProtocol& {
-		return this->log(LogLevel::DEBUG, msg);
+	auto AsyncProtocol::debug(T &&_msg) -> AsyncProtocol& {
+		return this->log(LogLevel::DEBUG, _msg);
 	}
 
 	template <typename T, typename ...Q>
-	auto AsyncProtocol::debug(T &&msg, Q &&... args) -> AsyncProtocol& {
-		return this->log(LogLevel::DEBUG, msg, args...);
+	auto AsyncProtocol::debug(T &&_msg, Q &&... _args) -> AsyncProtocol& {
+		return this->log(LogLevel::DEBUG, _msg, _args...);
 	}
 
 	template <typename T>
-	auto AsyncProtocol::info(T &&msg) -> AsyncProtocol& {
-		return this->log(LogLevel::INFO, msg);
+	auto AsyncProtocol::info(T &&_msg) -> AsyncProtocol& {
+		return this->log(LogLevel::INFO, _msg);
 	}
 
 	template <typename T, typename ...Q>
-	auto AsyncProtocol::info(T &&msg, Q &&... args) -> AsyncProtocol& {
-		return this->log(LogLevel::INFO, msg, args...);
+	auto AsyncProtocol::info(T &&_msg, Q &&... _args) -> AsyncProtocol& {
+		return this->log(LogLevel::INFO, _msg, _args...);
 	}
 
 	template <typename T>
-	auto AsyncProtocol::warn(T &&msg) -> AsyncProtocol& {
-		return this->log(LogLevel::WARN, msg);
+	auto AsyncProtocol::warn(T &&_msg) -> AsyncProtocol& {
+		return this->log(LogLevel::WARN, _msg);
 	}
 
 	template <typename T, typename ...Q>
-	auto AsyncProtocol::warn(T &&msg, Q &&... args) -> AsyncProtocol& {
-		return this->log(LogLevel::WARN, msg, args...);
+	auto AsyncProtocol::warn(T &&_msg, Q &&... _args) -> AsyncProtocol& {
+		return this->log(LogLevel::WARN, _msg, _args...);
 	}
 
 	template <typename T>
-	auto AsyncProtocol::error(T &&msg) -> AsyncProtocol& {
-		return this->log(LogLevel::ERROR, msg);
+	auto AsyncProtocol::error(T &&_msg) -> AsyncProtocol& {
+		return this->log(LogLevel::ERROR, _msg);
 	}
 
 	template <typename T, typename ...Q>
-	auto AsyncProtocol::error(T &&msg, Q &&... args) -> AsyncProtocol& {
-		return this->log(LogLevel::ERROR, msg, args...);
+	auto AsyncProtocol::error(T &&_msg, Q &&... _args) -> AsyncProtocol& {
+		return this->log(LogLevel::ERROR, _msg, _args...);
 	}
 
 	template <typename T>
-	auto AsyncProtocol::critical(T &&msg) -> AsyncProtocol& {
-		return this->log(LogLevel::CRITICAL, msg);
+	auto AsyncProtocol::critical(T &&_msg) -> AsyncProtocol& {
+		return this->log(LogLevel::CRITICAL, _msg);
 	}
 
 	template <typename T, typename ...Q>
-	auto AsyncProtocol::critical(T &&msg, Q &&... args) -> AsyncProtocol& {
-		return this->log(LogLevel::CRITICAL, msg, args...);
+	auto AsyncProtocol::critical(T &&_msg, Q &&... _args) -> AsyncProtocol& {
+		return this->log(LogLevel::CRITICAL, _msg, _args...);
 	}
 
 	inline auto AsyncProtocol::sink_to_file() const noexcept -> const spdlog::sink_ptr& {

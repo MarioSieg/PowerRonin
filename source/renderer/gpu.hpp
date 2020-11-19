@@ -51,7 +51,7 @@ namespace dce::renderer {
 		void end_frame() const noexcept;
 
 		/* Set camera matrices. */
-		void set_camera(const Matrix4x4 &_view, const Matrix4x4 &_proj, const std::uint8_t _view_id = 0) const noexcept;
+		void set_camera(const Matrix4x4<> &_view, const Matrix4x4<> &_proj, const std::uint8_t _view_id = 0) const noexcept;
 
 		/* High level mesh renderer. */
 		void render_mesh(const Transform &_transform, const MeshRenderer &_renderer) const;
@@ -63,7 +63,8 @@ namespace dce::renderer {
 		void set_mesh(const RRef<Mesh> &_mesh) const noexcept;
 
 		/* Set texture. */
-		void set_texture(const std::uint16_t _sampler, const RRef<Texture> &_texture) const noexcept;
+		void set_texture(const std::string_view _sampler_uniform, const RRef<Shader> &_shader
+		                 , const RRef<Texture> &_texture) const noexcept;
 
 		/* Render mesh. */
 		void submit(const RRef<Shader> &_shader, const std::uint8_t _view_id = 0) const noexcept;

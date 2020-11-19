@@ -1,5 +1,5 @@
 add_subdirectory("extern/spdlog/")
-target_link_libraries("dreamcast_runtime" "spdlog")
+target_link_libraries("dreamcast_runtime"  "spdlog")
 
 add_subdirectory("extern/glfw/")
 target_link_libraries("dreamcast_runtime" "glfw")

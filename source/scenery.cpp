@@ -34,10 +34,10 @@ namespace dce {
 
 			meta.name = "Cube";
 
-			renderer.texture = _resource_manager.system_resources.checkerboard_texture;
+			renderer.texture = _resource_manager.system_resources.textures.error_marker;
 			renderer.mesh = _resource_manager.mesh_cache.load<MeshImporteur>(
 				_resource_manager.gen_id(), "meshes/common/cube.obj");
-			renderer.shader = _resource_manager.system_resources.basic_shader;
+			renderer.shader = _resource_manager.system_resources.shaders.unlit;
 		}
 		{
 			const auto platform = this->registry_.create();
@@ -50,11 +50,16 @@ namespace dce {
 			transform.position.y = -1.f;
 			transform.scale *= 3.f;
 
-			renderer.texture = _resource_manager.system_resources.checkerboard_texture;
+			renderer.texture = _resource_manager.system_resources.textures.error_marker;
 			renderer.mesh = _resource_manager.mesh_cache.load<MeshImporteur>(
 				_resource_manager.gen_id(), "meshes/common/platform.obj");
-			renderer.shader = _resource_manager.system_resources.basic_shader;
+			renderer.shader = _resource_manager.system_resources.shaders.unlit;
 		}
+		{
+			const auto sun = this->registry_.create();
 
+			auto &transform = this->registry_.emplace<Transform>(sun);
+			auto &light = this->registry_.emplace<Light>(sun);
+		}
 	}
 } // namespace dce

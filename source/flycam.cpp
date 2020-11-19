@@ -12,27 +12,27 @@
 
 namespace dce {
 
-	auto FlyCam::get_projection_matrix() const noexcept -> const Matrix4x4& {
+	auto FlyCam::get_projection_matrix() const noexcept -> const Matrix4x4<>& {
 		return this->proj_;
 	}
 
-	auto FlyCam::get_view_matrix() const noexcept -> const Matrix4x4& {
+	auto FlyCam::get_view_matrix() const noexcept -> const Matrix4x4<>& {
 		return this->view_;
 	}
 
-	auto FlyCam::get_eye_vector() const noexcept -> const Vec3& {
+	auto FlyCam::get_eye_vector() const noexcept -> const Vector3<>& {
 		return this->eye_;
 	}
 
-	auto FlyCam::get_direction_vector() const noexcept -> const Vec3& {
+	auto FlyCam::get_direction_vector() const noexcept -> const Vector3<>& {
 		return this->at_;
 	}
 
-	auto FlyCam::get_upwards_vector() const noexcept -> const Vec3& {
+	auto FlyCam::get_upwards_vector() const noexcept -> const Vector3<>& {
 		return this->up_;
 	}
 
-	void FlyCam::set_position(const Vec3 &_position) noexcept {
+	void FlyCam::set_position(const Vector3<> &_position) noexcept {
 		this->eye_ = _position;
 	}
 
@@ -73,19 +73,19 @@ namespace dce {
 		this->at_ = this->eye_ + dir_;
 
 		[[unlikely]] if (input.is_key_down(Key::W)) {
-			this->eye_ += Vec3{speed * delta_time} * this->forward_;
+			this->eye_ += Vector3<>{speed * delta_time} * this->forward_;
 		}
 
 		[[unlikely]] if (input.is_key_down(Key::A)) {
-			this->eye_ += Vec3{speed * delta_time} * this->left_;
+			this->eye_ += Vector3<>{speed * delta_time} * this->left_;
 		}
 
 		[[unlikely]] if (input.is_key_down(Key::S)) {
-			this->eye_ -= Vec3{speed * delta_time} * this->forward_;
+			this->eye_ -= Vector3<>{speed * delta_time} * this->forward_;
 		}
 
 		[[unlikely]] if (input.is_key_down(Key::D)) {
-			this->eye_ -= Vec3{speed * delta_time} * this->left_;
+			this->eye_ -= Vector3<>{speed * delta_time} * this->left_;
 		}
 
 		this->view_ = lookAtLH(this->eye_, this->at_, this->up_);

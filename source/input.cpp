@@ -20,7 +20,7 @@ namespace dce {
 		return ImGui::IsMouseDown(static_cast<ImGuiMouseButton>(_mb));
 	}
 
-	auto Input::get_mouse_position() const noexcept -> Vec2 {
+	auto Input::get_mouse_position() const noexcept -> Vector2<> {
 		const auto position = ImGui::GetMousePos();
 		return {position.x, position.y};
 	}

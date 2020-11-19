@@ -18,14 +18,25 @@ namespace dce {
 	class ResourceManager final {
 		friend class State;
 	public:
-		struct {
-			RRef<Texture> black_texture = {};
-			RRef<Texture> white_texture = {};
-			RRef<Texture> invalid_texture = {};
-			RRef<Texture> checkerboard_texture = {};
-			RRef<Mesh> error_mesh = {};
-			RRef<Shader> basic_shader = {};
-		} system_resources = {};
+		struct SystemResources {
+
+			struct {
+				RRef<Texture> black_1x1 = {};
+				RRef<Texture> white_1x1 = {};
+				RRef<Texture> error_marker = {};
+				RRef<Texture> checkerboard = {};
+			} textures = {};
+
+			struct {
+				RRef<Mesh> error_text = {};
+				RRef<Mesh> cube = {};
+			} meshes = {};
+
+			struct {
+				RRef<Shader> unlit = {};
+				RRef<Shader> lambert = {};
+			} shaders = {};
+		} system_resources;
 
 		ResourceCache<Texture> texture_cache = {};
 		ResourceCache<Mesh> mesh_cache = {};

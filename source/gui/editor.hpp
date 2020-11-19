@@ -13,7 +13,6 @@
 
 #include "widgets/profiler.hpp"
 #include "widgets/resource_viewer.hpp"
-#include "widgets/shader_merger.hpp"
 #include "widgets/hierarchy.hpp"
 #include "widgets/inspector.hpp"
 
@@ -35,7 +34,6 @@ namespace dce {
 			/* Widgets: */
 			widgets::ResourceViewer resource_viewer_ = {};
 			widgets::Profiler profiler_ = {};
-			widgets::ShaderMerger shader_merger_ = {};
 			widgets::MemoryEditor memory_editor_ = {};
 			widgets::Hierarchy hierarchy_ = {};
 			widgets::Inspector inspector_ = {};
@@ -43,9 +41,8 @@ namespace dce {
 			bool show_menu_ = true;
 			bool show_resource_viewer_ = false;
 			bool show_profiler_ = false;
-			bool show_shader_merger_ = false;
-			bool show_hierarchy_viewer_ = false;
-			bool show_inspector_ = false;
+			bool show_hierarchy_viewer_ = true;
+			bool show_inspector_ = true;
 		};
 	}
 }
