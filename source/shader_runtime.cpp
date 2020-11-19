@@ -159,11 +159,6 @@ namespace dce {
 			throw std::runtime_error("Failed to load shader from file!");
 		}
 
-		const std::ifstream stream(_path, std::ios::in | std::ios::binary);
-		[[unlikely]] if (!stream) {
-			throw std::runtime_error("Failed to load shader from file!");
-		}
-
 		Blob vs_bytecode = blob_from_disk(_path);
 		[[unlikely]] if (vs_bytecode.empty()) {
 			throw std::runtime_error("Failed to load shader from file!");

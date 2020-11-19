@@ -11,7 +11,7 @@
 #include "../extern/assimp/include/assimp/Importer.hpp"
 #include "../extern/assimp/include/assimp/postprocess.h"
 #include "../extern/assimp/include/assimp/scene.h"
-#include "../extern/bgfx/bgfx/include/bgfx/bgfx.h"
+#include "renderer/gl_headers.hpp"
 
 namespace {
 	auto create_vertex_layout() -> bgfx::VertexLayout {
@@ -89,7 +89,7 @@ namespace dce {
 		Assimp::Importer importer;
 
 		constexpr unsigned flags = aiProcess_JoinIdenticalVertices | aiProcess_Triangulate | aiProcess_GenUVCoords |
-			aiProcess_GenSmoothNormals;
+			aiProcess_GenSmoothNormals | aiProcess_ConvertToLeftHanded;
 
 		/* We should add some flags here! */
 		const aiScene *const scene = importer.ReadFile(_path.string().c_str(), flags);

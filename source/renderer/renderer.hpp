@@ -11,6 +11,8 @@
 
 #include "../../include/dce/core/kernel.hpp"
 #include "../../include/dce/flycam.hpp"
+
+#include "shader_bucket.hpp"
 #include "gpu.hpp"
 
 // UGLYY AAAA
@@ -43,9 +45,10 @@ namespace dce {
 			virtual auto on_post_tick(State & /*unused*/) -> bool override;
 			virtual auto on_post_shutdown(State & /*unused*/) -> bool override;
 
-			FlyCam fly_cam_ = {};
 			std::uint64_t tick_prev_ = 0;
+			FlyCam fly_cam_ = {};
 			GPU gpu_ = {};
+			ShaderBucket shader_bucket_ = {};
 		};
 	} // namespace dce::renderer // namespace dce::renderer
 }

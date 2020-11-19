@@ -46,6 +46,5 @@ namespace dce {
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T> using Matrix4x4 = math::mat<
 		4, 4, T, math::defaultp>;
 
-	template <typename T = float>
-	template <auto N = 2> requires std::is_floating_point_v<T> || std::is_integral_v<T> using Color = Vector4<>;
+	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T> using Color = Vector4<T>;
 } // namespace dce

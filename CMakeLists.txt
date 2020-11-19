@@ -82,13 +82,11 @@ add_library(
     "include/dce/diagnostics.hpp" 
     "source/gui/scroll_roll_buffer.hpp" 
     "source/gui/scroll_roll_buffer.cpp" 
-    "include/dce/shader.hpp" 
+    "source/renderer/shader_bucket.hpp" 
     "source/shader.cpp" 
     "include/dce/blob.hpp"
     "source/blob.cpp" 
     "source/resource.cpp" 
-     
-     
     "source/gui/file_dialog_tool.hpp"
     "source/gui/file_dialog_tool.cpp" 
     "source/gui/widgets/ram_editor.hpp" 
@@ -124,7 +122,17 @@ add_library(
     "include/dce/collider.hpp" 
     "include/dce/rigidbody.hpp" 
     "source/physics/physics_headers.hpp"
-    "source/flycam.cpp" "include/dce/light.hpp")
+    "source/flycam.cpp" 
+    "include/dce/light.hpp" 
+    "include/dce/material.hpp" 
+    "source/renderer/shaders/unlit.hpp" 
+    "source/renderer/shaders/unlit.cpp" 
+    "source/renderer/shader_bucket.hpp" 
+    "source/renderer/program_loader.hpp" 
+    "source/renderer/program_loader.cpp" 
+    "source/renderer/ishader.hpp" 
+     
+    "source/renderer/shader_bucket.cpp")
 
 include("extern/CMakeLists.txt")
 

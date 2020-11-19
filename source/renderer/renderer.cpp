@@ -28,6 +28,8 @@ namespace dce::renderer {
 			return false;
 		}
 
+		this->shader_bucket_.load_all();
+
 		get_limits(const_cast<Diagnostics &>(_state.diagnostics()));
 
 		this->fly_cam_.set_position({0.0f, 0.0f, -5.0f});
@@ -53,18 +55,19 @@ namespace dce::renderer {
 			this->gpu_.set_camera(this->fly_cam_.get_view_matrix(), this->fly_cam_.get_projection_matrix());
 
 			auto &registry = _state.scenery().registry();
-			registry.view<Transform, MeshRenderer>().each(
-				[&gpu = this->gpu_](Transform &_transform, MeshRenderer &_mesh_renderer) {
-					[[likely]] if (_mesh_renderer.is_visible) {
-						gpu.render_mesh(_transform, _mesh_renderer);
-					}
-				});
+			registry.view<Transform, MeshRenderer>().each([this](Transform &_transform, MeshRenderer &_mesh_renderer) {
+				[[likely]] if (_mesh_renderer.is_visible) {
+					this->gpu_.set_transform(_transform);
+					this->shader_bucket_.render(this->gpu_, _mesh_renderer);
+				}
+			});
 		}
 		this->gpu_.end_frame();
 		return true;
 	}
 
 	auto Renderer::on_post_shutdown(State & /*unused*/) -> bool {
+		this->shader_bucket_.unload_all();
 		this->gpu_.shutdown_drivers();
 		return true;
 	}
