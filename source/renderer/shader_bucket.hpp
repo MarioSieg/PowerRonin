@@ -10,6 +10,7 @@
 #pragma once
 
 #include "shaders/unlit.hpp"
+#include "shaders/lambert.hpp"
 
 namespace dce::renderer {
 	enum class ShaderType {
@@ -17,13 +18,18 @@ namespace dce::renderer {
 		, LAMBERT
 	};
 
+	struct RenderParams final {
+		Vector4<> light_dir = {0, 1, 0, 1};
+	};
+
 	class ShaderBucket final {
 	public:
 		void load_all();
 		void unload_all();
-		void render(GPU &_gpu, const MeshRenderer &_renderer);
+		void render(GPU &_gpu, const MeshRenderer &_renderer, const RenderParams &_props);
 
 	private:
 		Unlit unlit_ = {};
+		Lambert lambert_ = {};
 	};
 }

@@ -30,11 +30,12 @@ namespace dce {
 			[[maybe_unused]] auto &transform = this->registry_.emplace<Transform>(cube);
 			auto &renderer = this->registry_.emplace<MeshRenderer>(cube);
 			[[maybe_unused]] auto &collider = this->registry_.emplace<Collider>(cube);
-			[[maybe_unused]] auto &rigidbody = this->registry_.emplace<Rigidbody>(cube);
 
 			meta.name = "Cube";
 
-			renderer.material.properties = Material::Unlit{_resource_manager.system_resources.textures.error_marker};
+			renderer.material.properties = Material::Lambert{
+				.albedo = _resource_manager.system_resources.textures.error_marker, .color = {1, 1, 1, 1}
+			};
 			renderer.mesh = _resource_manager.mesh_cache.load<MeshImporteur>(
 				_resource_manager.gen_id(), "meshes/common/cube.obj");
 		}
@@ -49,15 +50,11 @@ namespace dce {
 			transform.position.y = -1.f;
 			transform.scale *= 3.f;
 
-			renderer.material.properties = Material::Unlit{_resource_manager.system_resources.textures.error_marker};
+			renderer.material.properties = Material::Lambert{
+				.albedo = _resource_manager.system_resources.textures.error_marker, .color = {1, 1, 1, 1}
+			};
 			renderer.mesh = _resource_manager.mesh_cache.load<MeshImporteur>(
 				_resource_manager.gen_id(), "meshes/common/platform.obj");
-		}
-		{
-			const auto sun = this->registry_.create();
-
-			auto &transform = this->registry_.emplace<Transform>(sun);
-			auto &light = this->registry_.emplace<Light>(sun);
 		}
 	}
 } // namespace dce

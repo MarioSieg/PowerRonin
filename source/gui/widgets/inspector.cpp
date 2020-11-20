@@ -10,9 +10,11 @@
 #include "inspector.hpp"
 #include "../gui_headers.hpp"
 #include "../font_headers.hpp"
+#include "../utils.hpp"
 #include "../../include/dce/comcollections.hpp"
 #include "../../include/dce/resource_manager.hpp"
 #include "../file_dialog_tool.hpp"
+#include <variant>
 
 using namespace ImGui;
 
@@ -108,15 +110,30 @@ namespace dce::gui::widgets {
 					auto &renderer = _registry.get<MeshRenderer>(_entity);
 					[[likely]] if (CollapsingHeader(ICON_FA_CUBE " Mesh Renderer")) {
 						Checkbox("Visible", &renderer.is_visible);
+
 						const auto file_name = renderer.mesh->get_file_path().filename().string();
 						TextUnformatted(file_name.c_str());
 						SameLine();
-						if (SmallButton(ICON_FA_FOLDER_OPEN "##mesh")) {
+						TextUnformatted("Mesh");
+						SameLine();
+						if (embedded_button(ICON_FA_FOLDER_OPEN "##mesh")) {
 							char *path = nullptr;
 							open_file_dialog(path, MESH_FILE_FILTER, this->current_path_.c_str());
 							[[likely]] if (path) {
 								renderer.mesh = _resource_manager.mesh_cache.load<MeshImporteur>(
 									_resource_manager.gen_id(), path);
+							}
+						}
+
+						if (std::holds_alternative<Material::Unlit>(renderer.material.properties)) {
+							auto &props = std::get<Material::Unlit>(renderer.material.properties);
+							[[likely]] if (CollapsingHeader(ICON_FA_ADJUST " Unlit Material")) { }
+
+						}
+						else if (std::holds_alternative<Material::Lambert>(renderer.material.properties)) {
+							auto &props = std::get<Material::Lambert>(renderer.material.properties);
+							[[likely]] if (CollapsingHeader(ICON_FA_ADJUST " Lambert Material")) {
+								ColorPicker4("Diffuse", value_ptr(props.color), ImGuiColorEditFlags_PickerHueWheel);
 							}
 						}
 					}

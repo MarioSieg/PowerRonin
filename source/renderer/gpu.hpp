@@ -66,6 +66,25 @@ namespace dce::renderer {
 		void draw(const bgfx::ProgramHandle _shader, const bgfx::ViewId _view_id = 0
 		          , const std::uint8_t _depth = 0) const noexcept;
 
+		/* Set uniform. */
+		void set_uniform(const bgfx::UniformHandle _handle, const Vector4<> &_value) const noexcept;
+
+		/* Set uniform. */
+		void set_uniform(const bgfx::UniformHandle _handle, const Matrix3x3<> &_value) const noexcept;
+
+		/* Set uniform. */
+		void set_uniform(const bgfx::UniformHandle _handle, const Matrix4x4<> &_value) const noexcept;
+
+		/* Set uniform. */
+		void set_uniform(const bgfx::UniformHandle _handle, const float (&_value)[4]) const noexcept;
+
+		/* Set uniform. */
+		void set_uniform(const bgfx::UniformHandle _handle, const float (&_value)[9]) const noexcept;
+
+		/* Set uniform. */
+		void set_uniform(const bgfx::UniformHandle _handle, const float (&_value)[16]) const noexcept;
+
+
 	private:
 		std::uint16_t width_ = 0;
 		std::uint16_t height_ = 0;

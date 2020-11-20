@@ -130,9 +130,12 @@ add_library(
     "source/renderer/shader_bucket.hpp" 
     "source/renderer/program_loader.hpp" 
     "source/renderer/program_loader.cpp" 
-    "source/renderer/ishader.hpp" 
-     
-    "source/renderer/shader_bucket.cpp")
+    "source/renderer/ishader.hpp"  
+    "source/renderer/shader_bucket.cpp" 
+    "source/renderer/shaders/lambert.hpp"
+    "source/renderer/shaders/lambert.cpp" 
+    "include/dce/sun.hpp" 
+    "source/sun.cpp")
 
 include("extern/CMakeLists.txt")
 

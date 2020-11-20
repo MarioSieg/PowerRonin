@@ -15,7 +15,7 @@ namespace dce::renderer {
 
 	void Unlit::load() {
 		IShader::load();
-		this->u_s_tex_color_ = createUniform("s_texColor", bgfx::UniformType::Sampler);
+		this->u_s_tex_color_ = createUniform("s_tex_color", bgfx::UniformType::Sampler);
 	}
 
 	void Unlit::unload() {

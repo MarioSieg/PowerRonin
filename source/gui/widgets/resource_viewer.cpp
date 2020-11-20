@@ -64,6 +64,7 @@ namespace dce::gui::widgets {
 					Separator();
 				});
 			}
+			/*
 			[[likely]] if (CollapsingHeader(ICON_FA_EYE " Shaders")) {
 				_importeur.shader_cache.each([](const RRef<Shader> &_shader) {
 					TextUnformatted(ICON_FA_EYE);
@@ -103,6 +104,7 @@ namespace dce::gui::widgets {
 					Separator();
 				});
 			}
+			*/
 		}
 		End();
 	}

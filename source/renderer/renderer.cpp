@@ -58,7 +58,7 @@ namespace dce::renderer {
 			registry.view<Transform, MeshRenderer>().each([this](Transform &_transform, MeshRenderer &_mesh_renderer) {
 				[[likely]] if (_mesh_renderer.is_visible) {
 					this->gpu_.set_transform(_transform);
-					this->shader_bucket_.render(this->gpu_, _mesh_renderer);
+					this->shader_bucket_.render(this->gpu_, _mesh_renderer, this->render_params_);
 				}
 			});
 		}

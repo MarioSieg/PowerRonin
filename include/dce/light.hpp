@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include "mathlib.hpp"
+
 namespace dce {
 	class Light final {
 	public:
@@ -18,6 +20,7 @@ namespace dce {
 			, POINT
 		} type = Type::DIRECTIONAL;
 
+		Color<> color = {1.f, 1.f, 1.f, 1.f};
 		float intensity = 1.f;
 	};
 }

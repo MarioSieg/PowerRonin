@@ -12,7 +12,6 @@
 #include "mesh.hpp"
 #include "resource.hpp"
 #include "texture.hpp"
-#include "shader.hpp"
 
 namespace dce {
 	class ResourceManager final {
@@ -31,16 +30,10 @@ namespace dce {
 				RRef<Mesh> error_text = {};
 				RRef<Mesh> cube = {};
 			} meshes = {};
-
-			struct {
-				RRef<Shader> unlit = {};
-				RRef<Shader> lambert = {};
-			} shaders = {};
 		} system_resources;
 
 		ResourceCache<Texture> texture_cache = {};
 		ResourceCache<Mesh> mesh_cache = {};
-		ResourceCache<Shader> shader_cache = {};
 
 		[[nodiscard]] auto gen_id() noexcept -> std::uint32_t;
 		void load_system_resources();

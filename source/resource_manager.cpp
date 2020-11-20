@@ -23,12 +23,5 @@ namespace dce {
 		this->system_resources.meshes.error_text = this->mesh_cache.load<MeshImporteur>(
 			this->gen_id(), "meshes/common/invalid.obj");
 		this->system_resources.meshes.cube = this->mesh_cache.load<MeshImporteur>(this->gen_id(), "meshes/common/cube.obj");
-
-		std::unordered_map<std::string_view, std::tuple<UniformType, std::uint16_t>> uniforms = {
-			{"s_texColor", std::make_tuple(UniformType::SAMPLER, 0)}
-		};
-
-		this->system_resources.shaders.unlit = this->shader_cache.load<ShaderImporteur>(
-			this->gen_id(), "shaders/bin/unlit/dx11/vertex.shc", std::move(uniforms));
 	}
 } // namespace dce // namespace dce

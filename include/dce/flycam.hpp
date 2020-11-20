@@ -22,7 +22,7 @@ namespace dce {
 		float sensitivity = 100.f;
 		float fov = 80.0f;
 		float near_clip = 0.01f;
-		float far_clip = 100.0f;
+		float far_clip = 2000.0f;
 
 		[[nodiscard]] auto get_projection_matrix() const noexcept -> const Matrix4x4<>&;
 

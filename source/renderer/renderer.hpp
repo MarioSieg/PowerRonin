@@ -49,6 +49,7 @@ namespace dce {
 			FlyCam fly_cam_ = {};
 			GPU gpu_ = {};
 			ShaderBucket shader_bucket_ = {};
+			RenderParams render_params_ = {};
 		};
 	} // namespace dce::renderer // namespace dce::renderer
 }

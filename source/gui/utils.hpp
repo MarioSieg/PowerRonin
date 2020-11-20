@@ -82,4 +82,11 @@ namespace dce::gui {
 	inline auto is_mouse_over_area() noexcept -> bool {
 		return ImGui::IsAnyItemHovered() || ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow);
 	}
+
+	inline auto embedded_button(const char *const _txt) -> bool {
+		ImGui::PushStyleColor(ImGuiCol_Button, 0x00000000);
+		const auto result = ImGui::SmallButton(_txt);
+		ImGui::PopStyleColor();
+		return result;
+	}
 } // namespace dce::gui // namespace dce::gui

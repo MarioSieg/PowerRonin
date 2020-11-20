@@ -123,4 +123,28 @@ namespace dce::renderer {
 		bgfx::setState(states);
 		submit(_view_id, _shader, _depth);
 	}
+
+	void GPU::set_uniform(const bgfx::UniformHandle _handle, const Vector4<> &_value) const noexcept {
+		setUniform(_handle, value_ptr(_value));
+	}
+
+	void GPU::set_uniform(const bgfx::UniformHandle _handle, const Matrix3x3<> &_value) const noexcept {
+		setUniform(_handle, value_ptr(_value));
+	}
+
+	void GPU::set_uniform(const bgfx::UniformHandle _handle, const Matrix4x4<> &_value) const noexcept {
+		setUniform(_handle, value_ptr(_value));
+	}
+
+	void GPU::set_uniform(const bgfx::UniformHandle _handle, const float (&_value)[4]) const noexcept {
+		setUniform(_handle, &*_value);
+	}
+
+	void GPU::set_uniform(const bgfx::UniformHandle _handle, const float (&_value)[9]) const noexcept {
+		setUniform(_handle, &*_value);
+	}
+
+	void GPU::set_uniform(const bgfx::UniformHandle _handle, const float (&_value)[16]) const noexcept {
+		setUniform(_handle, &*_value);
+	}
 }

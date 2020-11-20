@@ -28,6 +28,11 @@ namespace dce {
 		std::string name = {};
 		std::string description = {};
 
+		struct {
+			float latitude = .0f;
+			float hour = 12.f;
+		} sun = {};
+
 		[[nodiscard]] auto registry() const noexcept -> const Registry&;
 
 		[[nodiscard]] auto registry() noexcept -> Registry&;
