@@ -30,13 +30,13 @@ namespace dce {
 
 		[[nodiscard]] auto get_eye_vector() const noexcept -> const Vector3<>&;
 
-		void set_position(const Vector3<> &_position) noexcept;
+		void set_position(const Vector3<>& _position) noexcept;
 
 		[[nodiscard]] auto get_direction_vector() const noexcept -> const Vector3<>&;
 
 		[[nodiscard]] auto get_upwards_vector() const noexcept -> const Vector3<>&;
 
-		void update(const State &_state);
+		void update(const State& _state);
 
 	private:
 		Matrix4x4<> view_ = {};

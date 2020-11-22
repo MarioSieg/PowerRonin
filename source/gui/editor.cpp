@@ -17,12 +17,12 @@ using namespace ImGui;
 
 namespace dce::gui {
 
-	void Editor::initialize([[maybe_unused]] State &_state) {
+	void Editor::initialize([[maybe_unused]] State& _state) {
 		this->inspector_.initialize();
 		this->memory_editor_.OptShowDataPreview = true;
 	}
 
-	void Editor::update(State &_state, bool &_show_terminal) {
+	void Editor::update(State& _state, bool& _show_terminal) {
 		[[likely]] if (this->show_menu_) {
 			this->main_menu(_show_terminal);
 		}
@@ -40,8 +40,7 @@ namespace dce::gui {
 		}
 
 		[[likely]] if (this->show_inspector_) {
-			this->inspector_.update(this->show_inspector_, _state.scenery().registry(), _state.resource_manager()
-			                        , this->hierarchy_.get_selected());
+			this->inspector_.update(this->show_inspector_, _state.scenery().registry(), _state.resource_manager(), this->hierarchy_.get_selected());
 		}
 
 		[[unlikely]] if (this->memory_editor_.Open) {
@@ -54,7 +53,7 @@ namespace dce::gui {
 
 	}
 
-	void Editor::main_menu(bool &_show_terminal) {
+	void Editor::main_menu(bool& _show_terminal) {
 		[[likely]] if (BeginMainMenuBar()) {
 			[[unlikely]] if (BeginMenu("File")) {
 				if (MenuItem("New")) {}

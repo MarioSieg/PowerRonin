@@ -12,7 +12,7 @@
 #include <fstream>
 
 namespace dce {
-	auto ISerializable::serialize_to_file(const std::filesystem::path &path) const -> bool {
+	auto ISerializable::serialize_to_file(const std::filesystem::path& path) const -> bool {
 		std::ofstream file(path);
 		if (!file) {
 			return false;
@@ -23,7 +23,7 @@ namespace dce {
 		return true;
 	}
 
-	auto ISerializable::deserialize_from_file(const std::filesystem::path &path) -> bool {
+	auto ISerializable::deserialize_from_file(const std::filesystem::path& path) -> bool {
 		std::ifstream file(path);
 		if (!file) {
 			return false;

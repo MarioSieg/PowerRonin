@@ -24,7 +24,7 @@ namespace dce::gui {
 		return this->buffer_;
 	}
 
-	void Terminal::update(bool &_show, State &_state) {
+	void Terminal::update(bool& _show, State& _state) {
 		SetNextWindowSize({800, 600}, ImGuiCond_FirstUseEver);
 		[[likely]] if (Begin(ICON_FA_TERMINAL " Terminal", &_show, ImGuiWindowFlags_NoScrollbar)) {
 			const auto footer_height_to_reserve = GetStyle().ItemSpacing.y + GetFrameHeightWithSpacing();
@@ -32,7 +32,7 @@ namespace dce::gui {
 				PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 1));
 
 				[[likely]] if (this->sink_ != nullptr) {
-					for (const auto &msg : sink_->string_buffer()) {
+					for (const auto& msg : sink_->string_buffer()) {
 						switch (std::get<1>(msg)) {
 							[[unlikely]] case LogLevel::ERROR: PushStyleColor(ImGuiCol_Text, COLOR_ERROR);
 							++this->error_messages_count_;
@@ -100,7 +100,7 @@ namespace dce::gui {
 
 			/* History button. */
 			{
-				const auto &history = _state.command_db().get_history();
+				const auto& history = _state.command_db().get_history();
 				PushStyleColor(ImGuiCol_Button, 0x00000000);
 				const bool history_forward = Button(ICON_FA_ARROW_UP);
 				[[unlikely]] if (IsItemHovered()) {
@@ -110,7 +110,7 @@ namespace dce::gui {
 				}
 				[[unlikely]] if (history_forward && !history.empty()) {
 					const auto i = std::clamp<std::size_t>(history.size() - this->history_index_ - 1, 0, history.size() - 1);
-					const auto &prev_command = history[i];
+					const auto& prev_command = history[i];
 					prev_command.copy(this->buffer_.data(), BUFFER_SIZE);
 					++this->history_index_;
 					if (this->history_index_ >= history.size()) {
@@ -139,12 +139,10 @@ namespace dce::gui {
 				[[unlikely]] if (get_input_ok) {
 					if (is_input_valid) {
 						auto dyn_str = std::string(this->buffer_.begin(), this->buffer_.end());
-						switch (auto &proto = _state.protocol(); _state.command_db().analyze_and_call(
-							_state, std::move(dyn_str))) {
+						switch (auto& proto = _state.protocol(); _state.command_db().analyze_and_call(_state, std::move(dyn_str))) {
 						case CommandExecutionResult::COMMAND_DOES_NOT_EXIST: proto.error("Command does not exist!");
 							break;
-						case CommandExecutionResult::ARGS_SEPARATOR_MISSING: proto.error(
-								"Missing '{}' as separator!", CmdDB::ARGUMENT_SEPARATOR);
+						case CommandExecutionResult::ARGS_SEPARATOR_MISSING: proto.error("Missing '{}' as separator!", CmdDB::ARGUMENT_SEPARATOR);
 							break;
 						case CommandExecutionResult::NO_ARGS_PROVIDED: proto.error("Missing arguments!");
 							break;
@@ -168,8 +166,8 @@ namespace dce::gui {
 		End();
 	}
 
-	auto Terminal::initialize(const spdlog::sink_ptr &_term_sink) noexcept -> bool {
-		this->sink_ = dynamic_cast<const TerminalSink<> *>(&*_term_sink);
+	auto Terminal::initialize(const spdlog::sink_ptr& _term_sink) noexcept -> bool {
+		this->sink_ = dynamic_cast<const TerminalSink<>*>(&*_term_sink);
 		return this->sink_ != nullptr;
 	}
 } // namespace dce::gui::widgets // namespace dce::gui::widgets

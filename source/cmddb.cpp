@@ -15,15 +15,15 @@
 
 namespace dce {
 
-	extern void register_common_commands(CmdDB &);
+	extern void register_common_commands(CmdDB&);
 
-	auto CmdDB::analyze_and_call(State &_state, std::string &&_in) -> CommandExecutionResult {
+	auto CmdDB::analyze_and_call(State& _state, std::string&& _in) -> CommandExecutionResult {
 		/* Add to history: */
 		this->history_.push_back(_in);
 
 		/* Search for existing command! */
 		std::string_view command = "";
-		for (const auto &[first, _] : this->commands_) {
+		for (const auto& [first, _] : this->commands_) {
 			if (_in.starts_with(first)) {
 				command = first;
 				break;
@@ -35,7 +35,7 @@ namespace dce {
 			return CommandExecutionResult::COMMAND_DOES_NOT_EXIST;
 		}
 
-		const auto &cmd = commands_[command];
+		const auto& cmd = commands_[command];
 
 		/* Remove command. */
 		_in.erase(0, command.size());
@@ -59,14 +59,14 @@ namespace dce {
 		return cmd(_state, std::move(_in)) ? CommandExecutionResult::OK : CommandExecutionResult::COMMAND_FUNCTOR_FAILED;
 	}
 
-	auto CmdDB::call(const std::string_view _command, State &_state, std::string &&_args) -> bool {
+	auto CmdDB::call(const std::string_view _command, State& _state, std::string&& _args) -> bool {
 		if (!commands_.contains(_command)) {
 			return false;
 		}
 		return commands_[_command](_state, std::move(_args));
 	}
 
-	auto CmdDB::register_command(const Command &_command) -> bool {
+	auto CmdDB::register_command(const Command& _command) -> bool {
 		if (commands_.contains(_command.token)) {
 			return false;
 		}
@@ -113,23 +113,23 @@ namespace dce {
 		register_common_commands(*this);
 	}
 
-	void register_common_commands(CmdDB &_cdb) {
+	void register_common_commands(CmdDB& _cdb) {
 		struct {
-			CmdDB &db;
+			CmdDB& db;
 
-			inline void operator+=(const Command &_cmd) const {
+			inline void operator+=(const Command& _cmd) const {
 				const auto _ = this->db.register_command(_cmd);
 			}
 		} registry = {_cdb};
 
 		/* help */
 		{
-			auto functor = [](State &state, [[maybe_unused]] std::string &&) -> bool {
-				auto &proto = state.protocol();
-				auto &db = state.command_db();
+			auto functor = [](State& state, [[maybe_unused]] std::string&&) -> bool {
+				auto& proto = state.protocol();
+				auto& db = state.command_db();
 				proto.separator();
 				proto.info("All registered commands ({}):", db.get_registry_map().size());
-				for (const auto &cmd : db.get_registry_map()) {
+				for (const auto& cmd : db.get_registry_map()) {
 					proto.info("\"{}\":", cmd.first);
 					proto.info("\tDescription: \"{}\"", cmd.second.help);
 					proto.info("\tRequires root: {}", cmd.second.requires_root);
@@ -138,16 +138,14 @@ namespace dce {
 				return true;
 			};
 
-			registry += Command{
-				.token = "help", .help = "Displays all registered commands with a short help message.", .functor = +functor,
-			};
+			registry += Command{.token = "help", .help = "Displays all registered commands with a short help message.", .functor = +functor,};
 		}
 
 		/* config */
 		{
-			auto functor = [](State &state, [[maybe_unused]] std::string &&) -> bool {
-				auto &proto = state.protocol();
-				const auto &cfg = state.config();
+			auto functor = [](State& state, [[maybe_unused]] std::string&&) -> bool {
+				auto& proto = state.protocol();
+				const auto& cfg = state.config();
 
 				proto.separator();
 				JsonStream stream;
@@ -164,7 +162,7 @@ namespace dce {
 
 		/* style */
 		{
-			auto functor = [ ]([[maybe_unused]] State &, std::string &&arg) -> bool {
+			auto functor = [ ]([[maybe_unused]] State&, std::string&& arg) -> bool {
 				[[likely]] if (arg.starts_with("dark")) {
 					gui::style_dark();
 				}
@@ -184,15 +182,12 @@ namespace dce {
 				return true;
 			};
 
-			registry += Command{
-				.token = "theme", .help = "Change the current theme of the system overlay.", .functor = +functor
-				, .requires_args = true,
-			};
+			registry += Command{.token = "theme", .help = "Change the current theme of the system overlay.", .functor = +functor, .requires_args = true,};
 		}
 
 		/* style_alpha */
 		{
-			auto functor = [ ]([[maybe_unused]] State &, std::string &&_arg) -> bool {
+			auto functor = [ ]([[maybe_unused]] State&, std::string&& _arg) -> bool {
 				float x = std::stof(_arg);
 
 				[[unlikely]] if (x == .0f) {
@@ -204,17 +199,14 @@ namespace dce {
 				return true;
 			};
 
-			registry += Command{
-				.token = "alpha", .help = "Changes transparency of the whole system overlay.", .functor = +functor
-				, .requires_args = true
-			};
+			registry += Command{.token = "alpha", .help = "Changes transparency of the whole system overlay.", .functor = +functor, .requires_args = true};
 		}
 
 		/* entity report */
 		{
-			auto functor = [ ](State &_state, [[maybe_unused]] std::string &&_arg) -> bool {
-				const auto &scene_registry = _state.scenery().registry();
-				auto &proto = _state.protocol();
+			auto functor = [ ](State& _state, [[maybe_unused]] std::string&& _arg) -> bool {
+				const auto& scene_registry = _state.scenery().registry();
+				auto& proto = _state.protocol();
 				proto.separator();
 				proto.info("{} entities registered:", scene_registry.size());
 				scene_registry.each([&](const ERef _entity) {
@@ -227,7 +219,7 @@ namespace dce {
 
 		/* reload system resources */
 		{
-			auto functor = [ ](State &_state, [[maybe_unused]] std::string &&_args) -> bool {
+			auto functor = [ ](State& _state, [[maybe_unused]] std::string&& _args) -> bool {
 				_state.resource_manager().load_system_resources();
 				return true;
 			};

@@ -11,7 +11,7 @@
 #include "../include/dce/json_impl.hpp"
 
 namespace dce {
-	auto Config::serialize(JsonStream &j) const -> bool {
+	auto Config::serialize(JsonStream& j) const -> bool {
 		j["display_width"] = this->display.width;
 		j["display_height"] = this->display.height;
 		j["display_fullscreen"] = this->display.full_screen;
@@ -25,7 +25,7 @@ namespace dce {
 		return true;
 	}
 
-	auto Config::deserialize(const JsonStream &j) -> bool {
+	auto Config::deserialize(const JsonStream& j) -> bool {
 		this->display.width = j["display_width"];
 		this->display.height = j["display_height"];
 		this->display.full_screen = j["display_fullscreen"];

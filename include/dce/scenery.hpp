@@ -34,14 +34,14 @@ namespace dce {
 				} sun;
 
 				Color<> const_ambient_color = rgba_to_rgba_norm(0xFFFFFFFF);
-			} lighting = {};
+			} lighting;
 		};
 
 		Scenery() = default;
-		Scenery(const Scenery &) = delete;
-		Scenery(Scenery &&) = delete;
-		auto operator=(const Scenery &) -> Scenery& = delete;
-		auto operator=(Scenery &&) -> Scenery& = delete;
+		Scenery(const Scenery&) = delete;
+		Scenery(Scenery&&) = delete;
+		auto operator=(const Scenery&) -> Scenery& = delete;
+		auto operator=(Scenery&&) -> Scenery& = delete;
 		~Scenery() = default;
 
 		std::string name = {};
@@ -55,6 +55,6 @@ namespace dce {
 	private:
 		Registry registry_ = {};
 		void initialize();
-		void new_default(ResourceManager &_resource_manager);
+		void new_default(ResourceManager& _resource_manager);
 	};
 } // namespace dce // namespace dce

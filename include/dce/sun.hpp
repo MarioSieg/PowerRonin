@@ -12,8 +12,7 @@
 #include "mathlib.hpp"
 
 namespace dce {
-	[[nodiscard]] extern auto calculate_sun_dir(float _hour, float _latitude, const float _delta, const Vector3<> &_up
-	                                            , const Vector3<> &_north) noexcept -> Vector3<>;
+	[[nodiscard]] extern auto calculate_sun_dir(float _hour, float _latitude, const float _delta, const Vector3<>& _up, const Vector3<>& _north) noexcept -> Vector3<>;
 
 	[[nodiscard]] extern auto calculate_sun_orbit(const float _month, const float _ecliptic_obliquity) noexcept -> float;
 }

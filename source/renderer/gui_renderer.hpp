@@ -21,11 +21,11 @@ namespace dce::renderer {
 		static constexpr std::uint16_t VIEW_ID = 0xFF;
 
 		auto initialize(std::uint8_t font_size) -> bool;
-		void render(const ImDrawData *data) const;
+		void render(const ImDrawData* data) const;
 		void shutdown() const;
 
 	private:
-		ImFont *font = nullptr;
+		ImFont* font = nullptr;
 		bgfx::VertexLayout layout = {};
 		bgfx::ProgramHandle gui_program = {bgfx::kInvalidHandle};
 		bgfx::ProgramHandle gui_image_program = {bgfx::kInvalidHandle};

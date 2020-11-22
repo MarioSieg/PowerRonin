@@ -57,10 +57,10 @@ namespace dce {
 		[[nodiscard]] auto input() & noexcept -> Input&;
 
 		State() = default;
-		State(const State &) = delete;
-		State(State &&) noexcept = delete;
-		auto operator=(const State &) -> State& = delete;
-		auto operator=(State &&) noexcept -> State& = delete;
+		State(const State&) = delete;
+		State(State&&) noexcept = delete;
+		auto operator=(const State&) -> State& = delete;
+		auto operator=(State&&) noexcept -> State& = delete;
 		virtual ~State() override = default;
 
 		virtual void start() override;

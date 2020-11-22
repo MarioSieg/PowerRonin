@@ -12,22 +12,24 @@
 #include "renderer/gl_headers.hpp"
 #include <fstream>
 
+#include "../include/dce/utils.hpp"
+
 namespace dce {
-	void Shader::set_uniform(const std::string_view _name, const Matrix3x3<> &_value) const noexcept {
+	void Shader::set_uniform(const std::string_view _name, const Matrix3x3<>& _value) const noexcept {
 		assert(this->volatile_upload_data_.uniforms.contains(_name));
 		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
 		assert(bgfx::isValid(handle));
 		setUniform(handle, value_ptr(_value));
 	}
 
-	void Shader::set_uniform(const std::string_view _name, const Matrix4x4<> &_value) const noexcept {
+	void Shader::set_uniform(const std::string_view _name, const Matrix4x4<>& _value) const noexcept {
 		assert(this->volatile_upload_data_.uniforms.contains(_name));
 		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
 		assert(bgfx::isValid(handle));
 		setUniform(handle, value_ptr(_value));
 	}
 
-	void Shader::set_uniform(const std::string_view _name, const Vector4<> &_value) const noexcept {
+	void Shader::set_uniform(const std::string_view _name, const Vector4<>& _value) const noexcept {
 		assert(this->volatile_upload_data_.uniforms.contains(_name));
 		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
 		assert(bgfx::isValid(handle));
@@ -65,51 +67,46 @@ namespace dce {
 			this->offload();
 		}
 
-		[[unlikely]] if (this->vertex_shader_bytecode_.empty() || this->fragment_shader_bytecode_ && (*this->
-			fragment_shader_bytecode_).empty()) {
-			throw std::runtime_error("Failed to upload shader!");
+		[[unlikely]] if (this->vertex_shader_bytecode_.empty() || this->fragment_shader_bytecode_ && (*this->fragment_shader_bytecode_).empty()) {
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload shader!");
 		}
 
-		const auto *const vs_mem = bgfx::makeRef(this->vertex_shader_bytecode_.data()
-		                                         , static_cast<std::uint32_t>(this->vertex_shader_bytecode_.size() * sizeof(
-			                                         std::byte)), nullptr, nullptr);
+		const auto* const vs_mem = bgfx::makeRef(this->vertex_shader_bytecode_.data(), static_cast<std::uint32_t>(this->vertex_shader_bytecode_.size() * sizeof(std::byte)), nullptr, nullptr);
 
 		[[unlikely]] if (!vs_mem) {
-			throw std::runtime_error("Failed to upload shader!");
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload shader!");
 		}
 
 		const bgfx::ShaderHandle vs = createShader(vs_mem);
 		[[unlikely]] if (!isValid(vs)) {
-			throw std::runtime_error("Failed to upload shader!");
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload shader!");
 		}
 
 		auto fs = bgfx::ShaderHandle{bgfx::kInvalidHandle};
 
 		[[likely]] if (this->fragment_shader_bytecode_) {
 
-			const auto *const fs_mem = bgfx::makeRef((*this->fragment_shader_bytecode_).data()
-			                                         , static_cast<std::uint32_t>((*this->fragment_shader_bytecode_).size() *
-				                                         sizeof(std::byte)), nullptr, nullptr);
+			const auto* const fs_mem = bgfx::makeRef((*this->fragment_shader_bytecode_).data(), static_cast<std::uint32_t>((*this->fragment_shader_bytecode_).size() * sizeof(std::byte)), nullptr, nullptr);
 
 			[[unlikely]] if (!fs_mem) {
-				throw std::runtime_error("Failed to upload shader!");
+				throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload shader!");
 			}
 
 			fs = createShader(fs_mem);
 			[[unlikely]] if (!isValid(fs)) {
-				throw std::runtime_error("Failed to upload shader!");
+				throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload shader!");
 			}
 
 		}
 
 		const bgfx::ProgramHandle shader = createProgram(vs, fs, true);
 		[[unlikely]] if (!isValid(shader)) {
-			throw std::runtime_error("Failed to upload shader!");
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload shader!");
 		}
 
-		for (auto &[key, value] : this->volatile_upload_data_.uniforms) {
+		for (auto& [key, value] : this->volatile_upload_data_.uniforms) {
 			[[unlikely]] if (key.empty()) {
-				throw std::runtime_error("Failed to upload shader!");
+				throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload shader!");
 			}
 			bgfx::UniformType::Enum type = bgfx::UniformType::Sampler;
 			switch (std::get<0>(value)) {
@@ -124,7 +121,7 @@ namespace dce {
 			}
 			const auto uniform_handle = createUniform(key.data(), type);
 			[[unlikely]] if (!isValid(uniform_handle)) {
-				throw std::runtime_error("Failed to upload shader!");
+				throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload shader!");
 			}
 			std::get<1>(value) = uniform_handle.idx;
 		}
@@ -141,7 +138,7 @@ namespace dce {
 		}
 		this->volatile_upload_data_.program_id = bgfx::kInvalidHandle;
 
-		for (auto &uniform : this->volatile_upload_data_.uniforms) {
+		for (auto& uniform : this->volatile_upload_data_.uniforms) {
 			const auto uniform_handle = bgfx::UniformHandle{std::get<1>(uniform.second)};
 			[[likely]] if (isValid(uniform_handle)) {
 				destroy(uniform_handle);
@@ -151,17 +148,15 @@ namespace dce {
 		this->uploaded_ = false;
 	}
 
-	auto ShaderImporteur::load(std::filesystem::path &&_path
-	                           , std::unordered_map<std::string_view, std::tuple<UniformType, std::uint16_t>> &&_uniforms) const
-	-> std::shared_ptr<Shader> {
+	auto ShaderImporteur::load(std::filesystem::path&& _path, std::unordered_map<std::string_view, std::tuple<UniformType, std::uint16_t>>&& _uniforms) const -> std::shared_ptr<Shader> {
 
 		[[unlikely]] if (_path.extension() != Shader::FILE_EXTENSIONS[0]) {
-			throw std::runtime_error("Failed to load shader from file!");
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load shader from file!");
 		}
 
 		Blob vs_bytecode = blob_from_disk(_path);
 		[[unlikely]] if (vs_bytecode.empty()) {
-			throw std::runtime_error("Failed to load shader from file!");
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load shader from file!");
 		}
 
 		Blob fs_bytecode = {};
@@ -186,7 +181,7 @@ namespace dce {
 		return self;
 	}
 
-	auto ShaderCompiler::load(std::filesystem::path &&_path) const -> std::shared_ptr<Shader> {
+	auto ShaderCompiler::load(std::filesystem::path&& _path) const -> std::shared_ptr<Shader> {
 
 		auto self = IResource::allocate<Shader>();
 		self->file_path_ = std::move(_path);

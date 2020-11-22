@@ -49,10 +49,10 @@ namespace dce {
 			const std::uint_fast16_t id;
 
 			/* Delete copy and move constructor and assignment operators */
-			ISubsystem(const ISubsystem &) = delete;
-			ISubsystem(ISubsystem &&) = delete;
-			auto operator=(const ISubsystem &) -> ISubsystem& = delete;
-			auto operator=(ISubsystem &&) -> ISubsystem& = delete;
+			ISubsystem(const ISubsystem&) = delete;
+			ISubsystem(ISubsystem&&) = delete;
+			auto operator=(const ISubsystem&) -> ISubsystem& = delete;
+			auto operator=(ISubsystem&&) -> ISubsystem& = delete;
 
 			/* Virtual destructor */
 			virtual ~ISubsystem() = default;
@@ -77,17 +77,17 @@ namespace dce {
 
 
 		protected:
-			[[nodiscard]] virtual auto on_pre_startup(State & /*unused*/) -> bool;
+			[[nodiscard]] virtual auto on_pre_startup(State& /*unused*/) -> bool;
 
-			[[nodiscard]] virtual auto on_post_startup(State & /*unused*/) -> bool;
+			[[nodiscard]] virtual auto on_post_startup(State& /*unused*/) -> bool;
 
-			[[nodiscard]] virtual auto on_pre_tick(State & /*unused*/) -> bool;
+			[[nodiscard]] virtual auto on_pre_tick(State& /*unused*/) -> bool;
 
-			[[nodiscard]] virtual auto on_post_tick(State & /*unused*/) -> bool;
+			[[nodiscard]] virtual auto on_post_tick(State& /*unused*/) -> bool;
 
-			[[nodiscard]] virtual auto on_pre_shutdown(State & /*unused*/) -> bool;
+			[[nodiscard]] virtual auto on_pre_shutdown(State& /*unused*/) -> bool;
 
-			[[nodiscard]] virtual auto on_post_shutdown(State & /*unused*/) -> bool;
+			[[nodiscard]] virtual auto on_post_shutdown(State& /*unused*/) -> bool;
 
 		private:
 			double pre_startup_time = 0.;

@@ -13,7 +13,7 @@
 #include "../../extern/bgfx/bgfx/include/bgfx/bgfx.h"
 
 namespace dce::renderer {
-	auto update_clocks(Chrono &_chrono, const std::uint64_t _prev) noexcept -> std::uint64_t {
+	auto update_clocks(Chrono& _chrono, const std::uint64_t _prev) noexcept -> std::uint64_t {
 		++_chrono.cycles;
 		const auto now = get_high_precision_counter();
 		const auto frame_time = now - _prev;
@@ -21,7 +21,7 @@ namespace dce::renderer {
 		_chrono.delta_time = static_cast<double>(frame_time) / _chrono.frequency;
 		_chrono.time += _chrono.delta_time;
 
-		const auto &stats = *bgfx::getStats();
+		const auto& stats = *bgfx::getStats();
 		_chrono.cpu_ms = 1000. / static_cast<double>(stats.cpuTimerFreq);
 		_chrono.gpu_ms = 1000. / static_cast<double>(stats.gpuTimerFreq);
 		_chrono.frame_ms = static_cast<double>(stats.cpuTimeFrame) * _chrono.cpu_ms;

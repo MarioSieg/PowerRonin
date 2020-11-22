@@ -12,7 +12,7 @@
 
 namespace dce::gui {
 	void style_dark() noexcept {
-		auto &style = ImGui::GetStyle();
+		auto& style = ImGui::GetStyle();
 		style.Colors[ImGuiCol_Text] = ImVec4(1.00F, 1.00F, 1.00F, 1.00F);
 		style.Colors[ImGuiCol_TextDisabled] = ImVec4(0.50F, 0.50F, 0.50F, 1.00F);
 		style.Colors[ImGuiCol_WindowBg] = ImVec4(0.06F, 0.06F, 0.06F, 0.94F);
@@ -63,7 +63,7 @@ namespace dce::gui {
 	}
 
 	void style_light() noexcept {
-		auto &style = ImGui::GetStyle();
+		auto& style = ImGui::GetStyle();
 		style.FrameRounding = 3.0F;
 		style.Colors[ImGuiCol_Text] = ImVec4(0.00F, 0.00F, 0.00F, 1.00F);
 		style.Colors[ImGuiCol_TextDisabled] = ImVec4(0.60F, 0.60F, 0.60F, 1.00F);
@@ -111,7 +111,7 @@ namespace dce::gui {
 	}
 
 	void style_cherry() noexcept {
-		auto &style = ImGui::GetStyle();
+		auto& style = ImGui::GetStyle();
 		style.Colors[ImGuiCol_Text] = ImVec4(0.860F, 0.930F, 0.890F, 0.78F);
 		style.Colors[ImGuiCol_TextDisabled] = ImVec4(0.860F, 0.930F, 0.890F, 0.28F);
 		style.Colors[ImGuiCol_WindowBg] = ImVec4(0.13F, 0.14F, 0.17F, 1.00F);
@@ -155,7 +155,7 @@ namespace dce::gui {
 	}
 
 	void style_blue() noexcept {
-		auto &style = ImGui::GetStyle();
+		auto& style = ImGui::GetStyle();
 		style.Colors[ImGuiCol_Text] = ImVec4(0.95F, 0.96F, 0.98F, 1.00F);
 		style.Colors[ImGuiCol_TextDisabled] = ImVec4(0.36F, 0.42F, 0.47F, 1.00F);
 		style.Colors[ImGuiCol_WindowBg] = ImVec4(0.11F, 0.15F, 0.17F, 1.00F);
@@ -207,7 +207,7 @@ namespace dce::gui {
 	}
 
 	void style_green() noexcept {
-		auto &style = ImGui::GetStyle();
+		auto& style = ImGui::GetStyle();
 		style.Colors[ImGuiCol_Text] = ImVec4(1.00F, 1.00F, 1.00F, 1.00F);
 		style.Colors[ImGuiCol_TextDisabled] = ImVec4(0.50F, 0.50F, 0.50F, 1.00F);
 		style.Colors[ImGuiCol_WindowBg] = ImVec4(0.29F, 0.34F, 0.26F, 1.00F);
@@ -261,19 +261,19 @@ namespace dce::gui {
 	}
 
 	void style_alpha_apply(const float alpha) noexcept {
-		auto &style = ImGui::GetStyle();
+		auto& style = ImGui::GetStyle();
 		style.Alpha = alpha;
 	}
 
 	void style_antialiasing_apply(const bool enable_aa) noexcept {
-		auto &style = ImGui::GetStyle();
+		auto& style = ImGui::GetStyle();
 		style.AntiAliasedFill = enable_aa;
 		style.AntiAliasedLines = enable_aa;
 		style.AntiAliasedLinesUseTex = enable_aa;
 	}
 
 	void style_rounding_apply(const float rounding) noexcept {
-		auto &style = ImGui::GetStyle();
+		auto& style = ImGui::GetStyle();
 		style.ChildRounding = rounding;
 		style.FrameRounding = rounding;
 		style.GrabRounding = rounding;

@@ -14,12 +14,12 @@
 namespace dce::renderer {
 	class Lambert final : public IShader<Material::Lambert> {
 	public:
-		explicit Lambert(GPU &_gpu) noexcept;
+		explicit Lambert(GPU& _gpu) noexcept;
 
 		virtual void load() override;
 		virtual void unload() override;
-		virtual void per_frame(const PerFrameBuffer &_buffer) override;
-		virtual void draw(const Mesh &_mesh, const Material::Lambert &_mat) override;
+		virtual void per_frame(const PerFrameBuffer& _buffer) override;
+		virtual void draw(const Mesh& _mesh, const Material::Lambert& _mat) override;
 
 	private:
 		bgfx::UniformHandle u_s_tex_color_ = {bgfx::kInvalidHandle};

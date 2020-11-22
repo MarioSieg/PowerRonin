@@ -23,11 +23,11 @@ namespace dce::renderer {
 	template <typename Material, typename... Args>
 	class IShader {
 	public:
-		explicit IShader(const std::string_view _name, GPU &_gpu) noexcept;
-		IShader(const IShader &) = delete;
-		IShader(IShader &&) = delete;
-		auto operator=(const IShader &) -> IShader& = delete;
-		auto operator=(IShader &&) -> IShader& = delete;
+		explicit IShader(const std::string_view _name, GPU& _gpu) noexcept;
+		IShader(const IShader&) = delete;
+		IShader(IShader&&) = delete;
+		auto operator=(const IShader&) -> IShader& = delete;
+		auto operator=(IShader&&) -> IShader& = delete;
 		virtual ~IShader() = default;
 
 		using MatParams = Material;
@@ -38,20 +38,20 @@ namespace dce::renderer {
 
 		virtual void load();
 		virtual void unload();
-		virtual void per_frame(const PerFrameBuffer &_buffer);
-		virtual void per_material(const PerMaterialBuffer &_buffer);
-		virtual void per_object(const PerObjectBuffer &_buffer);
-		virtual void draw(const Mesh &_mesh, const Material &_mat, Args ... _args) = 0;
+		virtual void per_frame(const PerFrameBuffer& _buffer);
+		virtual void per_material(const PerMaterialBuffer& _buffer);
+		virtual void per_object(const PerObjectBuffer& _buffer);
+		virtual void draw(const Mesh& _mesh, const Material& _mat, Args ... _args) = 0;
 
 	protected:
 		std::string_view name_ = {};
 		std::filesystem::path path_ = {};
-		GPU &gpu_;
+		GPU& gpu_;
 		bgfx::ProgramHandle program_ = {bgfx::kInvalidHandle};
 	};
 
 	template <typename Material, typename... Args>
-	inline IShader<Material, Args...>::IShader(const std::string_view _name, GPU &_gpu) noexcept : name_(_name), gpu_(_gpu) { }
+	inline IShader<Material, Args...>::IShader(const std::string_view _name, GPU& _gpu) noexcept : name_(_name), gpu_(_gpu) { }
 
 	template <typename Material, typename... Args>
 	inline auto IShader<Material, Args...>::get_name() const noexcept -> std::string_view {
@@ -74,11 +74,11 @@ namespace dce::renderer {
 	}
 
 	template <typename Material, typename ... Args>
-	inline void IShader<Material, Args...>::per_frame(const PerFrameBuffer &_buffer) { }
+	inline void IShader<Material, Args...>::per_frame(const PerFrameBuffer& _buffer) { }
 
 	template <typename Material, typename ... Args>
-	inline void IShader<Material, Args...>::per_material(const PerMaterialBuffer &_buffer) { }
+	inline void IShader<Material, Args...>::per_material(const PerMaterialBuffer& _buffer) { }
 
 	template <typename Material, typename ... Args>
-	inline void IShader<Material, Args...>::per_object(const PerObjectBuffer &_buffer) { }
+	inline void IShader<Material, Args...>::per_object(const PerObjectBuffer& _buffer) { }
 }

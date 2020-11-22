@@ -21,19 +21,19 @@ namespace dce::renderer {
 
 	class ShaderBucket final {
 	public:
-		explicit ShaderBucket(GPU &_gpu) noexcept;
-		ShaderBucket(const ShaderBucket &) = delete;
-		ShaderBucket(ShaderBucket &&) = delete;
-		auto operator=(const ShaderBucket &) = delete;
-		auto operator=(ShaderBucket &&) = delete;
+		explicit ShaderBucket(GPU& _gpu) noexcept;
+		ShaderBucket(const ShaderBucket&) = delete;
+		ShaderBucket(ShaderBucket&&) = delete;
+		auto operator=(const ShaderBucket&) = delete;
+		auto operator=(ShaderBucket&&) = delete;
 		~ShaderBucket() = default;
 
 		void load_all();
 		void unload_all();
-		void per_frame(const PerFrameBuffer &_buffer);
-		void per_material(const PerMaterialBuffer &_buffer);
-		void per_object(const PerObjectBuffer &_buffer);
-		void render(GPU &_gpu, const MeshRenderer &_renderer);
+		void per_frame(const PerFrameBuffer& _buffer);
+		void per_material(const PerMaterialBuffer& _buffer);
+		void per_object(const PerObjectBuffer& _buffer);
+		void render(GPU& _gpu, const MeshRenderer& _renderer);
 
 	private:
 		Unlit unlit_;

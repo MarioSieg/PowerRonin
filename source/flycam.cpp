@@ -32,12 +32,12 @@ namespace dce {
 		return this->up_;
 	}
 
-	void FlyCam::set_position(const Vector3<> &_position) noexcept {
+	void FlyCam::set_position(const Vector3<>& _position) noexcept {
 		this->eye_ = _position;
 	}
 
-	void FlyCam::update(const State &_state) {
-		const auto &input = _state.input();
+	void FlyCam::update(const State& _state) {
+		const auto& input = _state.input();
 		const auto mouse = input.get_mouse_position();
 		const auto viewport_x = _state.config().display.width;
 		const auto viewport_y = _state.config().display.height;
@@ -53,11 +53,7 @@ namespace dce {
 			this->mouse_angles_.x += delta_x * sensitivity * delta_time;
 			this->mouse_angles_.y -= delta_y * sensitivity * delta_time;
 
-			this->dir_ = {
-				math::cos(math::radians(this->mouse_angles_.y)) * math::sin(math::radians(this->mouse_angles_.x))
-				, math::sin(math::radians(this->mouse_angles_.y))
-				, math::cos(math::radians(this->mouse_angles_.y)) * math::cos(math::radians(this->mouse_angles_.x))
-			};
+			this->dir_ = {math::cos(math::radians(this->mouse_angles_.y)) * math::sin(math::radians(this->mouse_angles_.x)), math::sin(math::radians(this->mouse_angles_.y)), math::cos(math::radians(this->mouse_angles_.y)) * math::cos(math::radians(this->mouse_angles_.x))};
 
 			this->mouse_prev_.x = mouse.x;
 			this->mouse_prev_.y = mouse.y;
@@ -89,7 +85,6 @@ namespace dce {
 		}
 
 		this->view_ = lookAtLH(this->eye_, this->at_, this->up_);
-		this->proj_ = math::perspectiveFovLH<float>(math::radians(this->fov), viewport_x, viewport_y, this->near_clip
-		                                            , this->far_clip);
+		this->proj_ = math::perspectiveFovLH<float>(math::radians(this->fov), viewport_x, viewport_y, this->near_clip, this->far_clip);
 	}
 }

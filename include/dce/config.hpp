@@ -52,7 +52,7 @@ namespace dce {
 			float rounding = .0F;
 		} overlay;
 
-		virtual auto serialize(JsonStream & /*j*/) const -> bool override;
-		virtual auto deserialize(const JsonStream & /*j*/) -> bool override;
+		virtual auto serialize(JsonStream& /*j*/) const -> bool override;
+		virtual auto deserialize(const JsonStream& /*j*/) -> bool override;
 	};
 } // namespace dce // namespace dce

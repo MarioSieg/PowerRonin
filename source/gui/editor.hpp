@@ -27,9 +27,9 @@ namespace dce {
 	namespace gui {
 		class Editor final {
 		public:
-			void initialize(State &_state);
-			void update(State &_state, bool &_show_terminal);
-			void main_menu(bool &_show_terminal);
+			void initialize(State& _state);
+			void update(State& _state, bool& _show_terminal);
+			void main_menu(bool& _show_terminal);
 
 		private:
 			/* Widgets: */

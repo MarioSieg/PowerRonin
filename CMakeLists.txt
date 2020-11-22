@@ -58,7 +58,7 @@ add_library(
     "source/platform/callback_hooks.cpp"
     "source/gui/terminal.hpp"
     "source/gui/terminal.cpp" 
-    "include/dce/core/main.hpp"
+    "include/dce/core/misc.hpp"
     "source/terminal_sink.hpp"    
     "source/half.cpp"   
     "source/texture.cpp" 
@@ -138,7 +138,10 @@ add_library(
     "source/sun.cpp" 
     "source/renderer/buffers.hpp" 
     "source/gui/widgets/config_editor.hpp"
-    "source/gui/widgets/config_editor.cpp")
+    "source/gui/widgets/config_editor.cpp" 
+    "source/core/misc.cpp"
+    "include/dce/utils.hpp" 
+    "source/utils.cpp")
 
 include("extern/CMakeLists.txt")
 

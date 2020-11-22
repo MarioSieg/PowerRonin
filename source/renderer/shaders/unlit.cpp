@@ -11,7 +11,7 @@
 
 namespace dce::renderer {
 
-	Unlit::Unlit(GPU &_gpu) noexcept : IShader("unlit", _gpu) {}
+	Unlit::Unlit(GPU& _gpu) noexcept : IShader("unlit", _gpu) {}
 
 	void Unlit::load() {
 		IShader::load();
@@ -23,7 +23,7 @@ namespace dce::renderer {
 		IShader::unload();
 	}
 
-	void Unlit::draw(const Mesh &_mesh, const Material::Unlit &_mat) {
+	void Unlit::draw(const Mesh& _mesh, const Material::Unlit& _mat) {
 		this->gpu_.set_mesh_buffer(_mesh);
 		this->gpu_.set_texture(_mat.albedo, this->u_s_tex_color_);
 		this->gpu_.draw(this->program_);

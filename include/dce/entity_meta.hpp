@@ -17,7 +17,7 @@ namespace dce {
 	public:
 		std::string name = {};
 		std::string description = {};
-		void *user_data = nullptr;
+		void* user_data = nullptr;
 		std::uint16_t tag = 0;
 		std::uint16_t layer = 0;
 	};

@@ -22,39 +22,33 @@ namespace dce {
 
 	void Scenery::initialize() { }
 
-	void Scenery::new_default(ResourceManager &_resource_manager) {
+	void Scenery::new_default(ResourceManager& _resource_manager) {
 		{
 			const auto cube = this->registry_.create();
 
-			auto &meta = this->registry_.emplace<MetaData>(cube);
-			[[maybe_unused]] auto &transform = this->registry_.emplace<Transform>(cube);
-			auto &renderer = this->registry_.emplace<MeshRenderer>(cube);
-			[[maybe_unused]] auto &collider = this->registry_.emplace<Collider>(cube);
+			auto& meta = this->registry_.emplace<MetaData>(cube);
+			[[maybe_unused]] auto& transform = this->registry_.emplace<Transform>(cube);
+			auto& renderer = this->registry_.emplace<MeshRenderer>(cube);
+			[[maybe_unused]] auto& collider = this->registry_.emplace<Collider>(cube);
 
 			meta.name = "Cube";
 
-			renderer.material.properties = Material::Lambert{
-				.albedo = _resource_manager.system_resources.textures.checkerboard, .color = {1, 1, 1, 1}
-			};
-			renderer.mesh = _resource_manager.mesh_cache.load<MeshImporteur>(
-				_resource_manager.gen_id(), "meshes/common/cube.obj");
+			renderer.material.properties = Material::Lambert{.albedo = _resource_manager.system_resources.textures.checkerboard, .color = {1, 1, 1, 1}};
+			renderer.mesh = _resource_manager.mesh_cache.load<MeshImporteur>(_resource_manager.gen_id(), "meshes/common/cube.obj");
 		}
 		{
 			const auto platform = this->registry_.create();
 
-			auto &meta = this->registry_.emplace<MetaData>(platform);
-			auto &transform = this->registry_.emplace<Transform>(platform);
-			auto &renderer = this->registry_.emplace<MeshRenderer>(platform);
+			auto& meta = this->registry_.emplace<MetaData>(platform);
+			auto& transform = this->registry_.emplace<Transform>(platform);
+			auto& renderer = this->registry_.emplace<MeshRenderer>(platform);
 
 			meta.name = "Platform";
 			transform.position.y = -1.f;
 			transform.scale *= 3.f;
 
-			renderer.material.properties = Material::Lambert{
-				.albedo = _resource_manager.system_resources.textures.checkerboard, .color = {1, 1, 1, 1}
-			};
-			renderer.mesh = _resource_manager.mesh_cache.load<MeshImporteur>(
-				_resource_manager.gen_id(), "meshes/common/platform.obj");
+			renderer.material.properties = Material::Lambert{.albedo = _resource_manager.system_resources.textures.checkerboard, .color = {1, 1, 1, 1}};
+			renderer.mesh = _resource_manager.mesh_cache.load<MeshImporteur>(_resource_manager.gen_id(), "meshes/common/platform.obj");
 		}
 	}
 } // namespace dce

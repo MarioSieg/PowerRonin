@@ -15,5 +15,5 @@
 namespace dce {
 	using Blob = std::vector<std::byte>;
 
-	extern auto blob_from_disk(const std::filesystem::path &file) -> Blob;
+	extern auto blob_from_disk(const std::filesystem::path& file) -> Blob;
 }

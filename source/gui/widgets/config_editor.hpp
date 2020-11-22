@@ -15,6 +15,6 @@
 namespace dce::gui::widgets {
 	class ConfigEditor final {
 	public:
-		void update(bool &_show, Config &_cfg, Scenery::Configuration &_scenery_config) const;
+		void update(bool& _show, Config& _cfg, Scenery::Configuration& _scenery_config) const;
 	};
 }

@@ -27,13 +27,13 @@ namespace dce {
 			static constexpr auto COLOR_TRACE = 0xFF'BB'BB'BB;
 			static constexpr auto COLOR_WARN = 0xFF'66'AA'FF;
 
-			auto initialize(const spdlog::sink_ptr &_term_sink) noexcept -> bool;
-			void update(bool &_show, State &_state);
+			auto initialize(const spdlog::sink_ptr& _term_sink) noexcept -> bool;
+			void update(bool& _show, State& _state);
 			void clear_buffer();
 			[[nodiscard]] auto get_buffer() const noexcept -> const std::array<char, BUFFER_SIZE>&;
 
 		private:
-			const TerminalSink<> *sink_ = nullptr;
+			const TerminalSink<>* sink_ = nullptr;
 			std::array<char, BUFFER_SIZE> buffer_ = {};
 			std::size_t history_index_ = 0;
 			std::size_t warning_messages_count_ = 0;

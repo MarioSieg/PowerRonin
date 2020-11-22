@@ -11,9 +11,7 @@
 #include "../../include/dce/xorshift.hpp"
 
 namespace dce::core {
-	ISubsystem::ISubsystem(const std::string_view _name
-	                       , const std::underlying_type<ServiceEvents::Enum>::type _subscribed_events) noexcept : name(_name),
-		subscribed_events(_subscribed_events), id(xorshift32()) { }
+	ISubsystem::ISubsystem(const std::string_view _name, const std::underlying_type<ServiceEvents::Enum>::type _subscribed_events) noexcept : name(_name), subscribed_events(_subscribed_events), id(xorshift32()) { }
 
 	auto ISubsystem::get_pre_startup_time() const noexcept -> double {
 		return this->pre_startup_time;
@@ -39,27 +37,27 @@ namespace dce::core {
 		return this->post_shutdown_time;
 	}
 
-	auto ISubsystem::on_pre_startup(State & /*unused*/) -> bool {
+	auto ISubsystem::on_pre_startup(State& /*unused*/) -> bool {
 		return true;
 	}
 
-	auto ISubsystem::on_post_startup(State & /*unused*/) -> bool {
+	auto ISubsystem::on_post_startup(State& /*unused*/) -> bool {
 		return true;
 	}
 
-	auto ISubsystem::on_pre_tick(State & /*unused*/) -> bool {
+	auto ISubsystem::on_pre_tick(State& /*unused*/) -> bool {
 		return true;
 	}
 
-	auto ISubsystem::on_post_tick(State & /*unused*/) -> bool {
+	auto ISubsystem::on_post_tick(State& /*unused*/) -> bool {
 		return true;
 	}
 
-	auto ISubsystem::on_pre_shutdown(State & /*unused*/) -> bool {
+	auto ISubsystem::on_pre_shutdown(State& /*unused*/) -> bool {
 		return true;
 	}
 
-	auto ISubsystem::on_post_shutdown(State & /*unused*/) -> bool {
+	auto ISubsystem::on_post_shutdown(State& /*unused*/) -> bool {
 		return true;
 	}
 } // namespace dce::core // namespace dce::core

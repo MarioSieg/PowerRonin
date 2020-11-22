@@ -18,12 +18,12 @@
 #include "../../include/dce/mesh_renderer.hpp"
 #include "../../include/dce/sun.hpp"
 
-const float *VIEW, *PROJ;
+const float* VIEW,* PROJ;
 
 namespace dce::renderer {
 	Renderer::Renderer() : ISubsystem("Renderer", EVENTS), shader_bucket_(this->gpu_) { }
 
-	auto Renderer::on_pre_startup(State &_state) -> bool {
+	auto Renderer::on_pre_startup(State& _state) -> bool {
 
 		if (!this->gpu_.initialize_drivers(_state.config(), _state.protocol())) {
 			return false;
@@ -39,7 +39,7 @@ namespace dce::renderer {
 	}
 
 	/* Prepare frame */
-	auto Renderer::on_pre_tick(State &_state) -> bool {
+	auto Renderer::on_pre_tick(State& _state) -> bool {
 		get_runtime_stats(const_cast<Diagnostics &>(_state.diagnostics()));
 		this->tick_prev_ = update_clocks(const_cast<Chrono &>(_state.chrono()), this->tick_prev_);
 		this->gpu_.begin_frame();
@@ -47,7 +47,7 @@ namespace dce::renderer {
 	}
 
 	/* End frame */
-	auto Renderer::on_post_tick(State &_state) -> bool {
+	auto Renderer::on_post_tick(State& _state) -> bool {
 		this->gpu_.sort_drawcalls();
 		{
 			this->fly_cam_.update(_state);
@@ -59,35 +59,34 @@ namespace dce::renderer {
 			this->set_per_frame_buffer(_state.scenery().config);
 
 
-			auto draw = [this](Transform &_transform, MeshRenderer &_mesh_renderer) {
+			auto draw = [this](Transform& _transform, MeshRenderer& _mesh_renderer) {
 				[[likely]] if (_mesh_renderer.is_visible) {
 					this->gpu_.set_transform(_transform);
 					this->shader_bucket_.render(this->gpu_, _mesh_renderer);
 				}
 			};
 
-			auto &registry = _state.scenery().registry();
+			auto& registry = _state.scenery().registry();
 			registry.view<Transform, MeshRenderer>().each(draw);
 		}
 		this->gpu_.end_frame();
 		return true;
 	}
 
-	auto Renderer::on_post_shutdown(State &_state) -> bool {
+	auto Renderer::on_post_shutdown(State& _state) -> bool {
 		this->shader_bucket_.unload_all();
 		this->gpu_.shutdown_drivers();
 		return true;
 	}
 
-	void Renderer::set_per_frame_buffer(const Scenery::Configuration &_config) {
+	void Renderer::set_per_frame_buffer(const Scenery::Configuration& _config) {
 
-		const auto sun_dir = calculate_sun_dir(_config.lighting.sun.hour, _config.lighting.sun.latitude, .0f, {0, 1, 0}
-		                                       , {0, 1, 0});
+		const float delta = calculate_sun_orbit(3, math::radians(23.4f));
+		const auto up = Vector3<>{1, 0, 0};
+		const auto north = Vector3<>{0, 1, 0};
+		const auto sun_dir = -calculate_sun_dir(_config.lighting.sun.hour, _config.lighting.sun.latitude, delta, up, north);
 
-		const PerFrameBuffer per_frame = {
-			.sun_color = _config.lighting.sun.color.xyzz, .sun_dir = sun_dir.xyzz
-			, .ambient_color = _config.lighting.const_ambient_color.xyzz,
-		};
+		const PerFrameBuffer per_frame = {.sun_color = _config.lighting.sun.color.xyzz, .sun_dir = sun_dir.xyzz, .ambient_color = _config.lighting.const_ambient_color.xyzz,};
 
 		this->shader_bucket_.per_frame(per_frame);
 	}

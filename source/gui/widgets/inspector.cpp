@@ -19,7 +19,7 @@
 using namespace ImGui;
 
 // Pls fix :'(
-extern const float *VIEW, *PROJ;
+extern const float* VIEW,* PROJ;
 
 namespace dce::gui::widgets {
 
@@ -27,7 +27,7 @@ namespace dce::gui::widgets {
 		this->current_path_ = std::filesystem::current_path().string();
 	}
 
-	void Inspector::update(bool &_show, Registry &_registry, ResourceManager &_resource_manager, const ERef _entity) {
+	void Inspector::update(bool& _show, Registry& _registry, ResourceManager& _resource_manager, const ERef _entity) {
 		SetNextWindowSize({300, 800}, ImGuiCond_FirstUseEver);
 		[[likely]] if (Begin(ICON_FA_SLIDERS_H " Inspector", &_show)) {
 			[[unlikely]] if (!_registry.valid(_entity)) {
@@ -38,7 +38,7 @@ namespace dce::gui::widgets {
 			const auto footer_height_to_reserve = GetStyle().ItemSpacing.y + GetFrameHeightWithSpacing();
 			[[likely]] if (BeginChild("", {.0, -footer_height_to_reserve}, false)) {
 				[[likely]] if (_registry.has<MetaData>(_entity)) {
-					auto &meta = _registry.get<MetaData>(_entity);
+					auto& meta = _registry.get<MetaData>(_entity);
 					[[likely]] if (CollapsingHeader(ICON_FA_COGS " Metadata")) {
 						std::strncpy(this->string_buffer_.data(), meta.name.data(), BUFFER_SIZE);
 						if (InputText("Name", this->string_buffer_.data(), BUFFER_SIZE)) {
@@ -62,7 +62,7 @@ namespace dce::gui::widgets {
 					}
 				}
 				[[likely]] if (_registry.has<Transform>(_entity)) {
-					auto &transform = _registry.get<Transform>(_entity);
+					auto& transform = _registry.get<Transform>(_entity);
 					[[likely]] if (CollapsingHeader(ICON_FA_MAP_MARKER_ALT " Transform ")) {
 
 						[[unlikely]] if (Button(ICON_FA_ARROWS)) {
@@ -97,7 +97,7 @@ namespace dce::gui::widgets {
 						auto matrix = transform.calculate_matrix();
 						ImGuizmo::Enable(true);
 						ImGuizmo::BeginFrame();
-						auto &io = GetIO();
+						auto& io = GetIO();
 						ImGuizmo::SetRect(.0f, .0f, io.DisplaySize.x, io.DisplaySize.y);
 						[[unlikely]] if (Manipulate(VIEW, PROJ, this->modifier_, ImGuizmo::WORLD, value_ptr(matrix))) {
 							glm::vec3 skew;
@@ -107,7 +107,7 @@ namespace dce::gui::widgets {
 					}
 				}
 				[[likely]] if (_registry.has<MeshRenderer>(_entity)) {
-					auto &renderer = _registry.get<MeshRenderer>(_entity);
+					auto& renderer = _registry.get<MeshRenderer>(_entity);
 					[[likely]] if (CollapsingHeader(ICON_FA_CUBE " Mesh Renderer")) {
 						Checkbox("Visible", &renderer.is_visible);
 
@@ -118,58 +118,52 @@ namespace dce::gui::widgets {
 							TextUnformatted("Mesh");
 							SameLine();
 							if (embedded_button(ICON_FA_FOLDER_OPEN "##mesh")) {
-								char *path = nullptr;
+								char* path = nullptr;
 								open_file_dialog(path, MESH_FILE_FILTER, this->current_path_.c_str());
 								[[likely]] if (path) {
-									renderer.mesh = _resource_manager.mesh_cache.load<MeshImporteur>(
-										_resource_manager.gen_id(), path);
+									renderer.mesh = _resource_manager.mesh_cache.load<MeshImporteur>(_resource_manager.gen_id(), path);
 								}
 							}
 						}
 
+						Separator();
+
 						if (std::holds_alternative<Material::Unlit>(renderer.material.properties)) {
-							auto &props = std::get<Material::Unlit>(renderer.material.properties);
-							[[likely]] if (CollapsingHeader(ICON_FA_ADJUST " Unlit Material")) {
-								const auto file_name = props.albedo->get_file_path().filename().string();
-								TextUnformatted(file_name.c_str());
-								SameLine();
-								TextUnformatted("Albedo");
-								SameLine();
-								if (embedded_button(ICON_FA_FOLDER_OPEN "##tex")) {
-									char *path = nullptr;
-									open_file_dialog(path, TEX_FILE_FILTER, this->current_path_.c_str());
-									[[likely]] if (path) {
-										props.albedo = _resource_manager.texture_cache.load<TextureImporteur>(
-											_resource_manager.gen_id(), path);
-									}
+							auto& props = std::get<Material::Unlit>(renderer.material.properties);
+							const auto file_name = props.albedo->get_file_path().filename().string();
+							TextUnformatted(file_name.c_str());
+							SameLine();
+							TextUnformatted("Albedo");
+							SameLine();
+							if (embedded_button(ICON_FA_FOLDER_OPEN "##tex")) {
+								char* path = nullptr;
+								open_file_dialog(path, TEX_FILE_FILTER, this->current_path_.c_str());
+								[[likely]] if (path) {
+									props.albedo = _resource_manager.texture_cache.load<TextureImporteur>(_resource_manager.gen_id(), path);
 								}
 							}
-
 						}
 
 						else if (std::holds_alternative<Material::Lambert>(renderer.material.properties)) {
-							auto &props = std::get<Material::Lambert>(renderer.material.properties);
-							[[likely]] if (CollapsingHeader(ICON_FA_ADJUST " Lambert Material")) {
-								const auto file_name = props.albedo->get_file_path().filename().string();
-								TextUnformatted(file_name.c_str());
-								SameLine();
-								TextUnformatted("Albedo");
-								SameLine();
-								if (embedded_button(ICON_FA_FOLDER_OPEN "##tex2")) {
-									char *path = nullptr;
-									open_file_dialog(path, TEX_FILE_FILTER, this->current_path_.c_str());
-									[[likely]] if (path) {
-										props.albedo = _resource_manager.texture_cache.load<TextureImporteur>(
-											_resource_manager.gen_id(), path);
-									}
+							auto& props = std::get<Material::Lambert>(renderer.material.properties);
+							const auto file_name = props.albedo->get_file_path().filename().string();
+							TextUnformatted(file_name.c_str());
+							SameLine();
+							TextUnformatted("Albedo");
+							SameLine();
+							if (embedded_button(ICON_FA_FOLDER_OPEN "##tex2")) {
+								char* path = nullptr;
+								open_file_dialog(path, TEX_FILE_FILTER, this->current_path_.c_str());
+								[[likely]] if (path) {
+									props.albedo = _resource_manager.texture_cache.load<TextureImporteur>(_resource_manager.gen_id(), path);
 								}
-								ColorPicker4("Diffuse Color", value_ptr(props.color), ImGuiColorEditFlags_PickerHueWheel);
 							}
+							ColorPicker4("Diffuse Color", value_ptr(props.color), ImGuiColorEditFlags_PickerHueWheel);
 						}
 					}
 				}
 				[[likely]] if (_registry.has<Rigidbody>(_entity)) {
-					auto &rigidbody = _registry.get<Rigidbody>(_entity);
+					auto& rigidbody = _registry.get<Rigidbody>(_entity);
 					[[likely]] if (CollapsingHeader(ICON_FA_GLOBE " Rigidbody")) {
 						DragFloat("Mass", &rigidbody.mass);
 						Checkbox("Is Kinematic", &rigidbody.is_kinematic);

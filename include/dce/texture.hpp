@@ -141,9 +141,7 @@ namespace dce {
 
 	public:
 		/* All associated file types. */
-		static constexpr std::array<std::string_view, 14> FILE_EXTENSIONS = {
-			".dds", ".ktx", ".jpeg", ".jpg", ".png", ".tga", ".bmp", ".psd", ".gif", ".hdr", ".pic", ".pnm", ".ppm", ".pgm"
-		};
+		static constexpr std::array<std::string_view, 14> FILE_EXTENSIONS = {".dds", ".ktx", ".jpeg", ".jpg", ".png", ".tga", ".bmp", ".psd", ".gif", ".hdr", ".pic", ".pnm", ".ppm", ".pgm"};
 
 		[[nodiscard]] auto get_texels() const noexcept -> const std::vector<std::byte>&;
 
@@ -186,6 +184,6 @@ namespace dce {
 
 	class TextureImporteur final : public ResourceImporteur<TextureImporteur, Texture> {
 	public:
-		auto load(std::filesystem::path &&_path) const -> std::shared_ptr<Texture>;
+		auto load(std::filesystem::path&& _path) const -> std::shared_ptr<Texture>;
 	};
 } // namespace dce // namespace dce

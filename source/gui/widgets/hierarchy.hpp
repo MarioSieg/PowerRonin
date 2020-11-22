@@ -14,7 +14,7 @@
 namespace dce::gui::widgets {
 	class Hierarchy final {
 	public:
-		void update(bool &_show, Registry &_registry);
+		void update(bool& _show, Registry& _registry);
 		auto get_selected() const noexcept -> ERef;
 
 	private:

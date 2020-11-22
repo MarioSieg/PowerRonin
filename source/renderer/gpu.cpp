@@ -22,16 +22,15 @@
 
 namespace dce::renderer {
 
-	auto GPU::initialize_drivers(const Config &_config, AsyncProtocol &_proto) -> bool {
+	auto GPU::initialize_drivers(const Config& _config, AsyncProtocol& _proto) -> bool {
 		if (platform::NATIVE_WINDOW_HANDLE == nullptr) {
-			_proto.error(
-				"platform::NATIVE_WINDOW_HANDLE was nullptr! Platform system must be initialized before render system!");
+			_proto.error("platform::NATIVE_WINDOW_HANDLE was nullptr! Platform system must be initialized before render system!");
 			return false;
 		}
 
 		bgfx::Init init{};
 		init.limits.maxEncoders = 16;
-		init.type = bgfx::RendererType::Direct3D11;
+		init.type = bgfx::RendererType::Direct3D12;
 		init.debug = DEBUG_MODE;
 		init.platformData.nwh = platform::NATIVE_WINDOW_HANDLE;
 		init.profile = DEBUG_MODE;
@@ -83,15 +82,15 @@ namespace dce::renderer {
 		bgfx::frame();
 	}
 
-	void GPU::set_camera(const Matrix4x4<> &_view, const Matrix4x4<> &_proj, const bgfx::ViewId _view_id) const noexcept {
+	void GPU::set_camera(const Matrix4x4<>& _view, const Matrix4x4<>& _proj, const bgfx::ViewId _view_id) const noexcept {
 		bgfx::setViewTransform(_view_id, value_ptr(_view), value_ptr(_proj));
 	}
 
-	void GPU::set_transform(const Transform &_transform) const noexcept {
+	void GPU::set_transform(const Transform& _transform) const noexcept {
 		bgfx::setTransform(value_ptr(_transform.calculate_matrix()));
 	}
 
-	void GPU::set_mesh_buffer(const Mesh &_mesh) const noexcept {
+	void GPU::set_mesh_buffer(const Mesh& _mesh) const noexcept {
 		assert(_mesh.is_uploaded());
 
 		const auto vb_buffer = bgfx::VertexBufferHandle{_mesh.get_vertex_buffer_id()};
@@ -104,7 +103,7 @@ namespace dce::renderer {
 		setVertexBuffer(0, vb_buffer);
 	}
 
-	void GPU::set_texture(const Texture &_texture, const bgfx::UniformHandle _sampler) const noexcept {
+	void GPU::set_texture(const Texture& _texture, const bgfx::UniformHandle _sampler) const noexcept {
 		assert(_texture.is_uploaded());
 
 		const auto view = bgfx::TextureHandle{_texture.get_texel_buffer_id()};
@@ -117,22 +116,21 @@ namespace dce::renderer {
 	void GPU::draw(const bgfx::ProgramHandle _shader, const bgfx::ViewId _view_id, const std::uint8_t _depth) const noexcept {
 		assert(bgfx::isValid(_shader));
 
-		constexpr auto states = BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_A | BGFX_STATE_WRITE_Z | BGFX_STATE_DEPTH_TEST_LESS |
-			BGFX_STATE_MSAA | BGFX_STATE_CULL_CCW;
+		constexpr auto states = BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_A | BGFX_STATE_WRITE_Z | BGFX_STATE_DEPTH_TEST_LESS | BGFX_STATE_MSAA | BGFX_STATE_CULL_CCW;
 
 		bgfx::setState(states);
 		submit(_view_id, _shader, _depth);
 	}
 
-	void GPU::set_uniform(const bgfx::UniformHandle _handle, const Vector4<> &_value) const noexcept {
+	void GPU::set_uniform(const bgfx::UniformHandle _handle, const Vector4<>& _value) const noexcept {
 		setUniform(_handle, value_ptr(_value));
 	}
 
-	void GPU::set_uniform(const bgfx::UniformHandle _handle, const Matrix3x3<> &_value) const noexcept {
+	void GPU::set_uniform(const bgfx::UniformHandle _handle, const Matrix3x3<>& _value) const noexcept {
 		setUniform(_handle, value_ptr(_value));
 	}
 
-	void GPU::set_uniform(const bgfx::UniformHandle _handle, const Matrix4x4<> &_value) const noexcept {
+	void GPU::set_uniform(const bgfx::UniformHandle _handle, const Matrix4x4<>& _value) const noexcept {
 		setUniform(_handle, value_ptr(_value));
 	}
 

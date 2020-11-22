@@ -15,7 +15,7 @@ namespace dce {
 	namespace gui::widgets {
 		class ResourceViewer final {
 		public:
-			void update(bool &_show, ResourceManager &_importeur);
+			void update(bool& _show, ResourceManager& _importeur);
 		};
 	} // namespace gui::widgets
 } // namespace dce // namespace dce
