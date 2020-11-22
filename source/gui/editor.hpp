@@ -15,6 +15,7 @@
 #include "widgets/resource_viewer.hpp"
 #include "widgets/hierarchy.hpp"
 #include "widgets/inspector.hpp"
+#include "widgets/config_editor.hpp"
 
 namespace dce::gui::widgets {
 #include "widgets/ram_editor.hpp"
@@ -37,12 +38,14 @@ namespace dce {
 			widgets::MemoryEditor memory_editor_ = {};
 			widgets::Hierarchy hierarchy_ = {};
 			widgets::Inspector inspector_ = {};
+			widgets::ConfigEditor config_editor_ = {};
 
 			bool show_menu_ = true;
 			bool show_resource_viewer_ = false;
 			bool show_profiler_ = false;
 			bool show_hierarchy_viewer_ = true;
 			bool show_inspector_ = true;
+			bool show_config_editor_ = false;
 		};
 	}
 }

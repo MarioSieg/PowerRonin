@@ -45,7 +45,7 @@ namespace dce {
 		} display;
 
 		struct {
-			std::uint8_t font_size = 18;
+			std::uint8_t font_size = 24;
 			SystemStyle style = SystemStyle::DARK;
 			bool enable_antialiasing = true;
 			float transparency = 1.F;

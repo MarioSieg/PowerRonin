@@ -111,29 +111,59 @@ namespace dce::gui::widgets {
 					[[likely]] if (CollapsingHeader(ICON_FA_CUBE " Mesh Renderer")) {
 						Checkbox("Visible", &renderer.is_visible);
 
-						const auto file_name = renderer.mesh->get_file_path().filename().string();
-						TextUnformatted(file_name.c_str());
-						SameLine();
-						TextUnformatted("Mesh");
-						SameLine();
-						if (embedded_button(ICON_FA_FOLDER_OPEN "##mesh")) {
-							char *path = nullptr;
-							open_file_dialog(path, MESH_FILE_FILTER, this->current_path_.c_str());
-							[[likely]] if (path) {
-								renderer.mesh = _resource_manager.mesh_cache.load<MeshImporteur>(
-									_resource_manager.gen_id(), path);
+						{
+							const auto file_name = renderer.mesh->get_file_path().filename().string();
+							TextUnformatted(file_name.c_str());
+							SameLine();
+							TextUnformatted("Mesh");
+							SameLine();
+							if (embedded_button(ICON_FA_FOLDER_OPEN "##mesh")) {
+								char *path = nullptr;
+								open_file_dialog(path, MESH_FILE_FILTER, this->current_path_.c_str());
+								[[likely]] if (path) {
+									renderer.mesh = _resource_manager.mesh_cache.load<MeshImporteur>(
+										_resource_manager.gen_id(), path);
+								}
 							}
 						}
 
 						if (std::holds_alternative<Material::Unlit>(renderer.material.properties)) {
 							auto &props = std::get<Material::Unlit>(renderer.material.properties);
-							[[likely]] if (CollapsingHeader(ICON_FA_ADJUST " Unlit Material")) { }
+							[[likely]] if (CollapsingHeader(ICON_FA_ADJUST " Unlit Material")) {
+								const auto file_name = props.albedo->get_file_path().filename().string();
+								TextUnformatted(file_name.c_str());
+								SameLine();
+								TextUnformatted("Albedo");
+								SameLine();
+								if (embedded_button(ICON_FA_FOLDER_OPEN "##tex")) {
+									char *path = nullptr;
+									open_file_dialog(path, TEX_FILE_FILTER, this->current_path_.c_str());
+									[[likely]] if (path) {
+										props.albedo = _resource_manager.texture_cache.load<TextureImporteur>(
+											_resource_manager.gen_id(), path);
+									}
+								}
+							}
 
 						}
+
 						else if (std::holds_alternative<Material::Lambert>(renderer.material.properties)) {
 							auto &props = std::get<Material::Lambert>(renderer.material.properties);
 							[[likely]] if (CollapsingHeader(ICON_FA_ADJUST " Lambert Material")) {
-								ColorPicker4("Diffuse", value_ptr(props.color), ImGuiColorEditFlags_PickerHueWheel);
+								const auto file_name = props.albedo->get_file_path().filename().string();
+								TextUnformatted(file_name.c_str());
+								SameLine();
+								TextUnformatted("Albedo");
+								SameLine();
+								if (embedded_button(ICON_FA_FOLDER_OPEN "##tex2")) {
+									char *path = nullptr;
+									open_file_dialog(path, TEX_FILE_FILTER, this->current_path_.c_str());
+									[[likely]] if (path) {
+										props.albedo = _resource_manager.texture_cache.load<TextureImporteur>(
+											_resource_manager.gen_id(), path);
+									}
+								}
+								ColorPicker4("Diffuse Color", value_ptr(props.color), ImGuiColorEditFlags_PickerHueWheel);
 							}
 						}
 					}

@@ -47,4 +47,10 @@ namespace dce {
 		4, 4, T, math::defaultp>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T> using Color = Vector4<T>;
+
+	inline auto rgba_to_rgba_norm(const std::uint32_t _rgba) noexcept -> Color<> {
+		return Color<>{
+			(_rgba >> 24 & 0xFF) / 255.f, (_rgba >> 16 & 0xFF) / 255.f, (_rgba >> 8 & 0xFF) / 255.f, (_rgba & 0xFF) / 255.f
+		};
+	}
 } // namespace dce

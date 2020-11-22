@@ -12,17 +12,20 @@
 #include "../ishader.hpp"
 
 namespace dce::renderer {
-	class Lambert final : public IShader<Material::Lambert, const Vector4<> &> {
+	class Lambert final : public IShader<Material::Lambert> {
 	public:
-		Lambert() noexcept;
+		explicit Lambert(GPU &_gpu) noexcept;
 
 		virtual void load() override;
 		virtual void unload() override;
-		virtual void draw(GPU &_gpu, const Mesh &_mesh, const Material::Lambert &_mat, const Vector4<> &_args) override;
+		virtual void per_frame(const PerFrameBuffer &_buffer) override;
+		virtual void draw(const Mesh &_mesh, const Material::Lambert &_mat) override;
 
 	private:
 		bgfx::UniformHandle u_s_tex_color_ = {bgfx::kInvalidHandle};
-		bgfx::UniformHandle u_color_ = {bgfx::kInvalidHandle};
+		bgfx::UniformHandle u_mat_color_ = {bgfx::kInvalidHandle};
 		bgfx::UniformHandle u_light_dir_ = {bgfx::kInvalidHandle};
+		bgfx::UniformHandle u_ambient_color = {bgfx::kInvalidHandle};
+		bgfx::UniformHandle u_light_color = {bgfx::kInvalidHandle};
 	};
 }

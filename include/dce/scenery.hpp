@@ -15,9 +15,28 @@
 namespace dce {
 	class ResourceManager;
 
+	/// <summary>
+	/// Represents a scenery environment.
+	/// </summary>
 	class Scenery final {
 		friend class State;
 	public:
+		/// <summary>
+		/// Contains per scenery settings.
+		/// </summary>
+		struct Configuration final {
+			struct {
+				struct {
+					float latitude = 50.f;
+					float hour = 12.f;
+					bool sync_hour_with_env_time = false;
+					Color<> color = rgba_to_rgba_norm(0xFFFFFFFF);
+				} sun;
+
+				Color<> const_ambient_color = rgba_to_rgba_norm(0xFFFFFFFF);
+			} lighting = {};
+		};
+
 		Scenery() = default;
 		Scenery(const Scenery &) = delete;
 		Scenery(Scenery &&) = delete;
@@ -27,11 +46,7 @@ namespace dce {
 
 		std::string name = {};
 		std::string description = {};
-
-		struct {
-			float latitude = .0f;
-			float hour = 12.f;
-		} sun = {};
+		Configuration config = {};
 
 		[[nodiscard]] auto registry() const noexcept -> const Registry&;
 

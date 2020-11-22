@@ -11,6 +11,7 @@
 
 #include "shaders/unlit.hpp"
 #include "shaders/lambert.hpp"
+#include "buffers.hpp"
 
 namespace dce::renderer {
 	enum class ShaderType {
@@ -18,18 +19,24 @@ namespace dce::renderer {
 		, LAMBERT
 	};
 
-	struct RenderParams final {
-		Vector4<> light_dir = {0, 1, 0, 1};
-	};
-
 	class ShaderBucket final {
 	public:
+		explicit ShaderBucket(GPU &_gpu) noexcept;
+		ShaderBucket(const ShaderBucket &) = delete;
+		ShaderBucket(ShaderBucket &&) = delete;
+		auto operator=(const ShaderBucket &) = delete;
+		auto operator=(ShaderBucket &&) = delete;
+		~ShaderBucket() = default;
+
 		void load_all();
 		void unload_all();
-		void render(GPU &_gpu, const MeshRenderer &_renderer, const RenderParams &_props);
+		void per_frame(const PerFrameBuffer &_buffer);
+		void per_material(const PerMaterialBuffer &_buffer);
+		void per_object(const PerObjectBuffer &_buffer);
+		void render(GPU &_gpu, const MeshRenderer &_renderer);
 
 	private:
-		Unlit unlit_ = {};
-		Lambert lambert_ = {};
+		Unlit unlit_;
+		Lambert lambert_;
 	};
 }

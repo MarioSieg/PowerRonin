@@ -91,6 +91,8 @@ namespace dce {
 		constexpr unsigned flags = aiProcess_JoinIdenticalVertices | aiProcess_Triangulate | aiProcess_GenUVCoords |
 			aiProcess_GenSmoothNormals | aiProcess_ConvertToLeftHanded;
 
+		//importer.SetPropertyFloat(AI_CONFIG_GLOBAL_SCALE_FACTOR_KEY, .1f);
+
 		/* We should add some flags here! */
 		const aiScene *const scene = importer.ReadFile(_path.string().c_str(), flags);
 

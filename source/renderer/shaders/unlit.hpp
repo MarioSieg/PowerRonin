@@ -14,11 +14,11 @@
 namespace dce::renderer {
 	class Unlit final : public IShader<Material::Unlit> {
 	public:
-		Unlit() noexcept;
+		explicit Unlit(GPU &_gpu) noexcept;
 
 		virtual void load() override;
 		virtual void unload() override;
-		virtual void draw(GPU &_gpu, const Mesh &_mesh, const Material::Unlit &_mat) override;
+		virtual void draw(const Mesh &_mesh, const Material::Unlit &_mat) override;
 
 	private:
 		bgfx::UniformHandle u_s_tex_color_ = {bgfx::kInvalidHandle};

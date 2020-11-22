@@ -48,6 +48,10 @@ namespace dce::gui {
 			this->memory_editor_.DrawWindow(ICON_FA_MEMORY " Memory Editor", &_state, sizeof(State));
 		}
 
+		[[unlikely]] if (this->show_config_editor_) {
+			this->config_editor_.update(this->show_config_editor_, _state.config(), _state.scenery().config);
+		}
+
 	}
 
 	void Editor::main_menu(bool &_show_terminal) {
@@ -68,6 +72,9 @@ namespace dce::gui {
 				}
 				if (MenuItem(ICON_FA_SLIDERS_H " Inspector")) {
 					this->show_inspector_ = true;
+				}
+				if (MenuItem(ICON_FA_COGS " Configuration")) {
+					this->show_config_editor_ = true;
 				}
 				if (MenuItem(ICON_FA_DATABASE " Resources")) {
 					this->show_resource_viewer_ = true;

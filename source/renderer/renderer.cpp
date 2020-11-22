@@ -16,11 +16,12 @@
 #include "../../include/dce/mathlib.hpp"
 #include "../../include/dce/transform.hpp"
 #include "../../include/dce/mesh_renderer.hpp"
+#include "../../include/dce/sun.hpp"
 
 const float *VIEW, *PROJ;
 
 namespace dce::renderer {
-	Renderer::Renderer() : ISubsystem("Renderer", EVENTS) { }
+	Renderer::Renderer() : ISubsystem("Renderer", EVENTS), shader_bucket_(this->gpu_) { }
 
 	auto Renderer::on_pre_startup(State &_state) -> bool {
 
@@ -54,21 +55,40 @@ namespace dce::renderer {
 			PROJ = value_ptr(this->fly_cam_.get_projection_matrix());
 			this->gpu_.set_camera(this->fly_cam_.get_view_matrix(), this->fly_cam_.get_projection_matrix());
 
-			auto &registry = _state.scenery().registry();
-			registry.view<Transform, MeshRenderer>().each([this](Transform &_transform, MeshRenderer &_mesh_renderer) {
+
+			this->set_per_frame_buffer(_state.scenery().config);
+
+
+			auto draw = [this](Transform &_transform, MeshRenderer &_mesh_renderer) {
 				[[likely]] if (_mesh_renderer.is_visible) {
 					this->gpu_.set_transform(_transform);
-					this->shader_bucket_.render(this->gpu_, _mesh_renderer, this->render_params_);
+					this->shader_bucket_.render(this->gpu_, _mesh_renderer);
 				}
-			});
+			};
+
+			auto &registry = _state.scenery().registry();
+			registry.view<Transform, MeshRenderer>().each(draw);
 		}
 		this->gpu_.end_frame();
 		return true;
 	}
 
-	auto Renderer::on_post_shutdown(State & /*unused*/) -> bool {
+	auto Renderer::on_post_shutdown(State &_state) -> bool {
 		this->shader_bucket_.unload_all();
 		this->gpu_.shutdown_drivers();
 		return true;
+	}
+
+	void Renderer::set_per_frame_buffer(const Scenery::Configuration &_config) {
+
+		const auto sun_dir = calculate_sun_dir(_config.lighting.sun.hour, _config.lighting.sun.latitude, .0f, {0, 1, 0}
+		                                       , {0, 1, 0});
+
+		const PerFrameBuffer per_frame = {
+			.sun_color = _config.lighting.sun.color.xyzz, .sun_dir = sun_dir.xyzz
+			, .ambient_color = _config.lighting.const_ambient_color.xyzz,
+		};
+
+		this->shader_bucket_.per_frame(per_frame);
 	}
 } // namespace dce::renderer // namespace dce::renderer

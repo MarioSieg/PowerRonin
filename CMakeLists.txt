@@ -135,7 +135,10 @@ add_library(
     "source/renderer/shaders/lambert.hpp"
     "source/renderer/shaders/lambert.cpp" 
     "include/dce/sun.hpp" 
-    "source/sun.cpp")
+    "source/sun.cpp" 
+    "source/renderer/buffers.hpp" 
+    "source/gui/widgets/config_editor.hpp"
+    "source/gui/widgets/config_editor.cpp")
 
 include("extern/CMakeLists.txt")
 

@@ -45,11 +45,12 @@ namespace dce {
 			virtual auto on_post_tick(State & /*unused*/) -> bool override;
 			virtual auto on_post_shutdown(State & /*unused*/) -> bool override;
 
+			void set_per_frame_buffer(const Scenery::Configuration &_config);
+
 			std::uint64_t tick_prev_ = 0;
 			FlyCam fly_cam_ = {};
 			GPU gpu_ = {};
-			ShaderBucket shader_bucket_ = {};
-			RenderParams render_params_ = {};
+			ShaderBucket shader_bucket_;
 		};
 	} // namespace dce::renderer // namespace dce::renderer
 }
