@@ -8,9 +8,15 @@
 // Created: 22.11.2020 19:08
 
 #include "../include/dce/utils.hpp"
-#include "../../include/dce/utils.hpp"
 #include "../../include/dce/env.hpp"
 #include <mutex>
+
+#if SYS_WINDOWS
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+#else
+#include <fstream>
+#endif
 
 namespace dce {
 	FatalEngineException::FatalEngineException() : std::runtime_error("Fatal engine system error!") { }
@@ -58,16 +64,15 @@ namespace dce {
 		std::strftime(_buffer, sizeof _buffer, "%F %T", &bt);
 	}
 
-	void call_to_interrupt() {
-#if COM_MSVC
-		__debugbreak();
-#elif CPU_ARM
-		asm("bkpt 0");
-#elif CPU_X86 && (COM_GCC || COM_CLANG)
-		__asm__ __volatile__("int $3");
-#else
-		int* int3 = reinterpret_cast<int*>(3L);
-		*int3 = 3;
+	auto get_executable_name() -> std::string {
+#if SYS_WINDOWS
+		char buf[MAX_PATH];
+		GetModuleFileNameA(nullptr, buf, MAX_PATH);
+		return buf;
+#else /* POSIX */
+		std::string sp;
+		std::ifstream("/proc/self/comm") >> sp;
+		return sp;
 #endif
 	}
 }

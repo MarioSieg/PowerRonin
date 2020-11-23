@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_C_COMPILER_WORKS 1)
 set(CMAKE_CXX_COMPILER_WORKS 1)
 
-project ("DreamcastSDK" CXX C)
+project ("DreamcastSDK" CXX C ASM)
 
 add_library(
     "dreamcast_runtime" STATIC
@@ -141,7 +141,9 @@ add_library(
     "source/gui/widgets/config_editor.cpp" 
     "source/core/misc.cpp"
     "include/dce/utils.hpp" 
-    "source/utils.cpp")
+    "source/utils.cpp" 
+    "source/scripting/scripting.hpp"
+    "source/scripting/scripting.cpp")
 
 include("extern/CMakeLists.txt")
 

@@ -42,6 +42,7 @@ namespace dce::core {
 		[[unlikely]] if (this->core_->kernel_state != KernelState::OFFLINE) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Invalid kernel state!");
 		}
+		std::filesystem::current_path("../../../");
 
 		const auto tik = std::chrono::high_resolution_clock::now();
 
@@ -54,8 +55,6 @@ namespace dce::core {
 		proto.critical("Initializing {} v.{}", ENGINE_NAME, ENGINE_VERSION);
 		proto.info("System: {}", SYSTEM_NAME);
 		proto.info("Using C++ 20! Compiler: {}", COMPILER_NAME);
-
-		std::filesystem::current_path("../../../");
 
 		proto.separator();
 

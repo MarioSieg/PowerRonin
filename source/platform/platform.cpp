@@ -174,7 +174,7 @@ namespace dce::platform {
 		proto.info("Initializing window...");
 		proto.info("Setting window hint: {:X} to {}", GLFW_CLIENT_API, GLFW_NO_API);
 		proto.info("Setting window hint: {:X} to {}", GLFW_VISIBLE, GLFW_FALSE);
-		
+
 		/* Create window: */
 		this->window_ = glfwCreateWindow(display_settings.width, display_settings.height, "Dreamcast Engine", display_settings.full_screen ? primary_monitor : nullptr, nullptr);
 
@@ -186,7 +186,7 @@ namespace dce::platform {
 		if (_state.config().display.maximize) {
 			glfwMaximizeWindow(static_cast<GLFWwindow*>(this->window_));
 		}
-		
+
 		if (display_settings.full_screen || display_settings.maximize) {
 			int w = 0;
 			int h = 0;

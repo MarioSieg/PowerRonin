@@ -63,7 +63,7 @@ namespace dce {
 	[[nodiscard]] extern void time_stamp(char (&_buffer)[32]);
 
 	/// <summary>
-	/// Cross platform debug break (int $3)
+	/// Returns the name of the executable.
 	/// </summary>
-	extern void call_to_interrupt();
+	[[nodiscard]] extern auto get_executable_name() -> std::string;
 }
