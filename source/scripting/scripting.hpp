@@ -33,5 +33,7 @@ namespace dce::scripting {
 		virtual auto on_post_tick([[maybe_unused]] State& _state) -> bool override;
 		virtual auto on_pre_shutdown([[maybe_unused]] State& _state) -> bool override;
 		virtual auto on_post_shutdown([[maybe_unused]] State& _state) -> bool override;
+
+		void startup_python_runtime(AsyncProtocol& _proto, const Config& _config) const;
 	};
 }

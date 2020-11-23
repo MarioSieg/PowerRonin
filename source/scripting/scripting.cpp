@@ -9,40 +9,18 @@
 
 #include "scripting.hpp"
 #include "../../include/dce/utils.hpp"
-
-#include "../../extern/python/cpython-3.6.12/Include/Python.h"
+#include "py/pybase.hpp"
+#include "py/pystreamhook.hpp"
 
 namespace dce::scripting {
 
 	Scripting::Scripting() : ISubsystem("Scripting", EVENTS) { }
 
-	constexpr std::string_view TEST_SCRIPT = R"(
-		from time import time, ctime
-		print("Hello world from the Dreamcast Engine embedded Python!")
-		print("Today is ", ctime(time()))
-	)";
-
 	auto Scripting::on_pre_startup(State& _state) -> bool {
-		const std::wstring py_libs = L"scripts/python/pystd";
-
-
 		auto& proto = _state.protocol();
+		const auto& config = _state.config();
 
-		proto.info("Initializing Python {}...", Py_GetVersion());
-
-		proto.info("Pylib: {}", std::string(py_libs.begin(), py_libs.end()));
-
-		const auto program_name = get_executable_name();
-
-		wchar_t* name = Py_DecodeLocale(program_name.c_str(), nullptr);
-
-		Py_SetProgramName(name);
-		Py_SetPath(py_libs.c_str());
-		Py_Initialize();
-
-		proto.info("Running mini test Python script:\n{}", TEST_SCRIPT);
-
-		PyRun_SimpleString(TEST_SCRIPT.data());
+		this->startup_python_runtime(proto, config);
 
 		return true;
 	}
@@ -64,7 +42,30 @@ namespace dce::scripting {
 	}
 
 	auto Scripting::on_post_shutdown(State& _state) -> bool {
-		Py_FinalizeEx();
+		py::reset_hook();
+		py::shutdown();
 		return true;
+	}
+
+	void Scripting::startup_python_runtime(AsyncProtocol& _proto, const Config& _config) const {
+		const auto py_libs = _config.scripting.python_libs_dir.string();
+		const auto program_name = get_executable_name();
+		const char* info;
+
+		py::stdout_pre_initialize();
+		py::initialize(program_name.c_str(), py_libs.c_str(), py_libs.c_str(), info, nullptr, 0);
+		py::stdout_post_initialize();
+		py::stdout_install_hook([&_proto](std::string&& _msg) {
+			[[likely]] if (!_msg.empty()) {
+				_proto.info(std::move(_msg));
+			}
+		});
+
+		_proto.critical("Initializing Python {}...", info);
+		_proto.critical("Running test Python script \"{}\"...", _config.scripting.python_test_script.string());
+		const auto result = py::exec_test_file(_config.scripting.python_test_script);
+		[[unlikely]] if (!std::get<0>(result)) {
+			_proto.error("Failed to execute test script!");
+		}
 	}
 }

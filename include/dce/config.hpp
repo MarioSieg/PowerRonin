@@ -52,6 +52,11 @@ namespace dce {
 			float rounding = .0F;
 		} overlay;
 
+		struct {
+			std::filesystem::path python_libs_dir = "scripts/python/pystd";
+			std::filesystem::path python_test_script = "scripts/python/internal/test_script.py";
+		} scripting;
+
 		virtual auto serialize(JsonStream& /*j*/) const -> bool override;
 		virtual auto deserialize(const JsonStream& /*j*/) -> bool override;
 	};

@@ -8,9 +8,10 @@
 // Created: 15.11.2020 21:36
 
 #include "../include/dce/proto.hpp"
-#include "terminal_sink.hpp"
+#include "../include/dce/utils.hpp"
 #include "../extern/spdlog/include/spdlog/async.h"
 #include "../extern/spdlog/include/spdlog/sinks/basic_file_sink.h"
+#include "terminal_sink.hpp"
 
 #include <array>
 #include <iomanip>
@@ -20,8 +21,7 @@ namespace dce {
 	AsyncProtocol::AsyncProtocol() : AsyncProtocol("engine") { }
 
 	AsyncProtocol::AsyncProtocol(const std::string& _name) {
-		auto t = std::time(nullptr);
-		auto tm = *std::localtime(&t);
+		auto tm = safe_localtime(std::time(nullptr));
 		std::stringstream ss;
 		ss << "proto/session-";
 		ss << std::put_time(&tm, "%d-%m-%Y-%H-%M-%S");

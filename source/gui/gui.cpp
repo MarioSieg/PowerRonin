@@ -57,6 +57,9 @@ namespace dce::gui {
 
 	auto Gui::on_post_tick(State& _state) -> bool {
 		this->editor_.update(_state, this->show_terminal_);
+		[[unlikely]] if (_state.input().is_key_down(Key::GRAVE_ACCENT)) {
+			this->show_terminal_ = true;
+		}
 		[[unlikely]] if (this->show_terminal_) {
 			this->terminal_.update(this->show_terminal_, _state);
 		}
