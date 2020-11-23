@@ -13,8 +13,7 @@
 #include <cstdint>
 
 namespace dce {
-	constexpr auto uint32_sels(const std::uint32_t _t, const std::uint32_t _x
-	                           , const std::uint32_t _b) noexcept -> std::uint32_t {
+	constexpr auto uint32_sels(const std::uint32_t _t, const std::uint32_t _x, const std::uint32_t _b) noexcept -> std::uint32_t {
 		const std::uint32_t mask = static_cast<int32_t>(_t) >> 31;
 		const std::uint32_t sel_a = _x & mask;
 		const std::uint32_t sel_b = _b & ~mask;
@@ -27,9 +26,7 @@ namespace dce {
 
 	template <>
 	constexpr auto uint32_cntlz(const uint64_t x) noexcept -> std::uint32_t {
-		return (x & UINT64_C(0xffffffff00000000)) != 0u
-			       ? uint32_cntlz(static_cast<uint32_t>(x >> 32))
-			       : uint32_cntlz(static_cast<uint32_t>(x)) + 32;
+		return (x & UINT64_C(0xffffffff00000000)) != 0u ? uint32_cntlz(static_cast<uint32_t>(x >> 32)) : uint32_cntlz(static_cast<uint32_t>(x)) + 32;
 	}
 
 	template <>

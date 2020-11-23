@@ -38,11 +38,7 @@ namespace dce {
 
 	public:
 		/* All associated file types. */
-		static constexpr std::array<std::string_view, 37> FILE_EXTENSIONS = {
-			".dae", ".blend", ".bvh", ".3ds", ".ase", ".obj", ".ply", ".dxf", ".ifc", ".nff", ".smd", ".vta", ".mdl", ".md2"
-			, ".md3", ".pk3", ".mdc", ".md5mesh", ".x", ".raw", ".ac", ".stl", ".dxf", ".irrmesh", ".xml", ".off", ".ter"
-			, ".mdl", ".hmp", ".mesh.xml", ".ms3d", ".lwo", ".lws", ".lxo", ".csm", ".cob", ".scn"
-		};
+		static constexpr std::array<std::string_view, 37> FILE_EXTENSIONS = {".dae", ".blend", ".bvh", ".3ds", ".ase", ".obj", ".ply", ".dxf", ".ifc", ".nff", ".smd", ".vta", ".mdl", ".md2", ".md3", ".pk3", ".mdc", ".md5mesh", ".x", ".raw", ".ac", ".stl", ".dxf", ".irrmesh", ".xml", ".off", ".ter", ".mdl", ".hmp", ".mesh.xml", ".ms3d", ".lwo", ".lws", ".lxo", ".csm", ".cob", ".scn"};
 
 		[[nodiscard]] auto get_indices() const noexcept -> const std::vector<std::uint16_t>&;
 
@@ -69,6 +65,6 @@ namespace dce {
 
 	class MeshImporteur final : public ResourceImporteur<MeshImporteur, Mesh> {
 	public:
-		auto load(std::filesystem::path &&_path) const -> std::shared_ptr<Mesh>;
+		auto load(std::filesystem::path&& _path) const -> std::shared_ptr<Mesh>;
 	};
 } // namespace dce // namespace dce

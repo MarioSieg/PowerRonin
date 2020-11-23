@@ -11,14 +11,13 @@
 
 #include "mesh.hpp"
 #include "shader.hpp"
-#include "texture.hpp"
+#include "material.hpp"
 
 namespace dce {
-	class CMeshRenderer final {
+	class MeshRenderer final {
 	public:
 		RRef<Mesh> mesh = {};
-		RRef<Shader> shader = {};
-		RRef<Texture> texture = {};
+		Material material = {};
 		bool is_visible = true;
 	};
 }

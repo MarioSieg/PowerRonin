@@ -30,14 +30,14 @@ namespace dce {
 	struct Command final {
 		std::string_view token = {};
 		std::string_view help = {};
-		auto (*functor)(State &, std::string &&) -> bool = {};
+		auto (*functor)(State&, std::string&&) -> bool = {};
 		bool requires_root = false;
 		bool requires_args = false;
 
-		[[nodiscard]] auto operator()(State &_state, std::string &&_args) const -> bool;
+		[[nodiscard]] auto operator()(State& _state, std::string&& _args) const -> bool;
 	};
 
-	inline auto Command::operator()(State &_state, std::string &&_args) const -> bool {
+	inline auto Command::operator()(State& _state, std::string&& _args) const -> bool {
 		return this->functor != nullptr ? this->functor(_state, std::move(_args)) : false;
 	}
 
@@ -48,13 +48,13 @@ namespace dce {
 		static constexpr char ARGUMENT_SEPARATOR = '=';
 
 		/* Analyze whole command string. */
-		[[nodiscard]] auto analyze_and_call(State &_state, std::string &&_in) -> CommandExecutionResult;
+		[[nodiscard]] auto analyze_and_call(State& _state, std::string&& _in) -> CommandExecutionResult;
 
 		/* Calls the command. */
-		[[nodiscard]] auto call(std::string_view _command, State &_state, std::string &&_args) -> bool;
+		[[nodiscard]] auto call(std::string_view _command, State& _state, std::string&& _args) -> bool;
 
 		/* Pushes a new command. */
-		[[nodiscard]] auto register_command(const Command &_command) -> bool;
+		[[nodiscard]] auto register_command(const Command& _command) -> bool;
 
 		/* Returns a get_help string to the command. */
 		[[nodiscard]] auto get_help(std::string_view _command) -> std::string_view;

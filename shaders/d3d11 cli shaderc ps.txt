@@ -1,1 +1,0 @@
-.\shaderc.exe -f src/fs_mesh.shader -o bin/fs_mesh.bin --platform windows -p ps_5_0 --varyingdef src/varying.def.shader --type fragment

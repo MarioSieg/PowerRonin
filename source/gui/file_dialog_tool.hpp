@@ -9,13 +9,10 @@
 
 #pragma once
 
-#include <string_view>
-
 namespace dce::gui {
-	extern void open_file_dialog(char *&_out, const char *const _filter = nullptr, const char *const _default_path = nullptr);
+	extern void open_file_dialog(char*& _out, const char* const _filter = nullptr, const char* const _default_path = nullptr);
 
-	extern void open_files_dialog(void (&_callback)(const char *const), const char *const _filter = nullptr
-	                              , const char *const _default_path = nullptr);
+	extern void open_files_dialog(void (&_callback)(const char* const), const char* const _filter = nullptr, const char* const _default_path = nullptr);
 
-	extern void save_file_dialog(char *&_out, const char *const _filter = nullptr, const char *const _default_path = nullptr);
+	extern void save_file_dialog(char*& _out, const char* const _filter = nullptr, const char* const _default_path = nullptr);
 }

@@ -14,8 +14,8 @@
 #include "../../extern/bgfx/bgfx/include/bgfx/bgfx.h"
 
 namespace dce::renderer {
-	void get_limits(Diagnostics &_diag) noexcept {
-		const auto &limits = bgfx::getCaps()->limits;
+	void get_limits(Diagnostics& _diag) noexcept {
+		const auto& limits = bgfx::getCaps()->limits;
 		_diag.graphics.max_vram = bgfx::getStats()->gpuMemoryMax;
 		_diag.graphics.max_draw_calls = limits.maxDrawCalls;
 		_diag.graphics.max_blit_calls = limits.maxComputeBindings;
@@ -30,8 +30,8 @@ namespace dce::renderer {
 		_diag.graphics.max_frame_buffers = limits.maxFrameBuffers;
 	}
 
-	void dump_limits(AsyncProtocol &_proto) {
-		const auto *const caps = bgfx::getCaps();
+	void dump_limits(AsyncProtocol& _proto) {
+		const auto* const caps = bgfx::getCaps();
 		_proto.info("Supported flags: {:B}", caps->supported);
 		_proto.info("Vendor ID: {}", caps->vendorId);
 		_proto.info("Device ID: {}", caps->deviceId);
@@ -67,8 +67,8 @@ namespace dce::renderer {
 		_proto.info("Max transient index buffer size: {}", caps->limits.transientIbSize);
 	}
 
-	void get_runtime_stats(Diagnostics &_diag) noexcept {
-		const auto &stats = *bgfx::getStats();
+	void get_runtime_stats(Diagnostics& _diag) noexcept {
+		const auto& stats = *bgfx::getStats();
 		_diag.graphics.used_vram = stats.gpuMemoryUsed;
 		_diag.graphics.used_draw_calls = stats.numDraw;
 		_diag.graphics.used_blit_calls = stats.numBlit;

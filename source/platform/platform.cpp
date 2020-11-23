@@ -8,7 +8,6 @@
 // Created: 15.11.2020 21:36
 
 #include "platform.hpp"
-#include "../../extern/infoware/include/infoware/infoware.hpp"
 #include "../../include/dce/config.hpp"
 #include "../../include/dce/env.hpp"
 #include <cmath>
@@ -18,11 +17,11 @@
 #include "platform_headers.hpp"
 
 namespace {
-	void error_callback(const int _error, const char *const _info) {
+	void error_callback(const int _error, const char* const _info) {
 		std::cerr << "Fatal platform error! Code: " << _error << " Message: " << _info << 'n';
 	}
 
-	void print_monitor_info(GLFWmonitor *const _current, dce::AsyncProtocol &_logger) {
+	void print_monitor_info(GLFWmonitor* const _current, dce::AsyncProtocol& _logger) {
 		using namespace dce;
 
 		float scale_x = NAN;
@@ -43,7 +42,7 @@ namespace {
 		int wh = 0;
 		glfwGetMonitorWorkarea(_current, &wx, &wy, &ww, &wh);
 
-		const char *const name = glfwGetMonitorName(_current);
+		const char* const name = glfwGetMonitorName(_current);
 
 		_logger.info("\t\tName: {}", name);
 		_logger.info("\t\tContent scale: ({}, {})", scale_x, scale_y);
@@ -52,7 +51,7 @@ namespace {
 		_logger.info("\t\tWorking area: ({}, {}, {}, {})", wx, wy, ww, wh);
 	}
 
-	void print_video_mode_info(const GLFWvidmode *const _current, dce::AsyncProtocol &_logger) {
+	void print_video_mode_info(const GLFWvidmode* const _current, dce::AsyncProtocol& _logger) {
 		using namespace dce;
 
 		_logger.info("\t\tResolution: ({}, {})", _current->width, _current->height);
@@ -68,7 +67,7 @@ namespace {
 		case iware::system::kernel_t::windows_nt: return "Windows NT";
 		case iware::system::kernel_t::linux: return "Linux";
 		case iware::system::kernel_t::darwin: return "Darwin";
-		default: return "Unknown";
+		case iware::system::kernel_t::unknown: default: return "Unknown";
 		}
 	}
 
@@ -88,7 +87,7 @@ namespace {
 		case iware::cpu::architecture_t::arm: return "ARM";
 		case iware::cpu::architecture_t::itanium: return "Itanium";
 		case iware::cpu::architecture_t::x86: return "x86";
-		default: return "Unknown";
+		case iware::cpu::architecture_t::unknown: default: return "Unknown";
 		}
 	}
 
@@ -102,13 +101,13 @@ namespace {
 } // namespace // namespace
 
 namespace dce::platform {
-	void *NATIVE_WINDOW_HANDLE = nullptr;
-	void *WINDOW_HANDLE = nullptr;
+	void* NATIVE_WINDOW_HANDLE = nullptr;
+	void* WINDOW_HANDLE = nullptr;
 
 	Platform::Platform() : ISubsystem("Platform", EVENTS) { }
 
-	auto Platform::on_pre_startup(State &_state) -> bool {
-		auto &proto = _state.protocol();
+	auto Platform::on_pre_startup(State& _state) -> bool {
+		auto& proto = _state.protocol();
 
 		glfwSetErrorCallback(&error_callback);
 
@@ -117,6 +116,55 @@ namespace dce::platform {
 			proto.error("Failed to initialize GLFW!");
 			return false;
 		}
+
+		/*  Get all connected monitors: */
+		int all_monitors_count = 0;
+		GLFWmonitor** const all_monitors = glfwGetMonitors(&all_monitors_count);
+		if (all_monitors == nullptr) {
+			return false;
+		}
+
+		proto.info("{} Monitors connected!", all_monitors_count);
+
+		for (int i = 0; i < all_monitors_count; ++i) {
+			GLFWmonitor* const current = all_monitors[i];
+			proto.info("Detected monitor {} of {}:", i + 1, all_monitors_count);
+			print_monitor_info(current, proto);
+			int video_mode_count = 0;
+			const GLFWvidmode* const video_modes = glfwGetVideoModes(current, &video_mode_count);
+			proto.info("Detected {} video modes:", video_mode_count);
+			for (int j = 0; j < video_mode_count; ++j) {
+				proto.info("Detected video mode {} of {}:", j + 1, video_mode_count);
+				print_video_mode_info(video_modes + j, proto);
+			}
+		}
+
+		/* Get primary monitor: */
+		GLFWmonitor* const primary_monitor = glfwGetPrimaryMonitor();
+		if (primary_monitor == nullptr) {
+			return false;
+		}
+
+		proto.info("Using primary monitor:");
+		print_monitor_info(primary_monitor, proto);
+
+		/* Get primary video mode from primary monitor: */
+		const GLFWvidmode* const primary_video_mode = glfwGetVideoMode(primary_monitor);
+		if (primary_video_mode == nullptr) {
+			return false;
+		}
+
+		proto.info("Using primary video mode:");
+		print_video_mode_info(primary_video_mode, proto);
+
+		/* Get all video modes from primary monitor: */
+		int all_video_mode_count = 0;
+		const GLFWvidmode* const all_primary_video_modes = glfwGetVideoModes(primary_monitor, &all_video_mode_count);
+		if (all_primary_video_modes == nullptr) {
+			return false;
+		}
+
+		auto& display_settings = _state.config().display;
 
 		/* Disable any GLFW side API: */
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -127,72 +175,22 @@ namespace dce::platform {
 		proto.info("Setting window hint: {:X} to {}", GLFW_CLIENT_API, GLFW_NO_API);
 		proto.info("Setting window hint: {:X} to {}", GLFW_VISIBLE, GLFW_FALSE);
 
-		/*  Get all connected monitors: */
-		int all_monitors_count = 0;
-		GLFWmonitor **const all_monitors = glfwGetMonitors(&all_monitors_count);
-		if (all_monitors == nullptr) {
-			return false;
-		}
-
-		proto.info("{} Monitors connected!", all_monitors_count);
-
-		for (int i = 0; i < all_monitors_count; ++i) {
-			GLFWmonitor *const current = all_monitors[i];
-			proto.info("Detected monitor {} of {}:", i + 1, all_monitors_count);
-			print_monitor_info(current, proto);
-			int video_mode_count = 0;
-			const GLFWvidmode *const video_modes = glfwGetVideoModes(current, &video_mode_count);
-			proto.info("Detected {} video modes:", video_mode_count);
-			for (int j = 0; j < video_mode_count; ++j) {
-				proto.info("Detected video mode {} of {}:", j + 1, video_mode_count);
-				print_video_mode_info(video_modes + j, proto);
-			}
-		}
-
-		/* Get primary monitor: */
-		GLFWmonitor *const primary_monitor = glfwGetPrimaryMonitor();
-		if (primary_monitor == nullptr) {
-			return false;
-		}
-
-		proto.info("Using primary monitor:");
-		print_monitor_info(primary_monitor, proto);
-
-		/* Get primary video mode from primary monitor: */
-		const GLFWvidmode *const primary_video_mode = glfwGetVideoMode(primary_monitor);
-		if (primary_video_mode == nullptr) {
-			return false;
-		}
-
-		proto.info("Using primary video mode:");
-		print_video_mode_info(primary_video_mode, proto);
-
-		/* Get all video modes from primary monitor: */
-		int all_video_mode_count = 0;
-		const GLFWvidmode *const all_primary_video_modes = glfwGetVideoModes(primary_monitor, &all_video_mode_count);
-		if (all_primary_video_modes == nullptr) {
-			return false;
-		}
-
-		auto &display_settings = _state.config().display;
-
 		/* Create window: */
-		this->window_ = glfwCreateWindow(display_settings.width, display_settings.height, "Dreamcast Engine"
-		                                 , display_settings.full_screen ? primary_monitor : nullptr, nullptr);
+		this->window_ = glfwCreateWindow(display_settings.width, display_settings.height, "Dreamcast Engine", display_settings.full_screen ? primary_monitor : nullptr, nullptr);
 
 		if (this->window_ == nullptr) {
 			proto.error("Failed to create window!");
 			return false;
 		}
 
-		if (display_settings.maximize) {
-			glfwMaximizeWindow(static_cast<GLFWwindow *>(this->window_));
+		if (_state.config().display.maximize) {
+			glfwMaximizeWindow(static_cast<GLFWwindow*>(this->window_));
 		}
 
 		if (display_settings.full_screen || display_settings.maximize) {
 			int w = 0;
 			int h = 0;
-			glfwGetFramebufferSize(static_cast<GLFWwindow *>(this->window_), &w, &h);
+			glfwGetFramebufferSize(static_cast<GLFWwindow*>(this->window_), &w, &h);
 			if (w != 0 && h != 0) {
 				display_settings.width = static_cast<std::uint16_t>(w);
 				display_settings.height = static_cast<std::uint16_t>(h);
@@ -200,12 +198,12 @@ namespace dce::platform {
 		}
 
 		/* Native handle: */
-		void *volatile nat_handle = nullptr;
+		void* volatile nat_handle = nullptr;
 
 #if SYS_LINUX
 		nat_handle = reinterpret_cast<void*>(reinterpret_cast<std::uintptr_t>(glfwGetX11Window(static_cast<GLFWwindow*>(this->window))));
 #elif SYS_WINDOWS
-		nat_handle = reinterpret_cast<void *>(glfwGetWin32Window(static_cast<GLFWwindow *>(this->window_)));
+		nat_handle = reinterpret_cast<void*>(glfwGetWin32Window(static_cast<GLFWwindow*>(this->window_)));
 #elif SYS_MAC
 		nat_handle = reinterpret_cast<void*>(glfwGetCocoaWindow(static_cast<GLFWwindow*>(this->window)));
 #endif
@@ -223,7 +221,7 @@ namespace dce::platform {
 		this->all_vidmodes_ = all_primary_video_modes;
 
 		this->monitor_ = primary_monitor;
-		this->all_monitors_ = reinterpret_cast<void **>(all_monitors);
+		this->all_monitors_ = reinterpret_cast<void**>(all_monitors);
 
 		/* Log platform info: */
 		{
@@ -236,10 +234,8 @@ namespace dce::platform {
 
 			proto.info("RAM physical: {}B, available: {}B", memory.physical_total, memory.physical_available);
 			proto.info("RAM virtual: {}B, available: {}B", memory.virtual_available, memory.virtual_total);
-			proto.info("Kernel: {}, version: {}.{}.{}.{}", kernel_variant_name(kernel_info.variant), kernel_info.major
-			           , kernel_info.minor, kernel_info.patch, kernel_info.build_number);
-			proto.info("OS: {}, version: {}.{}.{}.{}", os_info.full_name, os_info.major, os_info.minor, os_info.patch
-			           , os_info.build_number);
+			proto.info("Kernel: {}, version: {}.{}.{}.{}", kernel_variant_name(kernel_info.variant), kernel_info.major, kernel_info.minor, kernel_info.patch, kernel_info.build_number);
+			proto.info("OS: {}, version: {}.{}.{}.{}", os_info.full_name, os_info.major, os_info.minor, os_info.patch, os_info.build_number);
 			proto.info("CPU model: {}", iware::cpu::model_name());
 			proto.info("CPU architecture: {}", architecture_name(iware::cpu::architecture()));
 			proto.info("CPU frequency: {}Hz", iware::cpu::frequency());
@@ -248,8 +244,7 @@ namespace dce::platform {
 			proto.info("CPU cores: {}, logical: {}, sockets: {}", quantities.physical, quantities.logical, quantities.packages);
 			for (auto i = 1U; i <= 3; ++i) {
 				const auto cache = iware::cpu::cache(i);
-				proto.info("CPU cache L{} size: {}B, line size: {}B, associativity: {}, type: {}", i, cache.size
-				           , cache.line_size, cache.associativity, cache_type_name(cache.type));
+				proto.info("CPU cache L{} size: {}B, line size: {}B, associativity: {}, type: {}", i, cache.size, cache.line_size, cache.associativity, cache_type_name(cache.type));
 			}
 
 			using enum iware::cpu::instruction_set_t;
@@ -293,39 +288,36 @@ namespace dce::platform {
 			proto.info("RDRAND: {}", instruction_set_supported(rd_rand));
 			proto.info("x64: {}", instruction_set_supported(x64));
 			proto.info("x87FPU: {}", instruction_set_supported(x87_fpu));
-			proto.info("Periphery: mice: {}, keyboards: {}, other: {}", iware::system::mouse_amount()
-			           , iware::system::keyboard_amount(), iware::system::other_HID_amount());
+			proto.info("Periphery: mice: {}, keyboards: {}, other: {}", iware::system::mouse_amount(), iware::system::keyboard_amount(), iware::system::other_HID_amount());
 			proto.separator();
 		}
 
 		return true;
 	}
 
-	auto Platform::on_post_startup(State & /*state*/) -> bool {
-		glfwShowWindow(static_cast<GLFWwindow *>(this->window_));
-		glfwFocusWindow(static_cast<GLFWwindow *>(this->window_));
-
+	auto Platform::on_post_startup(State& _state) -> bool {
+		glfwShowWindow(static_cast<GLFWwindow*>(this->window_));
 		return true;
 	}
 
-	auto Platform::on_pre_tick(State & /*unused*/) -> bool {
+	auto Platform::on_pre_tick(State& /*unused*/) -> bool {
 		glfwPollEvents();
 		return true;
 	}
 
-	auto Platform::on_post_tick(State & /*unused*/) -> bool {
+	auto Platform::on_post_tick(State& /*unused*/) -> bool {
 		/* Return false to quit if the window is closed: */
-		return glfwWindowShouldClose(static_cast<GLFWwindow *>(this->window_)) == 0;
+		return glfwWindowShouldClose(static_cast<GLFWwindow*>(this->window_)) == 0;
 	}
 
-	auto Platform::on_pre_shutdown(State & /*unused*/) -> bool {
-		glfwHideWindow(static_cast<GLFWwindow *>(this->window_));
+	auto Platform::on_pre_shutdown(State& /*unused*/) -> bool {
+		glfwHideWindow(static_cast<GLFWwindow*>(this->window_));
 		return true;
 	}
 
-	auto Platform::on_post_shutdown(State & /*unused*/) -> bool {
+	auto Platform::on_post_shutdown(State& /*unused*/) -> bool {
 		/* Destroy the window: */
-		glfwDestroyWindow(static_cast<GLFWwindow *>(this->window_));
+		glfwDestroyWindow(static_cast<GLFWwindow*>(this->window_));
 
 		/* Shutdown GLFW: */
 		glfwTerminate();

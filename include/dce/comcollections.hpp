@@ -14,3 +14,4 @@
 #include "mesh_renderer.hpp"
 #include "rigidbody.hpp"
 #include "collider.hpp"
+#include "light.hpp"

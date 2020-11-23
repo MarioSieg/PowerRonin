@@ -10,6 +10,7 @@
 #pragma once
 
 #include "../../include/dce/env.hpp"
+#include "../../extern/infoware/include/infoware/infoware.hpp"
 
 #ifdef GLFW_NATIVE
 #if SYS_WINDOWS

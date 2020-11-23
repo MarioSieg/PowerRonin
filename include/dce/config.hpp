@@ -45,14 +45,14 @@ namespace dce {
 		} display;
 
 		struct {
-			std::uint8_t font_size = 18;
+			std::uint8_t font_size = 24;
 			SystemStyle style = SystemStyle::DARK;
 			bool enable_antialiasing = true;
 			float transparency = 1.F;
 			float rounding = .0F;
 		} overlay;
 
-		virtual auto serialize(JsonStream & /*j*/) const -> bool override;
-		virtual auto deserialize(const JsonStream & /*j*/) -> bool override;
+		virtual auto serialize(JsonStream& /*j*/) const -> bool override;
+		virtual auto deserialize(const JsonStream& /*j*/) -> bool override;
 	};
 } // namespace dce // namespace dce

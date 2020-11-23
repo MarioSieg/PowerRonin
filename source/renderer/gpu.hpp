@@ -13,12 +13,12 @@
 
 #include "../../include/dce/mathlib.hpp"
 #include "../../include/dce/mesh.hpp"
-#include "../../include/dce/shader.hpp"
 #include "../../include/dce/texture.hpp"
+#include "gl_headers.hpp"
 
 namespace dce {
 	class Transform;
-	class CMeshRenderer;
+	class MeshRenderer;
 	class Diagnostics;
 	class Config;
 	class AsyncProtocol;
@@ -29,47 +29,60 @@ namespace dce::renderer {
 	class GPU final {
 	public:
 		GPU() noexcept = default;
-		GPU(const GPU &) = delete;
-		GPU(GPU &&) = delete;
-		auto operator=(const GPU &) -> GPU& = delete;
-		auto operator=(GPU &&) -> GPU& = delete;
+		GPU(const GPU&) = delete;
+		GPU(GPU&&) = delete;
+		auto operator=(const GPU&) -> GPU& = delete;
+		auto operator=(GPU&&) -> GPU& = delete;
 		~GPU() = default;
 
 		/* Initialize rendering backend. */
-		auto initialize_drivers(const Config &_config, AsyncProtocol &_proto) -> bool;
+		auto initialize_drivers(const Config& _config, AsyncProtocol& _proto) -> bool;
 
 		/* Shutdown rendering backend. */
-		void shutdown_drivers() const;
+		void shutdown_drivers();
 
 		/* Begin and clear frame. */
 		void begin_frame() const noexcept;
 
 		/* Sort draws. (Call after gui before ordinary drawcalls) */
-		void sort_drawcalls(const std::uint8_t _view_id = 0) const noexcept;
+		void sort_drawcalls(const bgfx::ViewId _view_id = 0) const noexcept;
 
 		/* End frame and kick render thread. */
 		void end_frame() const noexcept;
 
 		/* Set camera matrices. */
-		void set_camera(const Matrix4x4 &_view, const Matrix4x4 &_proj, const std::uint8_t _view_id = 0) const noexcept;
-
-		/* High level mesh renderer. */
-		void render_mesh(const Transform &_transform, const CMeshRenderer &_renderer) const;
+		void set_camera(const Matrix4x4<>& _view, const Matrix4x4<>& _proj, const bgfx::ViewId _view_id = 0) const noexcept;
 
 		/* Set mesh world transform matrix. */
-		void set_transform(const Transform &_transform) const noexcept;
+		void set_transform(const Transform& _transform) const noexcept;
 
-		/* Set mesh. */
-		void set_mesh(const RRef<Mesh> &_mesh) const noexcept;
+		/* Set mesh buffers. */
+		void set_mesh_buffer(const Mesh& _mesh) const noexcept;
 
 		/* Set texture. */
-		void set_texture(const std::uint16_t _sampler, const RRef<Texture> &_texture) const noexcept;
+		void set_texture(const Texture& _texture, const bgfx::UniformHandle _sampler) const noexcept;
 
-		/* Render mesh. */
-		void submit(const RRef<Shader> &_shader, const std::uint8_t _view_id = 0) const noexcept;
+		/* Draw mesh */
+		void draw(const bgfx::ProgramHandle _shader, const bgfx::ViewId _view_id = 0, const std::uint8_t _depth = 0) const noexcept;
 
-		/* Set render states. */
-		void set_states() const noexcept;
+		/* Set uniform. */
+		void set_uniform(const bgfx::UniformHandle _handle, const Vector4<>& _value) const noexcept;
+
+		/* Set uniform. */
+		void set_uniform(const bgfx::UniformHandle _handle, const Matrix3x3<>& _value) const noexcept;
+
+		/* Set uniform. */
+		void set_uniform(const bgfx::UniformHandle _handle, const Matrix4x4<>& _value) const noexcept;
+
+		/* Set uniform. */
+		void set_uniform(const bgfx::UniformHandle _handle, const float (&_value)[4]) const noexcept;
+
+		/* Set uniform. */
+		void set_uniform(const bgfx::UniformHandle _handle, const float (&_value)[9]) const noexcept;
+
+		/* Set uniform. */
+		void set_uniform(const bgfx::UniformHandle _handle, const float (&_value)[16]) const noexcept;
+
 
 	private:
 		std::uint16_t width_ = 0;

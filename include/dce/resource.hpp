@@ -15,21 +15,19 @@
 namespace dce {
 	class IResource;
 
-	template <typename Importeur, typename Resource> requires std::is_base_of_v<IResource, Resource> using ResourceImporteur =
-	entt::resource_loader<Importeur, Resource>;
+	template <typename Importeur, typename Resource> requires std::is_base_of_v<IResource, Resource> using ResourceImporteur = entt::resource_loader<Importeur, Resource>;
 
-	template <typename Resource> requires std::is_base_of_v<IResource, Resource>using ResourceCache = entt::resource_cache<
-		Resource>;
+	template <typename Resource> requires std::is_base_of_v<IResource, Resource>using ResourceCache = entt::resource_cache<Resource>;
 
 	template <typename Resource> requires std::is_base_of_v<IResource, Resource>using RRef = entt::resource_handle<Resource>;
 
 	class IResource {
 	public:
 
-		IResource(const IResource &) = delete;
-		IResource(IResource &&) = delete;
-		auto operator=(const IResource &) -> IResource& = delete;
-		auto operator=(IResource &&) noexcept -> IResource& = default;
+		IResource(const IResource&) = delete;
+		IResource(IResource&&) = delete;
+		auto operator=(const IResource&) -> IResource& = delete;
+		auto operator=(IResource&&) noexcept -> IResource& = default;
 		virtual ~IResource() = default;
 
 		/* Upload resource to target system. */
@@ -42,8 +40,7 @@ namespace dce {
 
 		[[nodiscard]] auto is_uploaded() const noexcept -> bool;
 
-		template <typename T, typename... Q> requires std::is_base_of_v<IResource, T> [[nodiscard]] static auto allocate(
-			Q &&..._args) -> std::shared_ptr<T>;
+		template <typename T, typename... Q> requires std::is_base_of_v<IResource, T> [[nodiscard]] static auto allocate(Q&&..._args) -> std::shared_ptr<T>;
 
 	protected:
 		IResource() = default;
@@ -51,9 +48,8 @@ namespace dce {
 		bool uploaded_ = false;
 	};
 
-	template <typename T, typename ... Q> requires std::is_base_of_v<IResource, T>inline auto IResource::allocate(
-		Q &&... _args) -> std::shared_ptr<T> {
-		return std::shared_ptr<T>(new T(_args...), [](T *const _ptr) {
+	template <typename T, typename ... Q> requires std::is_base_of_v<IResource, T>inline auto IResource::allocate(Q&&... _args) -> std::shared_ptr<T> {
+		return std::shared_ptr<T>(new T(_args...), [](T* const _ptr) {
 			if (_ptr) {
 				_ptr->offload();
 				delete _ptr;

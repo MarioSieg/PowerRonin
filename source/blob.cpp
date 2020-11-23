@@ -11,7 +11,7 @@
 #include <fstream>
 
 namespace dce {
-	auto blob_from_disk(const std::filesystem::path &file) -> Blob {
+	auto blob_from_disk(const std::filesystem::path& file) -> Blob {
 		std::basic_ifstream<std::byte> stream(file, std::ios::in | std::ios::binary);
 		if (!stream) {
 			return {};

@@ -24,8 +24,8 @@ namespace dce::platform {
 
 	private:
 		bool mouse_buttons[5] = {};
-		GLFWcursor *cursors[9] = {};
+		GLFWcursor* cursors[9] = {};
 		double timer = .0;
-		void *window = nullptr;
+		void* window = nullptr;
 	};
 } // namespace dce::platform // namespace dce::platform

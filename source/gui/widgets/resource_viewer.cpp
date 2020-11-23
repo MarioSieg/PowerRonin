@@ -16,7 +16,7 @@
 using namespace ImGui;
 
 namespace dce::gui::widgets {
-	void ResourceViewer::update(bool &_show, ResourceManager &_importeur) {
+	void ResourceViewer::update(bool& _show, ResourceManager& _importeur) {
 		SetNextWindowSize({800, 600}, ImGuiCond_FirstUseEver);
 		[[likely]] if (Begin(ICON_FA_DATABASE " Resource Viewer", &_show)) {
 			Text("Textures: %u", static_cast<unsigned>(_importeur.texture_cache.size()));
@@ -25,7 +25,7 @@ namespace dce::gui::widgets {
 			Separator();
 			Spacing();
 			if (CollapsingHeader(ICON_FA_IMAGES " Textures")) {
-				_importeur.texture_cache.each([&](const RRef<Texture> &_texture) {
+				_importeur.texture_cache.each([&](const RRef<Texture>& _texture) {
 					TextUnformatted(ICON_FA_IMAGE);
 					SameLine();
 					TextUnformatted(_texture->get_file_path().filename().string().c_str());
@@ -47,13 +47,12 @@ namespace dce::gui::widgets {
 				});
 			}
 			[[likely]] if (CollapsingHeader(ICON_FA_CUBES " Meshes")) {
-				_importeur.mesh_cache.each([](const RRef<Mesh> &_mesh) {
+				_importeur.mesh_cache.each([](const RRef<Mesh>& _mesh) {
 					TextUnformatted(ICON_FA_CUBE);
 					SameLine();
 					TextUnformatted(_mesh->get_file_path().filename().string().c_str());
 					if (IsItemHovered()) {
-						const auto size = _mesh->get_vertices().size() * sizeof(Vertex) + _mesh->get_indices().size() * sizeof
-							std::uint16_t;
+						const auto size = _mesh->get_vertices().size() * sizeof(Vertex) + _mesh->get_indices().size() * sizeof std::uint16_t;
 						BeginTooltip();
 						TextUnformatted(_mesh->is_uploaded() ? "Uploaded: yes" : "Uploaded: no");
 						Text("Vertices: %zu", _mesh->get_vertices().size());
@@ -64,6 +63,7 @@ namespace dce::gui::widgets {
 					Separator();
 				});
 			}
+			/*
 			[[likely]] if (CollapsingHeader(ICON_FA_EYE " Shaders")) {
 				_importeur.shader_cache.each([](const RRef<Shader> &_shader) {
 					TextUnformatted(ICON_FA_EYE);
@@ -73,15 +73,37 @@ namespace dce::gui::widgets {
 						BeginTooltip();
 						TextUnformatted(_shader->is_uploaded() ? "Uploaded: yes" : "Uploaded: no");
 						const auto vs_size = _shader->get_vertex_shader_bytecode().size() * sizeof(std::byte);
-						const auto fs_size = _shader->get_fragment_shader_bytecode().size() * sizeof(std::byte);
 						Text("Vertex Shader Size: %zuB", vs_size);
-						Text("Fragment Shader Size: %zuB", fs_size);
+						std::size_t fs_size = 0;
+						[[likely]] if (_shader->get_fragment_shader_bytecode()) {
+							fs_size = (*_shader->get_fragment_shader_bytecode()).size() * sizeof(std::byte);
+							Text("Fragment Shader Size: %zuB", fs_size);
+						}
 						Text("Total Size: %zuB", vs_size + fs_size);
+						Text("Uniforms: %zu", _shader->get_uniforms().size());
+						Separator();
+						for (const auto &uniform : _shader->get_uniforms()) {
+							TextUnformatted(uniform.first.data());
+							SameLine();
+							const char *type = "";
+							switch (std::get<0>(uniform.second)) {
+							default: case UniformType::SAMPLER: type = ": Sampler";
+								break;
+							case UniformType::MATRIX_3x3: type = ": Matrix3x3";
+								break;
+							case UniformType::MATRIX_4x4: type = ": Matrix4x4";
+								break;
+							case UniformType::VEC_4: type = ": Vector4";
+								break;
+							}
+							TextUnformatted(type);
+						}
 						EndTooltip();
 					}
 					Separator();
 				});
 			}
+			*/
 		}
 		End();
 	}

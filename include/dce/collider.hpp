@@ -5,7 +5,7 @@
 // Author: Mario
 // Solution: 
 // Project: DreamcastSDK
-// Created: 17.11.2020 11:21
+// Created: 18.11.2020 12:22
 
 #pragma once
 
@@ -18,8 +18,8 @@ namespace dce {
 		union ColliderData {
 			/* Box collider data. */
 			struct {
-				Vec3 half_extents;
-			} box;
+				Vector3<> half_extents;
+			} box = {};
 
 			/* Sphere collider data. */
 			struct {

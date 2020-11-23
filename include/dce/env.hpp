@@ -77,6 +77,7 @@ enum class Compiler {
 	case System::LINUX: return "Linux";
 	case System::WINDOWS: return "Windows";
 	case System::MAC: return "Mac";
+	default: return "Unknown";
 	}
 }
 
@@ -125,3 +126,41 @@ constexpr auto DEBUG_MODE = IS_DEBUG;
 
 /* Char used to XOR-encrypt memory address prints. */
 constexpr auto MEMORY_KEY = '&';
+
+#define CPU_ARM   false
+#define CPU_JIT   false
+#define CPU_MIPS  false
+#define CPU_PPC   false
+#define CPU_RISCV false
+#define CPU_X86   false
+
+#if defined(__arm__)     \
+ || defined(__aarch64__) \
+ || defined(_M_ARM)
+#	undef  CPU_ARM
+#	define CPU_ARM true
+#elif defined(__MIPSEL__)     \
+ ||   defined(__mips_isa_rev) \
+ ||   defined(__mips64)
+#	undef  CPU_MIPS
+#	define CPU_MIPS true
+#elif defined(_M_PPC)        \
+ ||   defined(__powerpc__)   \
+ ||   defined(__powerpc64__)
+#	undef  CPU_PPC
+#	define CPU_PPC true
+#elif defined(__riscv)   \
+ ||   defined(__riscv__) \
+ ||   defined(RISCVEL)
+#	undef  CPU_RISCV
+#	define CPU_RISCV true
+#elif defined(_M_IX86)    \
+ ||   defined(_M_X64)     \
+ ||   defined(__i386__)   \
+ ||   defined(__x86_64__)
+#	undef  CPU_X86
+#	define CPU_X86 true
+#else
+#	undef  CPU_JIT
+#	define CPU_JIT true
+#endif

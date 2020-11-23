@@ -9,15 +9,13 @@
 
 #pragma once
 
-#include "../../../include/dce/texture.hpp"
-
 namespace dce {
 	class ResourceManager;
 
 	namespace gui::widgets {
 		class ResourceViewer final {
 		public:
-			void update(bool &_show, ResourceManager &_importeur);
+			void update(bool& _show, ResourceManager& _importeur);
 		};
 	} // namespace gui::widgets
 } // namespace dce // namespace dce

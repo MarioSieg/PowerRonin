@@ -15,7 +15,7 @@ namespace dce {
 		return this->vertex_shader_bytecode_;
 	}
 
-	auto Shader::get_fragment_shader_bytecode() const noexcept -> const std::vector<std::byte>& {
+	auto Shader::get_fragment_shader_bytecode() const noexcept -> const std::optional<std::vector<std::byte>>& {
 		return this->fragment_shader_bytecode_;
 	}
 
@@ -31,8 +31,7 @@ namespace dce {
 		return this->volatile_upload_data_.program_id;
 	}
 
-	auto Shader::get_sampler_id() const noexcept -> std::uint16_t {
-		return this->volatile_upload_data_.sampler_uniform_id;
+	auto Shader::get_uniforms() const noexcept -> const std::unordered_map<std::string_view, std::tuple<UniformType, std::uint16_t>>& {
+		return this->volatile_upload_data_.uniforms;
 	}
-
 }

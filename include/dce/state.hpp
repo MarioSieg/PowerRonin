@@ -18,6 +18,7 @@
 #include "proto.hpp"
 #include "chrono.hpp"
 #include "scenery.hpp"
+#include "input.hpp"
 
 namespace dce {
 	/* Contains all system states and data. */
@@ -51,11 +52,15 @@ namespace dce {
 
 		[[nodiscard]] auto scenery() & noexcept -> Scenery&;
 
+		[[nodiscard]] auto input() const & noexcept -> const Input&;
+
+		[[nodiscard]] auto input() & noexcept -> Input&;
+
 		State() = default;
-		State(const State &) = delete;
-		State(State &&) noexcept = delete;
-		auto operator=(const State &) -> State& = delete;
-		auto operator=(State &&) noexcept -> State& = delete;
+		State(const State&) = delete;
+		State(State&&) noexcept = delete;
+		auto operator=(const State&) -> State& = delete;
+		auto operator=(State&&) noexcept -> State& = delete;
 		virtual ~State() override = default;
 
 		virtual void start() override;
@@ -71,5 +76,6 @@ namespace dce {
 		Diagnostics diagnostics_ = {};
 		Chrono chrono_ = {};
 		Scenery scenery_ = {};
+		Input input_ = {};
 	};
 } // namespace dce // namespace dce

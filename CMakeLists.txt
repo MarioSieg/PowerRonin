@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_C_COMPILER_WORKS 1)
 set(CMAKE_CXX_COMPILER_WORKS 1)
 
-project ("DreamcastSDK" CXX C)
+project ("DreamcastSDK" CXX C ASM)
 
 add_library(
     "dreamcast_runtime" STATIC
@@ -58,7 +58,7 @@ add_library(
     "source/platform/callback_hooks.cpp"
     "source/gui/terminal.hpp"
     "source/gui/terminal.cpp" 
-    "include/dce/core/main.hpp"
+    "include/dce/core/misc.hpp"
     "source/terminal_sink.hpp"    
     "source/half.cpp"   
     "source/texture.cpp" 
@@ -82,18 +82,15 @@ add_library(
     "include/dce/diagnostics.hpp" 
     "source/gui/scroll_roll_buffer.hpp" 
     "source/gui/scroll_roll_buffer.cpp" 
-    "include/dce/shader.hpp" 
+    "source/renderer/shader_bucket.hpp" 
     "source/shader.cpp" 
     "include/dce/blob.hpp"
     "source/blob.cpp" 
     "source/resource.cpp" 
-    "source/gui/widgets/shader_merger.hpp" 
-    "source/gui/widgets/shader_merger.cpp" 
     "source/gui/file_dialog_tool.hpp"
     "source/gui/file_dialog_tool.cpp" 
     "source/gui/widgets/ram_editor.hpp" 
-    "source/flycam.hpp" 
-    "source/flycam.cpp" 
+    "include/dce/flycam.hpp" 
     "include/dce/chrono.hpp" 
     "source/sysclock.hpp" 
     "source/sysclock.cpp" 
@@ -119,11 +116,34 @@ add_library(
     "source/gui/widgets/inspector.hpp"
     "source/gui/widgets/inspector.cpp" 
     "include/dce/input.hpp" 
+    "source/input.cpp" 
     "source/physics/physics.hpp" 
     "source/physics/physics.cpp" 
     "include/dce/collider.hpp" 
     "include/dce/rigidbody.hpp" 
-    "source/physics/physics_headers.hpp" )
+    "source/physics/physics_headers.hpp"
+    "source/flycam.cpp" 
+    "include/dce/light.hpp" 
+    "include/dce/material.hpp" 
+    "source/renderer/shaders/unlit.hpp" 
+    "source/renderer/shaders/unlit.cpp" 
+    "source/renderer/shader_bucket.hpp" 
+    "source/renderer/program_loader.hpp" 
+    "source/renderer/program_loader.cpp" 
+    "source/renderer/ishader.hpp"  
+    "source/renderer/shader_bucket.cpp" 
+    "source/renderer/shaders/lambert.hpp"
+    "source/renderer/shaders/lambert.cpp" 
+    "include/dce/sun.hpp" 
+    "source/sun.cpp" 
+    "source/renderer/buffers.hpp" 
+    "source/gui/widgets/config_editor.hpp"
+    "source/gui/widgets/config_editor.cpp" 
+    "source/core/misc.cpp"
+    "include/dce/utils.hpp" 
+    "source/utils.cpp" 
+    "source/scripting/scripting.hpp"
+    "source/scripting/scripting.cpp")
 
 include("extern/CMakeLists.txt")
 

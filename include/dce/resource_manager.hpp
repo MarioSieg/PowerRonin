@@ -12,24 +12,28 @@
 #include "mesh.hpp"
 #include "resource.hpp"
 #include "texture.hpp"
-#include "shader.hpp"
 
 namespace dce {
 	class ResourceManager final {
 		friend class State;
 	public:
-		struct {
-			RRef<Texture> black_texture = {};
-			RRef<Texture> white_texture = {};
-			RRef<Texture> invalid_texture = {};
-			RRef<Texture> checkerboard_texture = {};
-			RRef<Mesh> error_mesh = {};
-			RRef<Shader> basic_shader = {};
-		} system_resources = {};
+		struct SystemResources {
+
+			struct {
+				RRef<Texture> black_1x1 = {};
+				RRef<Texture> white_1x1 = {};
+				RRef<Texture> error_marker = {};
+				RRef<Texture> checkerboard = {};
+			} textures = {};
+
+			struct {
+				RRef<Mesh> error_text = {};
+				RRef<Mesh> cube = {};
+			} meshes = {};
+		} system_resources;
 
 		ResourceCache<Texture> texture_cache = {};
 		ResourceCache<Mesh> mesh_cache = {};
-		ResourceCache<Shader> shader_cache = {};
 
 		[[nodiscard]] auto gen_id() noexcept -> std::uint32_t;
 		void load_system_resources();

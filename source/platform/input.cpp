@@ -10,7 +10,6 @@
 #include "input.hpp"
 #include "callback_hooks.hpp"
 #include "platform_headers.hpp"
-#include "math.h"
 #include "../gui/gui_headers.hpp"
 #include <limits>
 
@@ -19,7 +18,7 @@
 #define MAP_ANALOG(NAV_NO, AXIS_NO, V0, V1) { float v = (axes_count > (AXIS_NO)) ? axes[AXIS_NO] : (V0); v = (v - (V0)) / ((V1) - (V0)); if (v > 1.0f) v = 1.0f; if (io.NavInputs[NAV_NO] < v) io.NavInputs[NAV_NO] = v; }
 
 namespace dce::platform {
-	extern void *WINDOW_HANDLE;
+	extern void* WINDOW_HANDLE;
 } // namespace dce::platform
 
 namespace dce::platform {
@@ -31,7 +30,7 @@ namespace dce::platform {
 		MOUSE_STATES = &this->mouse_buttons;
 		this->window = WINDOW_HANDLE;
 
-		auto &io = ImGui::GetIO();
+		auto& io = ImGui::GetIO();
 		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 		io.BackendPlatformName = "Dreamcast Engine";
@@ -95,9 +94,9 @@ namespace dce::platform {
 		int h = 0;
 		int display_w = 0;
 		int display_h = 0;
-		glfwGetWindowSize(static_cast<GLFWwindow *>(this->window), &w, &h);
-		glfwGetFramebufferSize(static_cast<GLFWwindow *>(this->window), &display_w, &display_h);
-		auto &io = ImGui::GetIO();
+		glfwGetWindowSize(static_cast<GLFWwindow*>(this->window), &w, &h);
+		glfwGetFramebufferSize(static_cast<GLFWwindow*>(this->window), &display_w, &display_h);
+		auto& io = ImGui::GetIO();
 		io.DisplaySize = ImVec2(static_cast<float>(w), static_cast<float>(h));
 		io.DisplayFramebufferScale = ImVec2(static_cast<float>(display_w) / w, static_cast<float>(display_h) / h);
 
@@ -111,10 +110,10 @@ namespace dce::platform {
 	}
 
 	void GuiInput::update_mouse() {
-		auto *const win = static_cast<GLFWwindow *>(this->window);
-		auto &io = ImGui::GetIO();
+		auto* const win = static_cast<GLFWwindow*>(this->window);
+		auto& io = ImGui::GetIO();
 
-		for (auto i = 0; i < sizeof io.MouseDown / sizeof *io.MouseDown; i++) {
+		for (std::size_t i = 0; i < sizeof io.MouseDown / sizeof *io.MouseDown; i++) {
 			io.MouseDown[i] = this->mouse_buttons[i] || glfwGetMouseButton(win, i) != 0;
 			this->mouse_buttons[i] = false;
 		}
@@ -139,10 +138,9 @@ namespace dce::platform {
 	}
 
 	void GuiInput::update_cursor() {
-		auto *const win = static_cast<GLFWwindow *>(this->window);
-		auto &io = ImGui::GetIO();
-		if ((io.ConfigFlags & ImGuiConfigFlags_NoMouseCursorChange) != 0 || glfwGetInputMode(win, GLFW_CURSOR) ==
-			GLFW_CURSOR_DISABLED) {
+		auto* const win = static_cast<GLFWwindow*>(this->window);
+		auto& io = ImGui::GetIO();
+		if ((io.ConfigFlags & ImGuiConfigFlags_NoMouseCursorChange) != 0 || glfwGetInputMode(win, GLFW_CURSOR) == GLFW_CURSOR_DISABLED) {
 			return;
 		}
 
@@ -153,15 +151,13 @@ namespace dce::platform {
 		}
 		else {
 			// Show OS mouse cursor:
-			glfwSetCursor(win, this->cursors[gui_mouse_cursor] != nullptr
-				                   ? this->cursors[gui_mouse_cursor]
-				                   : this->cursors[ImGuiMouseCursor_Arrow]);
+			glfwSetCursor(win, this->cursors[gui_mouse_cursor] != nullptr ? this->cursors[gui_mouse_cursor] : this->cursors[ImGuiMouseCursor_Arrow]);
 			glfwSetInputMode(win, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 		}
 	}
 
 	void GuiInput::update_gamepads() {
-		ImGuiIO &io = ImGui::GetIO();
+		ImGuiIO& io = ImGui::GetIO();
 
 		memset(io.NavInputs, 0, sizeof io.NavInputs);
 
@@ -171,8 +167,8 @@ namespace dce::platform {
 
 		auto axes_count = 0;
 		auto buttons_count = 0;
-		const float *const axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axes_count);
-		const unsigned char *const buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &buttons_count);
+		const float* const axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axes_count);
+		const unsigned char* const buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &buttons_count);
 		MAP_BUTTON(ImGuiNavInput_Activate, 0) // Cross / A
 		MAP_BUTTON(ImGuiNavInput_Cancel, 1) // Circle / B
 		MAP_BUTTON(ImGuiNavInput_Menu, 2) // Square / X
@@ -199,7 +195,7 @@ namespace dce::platform {
 	}
 
 	void GuiInput::install_callback_procedures() const {
-		auto *const win = static_cast<GLFWwindow *>(this->window);
+		auto* const win = static_cast<GLFWwindow*>(this->window);
 		glfwSetMouseButtonCallback(win, &mouse_button_callback);
 		glfwSetScrollCallback(win, &scroll_callback);
 		glfwSetKeyCallback(win, &key_callback);
@@ -208,7 +204,7 @@ namespace dce::platform {
 
 	void GuiInput::shutdown() {
 		MOUSE_STATES = nullptr;
-		for (auto *&cur : this->cursors) {
+		for (auto*& cur : this->cursors) {
 			if (cur == nullptr) {
 				continue;
 			}

@@ -10,7 +10,6 @@
 #pragma once
 
 #include "gui_headers.hpp"
-#include <cmath>
 
 namespace dce::gui {
 	// utility structure for realtime plot
