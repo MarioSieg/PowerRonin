@@ -1,4 +1,1 @@
-# Auto detect text files and perform LF normalization
-* text=auto
-
- *.shader* linguist-language=GLSL
+*.shader linguist-language=GLSL
