@@ -22,7 +22,7 @@ namespace dce::core {
 
 	struct Kernel::Core final {
 		KernelState kernel_state = KernelState::OFFLINE;
-		std::vector<std::tuple<std::uint_fast16_t, std::unique_ptr<ISubsystem>>> services = {};
+		std::vector<std::tuple<std::uint_fast16_t, std::unique_ptr<ISubsystem>>> subsystems = {};
 		std::unique_ptr<State> state = nullptr;
 	};
 
@@ -59,14 +59,14 @@ namespace dce::core {
 
 		proto.separator();
 
-		for (std::size_t i = 0; i < this->core_->services.size(); ++i) {
-			const auto& entry = this->core_->services[i];
+		for (std::size_t i = 0; i < this->core_->subsystems.size(); ++i) {
+			const auto& entry = this->core_->subsystems[i];
 			const auto id = std::get<0>(entry);
 			const auto& sys = std::get<1>(entry);
 			const auto* const name = typeid(decltype(*sys)).name();
 			const auto hash = typeid(decltype(*sys)).hash_code();
 
-			proto.info("Found installed subsystem {} of {}:", i + 1, this->core_->services.size());
+			proto.info("Found installed subsystem {} of {}:", i + 1, this->core_->subsystems.size());
 			proto.info("\tID: {:#x}", id);
 			proto.info("\tTypename: {}", name);
 			proto.info("\tHash: {:#x}", hash);
@@ -75,7 +75,7 @@ namespace dce::core {
 		}
 
 		/* Invoke "on_pre_startup()" on all subsystems, which have this event registered. */
-		for (auto sys = this->core_->services.begin(); sys != this->core_->services.end(); ++sys) {
+		for (auto sys = this->core_->subsystems.begin(); sys != this->core_->subsystems.end(); ++sys) {
 			const auto& name = std::get<1>(*sys)->name;
 			proto.critical(R"(Invoking kernel event "on_pre_startup" on subsystem interface "{}"...)", name);
 			const auto tik2 = std::chrono::high_resolution_clock::now();
@@ -87,7 +87,7 @@ namespace dce::core {
 		}
 
 		/* Invoke "on_post_startup()" on all subsystems, which have this event registered. */
-		for (auto sys = this->core_->services.rbegin(); sys != this->core_->services.rend(); ++sys) {
+		for (auto sys = this->core_->subsystems.rbegin(); sys != this->core_->subsystems.rend(); ++sys) {
 			const auto& name = std::get<1>(*sys)->name;
 			proto.critical(R"(Invoking kernel event "on_post_startup" on subsystem interface "{}"...)", name);
 			const auto tik2 = std::chrono::high_resolution_clock::now();
@@ -137,7 +137,7 @@ namespace dce::core {
 			++cycles;
 
 			/* Invoke "on_pre_tick()" on all subsystems, which have this event registered. */
-			for (auto sys = this->core_->services.begin(); sys != this->core_->services.end(); ++sys) {
+			for (auto sys = this->core_->subsystems.begin(); sys != this->core_->subsystems.end(); ++sys) {
 				const auto tik2 = std::chrono::high_resolution_clock::now();
 				[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::PRE_TICK && !std::get<1>(*sys)->on_pre_tick(*this->core_->state)) {
 					return false;
@@ -147,7 +147,7 @@ namespace dce::core {
 			}
 
 			/* Invoke "on_post_tick()" on all subsystems, which have this event registered. */
-			for (auto sys = this->core_->services.rbegin(); sys != this->core_->services.rend(); ++sys) {
+			for (auto sys = this->core_->subsystems.rbegin(); sys != this->core_->subsystems.rend(); ++sys) {
 				const auto tik2 = std::chrono::high_resolution_clock::now();
 				[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::POST_TICK && !std::get<1>(*sys)->on_post_tick(*this->core_->state)) {
 					return false;
@@ -190,7 +190,7 @@ namespace dce::core {
 		this->core_->state->end();
 
 		/* Invoke "on_pre_shutdown()" on all subsystems, which have this event registered. */
-		for (auto sys = this->core_->services.begin(); sys != this->core_->services.end(); ++sys) {
+		for (auto sys = this->core_->subsystems.begin(); sys != this->core_->subsystems.end(); ++sys) {
 			const auto tik2 = std::chrono::high_resolution_clock::now();
 			const auto& name = std::get<1>(*sys)->name;
 			proto.critical(R"(Invoking kernel event "on_pre_shutdown" on subsystem interface "{}"...)", name);
@@ -202,7 +202,7 @@ namespace dce::core {
 		}
 
 		/* Invoke "on_post_shutdown()" on all subsystems, which have this event registered. */
-		for (auto sys = this->core_->services.rbegin(); sys != this->core_->services.rend(); ++sys) {
+		for (auto sys = this->core_->subsystems.rbegin(); sys != this->core_->subsystems.rend(); ++sys) {
 			const auto tik2 = std::chrono::high_resolution_clock::now();
 			const auto& name = std::get<1>(*sys)->name;
 			proto.critical(R"(Invoking kernel event "on_post_shutdown" on subsystem interface "{}"...)", name);
@@ -225,18 +225,18 @@ namespace dce::core {
 	}
 
 	auto Kernel::installed_subsystems() const noexcept -> const std::vector<std::tuple<std::uint32_t, std::unique_ptr<ISubsystem>>>& {
-		return this->core_->services;
+		return this->core_->subsystems;
 	}
 
 	void Kernel::install_subsystem(std::unique_ptr<ISubsystem>&& _subsystem) const {
 		/* Check if subsystem with id already exists: */
-		for (const auto& sys : this->core_->services) {
+		for (const auto& sys : this->core_->subsystems) {
 			if (std::get<1>(sys)->id == _subsystem->id) {
 				return;
 			}
 		}
 
-		this->core_->services.emplace_back(std::make_tuple(_subsystem->id, std::move(_subsystem)));
+		this->core_->subsystems.emplace_back(std::make_tuple(_subsystem->id, std::move(_subsystem)));
 	}
 
 	auto Kernel::get_state() noexcept -> std::unique_ptr<State>& {
@@ -249,10 +249,10 @@ namespace dce::core {
 
 	auto Kernel::uninstall_subsystem(const std::uint_fast16_t _id) const -> bool {
 		/* Check if subsystem with id already exists: */
-		for (std::size_t i = 0; i < this->core_->services.size(); ++i) {
+		for (std::size_t i = 0; i < this->core_->subsystems.size(); ++i) {
 			/* If it exists, remove it */
-			[[likely]] if (std::get<1>(this->core_->services[i])->id == _id) {
-				this->core_->services.erase(this->core_->services.begin() + i);
+			[[likely]] if (std::get<1>(this->core_->subsystems[i])->id == _id) {
+				this->core_->subsystems.erase(this->core_->subsystems.begin() + i);
 				return true;
 			}
 		}
@@ -263,7 +263,7 @@ namespace dce::core {
 
 	auto Kernel::lookup_subsystem(const std::uint_fast16_t _id) const -> bool {
 		/* Check if subsystem with id already exists: */
-		for (auto& service : this->core_->services) {
+		for (auto& service : this->core_->subsystems) {
 			/* If it exists, remove it */
 			if (std::get<1>(service)->id == _id) {
 				return true;
@@ -274,12 +274,14 @@ namespace dce::core {
 		return false;
 	}
 
-	auto Kernel::install_subsystems(auto (* const _hook)(Kernel&) -> bool) -> std::tuple<bool, std::size_t> {
-		const auto size = this->core_->services.size();
-		return {_hook(*this) && this->core_->services.size() > size, this->core_->services.size()};
+	auto Kernel::install_subsystems(auto (* const _hook)(Kernel&) -> bool) -> std::size_t {
+		[[likely]] if (_hook) {
+			_hook(*this);
+		}
+		return this->core_->subsystems.size();
 	}
 
 	void Kernel::uninstall_all() const {
-		this->core_->services.clear();
+		this->core_->subsystems.clear();
 	}
 } // namespace dce::core // namespace dce::core

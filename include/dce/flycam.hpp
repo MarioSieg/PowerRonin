@@ -34,8 +34,6 @@ namespace dce {
 
 		[[nodiscard]] auto get_direction_vector() const noexcept -> const Vector3<>&;
 
-		[[nodiscard]] auto get_upwards_vector() const noexcept -> const Vector3<>&;
-
 		void update(const State& _state);
 
 	private:
@@ -43,7 +41,6 @@ namespace dce {
 		Matrix4x4<> proj_ = {};
 		Vector3<> eye_ = {};
 		Vector3<> at_ = {};
-		Vector3<> up_ = {.0f, 1.f, .0f};
 		Vector3<> forward_ = {};
 		Vector3<> left_ = {};
 		Vector3<> dir_ = {.0f, .0f, 1.f};

@@ -81,10 +81,8 @@ namespace dce::renderer {
 
 	void Renderer::set_per_frame_buffer(const Scenery::Configuration& _config) {
 
-		const float delta = calculate_sun_orbit(3, math::radians(23.4f));
-		const auto up = Vector3<>{1, 0, 0};
-		const auto north = Vector3<>{0, 1, 0};
-		const auto sun_dir = -calculate_sun_dir(_config.lighting.sun.hour, _config.lighting.sun.latitude, delta, up, north);
+		const float delta = calculate_sun_orbit(6, math::radians(23.4f));
+		const auto sun_dir = calculate_sun_dir(_config.lighting.sun.hour, _config.lighting.sun.latitude, delta, math::UP, math::NORTH);
 
 		const PerFrameBuffer per_frame = {.sun_color = _config.lighting.sun.color.xyzz, .sun_dir = sun_dir.xyzz, .ambient_color = _config.lighting.const_ambient_color.xyzz,};
 

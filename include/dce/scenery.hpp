@@ -30,10 +30,10 @@ namespace dce {
 					float latitude = 50.f;
 					float hour = 12.f;
 					bool sync_hour_with_env_time = false;
-					Color<> color = rgba_to_rgba_norm(0xFFFFFFFF);
+					Color<> color = math::rgba_to_rgba_norm(0xFFFFFFFF);
 				} sun;
 
-				Color<> const_ambient_color = rgba_to_rgba_norm(0xFFFFFFFF);
+				Color<> const_ambient_color = math::rgba_to_rgba_norm(0xFFFFFFFF);
 			} lighting;
 		};
 

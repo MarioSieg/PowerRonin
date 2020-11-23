@@ -28,10 +28,6 @@ namespace dce {
 		return this->at_;
 	}
 
-	auto FlyCam::get_upwards_vector() const noexcept -> const Vector3<>& {
-		return this->up_;
-	}
-
 	void FlyCam::set_position(const Vector3<>& _position) noexcept {
 		this->eye_ = _position;
 	}
@@ -65,7 +61,7 @@ namespace dce {
 		}
 
 		this->forward_ = normalize(this->dir_);
-		this->left_ = normalize(cross(this->forward_, this->up_));
+		this->left_ = normalize(cross(this->forward_, math::UP));
 		this->at_ = this->eye_ + dir_;
 
 		[[unlikely]] if (input.is_key_down(Key::W)) {
@@ -84,7 +80,7 @@ namespace dce {
 			this->eye_ -= Vector3<>{speed * delta_time} * this->left_;
 		}
 
-		this->view_ = lookAtLH(this->eye_, this->at_, this->up_);
+		this->view_ = lookAtLH(this->eye_, this->at_, math::UP);
 		this->proj_ = math::perspectiveFovLH<float>(math::radians(this->fov), viewport_x, viewport_y, this->near_clip, this->far_clip);
 	}
 }

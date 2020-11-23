@@ -57,13 +57,13 @@ namespace dce {
 			~Kernel();
 
 			/* Startup runtime */
-			[[nodiscard]] auto startup() const -> std::uint64_t;
+			auto startup() const -> std::uint64_t;
 
 			/* Execute runtime */
-			[[nodiscard]] auto execute() -> std::tuple<std::uint_fast32_t, std::uint8_t, std::uint64_t>;
+			auto execute() -> std::tuple<std::uint_fast32_t, std::uint8_t, std::uint64_t>;
 
 			/* Shutdown runtime */
-			[[nodiscard]] auto shutdown() const -> std::uint64_t;
+			auto shutdown() const -> std::uint64_t;
 
 			/* Installs a new subsystem to the kernel and initializes all hooks */
 			void install_subsystem(std::unique_ptr<ISubsystem>&& _subsystem) const;
@@ -87,7 +87,7 @@ namespace dce {
 			[[nodiscard]] auto lookup_subsystem(std::uint_fast16_t _id) const -> bool;
 
 			/* Install some subsystem via a hook. */
-			[[nodiscard]] auto install_subsystems(auto (* _hook)(Kernel&) -> bool) -> std::tuple<bool, std::size_t>;
+			auto install_subsystems(auto (* _hook)(Kernel&) -> bool) -> std::size_t;
 
 			/* Uninstalls all subsystems */
 			void uninstall_all() const;
