@@ -4,8 +4,6 @@ message("Initializing DreamcastSDK CMake")
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_C_COMPILER_WORKS 1)
-set(CMAKE_CXX_COMPILER_WORKS 1)
 
 project ("DreamcastSDK" CXX C ASM)
 
@@ -143,14 +141,7 @@ add_library(
     "include/dce/utils.hpp" 
     "source/utils.cpp" 
     "source/scripting/scripting.hpp"
-    "source/scripting/scripting.cpp"
-    "source/scripting/py/pybase.hpp"
-    "source/scripting/py/pybase.cpp" 
-    "source/scripting/py/pyobj.hpp"
-    "source/scripting/py/pyobj.cpp" 
-    "source/scripting/py/python.hpp" 
-    "source/scripting/py/pystreamhook.hpp"
-    "source/scripting/py/pystreamhook.cpp")
+    "source/scripting/scripting.cpp")
 
 include("extern/CMakeLists.txt")
 
