@@ -14,7 +14,7 @@
 using namespace dce::core;
 
 /* Main function where the dream starts and ends. */
-auto DREAM_ENTRY(const int _argc, const char *const*const _argv, const char *const*const _envp) -> int 
+auto DREAM_ENTRY(const int _argc, const char *const* const _argv, const char *const* const _envp) -> int 
 	try {
 		ScopedVectoredExceptionHandler _ = {};
 		

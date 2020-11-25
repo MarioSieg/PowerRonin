@@ -176,8 +176,8 @@ namespace dce::scripting {
 
 	auto Scripting::on_pre_startup(State& _state) -> bool {
 		auto& proto = _state.protocol();
+		proto.info("Initializing {} {}...", this->lua_system_.get_version_string(), this->lua_system_.get_jit_version_string());
 		this->lua_system_.initialize();
-		proto.info("Initializing {} {}", this->lua_system_.get_version_string(), this->lua_system_.get_jit_version_string());
 		return true;
 	}
 
