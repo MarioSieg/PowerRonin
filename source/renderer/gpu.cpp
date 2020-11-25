@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -185,7 +184,8 @@
 namespace dce::renderer {
 	auto GPU::initialize_drivers(const Config& _config, AsyncProtocol& _proto) -> bool {
 		if (platform::NATIVE_WINDOW_HANDLE == nullptr) {
-			_proto.error("platform::NATIVE_WINDOW_HANDLE was nullptr! Platform system must be initialized before render system!");
+			_proto.error(
+				"platform::NATIVE_WINDOW_HANDLE was nullptr! Platform system must be initialized before render system!");
 			return false;
 		}
 
@@ -244,7 +244,8 @@ namespace dce::renderer {
 		bgfx::frame();
 	}
 
-	void GPU::set_camera(const Matrix4x4<>& _view, const Matrix4x4<>& _proj, const bgfx::ViewId _view_id) const noexcept {
+	void GPU::set_camera(const Matrix4x4<>& _view, const Matrix4x4<>& _proj,
+	                     const bgfx::ViewId _view_id) const noexcept {
 		bgfx::setViewTransform(_view_id, value_ptr(_view), value_ptr(_proj));
 	}
 
@@ -275,10 +276,12 @@ namespace dce::renderer {
 		setTexture(0, _sampler, view);
 	}
 
-	void GPU::draw(const bgfx::ProgramHandle _shader, const bgfx::ViewId _view_id, const std::uint8_t _depth) const noexcept {
+	void GPU::draw(const bgfx::ProgramHandle _shader, const bgfx::ViewId _view_id,
+	               const std::uint8_t _depth) const noexcept {
 		assert(bgfx::isValid(_shader));
 
-		constexpr auto states = BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_A | BGFX_STATE_WRITE_Z | BGFX_STATE_DEPTH_TEST_LESS | BGFX_STATE_MSAA | BGFX_STATE_CULL_CCW;
+		constexpr auto states = BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_A | BGFX_STATE_WRITE_Z |
+			BGFX_STATE_DEPTH_TEST_LESS | BGFX_STATE_MSAA | BGFX_STATE_CULL_CCW;
 
 		bgfx::setState(states);
 		submit(_view_id, _shader, _depth);

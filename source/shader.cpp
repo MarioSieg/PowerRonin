@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -192,7 +191,8 @@ namespace dce {
 		return this->volatile_upload_data_.program_id;
 	}
 
-	auto Shader::get_uniforms() const noexcept -> const std::unordered_map<std::string_view, std::tuple<UniformType, std::uint16_t>>& {
+	auto Shader::get_uniforms() const noexcept -> const std::unordered_map<
+		std::string_view, std::tuple<UniformType, std::uint16_t>>& {
 		return this->volatile_upload_data_.uniforms;
 	}
 }

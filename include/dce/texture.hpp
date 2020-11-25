@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -302,7 +301,10 @@ namespace dce {
 
 	public:
 		/* All associated file types. */
-		static constexpr std::array<std::string_view, 14> FILE_EXTENSIONS = {".dds", ".ktx", ".jpeg", ".jpg", ".png", ".tga", ".bmp", ".psd", ".gif", ".hdr", ".pic", ".pnm", ".ppm", ".pgm"};
+		static constexpr std::array<std::string_view, 14> FILE_EXTENSIONS = {
+			".dds", ".ktx", ".jpeg", ".jpg", ".png", ".tga", ".bmp", ".psd", ".gif", ".hdr", ".pic", ".pnm", ".ppm",
+			".pgm"
+		};
 
 		[[nodiscard]] auto get_texels() const noexcept -> const std::vector<std::byte>&;
 

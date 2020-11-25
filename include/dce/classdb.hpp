@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -211,10 +210,14 @@ namespace dce {
 	class ClassDB final {
 	public:
 		/* Registers a new class descriptor into the commands. */
-		void register_class(std::string_view name, std::size_t size, std::size_t hash_code, const ClassDescriptor::BaseDescriptor::SourceInfo& src_info, std::string_view description = "", bool is_custom = false);
+		void register_class(std::string_view name, std::size_t size, std::size_t hash_code,
+		                    const ClassDescriptor::BaseDescriptor::SourceInfo& src_info,
+		                    std::string_view description = "", bool is_custom = false);
 
 		/* Registers a new class with info from typeid() from <T> to the commands. */
-		template <typename T> requires std::is_class<T>::value void auto_register_class(const ClassDescriptor::BaseDescriptor::SourceInfo& src_info, const std::string_view description = "", const bool is_custom = false) {
+		template <typename T> requires std::is_class<T>::value void auto_register_class(
+			const ClassDescriptor::BaseDescriptor::SourceInfo& src_info, const std::string_view description = "",
+			const bool is_custom = false) {
 			const auto& info = typeid(T);
 			this->register_class(info.name(), sizeof(T), info.hash_code(), src_info, description, is_custom);
 		}

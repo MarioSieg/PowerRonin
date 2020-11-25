@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -209,7 +208,11 @@ namespace dce {
 			this->mouse_angles_.x += delta_x * sensitivity * delta_time;
 			this->mouse_angles_.y -= delta_y * sensitivity * delta_time;
 
-			this->dir_ = {math::cos(math::radians(this->mouse_angles_.y)) * math::sin(math::radians(this->mouse_angles_.x)), math::sin(math::radians(this->mouse_angles_.y)), math::cos(math::radians(this->mouse_angles_.y)) * math::cos(math::radians(this->mouse_angles_.x))};
+			this->dir_ = {
+				math::cos(math::radians(this->mouse_angles_.y)) * math::sin(math::radians(this->mouse_angles_.x)),
+				math::sin(math::radians(this->mouse_angles_.y)),
+				math::cos(math::radians(this->mouse_angles_.y)) * math::cos(math::radians(this->mouse_angles_.x))
+			};
 
 			this->mouse_prev_.x = mouse.x;
 			this->mouse_prev_.y = mouse.y;
@@ -240,6 +243,7 @@ namespace dce {
 		}
 
 		this->view_ = lookAtLH(this->eye_, this->at_, math::UP);
-		this->proj_ = math::perspectiveFovLH<float>(math::radians(this->fov), viewport_x, viewport_y, this->near_clip, this->far_clip);
+		this->proj_ = math::perspectiveFovLH<float>(math::radians(this->fov), viewport_x, viewport_y, this->near_clip,
+		                                            this->far_clip);
 	}
 }

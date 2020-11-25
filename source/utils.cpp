@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -187,7 +186,9 @@ namespace dce {
 
 	FatalEngineException::FatalEngineException(const char* const _msg) : std::runtime_error(_msg) { }
 
-	FatalEngineException::FatalEngineException(const char* const _msg, const int _line, const char* const _file) : std::runtime_error(_msg), line_(_line), file_(_file) { }
+	FatalEngineException::FatalEngineException(const char* const _msg, const int _line,
+	                                           const char* const _file) : std::runtime_error(_msg), line_(_line),
+	                                                                      file_(_file) { }
 
 	auto FatalEngineException::what() const noexcept -> const char* {
 		return std::runtime_error::what();

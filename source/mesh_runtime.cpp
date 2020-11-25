@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -179,7 +178,9 @@
 namespace {
 	auto create_vertex_layout() -> bgfx::VertexLayout {
 		bgfx::VertexLayout layout;
-		layout.begin().add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float).add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float).add(bgfx::Attrib::Normal, 3, bgfx::AttribType::Float, true).end();
+		layout.begin().add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float).add(
+			bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float).add(bgfx::Attrib::Normal, 3, bgfx::AttribType::Float,
+			                                                         true).end();
 		return layout;
 	}
 } // namespace
@@ -196,7 +197,9 @@ namespace dce {
 
 		static const auto VERTEX_LAYOUT = create_vertex_layout();
 
-		const auto* const index_buffer_mem = bgfx::makeRef(this->indices_.data(), static_cast<std::uint32_t>(sizeof(std::uint16_t) * this->indices_.size()), nullptr, nullptr);
+		const auto* const index_buffer_mem = bgfx::makeRef(this->indices_.data(),
+		                                                   static_cast<std::uint32_t>(sizeof(std::uint16_t) * this->
+			                                                   indices_.size()), nullptr, nullptr);
 
 		[[unlikely]] if (index_buffer_mem == nullptr) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload mesh!");
@@ -208,7 +211,9 @@ namespace dce {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload mesh!");
 		}
 
-		const auto* const vertex_buffer_mem = bgfx::makeRef(this->vertices_.data(), static_cast<std::uint32_t>(this->vertices_.size() * VERTEX_LAYOUT.getStride()), nullptr, nullptr);
+		const auto* const vertex_buffer_mem = bgfx::makeRef(this->vertices_.data(),
+		                                                    static_cast<std::uint32_t>(this->vertices_.size() *
+			                                                    VERTEX_LAYOUT.getStride()), nullptr, nullptr);
 		[[unlikely]] if (vertex_buffer_mem == nullptr) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload mesh!");
 		}
@@ -244,7 +249,8 @@ namespace dce {
 	auto MeshImporteur::load(std::filesystem::path&& _path) const -> std::shared_ptr<Mesh> {
 		Assimp::Importer importer;
 
-		constexpr unsigned flags = aiProcess_JoinIdenticalVertices | aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_GenSmoothNormals | aiProcess_ConvertToLeftHanded;
+		constexpr unsigned flags = aiProcess_JoinIdenticalVertices | aiProcess_Triangulate | aiProcess_GenUVCoords |
+			aiProcess_GenSmoothNormals | aiProcess_ConvertToLeftHanded;
 
 		//importer.SetPropertyFloat(AI_CONFIG_GLOBAL_SCALE_FACTOR_KEY, .1f);
 

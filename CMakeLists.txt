@@ -141,10 +141,7 @@ add_library(
     "include/dce/utils.hpp" 
     "source/utils.cpp" 
     "source/scripting/scripting.hpp"
-    "source/scripting/scripting.cpp" 
-    "source/scripting/lua/luasys.hpp" 
-    "source/scripting/lua/luasys.cpp"
-    "source/scripting/lua/lua.hpp" )
+    "source/scripting/scripting.cpp")
 
 include("extern/CMakeLists.txt")
 

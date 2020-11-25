@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -262,7 +261,8 @@ namespace dce::gui::widgets {
 						[[unlikely]] if (Manipulate(VIEW, PROJ, this->modifier_, ImGuizmo::WORLD, value_ptr(matrix))) {
 							glm::vec3 skew;
 							glm::vec4 perspective;
-							decompose(matrix, transform.scale, transform.rotation, transform.position, skew, perspective);
+							decompose(matrix, transform.scale, transform.rotation, transform.position, skew,
+							          perspective);
 						}
 					}
 				}
@@ -281,7 +281,8 @@ namespace dce::gui::widgets {
 								char* path = nullptr;
 								open_file_dialog(path, MESH_FILE_FILTER, this->current_path_.c_str());
 								[[likely]] if (path) {
-									renderer.mesh = _resource_manager.mesh_cache.load<MeshImporteur>(_resource_manager.gen_id(), path);
+									renderer.mesh = _resource_manager.mesh_cache.load<MeshImporteur>(
+										_resource_manager.gen_id(), path);
 								}
 							}
 						}
@@ -299,7 +300,8 @@ namespace dce::gui::widgets {
 								char* path = nullptr;
 								open_file_dialog(path, TEX_FILE_FILTER, this->current_path_.c_str());
 								[[likely]] if (path) {
-									props.albedo = _resource_manager.texture_cache.load<TextureImporteur>(_resource_manager.gen_id(), path);
+									props.albedo = _resource_manager.texture_cache.load<TextureImporteur>(
+										_resource_manager.gen_id(), path);
 								}
 							}
 						}
@@ -314,7 +316,8 @@ namespace dce::gui::widgets {
 								char* path = nullptr;
 								open_file_dialog(path, TEX_FILE_FILTER, this->current_path_.c_str());
 								[[likely]] if (path) {
-									props.albedo = _resource_manager.texture_cache.load<TextureImporteur>(_resource_manager.gen_id(), path);
+									props.albedo = _resource_manager.texture_cache.load<TextureImporteur>(
+										_resource_manager.gen_id(), path);
 								}
 							}
 							ColorPicker4("Diffuse Color", value_ptr(props.color), ImGuiColorEditFlags_PickerHueWheel);

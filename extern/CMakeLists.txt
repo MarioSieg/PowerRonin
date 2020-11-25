@@ -34,6 +34,3 @@ add_subdirectory("extern/bullet3")
 target_link_libraries("dreamcast_runtime" "BulletDynamics")
 target_link_libraries("dreamcast_runtime" "BulletCollision")
 target_link_libraries("dreamcast_runtime" "LinearMath")
-
-add_subdirectory("extern/luajit")
-target_link_libraries("dreamcast_runtime" "liblua-static")

@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -214,7 +213,8 @@ namespace dce::gui::widgets {
 					SameLine();
 					TextUnformatted(_mesh->get_file_path().filename().string().c_str());
 					if (IsItemHovered()) {
-						const auto size = _mesh->get_vertices().size() * sizeof(Vertex) + _mesh->get_indices().size() * sizeof std::uint16_t;
+						const auto size = _mesh->get_vertices().size() * sizeof(Vertex) + _mesh->get_indices().size() *
+							sizeof std::uint16_t;
 						BeginTooltip();
 						TextUnformatted(_mesh->is_uploaded() ? "Uploaded: yes" : "Uploaded: no");
 						Text("Vertices: %zu", _mesh->get_vertices().size());

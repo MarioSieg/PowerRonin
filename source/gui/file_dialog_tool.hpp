@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -174,7 +173,8 @@
 namespace dce::gui {
 	extern void open_file_dialog(char*& _out, const char* _filter = nullptr, const char* _default_path = nullptr);
 
-	extern void open_files_dialog(void (&_callback)(const char*), const char* _filter = nullptr, const char* _default_path = nullptr);
+	extern void open_files_dialog(void (&_callback)(const char*), const char* _filter = nullptr,
+	                              const char* _default_path = nullptr);
 
 	extern void save_file_dialog(char*& _out, const char* _filter = nullptr, const char* _default_path = nullptr);
 }

@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -177,11 +176,14 @@
 namespace dce {
 	class IResource;
 
-	template <typename Importeur, typename Resource> requires std::is_base_of_v<IResource, Resource> using ResourceImporteur = entt::resource_loader<Importeur, Resource>;
+	template <typename Importeur, typename Resource> requires std::is_base_of_v<IResource, Resource> using
+	ResourceImporteur = entt::resource_loader<Importeur, Resource>;
 
-	template <typename Resource> requires std::is_base_of_v<IResource, Resource>using ResourceCache = entt::resource_cache<Resource>;
+	template <typename Resource> requires std::is_base_of_v<IResource, Resource>using ResourceCache =
+	entt::resource_cache<Resource>;
 
-	template <typename Resource> requires std::is_base_of_v<IResource, Resource>using RRef = entt::resource_handle<Resource>;
+	template <typename Resource> requires std::is_base_of_v<IResource, Resource>using RRef = entt::resource_handle<
+		Resource>;
 
 	class IResource {
 	public:
@@ -202,7 +204,8 @@ namespace dce {
 
 		[[nodiscard]] auto is_uploaded() const noexcept -> bool;
 
-		template <typename T, typename... Q> requires std::is_base_of_v<IResource, T> [[nodiscard]] static auto allocate(Q&&..._args) -> std::shared_ptr<T>;
+		template <typename T, typename... Q> requires std::is_base_of_v<IResource, T> [[nodiscard]] static auto
+		allocate(Q&&..._args) -> std::shared_ptr<T>;
 
 	protected:
 		IResource() = default;
@@ -210,7 +213,8 @@ namespace dce {
 		bool uploaded_ = false;
 	};
 
-	template <typename T, typename ... Q> requires std::is_base_of_v<IResource, T>auto IResource::allocate(Q&&... _args) -> std::shared_ptr<T> {
+	template <typename T, typename ... Q> requires std::is_base_of_v<IResource, T>auto IResource::allocate(
+		Q&&... _args) -> std::shared_ptr<T> {
 		return std::shared_ptr<T>(new T(_args...), [](T* const _ptr) {
 			if (_ptr) {
 				_ptr->offload();

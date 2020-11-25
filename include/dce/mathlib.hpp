@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -188,6 +187,9 @@ namespace dce::math {
 	inline const Vector3<> WEST = {-1, 0, 0};
 
 	inline auto rgba_to_rgba_norm(const std::uint32_t _rgba) noexcept -> Color<> {
-		return Color<>{(_rgba >> 24 & 0xFF) / 255.f, (_rgba >> 16 & 0xFF) / 255.f, (_rgba >> 8 & 0xFF) / 255.f, (_rgba & 0xFF) / 255.f};
+		return Color<>{
+			(_rgba >> 24 & 0xFF) / 255.f, (_rgba >> 16 & 0xFF) / 255.f, (_rgba >> 8 & 0xFF) / 255.f,
+			(_rgba & 0xFF) / 255.f
+		};
 	}
 }

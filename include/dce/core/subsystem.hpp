@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -198,7 +197,8 @@ namespace dce {
 			friend class Kernel;
 
 		protected:
-			ISubsystem(std::string_view name, std::underlying_type<ServiceEvents::Enum>::type subscribed_events) noexcept;
+			ISubsystem(std::string_view name,
+			           std::underlying_type<ServiceEvents::Enum>::type subscribed_events) noexcept;
 
 		public:
 			/* Name of the subsystem */

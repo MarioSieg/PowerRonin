@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -178,6 +177,7 @@ namespace dce {
 		if (!stream) {
 			return {};
 		}
-		return std::vector<std::byte>(std::istreambuf_iterator<std::byte>(stream), std::istreambuf_iterator<std::byte>());
+		return std::vector<std::byte>(std::istreambuf_iterator<std::byte>(stream),
+		                              std::istreambuf_iterator<std::byte>());
 	}
 }

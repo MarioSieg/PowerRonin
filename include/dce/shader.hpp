@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -196,7 +195,8 @@ namespace dce {
 
 		[[nodiscard]] auto get_vertex_shader_bytecode() const noexcept -> const std::vector<std::byte>&;
 
-		[[nodiscard]] auto get_fragment_shader_bytecode() const noexcept -> const std::optional<std::vector<std::byte>>&;
+		[[nodiscard]] auto
+		get_fragment_shader_bytecode() const noexcept -> const std::optional<std::vector<std::byte>>&;
 
 		[[nodiscard]] auto get_vertex_shader_textcode() const noexcept -> const std::optional<std::string>&;
 
@@ -204,7 +204,8 @@ namespace dce {
 
 		[[nodiscard]] auto get_program_id() const noexcept -> std::uint16_t;
 
-		[[nodiscard]] auto get_uniforms() const noexcept -> const std::unordered_map<std::string_view, std::tuple<UniformType, std::uint16_t>>&;
+		[[nodiscard]] auto get_uniforms() const noexcept -> const std::unordered_map<
+			std::string_view, std::tuple<UniformType, std::uint16_t>>&;
 
 		void set_uniform(std::string_view _name, const Vector4<>& _value) const noexcept;
 		void set_uniform(std::string_view _name, const Matrix3x3<>& _value) const noexcept;
@@ -233,7 +234,9 @@ namespace dce {
 
 	class ShaderImporteur final : public ResourceImporteur<ShaderImporteur, Shader> {
 	public:
-		auto load(std::filesystem::path&& _path, std::unordered_map<std::string_view, std::tuple<UniformType, std::uint16_t>>&& _uniforms) const -> std::shared_ptr<Shader>;
+		auto load(std::filesystem::path&& _path,
+		          std::unordered_map<std::string_view, std::tuple<UniformType, std::uint16_t>>&& _uniforms) const ->
+		std::shared_ptr<Shader>;
 	};
 
 	class ShaderCompiler final : public ResourceImporteur<ShaderCompiler, Shader> {

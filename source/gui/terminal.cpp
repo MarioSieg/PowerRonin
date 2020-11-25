@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -271,7 +270,8 @@ namespace dce::gui {
 					EndTooltip();
 				}
 				[[unlikely]] if (history_forward && !history.empty()) {
-					const auto i = std::clamp<std::size_t>(history.size() - this->history_index_ - 1, 0, history.size() - 1);
+					const auto i = std::clamp<std::size_t>(history.size() - this->history_index_ - 1, 0,
+					                                       history.size() - 1);
 					const auto& prev_command = history[i];
 					prev_command.copy(this->buffer_.data(), BUFFER_SIZE);
 					++this->history_index_;
@@ -301,10 +301,12 @@ namespace dce::gui {
 				[[unlikely]] if (get_input_ok) {
 					if (is_input_valid) {
 						auto dyn_str = std::string(this->buffer_.begin(), this->buffer_.end());
-						switch (auto& proto = _state.protocol(); _state.command_db().analyze_and_call(_state, std::move(dyn_str))) {
+						switch (auto& proto = _state.protocol(); _state.command_db().analyze_and_call(
+							_state, std::move(dyn_str))) {
 						case CommandExecutionResult::COMMAND_DOES_NOT_EXIST: proto.error("Command does not exist!");
 							break;
-						case CommandExecutionResult::ARGS_SEPARATOR_MISSING: proto.error("Missing '{}' as separator!", CmdDB::ARGUMENT_SEPARATOR);
+						case CommandExecutionResult::ARGS_SEPARATOR_MISSING: proto.error(
+								"Missing '{}' as separator!", CmdDB::ARGUMENT_SEPARATOR);
 							break;
 						case CommandExecutionResult::NO_ARGS_PROVIDED: proto.error("Missing arguments!");
 							break;

@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -191,7 +190,8 @@ namespace dce {
 
 		const auto format = static_cast<bgfx::TextureFormat::Enum>(this->format_);
 
-		const auto* const mem = bgfx::makeRef(this->texels_.data(), static_cast<std::uint32_t>(this->size_), nullptr, nullptr);
+		const auto* const mem = bgfx::makeRef(this->texels_.data(), static_cast<std::uint32_t>(this->size_), nullptr,
+		                                      nullptr);
 		[[unlikely]] if (mem == nullptr) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload texture!");
 		}
@@ -200,7 +200,8 @@ namespace dce {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload texture!");
 		}
 
-		const bgfx::TextureHandle texture_handle = createTexture2D(this->width_, this->height_, this->mipmap_count_ > 1, 0, format, 0, mem);
+		const bgfx::TextureHandle texture_handle = createTexture2D(this->width_, this->height_, this->mipmap_count_ > 1,
+		                                                           0, format, 0, mem);
 		[[unlikely]] if (!isValid(texture_handle)) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload texture!");
 		}
@@ -230,7 +231,13 @@ namespace dce {
 			}
 
 			bx::DefaultAllocator allocator;
-			bimg::ImageContainer* const image = ext == ".dds" ? bimg::imageParseDds(&allocator, blob.data(), static_cast<std::uint32_t>(blob.size()), nullptr) : bimg::imageParseKtx(&allocator, blob.data(), static_cast<std::uint32_t>(blob.size()), nullptr);
+			bimg::ImageContainer* const image = ext == ".dds"
+				                                    ? bimg::imageParseDds(
+					                                    &allocator, blob.data(),
+					                                    static_cast<std::uint32_t>(blob.size()), nullptr)
+				                                    : bimg::imageParseKtx(
+					                                    &allocator, blob.data(),
+					                                    static_cast<std::uint32_t>(blob.size()), nullptr);
 			[[unlikely]] if (!image) {
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load texture from file!");
 			}
@@ -247,7 +254,8 @@ namespace dce {
 			imageFree(image);
 
 			bgfx::TextureInfo info = {};
-			calcTextureSize(info, static_cast<std::uint16_t>(self->width_), static_cast<std::uint16_t>(self->height_), 1, false, self->mipmap_count_, 1, static_cast<bgfx::TextureFormat::Enum>(self->format_));
+			calcTextureSize(info, static_cast<std::uint16_t>(self->width_), static_cast<std::uint16_t>(self->height_),
+			                1, false, self->mipmap_count_, 1, static_cast<bgfx::TextureFormat::Enum>(self->format_));
 
 			self->size_ = info.storageSize;
 			self->bits_per_pel_ = info.bitsPerPixel;
@@ -288,7 +296,8 @@ namespace dce {
 			self->mipmap_count_ = 1;
 
 			bgfx::TextureInfo info = {};
-			calcTextureSize(info, static_cast<std::uint16_t>(self->width_), static_cast<std::uint16_t>(self->height_), 1, false, false, 1, static_cast<bgfx::TextureFormat::Enum>(self->format_));
+			calcTextureSize(info, static_cast<std::uint16_t>(self->width_), static_cast<std::uint16_t>(self->height_),
+			                1, false, false, 1, static_cast<bgfx::TextureFormat::Enum>(self->format_));
 
 			self->size_ = info.storageSize;
 			self->bits_per_pel_ = info.bitsPerPixel;

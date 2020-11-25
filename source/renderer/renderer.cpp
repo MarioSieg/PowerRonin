@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -240,9 +239,13 @@ namespace dce::renderer {
 
 	void Renderer::set_per_frame_buffer(const Scenery::Configuration& _config) {
 		const float delta = calculate_sun_orbit(6, math::radians(23.4f));
-		const auto sun_dir = calculate_sun_dir(_config.lighting.sun.hour, _config.lighting.sun.latitude, delta, math::UP, math::NORTH);
+		const auto sun_dir = calculate_sun_dir(_config.lighting.sun.hour, _config.lighting.sun.latitude, delta,
+		                                       math::UP, math::NORTH);
 
-		const PerFrameBuffer per_frame = {.sun_color = _config.lighting.sun.color.xyzz, .sun_dir = sun_dir.xyzz, .ambient_color = _config.lighting.const_ambient_color.xyzz,};
+		const PerFrameBuffer per_frame = {
+			.sun_color = _config.lighting.sun.color.xyzz, .sun_dir = sun_dir.xyzz,
+			.ambient_color = _config.lighting.const_ambient_color.xyzz,
+		};
 
 		this->shader_bucket_.per_frame(per_frame);
 	}

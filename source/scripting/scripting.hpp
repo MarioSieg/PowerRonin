@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -172,7 +171,6 @@
 #pragma once
 
 #include "../../include/dce/core/kernel.hpp"
-#include "lua/luasys.hpp"
 
 namespace dce::scripting {
 	class Scripting final : public core::ISubsystem {
@@ -196,7 +194,5 @@ namespace dce::scripting {
 		virtual auto on_post_tick([[maybe_unused]] State& _state) -> bool override;
 		virtual auto on_pre_shutdown([[maybe_unused]] State& _state) -> bool override;
 		virtual auto on_post_shutdown([[maybe_unused]] State& _state) -> bool override;
-
-		LuaSystem lua_system_ = {};
 	};
 }

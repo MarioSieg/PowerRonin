@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -173,12 +172,18 @@
 
 namespace dce {
 	void ResourceManager::load_system_resources() {
-		this->system_resources.textures.black_1x1 = this->texture_cache.load<TextureImporteur>(this->gen_id(), "textures/common/unit/black.png");
-		this->system_resources.textures.white_1x1 = this->texture_cache.load<TextureImporteur>(this->gen_id(), "textures/common/unit/white.png");
-		this->system_resources.textures.error_marker = this->texture_cache.load<TextureImporteur>(this->gen_id(), "textures/common/invalid.dds");
-		this->system_resources.textures.checkerboard = this->texture_cache.load<TextureImporteur>(this->gen_id(), "textures/common/checkerboard.dds");
+		this->system_resources.textures.black_1x1 = this->texture_cache.load<TextureImporteur>(
+			this->gen_id(), "textures/common/unit/black.png");
+		this->system_resources.textures.white_1x1 = this->texture_cache.load<TextureImporteur>(
+			this->gen_id(), "textures/common/unit/white.png");
+		this->system_resources.textures.error_marker = this->texture_cache.load<TextureImporteur>(
+			this->gen_id(), "textures/common/invalid.dds");
+		this->system_resources.textures.checkerboard = this->texture_cache.load<TextureImporteur>(
+			this->gen_id(), "textures/common/checkerboard.dds");
 
-		this->system_resources.meshes.error_text = this->mesh_cache.load<MeshImporteur>(this->gen_id(), "meshes/common/invalid.obj");
-		this->system_resources.meshes.cube = this->mesh_cache.load<MeshImporteur>(this->gen_id(), "meshes/common/cube.obj");
+		this->system_resources.meshes.error_text = this->mesh_cache.load<MeshImporteur>(
+			this->gen_id(), "meshes/common/invalid.obj");
+		this->system_resources.meshes.cube = this->mesh_cache.load<MeshImporteur>(
+			this->gen_id(), "meshes/common/cube.obj");
 	}
 } // namespace dce // namespace dce

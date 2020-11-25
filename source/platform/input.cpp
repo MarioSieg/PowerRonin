@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -302,7 +301,8 @@ namespace dce::platform {
 	void GuiInput::update_cursor() {
 		auto* const win = static_cast<GLFWwindow*>(this->window);
 		auto& io = ImGui::GetIO();
-		if ((io.ConfigFlags & ImGuiConfigFlags_NoMouseCursorChange) != 0 || glfwGetInputMode(win, GLFW_CURSOR) == GLFW_CURSOR_DISABLED) {
+		if ((io.ConfigFlags & ImGuiConfigFlags_NoMouseCursorChange) != 0 || glfwGetInputMode(win, GLFW_CURSOR) ==
+			GLFW_CURSOR_DISABLED) {
 			return;
 		}
 
@@ -313,7 +313,9 @@ namespace dce::platform {
 		}
 		else {
 			// Show OS mouse cursor:
-			glfwSetCursor(win, this->cursors[gui_mouse_cursor] != nullptr ? this->cursors[gui_mouse_cursor] : this->cursors[ImGuiMouseCursor_Arrow]);
+			glfwSetCursor(win, this->cursors[gui_mouse_cursor] != nullptr
+				                   ? this->cursors[gui_mouse_cursor]
+				                   : this->cursors[ImGuiMouseCursor_Arrow]);
 			glfwSetInputMode(win, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 		}
 	}

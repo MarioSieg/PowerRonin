@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -217,7 +216,9 @@ namespace dce {
 		}
 
 		/* Call functor. */
-		return cmd(_state, std::move(_in)) ? CommandExecutionResult::OK : CommandExecutionResult::COMMAND_FUNCTOR_FAILED;
+		return cmd(_state, std::move(_in))
+			       ? CommandExecutionResult::OK
+			       : CommandExecutionResult::COMMAND_FUNCTOR_FAILED;
 	}
 
 	auto CmdDB::call(const std::string_view _command, State& _state, std::string&& _args) -> bool {
@@ -299,7 +300,10 @@ namespace dce {
 				return true;
 			};
 
-			registry += Command{.token = "help", .help = "Displays all registered commands with a short help message.", .functor = +functor,};
+			registry += Command{
+				.token = "help", .help = "Displays all registered commands with a short help message.",
+				.functor = +functor,
+			};
 		}
 
 		/* config */
@@ -318,7 +322,9 @@ namespace dce {
 				return true;
 			};
 
-			registry += Command{.token = "cfg", .help = "Displays the current configuration as JSON.", .functor = +functor};
+			registry += Command{
+				.token = "cfg", .help = "Displays the current configuration as JSON.", .functor = +functor
+			};
 		}
 
 		/* style */
@@ -343,7 +349,10 @@ namespace dce {
 				return true;
 			};
 
-			registry += Command{.token = "theme", .help = "Change the current theme of the system overlay.", .functor = +functor, .requires_args = true,};
+			registry += Command{
+				.token = "theme", .help = "Change the current theme of the system overlay.", .functor = +functor,
+				.requires_args = true,
+			};
 		}
 
 		/* style_alpha */
@@ -360,7 +369,10 @@ namespace dce {
 				return true;
 			};
 
-			registry += Command{.token = "alpha", .help = "Changes transparency of the whole system overlay.", .functor = +functor, .requires_args = true};
+			registry += Command{
+				.token = "alpha", .help = "Changes transparency of the whole system overlay.", .functor = +functor,
+				.requires_args = true
+			};
 		}
 
 		/* entity report */

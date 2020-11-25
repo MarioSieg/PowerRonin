@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -178,9 +177,11 @@ namespace dce::platform {
 	bool (*MOUSE_STATES)[5] = nullptr;
 
 	void mouse_button_callback([[maybe_unused]] GLFWwindow* const /*win*/
-	                           , [[maybe_unused]] const int _button, [[maybe_unused]] const int _action, [[maybe_unused]] const int /*mods*/) noexcept {
+	                           , [[maybe_unused]] const int _button, [[maybe_unused]] const int _action,
+	                           [[maybe_unused]] const int /*mods*/) noexcept {
 		assert(MOUSE_STATES);
-		[[likely]] if (_action == GLFW_PRESS && _button >= 0 && _button < static_cast<int>(sizeof *MOUSE_STATES / sizeof **MOUSE_STATES)) {
+		[[likely]] if (_action == GLFW_PRESS && _button >= 0 && _button < static_cast<int>(sizeof *MOUSE_STATES / sizeof
+			**MOUSE_STATES)) {
 			*MOUSE_STATES[_button] = true;
 		}
 	}
@@ -192,7 +193,8 @@ namespace dce::platform {
 		io.MouseWheel += static_cast<float>(_y);
 	}
 
-	void key_callback([[maybe_unused]] GLFWwindow* const /*win*/, const int _key, [[maybe_unused]] const int /*scancode*/
+	void key_callback([[maybe_unused]] GLFWwindow* const /*win*/, const int _key,
+	                  [[maybe_unused]] const int /*scancode*/
 	                  , const int _action, [[maybe_unused]] const int /*mods*/) noexcept {
 		auto& io = ImGui::GetIO();
 		[[likely]] if (_action == GLFW_PRESS) {

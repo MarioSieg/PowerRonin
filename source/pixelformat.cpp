@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -802,7 +801,8 @@ namespace dce {
 		// ReSharper disable once CppRedundantParentheses
 		const std::int32_t expbias = (1 << (expbits - 1)) - 1;
 		// ReSharper disable once CppRedundantParentheses
-		const float sharedexpmax = static_cast<float>(expmax) / static_cast<float>(expmax + 1) * static_cast<float>(1 << (expmax - expbias));
+		const float sharedexpmax = static_cast<float>(expmax) / static_cast<float>(expmax + 1) * static_cast<float>(1 <<
+			(expmax - expbias));
 
 		const float rr = std::clamp(src1[0], 0.0F, sharedexpmax);
 		const float gg = std::clamp(src1[1], 0.0F, sharedexpmax);
@@ -812,7 +812,8 @@ namespace dce {
 			float ff;
 			std::uint32_t ui;
 		} cast = {mm};
-		std::int32_t expshared = static_cast<std::int32_t>(std::max(static_cast<std::uint32_t>(-expbias - 1), (cast.ui >> 23 & 0xff) - 127)) + 1 + expbias;
+		std::int32_t expshared = static_cast<std::int32_t>(std::max(static_cast<std::uint32_t>(-expbias - 1),
+		                                                            (cast.ui >> 23 & 0xff) - 127)) + 1 + expbias;
 		float denom = std::pow(2.0F, static_cast<float>(expshared - expbias - mantissabits));
 
 		if (1 << mantissabits == static_cast<std::int32_t>(std::round(mm / denom))) {
@@ -843,7 +844,8 @@ namespace dce {
 		float tmp[4];
 		encodergbe<9, 5>(tmp, src1);
 
-		*static_cast<std::uint32_t*>(dst1) = 0 | static_cast<std::uint32_t>(tmp[0]) | static_cast<std::uint32_t>(tmp[1]) << 9 | static_cast<std::uint32_t>(tmp[2]) << 18 | static_cast<std::uint32_t>(tmp[3]) << 27;
+		*static_cast<std::uint32_t*>(dst1) = 0 | static_cast<std::uint32_t>(tmp[0]) | static_cast<std::uint32_t>(tmp[1])
+			<< 9 | static_cast<std::uint32_t>(tmp[2]) << 18 | static_cast<std::uint32_t>(tmp[3]) << 27;
 	}
 
 	void unpack_rgb9e5f(float* dst1, const void* src1) noexcept {
@@ -887,7 +889,9 @@ namespace dce {
 
 	// r5g6b5
 	void pack_r5g6b5(void* dst1, const float* src1) noexcept {
-		*static_cast<std::uint16_t*>(dst1) = 0 | static_cast<std::uint16_t>(to_unorm(src1[0], 31.0F) << 11) | static_cast<std::uint16_t>(to_unorm(src1[1], 63.0F) << 5) | static_cast<std::uint16_t>(to_unorm(src1[2], 31.0F));
+		*static_cast<std::uint16_t*>(dst1) = 0 | static_cast<std::uint16_t>(to_unorm(src1[0], 31.0F) << 11) |
+			static_cast<std::uint16_t>(to_unorm(src1[1], 63.0F) << 5) | static_cast<std::uint16_t>(to_unorm(
+				src1[2], 31.0F));
 	}
 
 	void unpack_r5g6b5(float* dst1, const void* src1) noexcept {
@@ -900,7 +904,10 @@ namespace dce {
 
 	// rgba4
 	void pack_rgba4(void* dst1, const float* src1) noexcept {
-		*static_cast<std::uint16_t*>(dst1) = 0 | static_cast<std::uint16_t>(to_unorm(src1[0], 15.0F)) | static_cast<std::uint16_t>(to_unorm(src1[1], 15.0F) << 4) | static_cast<std::uint16_t>(to_unorm(src1[2], 15.0F) << 8) | static_cast<std::uint16_t>(to_unorm(src1[3], 15.0F) << 12);
+		*static_cast<std::uint16_t*>(dst1) = 0 | static_cast<std::uint16_t>(to_unorm(src1[0], 15.0F)) | static_cast<
+				std::uint16_t>(to_unorm(src1[1], 15.0F) << 4) | static_cast<std::uint16_t>(to_unorm(src1[2], 15.0F) << 8
+			) |
+			static_cast<std::uint16_t>(to_unorm(src1[3], 15.0F) << 12);
 	}
 
 	void unpack_rgba4(float* dst1, const void* src1) noexcept {
@@ -913,7 +920,9 @@ namespace dce {
 
 	// rgba4
 	void pack_bgra4(void* dst1, const float* src1) noexcept {
-		*static_cast<std::uint16_t*>(dst1) = 0 | static_cast<std::uint16_t>(to_unorm(src1[0], 15.0F) << 8) | static_cast<std::uint16_t>(to_unorm(src1[1], 15.0F) << 4) | static_cast<std::uint16_t>(to_unorm(src1[2], 15.0F)) | static_cast<std::uint16_t>(to_unorm(src1[3], 15.0F) << 12);
+		*static_cast<std::uint16_t*>(dst1) = 0 | static_cast<std::uint16_t>(to_unorm(src1[0], 15.0F) << 8) | static_cast
+			<std::uint16_t>(to_unorm(src1[1], 15.0F) << 4) | static_cast<std::uint16_t>(to_unorm(src1[2], 15.0F)) |
+			static_cast<std::uint16_t>(to_unorm(src1[3], 15.0F) << 12);
 	}
 
 	void unpack_bgra4(float* dst1, const void* src1) noexcept {
@@ -926,7 +935,10 @@ namespace dce {
 
 	// rgb5a1
 	void pack_rgb5a1(void* dst1, const float* src1) noexcept {
-		*static_cast<std::uint16_t*>(dst1) = 0 | static_cast<std::uint16_t>(to_unorm(src1[0], 31.0F)) | static_cast<std::uint16_t>(to_unorm(src1[1], 31.0F) << 5) | static_cast<std::uint16_t>(to_unorm(src1[2], 31.0F) << 10) | static_cast<std::uint16_t>(to_unorm(src1[3], 1.0F) << 15);
+		*static_cast<std::uint16_t*>(dst1) = 0 | static_cast<std::uint16_t>(to_unorm(src1[0], 31.0F)) | static_cast<
+				std::uint16_t>(to_unorm(src1[1], 31.0F) << 5) | static_cast<std::uint16_t>(to_unorm(src1[2], 31.0F) <<
+				10) |
+			static_cast<std::uint16_t>(to_unorm(src1[3], 1.0F) << 15);
 	}
 
 	void unpack_rgb5a1(float* dst1, const void* src1) noexcept {
@@ -939,7 +951,9 @@ namespace dce {
 
 	// bgr5a1
 	void pack_bgr5a1(void* dst1, const float* src1) noexcept {
-		*static_cast<std::uint16_t*>(dst1) = 0 | static_cast<std::uint16_t>(to_unorm(src1[0], 31.0F) << 10) | static_cast<std::uint16_t>(to_unorm(src1[1], 31.0F) << 5) | static_cast<std::uint16_t>(to_unorm(src1[2], 31.0F)) | static_cast<std::uint16_t>(to_unorm(src1[3], 1.0F) << 15);
+		*static_cast<std::uint16_t*>(dst1) = 0 | static_cast<std::uint16_t>(to_unorm(src1[0], 31.0F) << 10) |
+			static_cast<std::uint16_t>(to_unorm(src1[1], 31.0F) << 5) | static_cast<std::uint16_t>(
+				to_unorm(src1[2], 31.0F)) | static_cast<std::uint16_t>(to_unorm(src1[3], 1.0F) << 15);
 	}
 
 	void unpack_bgr5a1(float* dst1, const void* src1) noexcept {
@@ -952,7 +966,8 @@ namespace dce {
 
 	// rgb10a2
 	void pack_rgb10a2(void* dst1, const float* src1) noexcept {
-		*static_cast<std::uint32_t*>(dst1) = 0 | to_unorm(src1[0], 1023.0F) | to_unorm(src1[1], 1023.0F) << 10 | to_unorm(src1[2], 1023.0F) << 20 | to_unorm(src1[3], 3.0F) << 30;
+		*static_cast<std::uint32_t*>(dst1) = 0 | to_unorm(src1[0], 1023.0F) | to_unorm(src1[1], 1023.0F) << 10 |
+			to_unorm(src1[2], 1023.0F) << 20 | to_unorm(src1[3], 3.0F) << 30;
 	}
 
 	void unpack_rgb10a2(float* dst1, const void* src1) noexcept {
@@ -965,7 +980,8 @@ namespace dce {
 
 	// rg11b10f
 	void pack_rg11b10f(void* dst1, const float* src1) noexcept {
-		*static_cast<std::uint32_t*>(dst1) = 0 | half_from_float(src1[0]) >> 4 & 0x7ff | half_from_float(src1[0]) << 7 & 0x3ff800 | half_from_float(src1[0]) << 17 & 0xffc00000;
+		*static_cast<std::uint32_t*>(dst1) = 0 | half_from_float(src1[0]) >> 4 & 0x7ff | half_from_float(src1[0]) << 7 &
+			0x3ff800 | half_from_float(src1[0]) << 17 & 0xffc00000;
 	}
 
 	void unpack_rg11b10f(float* dst1, const void* src1) noexcept {

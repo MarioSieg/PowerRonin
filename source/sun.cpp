@@ -1,5 +1,4 @@
-// 
-//                                 Apache License
+//  Apache License
 //                            Version 2.0, January 2004
 //                         http://www.apache.org/licenses/
 //    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
@@ -173,11 +172,14 @@
 #include <cmath>
 
 namespace dce {
-	auto calculate_sun_dir(float _hour, float _latitude, const float _delta, const Vector3<>& _up, const Vector3<>& _north) noexcept -> Vector3<> {
+	auto calculate_sun_dir(float _hour, float _latitude, const float _delta, const Vector3<>& _up,
+	                       const Vector3<>& _north) noexcept -> Vector3<> {
 		_latitude = math::radians(_latitude);
 		_hour *= math::pi<float>() / 12.f;
-		const auto azimuth = std::atan2(std::sin(_hour), std::cos(_hour) * std::sin(_latitude) - std::tan(_delta) * std::cos(_latitude));
-		const auto altitude = std::asin(std::sin(_latitude) * std::sin(_delta) + std::cos(_latitude) * std::cos(_delta) * std::cos(_hour));
+		const auto azimuth = std::atan2(std::sin(_hour),
+		                                std::cos(_hour) * std::sin(_latitude) - std::tan(_delta) * std::cos(_latitude));
+		const auto altitude = std::asin(
+			std::sin(_latitude) * std::sin(_delta) + std::cos(_latitude) * std::cos(_delta) * std::cos(_hour));
 		auto rotation = math::identity<Quaternion<>>();
 		rotation = rotate(rotation, -azimuth, _up);
 		const Vector3<> dir = _north * rotation;
