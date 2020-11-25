@@ -24,9 +24,6 @@ target_link_libraries("dreamcast_runtime" "assimp")
 add_subdirectory("extern/glm")
 target_link_libraries("dreamcast_runtime" "glm")
 
-add_subdirectory("extern/tbb")
-target_link_libraries("dreamcast_runtime" "tbb")
-
 add_subdirectory("extern/infoware")
 target_link_libraries("dreamcast_runtime" "infoware")
 
@@ -37,3 +34,6 @@ add_subdirectory("extern/bullet3")
 target_link_libraries("dreamcast_runtime" "BulletDynamics")
 target_link_libraries("dreamcast_runtime" "BulletCollision")
 target_link_libraries("dreamcast_runtime" "LinearMath")
+
+add_subdirectory("extern/luajit")
+target_link_libraries("liblua_static")
