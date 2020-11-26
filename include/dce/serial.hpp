@@ -176,6 +176,9 @@
 namespace dce {
 	using JsonStream = nlohmann::basic_json<>;
 
+	/// <summary>
+	/// Base interface for all serializable objects.
+	/// </summary>
 	class ISerializable {
 	public:
 		ISerializable() noexcept = default;
@@ -185,10 +188,12 @@ namespace dce {
 		auto operator=(ISerializable&&) noexcept -> ISerializable& = default;
 		virtual ~ISerializable() = default;
 
+		[[nodiscard]] virtual void serialize(JsonStream&) const = 0;
 
-		virtual auto serialize(JsonStream&) const -> bool = 0;
-		virtual auto deserialize(const JsonStream&) -> bool = 0;
-		[[nodiscard]] virtual auto serialize_to_file(const std::filesystem::path& /*path*/) const -> bool;
-		virtual auto deserialize_from_file(const std::filesystem::path& /*path*/) -> bool;
+		[[nodiscard]] virtual void deserialize(const JsonStream&) = 0;
+
+		[[nodiscard]] virtual auto serialize_to_file(const std::filesystem::path& _path) const -> bool;
+
+		[[nodiscard]] virtual auto deserialize_from_file(const std::filesystem::path& _path) -> bool;
 	};
 } // namespace dce // namespace dce

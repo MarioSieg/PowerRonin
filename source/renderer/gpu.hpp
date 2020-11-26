@@ -186,7 +186,9 @@ namespace dce {
 }
 
 namespace dce::renderer {
-	/* Represents a high level GPU which can draw stuff. */
+	/// <summary>
+	/// Represents a high level GPU which can draw stuff.
+	/// </summary>
 	class GPU final {
 	public:
 		GPU() noexcept = default;
@@ -196,52 +198,138 @@ namespace dce::renderer {
 		auto operator=(GPU&&) -> GPU& = delete;
 		~GPU() = default;
 
-		/* Initialize rendering backend. */
+		/// <summary>
+		/// Initialize rendering backend.
+		/// </summary>
+		/// <param name="_config"></param>
+		/// <param name="_proto"></param>
+		/// <returns></returns>
 		auto initialize_drivers(const Config& _config, AsyncProtocol& _proto) -> bool;
 
-		/* Shutdown rendering backend. */
+		/// <summary>
+		/// Shutdown rendering backend.
+		/// </summary>
 		void shutdown_drivers() const;
 
-		/* Begin and clear frame. */
+		/// <summary>
+		/// Begin and clear frame.
+		/// </summary>
+		/// <returns></returns>
 		void begin_frame() const noexcept;
 
-		/* Sort draws. (Call after gui before ordinary drawcalls) */
+		/// <summary>
+		/// Sort draws. (Call after gui before ordinary drawcalls)
+		/// </summary>
+		/// <param name="_view_id"></param>
+		/// <returns></returns>
 		void sort_drawcalls(bgfx::ViewId _view_id = 0) const noexcept;
 
-		/* End frame and kick render thread. */
+		/// <summary>
+		/// End frame and kick render thread.
+		/// </summary>
+		/// <returns></returns>
 		void end_frame() const noexcept;
 
-		/* Set camera matrices. */
+		/// <summary>
+		/// Set camera matrices.
+		/// </summary>
+		/// <param name="_view"></param>
+		/// <param name="_proj"></param>
+		/// <param name="_view_id"></param>
+		/// <returns></returns>
 		void set_camera(const Matrix4x4<>& _view, const Matrix4x4<>& _proj, bgfx::ViewId _view_id = 0) const noexcept;
 
-		/* Set mesh world transform matrix. */
+		/// <summary>
+		/// Set mesh world transform matrix.
+		/// </summary>
+		/// <param name="_transform"></param>
+		/// <returns></returns>
 		void set_transform(const Transform& _transform) const noexcept;
 
-		/* Set mesh buffers. */
+		/// <summary>
+		/// Set mesh world transform matrix.
+		/// </summary>
+		/// <param name="_transform"></param>
+		/// <returns></returns>
+		void set_transform(const float (&_matrix)[16]) const noexcept;
+
+		/// <summary>
+		/// Set mesh world transform matrix.
+		/// </summary>
+		/// <param name="_transform"></param>
+		/// <returns></returns>
+		void set_transform(const float* const _matrix) const noexcept;
+
+		/// <summary>
+		/// Set mesh buffers.
+		/// </summary>
+		/// <param name="_mesh"></param>
+		/// <returns></returns>
 		void set_mesh_buffer(const Mesh& _mesh) const noexcept;
 
-		/* Set texture. */
+		/// <summary>
+		/// Set texture.
+		/// </summary>
+		/// <param name="_texture"></param>
+		/// <param name="_sampler"></param>
+		/// <returns></returns>
 		void set_texture(const Texture& _texture, bgfx::UniformHandle _sampler) const noexcept;
 
-		/* Draw mesh */
+		/// <summary>
+		/// Draw mesh
+		/// </summary>
+		/// <param name="_shader"></param>
+		/// <param name="_view_id"></param>
+		/// <param name="_depth"></param>
+		/// <returns></returns>
 		void draw(bgfx::ProgramHandle _shader, bgfx::ViewId _view_id = 0, std::uint8_t _depth = 0) const noexcept;
 
-		/* Set uniform. */
+		/// <summary>
+		/// Set uniform.
+		/// </summary>
+		/// <param name="_handle"></param>
+		/// <param name="_value"></param>
+		/// <returns></returns>
 		void set_uniform(bgfx::UniformHandle _handle, const Vector4<>& _value) const noexcept;
 
-		/* Set uniform. */
+		/// <summary>
+		/// Set uniform.
+		/// </summary>
+		/// <param name="_handle"></param>
+		/// <param name="_value"></param>
+		/// <returns></returns>
 		void set_uniform(bgfx::UniformHandle _handle, const Matrix3x3<>& _value) const noexcept;
 
-		/* Set uniform. */
+		/// <summary>
+		/// Set uniform.
+		/// </summary>
+		/// <param name="_handle"></param>
+		/// <param name="_value"></param>
+		/// <returns></returns>
 		void set_uniform(bgfx::UniformHandle _handle, const Matrix4x4<>& _value) const noexcept;
 
-		/* Set uniform. */
+		/// <summary>
+		/// Set uniform.
+		/// </summary>
+		/// <param name="_handle"></param>
+		/// <param name="_value"></param>
+		/// <returns></returns>
 		void set_uniform(bgfx::UniformHandle _handle, const float (&_value)[4]) const noexcept;
 
-		/* Set uniform. */
+		/// <summary>
+		/// Set uniform.
+		/// </summary>
+		/// <param name="_handle"></param>
+		/// <param name="_value"></param>
+		/// <returns></returns>
 		void set_uniform(bgfx::UniformHandle _handle, const float (&_value)[9]) const noexcept;
 
-		/* Set uniform. */
+		/// <summary>
+		/// Set uniform.
+		/// </summary>
+		/// <param name="_handle"></param>
+		/// <param name="_value"></param>
+		/// <returns></returns>
 		void set_uniform(bgfx::UniformHandle _handle, const float (&_value)[16]) const noexcept;
 
 

@@ -171,22 +171,24 @@
 #pragma once
 
 #include "ecs.hpp"
+#include "serial.hpp"
 #include <filesystem>
 
 namespace dce {
-	class IResource;
-
-	template <typename Importeur, typename Resource> requires std::is_base_of_v<IResource, Resource> using
-	ResourceImporteur = entt::resource_loader<Importeur, Resource>;
-
-	template <typename Resource> requires std::is_base_of_v<IResource, Resource>using ResourceCache =
-	entt::resource_cache<Resource>;
-
-	template <typename Resource> requires std::is_base_of_v<IResource, Resource>using RRef = entt::resource_handle<
-		Resource>;
-
+	/// <summary>
+	/// Base class for all runtime resources.
+	/// </summary>
+	/// <typeparam name="M">Metadata type.</typeparam>
+	template <typename M>
 	class IResource {
+		static_assert(std::is_move_assignable_v<M>, "Resource metadata must be at least move assignable!");
+		static_assert(std::is_base_of_v<ISerializable, M>, "Resource metadata must be serializable!");
+		static_assert(std::is_default_constructible_v<M>, "Resource metadata must be default constructible!");
+
 	public:
+		using Meta = M;
+
+		static constexpr std::string_view METADATA_FILE_EXTENSION = ".meta";
 
 		IResource(const IResource&) = delete;
 		IResource(IResource&&) = delete;
@@ -194,32 +196,101 @@ namespace dce {
 		auto operator=(IResource&&) noexcept -> IResource& = default;
 		virtual ~IResource() = default;
 
-		/* Upload resource to target system. */
+		/// <summary>
+		/// Upload resource to target subsystem.
+		/// For example: upload texture from RAM to VRAM.
+		/// </summary>
 		virtual void upload() = 0;
 
-		/* Offload resource from target system. */
+		/// <summary>
+		/// Upload resource from target subsystem.
+		/// For example: delete texture from VRAM, but keep it in RAM to upload() it again if needed.
+		/// </summary>
 		virtual void offload() = 0;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>The file path of the resource.</returns>
 		[[nodiscard]] auto get_file_path() const noexcept -> const std::filesystem::path&;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>True if the resource is currently uploaded, else false..</returns>
 		[[nodiscard]] auto is_uploaded() const noexcept -> bool;
 
-		template <typename T, typename... Q> requires std::is_base_of_v<IResource, T> [[nodiscard]] static auto
-		allocate(Q&&..._args) -> std::shared_ptr<T>;
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>The metadata of the resource.</returns>
+		[[nodiscard]] auto get_meta_data() const noexcept -> const Meta&;
+
+		/// <summary>
+		/// Allocate resource memory.
+		/// </summary>
+		/// <typeparam name="T">The type of resource.</typeparam>
+		/// <typeparam name="...Q">The constructor arguments.</typeparam>
+		/// <param name="..._args">The constructor arguments.</param>
+		/// <returns>The shared_ptr with the allocated resource.</returns>
+		template <typename T, typename... Q> requires std::is_base_of_v<IResource<M>, T> [[nodiscard]] static auto allocate(Q&&... _args) -> std::shared_ptr<T>;
+
+		/// <summary>
+		/// Tries to load some resource metadata from a .meta file.
+		/// If it fails, it tries to create the meta file and returns
+		/// the default value of Meta.
+		/// </summary>
+		/// <param name="_res">The resource file path..</param>
+		/// <returns>The deserialized metadata or the default value.</returns>
+		[[nodiscard]] static auto load_meta_or_default(std::filesystem::path _res) -> Meta;
 
 	protected:
 		IResource() = default;
+		explicit IResource(Meta&& _meta) noexcept;
 		std::filesystem::path file_path_ = {};
-		bool uploaded_ = false;
+		bool is_uploaded_ = false;
+		Meta meta_data_ = {};
 	};
 
-	template <typename T, typename ... Q> requires std::is_base_of_v<IResource, T>auto IResource::allocate(
-		Q&&... _args) -> std::shared_ptr<T> {
+	template <typename M>
+	inline auto IResource<M>::is_uploaded() const noexcept -> bool {
+		return this->is_uploaded_;
+	}
+
+	template <typename M>
+	inline auto IResource<M>::get_meta_data() const noexcept -> const Meta& {
+		return this->meta_data_;
+	}
+
+	template <typename M>
+	template <typename T, typename ... Q> requires std::is_base_of_v<IResource<M>, T> auto IResource<M>::allocate(Q&&... _args) -> std::shared_ptr<T> {
 		return std::shared_ptr<T>(new T(_args...), [](T* const _ptr) {
-			if (_ptr) {
+			[[likely]] if (_ptr) {
 				_ptr->offload();
 				delete _ptr;
 			}
 		});
 	}
+
+	template <typename M>
+	inline auto IResource<M>::get_file_path() const noexcept -> const std::filesystem::path& {
+		return this->file_path_;
+	}
+
+	template <typename M>
+	inline auto IResource<M>::load_meta_or_default(std::filesystem::path _res) -> Meta {
+		_res.replace_extension(METADATA_FILE_EXTENSION);
+		Meta meta = {};
+		ISerializable* const ser = &meta;
+		try {
+			[[unlikely]] if (!ser->deserialize_from_file(_res)) {
+				auto _ = ser->serialize_to_file(_res); // Create metadata file if it does not exist.
+			}
+		}
+		catch (...) { }
+		return meta;
+	}
+
+	template <typename M>
+	inline IResource<M>::IResource(Meta&& _meta) noexcept : meta_data_(std::forward(_meta)) { }
 } // namespace dce // namespace dce

@@ -178,8 +178,7 @@ namespace dce::physics {
 		this->dispatcher_ = new btCollisionDispatcher(this->collision_configuration_);
 		this->broadphase_interface_ = new btDbvtBroadphase();
 		this->solver_ = new btSequentialImpulseConstraintSolver();
-		this->dynamics_world_ = new btDiscreteDynamicsWorld(this->dispatcher_, this->broadphase_interface_,
-		                                                    this->solver_, this->collision_configuration_);
+		this->dynamics_world_ = new btDiscreteDynamicsWorld(this->dispatcher_, this->broadphase_interface_, this->solver_, this->collision_configuration_);
 		this->dynamics_world_->setGravity({.0f, -10.f, .0f});
 		return true;
 	}

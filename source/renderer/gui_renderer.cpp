@@ -183,8 +183,7 @@ namespace dce::renderer {
 	auto GuiRenderer::initialize(const std::uint8_t font_size) -> bool {
 		auto& io = ImGui::GetIO();
 		const auto type = bgfx::getRendererType();
-		this->gui_program = createProgram(createEmbeddedShader(EMBEDDED_SHADERS, type, "VS_GUI"),
-		                                  createEmbeddedShader(EMBEDDED_SHADERS, type, "FS_GUI"), true);
+		this->gui_program = createProgram(createEmbeddedShader(EMBEDDED_SHADERS, type, "VS_GUI"), createEmbeddedShader(EMBEDDED_SHADERS, type, "FS_GUI"), true);
 
 		if (this->gui_program.idx == bgfx::kInvalidHandle) {
 			return false;
@@ -196,16 +195,13 @@ namespace dce::renderer {
 			return false;
 		}
 
-		this->gui_image_program = createProgram(createEmbeddedShader(EMBEDDED_SHADERS, type, "VS_GUI_IMAGE"),
-		                                        createEmbeddedShader(EMBEDDED_SHADERS, type, "FS_GUI_IMAGE"), true);
+		this->gui_image_program = createProgram(createEmbeddedShader(EMBEDDED_SHADERS, type, "VS_GUI_IMAGE"), createEmbeddedShader(EMBEDDED_SHADERS, type, "FS_GUI_IMAGE"), true);
 
 		if (this->gui_image_program.idx == bgfx::kInvalidHandle) {
 			return false;
 		}
 
-		layout.begin().add(bgfx::Attrib::Position, 2, bgfx::AttribType::Float).add(
-			bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float).add(bgfx::Attrib::Color0, 4, bgfx::AttribType::Uint8,
-			                                                         true).end();
+		layout.begin().add(bgfx::Attrib::Position, 2, bgfx::AttribType::Float).add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float).add(bgfx::Attrib::Color0, 4, bgfx::AttribType::Uint8, true).end();
 
 		this->texture_uniform = createUniform("s_tex", bgfx::UniformType::Sampler);
 		if (this->texture_uniform.idx == bgfx::kInvalidHandle) {
@@ -221,8 +217,7 @@ namespace dce::renderer {
 			config.FontDataOwnedByAtlas = false;
 			config.MergeMode = false;
 
-			if (io.Fonts->AddFontFromFileTTF("fonts/jet_brains_mono_regular.ttf", static_cast<float>(font_size) - 3.F,
-			                                 &config, ranges) == nullptr) {
+			if (io.Fonts->AddFontFromFileTTF("fonts/jet_brains_mono_regular.ttf", static_cast<float>(font_size) - 3.F, &config, ranges) == nullptr) {
 				return false;
 			}
 
@@ -240,8 +235,7 @@ namespace dce::renderer {
 			        return false;
 			}
 			*/
-			if (!io.Fonts->AddFontFromFileTTF("fonts/font_awesome_pro_regular.ttf", static_cast<float>(font_size) - 3.F,
-			                                  &config, glyph_ranges)) {
+			if (!io.Fonts->AddFontFromFileTTF("fonts/font_awesome_pro_regular.ttf", static_cast<float>(font_size) - 3.F, &config, glyph_ranges)) {
 				return false;
 			}
 
@@ -251,8 +245,7 @@ namespace dce::renderer {
 
 		io.Fonts->GetTexDataAsRGBA32(&data, &lwidth, &lheight);
 
-		this->texture = createTexture2D(static_cast<uint16_t>(lwidth), static_cast<uint16_t>(lheight), false, 1,
-		                                bgfx::TextureFormat::BGRA8, 0, bgfx::copy(data, lwidth * lheight * 4));
+		this->texture = createTexture2D(static_cast<uint16_t>(lwidth), static_cast<uint16_t>(lheight), false, 1, bgfx::TextureFormat::BGRA8, 0, bgfx::copy(data, lwidth * lheight * 4));
 		return this->texture.idx != bgfx::kInvalidHandle;
 	}
 
@@ -309,9 +302,7 @@ namespace dce::renderer {
 								std::uint8_t mip;
 							} data;
 						} texture1 = {cmd->TextureId};
-						state |= (0x01 & texture1.data.flags) != 0
-							         ? BGFX_STATE_BLEND_FUNC(BGFX_STATE_BLEND_SRC_ALPHA, BGFX_STATE_BLEND_INV_SRC_ALPHA)
-							         : BGFX_STATE_NONE;
+						state |= (0x01 & texture1.data.flags) != 0 ? BGFX_STATE_BLEND_FUNC(BGFX_STATE_BLEND_SRC_ALPHA, BGFX_STATE_BLEND_INV_SRC_ALPHA) : BGFX_STATE_NONE;
 						textureHandle = texture1.data.handle;
 						[[unlikely]] if (texture1.data.mip != 0u) {
 							const float lod_enabled[4] = {static_cast<float>(texture1.data.mip), 1.F, .0F, .0F};
@@ -325,8 +316,7 @@ namespace dce::renderer {
 
 					const auto xx = static_cast<std::uint16_t>(std::max(cmd->ClipRect.x, .0F));
 					const auto yy = static_cast<std::uint16_t>(std::max(cmd->ClipRect.y, .0F));
-					bgfx::setScissor(xx, yy, static_cast<std::uint16_t>(std::min(cmd->ClipRect.z, 65535.F) - xx),
-					                 static_cast<std::uint16_t>(std::min(cmd->ClipRect.w, 65535.F) - yy));
+					bgfx::setScissor(xx, yy, static_cast<std::uint16_t>(std::min(cmd->ClipRect.z, 65535.F) - xx), static_cast<std::uint16_t>(std::min(cmd->ClipRect.w, 65535.F) - yy));
 
 					bgfx::setState(state);
 					setTexture(0, this->texture_uniform, textureHandle);

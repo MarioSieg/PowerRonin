@@ -177,7 +177,6 @@ namespace dce {
 		if (!stream) {
 			return {};
 		}
-		return std::vector<std::byte>(std::istreambuf_iterator<std::byte>(stream),
-		                              std::istreambuf_iterator<std::byte>());
+		return std::vector<std::byte>(std::istreambuf_iterator<std::byte>(stream), std::istreambuf_iterator<std::byte>());
 	}
 }

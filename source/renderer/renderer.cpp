@@ -215,6 +215,10 @@ namespace dce::renderer {
 			PROJ = value_ptr(this->fly_cam_.get_projection_matrix());
 			this->gpu_.set_camera(this->fly_cam_.get_view_matrix(), this->fly_cam_.get_projection_matrix());
 
+			Matrix4x4<> skybox_matrix = math::identity<Matrix4x4<>>();
+			skybox_matrix = scale(skybox_matrix, Vector3<>{100});
+			this->gpu_.set_transform(value_ptr(skybox_matrix));
+
 			this->set_per_frame_buffer(_state.scenery().config);
 
 			auto draw = [this](Transform& _transform, MeshRenderer& _mesh_renderer) {
@@ -238,14 +242,14 @@ namespace dce::renderer {
 	}
 
 	void Renderer::set_per_frame_buffer(const Scenery::Configuration& _config) {
-		const float delta = calculate_sun_orbit(6, math::radians(23.4f));
-		const auto sun_dir = calculate_sun_dir(_config.lighting.sun.hour, _config.lighting.sun.latitude, delta,
-		                                       math::UP, math::NORTH);
+		const auto& sun_color = _config.lighting.sun.color;
+		const auto delta = calculate_sun_orbit(6, math::radians(23.4f));
+		const auto sun_dir = Vector4<>(calculate_sun_dir(_config.lighting.sun.hour, _config.lighting.sun.latitude, delta, math::UP, math::NORTH), 1.f);
+		const auto& ambient_color = _config.lighting.const_ambient_color;
+		const auto& skybox_cubemap = _config.lighting.skybox_cubemap;
+		const auto& skydome = _config.lighting.skydome;
 
-		const PerFrameBuffer per_frame = {
-			.sun_color = _config.lighting.sun.color.xyzz, .sun_dir = sun_dir.xyzz,
-			.ambient_color = _config.lighting.const_ambient_color.xyzz,
-		};
+		const PerFrameBuffer per_frame = {&sun_color, &sun_dir, &ambient_color, &skybox_cubemap, &skydome};
 
 		this->shader_bucket_.per_frame(per_frame);
 	}

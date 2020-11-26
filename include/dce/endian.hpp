@@ -194,8 +194,6 @@ namespace dce {
 	}
 
 	constexpr auto endian_swap(const std::uint64_t in) noexcept {
-		return in >> 56 | in << 56 | (in & UINT64_C(0x00ff000000000000)) >> 40 | (in & UINT64_C(0x000000000000ff00)) <<
-			40 | (in & UINT64_C(0x0000ff0000000000)) >> 24 | (in & UINT64_C(0x0000000000ff0000)) << 24 | (in &
-				UINT64_C(0x000000ff00000000)) >> 8 | (in & UINT64_C(0x00000000ff000000)) << 8;
+		return in >> 56 | in << 56 | (in & UINT64_C(0x00ff000000000000)) >> 40 | (in & UINT64_C(0x000000000000ff00)) << 40 | (in & UINT64_C(0x0000ff0000000000)) >> 24 | (in & UINT64_C(0x0000000000ff0000)) << 24 | (in & UINT64_C(0x000000ff00000000)) >> 8 | (in & UINT64_C(0x00000000ff000000)) << 8;
 	}
 } // namespace dce // namespace dce

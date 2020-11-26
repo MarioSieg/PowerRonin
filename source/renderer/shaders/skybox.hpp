@@ -168,14 +168,22 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-#include "../include/dce/resource.hpp"
+#pragma once
 
-namespace dce {
-	auto IResource::get_file_path() const noexcept -> const std::filesystem::path& {
-		return this->file_path_;
-	}
+#include "../ishader.hpp"
 
-	auto IResource::is_uploaded() const noexcept -> bool {
-		return this->uploaded_;
-	}
+namespace dce::renderer::shaders {
+
+	class Skybox final : public IShader<> {
+	public:
+		explicit Skybox(GPU& _gpu) noexcept;
+
+		virtual void load() override;
+		virtual void unload() override;
+		virtual void draw(const Mesh& _mesh, [[maybe_unused]] const void* const _mat) override;
+		virtual void per_frame(const PerFrameBuffer& _buffer) override;
+
+	private:
+		bgfx::UniformHandle u_s_tex_cube_ = {bgfx::kInvalidHandle};
+	};
 }

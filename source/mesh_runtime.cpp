@@ -178,16 +178,14 @@
 namespace {
 	auto create_vertex_layout() -> bgfx::VertexLayout {
 		bgfx::VertexLayout layout;
-		layout.begin().add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float).add(
-			bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float).add(bgfx::Attrib::Normal, 3, bgfx::AttribType::Float,
-			                                                         true).end();
+		layout.begin().add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float).add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float).add(bgfx::Attrib::Normal, 3, bgfx::AttribType::Float, true).end();
 		return layout;
 	}
 } // namespace
 
 namespace dce {
 	void Mesh::upload() {
-		[[unlikely]] if (this->uploaded_) {
+		[[unlikely]] if (this->is_uploaded_) {
 			this->offload();
 		}
 
@@ -197,9 +195,7 @@ namespace dce {
 
 		static const auto VERTEX_LAYOUT = create_vertex_layout();
 
-		const auto* const index_buffer_mem = bgfx::makeRef(this->indices_.data(),
-		                                                   static_cast<std::uint32_t>(sizeof(std::uint16_t) * this->
-			                                                   indices_.size()), nullptr, nullptr);
+		const auto* const index_buffer_mem = bgfx::makeRef(this->indices_.data(), static_cast<std::uint32_t>(sizeof(std::uint16_t) * this->indices_.size()), nullptr, nullptr);
 
 		[[unlikely]] if (index_buffer_mem == nullptr) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload mesh!");
@@ -211,9 +207,7 @@ namespace dce {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload mesh!");
 		}
 
-		const auto* const vertex_buffer_mem = bgfx::makeRef(this->vertices_.data(),
-		                                                    static_cast<std::uint32_t>(this->vertices_.size() *
-			                                                    VERTEX_LAYOUT.getStride()), nullptr, nullptr);
+		const auto* const vertex_buffer_mem = bgfx::makeRef(this->vertices_.data(), static_cast<std::uint32_t>(this->vertices_.size() * VERTEX_LAYOUT.getStride()), nullptr, nullptr);
 		[[unlikely]] if (vertex_buffer_mem == nullptr) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload mesh!");
 		}
@@ -227,7 +221,7 @@ namespace dce {
 		this->volatile_upload_data_.index_buffer_id = index_buffer_handle.idx;
 		this->volatile_upload_data_.vertex_buffer_id = vertex_buffer_handle.idx;
 
-		this->uploaded_ = true;
+		this->is_uploaded_ = true;
 	}
 
 	void Mesh::offload() {
@@ -243,14 +237,13 @@ namespace dce {
 			this->volatile_upload_data_.index_buffer_id = bgfx::kInvalidHandle;
 		}
 
-		this->uploaded_ = false;
+		this->is_uploaded_ = false;
 	}
 
-	auto MeshImporteur::load(std::filesystem::path&& _path) const -> std::shared_ptr<Mesh> {
+	auto MeshImporteur::load(std::filesystem::path&& _path, const MeshMeta* const _meta) const -> std::shared_ptr<Mesh> {
 		Assimp::Importer importer;
 
-		constexpr unsigned flags = aiProcess_JoinIdenticalVertices | aiProcess_Triangulate | aiProcess_GenUVCoords |
-			aiProcess_GenSmoothNormals | aiProcess_ConvertToLeftHanded;
+		constexpr unsigned flags = aiProcess_JoinIdenticalVertices | aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_GenSmoothNormals | aiProcess_ConvertToLeftHanded;
 
 		//importer.SetPropertyFloat(AI_CONFIG_GLOBAL_SCALE_FACTOR_KEY, .1f);
 
@@ -300,10 +293,11 @@ namespace dce {
 
 		vertices.shrink_to_fit();
 
-		auto self = IResource::allocate<Mesh>();
+		auto self = IResource<MeshMeta>::allocate<Mesh>();
 		self->file_path_ = std::move(_path);
 		self->indices_ = std::move(indices);
 		self->vertices_ = std::move(vertices);
+		self->meta_data_ = _meta ? *_meta : IResource<MeshMeta>::load_meta_or_default(self->file_path_);
 
 		self->upload();
 

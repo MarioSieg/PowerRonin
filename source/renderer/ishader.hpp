@@ -181,7 +181,7 @@
 #include "../../include/dce/material.hpp"
 
 namespace dce::renderer {
-	template <typename Material, typename... Args>
+	template <typename Material = void, typename... Args>
 	class IShader {
 	public:
 		explicit IShader(std::string_view _name, GPU& _gpu) noexcept;
@@ -202,7 +202,7 @@ namespace dce::renderer {
 		virtual void per_frame(const PerFrameBuffer& _buffer);
 		virtual void per_material(const PerMaterialBuffer& _buffer);
 		virtual void per_object(const PerObjectBuffer& _buffer);
-		virtual void draw(const Mesh& _mesh, const Material& _mat, Args ... _args) = 0;
+		virtual void draw(const Mesh& _mesh, const Material* const _mat, Args ... _args) = 0;
 
 	protected:
 		std::string_view name_ = {};

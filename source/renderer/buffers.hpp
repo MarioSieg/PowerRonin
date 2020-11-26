@@ -177,9 +177,11 @@ namespace dce::renderer {
 	/// Data which will be submitted to the GPU each frame.
 	/// </summary>
 	struct PerFrameBuffer final {
-		Vector4<> sun_color;
-		Vector4<> sun_dir;
-		Vector4<> ambient_color;
+		const Vector4<>* sun_color;
+		const Vector4<>* sun_dir;
+		const Vector4<>* ambient_color;
+		const RRef<Texture>* skybox;
+		const RRef<Mesh>* skydome;
 	};
 
 	/// <summary>

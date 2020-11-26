@@ -83,8 +83,7 @@ add_library(
     "source/renderer/shader_bucket.hpp" 
     "source/shader.cpp" 
     "include/dce/blob.hpp"
-    "source/blob.cpp" 
-    "source/resource.cpp" 
+    "source/blob.cpp"  
     "source/gui/file_dialog_tool.hpp"
     "source/gui/file_dialog_tool.cpp" 
     "source/gui/widgets/ram_editor.hpp" 
@@ -141,7 +140,9 @@ add_library(
     "include/dce/utils.hpp" 
     "source/utils.cpp" 
     "source/scripting/scripting.hpp"
-    "source/scripting/scripting.cpp")
+    "source/scripting/scripting.cpp" 
+    "source/renderer/shaders/skybox.hpp"
+    "source/renderer/shaders/skybox.cpp")
 
 include("extern/CMakeLists.txt")
 

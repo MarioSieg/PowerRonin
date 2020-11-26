@@ -172,14 +172,14 @@
 
 #include "../ishader.hpp"
 
-namespace dce::renderer {
+namespace dce::renderer::shaders {
 	class Unlit final : public IShader<Material::Unlit> {
 	public:
 		explicit Unlit(GPU& _gpu) noexcept;
 
 		virtual void load() override;
 		virtual void unload() override;
-		virtual void draw(const Mesh& _mesh, const Material::Unlit& _mat) override;
+		virtual void draw(const Mesh& _mesh, const Material::Unlit* const _mat) override;
 
 	private:
 		bgfx::UniformHandle u_s_tex_color_ = {bgfx::kInvalidHandle};

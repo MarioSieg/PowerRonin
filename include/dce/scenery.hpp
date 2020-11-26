@@ -177,6 +177,21 @@ namespace dce {
 	class ResourceManager;
 
 	/// <summary>
+	/// Types of Skyboxes.
+	/// </summary>
+	enum class SkyboxType {
+		/// <summary>
+		/// Dynamic skybox (based on scenery daytime, weather)
+		/// </summary>
+		DYNAMIC,
+
+		/// <summary>
+		/// Static skybox (cubemap image).
+		/// </summary>
+		STATIC
+	};
+
+	/// <summary>
 	/// Represents a scenery environment.
 	/// </summary>
 	class Scenery final {
@@ -188,13 +203,46 @@ namespace dce {
 		struct Configuration final {
 			struct {
 				struct {
+					/// <summary>
+					/// The sun latitude.
+					/// </summary>
 					float latitude = 50.f;
+
+					/// <summary>
+					/// The sun hour. (Only if "sync_hour_with_env_time" == false)
+					/// </summary>
 					float hour = 12.f;
+
+					/// <summary>
+					/// If true, the scenery time will be used as sun hour too.
+					/// </summary>
 					bool sync_hour_with_env_time = false;
+
+					/// <summary>
+					/// The color of the sunlight.
+					/// </summary>
 					Color<> color = math::rgba_to_rgba_norm(0xFFFFFFFF);
 				} sun;
 
+				/// <summary>
+				/// Basic constant ambient color.
+				/// </summary>
 				Color<> const_ambient_color = math::rgba_to_rgba_norm(0xFFFFFFFF);
+
+				/// <summary>
+				/// The type of the scenery skybox.
+				/// </summary>
+				SkyboxType skybox_type = SkyboxType::STATIC;
+
+				/// <summary>
+				/// The cubemap texture of the skybox (only used if "skybox_type" == SkyboxType::STATIC)!
+				/// </summary>
+				RRef<Texture> skybox_cubemap;
+
+				/// <summary>
+				/// The skydome cube or sphere mesh on which the skybox cubemap will be rendered on.
+				/// </summary>
+				RRef<Mesh> skydome;
 			} lighting;
 		};
 

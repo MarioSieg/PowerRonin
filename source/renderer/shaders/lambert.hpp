@@ -172,7 +172,7 @@
 
 #include "../ishader.hpp"
 
-namespace dce::renderer {
+namespace dce::renderer::shaders {
 	class Lambert final : public IShader<Material::Lambert> {
 	public:
 		explicit Lambert(GPU& _gpu) noexcept;
@@ -180,13 +180,13 @@ namespace dce::renderer {
 		virtual void load() override;
 		virtual void unload() override;
 		virtual void per_frame(const PerFrameBuffer& _buffer) override;
-		virtual void draw(const Mesh& _mesh, const Material::Lambert& _mat) override;
+		virtual void draw(const Mesh& _mesh, const Material::Lambert* const _mat) override;
 
 	private:
 		bgfx::UniformHandle u_s_tex_color_ = {bgfx::kInvalidHandle};
 		bgfx::UniformHandle u_mat_color_ = {bgfx::kInvalidHandle};
 		bgfx::UniformHandle u_light_dir_ = {bgfx::kInvalidHandle};
-		bgfx::UniformHandle u_ambient_color = {bgfx::kInvalidHandle};
-		bgfx::UniformHandle u_light_color = {bgfx::kInvalidHandle};
+		bgfx::UniformHandle u_ambient_color_ = {bgfx::kInvalidHandle};
+		bgfx::UniformHandle u_light_color_ = {bgfx::kInvalidHandle};
 	};
 }

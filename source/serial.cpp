@@ -173,19 +173,19 @@
 #include <fstream>
 
 namespace dce {
-	auto ISerializable::serialize_to_file(const std::filesystem::path& path) const -> bool {
-		std::ofstream file(path);
+	auto ISerializable::serialize_to_file(const std::filesystem::path& _path) const -> bool {
+		std::ofstream file(_path);
 		if (!file) {
 			return false;
 		}
 		JsonStream stream{};
 		this->serialize(stream);
-		file << stream;
+		file << std::setw(4) << stream;
 		return true;
 	}
 
-	auto ISerializable::deserialize_from_file(const std::filesystem::path& path) -> bool {
-		std::ifstream file(path);
+	auto ISerializable::deserialize_from_file(const std::filesystem::path& _path) -> bool {
+		std::ifstream file(_path);
 		if (!file) {
 			return false;
 		}

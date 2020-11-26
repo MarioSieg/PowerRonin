@@ -184,14 +184,14 @@ namespace dce {
 
 	enum class GraphicsBackend {
 		AUTO,
-		DIRECT3D11,
-		DIRECT3D12,
+		DIRECT_3D11,
+		DIRECT_3D12,
 		METAL,
 		OPEN_GL,
 		VULKAN
 	};
 
-	class Config : ISerializable {
+	class Config final : ISerializable {
 	public:
 		struct {
 			GraphicsBackend backend_api = GraphicsBackend::AUTO;
@@ -212,7 +212,7 @@ namespace dce {
 			float rounding = .0F;
 		} overlay;
 
-		virtual auto serialize(JsonStream& /*j*/) const -> bool override;
-		virtual auto deserialize(const JsonStream& /*j*/) -> bool override;
+		virtual void serialize(JsonStream& _j) const override;
+		virtual void deserialize(const JsonStream& _j) override;
 	};
 } // namespace dce // namespace dce

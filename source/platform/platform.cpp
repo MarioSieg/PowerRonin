@@ -216,8 +216,7 @@ namespace {
 		using namespace dce;
 
 		_logger.info("\t\tResolution: ({}, {})", _current->width, _current->height);
-		_logger.info("\t\tAspect ratio: {}",
-		             static_cast<float>(_current->width) / static_cast<float>(_current->height));
+		_logger.info("\t\tAspect ratio: {}", static_cast<float>(_current->width) / static_cast<float>(_current->height));
 		_logger.info("\t\tRefresh rate: {}Hz", _current->refreshRate);
 		_logger.info("\t\tR bits: {:#B}", _current->redBits);
 		_logger.info("\t\tG bits: {:#B}", _current->greenBits);
@@ -338,8 +337,7 @@ namespace dce::platform {
 		proto.info("Setting window hint: {:X} to {}", GLFW_VISIBLE, GLFW_FALSE);
 
 		/* Create window: */
-		this->window_ = glfwCreateWindow(display_settings.width, display_settings.height, "Dreamcast Engine",
-		                                 display_settings.full_screen ? primary_monitor : nullptr, nullptr);
+		this->window_ = glfwCreateWindow(display_settings.width, display_settings.height, "Dreamcast Engine", display_settings.full_screen ? primary_monitor : nullptr, nullptr);
 
 		if (this->window_ == nullptr) {
 			proto.error("Failed to create window!");
@@ -397,21 +395,17 @@ namespace dce::platform {
 
 			proto.info("RAM physical: {}B, available: {}B", memory.physical_total, memory.physical_available);
 			proto.info("RAM virtual: {}B, available: {}B", memory.virtual_available, memory.virtual_total);
-			proto.info("Kernel: {}, version: {}.{}.{}.{}", kernel_variant_name(kernel_info.variant), kernel_info.major,
-			           kernel_info.minor, kernel_info.patch, kernel_info.build_number);
-			proto.info("OS: {}, version: {}.{}.{}.{}", os_info.full_name, os_info.major, os_info.minor, os_info.patch,
-			           os_info.build_number);
+			proto.info("Kernel: {}, version: {}.{}.{}.{}", kernel_variant_name(kernel_info.variant), kernel_info.major, kernel_info.minor, kernel_info.patch, kernel_info.build_number);
+			proto.info("OS: {}, version: {}.{}.{}.{}", os_info.full_name, os_info.major, os_info.minor, os_info.patch, os_info.build_number);
 			proto.info("CPU model: {}", iware::cpu::model_name());
 			proto.info("CPU architecture: {}", architecture_name(iware::cpu::architecture()));
 			proto.info("CPU frequency: {}Hz", iware::cpu::frequency());
 			proto.info("CPU endianness: {}", endianness_name(iware::cpu::endianness()));
 			proto.info("CPU vendor: {}", iware::cpu::vendor_id());
-			proto.info("CPU cores: {}, logical: {}, sockets: {}", quantities.physical, quantities.logical,
-			           quantities.packages);
+			proto.info("CPU cores: {}, logical: {}, sockets: {}", quantities.physical, quantities.logical, quantities.packages);
 			for (auto i = 1U; i <= 3; ++i) {
 				const auto cache = iware::cpu::cache(i);
-				proto.info("CPU cache L{} size: {}B, line size: {}B, associativity: {}, type: {}", i, cache.size,
-				           cache.line_size, cache.associativity, cache_type_name(cache.type));
+				proto.info("CPU cache L{} size: {}B, line size: {}B, associativity: {}, type: {}", i, cache.size, cache.line_size, cache.associativity, cache_type_name(cache.type));
 			}
 
 			using enum iware::cpu::instruction_set_t;
@@ -455,8 +449,7 @@ namespace dce::platform {
 			proto.info("RDRAND: {}", instruction_set_supported(rd_rand));
 			proto.info("x64: {}", instruction_set_supported(x64));
 			proto.info("x87FPU: {}", instruction_set_supported(x87_fpu));
-			proto.info("Periphery: mice: {}, keyboards: {}, other: {}", iware::system::mouse_amount(),
-			           iware::system::keyboard_amount(), iware::system::other_HID_amount());
+			proto.info("Periphery: mice: {}, keyboards: {}, other: {}", iware::system::mouse_amount(), iware::system::keyboard_amount(), iware::system::other_HID_amount());
 			proto.separator();
 		}
 

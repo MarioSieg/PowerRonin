@@ -180,7 +180,7 @@
 
 namespace dce {
 	void Texture::upload() {
-		[[unlikely]] if (this->uploaded_) {
+		[[unlikely]] if (this->is_uploaded_) {
 			this->offload();
 		}
 
@@ -190,8 +190,7 @@ namespace dce {
 
 		const auto format = static_cast<bgfx::TextureFormat::Enum>(this->format_);
 
-		const auto* const mem = bgfx::makeRef(this->texels_.data(), static_cast<std::uint32_t>(this->size_), nullptr,
-		                                      nullptr);
+		const auto* const mem = bgfx::makeRef(this->texels_.data(), static_cast<std::uint32_t>(this->size_), nullptr, nullptr);
 		[[unlikely]] if (mem == nullptr) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload texture!");
 		}
@@ -200,15 +199,14 @@ namespace dce {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload texture!");
 		}
 
-		const bgfx::TextureHandle texture_handle = createTexture2D(this->width_, this->height_, this->mipmap_count_ > 1,
-		                                                           0, format, 0, mem);
+		const bgfx::TextureHandle texture_handle = this->is_cubemap_ ? createTextureCube(this->width_, this->mipmap_count_ > 1, this->layer_count_, format, 0, mem) : createTexture2D(this->width_, this->height_, this->mipmap_count_ > 1, this->layer_count_, format, 0, mem);
 		[[unlikely]] if (!isValid(texture_handle)) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload texture!");
 		}
 
 		this->volatile_upload_data_.gpu_buffer_id = texture_handle.idx;
 
-		this->uploaded_ = true;
+		this->is_uploaded_ = true;
 	}
 
 	void Texture::offload() {
@@ -217,11 +215,11 @@ namespace dce {
 			destroy(texture_handle);
 			this->volatile_upload_data_.gpu_buffer_id = bgfx::kInvalidHandle;
 		}
-		this->uploaded_ = false;
+		this->is_uploaded_ = false;
 	}
 
-	auto TextureImporteur::load(std::filesystem::path&& _path) const -> std::shared_ptr<Texture> {
-		auto self = IResource::allocate<Texture>();
+	auto TextureImporteur::load(std::filesystem::path&& _path, const TextureMeta* const _meta) const -> std::shared_ptr<Texture> {
+		auto self = IResource<TextureMeta>::allocate<Texture>();
 
 		const auto ext = _path.extension();
 		[[likely]] if (ext == ".dds" || ext == ".ktx") {
@@ -231,13 +229,7 @@ namespace dce {
 			}
 
 			bx::DefaultAllocator allocator;
-			bimg::ImageContainer* const image = ext == ".dds"
-				                                    ? bimg::imageParseDds(
-					                                    &allocator, blob.data(),
-					                                    static_cast<std::uint32_t>(blob.size()), nullptr)
-				                                    : bimg::imageParseKtx(
-					                                    &allocator, blob.data(),
-					                                    static_cast<std::uint32_t>(blob.size()), nullptr);
+			auto* const image = ext == ".dds" ? bimg::imageParseDds(&allocator, blob.data(), static_cast<std::uint32_t>(blob.size()), nullptr) : bimg::imageParseKtx(&allocator, blob.data(), static_cast<std::uint32_t>(blob.size()), nullptr);
 			[[unlikely]] if (!image) {
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load texture from file!");
 			}
@@ -246,6 +238,8 @@ namespace dce {
 			self->height_ = static_cast<std::uint16_t>(image->m_height);
 			self->mipmap_count_ = image->m_numMips;
 			self->format_ = static_cast<TextureFormat>(image->m_format);
+			self->is_cubemap_ = image->m_cubeMap;
+			self->layer_count_ = image->m_numLayers;
 
 			self->texels_.reserve(image->m_size);
 			for (std::size_t i = 0; i < image->m_size; ++i) {
@@ -254,8 +248,7 @@ namespace dce {
 			imageFree(image);
 
 			bgfx::TextureInfo info = {};
-			calcTextureSize(info, static_cast<std::uint16_t>(self->width_), static_cast<std::uint16_t>(self->height_),
-			                1, false, self->mipmap_count_, 1, static_cast<bgfx::TextureFormat::Enum>(self->format_));
+			calcTextureSize(info, static_cast<std::uint16_t>(self->width_), static_cast<std::uint16_t>(self->height_), 1, false, self->mipmap_count_, 1, static_cast<bgfx::TextureFormat::Enum>(self->format_));
 
 			self->size_ = info.storageSize;
 			self->bits_per_pel_ = info.bitsPerPixel;
@@ -276,14 +269,6 @@ namespace dce {
 
 			self->texels_.reserve(texel_count);
 
-			/*
-			tbb::parallel_for(tbb::blocked_range<std::size_t>(0, texel_count), [&texels, image_data](const tbb::blocked_range<size_t>& r) {
-			                for (std::size_t i = r.begin(); i < r.end(); ++i) {
-			                                texels.push_back(*reinterpret_cast<std::byte*>(image_data + i));
-			                }
-			});
-			*/
-
 			for (std::size_t i = 0; i < texel_count; ++i) {
 				self->texels_.push_back(*reinterpret_cast<const std::byte* const>(image_data + i));
 			}
@@ -296,8 +281,7 @@ namespace dce {
 			self->mipmap_count_ = 1;
 
 			bgfx::TextureInfo info = {};
-			calcTextureSize(info, static_cast<std::uint16_t>(self->width_), static_cast<std::uint16_t>(self->height_),
-			                1, false, false, 1, static_cast<bgfx::TextureFormat::Enum>(self->format_));
+			calcTextureSize(info, static_cast<std::uint16_t>(self->width_), static_cast<std::uint16_t>(self->height_), 1, false, false, 1, static_cast<bgfx::TextureFormat::Enum>(self->format_));
 
 			self->size_ = info.storageSize;
 			self->bits_per_pel_ = info.bitsPerPixel;
@@ -311,6 +295,8 @@ namespace dce {
 
 		self->texels_.shrink_to_fit();
 		self->file_path_ = std::move(_path);
+		self->meta_data_ = _meta ? *_meta : IResource<TextureMeta>::load_meta_or_default(self->file_path_);
+
 		self->upload();
 
 		return self;

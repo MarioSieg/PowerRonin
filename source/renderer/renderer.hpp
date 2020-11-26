@@ -196,8 +196,7 @@ namespace dce {
 
 		private:
 			/* Required kernel events */
-			static constexpr auto EVENTS = core::ServiceEvents::PRE_STARTUP | core::ServiceEvents::PRE_TICK |
-				core::ServiceEvents::POST_TICK | core::ServiceEvents::POST_SHUTDOWN;
+			static constexpr auto EVENTS = core::ServiceEvents::PRE_STARTUP | core::ServiceEvents::PRE_TICK | core::ServiceEvents::POST_TICK | core::ServiceEvents::POST_SHUTDOWN;
 
 			/* Kernel events */
 			virtual auto on_pre_startup(State& /*_state*/) -> bool override;

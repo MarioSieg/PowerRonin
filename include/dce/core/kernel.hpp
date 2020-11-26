@@ -192,8 +192,7 @@ namespace dce {
 		/* Represents an engine kernel, containing all subsystems  */
 		class Kernel {
 		public:
-			[[nodiscard]] static auto create(const int _in_argc, const char* const* const _in_argv,
-			                                 const char* const* const _in_envp) -> std::unique_ptr<Kernel>;
+			[[nodiscard]] static auto create(const int _in_argc, const char* const* const _in_argv, const char* const* const _in_envp) -> std::unique_ptr<Kernel>;
 
 			/* Argument count */
 			const int argc;
@@ -231,8 +230,7 @@ namespace dce {
 			void install_subsystem(std::unique_ptr<ISubsystem>&& _subsystem) const;
 
 			/* Returns installed subsystems */
-			[[nodiscard]] auto installed_subsystems() const noexcept -> const std::vector<std::tuple<
-				std::uint_fast16_t, std::unique_ptr<ISubsystem>>>&;
+			[[nodiscard]] auto installed_subsystems() const noexcept -> const std::vector<std::tuple<std::uint_fast16_t, std::unique_ptr<ISubsystem>>>&;
 
 			/* Returns the current simulation state. */
 			[[nodiscard]] auto get_state() noexcept -> std::unique_ptr<State>&;
@@ -241,8 +239,7 @@ namespace dce {
 			[[nodiscard]] auto get_state() const noexcept -> const std::unique_ptr<State>&;
 
 			/* Allocates and installs the subsystem T. */
-			template <typename T, typename... Q> requires Subsystem<T> auto create_install_subsystem(
-				Q&&... /*args*/) -> Kernel&;
+			template <typename T, typename... Q> requires Subsystem<T> auto create_install_subsystem(Q&&... /*args*/) -> Kernel&;
 
 			/* Uninstalls a subsystem and removes all hooks */
 			[[nodiscard]] auto uninstall_subsystem(std::uint_fast16_t _id) const -> bool;
@@ -265,8 +262,7 @@ namespace dce {
 			const std::unique_ptr<Core> core_;
 		};
 
-		template <typename T, typename... Q> requires Subsystem<T> auto Kernel::create_install_subsystem(
-			Q&&... _args) -> Kernel& {
+		template <typename T, typename... Q> requires Subsystem<T> auto Kernel::create_install_subsystem(Q&&... _args) -> Kernel& {
 			this->install_subsystem(std::move(std::make_unique<T>(_args...)));
 			return *this;
 		}

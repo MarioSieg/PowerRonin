@@ -213,8 +213,7 @@ namespace dce::gui::widgets {
 					SameLine();
 					TextUnformatted(_mesh->get_file_path().filename().string().c_str());
 					if (IsItemHovered()) {
-						const auto size = _mesh->get_vertices().size() * sizeof(Vertex) + _mesh->get_indices().size() *
-							sizeof std::uint16_t;
+						const auto size = _mesh->get_vertices().size() * sizeof(Vertex) + _mesh->get_indices().size() * sizeof std::uint16_t;
 						BeginTooltip();
 						TextUnformatted(_mesh->is_uploaded() ? "Uploaded: yes" : "Uploaded: no");
 						Text("Vertices: %zu", _mesh->get_vertices().size());

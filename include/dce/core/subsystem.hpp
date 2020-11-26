@@ -197,8 +197,7 @@ namespace dce {
 			friend class Kernel;
 
 		protected:
-			ISubsystem(std::string_view name,
-			           std::underlying_type<ServiceEvents::Enum>::type subscribed_events) noexcept;
+			ISubsystem(std::string_view name, std::underlying_type<ServiceEvents::Enum>::type subscribed_events) noexcept;
 
 		public:
 			/* Name of the subsystem */

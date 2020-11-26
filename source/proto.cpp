@@ -189,9 +189,7 @@ namespace dce {
 		ss << ".log";
 		spdlog::init_thread_pool(QUEUE_SIZE, THREAD_COUNT);
 		const auto thread_pool = spdlog::thread_pool();
-		std::array<spdlog::sink_ptr, 2> sinks = {
-			std::make_shared<spdlog::sinks::basic_file_sink_mt>(ss.str()), std::make_shared<TerminalSink<>>()
-		};
+		std::array<spdlog::sink_ptr, 2> sinks = {std::make_shared<spdlog::sinks::basic_file_sink_mt>(ss.str()), std::make_shared<TerminalSink<>>()};
 		this->core = std::make_shared<spdlog::async_logger>(_name, sinks.begin(), sinks.end(), thread_pool);
 		this->file_sink = std::move(sinks[0]);
 		this->terminal_sink = std::move(sinks[1]);

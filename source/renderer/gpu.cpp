@@ -184,8 +184,7 @@
 namespace dce::renderer {
 	auto GPU::initialize_drivers(const Config& _config, AsyncProtocol& _proto) -> bool {
 		if (platform::NATIVE_WINDOW_HANDLE == nullptr) {
-			_proto.error(
-				"platform::NATIVE_WINDOW_HANDLE was nullptr! Platform system must be initialized before render system!");
+			_proto.error("platform::NATIVE_WINDOW_HANDLE was nullptr! Platform system must be initialized before render system!");
 			return false;
 		}
 
@@ -195,7 +194,7 @@ namespace dce::renderer {
 		init.debug = DEBUG_MODE;
 		init.platformData.nwh = platform::NATIVE_WINDOW_HANDLE;
 		init.profile = DEBUG_MODE;
-		init.resolution.reset = BGFX_RESET_MSAA_X16;
+		init.resolution.reset = BGFX_RESET_MSAA_X16 | BGFX_RESET_HIDPI | BGFX_RESET_MAXANISOTROPY;
 		init.resolution.width = _config.display.width;
 		init.resolution.height = _config.display.height;
 
@@ -244,13 +243,20 @@ namespace dce::renderer {
 		bgfx::frame();
 	}
 
-	void GPU::set_camera(const Matrix4x4<>& _view, const Matrix4x4<>& _proj,
-	                     const bgfx::ViewId _view_id) const noexcept {
+	void GPU::set_camera(const Matrix4x4<>& _view, const Matrix4x4<>& _proj, const bgfx::ViewId _view_id) const noexcept {
 		bgfx::setViewTransform(_view_id, value_ptr(_view), value_ptr(_proj));
 	}
 
 	void GPU::set_transform(const Transform& _transform) const noexcept {
 		bgfx::setTransform(value_ptr(_transform.calculate_matrix()));
+	}
+
+	void GPU::set_transform(const float (&_matrix)[16]) const noexcept {
+		bgfx::setTransform(&*_matrix);
+	}
+
+	void GPU::set_transform(const float* const _matrix) const noexcept {
+		bgfx::setTransform(_matrix);
 	}
 
 	void GPU::set_mesh_buffer(const Mesh& _mesh) const noexcept {
@@ -276,12 +282,10 @@ namespace dce::renderer {
 		setTexture(0, _sampler, view);
 	}
 
-	void GPU::draw(const bgfx::ProgramHandle _shader, const bgfx::ViewId _view_id,
-	               const std::uint8_t _depth) const noexcept {
+	void GPU::draw(const bgfx::ProgramHandle _shader, const bgfx::ViewId _view_id, const std::uint8_t _depth) const noexcept {
 		assert(bgfx::isValid(_shader));
 
-		constexpr auto states = BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_A | BGFX_STATE_WRITE_Z |
-			BGFX_STATE_DEPTH_TEST_LESS | BGFX_STATE_MSAA | BGFX_STATE_CULL_CCW;
+		constexpr auto states = BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_A | BGFX_STATE_WRITE_Z | BGFX_STATE_DEPTH_TEST_LESS | BGFX_STATE_MSAA | BGFX_STATE_CULL_CCW;
 
 		bgfx::setState(states);
 		submit(_view_id, _shader, _depth);

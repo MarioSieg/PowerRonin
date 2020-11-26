@@ -172,6 +172,7 @@
 
 #include "shaders/unlit.hpp"
 #include "shaders/lambert.hpp"
+#include "shaders/skybox.hpp"
 #include "buffers.hpp"
 
 namespace dce::renderer {
@@ -197,7 +198,8 @@ namespace dce::renderer {
 		void render(GPU& _gpu, const MeshRenderer& _renderer);
 
 	private:
-		Unlit unlit_;
-		Lambert lambert_;
+		shaders::Unlit unlit_;
+		shaders::Lambert lambert_;
+		shaders::Skybox skybox_;
 	};
 }
