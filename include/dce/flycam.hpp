@@ -173,7 +173,7 @@
 #include "mathlib.hpp"
 
 namespace dce {
-	class State;
+	class Input;
 
 	/* Header only helper class for a flying editor camera. */
 	class FlyCam final {
@@ -195,7 +195,7 @@ namespace dce {
 
 		[[nodiscard]] auto get_direction_vector() const noexcept -> const Vector3<>&;
 
-		void update(const State& _state);
+		void update(const Input& _input, const float _viewport_x, const float _viewport_y, const float _delta_time);
 
 	private:
 		Matrix4x4<> view_ = {};

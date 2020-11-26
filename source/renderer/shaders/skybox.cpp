@@ -184,12 +184,9 @@ namespace dce::renderer::shaders {
 		IShader::unload();
 	}
 
-	void Skybox::draw(const Mesh& _mesh, const void* const _mat) { }
-
-	void Skybox::per_frame(const PerFrameBuffer& _buffer) {
-		this->gpu_.set_texture(*_buffer.skybox, this->u_s_tex_cube_);
-		this->gpu_.set_mesh_buffer(*_buffer.skydome);
-		this->gpu_.set_texture(*_buffer.skybox, this->u_s_tex_cube_);
+	void Skybox::per_frame(const Texture& _skybox, const Mesh& _skydome) const {
+		this->gpu_.set_mesh_buffer(_skydome);
+		this->gpu_.set_texture(_skybox, this->u_s_tex_cube_);
 		this->gpu_.draw(this->program_);
 	}
 }

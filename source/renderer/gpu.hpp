@@ -175,6 +175,8 @@
 #include "../../include/dce/mathlib.hpp"
 #include "../../include/dce/mesh.hpp"
 #include "../../include/dce/texture.hpp"
+#include "../../include/dce/mesh_renderer.hpp"
+
 #include "gl_headers.hpp"
 
 namespace dce {
@@ -279,10 +281,11 @@ namespace dce::renderer {
 		/// Draw mesh
 		/// </summary>
 		/// <param name="_shader"></param>
+		/// <param name="_flags"></param>
 		/// <param name="_view_id"></param>
 		/// <param name="_depth"></param>
 		/// <returns></returns>
-		void draw(bgfx::ProgramHandle _shader, bgfx::ViewId _view_id = 0, std::uint8_t _depth = 0) const noexcept;
+		void draw(bgfx::ProgramHandle _shader, const std::underlying_type<RenderFlags::Enum>::type _flags = RenderFlags::DEFAULT, bgfx::ViewId _view_id = 0, std::uint8_t _depth = 0) const noexcept;
 
 		/// <summary>
 		/// Set uniform.
@@ -331,6 +334,14 @@ namespace dce::renderer {
 		/// <param name="_value"></param>
 		/// <returns></returns>
 		void set_uniform(bgfx::UniformHandle _handle, const float (&_value)[16]) const noexcept;
+
+
+		/// <summary>
+		/// Set render state flags.
+		/// </summary>
+		/// <param name="_flags"></param>
+		/// <returns></returns>
+		void set_flags(const std::underlying_type<RenderFlags::Enum>::type _flags) const noexcept;
 
 
 	private:

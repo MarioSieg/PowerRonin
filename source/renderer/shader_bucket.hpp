@@ -173,7 +173,6 @@
 #include "shaders/unlit.hpp"
 #include "shaders/lambert.hpp"
 #include "shaders/skybox.hpp"
-#include "buffers.hpp"
 
 namespace dce::renderer {
 	enum class ShaderType {
@@ -192,14 +191,12 @@ namespace dce::renderer {
 
 		void load_all();
 		void unload_all();
-		void per_frame(const PerFrameBuffer& _buffer);
-		void per_material(const PerMaterialBuffer& _buffer);
-		void per_object(const PerObjectBuffer& _buffer);
-		void render(GPU& _gpu, const MeshRenderer& _renderer);
+
+		shaders::Unlit unlit;
+		shaders::Lambert lambert;
+		shaders::Skybox skybox;
 
 	private:
-		shaders::Unlit unlit_;
-		shaders::Lambert lambert_;
-		shaders::Skybox skybox_;
+		GPU& gpu_;
 	};
 }

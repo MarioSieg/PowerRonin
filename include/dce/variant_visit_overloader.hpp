@@ -170,27 +170,33 @@
 
 #pragma once
 
-#include "../../include/dce/mathlib.hpp"
+/* Helper to do stuff like:
 
-namespace dce::renderer {
+	int main()
+	{
+	    std::variant<Fluid, LightItem, HeavyItem, FragileItem> package;
+
+	    std::visit(overload{
+	        [](Fluid& ) { cout << "fluid\n"; },
+	        [](LightItem& ) { cout << "light item\n"; },
+	        [](HeavyItem& ) { cout << "heavy item\n"; },
+	        [](FragileItem& ) { cout << "fragile\n"; }
+	    }, package);
+	}
+	
+ */
+
+namespace dce {
 	/// <summary>
-	/// Data which will be submitted to the GPU each frame.
+	/// std::visit helper to implement the overload pattern on std::variant
+	/// 
 	/// </summary>
-	struct PerFrameBuffer final {
-		const Vector4<>* sun_color;
-		const Vector4<>* sun_dir;
-		const Vector4<>* ambient_color;
-		const RRef<Texture>* skybox;
-		const RRef<Mesh>* skydome;
+	/// <typeparam name="...Ts"></typeparam>
+	template <class... Ts>
+	struct overload : Ts... {
+		using Ts::operator()...;
 	};
 
-	/// <summary>
-	/// Data which will be submitted to the GPU for each material.
-	/// </summary>
-	struct PerMaterialBuffer final { };
-
-	/// <summary>
-	/// Data which will be submitted to the GPU for each object.
-	/// </summary>
-	struct PerObjectBuffer final { };
+	template <class... Ts>
+	overload(Ts ...) -> overload<Ts...>;
 }

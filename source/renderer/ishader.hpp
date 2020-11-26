@@ -173,15 +173,9 @@
 #include <filesystem>
 
 #include "gl_headers.hpp"
-#include "program_loader.hpp"
 #include "gpu.hpp"
-#include "buffers.hpp"
-
-#include "../../include/dce/mesh_renderer.hpp"
-#include "../../include/dce/material.hpp"
 
 namespace dce::renderer {
-	template <typename Material = void, typename... Args>
 	class IShader {
 	public:
 		explicit IShader(std::string_view _name, GPU& _gpu) noexcept;
@@ -199,10 +193,6 @@ namespace dce::renderer {
 
 		virtual void load();
 		virtual void unload();
-		virtual void per_frame(const PerFrameBuffer& _buffer);
-		virtual void per_material(const PerMaterialBuffer& _buffer);
-		virtual void per_object(const PerObjectBuffer& _buffer);
-		virtual void draw(const Mesh& _mesh, const Material* const _mat, Args ... _args) = 0;
 
 	protected:
 		std::string_view name_ = {};
@@ -210,36 +200,4 @@ namespace dce::renderer {
 		GPU& gpu_;
 		bgfx::ProgramHandle program_ = {bgfx::kInvalidHandle};
 	};
-
-	template <typename Material, typename... Args>
-	IShader<Material, Args...>::IShader(const std::string_view _name, GPU& _gpu) noexcept : name_(_name), gpu_(_gpu) { }
-
-	template <typename Material, typename... Args>
-	auto IShader<Material, Args...>::get_name() const noexcept -> std::string_view {
-		return this->name_;
-	}
-
-	template <typename Material, typename... Args>
-	auto IShader<Material, Args...>::get_path() const noexcept -> const std::filesystem::path& {
-		return this->path_;
-	}
-
-	template <typename Material, typename... Args>
-	void IShader<Material, Args...>::load() {
-		this->program_ = load_shader_program(this->name_);
-	}
-
-	template <typename Material, typename... Args>
-	void IShader<Material, Args...>::unload() {
-		BGFX_FREE(this->program_);
-	}
-
-	template <typename Material, typename ... Args>
-	void IShader<Material, Args...>::per_frame(const PerFrameBuffer& _buffer) { }
-
-	template <typename Material, typename ... Args>
-	void IShader<Material, Args...>::per_material(const PerMaterialBuffer& _buffer) { }
-
-	template <typename Material, typename ... Args>
-	void IShader<Material, Args...>::per_object(const PerObjectBuffer& _buffer) { }
 }

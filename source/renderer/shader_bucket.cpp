@@ -169,47 +169,19 @@
 //    limitations under the License.
 
 #include "shader_bucket.hpp"
-#include <variant>
 
 namespace dce::renderer {
-	ShaderBucket::ShaderBucket(GPU& _gpu) noexcept : unlit_(_gpu), lambert_(_gpu), skybox_(_gpu) { }
+	ShaderBucket::ShaderBucket(GPU& _gpu) noexcept : unlit(_gpu), lambert(_gpu), skybox(_gpu), gpu_(_gpu) { }
 
 	void ShaderBucket::load_all() {
-		this->unlit_.load();
-		this->lambert_.load();
-		this->skybox_.load();
+		this->unlit.load();
+		this->lambert.load();
+		this->skybox.load();
 	}
 
 	void ShaderBucket::unload_all() {
-		this->skybox_.unload();
-		this->lambert_.unload();
-		this->unlit_.unload();
-	}
-
-	void ShaderBucket::per_frame(const PerFrameBuffer& _buffer) {
-		this->unlit_.per_frame(_buffer);
-		this->lambert_.per_frame(_buffer);
-		this->skybox_.per_frame(_buffer);
-	}
-
-	void ShaderBucket::per_material(const PerMaterialBuffer& _buffer) {
-		this->unlit_.per_material(_buffer);
-		this->lambert_.per_material(_buffer);
-	}
-
-	void ShaderBucket::per_object(const PerObjectBuffer& _buffer) {
-		this->unlit_.per_object(_buffer);
-		this->lambert_.per_object(_buffer);
-	}
-
-	void ShaderBucket::render(GPU& _gpu, const MeshRenderer& _renderer) {
-		if (std::holds_alternative<Material::Unlit>(_renderer.material.properties)) {
-			auto& mat = std::get<Material::Unlit>(_renderer.material.properties);
-			this->unlit_.draw(_renderer.mesh, &mat);
-		}
-		else if (std::holds_alternative<Material::Lambert>(_renderer.material.properties)) {
-			auto& mat = std::get<Material::Lambert>(_renderer.material.properties);
-			this->lambert_.draw(_renderer.mesh, &mat);
-		}
+		this->skybox.unload();
+		this->lambert.unload();
+		this->unlit.unload();
 	}
 }

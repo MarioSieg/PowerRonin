@@ -168,151 +168,26 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-#include "gpu.hpp"
-#include "stats.hpp"
-
-#include "../../include/dce/proto.hpp"
-#include "../../include/dce/env.hpp"
-#include "../../include/dce/config.hpp"
-#include "../../include/dce/transform.hpp"
-#include "../../include/dce/mesh_renderer.hpp"
-
-#include "../platform/platform.hpp"
-
-#include "../../extern/bgfx/bgfx/include/bgfx/bgfx.h"
+#include "ishader.hpp"
+#include "program_loader.hpp"
 
 namespace dce::renderer {
-	auto GPU::initialize_drivers(const Config& _config, AsyncProtocol& _proto) -> bool {
-		if (platform::NATIVE_WINDOW_HANDLE == nullptr) {
-			_proto.error("platform::NATIVE_WINDOW_HANDLE was nullptr! Platform system must be initialized before render system!");
-			return false;
-		}
 
-		bgfx::Init init{};
-		init.limits.maxEncoders = 16;
-		init.type = bgfx::RendererType::Direct3D12;
-		init.debug = DEBUG_MODE;
-		init.platformData.nwh = platform::NATIVE_WINDOW_HANDLE;
-		init.profile = DEBUG_MODE;
-		init.resolution.reset = BGFX_RESET_MSAA_X16 | BGFX_RESET_HIDPI | BGFX_RESET_MAXANISOTROPY;
-		init.resolution.width = _config.display.width;
-		init.resolution.height = _config.display.height;
+	IShader::IShader(const std::string_view _name, GPU& _gpu) noexcept : name_(_name), gpu_(_gpu) {}
 
-		if (!bgfx::init(init)) {
-			_proto.error("Failed to initialize GPU engine backend!");
-			return false;
-		}
-
-		this->width_ = _config.display.width;
-		this->height_ = _config.display.height;
-
-		_proto.separator();
-		_proto.critical("Initializing GPU engine backend...");
-
-		std::array<bgfx::RendererType::Enum, bgfx::RendererType::Count> supported = {};
-		getSupportedRenderers(static_cast<std::uint8_t>(supported.size()), supported.data());
-
-		for (const auto renderer : supported) {
-			if (renderer != bgfx::RendererType::Noop) {
-				_proto.info("Found supported backend API: {}", getRendererName(renderer));
-			}
-		}
-
-		_proto.info("Using GPU backend API: {}", getRendererName(init.type));
-
-		dump_limits(_proto);
-
-		return true;
+	auto IShader::get_name() const noexcept -> std::string_view {
+		return this->name_;
 	}
 
-	void GPU::shutdown_drivers() const {
-		// TODO
-		//bgfx::shutdown();
+	auto IShader::get_path() const noexcept -> const std::filesystem::path& {
+		return this->path_;
 	}
 
-	void GPU::begin_frame() const noexcept {
-		bgfx::setViewClear(0, BGFX_CLEAR_DEPTH | BGFX_CLEAR_COLOR, 0xFFFFFFFF, 1.F, 0);
-		bgfx::setViewRect(0, 0, 0, this->width_, this->height_);
+	void IShader::load() {
+		this->program_ = load_shader_program(this->name_);
 	}
 
-	void GPU::sort_drawcalls(const bgfx::ViewId _view_id) const noexcept {
-		bgfx::touch(_view_id);
-	}
-
-	void GPU::end_frame() const noexcept {
-		bgfx::frame();
-	}
-
-	void GPU::set_camera(const Matrix4x4<>& _view, const Matrix4x4<>& _proj, const bgfx::ViewId _view_id) const noexcept {
-		bgfx::setViewTransform(_view_id, value_ptr(_view), value_ptr(_proj));
-	}
-
-	void GPU::set_transform(const Transform& _transform) const noexcept {
-		bgfx::setTransform(value_ptr(_transform.calculate_matrix()));
-	}
-
-	void GPU::set_transform(const float (&_matrix)[16]) const noexcept {
-		bgfx::setTransform(&*_matrix);
-	}
-
-	void GPU::set_transform(const float* const _matrix) const noexcept {
-		bgfx::setTransform(_matrix);
-	}
-
-	void GPU::set_mesh_buffer(const Mesh& _mesh) const noexcept {
-		assert(_mesh.is_uploaded());
-
-		const auto vb_buffer = bgfx::VertexBufferHandle{_mesh.get_vertex_buffer_id()};
-		const auto ib_buffer = bgfx::IndexBufferHandle{_mesh.get_index_buffer_id()};
-
-		assert(bgfx::isValid(vb_buffer));
-		assert(bgfx::isValid(ib_buffer));
-
-		setIndexBuffer(ib_buffer);
-		setVertexBuffer(0, vb_buffer);
-	}
-
-	void GPU::set_texture(const Texture& _texture, const bgfx::UniformHandle _sampler) const noexcept {
-		assert(_texture.is_uploaded());
-
-		const auto view = bgfx::TextureHandle{_texture.get_texel_buffer_id()};
-
-		assert(bgfx::isValid(view));
-
-		setTexture(0, _sampler, view);
-	}
-
-	void GPU::draw(const bgfx::ProgramHandle _shader, const std::underlying_type<RenderFlags::Enum>::type _flags, const bgfx::ViewId _view_id, const std::uint8_t _depth) const noexcept {
-		assert(bgfx::isValid(_shader));
-		bgfx::setState(_flags);
-		submit(_view_id, _shader, _depth);
-	}
-
-	void GPU::set_uniform(const bgfx::UniformHandle _handle, const Vector4<>& _value) const noexcept {
-		setUniform(_handle, value_ptr(_value));
-	}
-
-	void GPU::set_uniform(const bgfx::UniformHandle _handle, const Matrix3x3<>& _value) const noexcept {
-		setUniform(_handle, value_ptr(_value));
-	}
-
-	void GPU::set_uniform(const bgfx::UniformHandle _handle, const Matrix4x4<>& _value) const noexcept {
-		setUniform(_handle, value_ptr(_value));
-	}
-
-	void GPU::set_uniform(const bgfx::UniformHandle _handle, const float (&_value)[4]) const noexcept {
-		setUniform(_handle, &*_value);
-	}
-
-	void GPU::set_uniform(const bgfx::UniformHandle _handle, const float (&_value)[9]) const noexcept {
-		setUniform(_handle, &*_value);
-	}
-
-	void GPU::set_uniform(const bgfx::UniformHandle _handle, const float (&_value)[16]) const noexcept {
-		setUniform(_handle, &*_value);
-	}
-
-	void GPU::set_flags(const std::underlying_type<RenderFlags::Enum>::type _flags) const noexcept {
-		bgfx::setState(_flags);
+	void IShader::unload() {
+		BGFX_FREE(this->program_);
 	}
 }

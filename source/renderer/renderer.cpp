@@ -177,6 +177,7 @@
 #include "../../include/dce/mathlib.hpp"
 #include "../../include/dce/transform.hpp"
 #include "../../include/dce/mesh_renderer.hpp"
+#include "../../include/dce/variant_visit_overloader.hpp"
 #include "../../include/dce/sun.hpp"
 
 const float *VIEW, *PROJ;
@@ -208,29 +209,54 @@ namespace dce::renderer {
 
 	/* End frame */
 	auto Renderer::on_post_tick(State& _state) -> bool {
+		const auto& lighting = _state.scenery().config.lighting;
+
+		// Sort draw calls before rendering 3D scene:
 		this->gpu_.sort_drawcalls();
+
 		{
-			this->fly_cam_.update(_state);
-			VIEW = value_ptr(this->fly_cam_.get_view_matrix());
-			PROJ = value_ptr(this->fly_cam_.get_projection_matrix());
-			this->gpu_.set_camera(this->fly_cam_.get_view_matrix(), this->fly_cam_.get_projection_matrix());
+			// Update camera and set matrices:
+			this->update_camera(_state);
 
-			Matrix4x4<> skybox_matrix = math::identity<Matrix4x4<>>();
-			skybox_matrix = scale(skybox_matrix, Vector3<>{100});
-			this->gpu_.set_transform(value_ptr(skybox_matrix));
+			// Set per frame data for all shaders:
+			this->set_per_frame_data(_state.scenery().config.lighting);
 
-			this->set_per_frame_buffer(_state.scenery().config);
-
+			// Draw lambda function which render an object:
 			auto draw = [this](Transform& _transform, MeshRenderer& _mesh_renderer) {
-				[[likely]] if (_mesh_renderer.is_visible) {
-					this->gpu_.set_transform(_transform);
-					this->shader_bucket_.render(this->gpu_, _mesh_renderer);
+
+				// If the mesh renderer is not visible, skip it.
+				[[unlikely]] if (!_mesh_renderer.is_visible) {
+					return;
 				}
+
+				// Set world transform matrix:
+				this->gpu_.set_transform(_transform);
+
+				// Get a reference to the mesh to capture.
+				const auto& mesh = _mesh_renderer.mesh;
+
+				// Render each material with the corresponding shader:
+				std::visit(overload{
+
+					           // Render with unlit material:
+					           [this, mesh](const Material::Unlit& _material) {
+						           this->shader_bucket_.unlit.per_object(mesh, _material);
+					           },
+
+					           // Render with lambert material:
+					           [this, mesh](const Material::Lambert& _material) {
+						           this->shader_bucket_.lambert.per_object(mesh, _material);
+					           },
+				           }, _mesh_renderer.material.properties);
 			};
 
+			// Iterate and draw:
 			auto& registry = _state.scenery().registry();
 			registry.view<Transform, MeshRenderer>().each(draw);
 		}
+
+		this->draw_skybox(lighting);
+
 		this->gpu_.end_frame();
 		return true;
 	}
@@ -241,16 +267,23 @@ namespace dce::renderer {
 		return true;
 	}
 
-	void Renderer::set_per_frame_buffer(const Scenery::Configuration& _config) {
-		const auto& sun_color = _config.lighting.sun.color;
-		const auto delta = calculate_sun_orbit(6, math::radians(23.4f));
-		const auto sun_dir = Vector4<>(calculate_sun_dir(_config.lighting.sun.hour, _config.lighting.sun.latitude, delta, math::UP, math::NORTH), 1.f);
-		const auto& ambient_color = _config.lighting.const_ambient_color;
-		const auto& skybox_cubemap = _config.lighting.skybox_cubemap;
-		const auto& skydome = _config.lighting.skydome;
+	void Renderer::update_camera(const State& _state) {
+		this->fly_cam_.update(_state.input(), _state.config().display.width, _state.config().display.height, _state.chrono().delta_time);
 
-		const PerFrameBuffer per_frame = {&sun_color, &sun_dir, &ambient_color, &skybox_cubemap, &skydome};
+		VIEW = value_ptr(this->fly_cam_.get_view_matrix());
+		PROJ = value_ptr(this->fly_cam_.get_projection_matrix());
+		this->gpu_.set_camera(this->fly_cam_.get_view_matrix(), this->fly_cam_.get_projection_matrix());
+	}
 
-		this->shader_bucket_.per_frame(per_frame);
+	void Renderer::draw_skybox(const Scenery::Configuration::Lighting& _lighting) const {
+		auto skybox_matrix = math::identity<Matrix4x4<>>();
+		skybox_matrix = scale(skybox_matrix, Vector3<>{100});
+		this->gpu_.set_transform(value_ptr(skybox_matrix));
+		this->shader_bucket_.skybox.per_frame(_lighting.skybox_cubemap, _lighting.skydome);
+	}
+
+	void Renderer::set_per_frame_data(const Scenery::Configuration::Lighting& _lighting) const {
+		const auto sun_dir = Vector4<>(calculate_sun_dir(_lighting.sun.hour, _lighting.sun.latitude, calculate_sun_orbit(6, math::radians(23.4f)), math::UP, math::NORTH), 1.f);
+		this->shader_bucket_.lambert.per_frame(sun_dir, _lighting.sun.color, _lighting.const_ambient_color);
 	}
 } // namespace dce::renderer // namespace dce::renderer

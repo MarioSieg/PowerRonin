@@ -201,7 +201,7 @@ namespace dce {
 		/// Contains per scenery settings.
 		/// </summary>
 		struct Configuration final {
-			struct {
+			struct Lighting final {
 				struct {
 					/// <summary>
 					/// The sun latitude.

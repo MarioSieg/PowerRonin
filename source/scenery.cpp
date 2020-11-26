@@ -218,7 +218,7 @@ namespace dce {
 		skybox_cubemap_meta.sampler_flags = SamplerFlags::UVW_CLAMP;
 
 		// Load skybox:
-		this->config.lighting.skybox_cubemap = _resource_manager.texture_cache.load<TextureImporteur>(_resource_manager.gen_id(), "textures/skybox/swiss.dds", &skybox_cubemap_meta);
+		this->config.lighting.skybox_cubemap = _resource_manager.texture_cache.load<TextureImporteur>(_resource_manager.gen_id(), "textures/skybox/wispy.dds", &skybox_cubemap_meta);
 		this->config.lighting.skydome = _resource_manager.mesh_cache.load<MeshImporteur>(_resource_manager.gen_id(), "meshes/common/skydome.obj");
 	}
 } // namespace dce

@@ -133,7 +133,7 @@ add_library(
     "source/renderer/shaders/lambert.cpp" 
     "include/dce/sun.hpp" 
     "source/sun.cpp" 
-    "source/renderer/buffers.hpp" 
+     
     "source/gui/widgets/config_editor.hpp"
     "source/gui/widgets/config_editor.cpp" 
     "source/core/misc.cpp"
@@ -142,7 +142,7 @@ add_library(
     "source/scripting/scripting.hpp"
     "source/scripting/scripting.cpp" 
     "source/renderer/shaders/skybox.hpp"
-    "source/renderer/shaders/skybox.cpp")
+    "source/renderer/shaders/skybox.cpp" "source/renderer/ishader.cpp" "include/dce/variant_visit_overloader.hpp")
 
 include("extern/CMakeLists.txt")
 
