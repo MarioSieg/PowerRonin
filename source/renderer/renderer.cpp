@@ -203,7 +203,6 @@ namespace dce::renderer {
 	auto Renderer::on_pre_tick(State& _state) -> bool {
 		get_runtime_stats(const_cast<Diagnostics&>(_state.diagnostics()));
 		this->tick_prev_ = update_clocks(const_cast<Chrono&>(_state.chrono()), this->tick_prev_);
-		this->gpu_.begin_frame();
 		return true;
 	}
 
@@ -211,8 +210,8 @@ namespace dce::renderer {
 	auto Renderer::on_post_tick(State& _state) -> bool {
 		const auto& lighting = _state.scenery().config.lighting;
 
-		// Sort draw calls before rendering 3D scene:
-		this->gpu_.sort_drawcalls();
+		this->gpu_.clear_view(SCENERY_VIEW);
+		this->gpu_.sort_draw_calls(SCENERY_VIEW);
 
 		{
 			// Update camera and set matrices:
@@ -255,6 +254,7 @@ namespace dce::renderer {
 			registry.view<Transform, MeshRenderer>().each(draw);
 		}
 
+		this->gpu_.clear_view(SKYBOX_VIEW, BGFX_CLEAR_NONE);
 		this->draw_skybox(lighting);
 
 		this->gpu_.end_frame();
@@ -268,17 +268,29 @@ namespace dce::renderer {
 	}
 
 	void Renderer::update_camera(const State& _state) {
-		this->fly_cam_.update(_state.input(), _state.config().display.width, _state.config().display.height, _state.chrono().delta_time);
-
-		VIEW = value_ptr(this->fly_cam_.get_view_matrix());
-		PROJ = value_ptr(this->fly_cam_.get_projection_matrix());
-		this->gpu_.set_camera(this->fly_cam_.get_view_matrix(), this->fly_cam_.get_projection_matrix());
+		this->fly_cam_.update(_state.input(), _state.config().display.width, _state.config().display.height, static_cast<float>(_state.chrono().delta_time));
+		this->view_ = this->fly_cam_.get_view_matrix();
+		this->projection_ = this->fly_cam_.get_projection_matrix();
+		this->gpu_.set_camera(SCENERY_VIEW, this->view_, this->projection_);
 	}
 
-	void Renderer::draw_skybox(const Scenery::Configuration::Lighting& _lighting) const {
+	void Renderer::draw_skybox(const Scenery::Configuration::Lighting& _lighting) {
+		// Create transform matrix:
 		auto skybox_matrix = math::identity<Matrix4x4<>>();
-		skybox_matrix = scale(skybox_matrix, Vector3<>{100});
+		skybox_matrix = scale(skybox_matrix, Vector3<>{10});
+
+		// Remove translation:
+		this->view_[3][0] = .0f;
+		this->view_[3][1] = .0f;
+		this->view_[3][2] = .0f;
+
+		// Set camera:
+		this->gpu_.set_camera(SKYBOX_VIEW, this->view_, this->projection_);
+
+		// Set transform:
 		this->gpu_.set_transform(value_ptr(skybox_matrix));
+
+		// Draw skybox:
 		this->shader_bucket_.skybox.per_frame(_lighting.skybox_cubemap, _lighting.skydome);
 	}
 

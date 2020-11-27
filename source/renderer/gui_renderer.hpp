@@ -179,19 +179,17 @@ struct ImFont;
 namespace dce::renderer {
 	class GuiRenderer final {
 	public:
-		static constexpr std::uint16_t VIEW_ID = 0xFF;
-
-		auto initialize(std::uint8_t font_size) -> bool;
-		void render(const ImDrawData* data) const;
+		auto initialize(std::uint8_t _font_size) -> bool;
+		void render(const ImDrawData* _data) const;
 		void shutdown() const;
 
 	private:
-		ImFont* font = nullptr;
+		ImFont* font_ = nullptr;
 		bgfx::VertexLayout layout = {};
-		bgfx::ProgramHandle gui_program = {bgfx::kInvalidHandle};
-		bgfx::ProgramHandle gui_image_program = {bgfx::kInvalidHandle};
-		bgfx::UniformHandle texture_uniform = {bgfx::kInvalidHandle};
-		bgfx::TextureHandle texture = {bgfx::kInvalidHandle};
-		bgfx::UniformHandle image_lod_enabled = {bgfx::kInvalidHandle};
+		bgfx::ProgramHandle gui_program_ = {bgfx::kInvalidHandle};
+		bgfx::ProgramHandle gui_image_program_ = {bgfx::kInvalidHandle};
+		bgfx::UniformHandle texture_uniform_ = {bgfx::kInvalidHandle};
+		bgfx::TextureHandle texture_ = {bgfx::kInvalidHandle};
+		bgfx::UniformHandle image_lod_enabled_ = {bgfx::kInvalidHandle};
 	};
 } // namespace dce::renderer // namespace dce::renderer

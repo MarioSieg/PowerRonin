@@ -176,10 +176,7 @@
 #include "../../include/dce/config.hpp"
 #include "../../include/dce/transform.hpp"
 #include "../../include/dce/mesh_renderer.hpp"
-
 #include "../platform/platform.hpp"
-
-#include "../../extern/bgfx/bgfx/include/bgfx/bgfx.h"
 
 namespace dce::renderer {
 	auto GPU::initialize_drivers(const Config& _config, AsyncProtocol& _proto) -> bool {
@@ -194,7 +191,7 @@ namespace dce::renderer {
 		init.debug = DEBUG_MODE;
 		init.platformData.nwh = platform::NATIVE_WINDOW_HANDLE;
 		init.profile = DEBUG_MODE;
-		init.resolution.reset = BGFX_RESET_MSAA_X16 | BGFX_RESET_HIDPI | BGFX_RESET_MAXANISOTROPY;
+		init.resolution.reset = BGFX_RESET_MSAA_X16 | BGFX_RESET_HIDPI | BGFX_RESET_MAXANISOTROPY | BGFX_RESET_DEPTH_CLAMP;
 		init.resolution.width = _config.display.width;
 		init.resolution.height = _config.display.height;
 
@@ -230,20 +227,20 @@ namespace dce::renderer {
 		//bgfx::shutdown();
 	}
 
-	void GPU::begin_frame() const noexcept {
-		bgfx::setViewClear(0, BGFX_CLEAR_DEPTH | BGFX_CLEAR_COLOR, 0xFFFFFFFF, 1.F, 0);
-		bgfx::setViewRect(0, 0, 0, this->width_, this->height_);
+	void GPU::clear_view(const bgfx::ViewId _view, const std::uint16_t _flags, const float _depth) const noexcept {
+		bgfx::setViewClear(_view, _flags, 0xFFFFFFFF, _depth, 0);
+		bgfx::setViewRect(_view, 0, 0, this->width_, this->height_);
 	}
 
-	void GPU::sort_drawcalls(const bgfx::ViewId _view_id) const noexcept {
-		bgfx::touch(_view_id);
+	void GPU::sort_draw_calls(const bgfx::ViewId _view) const noexcept {
+		bgfx::touch(_view);
 	}
 
 	void GPU::end_frame() const noexcept {
 		bgfx::frame();
 	}
 
-	void GPU::set_camera(const Matrix4x4<>& _view, const Matrix4x4<>& _proj, const bgfx::ViewId _view_id) const noexcept {
+	void GPU::set_camera(const bgfx::ViewId _view_id, const Matrix4x4<>& _view, const Matrix4x4<>& _proj) const noexcept {
 		bgfx::setViewTransform(_view_id, value_ptr(_view), value_ptr(_proj));
 	}
 
@@ -282,9 +279,9 @@ namespace dce::renderer {
 		setTexture(0, _sampler, view);
 	}
 
-	void GPU::draw(const bgfx::ProgramHandle _shader, const std::underlying_type<RenderFlags::Enum>::type _flags, const bgfx::ViewId _view_id, const std::uint8_t _depth) const noexcept {
+	void GPU::draw(const bgfx::ProgramHandle _shader, const bgfx::ViewId _view_id, const std::uint64_t _state_flags, const std::uint8_t _depth) const noexcept {
 		assert(bgfx::isValid(_shader));
-		bgfx::setState(_flags);
+		bgfx::setState(_state_flags);
 		submit(_view_id, _shader, _depth);
 	}
 
@@ -310,9 +307,5 @@ namespace dce::renderer {
 
 	void GPU::set_uniform(const bgfx::UniformHandle _handle, const float (&_value)[16]) const noexcept {
 		setUniform(_handle, &*_value);
-	}
-
-	void GPU::set_flags(const std::underlying_type<RenderFlags::Enum>::type _flags) const noexcept {
-		bgfx::setState(_flags);
 	}
 }

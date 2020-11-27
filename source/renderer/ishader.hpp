@@ -174,6 +174,7 @@
 
 #include "gl_headers.hpp"
 #include "gpu.hpp"
+#include "views.hpp"
 
 namespace dce::renderer {
 	class IShader {

@@ -142,7 +142,7 @@ add_library(
     "source/scripting/scripting.hpp"
     "source/scripting/scripting.cpp" 
     "source/renderer/shaders/skybox.hpp"
-    "source/renderer/shaders/skybox.cpp" "source/renderer/ishader.cpp" "include/dce/variant_visit_overloader.hpp")
+    "source/renderer/shaders/skybox.cpp" "source/renderer/ishader.cpp" "include/dce/variant_visit_overloader.hpp" "source/renderer/views.hpp")
 
 include("extern/CMakeLists.txt")
 

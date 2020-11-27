@@ -205,13 +205,15 @@ namespace dce {
 			virtual auto on_post_shutdown([[maybe_unused]] State& _state) -> bool override;
 
 			void update_camera(const State& _state);
-			void draw_skybox(const Scenery::Configuration::Lighting& _lighting) const;
+			void draw_skybox(const Scenery::Configuration::Lighting& _lighting);
 			void set_per_frame_data(const Scenery::Configuration::Lighting& _lighting) const;
 
 			std::uint64_t tick_prev_ = 0;
 			FlyCam fly_cam_ = {};
 			GPU gpu_ = {};
 			ShaderBucket shader_bucket_;
+			Matrix4x4<> view_ = math::identity<Matrix4x4<>>();
+			Matrix4x4<> projection_ = math::identity<Matrix4x4<>>();
 		};
 	} // namespace dce::renderer // namespace dce::renderer
 }

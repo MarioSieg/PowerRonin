@@ -180,31 +180,31 @@
 #include <algorithm>
 
 namespace dce::renderer {
-	auto GuiRenderer::initialize(const std::uint8_t font_size) -> bool {
+	auto GuiRenderer::initialize(const std::uint8_t _font_size) -> bool {
 		auto& io = ImGui::GetIO();
 		const auto type = bgfx::getRendererType();
-		this->gui_program = createProgram(createEmbeddedShader(EMBEDDED_SHADERS, type, "VS_GUI"), createEmbeddedShader(EMBEDDED_SHADERS, type, "FS_GUI"), true);
+		this->gui_program_ = createProgram(createEmbeddedShader(EMBEDDED_SHADERS, type, "VS_GUI"), createEmbeddedShader(EMBEDDED_SHADERS, type, "FS_GUI"), true);
 
-		if (this->gui_program.idx == bgfx::kInvalidHandle) {
+		if (this->gui_program_.idx == bgfx::kInvalidHandle) {
 			return false;
 		}
 
-		this->image_lod_enabled = createUniform("u_imageLodEnabled", bgfx::UniformType::Vec4);
+		this->image_lod_enabled_ = createUniform("u_imageLodEnabled", bgfx::UniformType::Vec4);
 
-		if (this->image_lod_enabled.idx == bgfx::kInvalidHandle) {
+		if (this->image_lod_enabled_.idx == bgfx::kInvalidHandle) {
 			return false;
 		}
 
-		this->gui_image_program = createProgram(createEmbeddedShader(EMBEDDED_SHADERS, type, "VS_GUI_IMAGE"), createEmbeddedShader(EMBEDDED_SHADERS, type, "FS_GUI_IMAGE"), true);
+		this->gui_image_program_ = createProgram(createEmbeddedShader(EMBEDDED_SHADERS, type, "VS_GUI_IMAGE"), createEmbeddedShader(EMBEDDED_SHADERS, type, "FS_GUI_IMAGE"), true);
 
-		if (this->gui_image_program.idx == bgfx::kInvalidHandle) {
+		if (this->gui_image_program_.idx == bgfx::kInvalidHandle) {
 			return false;
 		}
 
 		layout.begin().add(bgfx::Attrib::Position, 2, bgfx::AttribType::Float).add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float).add(bgfx::Attrib::Color0, 4, bgfx::AttribType::Uint8, true).end();
 
-		this->texture_uniform = createUniform("s_tex", bgfx::UniformType::Sampler);
-		if (this->texture_uniform.idx == bgfx::kInvalidHandle) {
+		this->texture_uniform_ = createUniform("s_tex", bgfx::UniformType::Sampler);
+		if (this->texture_uniform_.idx == bgfx::kInvalidHandle) {
 			return false;
 		}
 
@@ -217,7 +217,7 @@ namespace dce::renderer {
 			config.FontDataOwnedByAtlas = false;
 			config.MergeMode = false;
 
-			if (io.Fonts->AddFontFromFileTTF("fonts/jet_brains_mono_regular.ttf", static_cast<float>(font_size) - 3.F, &config, ranges) == nullptr) {
+			if (io.Fonts->AddFontFromFileTTF("fonts/jet_brains_mono_regular.ttf", static_cast<float>(_font_size) - 3.F, &config, ranges) == nullptr) {
 				return false;
 			}
 
@@ -235,18 +235,18 @@ namespace dce::renderer {
 			        return false;
 			}
 			*/
-			if (!io.Fonts->AddFontFromFileTTF("fonts/font_awesome_pro_regular.ttf", static_cast<float>(font_size) - 3.F, &config, glyph_ranges)) {
+			if (!io.Fonts->AddFontFromFileTTF("fonts/font_awesome_pro_regular.ttf", static_cast<float>(_font_size) - 3.F, &config, glyph_ranges)) {
 				return false;
 			}
 
 			config.MergeMode = false;
-			config.DstFont = font;
+			config.DstFont = font_;
 		}
 
 		io.Fonts->GetTexDataAsRGBA32(&data, &lwidth, &lheight);
 
-		this->texture = createTexture2D(static_cast<uint16_t>(lwidth), static_cast<uint16_t>(lheight), false, 1, bgfx::TextureFormat::BGRA8, 0, bgfx::copy(data, lwidth * lheight * 4));
-		return this->texture.idx != bgfx::kInvalidHandle;
+		this->texture_ = createTexture2D(static_cast<uint16_t>(lwidth), static_cast<uint16_t>(lheight), false, 1, bgfx::TextureFormat::BGRA8, 0, bgfx::copy(data, lwidth * lheight * 4));
+		return this->texture_.idx != bgfx::kInvalidHandle;
 	}
 
 	void GuiRenderer::render(const ImDrawData* const /*data*/) const {
@@ -254,11 +254,11 @@ namespace dce::renderer {
 		const auto& io = ImGui::GetIO();
 		const auto width = static_cast<std::uint16_t>(io.DisplaySize.x);
 		const auto height = static_cast<std::uint16_t>(io.DisplaySize.y);
-		setViewMode(VIEW_ID, bgfx::ViewMode::Sequential);
+		setViewMode(GUI_VIEW, bgfx::ViewMode::Sequential);
 		{
-			Matrix4x4 ortho = math::ortho(.0F, static_cast<float>(width), static_cast<float>(height), .0F, .0F, 1000.F);
-			bgfx::setViewTransform(VIEW_ID, nullptr, &ortho[0]);
-			bgfx::setViewRect(VIEW_ID, 0, 0, width, height);
+			Matrix4x4<> ortho = math::ortho(.0F, static_cast<float>(width), static_cast<float>(height), .0F, .0F, 1000.F);
+			bgfx::setViewTransform(GUI_VIEW, nullptr, math::value_ptr(ortho));
+			bgfx::setViewRect(GUI_VIEW, 0, 0, width, height);
 		}
 
 		for (auto i = 0; i < drawData->CmdListsCount; ++i) {
@@ -290,8 +290,8 @@ namespace dce::renderer {
 				else if (cmd->ElemCount != 0u) {
 					auto state = BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_A | BGFX_STATE_MSAA;
 
-					auto textureHandle = this->texture;
-					auto program = this->gui_program;
+					auto textureHandle = this->texture_;
+					auto program = this->gui_program_;
 					[[likely]] if (cmd->TextureId != nullptr) {
 						const union {
 							ImTextureID ptr;
@@ -306,8 +306,8 @@ namespace dce::renderer {
 						textureHandle = texture1.data.handle;
 						[[unlikely]] if (texture1.data.mip != 0u) {
 							const float lod_enabled[4] = {static_cast<float>(texture1.data.mip), 1.F, .0F, .0F};
-							setUniform(this->image_lod_enabled, lod_enabled);
-							program = this->gui_image_program;
+							setUniform(this->image_lod_enabled_, lod_enabled);
+							program = this->gui_image_program_;
 						}
 					}
 					else {
@@ -319,10 +319,10 @@ namespace dce::renderer {
 					bgfx::setScissor(xx, yy, static_cast<std::uint16_t>(std::min(cmd->ClipRect.z, 65535.F) - xx), static_cast<std::uint16_t>(std::min(cmd->ClipRect.w, 65535.F) - yy));
 
 					bgfx::setState(state);
-					setTexture(0, this->texture_uniform, textureHandle);
+					setTexture(0, this->texture_uniform_, textureHandle);
 					setVertexBuffer(0, &tvb, 0, vertex_count);
 					setIndexBuffer(&tib, offset, cmd->ElemCount);
-					submit(VIEW_ID, program);
+					submit(GUI_VIEW, program);
 				}
 				offset += cmd->ElemCount;
 			}
@@ -330,9 +330,9 @@ namespace dce::renderer {
 	}
 
 	void GuiRenderer::shutdown() const {
-		destroy(this->texture_uniform);
-		destroy(this->image_lod_enabled);
-		destroy(this->gui_program);
-		destroy(this->gui_image_program);
+		destroy(this->texture_uniform_);
+		destroy(this->image_lod_enabled_);
+		destroy(this->gui_program_);
+		destroy(this->gui_image_program_);
 	}
 } // namespace dce::renderer // namespace dce::renderer
