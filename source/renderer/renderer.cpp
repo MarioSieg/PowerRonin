@@ -157,11 +157,11 @@
 //       file or class name and description of purpose be included on the
 //       same "printed page" as the copyright notice for easier
 //       identification within third-party archives.
+// 
 //    Copyright 2020 Mario Sieg <support@kerbogames.com>
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
-//        http://www.apache.org/licenses/LICENSE-2.0
+//    You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 //    Unless required by applicable law or agreed to in writing, software
 //    distributed under the License is distributed on an "AS IS" BASIS,
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -203,16 +203,14 @@ namespace dce::renderer {
 	auto Renderer::on_pre_tick(State& _state) -> bool {
 		get_runtime_stats(const_cast<Diagnostics&>(_state.diagnostics()));
 		this->tick_prev_ = update_clocks(const_cast<Chrono&>(_state.chrono()), this->tick_prev_);
+		this->gpu_.clear_view(SCENERY_VIEW);
+		this->gpu_.sort_draw_calls(SCENERY_VIEW);
 		return true;
 	}
 
 	/* End frame */
 	auto Renderer::on_post_tick(State& _state) -> bool {
 		const auto& lighting = _state.scenery().config.lighting;
-
-		this->gpu_.clear_view(SCENERY_VIEW);
-		this->gpu_.sort_draw_calls(SCENERY_VIEW);
-
 		{
 			// Update camera and set matrices:
 			this->update_camera(_state);
@@ -246,7 +244,7 @@ namespace dce::renderer {
 					           [this, mesh](const Material::Lambert& _material) {
 						           this->shader_bucket_.lambert.per_object(mesh, _material);
 					           },
-				           }, _mesh_renderer.material.properties);
+				           }, _mesh_renderer.material->get_properties());
 			};
 
 			// Iterate and draw:

@@ -157,11 +157,11 @@
 //       file or class name and description of purpose be included on the
 //       same "printed page" as the copyright notice for easier
 //       identification within third-party archives.
+// 
 //    Copyright 2020 Mario Sieg <support@kerbogames.com>
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
-//        http://www.apache.org/licenses/LICENSE-2.0
+//    You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 //    Unless required by applicable law or agreed to in writing, software
 //    distributed under the License is distributed on an "AS IS" BASIS,
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -172,20 +172,221 @@
 
 #include "texture.hpp"
 #include "mathlib.hpp"
+
 #include <variant>
+#include <optional>
 
 namespace dce {
-	class Material final {
+	class ResourceManager;
+
+	struct MaterialMeta final : ISerializable {
+		[[nodiscard]] inline virtual void serialize(JsonStream&) const override { }
+
+		[[nodiscard]] inline virtual void deserialize(const JsonStream&) override { }
+	};
+
+	/// <summary>
+	/// Type of this material.
+	/// </summary>
+	enum class MaterialType {
+		/// <summary>
+		/// Has a simple texture and no lighting.
+		/// </summary>
+		UNLIT,
+
+		/// <summary>
+		/// Has a simple texture but lambertian diffuse lighting.
+		/// </summary>
+		LAMBERT
+	};
+
+	/// <summary>
+	/// Represents a material which contains properties to draw some surface.
+	/// </summary>
+	class Material final : public IResource<MaterialMeta> {
+		friend class MaterialImporteur;
+
 	public:
+		/// <summary>
+		/// Material properties for the type "UNLIT".
+		/// </summary>
 		struct Unlit final {
 			RRef<Texture> albedo = {};
 		};
 
+		/// <summary>
+		/// Material properties for the type "LAMBERT".
+		/// </summary>
 		struct Lambert final {
 			RRef<Texture> albedo = {};
 			Color<> color = {};
 		};
 
-		std::variant<Unlit, Lambert> properties = {};
+		/// <summary>
+		/// Properties are saved inside a type safe union (variant) to safe memory.
+		/// </summary>
+		using Properties = std::variant<Unlit, Lambert>;
+
+		/// <summary>
+		/// All associated file types.
+		/// </summary>
+		static constexpr std::array<std::string_view, 2> FILE_EXTENSION = {".mat", ".bmt"};
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_type"></param>
+		/// <returns>The material types as string.</returns>
+		[[nodiscard]] static constexpr auto type_to_string(const MaterialType _type) noexcept -> std::string_view;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_str"></param>
+		/// <returns>The material type is the string was valid, else std::nullopt.</returns>
+		[[nodiscard]] static constexpr auto type_from_string(const std::string_view _str) noexcept -> std::optional<MaterialType>;
+
+		/// <summary>
+		/// Creates a material from preloaded memory data.
+		/// </summary>
+		/// <param name="_props"></param>
+		/// <param name="_name_path_alias"></param>
+		/// <param name="_rm"></param>
+		/// <returns></returns>
+		[[nodiscard]] static auto create_from_data(Properties&& _props, std::filesystem::path&& _name_path_alias, ResourceManager& _rm) -> IRef<Material>;
+
+		/// <summary>
+		///
+		/// </summary>
+		/// <returns>A reference to the material's properties.</returns>
+		[[nodiscard]] auto get_properties() const noexcept -> const Properties&;
+
+		/// <summary>
+		///
+		/// </summary>
+		/// <returns>The type of the material.</returns>
+		[[nodiscard]] auto get_material_type() const noexcept -> MaterialType;
+
+		/// <summary>
+		/// NO-OP
+		/// </summary>
+		virtual void upload() override;
+
+		/// <summary>
+		/// NO-OP
+		/// </summary>
+		virtual void offload() override;
+
+		/// <summary>
+		/// Serialize properties to file.
+		/// </summary>
+		/// <param name="_j"></param>
+		void serialize(JsonStream& _j) const;
+
+		/// <summary>
+		/// Deserialize properties from file.
+		/// </summary>
+		/// <param name="_j"></param>
+		void deserialize(const JsonStream& _j, ResourceManager& _rm);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_type"></param>
+		/// <returns>True if material type is equals, else false.</returns>
+		[[nodiscard]] auto operator==(const MaterialType _type) const noexcept -> bool;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_type"></param>
+		/// <returns>True if material type is not equals, else false.</returns>
+		[[nodiscard]] auto operator!=(const MaterialType _type) const noexcept -> bool;
+
+		/// <summary>
+		/// Returns the material type data, if valid.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		template <typename T>
+		[[nodiscard]] auto get() const noexcept -> const T&;
+
+		/// <summary>
+		/// Returns the material type data, if valid.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		template <typename T>
+		[[nodiscard]] auto get() noexcept -> T&;
+
+		/// <summary>
+		/// Sets the material to a new type with new data.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="_variant"></param>
+		/// <returns></returns>
+		template <typename T>
+		void set(T&& _variant) noexcept;
+
+		/// <summary>
+		/// Direct set all properties.
+		/// </summary>
+		/// <param name="_props"></param>
+		/// <returns></returns>
+		void set(Properties&& _props) noexcept;
+
+	private:
+		Properties properties_ = {Unlit{}};
+		MaterialType mat_type_ = MaterialType::UNLIT;
+	};
+
+	template <typename T>
+	inline auto Material::get() const noexcept -> const T& {
+		return std::get<T>(this->properties_);
+	}
+
+	template <typename T>
+	inline auto Material::get() noexcept -> T& {
+		return std::get<T>(this->properties_);
+	}
+
+	template <>
+	inline void Material::set(Unlit&& _variant) noexcept {
+		this->properties_ = std::move(_variant);
+		this->mat_type_ = MaterialType::UNLIT;
+	}
+
+	template <>
+	inline void Material::set(Lambert&& _variant) noexcept {
+		this->properties_ = std::move(_variant);
+		this->mat_type_ = MaterialType::LAMBERT;
+	}
+
+	constexpr auto Material::type_to_string(const MaterialType _type) noexcept -> std::string_view {
+		switch (_type) {
+		case MaterialType::UNLIT: return "Unlit";
+		case MaterialType::LAMBERT: return "Lambert";
+		}
+	}
+
+	constexpr auto Material::type_from_string(const std::string_view _str) noexcept -> std::optional<MaterialType> {
+		if (_str == "Unlit") {
+			return MaterialType::UNLIT;
+		}
+
+		if (_str == "Lambert") {
+			return MaterialType::LAMBERT;
+		}
+
+		return std::nullopt;
+	}
+
+	/// <summary>
+	/// Material loader class.
+	/// Materials are de/serialized into JSON text files.
+	/// </summary>
+	class MaterialImporteur final : public ResourceImporteur<MaterialImporteur, Material> {
+	public:
+		auto load(std::filesystem::path&& _path, const MaterialMeta* const _meta = nullptr) const -> std::shared_ptr<Material>;
 	};
 }

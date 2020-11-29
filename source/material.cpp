@@ -168,26 +168,93 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-#include "ishader.hpp"
-#include "program_loader.hpp"
+#include "../../include/dce/material.hpp"
+#include "../../include/dce/json_impl.hpp"
+#include "../../include/dce/resource_manager.hpp"
 
-namespace dce::renderer {
+namespace dce {
+	void Material::serialize(JsonStream& _j) const {
+		_j["type"] = type_to_string(this->mat_type_);
+		switch (this->mat_type_) {
+		case MaterialType::UNLIT: {
+			const auto& props = this->get<Unlit>();
+			_j["_albedo"] = props.albedo->get_file_path().string();
+		}
+		break;
 
-	IShader::IShader(const std::string_view _name, GPU& _gpu) noexcept : name_(_name), gpu_(_gpu) {}
-
-	auto IShader::get_name() const noexcept -> std::string_view {
-		return this->name_;
+		case MaterialType::LAMBERT: {
+			const auto& props = this->get<Lambert>();
+			_j["_albedo"] = props.albedo->get_file_path().string();
+			_j["_albedo_color"] = std::make_tuple(props.color.r, props.color.g, props.color.b, props.color.a);
+		}
+		break;
+		}
 	}
 
-	auto IShader::get_path() const noexcept -> const std::filesystem::path& {
-		return this->path_;
+	void Material::deserialize(const JsonStream& _j, ResourceManager& _rm) {
+		this->mat_type_ = *type_from_string(_j["type"]);
+		switch (this->mat_type_) {
+		case MaterialType::UNLIT: {
+			this->get<Unlit>().albedo = _rm.load<Texture>(std::string(_j["_albedo"]));
+		}
+		break;
+
+		case MaterialType::LAMBERT: {
+			auto& lambert = this->get<Lambert>();
+			lambert.albedo = _rm.load<Texture>(std::string(_j["_albedo"]));
+			const std::tuple<float, float, float, float> albedo_color = _j["_albedo_color"];
+			lambert.color = {std::get<0>(albedo_color), std::get<1>(albedo_color), std::get<2>(albedo_color), std::get<3>(albedo_color)};
+		}
+		break;
+		}
 	}
 
-	void IShader::load() {
-		this->program_ = load_shader_program(this->name_);
+	auto Material::operator==(const MaterialType _type) const noexcept -> bool {
+		return this->mat_type_ == _type;
 	}
 
-	void IShader::unload() {
-		BGFX_FREE(this->program_);
+	auto Material::operator!=(const MaterialType _type) const noexcept -> bool {
+		return this->mat_type_ != _type;
+	}
+
+	void Material::set(Properties&& _props) noexcept {
+		if (std::holds_alternative<Unlit>(_props)) {
+			this->mat_type_ = MaterialType::UNLIT;
+		}
+		else if (std::holds_alternative<Lambert>(_props)) {
+			this->mat_type_ = MaterialType::LAMBERT;
+		}
+		this->properties_ = std::move(_props);
+	}
+
+	auto MaterialImporteur::load(std::filesystem::path&& _path, const MaterialMeta* const _meta) const -> std::shared_ptr<Material> {
+		auto self = IResource<MaterialMeta>::allocate<Material>();
+		// TODO
+		self->file_path_ = std::move(_path);
+		self->meta_data_ = _meta ? *_meta : IResource<MaterialMeta>::load_meta_or_default(self->file_path_);
+		return self;
+	}
+
+	auto Material::create_from_data(Properties&& _props, std::filesystem::path&& _name_path_alias, ResourceManager& _rm) -> IRef<Material> {
+		class MaterialFactory final : public ResourceImporteur<MaterialFactory, Material> {
+		public:
+			auto load(Properties&& _props, std::filesystem::path&& _name_path_alias) const -> std::shared_ptr<Material> {
+				auto self = allocate<Material>();
+				self->set(std::move(_props));
+				self->file_path_ = std::move(_name_path_alias);
+
+				return self;
+			}
+		};
+		const auto id = HString(_name_path_alias.string().c_str());
+		return const_cast<ResourceCache<Material>&>(_rm.get_material_cache()).load<MaterialFactory>(id, std::move(_props), std::move(_name_path_alias));
+	}
+
+	auto Material::get_properties() const noexcept -> const Properties& {
+		return this->properties_;
+	}
+
+	auto Material::get_material_type() const noexcept -> MaterialType {
+		return this->mat_type_;
 	}
 }

@@ -157,11 +157,11 @@
 //       file or class name and description of purpose be included on the
 //       same "printed page" as the copyright notice for easier
 //       identification within third-party archives.
+// 
 //    Copyright 2020 Mario Sieg <support@kerbogames.com>
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
-//        http://www.apache.org/licenses/LICENSE-2.0
+//    You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 //    Unless required by applicable law or agreed to in writing, software
 //    distributed under the License is distributed on an "AS IS" BASIS,
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -177,16 +177,16 @@
 using namespace ImGui;
 
 namespace dce::gui::widgets {
-	void ResourceViewer::update(bool& _show, ResourceManager& _importeur) {
+	void ResourceViewer::update(bool& _show, ResourceManager& _rm) {
 		SetNextWindowSize({800, 600}, ImGuiCond_FirstUseEver);
 		[[likely]] if (Begin(ICON_FA_DATABASE " Resource Viewer", &_show)) {
-			Text("Textures: %u", static_cast<unsigned>(_importeur.texture_cache.size()));
+			Text("Textures: %u", static_cast<unsigned>(_rm.get_texture_cache().size()));
 			SameLine();
-			Text("Meshes: %u", static_cast<unsigned>(_importeur.mesh_cache.size()));
+			Text("Meshes: %u", static_cast<unsigned>(_rm.get_mesh_cache().size()));
 			Separator();
 			Spacing();
 			if (CollapsingHeader(ICON_FA_IMAGES " Textures")) {
-				_importeur.texture_cache.each([&](const RRef<Texture>& _texture) {
+				_rm.get_texture_cache().each([&](const RRef<Texture>& _texture) {
 					TextUnformatted(ICON_FA_IMAGE);
 					SameLine();
 					TextUnformatted(_texture->get_file_path().filename().string().c_str());
@@ -208,7 +208,7 @@ namespace dce::gui::widgets {
 				});
 			}
 			[[likely]] if (CollapsingHeader(ICON_FA_CUBES " Meshes")) {
-				_importeur.mesh_cache.each([](const RRef<Mesh>& _mesh) {
+				_rm.get_mesh_cache().each([](const RRef<Mesh>& _mesh) {
 					TextUnformatted(ICON_FA_CUBE);
 					SameLine();
 					TextUnformatted(_mesh->get_file_path().filename().string().c_str());
@@ -226,7 +226,7 @@ namespace dce::gui::widgets {
 			}
 			/*
 			[[likely]] if (CollapsingHeader(ICON_FA_EYE " Shaders")) {
-			        _importeur.shader_cache.each([](const RRef<Shader> &_shader) {
+			        _rm.shader_cache.each([](const RRef<Shader> &_shader) {
 			                TextUnformatted(ICON_FA_EYE);
 			                SameLine();
 			                TextUnformatted(_shader->get_file_path().filename().string().c_str());

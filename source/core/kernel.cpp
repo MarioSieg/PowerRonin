@@ -157,11 +157,11 @@
 //       file or class name and description of purpose be included on the
 //       same "printed page" as the copyright notice for easier
 //       identification within third-party archives.
+// 
 //    Copyright 2020 Mario Sieg <support@kerbogames.com>
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
-//        http://www.apache.org/licenses/LICENSE-2.0
+//    You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 //    Unless required by applicable law or agreed to in writing, software
 //    distributed under the License is distributed on an "AS IS" BASIS,
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -235,7 +235,7 @@ namespace dce::core {
 		}
 
 		/* Invoke "on_pre_startup()" on all subsystems, which have this event registered. */
-		for (auto sys = this->core_->subsystems.begin(); sys != this->core_->subsystems.end(); ++sys) {
+		for (auto sys = this->core_->subsystems.begin(); sys != this->core_->subsystems.end(); std::advance(sys, 1)) {
 			const auto& name = std::get<1>(*sys)->name;
 			proto.critical(R"(Invoking kernel event "on_pre_startup" on subsystem interface "{}"...)", name);
 			const auto tik2 = std::chrono::high_resolution_clock::now();
@@ -247,7 +247,7 @@ namespace dce::core {
 		}
 
 		/* Invoke "on_post_startup()" on all subsystems, which have this event registered. */
-		for (auto sys = this->core_->subsystems.rbegin(); sys != this->core_->subsystems.rend(); ++sys) {
+		for (auto sys = this->core_->subsystems.rbegin(); sys != this->core_->subsystems.rend(); std::advance(sys, 1)) {
 			const auto& name = std::get<1>(*sys)->name;
 			proto.critical(R"(Invoking kernel event "on_post_startup" on subsystem interface "{}"...)", name);
 			const auto tik2 = std::chrono::high_resolution_clock::now();
@@ -297,7 +297,7 @@ namespace dce::core {
 			++cycles;
 
 			/* Invoke "on_pre_tick()" on all subsystems, which have this event registered. */
-			for (auto sys = this->core_->subsystems.begin(); sys != this->core_->subsystems.end(); ++sys) {
+			for (auto sys = this->core_->subsystems.begin(); sys != this->core_->subsystems.end(); std::advance(sys, 1)) {
 				const auto tik2 = std::chrono::high_resolution_clock::now();
 				[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::PRE_TICK && !std::get<1>(*sys)->on_pre_tick(*this->core_->state)) {
 					return false;
@@ -307,7 +307,7 @@ namespace dce::core {
 			}
 
 			/* Invoke "on_post_tick()" on all subsystems, which have this event registered. */
-			for (auto sys = this->core_->subsystems.rbegin(); sys != this->core_->subsystems.rend(); ++sys) {
+			for (auto sys = this->core_->subsystems.rbegin(); sys != this->core_->subsystems.rend(); std::advance(sys, 1)) {
 				const auto tik2 = std::chrono::high_resolution_clock::now();
 				[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::POST_TICK && !std::get<1>(*sys)->on_post_tick(*this->core_->state)) {
 					return false;

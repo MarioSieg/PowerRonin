@@ -157,11 +157,11 @@
 //       file or class name and description of purpose be included on the
 //       same "printed page" as the copyright notice for easier
 //       identification within third-party archives.
+// 
 //    Copyright 2020 Mario Sieg <support@kerbogames.com>
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
-//        http://www.apache.org/licenses/LICENSE-2.0
+//    You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 //    Unless required by applicable law or agreed to in writing, software
 //    distributed under the License is distributed on an "AS IS" BASIS,
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -177,7 +177,10 @@ namespace dce::platform {
 	bool (*MOUSE_STATES)[5] = nullptr;
 
 	void mouse_button_callback([[maybe_unused]] GLFWwindow* const /*win*/
-	                           , [[maybe_unused]] const int _button, [[maybe_unused]] const int _action, [[maybe_unused]] const int /*mods*/) noexcept {
+	                           ,
+	                           [[maybe_unused]] const int _button,
+	                           [[maybe_unused]] const int _action,
+	                           [[maybe_unused]] const int /*mods*/) noexcept {
 		assert(MOUSE_STATES);
 		[[likely]] if (_action == GLFW_PRESS && _button >= 0 && _button < static_cast<int>(sizeof *MOUSE_STATES / sizeof **MOUSE_STATES)) {
 			*MOUSE_STATES[_button] = true;
@@ -185,14 +188,20 @@ namespace dce::platform {
 	}
 
 	void scroll_callback([[maybe_unused]] GLFWwindow* const /*win*/
-	                     , [[maybe_unused]] const double _x, [[maybe_unused]] const double _y) noexcept {
+	                     ,
+	                     [[maybe_unused]] const double _x,
+	                     [[maybe_unused]] const double _y) noexcept {
 		auto& io = ImGui::GetIO();
 		io.MouseWheelH += static_cast<float>(_x);
 		io.MouseWheel += static_cast<float>(_y);
 	}
 
-	void key_callback([[maybe_unused]] GLFWwindow* const /*win*/, const int _key, [[maybe_unused]] const int /*scancode*/
-	                  , const int _action, [[maybe_unused]] const int /*mods*/) noexcept {
+	void key_callback([[maybe_unused]] GLFWwindow* const /*win*/,
+	                  const int _key,
+	                  [[maybe_unused]] const int /*scancode*/
+	                  ,
+	                  const int _action,
+	                  [[maybe_unused]] const int /*mods*/) noexcept {
 		auto& io = ImGui::GetIO();
 		[[likely]] if (_action == GLFW_PRESS) {
 			io.KeysDown[_key] = true;
@@ -211,7 +220,8 @@ namespace dce::platform {
 	}
 
 	void char_callback([[maybe_unused]] GLFWwindow* const /*win*/
-	                   , const unsigned _c) noexcept {
+	                   ,
+	                   const unsigned _c) noexcept {
 		ImGui::GetIO().AddInputCharacter(_c);
 	}
 } // namespace dce::platform // namespace dce::platform

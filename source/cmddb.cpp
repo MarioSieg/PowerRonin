@@ -157,11 +157,11 @@
 //       file or class name and description of purpose be included on the
 //       same "printed page" as the copyright notice for easier
 //       identification within third-party archives.
+// 
 //    Copyright 2020 Mario Sieg <support@kerbogames.com>
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
-//        http://www.apache.org/licenses/LICENSE-2.0
+//    You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 //    Unless required by applicable law or agreed to in writing, software
 //    distributed under the License is distributed on an "AS IS" BASIS,
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -381,7 +381,7 @@ namespace dce {
 		/* reload system resources */
 		{
 			auto functor = [ ](State& _state, [[maybe_unused]] std::string&& _args) -> bool {
-				_state.resource_manager().load_system_resources();
+				_state.resource_manager().system_resources.load_all(_state.resource_manager());
 				return true;
 			};
 			registry += Command{.token = "relsysres", .help = "Reload system resources.", .functor = +functor};

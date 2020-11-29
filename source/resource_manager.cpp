@@ -157,11 +157,11 @@
 //       file or class name and description of purpose be included on the
 //       same "printed page" as the copyright notice for easier
 //       identification within third-party archives.
+// 
 //    Copyright 2020 Mario Sieg <support@kerbogames.com>
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
-//        http://www.apache.org/licenses/LICENSE-2.0
+//    You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 //    Unless required by applicable law or agreed to in writing, software
 //    distributed under the License is distributed on an "AS IS" BASIS,
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -170,14 +170,43 @@
 
 #include "../include/dce/resource_manager.hpp"
 
-namespace dce {
-	void ResourceManager::load_system_resources() {
-		this->system_resources.textures.black_1x1 = this->texture_cache.load<TextureImporteur>(this->gen_id(), "textures/common/unit/black.png");
-		this->system_resources.textures.white_1x1 = this->texture_cache.load<TextureImporteur>(this->gen_id(), "textures/common/unit/white.png");
-		this->system_resources.textures.error_marker = this->texture_cache.load<TextureImporteur>(this->gen_id(), "textures/common/invalid.dds");
-		this->system_resources.textures.checkerboard = this->texture_cache.load<TextureImporteur>(this->gen_id(), "textures/common/checkerboard.dds");
 
-		this->system_resources.meshes.error_text = this->mesh_cache.load<MeshImporteur>(this->gen_id(), "meshes/common/invalid.obj");
-		this->system_resources.meshes.cube = this->mesh_cache.load<MeshImporteur>(this->gen_id(), "meshes/common/cube.obj");
+namespace dce {
+	void SystemResources::load_all(ResourceManager& _importeur) {
+		this->black_1x1 = _importeur.load<Texture>(std::filesystem::absolute("textures/common/unit/black.png"));
+		this->white_1x1 = _importeur.load<Texture>(std::filesystem::absolute("textures/common/unit/white.png"));
+		this->error_marker = _importeur.load<Texture>(std::filesystem::absolute("textures/common/invalid.dds"));
+		this->checkerboard = _importeur.load<Texture>(std::filesystem::absolute("textures/common/checkerboard.dds"));
+		this->error_text = _importeur.load<Mesh>(std::filesystem::absolute("meshes/common/invalid.obj"));
+		this->cube = _importeur.load<Mesh>(std::filesystem::absolute("meshes/common/cube.obj"));
+		this->skydome = _importeur.load<Mesh>(std::filesystem::absolute("meshes/common/skydome.obj"));
+		this->skybox = _importeur.load<Texture>(std::filesystem::absolute("textures/skybox/wispy.dds"));
+	}
+
+	auto ResourceManager::get_texture_cache() const noexcept -> const ResourceCache<Texture>& {
+		return this->texture_cache_;
+	}
+
+	auto ResourceManager::get_mesh_cache() const noexcept -> const ResourceCache<Mesh>& {
+		return this->mesh_cache_;
+	}
+
+	auto ResourceManager::get_material_cache() const noexcept -> const ResourceCache<Material>& {
+		return this->material_cache_;
+	}
+
+	auto ResourceManager::load_texture(std::filesystem::path&& _file) -> RRef<Texture> {
+		const auto id = HString(_file.string().c_str());
+		return this->texture_cache_.load<TextureImporteur>(id, std::move(_file));
+	}
+
+	auto ResourceManager::load_mesh(std::filesystem::path&& _file) -> RRef<Mesh> {
+		const auto id = HString(_file.string().c_str());
+		return this->mesh_cache_.load<MeshImporteur>(id, std::move(_file));
+	}
+
+	auto ResourceManager::load_material(std::filesystem::path&& _file) -> RRef<Material> {
+		const auto id = HString(_file.string().c_str());
+		return this->material_cache_.load<MaterialImporteur>(id, std::move(_file));
 	}
 } // namespace dce // namespace dce

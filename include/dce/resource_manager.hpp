@@ -157,11 +157,11 @@
 //       file or class name and description of purpose be included on the
 //       same "printed page" as the copyright notice for easier
 //       identification within third-party archives.
+// 
 //    Copyright 2020 Mario Sieg <support@kerbogames.com>
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
-//        http://www.apache.org/licenses/LICENSE-2.0
+//    You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 //    Unless required by applicable law or agreed to in writing, software
 //    distributed under the License is distributed on an "AS IS" BASIS,
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -171,38 +171,65 @@
 #pragma once
 
 #include "mesh.hpp"
-#include "resource.hpp"
 #include "texture.hpp"
+#include "material.hpp"
 
 namespace dce {
+	class ResourceManager;
+
+	/// <summary>
+	/// Contains all resources needed by the engine.
+	/// </summary>
+	struct SystemResources {
+		RRef<Texture> black_1x1 = {};
+		RRef<Texture> white_1x1 = {};
+		RRef<Texture> error_marker = {};
+		RRef<Texture> checkerboard = {};
+		RRef<Mesh> error_text = {};
+		RRef<Mesh> cube = {};
+		RRef<Mesh> skydome = {};
+		RRef<Texture> skybox = {};
+
+		void load_all(ResourceManager& _importeur);
+	};
+
+	/// <summary>
+	/// Manager of all resources like textures or meshes.
+	/// </summary>
 	class ResourceManager final {
 		friend class State;
 	public:
-		struct SystemResources {
-			struct {
-				RRef<Texture> black_1x1 = {};
-				RRef<Texture> white_1x1 = {};
-				RRef<Texture> error_marker = {};
-				RRef<Texture> checkerboard = {};
-			} textures = {};
+		SystemResources system_resources = {};
 
-			struct {
-				RRef<Mesh> error_text = {};
-				RRef<Mesh> cube = {};
-			} meshes = {};
-		} system_resources;
+		[[nodiscard]] auto get_texture_cache() const noexcept -> const ResourceCache<Texture>&;
+		[[nodiscard]] auto get_mesh_cache() const noexcept -> const ResourceCache<Mesh>&;
+		[[nodiscard]] auto get_material_cache() const noexcept -> const ResourceCache<Material>&;
 
-		ResourceCache<Texture> texture_cache = {};
-		ResourceCache<Mesh> mesh_cache = {};
-
-		[[nodiscard]] auto gen_id() noexcept -> std::uint32_t;
-		void load_system_resources();
+		template <typename T> requires std::is_base_of_v<IResource<typename T::Meta>, T> [[nodiscard]] auto load(std::filesystem::path&& _file) -> RRef<T>;
 
 	private:
-		std::uint32_t id_counter_ = 0;
+		[[nodiscard]] auto load_texture(std::filesystem::path&& _file) -> RRef<Texture>;
+		[[nodiscard]] auto load_mesh(std::filesystem::path&& _file) -> RRef<Mesh>;
+		[[nodiscard]] auto load_material(std::filesystem::path&& _file) -> RRef<Material>;
+
+
+		ResourceCache<Texture> texture_cache_ = {};
+		ResourceCache<Mesh> mesh_cache_ = {};
+		ResourceCache<Material> material_cache_ = {};
 	};
 
-	inline auto ResourceManager::gen_id() noexcept -> std::uint32_t {
-		return this->id_counter_++;
+	template <>
+	inline auto ResourceManager::load(std::filesystem::path&& _file) -> RRef<Texture> {
+		return this->load_texture(std::move(_file));
+	}
+
+	template <>
+	inline auto ResourceManager::load(std::filesystem::path&& _file) -> RRef<Mesh> {
+		return this->load_mesh(std::move(_file));
+	}
+
+	template <>
+	inline auto ResourceManager::load(std::filesystem::path&& _file) -> RRef<Material> {
+		return this->load_material(std::move(_file));
 	}
 } // namespace dce // namespace dce

@@ -157,11 +157,11 @@
 //       file or class name and description of purpose be included on the
 //       same "printed page" as the copyright notice for easier
 //       identification within third-party archives.
+// 
 //    Copyright 2020 Mario Sieg <support@kerbogames.com>
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
-//        http://www.apache.org/licenses/LICENSE-2.0
+//    You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 //    Unless required by applicable law or agreed to in writing, software
 //    distributed under the License is distributed on an "AS IS" BASIS,
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -194,8 +194,8 @@ namespace dce {
 
 			meta.name = "Cube";
 
-			renderer.material.properties = Material::Lambert{.albedo = _resource_manager.system_resources.textures.checkerboard, .color = {1, 1, 1, 1}};
-			renderer.mesh = _resource_manager.mesh_cache.load<MeshImporteur>(_resource_manager.gen_id(), "meshes/common/cube.obj");
+			renderer.material = Material::create_from_data(Material::Lambert{.albedo = _resource_manager.system_resources.checkerboard, .color = {1, 1, 1, 1}}, "lambert", _resource_manager);
+			renderer.mesh = _resource_manager.system_resources.cube;
 		}
 
 		// Create platform:
@@ -210,15 +210,15 @@ namespace dce {
 			transform.position.y = -1.f;
 			transform.scale *= 3.f;
 
-			renderer.material.properties = Material::Lambert{.albedo = _resource_manager.system_resources.textures.checkerboard, .color = {1, 1, 1, 1}};
-			renderer.mesh = _resource_manager.mesh_cache.load<MeshImporteur>(_resource_manager.gen_id(), "meshes/common/platform.obj");
+			renderer.material = Material::create_from_data(Material::Lambert{.albedo = _resource_manager.system_resources.checkerboard, .color = {1, 1, 1, 1}}, "lambert", _resource_manager);
+			renderer.mesh = _resource_manager.load<Mesh>("meshes/common/platform.obj");
 		}
 
 		TextureMeta skybox_cubemap_meta = {};
 		skybox_cubemap_meta.sampler_flags = SamplerFlags::UVW_CLAMP;
 
 		// Load skybox:
-		this->config.lighting.skybox_cubemap = _resource_manager.texture_cache.load<TextureImporteur>(_resource_manager.gen_id(), "textures/skybox/wispy.dds", &skybox_cubemap_meta);
-		this->config.lighting.skydome = _resource_manager.mesh_cache.load<MeshImporteur>(_resource_manager.gen_id(), "meshes/common/skydome.obj");
+		this->config.lighting.skybox_cubemap = _resource_manager.system_resources.skybox;
+		this->config.lighting.skydome = _resource_manager.system_resources.skydome;
 	}
 } // namespace dce

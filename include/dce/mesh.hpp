@@ -157,11 +157,11 @@
 //       file or class name and description of purpose be included on the
 //       same "printed page" as the copyright notice for easier
 //       identification within third-party archives.
+// 
 //    Copyright 2020 Mario Sieg <support@kerbogames.com>
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
-//        http://www.apache.org/licenses/LICENSE-2.0
+//    You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 //    Unless required by applicable law or agreed to in writing, software
 //    distributed under the License is distributed on an "AS IS" BASIS,
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -173,7 +173,9 @@
 #include "resource.hpp"
 
 namespace dce {
-	/* Vertex type. */
+	/// <summary>
+	/// Vertex type.
+	/// </summary>
 	struct Vertex final {
 		struct {
 			float x = .0f;
@@ -199,25 +201,51 @@ namespace dce {
 		[[nodiscard]] inline virtual void deserialize(const JsonStream&) override { }
 	};
 
-	/* Represents a 3D mesh. */
+	/// <summary>
+	/// Represents a 3D mesh.
+	/// </summary>
 	class Mesh final : public IResource<MeshMeta> {
 		friend class MeshImporteur;
 
 	public:
-		/* All associated file types. */
+		/// <summary>
+		/// All associated file types.
+		/// </summary>
 		static constexpr std::array<std::string_view, 37> FILE_EXTENSIONS = {".dae", ".blend", ".bvh", ".3ds", ".ase", ".obj", ".ply", ".dxf", ".ifc", ".nff", ".smd", ".vta", ".mdl", ".md2", ".md3", ".pk3", ".mdc", ".md5mesh", ".x", ".raw", ".ac", ".stl", ".dxf", ".irrmesh", ".xml", ".off", ".ter", ".mdl", ".hmp", ".mesh.xml", ".ms3d", ".lwo", ".lws", ".lxo", ".csm", ".cob", ".scn"};
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>The vector containing all indices.</returns>
 		[[nodiscard]] auto get_indices() const noexcept -> const std::vector<std::uint16_t>&;
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>The index buffer id.</returns>
 		[[nodiscard]] auto get_index_buffer_id() const noexcept -> std::uint16_t;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>The vector containing all vertices.</returns>
 		[[nodiscard]] auto get_vertices() const noexcept -> const std::vector<Vertex>&;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>The vertex buffer id.</returns>
 		[[nodiscard]] auto get_vertex_buffer_id() const noexcept -> std::uint16_t;
 
+		/// <summary>
+		/// Upload mesh data to VRAM. (Still stays in RAM).
+		/// </summary>
 		virtual void upload() override;
 
+
+		/// <summary>
+		/// Offload mesh data from VRAM. (Still stays in RAM).
+		/// </summary>
 		virtual void offload() override;
 
 	private:
@@ -230,6 +258,9 @@ namespace dce {
 		} volatile_upload_data_;
 	};
 
+	/// <summary>
+	/// Loader class for meshes.
+	/// </summary>
 	class MeshImporteur final : public ResourceImporteur<MeshImporteur, Mesh> {
 	public:
 		auto load(std::filesystem::path&& _path, const MeshMeta* const _meta = nullptr) const -> std::shared_ptr<Mesh>;
