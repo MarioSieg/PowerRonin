@@ -4,8 +4,6 @@ message("Initializing DreamcastSDK CMake")
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_C_COMPILER_WORKS 1)
-set(CMAKE_CXX_COMPILER_WORKS 1)
 
 project ("DreamcastSDK" CXX C ASM)
 
@@ -85,8 +83,7 @@ add_library(
     "source/renderer/shader_bucket.hpp" 
     "source/shader.cpp" 
     "include/dce/blob.hpp"
-    "source/blob.cpp" 
-    "source/resource.cpp" 
+    "source/blob.cpp"  
     "source/gui/file_dialog_tool.hpp"
     "source/gui/file_dialog_tool.cpp" 
     "source/gui/widgets/ram_editor.hpp" 
@@ -136,14 +133,21 @@ add_library(
     "source/renderer/shaders/lambert.cpp" 
     "include/dce/sun.hpp" 
     "source/sun.cpp" 
-    "source/renderer/buffers.hpp" 
     "source/gui/widgets/config_editor.hpp"
     "source/gui/widgets/config_editor.cpp" 
     "source/core/misc.cpp"
     "include/dce/utils.hpp" 
     "source/utils.cpp" 
     "source/scripting/scripting.hpp"
-    "source/scripting/scripting.cpp")
+    "source/scripting/scripting.cpp" 
+    "source/renderer/shaders/skybox.hpp"
+    "source/renderer/shaders/skybox.cpp" 
+    "source/renderer/ishader.cpp" 
+    "include/dce/variant_visit_overloader.hpp" 
+    "source/renderer/views.hpp" 
+    "source/material_runtime.cpp"
+    "source/material.cpp"
+    )
 
 include("extern/CMakeLists.txt")
 
