@@ -147,7 +147,10 @@ add_library(
     "source/renderer/views.hpp" 
     "source/material_runtime.cpp"
     "source/material.cpp"
-    )
+    "source/platform/splash.hpp" 
+    "source/platform/splash.cpp" 
+    "source/platform/util.hpp"
+    "source/platform/util.cpp")
 
 include("extern/CMakeLists.txt")
 
