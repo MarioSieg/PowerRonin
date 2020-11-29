@@ -180,7 +180,7 @@ namespace dce {
 		this->error_text = _importeur.load<Mesh>(std::filesystem::absolute("meshes/common/invalid.obj"));
 		this->cube = _importeur.load<Mesh>(std::filesystem::absolute("meshes/common/cube.obj"));
 		this->skydome = _importeur.load<Mesh>(std::filesystem::absolute("meshes/common/skydome.obj"));
-		this->skybox = _importeur.load<Texture>(std::filesystem::absolute("textures/skybox/wispy.dds"));
+		this->skybox = _importeur.load<Texture>(std::filesystem::absolute("textures/skybox/sunset.dds"));
 	}
 
 	auto ResourceManager::get_texture_cache() const noexcept -> const ResourceCache<Texture>& {
