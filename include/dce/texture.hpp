@@ -458,9 +458,8 @@ namespace dce {
 		SamplerFlags::Enum sampler_flags = SamplerFlags::NONE;
 		bool is_srgb = false;
 
-		[[nodiscard]] virtual void serialize(JsonStream&) const override;
-
-		[[nodiscard]] virtual void deserialize(const JsonStream&) override;
+		virtual void serialize(JsonStream&) const override;
+		virtual void deserialize(const JsonStream&) override;
 	};
 
 	/* Represents a 2D texture.*/

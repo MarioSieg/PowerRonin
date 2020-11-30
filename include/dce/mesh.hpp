@@ -196,9 +196,8 @@ namespace dce {
 	};
 
 	struct MeshMeta final : ISerializable {
-		[[nodiscard]] inline virtual void serialize(JsonStream&) const override { }
-
-		[[nodiscard]] inline virtual void deserialize(const JsonStream&) override { }
+		inline virtual void serialize(JsonStream&) const override { }
+		inline virtual void deserialize(const JsonStream&) override { }
 	};
 
 	/// <summary>

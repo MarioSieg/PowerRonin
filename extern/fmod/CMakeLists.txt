@@ -1,0 +1,1 @@
+add_library("fmod" "FMOD Studio API Windows/api/core/lib/x64/fmod_vc.lib")

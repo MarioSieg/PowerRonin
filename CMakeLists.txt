@@ -150,7 +150,17 @@ add_library(
     "source/platform/splash.hpp" 
     "source/platform/splash.cpp" 
     "source/platform/util.hpp"
-    "source/platform/util.cpp")
+    "source/platform/util.cpp" 
+    "source/audio/audio.hpp"
+    "source/audio/audio.cpp"
+    "source/audio/audio_headers.hpp"
+    "include/dce/audio_clip.hpp" 
+    "source/audio_clip.cpp" 
+    "source/audio_clip_runtime.cpp" 
+    "include/dce/audio_source.hpp" 
+    "source/audio_source.cpp" 
+    "source/wincom.hpp"
+    "source/wincom.cpp")
 
 include("extern/CMakeLists.txt")
 

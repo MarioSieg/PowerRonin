@@ -170,7 +170,6 @@
 
 #include "../include/dce/resource_manager.hpp"
 
-
 namespace dce {
 	void SystemResources::load_all(ResourceManager& _importeur) {
 		this->black_1x1 = _importeur.load<Texture>(std::filesystem::absolute("textures/common/unit/black.png"));
@@ -180,7 +179,7 @@ namespace dce {
 		this->error_text = _importeur.load<Mesh>(std::filesystem::absolute("meshes/common/invalid.obj"));
 		this->cube = _importeur.load<Mesh>(std::filesystem::absolute("meshes/common/cube.obj"));
 		this->skydome = _importeur.load<Mesh>(std::filesystem::absolute("meshes/common/skydome.obj"));
-		this->skybox = _importeur.load<Texture>(std::filesystem::absolute("textures/skybox/sunset.dds"));
+		this->skybox = _importeur.load<Texture>(std::filesystem::absolute("textures/skybox/wispy.dds"));
 	}
 
 	auto ResourceManager::get_texture_cache() const noexcept -> const ResourceCache<Texture>& {
@@ -195,18 +194,27 @@ namespace dce {
 		return this->material_cache_;
 	}
 
-	auto ResourceManager::load_texture(std::filesystem::path&& _file) -> RRef<Texture> {
+	auto ResourceManager::get_audio_clip_cache() const noexcept -> const ResourceCache<AudioClip>& {
+		return this->audio_clip_cache_;
+	}
+
+	auto ResourceManager::load_texture(std::filesystem::path&& _file, const TextureMeta* const _meta) -> RRef<Texture> {
 		const auto id = HString(_file.string().c_str());
 		return this->texture_cache_.load<TextureImporteur>(id, std::move(_file));
 	}
 
-	auto ResourceManager::load_mesh(std::filesystem::path&& _file) -> RRef<Mesh> {
+	auto ResourceManager::load_mesh(std::filesystem::path&& _file, const MeshMeta* const _meta) -> RRef<Mesh> {
 		const auto id = HString(_file.string().c_str());
 		return this->mesh_cache_.load<MeshImporteur>(id, std::move(_file));
 	}
 
-	auto ResourceManager::load_material(std::filesystem::path&& _file) -> RRef<Material> {
+	auto ResourceManager::load_material(std::filesystem::path&& _file, const MaterialMeta* const _meta) -> RRef<Material> {
 		const auto id = HString(_file.string().c_str());
 		return this->material_cache_.load<MaterialImporteur>(id, std::move(_file));
+	}
+
+	auto ResourceManager::load_audio_clip(std::filesystem::path&& _file, const AudioClipMeta* const _meta) -> RRef<AudioClip> {
+		const auto id = HString(_file.string().c_str());
+		return this->audio_clip_cache_.load<AudioClipImporteur>(id, std::move(_file));
 	}
 } // namespace dce // namespace dce

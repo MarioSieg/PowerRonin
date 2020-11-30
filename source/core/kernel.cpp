@@ -175,10 +175,10 @@
 #include <chrono>
 
 namespace dce::core {
-	enum class KernelState : std::uint8_t {
-		OFFLINE,
-		ONLINE,
-		RUNNING
+	enum class KernelState : std::int_fast32_t {
+		OFFLINE = 0,
+		ONLINE = 1,
+		RUNNING = -1
 	};
 
 	struct Kernel::Core final {
@@ -191,7 +191,7 @@ namespace dce::core {
 
 	auto Kernel::create(const int _in_argc, const char* const* const _in_argv, const char* const* const _in_envp) -> std::unique_ptr<Kernel> {
 		struct Factory final : Kernel {
-			explicit Factory(const int a, const char* const* const b, const char* const* const c) : Kernel(a, b, c) { }
+			explicit Factory(const int _a, const char* const* const _b, const char* const* const _c) : Kernel(_a, _b, _c) { }
 		};
 		return std::make_unique<Factory>(_in_argc, _in_argv, _in_envp);
 	}

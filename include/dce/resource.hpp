@@ -208,6 +208,12 @@ namespace dce {
 		/// </summary>
 		virtual void offload() = 0;
 
+
+		/// <summary>
+		/// Calls .upload() if it is not uploaded, else it does nothing.
+		/// </summary>
+		void try_upload();
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -273,23 +279,28 @@ namespace dce {
 	}
 
 	template <typename M>
+	inline void IResource<M>::try_upload() {
+		[[likely]] if (!this->is_uploaded_) {
+			this->upload();
+		}
+	}
+
+	template <typename M>
 	inline auto IResource<M>::get_file_path() const noexcept -> const std::filesystem::path& {
 		return this->file_path_;
 	}
 
 	template <typename M>
-	inline auto IResource<M>::load_meta_or_default(std::filesystem::path _res) -> Meta {
+	inline auto IResource<M>::load_meta_or_default(std::filesystem::path _res) -> Meta try {
 		_res.replace_extension(METADATA_FILE_EXTENSION);
 		Meta meta = {};
-		ISerializable* const ser = &meta;
-		try {
-			[[unlikely]] if (!ser->deserialize_from_file(_res)) {
-				auto _ = ser->serialize_to_file(_res); // Create metadata file if it does not exist.
-			}
+		auto* const ser = &meta;
+		[[unlikely]] if (!ser->deserialize_from_file(_res)) {
+			auto _ = ser->serialize_to_file(_res); // Create metadata file if it does not exist.
 		}
-		catch (...) { }
 		return meta;
 	}
+	catch (...) { return {}; }
 
 	template <typename M>
 	inline IResource<M>::IResource(Meta&& _meta) noexcept : meta_data_(std::forward(_meta)) { }

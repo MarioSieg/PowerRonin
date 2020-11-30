@@ -176,9 +176,9 @@
 #include "util.hpp"
 
 namespace {
-	constexpr const char* const VERTEX_SHADER = "#version 110\n" "uniform mat4 MVP;\n" "attribute vec2 vPos;\n" "varying vec2 texcoord;\n" "void main()\n" "{\n" "    gl_Position = MVP * vec4(vPos, 0.0, 1.0);\n" "    texcoord = vPos;\n" "}\n";
+	constexpr const char* const VERTEX_SHADER = "#version 110\n" "uniform mat4 mvp;\n" "attribute vec2 pos;\n" "varying vec2 texcoord;\n" "void main()\n" "{\n" "    gl_Position = mvp * vec4(pos, 0.0, 1.0);\n" "    texcoord = pos;\n" "}\n";
 
-	constexpr const char* const FRAGMENT_SHADER = "#version 110\n" "uniform sampler2D texture;\n" "varying vec2 texcoord;\n" "void main()\n" "{\n" "    gl_FragColor = texture2D(texture, texcoord);\n" "}\n";
+	constexpr const char* const FRAGMENT_SHADER = "#version 110\n" "uniform sampler2D tex;\n" "varying vec2 texcoord;\n" "void main()\n" "{\n" "    gl_FragColor = texture2D(tex, texcoord);\n" "}\n";
 
 	constexpr float VERTICES[4][2]{{0.f, 0.f}, {1.f, 0.f}, {1.f, 1.f}, {0.f, 1.f}};
 
@@ -271,9 +271,9 @@ namespace dce::platform {
 				glAttachShader(program, fragment_shader);
 				glLinkProgram(program);
 
-				mvp_location = glGetUniformLocation(program, "MVP");
-				texture_location = glGetUniformLocation(program, "texture");
-				vpos_location = glGetAttribLocation(program, "vPos");
+				mvp_location = glGetUniformLocation(program, "mvp");
+				texture_location = glGetUniformLocation(program, "tex");
+				vpos_location = glGetAttribLocation(program, "pos");
 
 				glGenBuffers(1, &vertex_buffer);
 				glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
@@ -352,7 +352,7 @@ namespace dce::platform {
 	auto SplashScreen::get_width() const noexcept -> int {
 		return this->width_;
 	}
-	
+
 	auto SplashScreen::get_height() const noexcept -> int {
 		return this->height_;
 	}

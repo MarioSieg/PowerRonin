@@ -225,6 +225,9 @@ namespace dce {
 	}
 
 	void Mesh::offload() {
+		[[unlikely]] if (!this->is_uploaded_) {
+			return;
+		}
 		const auto vb_handle = bgfx::VertexBufferHandle{this->volatile_upload_data_.vertex_buffer_id};
 		[[likely]] if (isValid(vb_handle)) {
 			destroy(vb_handle);

@@ -203,7 +203,9 @@ namespace dce::platform {
 
 	private:
 
-		/* Required kernel events */
+		/// <summary>
+		/// Required kernel events
+		/// </summary>
 		static constexpr auto EVENTS = core::ServiceEvents::ALL;
 		static constexpr std::string_view TITLE = "Dreamcast Engine";
 

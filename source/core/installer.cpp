@@ -175,6 +175,7 @@
 #include "../renderer/renderer.hpp"
 #include "../physics/physics.hpp"
 #include "../scripting/scripting.hpp"
+#include "../audio/audio.hpp"
 
 namespace dce::core {
 	auto install_minimal(Kernel& _kernel) -> bool {
@@ -186,6 +187,7 @@ namespace dce::core {
 		_kernel.create_install_subsystem<renderer::Renderer>();
 		_kernel.create_install_subsystem<gui::Gui>();
 		_kernel.create_install_subsystem<physics::Physics>();
+		_kernel.create_install_subsystem<audio::Audio>();
 		_kernel.create_install_subsystem<scripting::Scripting>();
 		return true;
 	}
