@@ -172,6 +172,8 @@
 
 #include "mathtypes.hpp"
 
+/* Sadly we cannot use constexpr here because glm is C++ 11. */
+
 namespace dce::math {
 	inline const Vector3<> BACK = {0, 0, -1};
 	inline const Vector3<> DOWN = {0, -1, 0};
