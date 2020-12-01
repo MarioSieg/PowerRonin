@@ -170,5 +170,8 @@
 
 #pragma once
 
-#include "../../extern/fmod/windows/api/core/inc/fmod.hpp"
-#include "../../extern/steamaudio_api/include/phonon.h"
+#define  AK_OPTIMIZED
+#include "../../extern/wwise/SDK/include/AK/SoundEngine/Common/AkMemoryMgr.h"
+#include "../../extern/wwise/SDK/include/AK/SoundEngine/Common/AkModule.h"
+#include "../../extern/wwise/SDK/include/AK/SoundEngine/Common/IAkStreamMgr.h"
+#include "../../extern/wwise/SDK/include/AK/Tools/Common/AkPlatformFuncs.h"

@@ -174,8 +174,6 @@
 #include "audio_headers.hpp"
 
 namespace dce::audio {
-	extern FMOD::System* AUDIO_SYSTEM_HANDLE;
-
 	class Audio final : public core::ISubsystem {
 	public:
 		Audio();
@@ -192,6 +190,6 @@ namespace dce::audio {
 		virtual auto on_pre_tick([[maybe_unused]] Runtime& _rt) -> bool override;
 		virtual auto on_pre_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
 
-		FMOD::System* system_ = nullptr;
+		AkMemSettings mem_settings_;
 	};
 }

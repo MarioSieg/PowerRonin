@@ -174,24 +174,14 @@
 
 namespace dce::audio {
 
-	FMOD::System* AUDIO_SYSTEM_HANDLE = nullptr;
-
 	Audio::Audio() : ISubsystem("audio", EVENTS) {}
 
 	auto Audio::on_pre_startup(Runtime& _rt) -> bool {
-		co_initialize();
+		AK::MemoryMgr::GetDefaultSettings(this->mem_settings_);
 
-		FMOD_RESULT result = System_Create(&this->system_);
-		[[unlikely]] if (result != FMOD_OK) {
+		[[unlikely]] if (AK::MemoryMgr::Init(&this->mem_settings_) != AKRESULT::AK_Success) {
 			return false;
 		}
-
-		result = this->system_->init(2048, FMOD_INIT_3D_RIGHTHANDED, nullptr);
-		[[unlikely]] if (result != FMOD_OK) {
-			return false;
-		}
-
-		AUDIO_SYSTEM_HANDLE = this->system_;
 
 		return true;
 	}
@@ -201,12 +191,6 @@ namespace dce::audio {
 	}
 
 	auto Audio::on_pre_shutdown(Runtime& _rt) -> bool {
-		[[likely]] if (this->system_) {
-			this->system_->release();
-			this->system_ = nullptr;
-			AUDIO_SYSTEM_HANDLE = nullptr;
-		}
-		co_uninitialize();
 		return true;
 	}
 

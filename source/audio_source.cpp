@@ -172,31 +172,11 @@
 #include "audio/audio_headers.hpp"
 
 namespace dce {
-	namespace audio {
-		extern FMOD::System* AUDIO_SYSTEM_HANDLE;
-	}
-
-	void AudioSource::play() {
-		[[unlikely]] if (!audio::AUDIO_SYSTEM_HANDLE || !this->clip) {
-			return;
-		}
-
-		auto* sound = static_cast<FMOD::Sound* const>(this->clip->get_handle());
-		FMOD::Channel* channel;
-		const FMOD_RESULT result = audio::AUDIO_SYSTEM_HANDLE->playSound(sound, nullptr, false, &channel);
-		[[unlikely]] if (result != FMOD_OK) {
-			return;
-		}
-		this->cha_ptr_ = channel;
-
-	}
+	void AudioSource::play() { }
 
 	auto AudioSource::is_currently_playing() const noexcept -> bool {
-		bool is_playing;
-		return this->cha_ptr_ && static_cast<FMOD::Channel*>(this->cha_ptr_)->isPlaying(&is_playing) == FMOD_OK && is_playing;
+		return false;
 	}
 
-	void AudioSource::stop() const {
-		this->cha_ptr_ && static_cast<FMOD::Channel*>(this->cha_ptr_)->stop() == FMOD_OK;
-	}
+	void AudioSource::stop() const { }
 }

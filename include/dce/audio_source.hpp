@@ -196,8 +196,5 @@ namespace dce {
 		/// Stops current playback.
 		/// </summary>
 		void stop() const;
-
-	private:
-		void* cha_ptr_ = nullptr;
 	};
 }

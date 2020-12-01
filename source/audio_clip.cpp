@@ -181,8 +181,4 @@ namespace dce {
 		this->is_stream = _j["is_stream"];
 		this->enable_3d_sound = _j["enable_3d_sound"];
 	}
-
-	auto AudioClip::get_handle() const noexcept -> void* {
-		return this->handle;
-	}
 }
