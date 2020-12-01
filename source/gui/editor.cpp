@@ -172,43 +172,43 @@
 #include "gui_headers.hpp"
 #include "font_headers.hpp"
 
-#include "../../include/dce/state.hpp"
+#include "../../include/dce/runtime.hpp"
 
 using namespace ImGui;
 
 namespace dce::gui {
-	void Editor::initialize([[maybe_unused]] State& _state) {
+	void Editor::initialize([[maybe_unused]] Runtime& _rt) {
 		this->inspector_.initialize();
 		this->memory_editor_.OptShowDataPreview = true;
 	}
 
-	void Editor::update(State& _state, bool& _show_terminal) {
+	void Editor::update(Runtime& _rt, bool& _show_terminal) {
 		[[likely]] if (this->show_menu_) {
 			this->main_menu(_show_terminal);
 		}
 
 		[[likely]] if (this->show_hierarchy_viewer_) {
-			this->hierarchy_.update(this->show_hierarchy_viewer_, _state.scenery().registry());
+			this->hierarchy_.update(this->show_hierarchy_viewer_, _rt.scenery().registry());
 		}
 
 		[[unlikely]] if (this->show_resource_viewer_) {
-			this->resource_viewer_.update(this->show_resource_viewer_, _state.resource_manager());
+			this->resource_viewer_.update(this->show_resource_viewer_, _rt.resource_manager());
 		}
 
 		[[unlikely]] if (this->show_profiler_) {
-			this->profiler_.update(this->show_profiler_, _state.diagnostics(), _state.chrono());
+			this->profiler_.update(this->show_profiler_, _rt.diagnostics(), _rt.chrono());
 		}
 
 		[[likely]] if (this->show_inspector_) {
-			this->inspector_.update(this->show_inspector_, _state.scenery().registry(), _state.resource_manager(), this->hierarchy_.get_selected());
+			this->inspector_.update(this->show_inspector_, _rt.scenery().registry(), _rt.resource_manager(), this->hierarchy_.get_selected());
 		}
 
 		[[unlikely]] if (this->memory_editor_.Open) {
-			this->memory_editor_.DrawWindow(ICON_FA_MEMORY " Memory Editor", &_state, sizeof(State));
+			this->memory_editor_.DrawWindow(ICON_FA_MEMORY " Memory Editor", &_rt, sizeof(Runtime));
 		}
 
 		[[unlikely]] if (this->show_config_editor_) {
-			this->config_editor_.update(this->show_config_editor_, _state.config(), _state.scenery().config);
+			this->config_editor_.update(this->show_config_editor_, _rt.config(), _rt.scenery().config);
 		}
 	}
 

@@ -195,7 +195,7 @@ namespace dce {
 	/// Represents a scenery environment.
 	/// </summary>
 	class Scenery final {
-		friend class State;
+		friend class Runtime;
 	public:
 		/// <summary>
 		/// Contains per scenery settings.
@@ -260,6 +260,8 @@ namespace dce {
 		[[nodiscard]] auto registry() const noexcept -> const Registry&;
 
 		[[nodiscard]] auto registry() noexcept -> Registry&;
+
+		void unload_all_entities();
 
 	private:
 		Registry registry_ = {};

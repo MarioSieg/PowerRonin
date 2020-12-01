@@ -227,4 +227,8 @@ namespace dce {
 		this->config.lighting.skybox_cubemap = _resource_manager.system_resources.skybox;
 		this->config.lighting.skydome = _resource_manager.system_resources.skydome;
 	}
+
+	void Scenery::unload_all_entities() {
+		this->registry_.clear();
+	}
 } // namespace dce

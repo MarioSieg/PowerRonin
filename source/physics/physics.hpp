@@ -189,9 +189,9 @@ namespace dce::physics {
 		static constexpr auto EVENTS = core::ServiceEvents::PRE_STARTUP | core::ServiceEvents::POST_TICK | core::ServiceEvents::PRE_SHUTDOWN;
 
 		/* Kernel events */
-		virtual auto on_pre_startup([[maybe_unused]] State&) -> bool override;
-		virtual auto on_post_tick(State&) -> bool override;
-		virtual auto on_pre_shutdown([[maybe_unused]] State&) -> bool override;
+		virtual auto on_pre_startup([[maybe_unused]] Runtime&) -> bool override;
+		virtual auto on_post_tick(Runtime&) -> bool override;
+		virtual auto on_pre_shutdown([[maybe_unused]] Runtime&) -> bool override;
 
 		/* Main handles */
 		btDefaultCollisionConfiguration* collision_configuration_ = nullptr;

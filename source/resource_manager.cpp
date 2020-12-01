@@ -198,6 +198,13 @@ namespace dce {
 		return this->audio_clip_cache_;
 	}
 
+	void ResourceManager::unload_all_resources() {
+		this->texture_cache_.clear();
+		this->mesh_cache_.clear();
+		this->material_cache_.clear();
+		this->audio_clip_cache_.clear();
+	}
+
 	auto ResourceManager::load_texture(std::filesystem::path&& _file, const TextureMeta* const _meta) -> RRef<Texture> {
 		const auto id = HString(_file.string().c_str());
 		return this->texture_cache_.load<TextureImporteur>(id, std::move(_file));

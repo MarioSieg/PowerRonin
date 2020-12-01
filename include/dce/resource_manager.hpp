@@ -242,6 +242,11 @@ namespace dce {
 		/// <returns>A resource reference to the newly loaded resource.</returns>
 		template <typename T> requires std::is_base_of_v<IResource<typename T::Meta>, T> [[nodiscard]] auto load(std::filesystem::path&& _file, const typename T::Meta* const _meta) -> RRef<T>;
 
+		/// <summary>
+		/// Destroyes all resources. (!DANGEROUS!)
+		/// </summary>
+		void unload_all_resources();
+
 	private:
 		[[nodiscard]] auto load_texture(std::filesystem::path&& _file, const TextureMeta* const _meta) -> RRef<Texture>;
 		[[nodiscard]] auto load_mesh(std::filesystem::path&& _file, const MeshMeta* const _meta) -> RRef<Mesh>;

@@ -183,6 +183,6 @@ namespace dce {
 	}
 
 	auto AudioClip::get_handle() const noexcept -> void* {
-		return this->volatile_upload_data_.handle;
+		return this->handle;
 	}
 }

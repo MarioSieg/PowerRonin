@@ -198,27 +198,27 @@ namespace dce::core {
 		return this->post_shutdown_time;
 	}
 
-	auto ISubsystem::on_pre_startup(State& /*unused*/) -> bool {
+	auto ISubsystem::on_pre_startup(Runtime& /*unused*/) -> bool {
 		return true;
 	}
 
-	auto ISubsystem::on_post_startup(State& /*unused*/) -> bool {
+	auto ISubsystem::on_post_startup(Runtime& /*unused*/) -> bool {
 		return true;
 	}
 
-	auto ISubsystem::on_pre_tick(State& /*unused*/) -> bool {
+	auto ISubsystem::on_pre_tick(Runtime& /*unused*/) -> bool {
 		return true;
 	}
 
-	auto ISubsystem::on_post_tick(State& /*unused*/) -> bool {
+	auto ISubsystem::on_post_tick(Runtime& /*unused*/) -> bool {
 		return true;
 	}
 
-	auto ISubsystem::on_pre_shutdown(State& /*unused*/) -> bool {
+	auto ISubsystem::on_pre_shutdown(Runtime& /*unused*/) -> bool {
 		return true;
 	}
 
-	auto ISubsystem::on_post_shutdown(State& /*unused*/) -> bool {
+	auto ISubsystem::on_post_shutdown(Runtime& /*unused*/) -> bool {
 		return true;
 	}
 } // namespace dce::core // namespace dce::core

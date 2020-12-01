@@ -178,7 +178,7 @@ namespace dce::audio {
 
 	Audio::Audio() : ISubsystem("audio", EVENTS) {}
 
-	auto Audio::on_pre_startup(State& _state) -> bool {
+	auto Audio::on_pre_startup(Runtime& _rt) -> bool {
 		co_initialize();
 
 		FMOD_RESULT result = System_Create(&this->system_);
@@ -196,11 +196,11 @@ namespace dce::audio {
 		return true;
 	}
 
-	auto Audio::on_pre_tick(State& _state) -> bool {
+	auto Audio::on_pre_tick(Runtime& _rt) -> bool {
 		return true;
 	}
 
-	auto Audio::on_pre_shutdown(State& _state) -> bool {
+	auto Audio::on_pre_shutdown(Runtime& _rt) -> bool {
 		[[likely]] if (this->system_) {
 			this->system_->release();
 			this->system_ = nullptr;

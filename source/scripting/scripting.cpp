@@ -173,28 +173,28 @@
 namespace dce::scripting {
 	Scripting::Scripting() : ISubsystem("Scripting", EVENTS) { }
 
-	auto Scripting::on_pre_startup(State& _state) -> bool {
-		auto& proto = _state.protocol();
+	auto Scripting::on_pre_startup(Runtime& _rt) -> bool {
+		auto& proto = _rt.protocol();
 		return true;
 	}
 
-	auto Scripting::on_post_startup(State& _state) -> bool {
+	auto Scripting::on_post_startup(Runtime& _rt) -> bool {
 		return true;
 	}
 
-	auto Scripting::on_pre_tick(State& _state) -> bool {
+	auto Scripting::on_pre_tick(Runtime& _rt) -> bool {
 		return true;
 	}
 
-	auto Scripting::on_post_tick(State& _state) -> bool {
+	auto Scripting::on_post_tick(Runtime& _rt) -> bool {
 		return true;
 	}
 
-	auto Scripting::on_pre_shutdown(State& _state) -> bool {
+	auto Scripting::on_pre_shutdown(Runtime& _rt) -> bool {
 		return true;
 	}
 
-	auto Scripting::on_post_shutdown(State& _state) -> bool {
+	auto Scripting::on_post_shutdown(Runtime& _rt) -> bool {
 		return true;
 	}
 }

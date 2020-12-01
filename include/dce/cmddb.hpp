@@ -176,7 +176,7 @@
 #include "proto.hpp"
 
 namespace dce {
-	class State;
+	class Runtime;
 
 	enum class CommandExecutionResult: std::int8_t {
 		OK = 0,
@@ -190,28 +190,28 @@ namespace dce {
 	struct Command final {
 		std::string_view token = {};
 		std::string_view help = {};
-		auto (*functor)(State&, std::string&&) -> bool = {};
+		auto (*functor)(Runtime&, std::string&&) -> bool = {};
 		bool requires_root = false;
 		bool requires_args = false;
 
-		[[nodiscard]] auto operator()(State& _state, std::string&& _args) const -> bool;
+		[[nodiscard]] auto operator()(Runtime& _rt, std::string&& _args) const -> bool;
 	};
 
-	inline auto Command::operator()(State& _state, std::string&& _args) const -> bool {
-		return this->functor != nullptr ? this->functor(_state, std::move(_args)) : false;
+	inline auto Command::operator()(Runtime& _rt, std::string&& _args) const -> bool {
+		return this->functor != nullptr ? this->functor(_rt, std::move(_args)) : false;
 	}
 
 	/* Contains all registered terminal commands. */
 	class CmdDB final {
-		friend class State;
+		friend class Runtime;
 	public:
 		static constexpr char ARGUMENT_SEPARATOR = '=';
 
 		/* Analyze whole command string. */
-		[[nodiscard]] auto analyze_and_call(State& _state, std::string&& _in) -> CommandExecutionResult;
+		[[nodiscard]] auto analyze_and_call(Runtime& _rt, std::string&& _in) -> CommandExecutionResult;
 
 		/* Calls the command. */
-		[[nodiscard]] auto call(std::string_view _command, State& _state, std::string&& _args) -> bool;
+		[[nodiscard]] auto call(std::string_view _command, Runtime& _rt, std::string&& _args) -> bool;
 
 		/* Pushes a new command. */
 		[[nodiscard]] auto register_command(const Command& _command) -> bool;

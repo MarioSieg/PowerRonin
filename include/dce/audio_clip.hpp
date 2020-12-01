@@ -201,10 +201,17 @@ namespace dce {
 		friend class AudioClipImporteur;
 
 	public:
+		AudioClip() noexcept = default;
+		AudioClip(const AudioClip&) = delete;
+		AudioClip(AudioClip&&) = delete;
+		auto operator=(const AudioClip&)->AudioClip & = delete;
+		auto operator=(AudioClip&&)->AudioClip & = delete;
+		~AudioClip() override;
+
 		/// <summary>
 		/// All associated file types.
 		/// </summary>
-		static constexpr std::array<std::string_view, 21> FILE_EXTENSIONS = {".aiff", ".asf", ".asx", ".dls", ".flac", ".fsb", ".it", ".m3u", ".midi", ".mod", ".mp2", ".mp3", ".ogg", ".pls", ".s3m", ".vag", ".wav", ".wax", ".wma", ".xm", ".xma"};
+		static constexpr std::array<std::string_view, 21> FILE_EXTENSIONS = { ".aiff", ".asf", ".asx", ".dls", ".flac", ".fsb", ".it", ".m3u", ".midi", ".mod", ".mp2", ".mp3", ".ogg", ".pls", ".s3m", ".vag", ".wav", ".wax", ".wma", ".xm", ".xma" };
 
 		/// <summary>
 		/// 
@@ -223,9 +230,7 @@ namespace dce {
 		virtual void offload() override;
 
 	private:
-		struct {
-			void* handle = nullptr;
-		} volatile_upload_data_;
+		void* handle = nullptr;
 	};
 
 	/// <summary>
@@ -233,6 +238,6 @@ namespace dce {
 	/// </summary>
 	class AudioClipImporteur final : public ResourceImporteur<AudioClipImporteur, AudioClip> {
 	public:
-		auto load(std::filesystem::path&& _path, const AudioClipMeta* const _meta = nullptr) const -> std::shared_ptr<AudioClip>;
+		auto load(std::filesystem::path&& _path, const AudioClipMeta* const _meta = nullptr) const->std::shared_ptr<AudioClip>;
 	};
 }

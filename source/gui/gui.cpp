@@ -174,7 +174,7 @@
 namespace dce::gui {
 	Gui::Gui() : ISubsystem("OverlayGui", EVENTS) { }
 
-	auto Gui::on_pre_startup(State& _state) -> bool {
+	auto Gui::on_pre_startup(Runtime& _rt) -> bool {
 		this->gui_context_ = ImGui::CreateContext();
 		[[unlikely]] if (this->gui_context_ == nullptr) {
 			return false;
@@ -189,7 +189,7 @@ namespace dce::gui {
 		io.IniFilename = nullptr;
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
-		auto& cfg = _state.config().overlay;
+		auto& cfg = _rt.config().overlay;
 		style_apply(cfg.style);
 		style_antialiasing_apply(cfg.enable_antialiasing);
 		style_alpha_apply(cfg.transparency);
@@ -199,37 +199,37 @@ namespace dce::gui {
 			return false;
 		}
 
-		[[unlikely]] if (!this->gui_renderer_.initialize(_state.config().overlay.font_size)) {
+		[[unlikely]] if (!this->gui_renderer_.initialize(_rt.config().overlay.font_size)) {
 			return false;
 		}
 
-		this->terminal_.initialize(_state.protocol().sink_to_terminal());
-		this->editor_.initialize(_state);
+		this->terminal_.initialize(_rt.protocol().sink_to_terminal());
+		this->editor_.initialize(_rt);
 
 		return true;
 	}
 
-	auto Gui::on_pre_tick(State& _state) -> bool {
-		const auto width = _state.config().display.width;
-		const auto height = _state.config().display.height;
+	auto Gui::on_pre_tick(Runtime& _rt) -> bool {
+		const auto width = _rt.config().display.width;
+		const auto height = _rt.config().display.height;
 		this->begin(width, height);
 		return true;
 	}
 
-	auto Gui::on_post_tick(State& _state) -> bool {
-		this->editor_.update(_state, this->show_terminal_);
-		[[unlikely]] if (_state.input().is_key_down(Key::GRAVE_ACCENT)) {
+	auto Gui::on_post_tick(Runtime& _rt) -> bool {
+		this->editor_.update(_rt, this->show_terminal_);
+		[[unlikely]] if (_rt.input().is_key_down(Key::GRAVE_ACCENT)) {
 			this->show_terminal_ = true;
 		}
 		[[unlikely]] if (this->show_terminal_) {
-			this->terminal_.update(this->show_terminal_, _state);
+			this->terminal_.update(this->show_terminal_, _rt);
 		}
 		this->end();
 
 		return true;
 	}
 
-	auto Gui::on_pre_shutdown([[maybe_unused]] State&) -> bool {
+	auto Gui::on_pre_shutdown([[maybe_unused]] Runtime&) -> bool {
 		this->gui_input_.shutdown();
 		this->gui_renderer_.shutdown();
 		return true;

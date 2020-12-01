@@ -202,8 +202,13 @@ namespace dce {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload audio clip!");
 		}
 
-		self->volatile_upload_data_.handle = sound;
+		self->handle = sound;
 
 		return self;
+	}
+
+	AudioClip::~AudioClip() {
+		this->handle && static_cast<FMOD::Sound*>(this->handle)->release();
+		this->handle = nullptr;
 	}
 }

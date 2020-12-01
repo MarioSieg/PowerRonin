@@ -268,8 +268,8 @@ namespace dce::platform {
 
 	Platform::Platform() : ISubsystem("Platform", EVENTS) { }
 
-	auto Platform::on_pre_startup(State& _state) -> bool {
-		auto& proto = _state.protocol();
+	auto Platform::on_pre_startup(Runtime& _rt) -> bool {
+		auto& proto = _rt.protocol();
 
 		glfwSetErrorCallback(&error_callback);
 
@@ -330,7 +330,7 @@ namespace dce::platform {
 			return false;
 		}
 
-		auto& display_settings = _state.config().display;
+		auto& display_settings = _rt.config().display;
 
 		/* Disable any GLFW side API: */
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -349,7 +349,7 @@ namespace dce::platform {
 			return false;
 		}
 
-		[[unlikely]] if (_state.config().display.maximize) {
+		[[unlikely]] if (_rt.config().display.maximize) {
 			//glfwMaximizeWindow(this->window_);
 		}
 
@@ -465,28 +465,28 @@ namespace dce::platform {
 		return true;
 	}
 
-	auto Platform::on_post_startup(State& _state) -> bool {
+	auto Platform::on_post_startup(Runtime& _rt) -> bool {
 		this->splash_screen_.close();
 		glfwShowWindow(this->window_);
 		return true;
 	}
 
-	auto Platform::on_pre_tick(State& /*unused*/) -> bool {
+	auto Platform::on_pre_tick(Runtime& /*unused*/) -> bool {
 		glfwPollEvents();
 		return true;
 	}
 
-	auto Platform::on_post_tick(State& /*unused*/) -> bool {
+	auto Platform::on_post_tick(Runtime& /*unused*/) -> bool {
 		/* Return false to quit if the window is closed: */
 		return glfwWindowShouldClose(this->window_) == 0;
 	}
 
-	auto Platform::on_pre_shutdown(State& /*unused*/) -> bool {
+	auto Platform::on_pre_shutdown(Runtime& /*unused*/) -> bool {
 		glfwHideWindow(this->window_);
 		return true;
 	}
 
-	auto Platform::on_post_shutdown(State& /*unused*/) -> bool {
+	auto Platform::on_post_shutdown(Runtime& /*unused*/) -> bool {
 		/* Destroy the window: */
 		glfwDestroyWindow(this->window_);
 

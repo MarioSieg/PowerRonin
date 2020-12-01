@@ -184,7 +184,7 @@ namespace dce::core {
 	struct Kernel::Core final {
 		KernelState kernel_state = KernelState::OFFLINE;
 		std::vector<std::tuple<std::uint_fast16_t, std::unique_ptr<ISubsystem>>> subsystems = {};
-		std::unique_ptr<State> state = nullptr;
+		std::unique_ptr<Runtime> runtime = nullptr;
 	};
 
 	Kernel::Kernel(const int _in_argc, const char* const * const _in_argv, const char* const * const _in_envp) : argc(_in_argc), argv(_in_argv), envp(_in_envp), core_(std::make_unique<Core>()) { }
@@ -208,9 +208,9 @@ namespace dce::core {
 		const auto tik = std::chrono::high_resolution_clock::now();
 
 		/* Allocate state. */
-		this->core_->state = std::make_unique<State>();
+		this->core_->runtime = std::make_unique<Runtime>();
 
-		auto& proto = this->core_->state->protocol();
+		auto& proto = this->core_->runtime->protocol();
 
 		/* Initialize core engine system. Print some basic info. */
 		proto.critical("Initializing {} v.{}", ENGINE_NAME, ENGINE_VERSION);
@@ -239,7 +239,7 @@ namespace dce::core {
 			const auto& name = std::get<1>(*sys)->name;
 			proto.critical(R"(Invoking kernel event "on_pre_startup" on subsystem interface "{}"...)", name);
 			const auto tik2 = std::chrono::high_resolution_clock::now();
-			[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::PRE_STARTUP && !std::get<1>(*sys)->on_pre_startup(*this->core_->state)) {
+			[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::PRE_STARTUP && !std::get<1>(*sys)->on_pre_startup(*this->core_->runtime)) {
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Bad \"on_pre_startup\" call!");
 			}
 			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
@@ -248,8 +248,8 @@ namespace dce::core {
 
 		/* Startup state. */
 		const auto tik2 = std::chrono::high_resolution_clock::now();
-		proto.critical("Starting state...");
-		this->core_->state->start();
+		proto.critical("Starting runtime...");
+		this->core_->runtime->initialize();
 		const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
 		proto.critical("State online! Required {}s!", dur);
 		this->core_->kernel_state = KernelState::ONLINE;
@@ -260,7 +260,7 @@ namespace dce::core {
 			const auto& name = std::get<1>(*sys)->name;
 			proto.critical(R"(Invoking kernel event "on_post_startup" on subsystem interface "{}"...)", name);
 			const auto tik2 = std::chrono::high_resolution_clock::now();
-			[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::POST_STARTUP && !std::get<1>(*sys)->on_post_startup(*this->core_->state)) {
+			[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::POST_STARTUP && !std::get<1>(*sys)->on_post_startup(*this->core_->runtime)) {
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Bad \"on_post_startup\" call!");
 			}
 			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
@@ -280,11 +280,11 @@ namespace dce::core {
 
 	/* Execute runtime */
 	auto Kernel::execute() -> std::tuple<std::uint_fast32_t, std::uint8_t, std::uint64_t> {
-		[[unlikely]] if (this->core_->kernel_state != KernelState::ONLINE || this->core_->state == nullptr) {
+		[[unlikely]] if (this->core_->kernel_state != KernelState::ONLINE || this->core_->runtime == nullptr) {
 			return {0, 0, 0};
 		}
 
-		auto& proto = this->core_->state->protocol();
+		auto& proto = this->core_->runtime->protocol();
 		proto.info("Entering runtime...");
 		proto.separator();
 
@@ -298,7 +298,7 @@ namespace dce::core {
 			/* Invoke "on_pre_tick()" on all subsystems, which have this event registered. */
 			for (auto sys = this->core_->subsystems.begin(); sys != this->core_->subsystems.end(); std::advance(sys, 1)) {
 				const auto tik2 = std::chrono::high_resolution_clock::now();
-				[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::PRE_TICK && !std::get<1>(*sys)->on_pre_tick(*this->core_->state)) {
+				[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::PRE_TICK && !std::get<1>(*sys)->on_pre_tick(*this->core_->runtime)) {
 					return false;
 				}
 				const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
@@ -308,7 +308,7 @@ namespace dce::core {
 			/* Invoke "on_post_tick()" on all subsystems, which have this event registered. */
 			for (auto sys = this->core_->subsystems.rbegin(); sys != this->core_->subsystems.rend(); std::advance(sys, 1)) {
 				const auto tik2 = std::chrono::high_resolution_clock::now();
-				[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::POST_TICK && !std::get<1>(*sys)->on_post_tick(*this->core_->state)) {
+				[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::POST_TICK && !std::get<1>(*sys)->on_post_tick(*this->core_->runtime)) {
 					return false;
 				}
 				const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
@@ -319,9 +319,6 @@ namespace dce::core {
 			[[unlikely]] if (this->hook_tick != nullptr && !this->hook_tick(cycles)) {
 				return false;
 			}
-
-			/* Update state. */
-			this->core_->state->update();
 
 			return true;
 		};
@@ -338,22 +335,23 @@ namespace dce::core {
 
 	/* Shutdown runtime */
 	auto Kernel::shutdown() const -> std::uint64_t {
-		[[unlikely]] if (this->core_->kernel_state != KernelState::ONLINE || this->core_->state == nullptr) {
+		[[unlikely]] if (this->core_->kernel_state != KernelState::ONLINE || this->core_->runtime == nullptr) {
 			return 0;
 		}
 
 		const auto tik = std::chrono::high_resolution_clock::now();
-		auto& proto = this->core_->state->protocol();
+		auto& proto = this->core_->runtime->protocol();
 
 		/* Shutdown state. */
-		this->core_->state->end();
+		proto.critical("Shutting down runtime...");
+		this->core_->runtime->initialize();
 
 		/* Invoke "on_pre_shutdown()" on all subsystems, which have this event registered. */
 		for (auto sys = this->core_->subsystems.begin(); sys != this->core_->subsystems.end(); ++sys) {
 			const auto tik2 = std::chrono::high_resolution_clock::now();
 			const auto& name = std::get<1>(*sys)->name;
 			proto.critical(R"(Invoking kernel event "on_pre_shutdown" on subsystem interface "{}"...)", name);
-			[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::PRE_SHUTDOWN && !std::get<1>(*sys)->on_pre_shutdown(*this->core_->state)) {
+			[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::PRE_SHUTDOWN && !std::get<1>(*sys)->on_pre_shutdown(*this->core_->runtime)) {
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Bad \"on_pre_shutdown\" call!");
 			}
 			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
@@ -365,7 +363,7 @@ namespace dce::core {
 			const auto tik2 = std::chrono::high_resolution_clock::now();
 			const auto& name = std::get<1>(*sys)->name;
 			proto.critical(R"(Invoking kernel event "on_post_shutdown" on subsystem interface "{}"...)", name);
-			[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::POST_SHUTDOWN && !std::get<1>(*sys)->on_post_shutdown(*this->core_->state)) {
+			[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::POST_SHUTDOWN && !std::get<1>(*sys)->on_post_shutdown(*this->core_->runtime)) {
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Bad \"on_post_shutdown\" call!");
 			}
 			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
@@ -398,12 +396,12 @@ namespace dce::core {
 		this->core_->subsystems.emplace_back(std::make_tuple(_subsystem->id, std::move(_subsystem)));
 	}
 
-	auto Kernel::get_state() noexcept -> std::unique_ptr<State>& {
-		return this->core_->state;
+	auto Kernel::get_state() noexcept -> std::unique_ptr<Runtime>& {
+		return this->core_->runtime;
 	}
 
-	auto Kernel::get_state() const noexcept -> const std::unique_ptr<State>& {
-		return this->core_->state;
+	auto Kernel::get_state() const noexcept -> const std::unique_ptr<Runtime>& {
+		return this->core_->runtime;
 	}
 
 	auto Kernel::uninstall_subsystem(const std::uint_fast16_t _id) const -> bool {

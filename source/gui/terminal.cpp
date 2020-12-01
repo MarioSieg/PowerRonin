@@ -171,7 +171,7 @@
 #include "terminal.hpp"
 #include "font_headers.hpp"
 #include "gui_headers.hpp"
-#include "../../include/dce/state.hpp"
+#include "../../include/dce/runtime.hpp"
 #include <algorithm>
 
 using namespace ImGui;
@@ -185,7 +185,7 @@ namespace dce::gui {
 		return this->buffer_;
 	}
 
-	void Terminal::update(bool& _show, State& _state) {
+	void Terminal::update(bool& _show, Runtime& _rt) {
 		SetNextWindowSize({800, 600}, ImGuiCond_FirstUseEver);
 		[[likely]] if (Begin(ICON_FA_TERMINAL " Terminal", &_show, ImGuiWindowFlags_NoScrollbar)) {
 			const auto footer_height_to_reserve = GetStyle().ItemSpacing.y + GetFrameHeightWithSpacing();
@@ -261,7 +261,7 @@ namespace dce::gui {
 
 			/* History button. */
 			{
-				const auto& history = _state.command_db().get_history();
+				const auto& history = _rt.command_db().get_history();
 				PushStyleColor(ImGuiCol_Button, 0x00000000);
 				const bool history_forward = Button(ICON_FA_ARROW_UP);
 				[[unlikely]] if (IsItemHovered()) {
@@ -300,7 +300,7 @@ namespace dce::gui {
 				[[unlikely]] if (get_input_ok) {
 					if (is_input_valid) {
 						auto dyn_str = std::string(this->buffer_.begin(), this->buffer_.end());
-						switch (auto& proto = _state.protocol(); _state.command_db().analyze_and_call(_state, std::move(dyn_str))) {
+						switch (auto& proto = _rt.protocol(); _rt.command_db().analyze_and_call(_rt, std::move(dyn_str))) {
 						case CommandExecutionResult::COMMAND_DOES_NOT_EXIST: proto.error("Command does not exist!");
 							break;
 						case CommandExecutionResult::ARGS_SEPARATOR_MISSING: proto.error("Missing '{}' as separator!", CmdDB::ARGUMENT_SEPARATOR);
@@ -317,7 +317,7 @@ namespace dce::gui {
 						SetScrollHere(1.F);
 					}
 					else {
-						_state.protocol().error("Invalid input! Type \"help\"!");
+						_rt.protocol().error("Invalid input! Type \"help\"!");
 					}
 				}
 				PopItemWidth();
