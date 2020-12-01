@@ -412,6 +412,7 @@ namespace dce::platform {
 			proto.info("CPU endianness: {}", endianness_name(iware::cpu::endianness()));
 			proto.info("CPU vendor: {}", iware::cpu::vendor_id());
 			proto.info("CPU cores: {}, logical: {}, sockets: {}", quantities.physical, quantities.logical, quantities.packages);
+			
 			for (auto i = 1U; i <= 3; ++i) {
 				const auto cache = iware::cpu::cache(i);
 				proto.info("CPU cache L{} size: {}B, line size: {}B, associativity: {}, type: {}", i, cache.size, cache.line_size, cache.associativity, cache_type_name(cache.type));

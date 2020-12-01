@@ -173,7 +173,6 @@
 #include "../wincom.hpp"
 
 namespace dce::audio {
-
 	Audio::Audio() : ISubsystem("audio", EVENTS) {}
 
 	auto Audio::on_pre_startup(Runtime& _rt) -> bool {

@@ -190,6 +190,6 @@ namespace dce::audio {
 		virtual auto on_pre_tick([[maybe_unused]] Runtime& _rt) -> bool override;
 		virtual auto on_pre_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
 
-		AkMemSettings mem_settings_;
+		AkMemSettings mem_settings_ = {};
 	};
 }
