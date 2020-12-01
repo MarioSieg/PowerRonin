@@ -169,6 +169,7 @@
 //    limitations under the License.
 
 #include "platform.hpp"
+#include "util.hpp"
 #include "../../include/dce/config.hpp"
 #include "../../include/dce/env.hpp"
 #include <cmath>
@@ -267,21 +268,31 @@ namespace dce::platform {
 
 	Platform::Platform() : ISubsystem("Platform", EVENTS) { }
 
-	auto Platform::on_pre_startup(State& _state) -> bool {
-		auto& proto = _state.protocol();
+	auto Platform::on_pre_startup(Runtime& _rt) -> bool {
+		auto& proto = _rt.protocol();
 
 		glfwSetErrorCallback(&error_callback);
 
 		/* Initialize glfw: */
-		if (glfwInit() == 0) {
+		[[unlikely]] if (!glfwInit()) {
 			proto.error("Failed to initialize GLFW!");
 			return false;
 		}
 
+		/* Get primary monitor: */
+		GLFWmonitor* const primary_monitor = glfwGetPrimaryMonitor();
+		[[unlikely]] if (primary_monitor == nullptr) {
+			return false;
+		}
+
+		/* Show splash screen: */
+		const auto sp_result = this->splash_screen_.open(4, primary_monitor, "textures/splash/splash.png");
+		proto.info("Opened splash screen with size {}x{}: {}", this->splash_screen_.get_width(), this->splash_screen_.get_height(), sp_result);
+
 		/*  Get all connected monitors: */
 		int all_monitors_count = 0;
 		GLFWmonitor** const all_monitors = glfwGetMonitors(&all_monitors_count);
-		if (all_monitors == nullptr) {
+		[[unlikely]] if (all_monitors == nullptr) {
 			return false;
 		}
 
@@ -300,18 +311,12 @@ namespace dce::platform {
 			}
 		}
 
-		/* Get primary monitor: */
-		GLFWmonitor* const primary_monitor = glfwGetPrimaryMonitor();
-		if (primary_monitor == nullptr) {
-			return false;
-		}
-
 		proto.info("Using primary monitor:");
 		print_monitor_info(primary_monitor, proto);
 
 		/* Get primary video mode from primary monitor: */
 		const GLFWvidmode* const primary_video_mode = glfwGetVideoMode(primary_monitor);
-		if (primary_video_mode == nullptr) {
+		[[unlikely]] if (primary_video_mode == nullptr) {
 			return false;
 		}
 
@@ -321,11 +326,11 @@ namespace dce::platform {
 		/* Get all video modes from primary monitor: */
 		int all_video_mode_count = 0;
 		const GLFWvidmode* const all_primary_video_modes = glfwGetVideoModes(primary_monitor, &all_video_mode_count);
-		if (all_primary_video_modes == nullptr) {
+		[[unlikely]] if (all_primary_video_modes == nullptr) {
 			return false;
 		}
 
-		auto& display_settings = _state.config().display;
+		auto& display_settings = _rt.config().display;
 
 		/* Disable any GLFW side API: */
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -339,37 +344,41 @@ namespace dce::platform {
 		/* Create window: */
 		this->window_ = glfwCreateWindow(display_settings.width, display_settings.height, "Dreamcast Engine", display_settings.full_screen ? primary_monitor : nullptr, nullptr);
 
-		if (this->window_ == nullptr) {
+		[[unlikely]] if (this->window_ == nullptr) {
 			proto.error("Failed to create window!");
 			return false;
 		}
 
-		if (_state.config().display.maximize) {
-			glfwMaximizeWindow(static_cast<GLFWwindow*>(this->window_));
+		[[unlikely]] if (_rt.config().display.maximize) {
+			//glfwMaximizeWindow(this->window_);
 		}
 
-		if (display_settings.full_screen || display_settings.maximize) {
+		[[likely]] if (display_settings.full_screen || display_settings.maximize) {
 			int w = 0;
 			int h = 0;
-			glfwGetFramebufferSize(static_cast<GLFWwindow*>(this->window_), &w, &h);
+			glfwGetFramebufferSize(this->window_, &w, &h);
 			if (w != 0 && h != 0) {
 				display_settings.width = static_cast<std::uint16_t>(w);
 				display_settings.height = static_cast<std::uint16_t>(h);
 			}
 		}
 
+		[[unlikely]] if (!display_settings.full_screen) {
+			center_window(this->window_, primary_monitor);
+		}
+
 		/* Native handle: */
 		void* volatile nat_handle = nullptr;
 
 #if SYS_LINUX
-		nat_handle = reinterpret_cast<void*>(reinterpret_cast<std::uintptr_t>(glfwGetX11Window(static_cast<GLFWwindow*>(this->window))));
+		nat_handle = reinterpret_cast<void*>(reinterpret_cast<std::uintptr_t>(glfwGetX11Window(this->window_)));
 #elif SYS_WINDOWS
-		nat_handle = reinterpret_cast<void*>(glfwGetWin32Window(static_cast<GLFWwindow*>(this->window_)));
+		nat_handle = reinterpret_cast<void*>(glfwGetWin32Window(this->window_));
 #elif SYS_MAC
-		nat_handle = reinterpret_cast<void*>(glfwGetCocoaWindow(static_cast<GLFWwindow*>(this->window)));
+		nat_handle = reinterpret_cast<void*>(glfwGetCocoaWindow(this->window_));
 #endif
 
-		if (nat_handle == nullptr) {
+		[[unlikely]] if (nat_handle == nullptr) {
 			proto.error("Failed to retrieve native window handle!");
 			return false;
 		}
@@ -382,7 +391,7 @@ namespace dce::platform {
 		this->all_vidmodes_ = all_primary_video_modes;
 
 		this->monitor_ = primary_monitor;
-		this->all_monitors_ = reinterpret_cast<void**>(all_monitors);
+		this->all_monitors_ = all_monitors;
 
 		/* Log platform info: */
 		{
@@ -456,29 +465,30 @@ namespace dce::platform {
 		return true;
 	}
 
-	auto Platform::on_post_startup(State& _state) -> bool {
-		glfwShowWindow(static_cast<GLFWwindow*>(this->window_));
+	auto Platform::on_post_startup(Runtime& _rt) -> bool {
+		this->splash_screen_.close();
+		glfwShowWindow(this->window_);
 		return true;
 	}
 
-	auto Platform::on_pre_tick(State& /*unused*/) -> bool {
+	auto Platform::on_pre_tick(Runtime& /*unused*/) -> bool {
 		glfwPollEvents();
 		return true;
 	}
 
-	auto Platform::on_post_tick(State& /*unused*/) -> bool {
+	auto Platform::on_post_tick(Runtime& /*unused*/) -> bool {
 		/* Return false to quit if the window is closed: */
-		return glfwWindowShouldClose(static_cast<GLFWwindow*>(this->window_)) == 0;
+		return glfwWindowShouldClose(this->window_) == 0;
 	}
 
-	auto Platform::on_pre_shutdown(State& /*unused*/) -> bool {
-		glfwHideWindow(static_cast<GLFWwindow*>(this->window_));
+	auto Platform::on_pre_shutdown(Runtime& /*unused*/) -> bool {
+		glfwHideWindow(this->window_);
 		return true;
 	}
 
-	auto Platform::on_post_shutdown(State& /*unused*/) -> bool {
+	auto Platform::on_post_shutdown(Runtime& /*unused*/) -> bool {
 		/* Destroy the window: */
-		glfwDestroyWindow(static_cast<GLFWwindow*>(this->window_));
+		glfwDestroyWindow(this->window_);
 
 		/* Shutdown GLFW: */
 		glfwTerminate();

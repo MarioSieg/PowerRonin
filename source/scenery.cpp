@@ -188,14 +188,20 @@ namespace dce {
 			const auto cube = this->registry_.create();
 
 			auto& meta = this->registry_.emplace<MetaData>(cube);
-			[[maybe_unused]] auto& transform = this->registry_.emplace<Transform>(cube);
+			auto& transform = this->registry_.emplace<Transform>(cube);
+			auto& audio = this->registry_.emplace<AudioSource>(cube);
 			auto& renderer = this->registry_.emplace<MeshRenderer>(cube);
-			[[maybe_unused]] auto& collider = this->registry_.emplace<Collider>(cube);
+			auto& collider = this->registry_.emplace<Collider>(cube);
 
 			meta.name = "Cube";
 
 			renderer.material = Material::create_from_data(Material::Lambert{.albedo = _resource_manager.system_resources.checkerboard, .color = {1, 1, 1, 1}}, "lambert", _resource_manager);
 			renderer.mesh = _resource_manager.system_resources.cube;
+			AudioClipMeta aumeta = {};
+			aumeta.enable_3d_sound = false;
+			aumeta.is_stream = true;
+			audio.clip = _resource_manager.load<AudioClip>("audio/music/entry.ogg", &aumeta);
+			audio.play();
 		}
 
 		// Create platform:
@@ -220,5 +226,9 @@ namespace dce {
 		// Load skybox:
 		this->config.lighting.skybox_cubemap = _resource_manager.system_resources.skybox;
 		this->config.lighting.skydome = _resource_manager.system_resources.skydome;
+	}
+
+	void Scenery::unload_all_entities() {
+		this->registry_.clear();
 	}
 } // namespace dce

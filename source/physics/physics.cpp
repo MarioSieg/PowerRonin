@@ -173,7 +173,7 @@
 namespace dce::physics {
 	Physics::Physics() : ISubsystem("Physics", EVENTS) { }
 
-	auto Physics::on_pre_startup(State&) -> bool {
+	auto Physics::on_pre_startup(Runtime&) -> bool {
 		this->collision_configuration_ = new btDefaultCollisionConfiguration();
 		this->dispatcher_ = new btCollisionDispatcher(this->collision_configuration_);
 		this->broadphase_interface_ = new btDbvtBroadphase();
@@ -183,16 +183,16 @@ namespace dce::physics {
 		return true;
 	}
 
-	auto Physics::on_post_tick(State& _state) -> bool {
+	auto Physics::on_post_tick(Runtime& _rt) -> bool {
 		/* TODO
-		_state.scenery().registry().view<Transform, Rigidbody, Collider>().each([ ](Transform &_transform, Rigidbody &_rigidbody, Collider &_collider) {
+		_rt.scenery().registry().view<Transform, Rigidbody, Collider>().each([ ](Transform &_transform, Rigidbody &_rigidbody, Collider &_collider) {
 	  
 		});
 		*/
 		return true;
 	}
 
-	auto Physics::on_pre_shutdown(State&) -> bool {
+	auto Physics::on_pre_shutdown(Runtime&) -> bool {
 		delete this->dynamics_world_;
 		this->dynamics_world_ = nullptr;
 

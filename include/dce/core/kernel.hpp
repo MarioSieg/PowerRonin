@@ -171,14 +171,14 @@
 #pragma once
 
 #include "subsystem.hpp"
-#include "../../../include/dce/state.hpp"
+#include "../../../include/dce/runtime.hpp"
 #include <cstdint>
 #include <memory>
 #include <tuple>
 #include <vector>
 
 namespace dce {
-	class State;
+	class Runtime;
 
 	namespace core {
 		constexpr std::string_view ENGINE_NAME = "Dreamcast-Engine";
@@ -233,10 +233,10 @@ namespace dce {
 			[[nodiscard]] auto installed_subsystems() const noexcept -> const std::vector<std::tuple<std::uint_fast16_t, std::unique_ptr<ISubsystem>>>&;
 
 			/* Returns the current simulation state. */
-			[[nodiscard]] auto get_state() noexcept -> std::unique_ptr<State>&;
+			[[nodiscard]] auto get_state() noexcept -> std::unique_ptr<Runtime>&;
 
 			/* Returns the current simulation state. */
-			[[nodiscard]] auto get_state() const noexcept -> const std::unique_ptr<State>&;
+			[[nodiscard]] auto get_state() const noexcept -> const std::unique_ptr<Runtime>&;
 
 			/* Allocates and installs the subsystem T. */
 			template <typename T, typename... Q> requires Subsystem<T> auto create_install_subsystem(Q&&... /*args*/) -> Kernel&;

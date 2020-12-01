@@ -30,13 +30,13 @@ add_library(
     "source/renderer/renderer.cpp" 
     "include/dce/config.hpp" 
     "source/config.cpp" 
-    "include/dce/state.hpp" 
+    "include/dce/runtime.hpp" 
     "include/dce/proto.hpp" 
     "source/proto.cpp" 
     "include/dce/core/subsystem.hpp" 
     "source/core/subsystem.cpp" 
     "source/cmddb.cpp" 
-    "source/state.cpp" 
+    "source/runtime.cpp" 
     "source/renderer/embedded_shaders.hpp" 
     "source/renderer/embedded_shaders.cpp" 
     "source/renderer/gui_renderer.hpp" 
@@ -147,7 +147,20 @@ add_library(
     "source/renderer/views.hpp" 
     "source/material_runtime.cpp"
     "source/material.cpp"
-    )
+    "source/platform/splash.hpp" 
+    "source/platform/splash.cpp" 
+    "source/platform/util.hpp"
+    "source/platform/util.cpp" 
+    "source/audio/audio.hpp"
+    "source/audio/audio.cpp"
+    "source/audio/audio_headers.hpp"
+    "include/dce/audio_clip.hpp" 
+    "source/audio_clip.cpp" 
+    "source/audio_clip_runtime.cpp" 
+    "include/dce/audio_source.hpp" 
+    "source/audio_source.cpp" 
+    "source/wincom.hpp"
+    "source/wincom.cpp")
 
 include("extern/CMakeLists.txt")
 

@@ -194,10 +194,10 @@ namespace dce::gui {
 		static constexpr auto EVENTS = core::ServiceEvents::PRE_STARTUP | core::ServiceEvents::PRE_TICK | core::ServiceEvents::POST_TICK | core::ServiceEvents::PRE_SHUTDOWN;
 
 		/* Kernel events */
-		virtual auto on_pre_startup(State& /*state*/) -> bool override;
-		virtual auto on_pre_tick(State& /*state*/) -> bool override;
-		virtual auto on_post_tick(State& /*state*/) -> bool override;
-		virtual auto on_pre_shutdown([[maybe_unused]] State&) -> bool override;
+		virtual auto on_pre_startup(Runtime& /*state*/) -> bool override;
+		virtual auto on_pre_tick(Runtime& /*state*/) -> bool override;
+		virtual auto on_post_tick(Runtime& /*state*/) -> bool override;
+		virtual auto on_pre_shutdown([[maybe_unused]] Runtime&) -> bool override;
 
 		void begin(std::uint16_t _width, std::uint16_t _height);
 		void end() const;

@@ -175,7 +175,7 @@
 #include <string_view>
 
 namespace dce {
-	class State;
+	class Runtime;
 
 	namespace core {
 		// Bitmask to subscribe to subsystem events
@@ -238,17 +238,17 @@ namespace dce {
 
 
 		protected:
-			[[nodiscard]] virtual auto on_pre_startup(State& /*unused*/) -> bool;
+			[[nodiscard]] virtual auto on_pre_startup(Runtime& /*unused*/) -> bool;
 
-			[[nodiscard]] virtual auto on_post_startup(State& /*unused*/) -> bool;
+			[[nodiscard]] virtual auto on_post_startup(Runtime& /*unused*/) -> bool;
 
-			[[nodiscard]] virtual auto on_pre_tick(State& /*unused*/) -> bool;
+			[[nodiscard]] virtual auto on_pre_tick(Runtime& /*unused*/) -> bool;
 
-			[[nodiscard]] virtual auto on_post_tick(State& /*unused*/) -> bool;
+			[[nodiscard]] virtual auto on_post_tick(Runtime& /*unused*/) -> bool;
 
-			[[nodiscard]] virtual auto on_pre_shutdown(State& /*unused*/) -> bool;
+			[[nodiscard]] virtual auto on_pre_shutdown(Runtime& /*unused*/) -> bool;
 
-			[[nodiscard]] virtual auto on_post_shutdown(State& /*unused*/) -> bool;
+			[[nodiscard]] virtual auto on_post_shutdown(Runtime& /*unused*/) -> bool;
 
 		private:
 			double pre_startup_time = 0.;

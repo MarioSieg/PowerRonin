@@ -185,14 +185,14 @@ const float *VIEW, *PROJ;
 namespace dce::renderer {
 	Renderer::Renderer() : ISubsystem("Renderer", EVENTS), shader_bucket_(this->gpu_) { }
 
-	auto Renderer::on_pre_startup(State& _state) -> bool {
-		if (!this->gpu_.initialize_drivers(_state.config(), _state.protocol())) {
+	auto Renderer::on_pre_startup(Runtime& _rt) -> bool {
+		if (!this->gpu_.initialize_drivers(_rt.config(), _rt.protocol())) {
 			return false;
 		}
 
 		this->shader_bucket_.load_all();
 
-		get_limits(const_cast<Diagnostics&>(_state.diagnostics()));
+		get_limits(const_cast<Diagnostics&>(_rt.diagnostics()));
 
 		this->fly_cam_.set_position({0.0f, 0.0f, -5.0f});
 
@@ -200,23 +200,23 @@ namespace dce::renderer {
 	}
 
 	/* Prepare frame */
-	auto Renderer::on_pre_tick(State& _state) -> bool {
-		get_runtime_stats(const_cast<Diagnostics&>(_state.diagnostics()));
-		this->tick_prev_ = update_clocks(const_cast<Chrono&>(_state.chrono()), this->tick_prev_);
+	auto Renderer::on_pre_tick(Runtime& _rt) -> bool {
+		get_runtime_stats(const_cast<Diagnostics&>(_rt.diagnostics()));
+		this->tick_prev_ = update_clocks(const_cast<Chrono&>(_rt.chrono()), this->tick_prev_);
 		this->gpu_.clear_view(SCENERY_VIEW);
 		this->gpu_.sort_draw_calls(SCENERY_VIEW);
 		return true;
 	}
 
 	/* End frame */
-	auto Renderer::on_post_tick(State& _state) -> bool {
-		const auto& lighting = _state.scenery().config.lighting;
+	auto Renderer::on_post_tick(Runtime& _rt) -> bool {
+		const auto& lighting = _rt.scenery().config.lighting;
 		{
 			// Update camera and set matrices:
-			this->update_camera(_state);
+			this->update_camera(_rt);
 
 			// Set per frame data for all shaders:
-			this->set_per_frame_data(_state.scenery().config.lighting);
+			this->set_per_frame_data(_rt.scenery().config.lighting);
 
 			// Draw lambda function which render an object:
 			auto draw = [this](Transform& _transform, MeshRenderer& _mesh_renderer) {
@@ -248,7 +248,7 @@ namespace dce::renderer {
 			};
 
 			// Iterate and draw:
-			auto& registry = _state.scenery().registry();
+			auto& registry = _rt.scenery().registry();
 			registry.view<Transform, MeshRenderer>().each(draw);
 		}
 
@@ -259,14 +259,14 @@ namespace dce::renderer {
 		return true;
 	}
 
-	auto Renderer::on_post_shutdown(State& _state) -> bool {
+	auto Renderer::on_post_shutdown(Runtime& _rt) -> bool {
 		this->shader_bucket_.unload_all();
 		this->gpu_.shutdown_drivers();
 		return true;
 	}
 
-	void Renderer::update_camera(const State& _state) {
-		this->fly_cam_.update(_state.input(), _state.config().display.width, _state.config().display.height, static_cast<float>(_state.chrono().delta_time));
+	void Renderer::update_camera(const Runtime& _rt) {
+		this->fly_cam_.update(_rt.input(), _rt.config().display.width, _rt.config().display.height, static_cast<float>(_rt.chrono().delta_time));
 		this->view_ = this->fly_cam_.get_view_matrix();
 		this->projection_ = this->fly_cam_.get_projection_matrix();
 		this->gpu_.set_camera(SCENERY_VIEW, this->view_, this->projection_);

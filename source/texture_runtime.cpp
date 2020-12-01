@@ -210,6 +210,9 @@ namespace dce {
 	}
 
 	void Texture::offload() {
+		[[unlikely]] if (!this->is_uploaded_) {
+			return;
+		}
 		const auto texture_handle = bgfx::TextureHandle{this->volatile_upload_data_.gpu_buffer_id};
 		[[likely]] if (isValid(texture_handle)) {
 			destroy(texture_handle);

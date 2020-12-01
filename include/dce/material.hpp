@@ -367,6 +367,7 @@ namespace dce {
 		case MaterialType::UNLIT: return "Unlit";
 		case MaterialType::LAMBERT: return "Lambert";
 		}
+		return "";
 	}
 
 	constexpr auto Material::type_from_string(const std::string_view _str) noexcept -> std::optional<MaterialType> {

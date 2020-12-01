@@ -174,7 +174,7 @@
 #include <array>
 
 namespace dce {
-	class State;
+	class Runtime;
 	class CmdDB;
 	class AsyncProtocol;
 
@@ -189,7 +189,7 @@ namespace dce {
 			static constexpr auto COLOR_WARN = 0xFF'66'AA'FF;
 
 			auto initialize(const spdlog::sink_ptr& _term_sink) noexcept -> bool;
-			void update(bool& _show, State& _state);
+			void update(bool& _show, Runtime& _rt);
 			void clear_buffer();
 			[[nodiscard]] auto get_buffer() const noexcept -> const std::array<char, BUFFER_SIZE>&;
 

@@ -199,12 +199,12 @@ namespace dce {
 			static constexpr auto EVENTS = core::ServiceEvents::PRE_STARTUP | core::ServiceEvents::PRE_TICK | core::ServiceEvents::POST_TICK | core::ServiceEvents::POST_SHUTDOWN;
 
 			/* Kernel events */
-			virtual auto on_pre_startup(State& _state) -> bool override;
-			virtual auto on_pre_tick(State& _state) -> bool override;
-			virtual auto on_post_tick([[maybe_unused]] State& _state) -> bool override;
-			virtual auto on_post_shutdown([[maybe_unused]] State& _state) -> bool override;
+			virtual auto on_pre_startup(Runtime& _rt) -> bool override;
+			virtual auto on_pre_tick(Runtime& _rt) -> bool override;
+			virtual auto on_post_tick([[maybe_unused]] Runtime& _rt) -> bool override;
+			virtual auto on_post_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
 
-			void update_camera(const State& _state);
+			void update_camera(const Runtime& _rt);
 			void draw_skybox(const Scenery::Configuration::Lighting& _lighting);
 			void set_per_frame_data(const Scenery::Configuration::Lighting& _lighting) const;
 

@@ -183,13 +183,13 @@ namespace dce::gui::widgets {
 }
 
 namespace dce {
-	class State;
+	class Runtime;
 
 	namespace gui {
 		class Editor final {
 		public:
-			void initialize(State& _state);
-			void update(State& _state, bool& _show_terminal);
+			void initialize(Runtime& _rt);
+			void update(Runtime& _rt, bool& _show_terminal);
 			void main_menu(bool& _show_terminal);
 
 		private:

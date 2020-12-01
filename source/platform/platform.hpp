@@ -171,15 +171,26 @@
 #pragma once
 
 #include "../../include/dce/core/kernel.hpp"
+#include "splash.hpp"
+
+struct GLFWwindow;
+struct GLFWmonitor;
+struct GLFWvidmode;
 
 namespace dce::platform {
-	/* GLFW window handle. */
+	/// <summary>
+	/// GLFW window handle.
+	/// </summary>
 	extern void* WINDOW_HANDLE;
 
-	/* Global raw window handle. (HWND on windows). */
+	/// <summary>
+	/// Global raw window handle. (HWND on Windows).
+	/// </summary>
 	extern void* NATIVE_WINDOW_HANDLE;
 
-	/* Manages window and input */
+	/// <summary>
+	/// Manages window and input 
+	/// </summary>
 	class Platform final : public core::ISubsystem {
 	public:
 		/* Constructors, assignment operators, destructor */
@@ -192,29 +203,58 @@ namespace dce::platform {
 
 	private:
 
-		/* Required kernel events */
+		/// <summary>
+		/// Required kernel events
+		/// </summary>
 		static constexpr auto EVENTS = core::ServiceEvents::ALL;
 		static constexpr std::string_view TITLE = "Dreamcast Engine";
 
 		/* Kernel events */
-		virtual auto on_pre_startup([[maybe_unused]] State& _state) -> bool override;
-		virtual auto on_post_startup([[maybe_unused]] State& _state) -> bool override;
-		virtual auto on_pre_tick([[maybe_unused]] State& _state) -> bool override;
-		virtual auto on_post_tick([[maybe_unused]] State& _state) -> bool override;
-		virtual auto on_pre_shutdown([[maybe_unused]] State& _state) -> bool override;
-		virtual auto on_post_shutdown([[maybe_unused]] State& _state) -> bool override;
+		virtual auto on_pre_startup([[maybe_unused]] Runtime& _rt) -> bool override;
+		virtual auto on_post_startup([[maybe_unused]] Runtime& _rt) -> bool override;
+		virtual auto on_pre_tick([[maybe_unused]] Runtime& _rt) -> bool override;
+		virtual auto on_post_tick([[maybe_unused]] Runtime& _rt) -> bool override;
+		virtual auto on_pre_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
+		virtual auto on_post_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
 
-		/* Main handles */
-		void* window_ = nullptr;
-		void* monitor_ = nullptr;
-		const void* vidmode_ = nullptr;
+		/// <summary>
+		/// Primary window handle.
+		/// </summary>
+		GLFWwindow* window_ = nullptr;
 
-		/* Monitor list */
+		/// <summary>
+		/// Primary monitor handle.
+		/// </summary>
+		GLFWmonitor* monitor_ = nullptr;
+
+		/// <summary>
+		/// Primary videomode handle.
+		/// </summary>
+		const GLFWvidmode* vidmode_ = nullptr;
+
+		/// <summary>
+		/// Monitor list count
+		/// </summary>
 		int all_monitors_count_ = 0;
-		void** all_monitors_ = nullptr;
 
-		/* Video mode list */
+		/// <summary>
+		/// Monitor list
+		/// </summary>
+		GLFWmonitor** all_monitors_ = nullptr;
+
+		/// <summary>
+		/// Video mode list count
+		/// </summary>
 		int all_vidmodes_count_ = 0;
-		const void* all_vidmodes_ = nullptr;
+
+		/// <summary>
+		/// Video mode list
+		/// </summary>
+		const GLFWvidmode* all_vidmodes_ = nullptr;
+
+		/// <summary>
+		/// Splash screen.
+		/// </summary>
+		SplashScreen splash_screen_ = {};
 	};
 } // namespace dce::platform // namespace dce::platform
