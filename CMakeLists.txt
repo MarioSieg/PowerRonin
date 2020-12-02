@@ -7,6 +7,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project ("DreamcastSDK" CXX C ASM)
 
+SET(GCC_COVERAGE_COMPILE_FLAGS "-march=native -Ofast")
+SET(GCC_COVERAGE_LINK_FLAGS    "")
+SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
+SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
+
 add_library(
     "dreamcast_runtime" STATIC
     "include/dce/core/kernel.hpp"

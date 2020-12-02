@@ -1,30 +1,17 @@
-/*******************************************************************************
-The content of this file includes portions of the AUDIOKINETIC Wwise Technology
-released in source code form as part of the SDK installer package.
-
-Commercial License Usage
-
-Licensees holding valid commercial licenses to the AUDIOKINETIC Wwise Technology
-may use this file in accordance with the end user license agreement provided 
-with the software or, alternatively, in accordance with the terms contained in a
-written agreement between you and Audiokinetic Inc.
-
-  Version: v2019.2.7  Build: 7402
-  Copyright (c) 2006-2020 Audiokinetic Inc.
-*******************************************************************************/
-//////////////////////////////////////////////////////////////////////
-//
-// AkFilePackageLowLevelIOBlocking.h
-//
-// Extends the CAkDefaultIOHookBlocking low level I/O hook with File 
-// Package handling functionality. 
-//
-// See AkDefaultIOHookBlocking.h for details on using the blocking 
-// low level I/O hook. 
+// *******************************************************************************
+// The content of this file includes portions of the KerboGames Dreamcast Technology
+// released in source code form as part of the SDK package.
 // 
-// See AkFilePackageLowLevelIO.h for details on using file packages.
-//
-//////////////////////////////////////////////////////////////////////
+// Commercial License Usage
+// 
+// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// may use this file in accordance with the end user license agreement provided 
+// with the software or, alternatively, in accordance with the terms contained in a
+// written agreement between you and KerboGames.
+// 
+// Copyright (c) 20013-2020 KerboGames, MarioSieg.
+// support@kerbogames.com
+// *******************************************************************************
 
 #ifndef _AK_FILE_PACKAGE_LOW_LEVEL_IO_BLOCKING_H_
 #define _AK_FILE_PACKAGE_LOW_LEVEL_IO_BLOCKING_H_
@@ -32,9 +19,7 @@ written agreement between you and Audiokinetic Inc.
 #include "../Common/AkFilePackageLowLevelIO.h"
 #include "AkDefaultIOHookBlocking.h"
 
-class CAkFilePackageLowLevelIOBlocking 
-	: public CAkFilePackageLowLevelIO<CAkDefaultIOHookBlocking>
-{
+class CAkFilePackageLowLevelIOBlocking : public CAkFilePackageLowLevelIO<CAkDefaultIOHookBlocking> {
 public:
 	CAkFilePackageLowLevelIOBlocking() {}
 	virtual ~CAkFilePackageLowLevelIOBlocking() {}

@@ -1,28 +1,17 @@
-/*******************************************************************************
-The content of this file includes portions of the AUDIOKINETIC Wwise Technology
-released in source code form as part of the SDK installer package.
-
-Commercial License Usage
-
-Licensees holding valid commercial licenses to the AUDIOKINETIC Wwise Technology
-may use this file in accordance with the end user license agreement provided 
-with the software or, alternatively, in accordance with the terms contained in a
-written agreement between you and Audiokinetic Inc.
-
-  Version: v2019.2.7  Build: 7402
-  Copyright (c) 2006-2020 Audiokinetic Inc.
-*******************************************************************************/
-//////////////////////////////////////////////////////////////////////
-//
-// AkFileLocationBase.h
-//
-// Basic file location resolving: Uses simple path concatenation logic.
-// Exposes basic path functions for convenience.
-// For more details on resolving file location, refer to section "File Location" inside
-// "Going Further > Overriding Managers > Streaming / Stream Manager > Low-Level I/O"
-// of the SDK documentation. 
-//
-//////////////////////////////////////////////////////////////////////
+// *******************************************************************************
+// The content of this file includes portions of the KerboGames Dreamcast Technology
+// released in source code form as part of the SDK package.
+// 
+// Commercial License Usage
+// 
+// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// may use this file in accordance with the end user license agreement provided 
+// with the software or, alternatively, in accordance with the terms contained in a
+// written agreement between you and KerboGames.
+// 
+// Copyright (c) 20013-2020 KerboGames, MarioSieg.
+// support@kerbogames.com
+// *******************************************************************************
 
 #ifndef _AK_FILE_LOCATION_BASE_H_
 #define _AK_FILE_LOCATION_BASE_H_
@@ -31,8 +20,7 @@ struct AkFileSystemFlags;
 
 #include <AK/SoundEngine/Common/IAkStreamMgr.h>
 
-class CAkFileLocationBase
-{
+class CAkFileLocationBase {
 public:
 	CAkFileLocationBase();
 	virtual ~CAkFileLocationBase();
@@ -45,15 +33,9 @@ public:
 	// Audio source path is appended to base path whenever uCompanyID is AK and uCodecID specifies an audio source.
 	// Bank path is appended to base path whenever uCompanyID is AK and uCodecID specifies a sound bank.
 	// Language specific dir name is appended to path whenever "bIsLanguageSpecific" is true.
-	AKRESULT SetBasePath(
-		const AkOSChar*   in_pszBasePath
-		);
-	AKRESULT SetBankPath(
-		const AkOSChar*   in_pszBankPath
-		);
-	AKRESULT SetAudioSrcPath(
-		const AkOSChar*   in_pszAudioSrcPath
-		);
+	AKRESULT SetBasePath(const AkOSChar* in_pszBasePath);
+	AKRESULT SetBankPath(const AkOSChar* in_pszBankPath);
+	AKRESULT SetAudioSrcPath(const AkOSChar* in_pszAudioSrcPath);
 	// Note: SetLangSpecificDirName() does not exist anymore. See release note WG-19397 (Wwise 2011.2).
 
 	//
@@ -63,12 +45,14 @@ public:
 	// String overload.
 	// Returns AK_Success if input flags are supported and the resulting path is not too long.
 	// Returns AK_Fail otherwise.
-	AKRESULT GetFullFilePath(
-		const AkOSChar *	in_pszFileName,		// File name.
-		AkFileSystemFlags * in_pFlags,			// Special flags. Can be NULL.
-		AkOpenMode			in_eOpenMode,		// File open mode (read, write, ...).
-		AkOSChar *			out_pszFullFilePath // Full file path.
-		);  
+	AKRESULT GetFullFilePath(const AkOSChar* in_pszFileName,
+	                         // File name.
+	                         AkFileSystemFlags* in_pFlags,
+	                         // Special flags. Can be NULL.
+	                         AkOpenMode in_eOpenMode,
+	                         // File open mode (read, write, ...).
+	                         AkOSChar* out_pszFullFilePath // Full file path.
+	);
 
 	// ID overload. 
 	// The name of the file will be formatted as ID.ext. This is meant to be used with options
@@ -78,19 +62,21 @@ public:
 	// Integration Details - Banks > General Information" of the SDK documentation.
 	// Returns AK_Success if input flags are supported and the resulting path is not too long.
 	// Returns AK_Fail otherwise.
-	AKRESULT GetFullFilePath(
-		AkFileID			in_fileID,			// File ID.
-		AkFileSystemFlags *	in_pFlags,			// Special flags. 
-		AkOpenMode			in_eOpenMode,		// File open mode (read, write, ...).
-		AkOSChar *			out_pszFullFilePath	// Full file path.
-		);
+	AKRESULT GetFullFilePath(AkFileID in_fileID,
+	                         // File ID.
+	                         AkFileSystemFlags* in_pFlags,
+	                         // Special flags. 
+	                         AkOpenMode in_eOpenMode,
+	                         // File open mode (read, write, ...).
+	                         AkOSChar* out_pszFullFilePath // Full file path.
+	);
 
 protected:
 
 	// Internal user paths.
-	AkOSChar			m_szBasePath[AK_MAX_PATH];
-	AkOSChar			m_szBankPath[AK_MAX_PATH];
-	AkOSChar			m_szAudioSrcPath[AK_MAX_PATH];
+	AkOSChar m_szBasePath[AK_MAX_PATH];
+	AkOSChar m_szBankPath[AK_MAX_PATH];
+	AkOSChar m_szAudioSrcPath[AK_MAX_PATH];
 
 };
 
