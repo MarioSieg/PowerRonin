@@ -160,7 +160,26 @@ add_library(
     "include/dce/audio_source.hpp" 
     "source/audio_source.cpp" 
     "source/wincom.hpp"
-    "source/wincom.cpp")
+    "source/wincom.cpp"
+    "source/audio/SoundEngine/Common/AkDefaultLowLevelIODispatcher.cpp"
+    "source/audio/SoundEngine/Common/AkDefaultLowLevelIODispatcher.h"
+    "source/audio/SoundEngine/Common/AkFileLocationBase.cpp"
+    "source/audio/SoundEngine/Common/AkFileLocationBase.h"
+    "source/audio/SoundEngine/Common/AkFilePackage.cpp"
+    "source/audio/SoundEngine/Common/AkFilePackage.h"
+    "source/audio/SoundEngine/Common/AkFilePackageLowLevelIO.h"
+    "source/audio/SoundEngine/Common/AkFilePackageLowLevelIO.inl"
+    "source/audio/SoundEngine/Common/AkFilePackageLUT.cpp"
+    "source/audio/SoundEngine/Common/AkFilePackageLUT.h"
+    "source/audio/SoundEngine/Common/AkMultipleFileLocation.cpp"
+    "source/audio/SoundEngine/Common/AkMultipleFileLocation.h"
+    "source/audio/SoundEngine/Win32/AkDefaultIOHookBlocking.cpp"
+    "source/audio/SoundEngine/Win32/AkDefaultIOHookBlocking.h"
+    "source/audio/SoundEngine/Win32/AkDefaultIOHookDeferred.cpp"
+    "source/audio/SoundEngine/Win32/AkDefaultIOHookDeferred.h"
+    "source/audio/SoundEngine/Win32/AkFileHelpers.h"
+    "source/audio/SoundEngine/Win32/AkFilePackageLowLevelIOBlocking.h"
+    "source/audio/SoundEngine/Win32/AkFilePackageLowLevelIODeferred.h")
 
 include("extern/CMakeLists.txt")
 

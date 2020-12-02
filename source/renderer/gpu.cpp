@@ -187,7 +187,7 @@ namespace dce::renderer {
 
 		bgfx::Init init{};
 		init.limits.maxEncoders = 16;
-		init.type = bgfx::RendererType::Direct3D12;
+		init.type = bgfx::RendererType::Direct3D11;
 		init.debug = DEBUG_MODE;
 		init.platformData.nwh = platform::NATIVE_WINDOW_HANDLE;
 		init.profile = DEBUG_MODE;

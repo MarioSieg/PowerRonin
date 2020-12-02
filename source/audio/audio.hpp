@@ -191,5 +191,12 @@ namespace dce::audio {
 		virtual auto on_pre_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
 
 		AkMemSettings mem_settings_ = {};
+		AkStreamMgrSettings stream_settings_ = {};
+		AkDeviceSettings device_settings_ = {};
+		AkInitSettings init_settings_ = {};
+		AkPlatformInitSettings platform_init_settings_ = {};
+		AkMusicSettings music_settings_ = {};
+		AkSpatialAudioInitSettings spatial_audio_init_settings_ = {};
+		CAkDefaultIOHookBlocking io_ = {};
 	};
 }
