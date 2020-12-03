@@ -21,8 +21,12 @@
 #include <cstdint>
 
 namespace dce::gui {
-	constexpr auto imgui_rgba(const std::uint8_t r, const std::uint8_t g, const std::uint8_t b, const std::uint8_t a = 0xFF) noexcept -> std::uint32_t {
-		return static_cast<std::uint32_t>(r) << 0 | static_cast<std::uint32_t>(g) << 8 | static_cast<std::uint32_t>(b) << 16 | static_cast<std::uint32_t>(a) << 24;
+	constexpr auto imgui_rgba(const std::uint8_t _r, const std::uint8_t _g, const std::uint8_t _b, const std::uint8_t _a = 0xFF) noexcept -> std::uint32_t {
+		return static_cast<std::uint32_t>(_r) << 0 | static_cast<std::uint32_t>(_g) << 8 | static_cast<std::uint32_t>(_b) << 16 | static_cast<std::uint32_t>(_a) << 24;
+	}
+
+	inline auto imgui_rgba_to_norm_vec4(const std::uint8_t _r, const std::uint8_t _g, const std::uint8_t _b, const std::uint8_t _a = 0xFF) noexcept -> ImVec4 {
+		return ImVec4{_r / 255.f, _g / 255.f, _b / 255.f, _a / 255.f,};
 	}
 
 	inline auto to_imgui_id(const bgfx::TextureHandle handle, const std::uint8_t flags, const std::uint8_t mip) -> ImTextureID {

@@ -15,6 +15,7 @@
 
 #include "../../include/dce/flycam.hpp"
 #include "../../include/dce/runtime.hpp"
+#include "gui/gui_headers.hpp"
 
 namespace dce {
 	auto FlyCam::get_projection_matrix() const noexcept -> const Matrix4x4<>& {
@@ -38,6 +39,9 @@ namespace dce {
 	}
 
 	void FlyCam::update(const Input& _input, const float _viewport_x, const float _viewport_y, const float _delta_time) {
+		[[unlikely]] if(ImGui::IsAnyItemHovered() || ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow)) {
+			return;
+		}
 		const auto mouse = _input.get_mouse_position();
 
 		const float speed = this->move_speed;

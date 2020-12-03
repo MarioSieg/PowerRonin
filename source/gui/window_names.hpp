@@ -25,6 +25,6 @@ namespace dce::gui {
 	constexpr const char* const INSPECTOR_NAME = ICON_FA_SLIDERS_H " Inspector";
 	constexpr const char* const PROFILER_NAME = ICON_FA_CLOCK " Profiler";
 	constexpr const char* const RESOURCE_VIEWER_NAME = ICON_FA_DATABASE " Resource Viewer";
-	constexpr const char* const RAM_EDITOR_NAME = ICON_FA_MEMORY " Memory Editor";
+	constexpr const char* const MEMORY_EDITOR_NAME = ICON_FA_MEMORY " Memory Editor";
 	constexpr const char* const TERMINAL_NAME = ICON_FA_TERMINAL " Terminal";
 }

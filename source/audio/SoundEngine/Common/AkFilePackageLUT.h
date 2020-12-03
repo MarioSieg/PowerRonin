@@ -99,7 +99,7 @@ protected:
 	template <class T_FILEID>
 	class FileLUT {
 	public:
-		const AkFileEntry<T_FILEID>* FileEntries() const { return reinterpret_cast<AkFileEntry<T_FILEID>*>(const_cast<AkUInt32 *>(reinterpret_cast<const AkUInt32*>(this) + 1)); }
+		const AkFileEntry<T_FILEID>* FileEntries() const { return reinterpret_cast<AkFileEntry<T_FILEID>*>(const_cast<AkUInt32*>(reinterpret_cast<const AkUInt32*>(this) + 1)); }
 		bool HasFiles() const { return m_uNumFiles > 0; }
 		AkUInt32 NumFiles() const { return m_uNumFiles; }
 	private:

@@ -56,7 +56,7 @@ namespace dce::gui {
 		}
 
 		[[unlikely]] if (this->memory_editor_.Open) {
-			this->memory_editor_.DrawWindow(RAM_EDITOR_NAME, &_rt, sizeof(Runtime));
+			this->memory_editor_.DrawWindow(MEMORY_EDITOR_NAME, &_rt, sizeof(Runtime));
 		}
 
 		[[unlikely]] if (this->show_config_editor_) {
@@ -77,25 +77,25 @@ namespace dce::gui {
 				if (MenuItem(ICON_FA_TERMINAL " Terminal")) {
 					_show_terminal = true;
 				}
-				if (MenuItem(ICON_FA_SITEMAP " Hierarchy")) {
+				if (MenuItem(HIERARCHY_NAME)) {
 					this->show_hierarchy_viewer_ = true;
 				}
-				if (MenuItem(ICON_FA_SLIDERS_H " Inspector")) {
+				if (MenuItem(INSPECTOR_NAME)) {
 					this->show_inspector_ = true;
 				}
-				if (MenuItem(ICON_FA_COGS " Configuration")) {
+				if (MenuItem(CONFIG_EDITOR_NAME)) {
 					this->show_config_editor_ = true;
 				}
-				if (MenuItem(ICON_FA_DATABASE " Resources")) {
+				if (MenuItem(RESOURCE_VIEWER_NAME)) {
 					this->show_resource_viewer_ = true;
 				}
-				if (MenuItem(ICON_FA_CLOCK " Profiler")) {
+				if (MenuItem(PROFILER_NAME)) {
 					this->show_profiler_ = true;
 				}
-				if (MenuItem(ICON_FA_SITEMAP " Hierarchy")) {
+				if (MenuItem(HIERARCHY_NAME)) {
 					this->show_hierarchy_viewer_ = true;
 				}
-				if (MenuItem(ICON_FA_MEMORY " Memory Editor")) {
+				if (MenuItem(MEMORY_EDITOR_NAME)) {
 					this->memory_editor_.Open = true;
 				}
 				EndMenu();
