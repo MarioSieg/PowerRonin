@@ -168,7 +168,7 @@ namespace dce {
 			fs_bytecode = blob_from_disk(fragment_file);
 		}
 
-		auto self = IResource<ShaderMeta>::allocate < Shader > ();
+		auto self = IResource<ShaderMeta>::allocate<Shader>();
 		self->file_path_ = std::move(_path);
 		self->vertex_shader_bytecode_ = std::move(vs_bytecode);
 		self->volatile_upload_data_.uniforms = std::move(_uniforms);
@@ -186,7 +186,7 @@ namespace dce {
 	}
 
 	auto ShaderCompiler::load(std::filesystem::path&& _path, const ShaderMeta* const _meta) const -> std::shared_ptr<Shader> {
-		auto self = IResource<ShaderMeta>::allocate < Shader > ();
+		auto self = IResource<ShaderMeta>::allocate<Shader>();
 
 		self->file_path_ = std::move(_path);
 		self->meta_data_ = _meta ? *_meta : IResource<ShaderMeta>::load_meta_or_default(self->file_path_);

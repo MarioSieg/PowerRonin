@@ -17,6 +17,16 @@
 #include "audio/audio_headers.hpp"
 
 namespace dce {
+	AudioSource::AudioSource() { }
+
+	AudioSource::AudioSource(AudioSource&& _rhs) noexcept { }
+
+	auto AudioSource::operator=(AudioSource&& _rhs) noexcept -> AudioSource& {
+		return *this;
+	}
+
+	AudioSource::~AudioSource() { }
+
 	void AudioSource::play() { }
 
 	auto AudioSource::is_currently_playing() const noexcept -> bool {

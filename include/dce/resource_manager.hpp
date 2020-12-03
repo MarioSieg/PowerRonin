@@ -76,9 +76,7 @@ namespace dce {
 		/// <typeparam name="T">The type to load. For example Texture or Mesh.</typeparam>
 		/// <param name="_file">The file path to the file to be loaded.</param>
 		/// <returns>A resource reference to the newly loaded resource.</returns>
-		template <typename T>
-		requires std::is_base_of_v<IResource<typename T::Meta>, T> [[nodiscard]]
-		auto load(std::filesystem::path&& _file) -> RRef<T>;
+		template <typename T> requires std::is_base_of_v<IResource<typename T::Meta>, T> [[nodiscard]] auto load(std::filesystem::path&& _file) -> RRef<T>;
 
 		/// <summary>
 		/// Loads a resource of type T from a file and stores it in the corresponding resource cache but with metadata.
@@ -87,9 +85,7 @@ namespace dce {
 		/// <param name="_file">The file path to the file to be loaded.</param>
 		/// <param name="_meta">The metadata pointer. Pass nullptr to load it from file.</param>
 		/// <returns>A resource reference to the newly loaded resource.</returns>
-		template <typename T>
-		requires std::is_base_of_v<IResource<typename T::Meta>, T> [[nodiscard]]
-		auto load(std::filesystem::path&& _file, const typename T::Meta* const _meta) -> RRef<T>;
+		template <typename T> requires std::is_base_of_v<IResource<typename T::Meta>, T> [[nodiscard]] auto load(std::filesystem::path&& _file, const typename T::Meta* const _meta) -> RRef<T>;
 
 		/// <summary>
 		/// Destroyes all resources. (!DANGEROUS!)
@@ -110,34 +106,22 @@ namespace dce {
 	};
 
 	template <>
-	inline auto ResourceManager::load(std::filesystem::path && _file)
-	->
-	RRef<Texture>
-{
+	inline auto ResourceManager::load(std::filesystem::path&& _file) -> RRef<Texture> {
 		return this->load_texture(std::move(_file), nullptr);
 	}
 
 	template <>
-	inline auto ResourceManager::load(std::filesystem::path && _file)
-	->
-	RRef<Mesh>
-{
+	inline auto ResourceManager::load(std::filesystem::path&& _file) -> RRef<Mesh> {
 		return this->load_mesh(std::move(_file), nullptr);
 	}
 
 	template <>
-	inline auto ResourceManager::load(std::filesystem::path && _file)
-	->
-	RRef<Material>
-{
+	inline auto ResourceManager::load(std::filesystem::path&& _file) -> RRef<Material> {
 		return this->load_material(std::move(_file), nullptr);
 	}
 
 	template <>
-	inline auto ResourceManager::load(std::filesystem::path && _file)
-	->
-	RRef<AudioClip>
-{
+	inline auto ResourceManager::load(std::filesystem::path&& _file) -> RRef<AudioClip> {
 		return this->load_audio_clip(std::move(_file), nullptr);
 	}
 

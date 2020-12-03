@@ -64,35 +64,19 @@ namespace dce {
 		this->at_ = this->eye_ + dir_;
 
 		[[unlikely]] if (_input.is_key_down(Key::W)) {
-			this->eye_ += Vector3 < >
-			{
-				speed * _delta_time
-			}
-			*this->forward_;
+			this->eye_ += Vector3<>{speed * _delta_time} * this->forward_;
 		}
 
 		[[unlikely]] if (_input.is_key_down(Key::A)) {
-			this->eye_ += Vector3 < >
-			{
-				speed * _delta_time
-			}
-			*this->left_;
+			this->eye_ += Vector3<>{speed * _delta_time} * this->left_;
 		}
 
 		[[unlikely]] if (_input.is_key_down(Key::S)) {
-			this->eye_ -= Vector3 < >
-			{
-				speed * _delta_time
-			}
-			*this->forward_;
+			this->eye_ -= Vector3<>{speed * _delta_time} * this->forward_;
 		}
 
 		[[unlikely]] if (_input.is_key_down(Key::D)) {
-			this->eye_ -= Vector3 < >
-			{
-				speed * _delta_time
-			}
-			*this->left_;
+			this->eye_ -= Vector3<>{speed * _delta_time} * this->left_;
 		}
 
 		this->view_ = lookAtLH(this->eye_, this->at_, math::UP);

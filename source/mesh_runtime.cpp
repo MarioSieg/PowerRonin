@@ -141,7 +141,7 @@ namespace dce {
 
 		vertices.shrink_to_fit();
 
-		auto self = IResource<MeshMeta>::allocate < Mesh > ();
+		auto self = IResource<MeshMeta>::allocate<Mesh>();
 		self->file_path_ = std::move(_path);
 		self->indices_ = std::move(indices);
 		self->vertices_ = std::move(vertices);

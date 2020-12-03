@@ -7,10 +7,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project ("DreamcastSDK" CXX C ASM)
 
-SET(GCC_COVERAGE_COMPILE_FLAGS "-march=native -Ofast")
-SET(GCC_COVERAGE_LINK_FLAGS    "")
-SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
-SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    SET(COVERAGE_COMPILE_FLAGS "-march=native -Ofast")
+    SET(COVERAGE_LINK_FLAGS    "")
+    SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${COVERAGE_COMPILE_FLAGS}")
+    SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${COVERAGE_LINK_FLAGS}")
+endif()
 
 add_library(
     "dreamcast_runtime" STATIC
@@ -184,7 +186,8 @@ add_library(
     "source/audio/SoundEngine/Win32/AkDefaultIOHookDeferred.h"
     "source/audio/SoundEngine/Win32/AkFileHelpers.h"
     "source/audio/SoundEngine/Win32/AkFilePackageLowLevelIOBlocking.h"
-    "source/audio/SoundEngine/Win32/AkFilePackageLowLevelIODeferred.h")
+    "source/audio/SoundEngine/Win32/AkFilePackageLowLevelIODeferred.h" 
+    "source/gui/window_names.hpp")
 
 include("extern/CMakeLists.txt")
 

@@ -123,7 +123,7 @@ AKRESULT CAkDefaultIOHookDeferred::Open(AkFileID in_fileID,
 // Async Read
 void AioFuncRead(AkAsyncIOTransferInfo& transferInfo) {
 
-	AkFileHandle fileHandle = ((AkFileDesc*)transferInfo.pUserData)->hFile;
+	AkFileHandle fileHandle = static_cast<AkFileDesc*>(transferInfo.pUserData)->hFile;
 
 	// Lock the file so no other thread tries to do it too
 	flockfile(fileHandle);
@@ -131,7 +131,7 @@ void AioFuncRead(AkAsyncIOTransferInfo& transferInfo) {
 	// Seek in the file
 	if (lseek(fileno(fileHandle), transferInfo.uFilePosition, SEEK_SET) == transferInfo.uFilePosition) {
 		// Read the data
-		AkUInt32 byteTransferred = (AkUInt32)read(fileno(fileHandle), transferInfo.pBuffer, transferInfo.uRequestedSize);
+		AkUInt32 byteTransferred = static_cast<AkUInt32>(read(fileno(fileHandle), transferInfo.pBuffer, transferInfo.uRequestedSize));
 
 		if (byteTransferred == transferInfo.uRequestedSize) {
 			transferInfo.pCallback(&transferInfo, AK_Success);
@@ -143,12 +143,11 @@ void AioFuncRead(AkAsyncIOTransferInfo& transferInfo) {
 	funlockfile(fileHandle);
 	transferInfo.pCallback(&transferInfo, AK_Fail);
 
-	return;
 }
 
 // Async Write
 void AioFuncWrite(AkAsyncIOTransferInfo& transferInfo) {
-	AkFileHandle fileHandle = ((AkFileDesc*)transferInfo.pUserData)->hFile;
+	AkFileHandle fileHandle = static_cast<AkFileDesc*>(transferInfo.pUserData)->hFile;
 
 	// Lock the file so no other thread tries to do it too
 	flockfile(fileHandle);
@@ -156,7 +155,7 @@ void AioFuncWrite(AkAsyncIOTransferInfo& transferInfo) {
 	// Seek in the file
 	if (lseek(fileno(fileHandle), transferInfo.uFilePosition, SEEK_SET) == transferInfo.uFilePosition) {
 		// Read the data
-		AkUInt32 byteTransferred = (AkUInt32)write(fileno(fileHandle), transferInfo.pBuffer, transferInfo.uRequestedSize);
+		AkUInt32 byteTransferred = static_cast<AkUInt32>(write(fileno(fileHandle), transferInfo.pBuffer, transferInfo.uRequestedSize));
 
 		if (byteTransferred == transferInfo.uRequestedSize) {
 			transferInfo.pCallback(&transferInfo, AK_Success);
@@ -169,7 +168,6 @@ void AioFuncWrite(AkAsyncIOTransferInfo& transferInfo) {
 	funlockfile(fileHandle);
 	transferInfo.pCallback(&transferInfo, AK_Fail);
 
-	return;
 }
 
 // Reads data from a file (asynchronous overload).
@@ -179,7 +177,7 @@ AKRESULT CAkDefaultIOHookDeferred::Read(AkFileDesc& in_fileDesc,
                                         // Heuristics for this data transfer (not used in this implementation).
                                         AkAsyncIOTransferInfo& io_transferInfo // Asynchronous data transfer info.
 ) {
-	io_transferInfo.pUserData = (void*)&in_fileDesc;
+	io_transferInfo.pUserData = static_cast<void*>(&in_fileDesc);
 
 	//Call the low level read which takes care of error handling with the callback 
 	AioFuncRead(io_transferInfo);
@@ -194,7 +192,7 @@ AKRESULT CAkDefaultIOHookDeferred::Write(AkFileDesc& in_fileDesc,
                                          // Heuristics for this data transfer (not used in this implementation).
                                          AkAsyncIOTransferInfo& io_transferInfo // Platform-specific asynchronous IO operation info.
 ) {
-	io_transferInfo.pUserData = (void*)&in_fileDesc;
+	io_transferInfo.pUserData = static_cast<void*>(&in_fileDesc);
 
 	//Call the low level read which takes care of error handling with the callback 
 	AioFuncWrite(io_transferInfo);
@@ -238,11 +236,11 @@ void CAkDefaultIOHookDeferred::GetDeviceDesc(AkDeviceDesc&
 	out_deviceDesc.bCanRead = true;
 	out_deviceDesc.bCanWrite = true;
 	AK_CHAR_TO_UTF16(out_deviceDesc.szDeviceName, POSIX_DEFERRED_DEVICE_NAME, AK_MONITOR_DEVICENAME_MAXLENGTH);
-	out_deviceDesc.uStringSize = (AkUInt32)AKPLATFORM::AkUtf16StrLen(out_deviceDesc.szDeviceName) + 1;
+	out_deviceDesc.uStringSize = static_cast<AkUInt32>(AKPLATFORM::AkUtf16StrLen(out_deviceDesc.szDeviceName)) + 1;
 #endif
 }
 
 // Returns custom profiling data: 1 if file opens are asynchronous, 0 otherwise.
 AkUInt32 CAkDefaultIOHookDeferred::GetDeviceData() {
-	return (m_bAsyncOpen) ? 1 : 0;
+	return m_bAsyncOpen ? 1 : 0;
 }

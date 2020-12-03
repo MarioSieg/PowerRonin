@@ -23,6 +23,16 @@ namespace dce {
 	/// </summary>
 	class AudioSource final {
 	public:
+		AudioSource();
+		AudioSource(const AudioSource&) = delete;
+		AudioSource(AudioSource&&) noexcept;
+		auto operator=(const AudioSource&) -> AudioSource& = delete;
+		auto operator=(AudioSource&&) noexcept -> AudioSource&;
+		~AudioSource();
+
+		/// <summary>
+		/// The audio clip which will be played.
+		/// </summary>
 		RRef<AudioClip> clip = {};
 
 		/// <summary>

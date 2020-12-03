@@ -89,7 +89,7 @@ public:
 	                         // File open mode (read, write, ...).
 	                         AkOSChar* out_pszFullFilePath,
 	                         // Full file path.
-	                         AkOSChar* in_pszBasePath = NULL // Base path to use.  If null, the first suitable location will be given.		
+	                         AkOSChar* in_pszBasePath = nullptr // Base path to use.  If null, the first suitable location will be given.		
 	);
 
 protected:

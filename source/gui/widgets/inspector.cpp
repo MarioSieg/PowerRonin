@@ -20,7 +20,7 @@
 #include "../../include/dce/comcollections.hpp"
 #include "../../include/dce/resource_manager.hpp"
 #include "../file_dialog_tool.hpp"
-#include <variant>
+#include "../window_names.hpp"
 
 using namespace ImGui;
 
@@ -34,7 +34,7 @@ namespace dce::gui::widgets {
 
 	void Inspector::update(bool& _show, Registry& _registry, ResourceManager& _resource_manager, const ERef _entity) {
 		SetNextWindowSize({300, 800}, ImGuiCond_FirstUseEver);
-		[[likely]] if (Begin(ICON_FA_SLIDERS_H " Inspector", &_show)) {
+		[[likely]] if (Begin(INSPECTOR_NAME, &_show)) {
 			[[unlikely]] if (!_registry.valid(_entity)) {
 				TextUnformatted("No entity selected!");
 				End();

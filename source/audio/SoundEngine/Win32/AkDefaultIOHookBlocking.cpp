@@ -51,7 +51,7 @@ AKRESULT CAkDefaultIOHookBlocking::Init(const AkDeviceSettings& in_deviceSetting
 void CAkDefaultIOHookBlocking::Term() {
 	CAkMultipleFileLocation::Term();
 
-	if (AK::StreamMgr::GetFileLocationResolver() == this) AK::StreamMgr::SetFileLocationResolver(NULL);
+	if (AK::StreamMgr::GetFileLocationResolver() == this) AK::StreamMgr::SetFileLocationResolver(nullptr);
 	AK::StreamMgr::DestroyDevice(m_deviceID);
 }
 
@@ -75,25 +75,23 @@ AKRESULT CAkDefaultIOHookBlocking::Open(const AkOSChar* in_pszFileName,
 	// be initialized with the flag in_bAsyncOpen set to true.
 	if (io_bSyncOpen || !m_bAsyncOpen) {
 		io_bSyncOpen = true;
-		AKRESULT eResult = CAkMultipleFileLocation::Open(in_pszFileName, in_eOpenMode, in_pFlags, false, out_fileDesc);
+		const AKRESULT eResult = CAkMultipleFileLocation::Open(in_pszFileName, in_eOpenMode, in_pFlags, false, out_fileDesc);
 		if (eResult == AK_Success) {
 			out_fileDesc.uSector = 0;
 			out_fileDesc.deviceID = m_deviceID;
-			out_fileDesc.pCustomParam = NULL;
+			out_fileDesc.pCustomParam = nullptr;
 			out_fileDesc.uCustomParamSize = 0;
 		}
 		return eResult;
 	}
-	else {
-		// The client allows us to perform asynchronous opening.
-		// We only need to specify the deviceID, and leave the boolean to false.
-		out_fileDesc.iFileSize = 0;
-		out_fileDesc.uSector = 0;
-		out_fileDesc.deviceID = m_deviceID;
-		out_fileDesc.pCustomParam = NULL;
-		out_fileDesc.uCustomParamSize = 0;
-		return AK_Success;
-	}
+	// The client allows us to perform asynchronous opening.
+	// We only need to specify the deviceID, and leave the boolean to false.
+	out_fileDesc.iFileSize = 0;
+	out_fileDesc.uSector = 0;
+	out_fileDesc.deviceID = m_deviceID;
+	out_fileDesc.pCustomParam = nullptr;
+	out_fileDesc.uCustomParamSize = 0;
+	return AK_Success;
 }
 
 // Returns a file descriptor for a given file ID.
@@ -112,25 +110,23 @@ AKRESULT CAkDefaultIOHookBlocking::Open(AkFileID in_fileID,
 	// be initialized with the flag in_bAsyncOpen set to true.
 	if (io_bSyncOpen || !m_bAsyncOpen) {
 		io_bSyncOpen = true;
-		AKRESULT eResult = CAkMultipleFileLocation::Open(in_fileID, in_eOpenMode, in_pFlags, false, out_fileDesc);
+		const AKRESULT eResult = CAkMultipleFileLocation::Open(in_fileID, in_eOpenMode, in_pFlags, false, out_fileDesc);
 		if (eResult == AK_Success) {
 			out_fileDesc.uSector = 0;
 			out_fileDesc.deviceID = m_deviceID;
-			out_fileDesc.pCustomParam = NULL;
+			out_fileDesc.pCustomParam = nullptr;
 			out_fileDesc.uCustomParamSize = 0;
 		}
 		return eResult;
 	}
-	else {
-		// The client allows us to perform asynchronous opening.
-		// We only need to specify the deviceID, and leave the boolean to false.
-		out_fileDesc.iFileSize = 0;
-		out_fileDesc.uSector = 0;
-		out_fileDesc.deviceID = m_deviceID;
-		out_fileDesc.pCustomParam = NULL;
-		out_fileDesc.uCustomParamSize = 0;
-		return AK_Success;
-	}
+	// The client allows us to perform asynchronous opening.
+	// We only need to specify the deviceID, and leave the boolean to false.
+	out_fileDesc.iFileSize = 0;
+	out_fileDesc.uSector = 0;
+	out_fileDesc.deviceID = m_deviceID;
+	out_fileDesc.pCustomParam = nullptr;
+	out_fileDesc.uCustomParamSize = 0;
+	return AK_Success;
 }
 
 //
@@ -149,9 +145,9 @@ AKRESULT CAkDefaultIOHookBlocking::Read(AkFileDesc& in_fileDesc,
 	AKASSERT(out_pBuffer && in_fileDesc.hFile != INVALID_HANDLE_VALUE);
 
 	OVERLAPPED overlapped;
-	overlapped.Offset = (DWORD)(io_transferInfo.uFilePosition & 0xFFFFFFFF);
-	overlapped.OffsetHigh = (DWORD)((io_transferInfo.uFilePosition >> 32) & 0xFFFFFFFF);
-	overlapped.hEvent = NULL;
+	overlapped.Offset = static_cast<DWORD>(io_transferInfo.uFilePosition & 0xFFFFFFFF);
+	overlapped.OffsetHigh = static_cast<DWORD>(io_transferInfo.uFilePosition >> 32 & 0xFFFFFFFF);
+	overlapped.hEvent = nullptr;
 
 	AkUInt32 uSizeTransferred;
 
@@ -174,9 +170,9 @@ AKRESULT CAkDefaultIOHookBlocking::Write(AkFileDesc& in_fileDesc,
 	AKASSERT(in_pData && in_fileDesc.hFile != INVALID_HANDLE_VALUE);
 
 	OVERLAPPED overlapped;
-	overlapped.Offset = (DWORD)(io_transferInfo.uFilePosition & 0xFFFFFFFF);
-	overlapped.OffsetHigh = (DWORD)((io_transferInfo.uFilePosition >> 32) & 0xFFFFFFFF);
-	overlapped.hEvent = NULL;
+	overlapped.Offset = static_cast<DWORD>(io_transferInfo.uFilePosition & 0xFFFFFFFF);
+	overlapped.OffsetHigh = static_cast<DWORD>(io_transferInfo.uFilePosition >> 32 & 0xFFFFFFFF);
+	overlapped.hEvent = nullptr;
 
 	AkUInt32 uSizeTransferred;
 
@@ -213,11 +209,11 @@ void CAkDefaultIOHookBlocking::GetDeviceDesc(AkDeviceDesc&
 	out_deviceDesc.bCanRead = true;
 	out_deviceDesc.bCanWrite = true;
 	AKPLATFORM::SafeStrCpy(out_deviceDesc.szDeviceName, WIN32_BLOCKING_DEVICE_NAME, AK_MONITOR_DEVICENAME_MAXLENGTH);
-	out_deviceDesc.uStringSize = (AkUInt32)wcslen(out_deviceDesc.szDeviceName) + 1;
+	out_deviceDesc.uStringSize = static_cast<AkUInt32>(wcslen(out_deviceDesc.szDeviceName)) + 1;
 #endif
 }
 
 // Returns custom profiling data: 1 if file opens are asynchronous, 0 otherwise.
 AkUInt32 CAkDefaultIOHookBlocking::GetDeviceData() {
-	return (m_bAsyncOpen) ? 1 : 0;
+	return m_bAsyncOpen ? 1 : 0;
 }

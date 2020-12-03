@@ -67,7 +67,7 @@ namespace dce {
 	}
 
 	auto TextureImporteur::load(std::filesystem::path&& _path, const TextureMeta* const _meta) const -> std::shared_ptr<Texture> {
-		auto self = IResource<TextureMeta>::allocate < Texture > ();
+		auto self = IResource<TextureMeta>::allocate<Texture>();
 
 		const auto ext = _path.extension();
 		[[likely]] if (ext == ".dds" || ext == ".ktx") {

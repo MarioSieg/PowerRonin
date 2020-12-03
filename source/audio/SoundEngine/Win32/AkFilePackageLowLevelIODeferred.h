@@ -31,7 +31,7 @@ public:
 	                    AkAsyncIOTransferInfo& io_transferInfo,
 	                    // Transfer info to cancel.
 	                    bool& io_bCancelAllTransfersForThisFile // Flag indicating whether all transfers should be cancelled for this file (see notes in function description).
-	) {
+	) override {
 		if (!IsInPackage(in_fileDesc)) {
 			CAkDefaultIOHookDeferred::Cancel(in_fileDesc, // File descriptor.
 			                                 io_transferInfo, // Transfer info to cancel.

@@ -85,7 +85,6 @@ namespace dce::gui {
 		io.DisplaySize = {static_cast<float>(_width), static_cast<float>(_height)};
 		this->gui_input_.update();
 		ImGui::NewFrame();
-		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 	}
 
 	void Gui::end() const {

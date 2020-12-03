@@ -73,17 +73,14 @@ namespace dce {
 	}
 
 	auto MaterialImporteur::load(std::filesystem::path&& _path, const MaterialMeta* const _meta) const -> std::shared_ptr<Material> {
-		auto self = IResource<MaterialMeta>::allocate < Material > ();
+		auto self = IResource<MaterialMeta>::allocate<Material>();
 		// TODO
 		self->file_path_ = std::move(_path);
 		self->meta_data_ = _meta ? *_meta : IResource<MaterialMeta>::load_meta_or_default(self->file_path_);
 		return self;
 	}
 
-	auto Material::create_from_data(Properties && _props, std::filesystem::path && _name_path_alias, ResourceManager & _rm)
-	->
-	IRef<Material>
-{
+	auto Material::create_from_data(Properties&& _props, std::filesystem::path&& _name_path_alias, ResourceManager& _rm) -> IRef<Material> {
 		class MaterialFactory final : public ResourceImporteur<MaterialFactory, Material> {
 		public:
 			auto load(Properties&& _props, std::filesystem::path&& _name_path_alias) const -> std::shared_ptr<Material> {

@@ -27,7 +27,7 @@
 //-----------------------------------------------------------------------------
 class AkFilePackageReader {
 public:
-	AkFilePackageReader() : m_pStream(NULL), m_uBlockSize(0) {}
+	AkFilePackageReader() : m_pStream(nullptr), m_uBlockSize(0) {}
 
 	~AkFilePackageReader() {
 		// IMPORTANT: Do not close file. This object can be copied.
@@ -42,7 +42,7 @@ public:
 		flags.uCompanyID = AKCOMPANYID_AUDIOKINETIC;
 		flags.uCodecID = AKCODECID_FILE_PACKAGE;
 		flags.uCustomParamSize = 0;
-		flags.pCustomParam = NULL;
+		flags.pCustomParam = nullptr;
 		flags.bIsLanguageSpecific = !in_bReadFromSFXOnlyDir;
 
 		AKRESULT eResult = AK::IAkStreamMgr::Get()->CreateStd(in_pszFilePackageName, &flags, AK_OpenModeRead, m_pStream, true);
@@ -65,37 +65,37 @@ public:
 	              AkPriority in_priority = AK_DEFAULT_PRIORITY,
 	              // Priority heuristic.
 	              AkReal32 in_fThroughput = 0 // Throughput heuristic. 0 means "not set", and results in "immediate".
-	) {
+	) const {
 		AKASSERT(m_pStream);
-		AkReal32 fDeadline = (in_fThroughput > 0) ? in_uSizeToRead / in_fThroughput : 0;
+		const AkReal32 fDeadline = in_fThroughput > 0 ? in_uSizeToRead / in_fThroughput : 0;
 		return m_pStream->Read(in_pBuffer, in_uSizeToRead, true, in_priority, fDeadline, out_uSizeRead);
 	}
 
-	AKRESULT Seek(AkUInt32 in_uPosition, AkUInt32& out_uRealOffset) {
+	AKRESULT Seek(AkUInt32 in_uPosition, AkUInt32& out_uRealOffset) const {
 		AkInt64 iRealOffset;
-		AKRESULT eResult = m_pStream->SetPosition(in_uPosition, AK_MoveBegin, &iRealOffset);
+		const AKRESULT eResult = m_pStream->SetPosition(in_uPosition, AK_MoveBegin, &iRealOffset);
 		AKASSERT(eResult == AK_Success || !"Failed changing stream position");
-		out_uRealOffset = (AkUInt32)iRealOffset;
+		out_uRealOffset = static_cast<AkUInt32>(iRealOffset);
 		return eResult;
 	}
 
 	void Close() {
 		if (m_pStream) m_pStream->Destroy();
-		m_pStream = NULL;
+		m_pStream = nullptr;
 	}
 
 	void SetName(const AkOSChar*
 #ifndef AK_OPTIMIZED
 		in_pszName
 #endif
-	) {
+	) const {
 #ifndef AK_OPTIMIZED
 		AKASSERT(m_pStream);
 		m_pStream->SetStreamName(in_pszName);
 #endif
 	}
 
-	AkUInt64 GetSize() {
+	AkUInt64 GetSize() const {
 		AKASSERT(m_pStream);
 		AkStreamInfo info;
 		m_pStream->GetInfo(info);
@@ -109,15 +109,15 @@ public:
 		return m_uBlockSize;
 	}
 
-	AkFileHandle GetHandle() {
+	AkFileHandle GetHandle() const {
 		AKASSERT(m_pStream);
-		AkFileDesc* pFileDesc = (AkFileDesc*)m_pStream->GetFileDescriptor();
+		AkFileDesc* pFileDesc = static_cast<AkFileDesc*>(m_pStream->GetFileDescriptor());
 		AKASSERT(pFileDesc);
 		return pFileDesc->hFile;
 	}
 
 	AkFileDesc* GetFileDesc() {
-		return (AkFileDesc*)m_pStream->GetFileDescriptor();
+		return static_cast<AkFileDesc*>(m_pStream->GetFileDescriptor());
 	}
 
 private:
@@ -164,7 +164,7 @@ public:
 	CAkDiskPackage(AkUInt32 in_uPackageID, AkUInt32 in_uHeaderSize, void* in_pToRelease) : CAkFilePackage(in_uPackageID, in_uHeaderSize, in_pToRelease) { }
 
 	// Override Destroy(): Close 
-	virtual void Destroy() {
+	virtual void Destroy() override {
 		m_reader.Close();
 		CAkFilePackage::Destroy();
 	}
@@ -172,8 +172,8 @@ public:
 	// Fills an AkFileHandle with a value that will be useable by the low-level I/O hook.
 	// Disk packages return the package's system handle: the hook reads from the package file itself, with
 	// proper offset, to get the data it needs.
-	inline AkFileHandle GetHandleForFileDesc() { return m_hFile; }
-	inline void* GetCustomParamPtrForFileDesc() { return m_pCustomParam; }
+	inline AkFileHandle GetHandleForFileDesc() const { return m_hFile; }
+	inline void* GetCustomParamPtrForFileDesc() const { return m_pCustomParam; }
 
 	AkFileDesc* GetFileDesc() { return m_reader.GetFileDesc(); }
 
@@ -294,7 +294,7 @@ protected:
 	                                            // New language name.
 	                                            void* in_pCookie // Cookie that was passed to AddLanguageChangeObserver().
 	) {
-		((CAkFilePackageLowLevelIO<T_LLIOHOOK_FILELOC, T_PACKAGE>*)in_pCookie)->OnLanguageChange(in_pLanguageName);
+		static_cast<CAkFilePackageLowLevelIO<T_LLIOHOOK_FILELOC, T_PACKAGE>*>(in_pCookie)->OnLanguageChange(in_pLanguageName);
 	}
 
 	// Updates language of all loaded packages. Packages keep a language ID to help them find 

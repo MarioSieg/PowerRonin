@@ -115,6 +115,6 @@ AKRESULT CAkDefaultLowLevelIODispatcher::AddDevice(AK::StreamMgr::IAkFileLocatio
 }
 
 void CAkDefaultLowLevelIODispatcher::RemoveAllDevices() {
-	for (AkUInt32 uRecord = 0; uRecord < AK_MAX_IO_DEVICES; uRecord++) m_arDevices[uRecord] = NULL;
+	for (AkUInt32 uRecord = 0; uRecord < AK_MAX_IO_DEVICES; uRecord++) m_arDevices[uRecord] = nullptr;
 	m_uNumDevices = 0;
 }

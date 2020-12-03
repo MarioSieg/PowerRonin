@@ -57,8 +57,8 @@ namespace dce {
 			FlyCam fly_cam_ = {};
 			GPU gpu_ = {};
 			ShaderBucket shader_bucket_;
-			Matrix4x4<> view_ = math::identity<Matrix4x4 <> > ();
-			Matrix4x4<> projection_ = math::identity<Matrix4x4 <> > ();
+			Matrix4x4<> view_ = math::identity<Matrix4x4<>>();
+			Matrix4x4<> projection_ = math::identity<Matrix4x4<>>();
 		};
 	} // namespace dce::renderer // namespace dce::renderer
 }

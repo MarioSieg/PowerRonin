@@ -180,11 +180,11 @@ void CAkDefaultIOHookBlocking::GetDeviceDesc(AkDeviceDesc&
 	out_deviceDesc.bCanWrite = true;
 
 	AK_OSCHAR_TO_UTF16(out_deviceDesc.szDeviceName, POSIX_BLOCKING_DEVICE_NAME, AK_MONITOR_DEVICENAME_MAXLENGTH);
-	out_deviceDesc.uStringSize = (AkUInt32)AKPLATFORM::AkUtf16StrLen(out_deviceDesc.szDeviceName) + 1;
+	out_deviceDesc.uStringSize = static_cast<AkUInt32>(AKPLATFORM::AkUtf16StrLen(out_deviceDesc.szDeviceName)) + 1;
 #endif
 }
 
 // Returns custom profiling data: 1 if file opens are asynchronous, 0 otherwise.
 AkUInt32 CAkDefaultIOHookBlocking::GetDeviceData() {
-	return (m_bAsyncOpen) ? 1 : 0;
+	return m_bAsyncOpen ? 1 : 0;
 }

@@ -54,11 +54,11 @@ AKRESULT CAkFilePackageLowLevelIO<T_LLIOHOOK_FILELOC, T_PACKAGE>::Open(const AkO
 			while (it != m_packages.End()) {
 				AkFileID fileID = (*it)->lut.GetSoundBankID(in_pszFileName);
 
-				if (FindPackagedFile((T_PACKAGE*)(*it), fileID, in_pFlags, out_fileDesc) == AK_Success) {
+				if (FindPackagedFile(static_cast<T_PACKAGE*>(*it), fileID, in_pFlags, out_fileDesc) == AK_Success) {
 					// Found the ID in the lut. 
 					io_bSyncOpen = true; // File is opened, now.
 					(*it)->AddRef();
-					out_fileDesc.pPackage = (*it);
+					out_fileDesc.pPackage = *it;
 					return AK_Success;
 				}
 				++it;
@@ -70,11 +70,11 @@ AKRESULT CAkFilePackageLowLevelIO<T_LLIOHOOK_FILELOC, T_PACKAGE>::Open(const AkO
 			while (it != m_packages.End()) {
 				AkUInt64 fileID = (*it)->lut.GetExternalID(in_pszFileName);
 
-				if (FindPackagedFile((T_PACKAGE*)(*it), fileID, in_pFlags, out_fileDesc) == AK_Success) {
+				if (FindPackagedFile(static_cast<T_PACKAGE*>(*it), fileID, in_pFlags, out_fileDesc) == AK_Success) {
 					// Found the ID in the lut. 
 					io_bSyncOpen = true; // File is opened, now.
 					(*it)->AddRef();
-					out_fileDesc.pPackage = (*it);
+					out_fileDesc.pPackage = *it;
 					return AK_Success;
 				}
 
@@ -106,11 +106,11 @@ AKRESULT CAkFilePackageLowLevelIO<T_LLIOHOOK_FILELOC, T_PACKAGE>::Open(AkFileID 
 		// Search file in each package.
 		ListFilePackages::Iterator it = m_packages.Begin();
 		while (it != m_packages.End()) {
-			if (FindPackagedFile((T_PACKAGE*)(*it), in_fileID, in_pFlags, out_fileDesc) == AK_Success) {
+			if (FindPackagedFile(static_cast<T_PACKAGE*>(*it), in_fileID, in_pFlags, out_fileDesc) == AK_Success) {
 				// File found. Return now.
 				io_bSyncOpen = true; // File is opened, now.
 				(*it)->AddRef();
-				out_fileDesc.pPackage = (*it);
+				out_fileDesc.pPackage = *it;
 				return AK_Success;
 			}
 			++it;
@@ -121,14 +121,14 @@ AKRESULT CAkFilePackageLowLevelIO<T_LLIOHOOK_FILELOC, T_PACKAGE>::Open(AkFileID 
 		ListFilePackages::Iterator it = m_packages.Begin();
 		while (it != m_packages.End()) {
 			AkOSChar szFileName[20];
-			AK_OSPRINTF(szFileName, 20, AKTEXT("%u.wem"), (unsigned int)in_fileID);
+			AK_OSPRINTF(szFileName, 20, AKTEXT("%u.wem"), static_cast<unsigned>(in_fileID));
 			AkUInt64 fileID = (*it)->lut.GetExternalID(szFileName);
 
-			if (FindPackagedFile((T_PACKAGE*)(*it), fileID, in_pFlags, out_fileDesc) == AK_Success) {
+			if (FindPackagedFile(static_cast<T_PACKAGE*>(*it), fileID, in_pFlags, out_fileDesc) == AK_Success) {
 				// Found the ID in the lut. 
 				io_bSyncOpen = true; // File is opened, now.
 				(*it)->AddRef();
-				out_fileDesc.pPackage = (*it);
+				out_fileDesc.pPackage = *it;
 				return AK_Success;
 			}
 
@@ -266,12 +266,12 @@ AKRESULT CAkFilePackageLowLevelIO<T_LLIOHOOK_FILELOC, T_PACKAGE>::_LoadFilePacka
 	};
 
 	AkUInt32 uReadBufferSize = AkMax(2 * in_reader.GetBlockSize(), sizeof(AkFilePackageHeader));
-	AkUInt8* pBufferForHeader = (AkUInt8*)AkAlloca(uReadBufferSize);
+	AkUInt8* pBufferForHeader = static_cast<AkUInt8*>(AkAlloca(uReadBufferSize));
 	AkUInt32 uSizeToRead;
-	bool bAligned = (sizeof(AkFilePackageHeader) % in_reader.GetBlockSize()) > 0;
+	const bool bAligned = sizeof(AkFilePackageHeader) % in_reader.GetBlockSize() > 0;
 	if (bAligned) {
 		// Header size is not a multiple of the required block size. Allocate an aligned buffer on the stack.
-		pBufferForHeader += (in_reader.GetBlockSize() - (AkUIntPtr)pBufferForHeader % in_reader.GetBlockSize());
+		pBufferForHeader += in_reader.GetBlockSize() - static_cast<AkUIntPtr>(pBufferForHeader) % in_reader.GetBlockSize();
 		uSizeToRead = in_reader.GetBlockSize();
 	}
 	else {
@@ -295,7 +295,7 @@ AKRESULT CAkFilePackageLowLevelIO<T_LLIOHOOK_FILELOC, T_PACKAGE>::_LoadFilePacka
 		AkFree(AkMemID_Streaming, pReadBuffer);
 	}
 
-	const AkFilePackageHeader& uFileHeader = *(AkFilePackageHeader*)pBufferForHeader;
+	const AkFilePackageHeader& uFileHeader = *static_cast<AkFilePackageHeader*>(pBufferForHeader);
 
 	if (uFileHeader.uFileFormatTag != AKPK_FILE_FORMAT_TAG || 0 == uFileHeader.uHeaderSize) {
 		AKASSERT(!"Invalid file package header");
@@ -327,7 +327,7 @@ AKRESULT CAkFilePackageLowLevelIO<T_LLIOHOOK_FILELOC, T_PACKAGE>::_LoadFilePacka
 		uHeaderSize -= uSizeToCopy;
 		uHeaderReadOffset += uSizeToCopy;
 		// Round it up to required block size. It should be equal to the size that was reserved (minus what was already read).
-		uHeaderSize = ((uHeaderSize + in_reader.GetBlockSize() - 1) / in_reader.GetBlockSize()) * in_reader.GetBlockSize();
+		uHeaderSize = (uHeaderSize + in_reader.GetBlockSize() - 1) / in_reader.GetBlockSize() * in_reader.GetBlockSize();
 		AKASSERT(uHeaderSize == uReservedHeaderSize - uSizeRead);
 	}
 
@@ -370,7 +370,7 @@ AKRESULT CAkFilePackageLowLevelIO<T_LLIOHOOK_FILELOC, T_PACKAGE>::UnloadFilePack
 	ListFilePackages::IteratorEx it = m_packages.BeginEx();
 	while (it != m_packages.End()) {
 		if ((*it)->ID() == in_uPackageID) {
-			CAkFilePackage* pPackage = (*it);
+			CAkFilePackage* pPackage = *it;
 			it = m_packages.Erase(it);
 
 			// Destroy package.
@@ -378,7 +378,7 @@ AKRESULT CAkFilePackageLowLevelIO<T_LLIOHOOK_FILELOC, T_PACKAGE>::UnloadFilePack
 
 			return AK_Success;
 		}
-		else ++it;
+		++it;
 	}
 
 	AKASSERT(!"Invalid package ID");
@@ -391,7 +391,7 @@ AKRESULT CAkFilePackageLowLevelIO<T_LLIOHOOK_FILELOC, T_PACKAGE>::UnloadAllFileP
 	AkAutoLock<CAkLock> lock(m_lock);
 	ListFilePackages::IteratorEx it = m_packages.BeginEx();
 	while (it != m_packages.End()) {
-		CAkFilePackage* pPackage = (*it);
+		CAkFilePackage* pPackage = *it;
 		it = m_packages.Erase(it);
 
 		// Destroy package.

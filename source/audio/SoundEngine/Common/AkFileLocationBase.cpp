@@ -34,7 +34,7 @@
 
 template <class TYPE>
 inline const TYPE& AkTemplMax(const TYPE& in_left, const TYPE& in_right) {
-	return (in_left < in_right) ? in_right : in_left;
+	return in_left < in_right ? in_right : in_left;
 }
 
 
@@ -102,7 +102,7 @@ AKRESULT CAkFileLocationBase::GetFullFilePath(const AkOSChar* in_pszFileName,
 	if (in_pFlags && in_pFlags->bIsLanguageSpecific) {
 		size_t uLanguageStrLen = AKPLATFORM::OsStrLen(AK::StreamMgr::GetCurrentLanguage());
 		if (uLanguageStrLen > 0) {
-			uiPathSize += (uLanguageStrLen + 1);
+			uiPathSize += uLanguageStrLen + 1;
 			if (uiPathSize >= AK_MAX_PATH) {
 				AKASSERT(!"Path is too large");
 				return AK_Fail;
@@ -182,7 +182,7 @@ AKRESULT CAkFileLocationBase::GetFullFilePath(AkFileID in_fileID,
 	if (in_pFlags->bIsLanguageSpecific) {
 		size_t uLanguageStrLen = AKPLATFORM::OsStrLen(AK::StreamMgr::GetCurrentLanguage());
 		if (uLanguageStrLen > 0) {
-			uiPathSize += (uLanguageStrLen + 1);
+			uiPathSize += uLanguageStrLen + 1;
 			if (uiPathSize >= AK_MAX_PATH) {
 				AKASSERT(!"Path is too large");
 				return AK_Fail;
@@ -193,12 +193,12 @@ AKRESULT CAkFileLocationBase::GetFullFilePath(AkFileID in_fileID,
 	}
 
 	// Append file title.
-	if ((uiPathSize + MAX_FILETITLE_SIZE) <= AK_MAX_PATH) {
+	if (uiPathSize + MAX_FILETITLE_SIZE <= AK_MAX_PATH) {
 		AkOSChar* pszTitle = out_pszFullFilePath + uiPathSize;
 		if (in_pFlags->uCodecID == AKCODECID_BANK)
-			AK_OSPRINTF(pszTitle, MAX_FILETITLE_SIZE, ID_TO_STRING_FORMAT_BANK, (unsigned int)in_fileID);
+			AK_OSPRINTF(pszTitle, MAX_FILETITLE_SIZE, ID_TO_STRING_FORMAT_BANK, static_cast<unsigned>(in_fileID));
 		else
-			AK_OSPRINTF(pszTitle, MAX_FILETITLE_SIZE, ID_TO_STRING_FORMAT_WEM, (unsigned int)in_fileID);
+			AK_OSPRINTF(pszTitle, MAX_FILETITLE_SIZE, ID_TO_STRING_FORMAT_WEM, static_cast<unsigned>(in_fileID));
 	}
 	else {
 		AKASSERT(!"String buffer too small");
@@ -218,12 +218,12 @@ AKRESULT CAkFileLocationBase::SetBasePath(const AkOSChar* in_pszBasePath) {
 	AKPLATFORM::SafeStrCpy(m_szBasePath, in_pszBasePath, AK_MAX_PATH);
 	if (len > 2) // Ensure path has terminating separator, and validate existence of directory, except for an empty directory (==current directory)
 	{
-		if (m_szBasePath[len - 3] != (AkOSChar)AK_PATH_SEPARATOR[0]) {
-			m_szBasePath[len - 2] = (AkOSChar)AK_PATH_SEPARATOR[0];
+		if (m_szBasePath[len - 3] != static_cast<AkOSChar>(AK_PATH_SEPARATOR[0])) {
+			m_szBasePath[len - 2] = static_cast<AkOSChar>(AK_PATH_SEPARATOR[0]);
 			m_szBasePath[len - 1] = 0;
 		}
 
-		AKRESULT eDirectoryResult = CAkFileHelpers::CheckDirectoryExists(in_pszBasePath);
+		const AKRESULT eDirectoryResult = CAkFileHelpers::CheckDirectoryExists(in_pszBasePath);
 		if (eDirectoryResult == AK_Fail) // AK_NotImplemented could be returned and should be ignored.
 		{
 			return AK_PathNotFound;

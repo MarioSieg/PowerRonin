@@ -64,9 +64,9 @@ namespace {
 		_logger.info("\t\tResolution: ({}, {})", _current->width, _current->height);
 		_logger.info("\t\tAspect ratio: {}", static_cast<float>(_current->width) / static_cast<float>(_current->height));
 		_logger.info("\t\tRefresh rate: {}Hz", _current->refreshRate);
-		_logger.info("\t\tR bits: {:#B}", _current->redBits);
-		_logger.info("\t\tG bits: {:#B}", _current->greenBits);
-		_logger.info("\t\tB bits: {:#B}", _current->blueBits);
+		_logger.info("\t\tR bits: {}", _current->redBits);
+		_logger.info("\t\tG bits: {}", _current->greenBits);
+		_logger.info("\t\tB bits: {}", _current->blueBits);
 	}
 
 	constexpr auto kernel_variant_name(const iware::system::kernel_t _variant) noexcept -> const char* {
@@ -194,11 +194,12 @@ namespace dce::platform {
 			return false;
 		}
 
-		[[unlikely]] if (_rt.config().display.maximize) {
-			//glfwMaximizeWindow(this->window_);
-		}
 
 		[[likely]] if (display_settings.full_screen || display_settings.maximize) {
+			[[likely]] if (display_settings.maximize) {
+				glfwMaximizeWindow(this->window_);
+				glfwHideWindow(this->window_);
+			}
 			int w = 0;
 			int h = 0;
 			glfwGetFramebufferSize(this->window_, &w, &h);
@@ -312,6 +313,9 @@ namespace dce::platform {
 
 	auto Platform::on_post_startup(Runtime& _rt) -> bool {
 		this->splash_screen_.close();
+		[[likely]] if (_rt.config().display.maximize) {
+			glfwMaximizeWindow(this->window_);
+		}
 		glfwShowWindow(this->window_);
 		return true;
 	}

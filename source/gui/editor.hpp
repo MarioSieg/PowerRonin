@@ -38,6 +38,8 @@ namespace dce {
 			void main_menu(bool& _show_terminal);
 
 		private:
+			void default_layout() const;
+
 			/* Widgets: */
 			widgets::ResourceViewer resource_viewer_ = {};
 			widgets::Profiler profiler_ = {};
@@ -47,11 +49,14 @@ namespace dce {
 			widgets::ConfigEditor config_editor_ = {};
 
 			bool show_menu_ = true;
-			bool show_resource_viewer_ = false;
-			bool show_profiler_ = false;
+			bool show_resource_viewer_ = true;
+			bool show_profiler_ = true;
 			bool show_hierarchy_viewer_ = true;
 			bool show_inspector_ = true;
-			bool show_config_editor_ = false;
+			bool show_config_editor_ = true;
+
+			bool first_use_ = true;
+			ImGuiID dockspace_id_ = 0;
 		};
 	}
 }

@@ -119,13 +119,8 @@ namespace dce::renderer {
 
 	void Renderer::draw_skybox(const Scenery::Configuration::Lighting& _lighting) {
 		// Create transform matrix:
-		auto skybox_matrix = math::identity<Matrix4x4 <> > ();
-		skybox_matrix = scale(skybox_matrix, Vector3 < >
-		{
-			10
-		}
-		)
-		;
+		auto skybox_matrix = math::identity<Matrix4x4<>>();
+		skybox_matrix = scale(skybox_matrix, Vector3<>{10});
 
 		// Remove translation:
 		this->view_[3][0] = .0f;
@@ -143,7 +138,7 @@ namespace dce::renderer {
 	}
 
 	void Renderer::set_per_frame_data(const Scenery::Configuration::Lighting& _lighting) const {
-		const auto sun_dir = Vector4 < > (calculate_sun_dir(_lighting.sun.hour, _lighting.sun.latitude, calculate_sun_orbit(6, math::radians(23.4f)), math::UP, math::NORTH), 1.f);
+		const auto sun_dir = Vector4<>(calculate_sun_dir(_lighting.sun.hour, _lighting.sun.latitude, calculate_sun_orbit(6, math::radians(23.4f)), math::UP, math::NORTH), 1.f);
 		this->shader_bucket_.lambert.per_frame(sun_dir, _lighting.sun.color, _lighting.const_ambient_color);
 	}
 } // namespace dce::renderer // namespace dce::renderer

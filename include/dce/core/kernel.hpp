@@ -32,8 +32,7 @@ namespace dce {
 		class Kernel;
 		class ISubsystem;
 
-		template <typename... T>
-		concept Subsystem = std::is_base_of<ISubsystem, T...>::value;
+		template <typename... T> concept Subsystem = std::is_base_of<ISubsystem, T...>::value;
 
 		/* Represents an engine kernel, containing all subsystems  */
 		class Kernel {
@@ -85,9 +84,7 @@ namespace dce {
 			[[nodiscard]] auto get_state() const noexcept -> const std::unique_ptr<Runtime>&;
 
 			/* Allocates and installs the subsystem T. */
-			template <typename T, typename... Q>
-			requires Subsystem<T>
-			auto create_install_subsystem(Q&&... /*args*/) -> Kernel&;
+			template <typename T, typename... Q> requires Subsystem<T> auto create_install_subsystem(Q&&... /*args*/) -> Kernel&;
 
 			/* Uninstalls a subsystem and removes all hooks */
 			[[nodiscard]] auto uninstall_subsystem(std::uint_fast16_t _id) const -> bool;
@@ -110,10 +107,7 @@ namespace dce {
 			const std::unique_ptr<Core> core_;
 		};
 
-		template <typename T, typename... Q>
-		requires Subsystem<T>
-
-		auto Kernel::create_install_subsystem(Q&&... _args) -> Kernel& {
+		template <typename T, typename... Q> requires Subsystem<T> auto Kernel::create_install_subsystem(Q&&... _args) -> Kernel& {
 			this->install_subsystem(std::move(std::make_unique<T>(_args...)));
 			return *this;
 		}

@@ -62,7 +62,7 @@ public:
 			dwCreationDisposition = OPEN_ALWAYS;
 			break;
 		default: AKASSERT(!"Invalid open mode");
-			out_hFile = NULL;
+			out_hFile = nullptr;
 			return AK_InvalidParameter;
 			break;
 		}
@@ -81,10 +81,10 @@ public:
 			dwCreationDisposition,
 			NULL );
 #else
-		out_hFile = ::CreateFileW(in_pszFilename, dwAccessMode, dwShareMode, NULL, dwCreationDisposition, dwFlags, NULL);
+		out_hFile = ::CreateFileW(in_pszFilename, dwAccessMode, dwShareMode, nullptr, dwCreationDisposition, dwFlags, nullptr);
 #endif
 		if (out_hFile == INVALID_HANDLE_VALUE) {
-			DWORD dwAllocError = ::GetLastError();
+			const DWORD dwAllocError = ::GetLastError();
 			if (ERROR_FILE_NOT_FOUND == dwAllocError || ERROR_PATH_NOT_FOUND == dwAllocError) return AK_FileNotFound;
 
 			return AK_Fail;
@@ -103,8 +103,8 @@ public:
 	                     AkFileDesc& out_fileDesc // File descriptor
 	) {
 		// Open the file without FILE_FLAG_OVERLAPPED and FILE_FLAG_NO_BUFFERING flags.
-		AKRESULT eResult = OpenFile(in_pszFileName, in_eOpenMode, in_bOverlapped, in_bOverlapped, //No buffering flag goes in pair with overlapped flag for now.  Block size must be set accordingly
-		                            out_fileDesc.hFile);
+		const AKRESULT eResult = OpenFile(in_pszFileName, in_eOpenMode, in_bOverlapped, in_bOverlapped, //No buffering flag goes in pair with overlapped flag for now.  Block size must be set accordingly
+		                                  out_fileDesc.hFile);
 
 		if (eResult == AK_Success) {
 #ifdef AK_USE_UWP_API
@@ -113,7 +113,7 @@ public:
 			out_fileDesc.iFileSize = info.EndOfFile.QuadPart;
 #else
 			ULARGE_INTEGER Temp;
-			Temp.LowPart = ::GetFileSize(out_fileDesc.hFile, (LPDWORD)&Temp.HighPart);
+			Temp.LowPart = ::GetFileSize(out_fileDesc.hFile, static_cast<LPDWORD>(&Temp.HighPart));
 			out_fileDesc.iFileSize = Temp.QuadPart;
 #endif
 		}
@@ -164,9 +164,9 @@ public:
 		if ( SetFilePointerEx( in_hFile, uPosition, NULL, FILE_BEGIN ) == FALSE )
 			return AK_Fail;
 #else
-		if (SetFilePointer(in_hFile, in_uPosition, NULL, FILE_BEGIN) != in_uPosition) return AK_Fail;
+		if (SetFilePointer(in_hFile, in_uPosition, nullptr, FILE_BEGIN) != in_uPosition) return AK_Fail;
 #endif
-		if (::ReadFile(in_hFile, in_pBuffer, in_uSizeToRead, &out_uSizeRead, NULL)) return AK_Success;
+		if (::ReadFile(in_hFile, in_pBuffer, in_uSizeToRead, &out_uSizeRead, nullptr)) return AK_Success;
 		return AK_Fail;
 	}
 
@@ -202,9 +202,9 @@ public:
 		AKASSERT(in_pData && in_hFile != INVALID_HANDLE_VALUE);
 
 		OVERLAPPED overlapped;
-		overlapped.Offset = (DWORD)(in_uPosition & 0xFFFFFFFF);
-		overlapped.OffsetHigh = (DWORD)((in_uPosition >> 32) & 0xFFFFFFFF);
-		overlapped.hEvent = NULL;
+		overlapped.Offset = static_cast<DWORD>(in_uPosition & 0xFFFFFFFF);
+		overlapped.OffsetHigh = static_cast<DWORD>(in_uPosition >> 32 & 0xFFFFFFFF);
+		overlapped.hEvent = nullptr;
 
 		AkUInt32 uSizeTransferred;
 

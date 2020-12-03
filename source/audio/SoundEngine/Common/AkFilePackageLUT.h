@@ -99,8 +99,8 @@ protected:
 	template <class T_FILEID>
 	class FileLUT {
 	public:
-		const AkFileEntry<T_FILEID>* FileEntries() const { return (AkFileEntry<T_FILEID>*)((AkUInt32*)this + 1); }
-		bool HasFiles() const { return (m_uNumFiles > 0); }
+		const AkFileEntry<T_FILEID>* FileEntries() const { return reinterpret_cast<AkFileEntry<T_FILEID>*>(const_cast<AkUInt32 *>(reinterpret_cast<const AkUInt32*>(this) + 1)); }
+		bool HasFiles() const { return m_uNumFiles > 0; }
 		AkUInt32 NumFiles() const { return m_uNumFiles; }
 	private:
 		FileLUT(); // Do not create this object, just cast raw data.
@@ -128,7 +128,7 @@ private:
 	public:
 		// Returns AK_INVALID_UNIQUE_ID if ID is not found.
 		AkUInt32 GetID(const AkOSChar* in_pszString);
-		inline AkUInt32 GetNumStrings() { return m_uNumStrings; }
+		inline AkUInt32 GetNumStrings() const { return m_uNumStrings; }
 	private:
 		struct StringEntry {
 			AkUInt32 uOffset; // Byte offset of the string in the packaged strings section, 
@@ -181,7 +181,7 @@ const CAkFilePackageLUT::AkFileEntry<T_FILEID>* CAkFilePackageLUT::LookupFile(T_
 	}
 	while (uTop <= uBottom);
 
-	return NULL;
+	return nullptr;
 }
 
 #endif //_AK_FILE_PACKAGE_LUT_H_

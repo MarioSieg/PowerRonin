@@ -19,6 +19,7 @@
 #include "../gui_headers.hpp"
 #include "../../include/dce/diagnostics.hpp"
 #include "../../include/dce/chrono.hpp"
+#include "../window_names.hpp"
 #include <chrono>
 #include <cinttypes>
 #include <string>
@@ -28,7 +29,7 @@ using namespace ImPlot;
 
 namespace dce::gui::widgets {
 	void Profiler::update(bool& _show, const Diagnostics& _diag, const Chrono& _chrono) const {
-		[[likely]] if (Begin(ICON_FA_CLOCK " Profiler", &_show, ImGuiWindowFlags_AlwaysAutoResize)) {
+		[[likely]] if (Begin(PROFILER_NAME, &_show, ImGuiWindowFlags_AlwaysAutoResize)) {
 			[[likely]] if (CollapsingHeader("General", ImGuiTreeNodeFlags_DefaultOpen)) {
 				Text("Frequency: %f", _chrono.frequency);
 				Text("Clock cycles: %u", _chrono.cycles);

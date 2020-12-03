@@ -13,10 +13,13 @@
 // support@kerbogames.com
 // *******************************************************************************
 
+#include "../../include/dce/runtime.hpp"
+
 #include "terminal.hpp"
 #include "font_headers.hpp"
 #include "gui_headers.hpp"
-#include "../../include/dce/runtime.hpp"
+#include "window_names.hpp"
+
 #include <algorithm>
 
 using namespace ImGui;
@@ -32,7 +35,7 @@ namespace dce::gui {
 
 	void Terminal::update(bool& _show, Runtime& _rt) {
 		SetNextWindowSize({800, 600}, ImGuiCond_FirstUseEver);
-		[[likely]] if (Begin(ICON_FA_TERMINAL " Terminal", &_show, ImGuiWindowFlags_NoScrollbar)) {
+		[[likely]] if (Begin(TERMINAL_NAME, &_show, ImGuiWindowFlags_NoScrollbar)) {
 			const auto footer_height_to_reserve = GetStyle().ItemSpacing.y + GetFrameHeightWithSpacing();
 			if (BeginChild("", {.0, -footer_height_to_reserve}, false)) {
 				PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 1));
@@ -145,9 +148,7 @@ namespace dce::gui {
 				[[unlikely]] if (get_input_ok) {
 					if (is_input_valid) {
 						auto dyn_str = std::string(this->buffer_.begin(), this->buffer_.end());
-						switch (auto& proto = _rt.protocol(); _rt.command_db().analyze_and_call(_rt, std::move(dyn_str))
-						)
-						{
+						switch (auto& proto = _rt.protocol(); _rt.command_db().analyze_and_call(_rt, std::move(dyn_str))) {
 						case CommandExecutionResult::COMMAND_DOES_NOT_EXIST: proto.error("Command does not exist!");
 							break;
 						case CommandExecutionResult::ARGS_SEPARATOR_MISSING: proto.error("Missing '{}' as separator!", CmdDB::ARGUMENT_SEPARATOR);

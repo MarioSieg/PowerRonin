@@ -15,8 +15,16 @@
 
 #pragma once
 
-#include "../../extern/imgui/ImGradient.h"
-#include "../../extern/imgui/imgui.h"
-#include "../../extern/imgui/ImGuizmo.h"
-#include "../../extern/imgui/implot.h"
-#include "../../extern/imgui/imgui_internal.h"
+#include "font_headers.hpp"
+
+namespace dce::gui {
+	// Names for all windows.
+
+	constexpr const char* const CONFIG_EDITOR_NAME = ICON_FA_COGS " Configuration";
+	constexpr const char* const HIERARCHY_NAME = ICON_FA_SITEMAP " Hierarchy";
+	constexpr const char* const INSPECTOR_NAME = ICON_FA_SLIDERS_H " Inspector";
+	constexpr const char* const PROFILER_NAME = ICON_FA_CLOCK " Profiler";
+	constexpr const char* const RESOURCE_VIEWER_NAME = ICON_FA_DATABASE " Resource Viewer";
+	constexpr const char* const RAM_EDITOR_NAME = ICON_FA_MEMORY " Memory Editor";
+	constexpr const char* const TERMINAL_NAME = ICON_FA_TERMINAL " Terminal";
+}

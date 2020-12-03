@@ -31,51 +31,24 @@
 #include "../../extern/glm/glm/gtc/type_ptr.hpp"
 #include "../../extern/glm/glm/gtx/transform.hpp"
 #include "../../extern/glm/glm/gtx/matrix_decompose.hpp"
+#include <cstdint>
 
 namespace dce {
 	namespace math {
 		using namespace glm;
 	}
 
-	template <typename T = float>
-	requires std::is_floating_point_v<T>
-	||
-	std::is_integral_v<T>
-	using Vector2 = math::vec<2, T, math::defaultp>;
+	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T> using Vector2 = math::vec<2, T, math::defaultp>;
 
-	template <typename T = float>
-	requires std::is_floating_point_v<T>
-	||
-	std::is_integral_v<T>
-	using Vector3 = math::vec<3, T, math::defaultp>;
+	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T> using Vector3 = math::vec<3, T, math::defaultp>;
 
-	template <typename T = float>
-	requires std::is_floating_point_v<T>
-	||
-	std::is_integral_v<T>
-	using Vector4 = math::vec<4, T, math::defaultp>;
+	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T> using Vector4 = math::vec<4, T, math::defaultp>;
 
-	template <typename T = float>
-	requires std::is_floating_point_v<T>
-	||
-	std::is_integral_v<T>
-	using Quaternion = math::qua<T, math::defaultp>;
+	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T> using Quaternion = math::qua<T, math::defaultp>;
 
-	template <typename T = float>
-	requires std::is_floating_point_v<T>
-	||
-	std::is_integral_v<T>
-	using Matrix3x3 = math::mat<3, 3, T, math::defaultp>;
+	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T> using Matrix3x3 = math::mat<3, 3, T, math::defaultp>;
 
-	template <typename T = float>
-	requires std::is_floating_point_v<T>
-	||
-	std::is_integral_v<T>
-	using Matrix4x4 = math::mat<4, 4, T, math::defaultp>;
+	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T> using Matrix4x4 = math::mat<4, 4, T, math::defaultp>;
 
-	template <typename T = float>
-	requires std::is_floating_point_v<T>
-	||
-	std::is_integral_v<T>
-	using Color = Vector4<T>;
+	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T> using Color = Vector4<T>;
 } // namespace dce

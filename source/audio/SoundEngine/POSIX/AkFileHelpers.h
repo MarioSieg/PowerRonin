@@ -48,13 +48,13 @@ public:
 
 		char* mode;
 		switch (in_eOpenMode) {
-		case AK_OpenModeRead: mode = (char*)"r";
+		case AK_OpenModeRead: mode = static_cast<char*>("r");
 			break;
-		case AK_OpenModeWrite: mode = (char*)"w";
+		case AK_OpenModeWrite: mode = static_cast<char*>("w");
 			break;
-		case AK_OpenModeWriteOvrwr: mode = (char*)"w+";
+		case AK_OpenModeWriteOvrwr: mode = static_cast<char*>("w+");
 			break;
-		case AK_OpenModeReadWrite: mode = (char*)"a";
+		case AK_OpenModeReadWrite: mode = static_cast<char*>("a");
 			break;
 		default: AKASSERT(!"Invalid open mode");
 			out_hFile = NULL;
@@ -135,7 +135,7 @@ public:
 			return AK_Fail;
 		}
 
-		out_uSizeRead = (AkUInt32)fread(in_pBuffer, 1, in_uSizeToRead, in_hFile);
+		out_uSizeRead = static_cast<AkUInt32>(fread(in_pBuffer, 1, in_uSizeToRead, in_hFile));
 
 		if (out_uSizeRead == in_uSizeToRead) {
 			return AK_Success;

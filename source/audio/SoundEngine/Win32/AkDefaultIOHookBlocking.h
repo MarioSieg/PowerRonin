@@ -56,7 +56,7 @@ public:
 	                      bool& io_bSyncOpen,
 	                      // If true, the file must be opened synchronously. Otherwise it is left at the File Location Resolver's discretion. Return false if Open needs to be deferred.
 	                      AkFileDesc& out_fileDesc // Returned file descriptor.
-	);
+	) override;
 
 	// Returns a file descriptor for a given file ID.
 	virtual AKRESULT Open(AkFileID in_fileID,
@@ -68,7 +68,7 @@ public:
 	                      bool& io_bSyncOpen,
 	                      // If true, the file must be opened synchronously. Otherwise it is left at the File Location Resolver's discretion. Return false if Open needs to be deferred.
 	                      AkFileDesc& out_fileDesc // Returned file descriptor.
-	);
+	) override;
 
 
 	//
@@ -83,7 +83,7 @@ public:
 	                      void* out_pBuffer,
 	                      // Buffer to be filled with data.
 	                      AkIOTransferInfo& io_transferInfo // Synchronous data transfer info. 
-	);
+	) override;
 
 	// Writes data to a file (synchronous). 
 	virtual AKRESULT Write(AkFileDesc& in_fileDesc,
@@ -93,22 +93,22 @@ public:
 	                       void* in_pData,
 	                       // Data to be written.
 	                       AkIOTransferInfo& io_transferInfo // Synchronous data transfer info. 
-	);
+	) override;
 
 	// Cleans up a file.
 	virtual AKRESULT Close(AkFileDesc& in_fileDesc // File descriptor.
-	);
+	) override;
 
 	// Returns the block size for the file or its storage device. 
 	virtual AkUInt32 GetBlockSize(AkFileDesc& in_fileDesc // File descriptor.
-	);
+	) override;
 
 	// Returns a description for the streaming device above this low-level hook.
 	virtual void GetDeviceDesc(AkDeviceDesc& out_deviceDesc // Device description.
-	);
+	) override;
 
 	// Returns custom profiling data: 1 if file opens are asynchronous, 0 otherwise.
-	virtual AkUInt32 GetDeviceData();
+	virtual AkUInt32 GetDeviceData() override;
 
 protected:
 	AkDeviceID m_deviceID;

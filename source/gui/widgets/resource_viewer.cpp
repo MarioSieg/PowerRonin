@@ -18,13 +18,14 @@
 #include "../gui_headers.hpp"
 #include "../utils.hpp"
 #include "../../../include/dce/resource_manager.hpp"
+#include "../window_names.hpp"
 
 using namespace ImGui;
 
 namespace dce::gui::widgets {
 	void ResourceViewer::update(bool& _show, ResourceManager& _rm) {
 		SetNextWindowSize({800, 600}, ImGuiCond_FirstUseEver);
-		[[likely]] if (Begin(ICON_FA_DATABASE " Resource Viewer", &_show)) {
+		[[likely]] if (Begin(RESOURCE_VIEWER_NAME, &_show)) {
 			Text("Textures: %u", static_cast<unsigned>(_rm.get_texture_cache().size()));
 			SameLine();
 			Text("Meshes: %u", static_cast<unsigned>(_rm.get_mesh_cache().size()));

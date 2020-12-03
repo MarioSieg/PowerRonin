@@ -23,7 +23,7 @@ namespace dce {
 	void AudioClip::offload() { }
 
 	auto AudioClipImporteur::load(std::filesystem::path&& _path, const AudioClipMeta* const _meta) const -> std::shared_ptr<AudioClip> {
-		auto self = IResource<AudioClipMeta>::allocate < AudioClip > ();
+		auto self = IResource<AudioClipMeta>::allocate<AudioClip>();
 		self->file_path_ = std::move(_path);
 		self->meta_data_ = _meta ? *_meta : IResource<AudioClipMeta>::load_meta_or_default(self->file_path_);
 

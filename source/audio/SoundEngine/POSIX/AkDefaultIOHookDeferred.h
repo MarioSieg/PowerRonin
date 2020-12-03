@@ -46,7 +46,7 @@ public:
 	              // Device settings.
 	              bool in_bAsyncOpen = true,
 	              // If true, files are opened asynchronously when possible.
-	              AkOSChar* in_pszMountPoint = NULL // Mount point (if NULL, SYS_DEV_HDD0 is used).
+	              AkOSChar* in_pszMountPoint = nullptr // Mount point (if NULL, SYS_DEV_HDD0 is used).
 	);
 	void Term();
 

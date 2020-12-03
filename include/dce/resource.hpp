@@ -84,10 +84,7 @@ namespace dce {
 		/// <typeparam name="...Q">The constructor arguments.</typeparam>
 		/// <param name="..._args">The constructor arguments.</param>
 		/// <returns>The shared_ptr with the allocated resource.</returns>
-		template <typename T, typename... Q>
-		requires std::is_base_of_v<IResource<M>, T> [[nodiscard]]
-
-		inline static auto allocate(Q&&... _args) -> std::shared_ptr<T> {
+		template <typename T, typename... Q> requires std::is_base_of_v<IResource<M>, T> [[nodiscard]] inline static auto allocate(Q&&... _args) -> std::shared_ptr<T> {
 			return std::shared_ptr<T>(new T(_args...), [](T* const _ptr) {
 				[[likely]] if (_ptr) {
 					_ptr->offload();

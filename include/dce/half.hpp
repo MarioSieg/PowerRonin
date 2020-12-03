@@ -28,9 +28,7 @@ namespace dce {
 		return result;
 	}
 
-	template <typename T>
-	requires std::is_trivial<T>::value
-	constexpr auto uint32_cntlz(T x) noexcept -> std::uint32_t;
+	template <typename T> requires std::is_trivial<T>::value constexpr auto uint32_cntlz(T x) noexcept -> std::uint32_t;
 
 	template <>
 	constexpr auto uint32_cntlz(const uint64_t x) noexcept -> std::uint32_t {
@@ -39,32 +37,32 @@ namespace dce {
 
 	template <>
 	constexpr auto uint32_cntlz(const std::uint8_t x) noexcept -> std::uint32_t {
-		return uint32_cntlz < uint32_t > (x) - 24;
+		return uint32_cntlz<uint32_t>(x) - 24;
 	}
 
 	template <>
 	constexpr auto uint32_cntlz(const std::int8_t x) noexcept -> std::uint32_t {
-		return uint32_cntlz < uint8_t > (x);
+		return uint32_cntlz<uint8_t>(x);
 	}
 
 	template <>
 	constexpr auto uint32_cntlz(const std::uint16_t x) noexcept -> std::uint32_t {
-		return uint32_cntlz < uint32_t > (x) - 16;
+		return uint32_cntlz<uint32_t>(x) - 16;
 	}
 
 	template <>
 	constexpr auto uint32_cntlz(const std::int16_t x) noexcept -> std::uint32_t {
-		return uint32_cntlz < uint16_t > (x);
+		return uint32_cntlz<uint16_t>(x);
 	}
 
 	template <>
 	constexpr auto uint32_cntlz(const std::int32_t x) noexcept -> std::uint32_t {
-		return uint32_cntlz < uint32_t > (x);
+		return uint32_cntlz<uint32_t>(x);
 	}
 
 	template <>
 	constexpr auto uint32_cntlz(const std::int64_t x) noexcept -> std::uint32_t {
-		return uint32_cntlz < uint64_t > (x);
+		return uint32_cntlz<uint64_t>(x);
 	}
 
 	extern auto half_from_float(float x) noexcept -> std::uint16_t;

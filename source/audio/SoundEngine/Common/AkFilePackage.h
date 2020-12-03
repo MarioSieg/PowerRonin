@@ -27,7 +27,7 @@
 template <class T>
 class CAkListAware {
 public:
-	CAkListAware() : pNextItem(NULL) {}
+	CAkListAware() : pNextItem(nullptr) {}
 
 	// Implement U_NEXTITEM AkListBare policy.
 	static AkForceInline T*& Get(T* in_pItem) {
@@ -61,17 +61,17 @@ public:
 	) {
 		AKASSERT(in_uHeaderSize > 0);
 
-		out_pHeaderBuffer = NULL;
+		out_pHeaderBuffer = nullptr;
 
 		// Allocate memory and copy header.
 		// The pool must be big enough to hold both the buffer for the LUT's header
 		// and a CAkFilePackage object.
-		AkUInt8* pToRelease = NULL;
-		out_uReservedHeaderSize = ((in_uHeaderSize + in_uBlockAlign - 1) / in_uBlockAlign) * in_uBlockAlign;
-		AkUInt32 uMemSize = out_uReservedHeaderSize + sizeof(T_PACKAGE);
+		AkUInt8* pToRelease = nullptr;
+		out_uReservedHeaderSize = (in_uHeaderSize + in_uBlockAlign - 1) / in_uBlockAlign * in_uBlockAlign;
+		const AkUInt32 uMemSize = out_uReservedHeaderSize + sizeof(T_PACKAGE);
 
-		pToRelease = (AkUInt8*)AkMalign(AkMemID_FilePackage, uMemSize, in_uBlockAlign);
-		if (!pToRelease) return NULL;
+		pToRelease = static_cast<AkUInt8*>(AkMalign(AkMemID_FilePackage, uMemSize, in_uBlockAlign));
+		if (!pToRelease) return nullptr;
 
 		// Generate an ID.
 		AkUInt32 uPackageID = AK::SoundEngine::GetIDFromString(in_pszPackageName);
@@ -86,8 +86,8 @@ public:
 	}
 
 	// Getters.
-	inline AkUInt32 ID() { return m_uPackageID; }
-	inline AkUInt32 HeaderSize() { return m_uHeaderSize; }
+	inline AkUInt32 ID() const { return m_uPackageID; }
+	inline AkUInt32 HeaderSize() const { return m_uHeaderSize; }
 
 	inline void AddRef() {
 		m_uRefCount++;

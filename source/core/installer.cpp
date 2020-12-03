@@ -28,12 +28,12 @@ namespace dce::core {
 	}
 
 	auto install_common(Kernel& _kernel) -> bool {
-		_kernel.create_install_subsystem < platform::Platform > ();
-		_kernel.create_install_subsystem < renderer::Renderer > ();
-		_kernel.create_install_subsystem < gui::Gui > ();
-		_kernel.create_install_subsystem < physics::Physics > ();
-		_kernel.create_install_subsystem < audio::Audio > ();
-		_kernel.create_install_subsystem < scripting::Scripting > ();
+		_kernel.create_install_subsystem<platform::Platform>();
+		_kernel.create_install_subsystem<renderer::Renderer>();
+		_kernel.create_install_subsystem<gui::Gui>();
+		_kernel.create_install_subsystem<physics::Physics>();
+		_kernel.create_install_subsystem<audio::Audio>();
+		_kernel.create_install_subsystem<scripting::Scripting>();
 		return true;
 	}
 } // namespace dce::core // namespace dce::core

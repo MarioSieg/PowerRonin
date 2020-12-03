@@ -16,7 +16,7 @@
 #include "editor.hpp"
 #include "gui_headers.hpp"
 #include "font_headers.hpp"
-
+#include "window_names.hpp"
 #include "../../include/dce/runtime.hpp"
 
 using namespace ImGui;
@@ -28,6 +28,13 @@ namespace dce::gui {
 	}
 
 	void Editor::update(Runtime& _rt, bool& _show_terminal) {
+		this->dockspace_id_ = DockSpaceOverViewport(GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
+
+		[[unlikely]] if (this->first_use_) {
+			this->default_layout();
+			this->first_use_ = false;
+		}
+
 		[[likely]] if (this->show_menu_) {
 			this->main_menu(_show_terminal);
 		}
@@ -49,7 +56,7 @@ namespace dce::gui {
 		}
 
 		[[unlikely]] if (this->memory_editor_.Open) {
-			this->memory_editor_.DrawWindow(ICON_FA_MEMORY " Memory Editor", &_rt, sizeof(Runtime));
+			this->memory_editor_.DrawWindow(RAM_EDITOR_NAME, &_rt, sizeof(Runtime));
 		}
 
 		[[unlikely]] if (this->show_config_editor_) {
@@ -95,5 +102,27 @@ namespace dce::gui {
 			}
 			EndMainMenuBar();
 		}
+	}
+
+	void Editor::default_layout() const {
+		DockBuilderRemoveNode(this->dockspace_id_);
+		DockBuilderAddNode(this->dockspace_id_, ImGuiDockNodeFlags_DockSpace);
+		DockBuilderSetNodeSize(this->dockspace_id_, GetMainViewport()->Size);
+		auto main_id = this->dockspace_id_;
+
+		const auto dock_id_bottom = DockBuilderSplitNode(this->dockspace_id_, ImGuiDir_Down, .20f, nullptr, &main_id);
+		const auto dock_id_left = DockBuilderSplitNode(this->dockspace_id_, ImGuiDir_Left, .20f, nullptr, &main_id);
+		const auto dock_id_right = DockBuilderSplitNode(this->dockspace_id_, ImGuiDir_Right, .20f, nullptr, &main_id);
+
+		DockBuilderDockWindow(TERMINAL_NAME, dock_id_bottom);
+		DockBuilderDockWindow(PROFILER_NAME, dock_id_bottom);
+
+		DockBuilderDockWindow(HIERARCHY_NAME, dock_id_left);
+		DockBuilderDockWindow(RESOURCE_VIEWER_NAME, dock_id_left);
+
+		DockBuilderDockWindow(INSPECTOR_NAME, dock_id_right);
+		DockBuilderDockWindow(CONFIG_EDITOR_NAME, dock_id_right);
+
+		DockBuilderFinish(this->dockspace_id_);
 	}
 }

@@ -18,9 +18,16 @@
 #include "mathlib.hpp"
 
 namespace dce {
-	/* Represents a physics collider. */
+	/* Represents a physical collider. */
 	class Collider final {
 	public:
+		Collider() noexcept = default;
+		Collider(const Collider&) noexcept = delete;
+		Collider(Collider&&) noexcept = default;
+		auto operator=(const Collider&) noexcept -> Collider& = delete;
+		auto operator=(Collider&&) noexcept -> Collider& = default;
+		~Collider() = default;
+
 		union ColliderData {
 			/* Box collider data. */
 			struct {

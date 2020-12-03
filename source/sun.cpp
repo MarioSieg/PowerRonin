@@ -22,11 +22,11 @@ namespace dce {
 		_hour *= math::pi<float>() / 12.f;
 		const auto azimuth = std::atan2(std::sin(_hour), std::cos(_hour) * std::sin(_latitude) - std::tan(_delta) * std::cos(_latitude));
 		const auto altitude = std::asin(std::sin(_latitude) * std::sin(_delta) + std::cos(_latitude) * std::cos(_delta) * std::cos(_hour));
-		auto rotation = math::identity<Quaternion <> > ();
+		auto rotation = math::identity<Quaternion<>>();
 		rotation = rotate(rotation, -azimuth, _up);
 		const Vector3<> dir = _north * rotation;
 		const Vector3<> udx = cross(_up, dir);
-		rotation = math::identity<Quaternion <> > ();
+		rotation = math::identity<Quaternion<>>();
 		rotate(rotation, altitude, udx);
 		return dir * rotation;
 	}

@@ -33,7 +33,7 @@
 
 void CAkMultipleFileLocation::Term() {
 	if (!m_Locations.IsEmpty()) {
-		FilePath* p = (*m_Locations.Begin());
+		FilePath* p = *m_Locations.Begin();
 		while (p) {
 			FilePath* next = p->pNextLightItem;
 			AkDelete(AkMemID_Streaming, p);
@@ -58,7 +58,7 @@ AKRESULT CAkMultipleFileLocation::Open(const AkOSChar* in_pszFileName,
 		// Get the full file path, using path concatenation logic.
 
 		if (GetFullFilePath(in_pszFileName, in_pFlags, in_eOpenMode, szFullFilePath) == AK_Success) {
-			AKRESULT res = CAkFileHelpers::Open(szFullFilePath, in_eOpenMode, in_bOverlapped, out_fileDesc);
+			const AKRESULT res = CAkFileHelpers::Open(szFullFilePath, in_eOpenMode, in_bOverlapped, out_fileDesc);
 			if (res == AK_Success) {
 				// iFileSize must be set by the OpenPolicy.
 				AKASSERT(out_fileDesc.iFileSize != 0 && (in_eOpenMode == AK_OpenModeRead || in_eOpenMode == AK_OpenModeReadWrite) || !(in_eOpenMode == AK_OpenModeRead || in_eOpenMode == AK_OpenModeReadWrite));
@@ -71,7 +71,7 @@ AKRESULT CAkMultipleFileLocation::Open(const AkOSChar* in_pszFileName,
 			// Get the full file path, using path concatenation logic.
 
 			if (GetFullFilePath(in_pszFileName, in_pFlags, in_eOpenMode, szFullFilePath, (*it)->szPath) == AK_Success) {
-				AKRESULT res = CAkFileHelpers::Open(szFullFilePath, in_eOpenMode, in_bOverlapped, out_fileDesc);
+				const AKRESULT res = CAkFileHelpers::Open(szFullFilePath, in_eOpenMode, in_bOverlapped, out_fileDesc);
 				if (res == AK_Success) {
 					// iFileSize must be set by the OpenPolicy.
 					AKASSERT(out_fileDesc.iFileSize != 0 && (in_eOpenMode == AK_OpenModeRead || in_eOpenMode == AK_OpenModeReadWrite) || !(in_eOpenMode == AK_OpenModeRead || in_eOpenMode == AK_OpenModeReadWrite));
@@ -132,7 +132,7 @@ AKRESULT CAkMultipleFileLocation::GetFullFilePath(const AkOSChar* in_pszFileName
 		return AK_InvalidParameter;
 	}
 
-	if (in_pszBasePath != NULL) {
+	if (in_pszBasePath != nullptr) {
 		AKPLATFORM::SafeStrCpy(out_pszFullFilePath, in_pszBasePath, AK_MAX_PATH);
 	}
 	else {
@@ -151,7 +151,7 @@ AKRESULT CAkMultipleFileLocation::GetFullFilePath(const AkOSChar* in_pszFileName
 		if (in_pFlags->bIsLanguageSpecific) {
 			size_t uLanguageStrLen = AKPLATFORM::OsStrLen(AK::StreamMgr::GetCurrentLanguage());
 			if (uLanguageStrLen > 0) {
-				uiPathSize += (uLanguageStrLen + 1);
+				uiPathSize += uLanguageStrLen + 1;
 				if (uiPathSize >= AK_MAX_PATH) {
 					AKASSERT(!"Path is too large");
 					return AK_Fail;
@@ -173,7 +173,7 @@ AKRESULT CAkMultipleFileLocation::GetFullFilePath(const AkOSChar* in_pszFileName
 }
 
 AKRESULT CAkMultipleFileLocation::AddBasePath(const AkOSChar* in_pszBasePath) {
-	AkUInt32 origLen = (AkUInt32)AKPLATFORM::OsStrLen(in_pszBasePath);
+	AkUInt32 origLen = static_cast<AkUInt32>(AKPLATFORM::OsStrLen(in_pszBasePath));
 	AkUInt32 newByteSize = origLen + 1; // One for the trailing \0
 	if (origLen && in_pszBasePath[origLen - 1] != AK_PATH_SEPARATOR[0]) {
 		newByteSize++; // Add space for a trailing slash
@@ -183,8 +183,8 @@ AKRESULT CAkMultipleFileLocation::AddBasePath(const AkOSChar* in_pszBasePath) {
 	// Format of the test is: basePath/Language/.
 	if (origLen + 1 + AKPLATFORM::OsStrLen(AK::StreamMgr::GetCurrentLanguage() + 1) >= AK_MAX_PATH) return AK_InvalidParameter;
 
-	FilePath* pPath = (FilePath*)AkAlloc(AkMemID_Streaming, sizeof(FilePath) + sizeof(AkOSChar)*(newByteSize - 1));
-	if (pPath == NULL) return AK_InsufficientMemory;
+	FilePath* pPath = static_cast<FilePath*>(AkAlloc(AkMemID_Streaming, sizeof(FilePath) + sizeof(AkOSChar)*(newByteSize - 1)));
+	if (pPath == nullptr) return AK_InsufficientMemory;
 
 	// Copy the base path EVEN if the directory does not exist.
 	AKPLATFORM::SafeStrCpy(pPath->szPath, in_pszBasePath, origLen + 1);
@@ -197,10 +197,10 @@ AKRESULT CAkMultipleFileLocation::AddBasePath(const AkOSChar* in_pszBasePath) {
 			pPath->szPath[origLen + 1] = 0;
 		}
 	}
-	pPath->pNextLightItem = NULL;
+	pPath->pNextLightItem = nullptr;
 	m_Locations.AddFirst(pPath);
 
-	AKRESULT eDirectoryResult = CAkFileHelpers::CheckDirectoryExists(in_pszBasePath);
+	const AKRESULT eDirectoryResult = CAkFileHelpers::CheckDirectoryExists(in_pszBasePath);
 	if (eDirectoryResult == AK_Fail) // AK_NotImplemented could be returned and should be ignored.
 	{
 		return AK_PathNotFound;
@@ -215,9 +215,9 @@ namespace AkMultipleFileLocation {
 		AKASSERT(in_pszTitleMaxLen >= MAX_FILETITLE_SIZE);
 
 		if (in_codecId == AKCODECID_BANK)
-			AK_OSPRINTF(out_pszTitle, in_pszTitleMaxLen, ID_TO_STRING_FORMAT_BANK, (unsigned int)in_fileID);
+			AK_OSPRINTF(out_pszTitle, in_pszTitleMaxLen, ID_TO_STRING_FORMAT_BANK, static_cast<unsigned>(in_fileID));
 		else
-			AK_OSPRINTF(out_pszTitle, in_pszTitleMaxLen, ID_TO_STRING_FORMAT_WEM, (unsigned int)in_fileID);
+			AK_OSPRINTF(out_pszTitle, in_pszTitleMaxLen, ID_TO_STRING_FORMAT_WEM, static_cast<unsigned>(in_fileID));
 	}
 
 }

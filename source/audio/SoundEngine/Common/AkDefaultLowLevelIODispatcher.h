@@ -42,7 +42,7 @@ public:
 	                      bool& io_bSyncOpen,
 	                      // If true, the file must be opened synchronously. Otherwise it is left at the File Location Resolver's discretion. Return false if Open needs to be deferred.
 	                      AkFileDesc& out_fileDesc // Returned file descriptor.
-	);
+	) override;
 
 	// Returns a file descriptor for a given file ID.
 	virtual AKRESULT Open(AkFileID in_fileID,
@@ -54,7 +54,7 @@ public:
 	                      bool& io_bSyncOpen,
 	                      // If true, the file must be opened synchronously. Otherwise it is left at the File Location Resolver's discretion. Return false if Open needs to be deferred.
 	                      AkFileDesc& out_fileDesc // Returned file descriptor.
-	);
+	) override;
 
 
 	// 

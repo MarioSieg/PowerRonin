@@ -19,6 +19,7 @@
 #include <typeinfo>
 #include <type_traits>
 #include <unordered_map>
+#include <string_view>
 
 namespace dce {
 	/* Describes a type in the ClassDB. */
@@ -58,16 +59,13 @@ namespace dce {
 		void register_class(std::string_view name, std::size_t size, std::size_t hash_code, const ClassDescriptor::BaseDescriptor::SourceInfo& src_info, std::string_view description = "", bool is_custom = false);
 
 		/* Registers a new class with info from typeid() from <T> to the commands. */
-		template <typename T>
-		requires std::is_class<T>::value
-
-		void auto_register_class(const ClassDescriptor::BaseDescriptor::SourceInfo& src_info, const std::string_view description = "", const bool is_custom = false) {
+		template <typename T> requires std::is_class<T>::value void auto_register_class(const ClassDescriptor::BaseDescriptor::SourceInfo& src_info, const std::string_view description = "", const bool is_custom = false) {
 			const auto& info = typeid(T);
 			this->register_class(info.name(), sizeof(T), info.hash_code(), src_info, description, is_custom);
 		}
 
 	private:
-		std::uint32_t id_counter = 0;
-		std::unordered_map<std::uint32_t, ClassDescriptor> registry = {};
+		std::uint32_t id_counter_ = 0;
+		std::unordered_map<std::uint32_t, ClassDescriptor> registry_ = {};
 	};
 } // namespace dce // namespace dce

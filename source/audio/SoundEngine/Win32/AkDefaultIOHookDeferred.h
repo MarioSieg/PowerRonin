@@ -56,7 +56,7 @@ public:
 	                      bool& io_bSyncOpen,
 	                      // If true, the file must be opened synchronously. Otherwise it is left at the File Location Resolver's discretion. Return false if Open needs to be deferred.
 	                      AkFileDesc& out_fileDesc // Returned file descriptor.
-	);
+	) override;
 
 	// Returns a file descriptor for a given file ID.
 	virtual AKRESULT Open(AkFileID in_fileID,
@@ -68,7 +68,7 @@ public:
 	                      bool& io_bSyncOpen,
 	                      // If true, the file must be opened synchronously. Otherwise it is left at the File Location Resolver's discretion. Return false if Open needs to be deferred.
 	                      AkFileDesc& out_fileDesc // Returned file descriptor.
-	);
+	) override;
 
 
 	//
@@ -81,7 +81,7 @@ public:
 	                      const AkIoHeuristics& in_heuristics,
 	                      // Heuristics for this data transfer.
 	                      AkAsyncIOTransferInfo& io_transferInfo // Asynchronous data transfer info.
-	);
+	) override;
 
 	// Writes data to a file (asynchronous).
 	virtual AKRESULT Write(AkFileDesc& in_fileDesc,
@@ -89,7 +89,7 @@ public:
 	                       const AkIoHeuristics& in_heuristics,
 	                       // Heuristics for this data transfer.
 	                       AkAsyncIOTransferInfo& io_transferInfo // Platform-specific asynchronous IO operation info.
-	);
+	) override;
 
 	// Notifies that a transfer request is cancelled. It will be flushed by the streaming device when completed.
 	virtual void Cancel(AkFileDesc& in_fileDesc,
@@ -97,22 +97,22 @@ public:
 	                    AkAsyncIOTransferInfo& io_transferInfo,
 	                    // Transfer info to cancel.
 	                    bool& io_bCancelAllTransfersForThisFile // Flag indicating whether all transfers should be cancelled for this file (see notes in function description).
-	);
+	) override;
 
 	// Cleans up a file.
 	virtual AKRESULT Close(AkFileDesc& in_fileDesc // File descriptor.
-	);
+	) override;
 
 	// Returns the block size for the file or its storage device. 
 	virtual AkUInt32 GetBlockSize(AkFileDesc& in_fileDesc // File descriptor.
-	);
+	) override;
 
 	// Returns a description for the streaming device above this low-level hook.
 	virtual void GetDeviceDesc(AkDeviceDesc& out_deviceDesc // Description of associated low-level I/O device.
-	);
+	) override;
 
 	// Returns custom profiling data: 1 if file opens are asynchronous, 0 otherwise.
-	virtual AkUInt32 GetDeviceData();
+	virtual AkUInt32 GetDeviceData() override;
 
 protected:
 
@@ -135,7 +135,7 @@ protected:
 	// Get a free slot for an OVERLAPPED I/O transfer.
 	OVERLAPPED* GetFreeOverlapped(AkAsyncIOTransferInfo* in_pTransfer // Transfer that will use this OVERLAPPED. Its address is stored in OVERLAPPED::hEvent.
 	) {
-		OVERLAPPED* pOverlapped = (OVERLAPPED*)AK::MemoryMgr::Malloc(AkMemID_Streaming, sizeof(OVERLAPPED));
+		OVERLAPPED* pOverlapped = static_cast<OVERLAPPED*>(AK::MemoryMgr::Malloc(AkMemID_Streaming, sizeof(OVERLAPPED)));
 		AKASSERT(pOverlapped || !"Too many concurrent transfers in the Low-Level IO");
 		pOverlapped->hEvent = in_pTransfer;
 		return pOverlapped;

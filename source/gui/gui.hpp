@@ -51,8 +51,8 @@ namespace dce::gui {
 		platform::GuiInput gui_input_ = {};
 		ImGuiContext* gui_context_ = nullptr;
 		ImPlotContext* plot_context_ = nullptr;
-		Terminal terminal_ = {};
-		bool show_terminal_ = false;
 		Editor editor_ = {};
+		Terminal terminal_ = {};
+		bool show_terminal_ = true;
 	};
 } // namespace dce::gui // namespace dce::gui
