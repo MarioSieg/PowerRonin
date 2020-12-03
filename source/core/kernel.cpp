@@ -29,7 +29,7 @@ namespace dce::core {
 	struct Kernel::Core final {
 		KernelState kernel_state = KernelState::OFFLINE;
 		std::vector<std::tuple<std::uint_fast16_t, std::unique_ptr<ISubsystem>>> subsystems = {};
-		std::unique_ptr<Runtime> runtime = nullptr;
+		Runtime* runtime = nullptr;
 	};
 
 	Kernel::Kernel(const int _in_argc, const char* const * const _in_argv, const char* const * const _in_envp) : argc(_in_argc), argv(_in_argv), envp(_in_envp), core_(std::make_unique<Core>()) { }
@@ -53,7 +53,10 @@ namespace dce::core {
 		const auto tik = std::chrono::high_resolution_clock::now();
 
 		/* Allocate state. */
-		this->core_->runtime = std::make_unique<Runtime>();
+		this->core_->runtime = new(std::nothrow) Runtime();
+		[[unlikely]] if (!this->core_->runtime) {
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to allocate runtime!");
+		}
 
 		auto& proto = this->core_->runtime->protocol();
 
@@ -92,10 +95,10 @@ namespace dce::core {
 		}
 
 		/* Startup state. */
-		const auto tik2 = std::chrono::high_resolution_clock::now();
+		const auto state_clock = std::chrono::high_resolution_clock::now();
 		proto.critical("Starting runtime...");
 		this->core_->runtime->initialize();
-		const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
+		const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - state_clock).count()) / 1000000.0;
 		proto.critical("State online! Required {}s!", dur);
 		this->core_->kernel_state = KernelState::ONLINE;
 		const auto duration = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik).count();
@@ -189,7 +192,7 @@ namespace dce::core {
 
 		/* Shutdown state. */
 		proto.critical("Shutting down runtime...");
-		this->core_->runtime->initialize();
+		this->core_->runtime->shutdown();
 
 		/* Invoke "on_pre_shutdown()" on all subsystems, which have this event registered. */
 		for (auto sys = this->core_->subsystems.begin(); sys != this->core_->subsystems.end(); ++sys) {
@@ -214,6 +217,9 @@ namespace dce::core {
 			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
 			std::get<1>(*sys)->post_shutdown_time = dur;
 		}
+
+		delete this->core_->runtime;
+		this->core_->runtime = nullptr;
 
 		this->core_->kernel_state = KernelState::OFFLINE;
 
@@ -241,11 +247,7 @@ namespace dce::core {
 		this->core_->subsystems.emplace_back(std::make_tuple(_subsystem->id, std::move(_subsystem)));
 	}
 
-	auto Kernel::get_state() noexcept -> std::unique_ptr<Runtime>& {
-		return this->core_->runtime;
-	}
-
-	auto Kernel::get_state() const noexcept -> const std::unique_ptr<Runtime>& {
+	auto Kernel::get_runtime() const noexcept -> Runtime* {
 		return this->core_->runtime;
 	}
 

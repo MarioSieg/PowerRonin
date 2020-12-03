@@ -26,5 +26,5 @@ namespace dce::gui {
 	extern void style_alpha_apply(float alpha = 1.F) noexcept;
 	extern void style_antialiasing_apply(bool enable_aa = true) noexcept;
 	extern void style_rounding_apply(float rounding = .0F) noexcept;
-	extern void style_apply(SystemStyle style) noexcept;
+	extern void style_apply(SystemTheme style) noexcept;
 } // namespace dce::gui // namespace dce::gui

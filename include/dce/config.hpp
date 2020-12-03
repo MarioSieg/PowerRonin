@@ -19,7 +19,7 @@
 #include <cstdint>
 
 namespace dce {
-	enum class SystemStyle {
+	enum class SystemTheme {
 		DARK,
 		LIGHT,
 		CHERRY,
@@ -51,10 +51,10 @@ namespace dce {
 
 		struct {
 			std::uint8_t font_size = 24;
-			SystemStyle style = SystemStyle::BLUE;
+			SystemTheme theme = SystemTheme::DARK;
 			bool enable_antialiasing = true;
-			float transparency = 1.F;
-			float rounding = .0F;
+			float transparency = 1.5F;
+			float rounding = 4.F;
 		} overlay;
 
 		virtual void serialize(JsonStream& _j) const override;

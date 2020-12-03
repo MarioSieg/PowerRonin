@@ -31,7 +31,7 @@ namespace dce::gui::widgets {
 			Text("Meshes: %u", static_cast<unsigned>(_rm.get_mesh_cache().size()));
 			Separator();
 			Spacing();
-			if (CollapsingHeader(ICON_FA_IMAGES " Textures")) {
+			if (CollapsingHeader(ICON_FA_IMAGES " Textures", ImGuiTreeNodeFlags_DefaultOpen)) {
 				_rm.get_texture_cache().each([&](const RRef<Texture>& _texture) {
 					TextUnformatted(ICON_FA_IMAGE);
 					SameLine();
@@ -53,7 +53,7 @@ namespace dce::gui::widgets {
 					Separator();
 				});
 			}
-			[[likely]] if (CollapsingHeader(ICON_FA_CUBES " Meshes")) {
+			[[likely]] if (CollapsingHeader(ICON_FA_CUBES " Meshes", ImGuiTreeNodeFlags_DefaultOpen)) {
 				_rm.get_mesh_cache().each([](const RRef<Mesh>& _mesh) {
 					TextUnformatted(ICON_FA_CUBE);
 					SameLine();

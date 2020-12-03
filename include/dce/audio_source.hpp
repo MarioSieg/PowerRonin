@@ -23,12 +23,12 @@ namespace dce {
 	/// </summary>
 	class AudioSource final {
 	public:
-		AudioSource();
+		AudioSource() = default;
 		AudioSource(const AudioSource&) = delete;
-		AudioSource(AudioSource&&) noexcept;
+		AudioSource(AudioSource&&) noexcept = default;
 		auto operator=(const AudioSource&) -> AudioSource& = delete;
-		auto operator=(AudioSource&&) noexcept -> AudioSource&;
-		~AudioSource();
+		auto operator=(AudioSource&&) noexcept -> AudioSource& = default;
+		~AudioSource() = default;
 
 		/// <summary>
 		/// The audio clip which will be played.
@@ -51,5 +51,22 @@ namespace dce {
 		/// Stops current playback.
 		/// </summary>
 		void stop() const;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns> The priority for the sound, from 0 (most important) to 256 (least important).</returns>
+		[[nodiscard]] auto get_priority() const noexcept -> std::uint8_t;
+
+		/// <summary>
+		///  Sets the priority for the sound, from 0 (most important) to 256 (least important).
+		/// </summary>
+		/// <param name="_priority">The new priority.</param>
+		/// <returns></returns>
+		void set_priority(const std::uint8_t _priority) noexcept;
+
+	private:
+		void* channel_ = nullptr;
+		std::uint8_t priority_ = 128;
 	};
 }

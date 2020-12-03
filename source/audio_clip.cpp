@@ -17,6 +17,10 @@
 #include "../../include/dce/json_impl.hpp"
 
 namespace dce {
+	auto AudioClip::get_handle() const noexcept -> void* {
+		return this->handle_;
+	}
+
 	void AudioClipMeta::serialize(JsonStream& _j) const {
 		_j["is_stream"] = this->is_stream;
 		_j["enable_3d_sound"] = this->enable_3d_sound;

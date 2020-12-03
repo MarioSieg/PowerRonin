@@ -17,21 +17,45 @@
 #include "audio/audio_headers.hpp"
 
 namespace dce {
-	AudioSource::AudioSource() { }
-
-	AudioSource::AudioSource(AudioSource&& _rhs) noexcept { }
-
-	auto AudioSource::operator=(AudioSource&& _rhs) noexcept -> AudioSource& {
-		return *this;
+	namespace audio {
+		extern FMOD::System* AUDIO_SYSTEM_HANDLE;
 	}
 
-	AudioSource::~AudioSource() { }
+	void AudioSource::play() {
+		[[unlikely]] if (!audio::AUDIO_SYSTEM_HANDLE || !this->clip) {
+			return;
+		}
 
-	void AudioSource::play() { }
+		auto* sound = static_cast<FMOD::Sound* const>(this->clip->get_handle());
+		FMOD::Channel* channel;
+		FMOD_RESULT result = audio::AUDIO_SYSTEM_HANDLE->playSound(sound, nullptr, false, &channel);
+		[[unlikely]] if (result != FMOD_OK) {
+			return;
+		}
+
+		result = channel->setPriority(this->priority_);
+		[[unlikely]] if (result != FMOD_OK) {
+			return;
+		}
+
+		this->channel_ = channel;
+	}
 
 	auto AudioSource::is_currently_playing() const noexcept -> bool {
-		return false;
+		bool is_playing;
+		return this->channel_ && static_cast<FMOD::Channel*>(this->channel_)->isPlaying(&is_playing) == FMOD_OK && is_playing;
 	}
 
-	void AudioSource::stop() const { }
+	void AudioSource::stop() const {
+		this->channel_ && static_cast<FMOD::Channel*>(this->channel_)->stop() == FMOD_OK;
+	}
+
+	auto AudioSource::get_priority() const noexcept -> std::uint8_t {
+		return this->priority_;
+	}
+
+	void AudioSource::set_priority(const std::uint8_t _priority) noexcept {
+		this->priority_ = _priority;
+		this->channel_ && static_cast<FMOD::Channel*>(this->channel_)->setPriority(this->priority_);
+	}
 }

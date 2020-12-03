@@ -78,10 +78,7 @@ namespace dce {
 			[[nodiscard]] auto installed_subsystems() const noexcept -> const std::vector<std::tuple<std::uint_fast16_t, std::unique_ptr<ISubsystem>>>&;
 
 			/* Returns the current simulation state. */
-			[[nodiscard]] auto get_state() noexcept -> std::unique_ptr<Runtime>&;
-
-			/* Returns the current simulation state. */
-			[[nodiscard]] auto get_state() const noexcept -> const std::unique_ptr<Runtime>&;
+			[[nodiscard]] auto get_runtime() const noexcept -> Runtime*;
 
 			/* Allocates and installs the subsystem T. */
 			template <typename T, typename... Q> requires Subsystem<T> auto create_install_subsystem(Q&&... /*args*/) -> Kernel&;

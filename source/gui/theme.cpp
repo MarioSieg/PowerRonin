@@ -18,9 +18,8 @@
 #include "utils.hpp"
 
 namespace dce::gui {
-		void style_blue() noexcept {
+	void style_blue() noexcept {
 		auto& style = ImGui::GetStyle();
-		/*
 		style.Colors[ImGuiCol_Text] = imgui_rgba_to_norm_vec4(131 + 40, 148 + 40, 150 + 40);
 		style.Colors[ImGuiCol_TextDisabled] = imgui_rgba_to_norm_vec4(53, 117, 123);
 		style.Colors[ImGuiCol_WindowBg] = imgui_rgba_to_norm_vec4(0, 30, 38);
@@ -69,7 +68,7 @@ namespace dce::gui {
 		style.Colors[ImGuiCol_NavWindowingHighlight] = ImVec4(1.00F, 1.00F, 1.00F, 0.70F);
 		style.Colors[ImGuiCol_NavWindowingDimBg] = ImVec4(0.80F, 0.80F, 0.80F, 0.20F);
 		style.Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.80F, 0.80F, 0.80F, 0.35F);
-		*/
+		/*
 		style.Colors[ImGuiCol_Text] = ImVec4(0.95F, 0.96F, 0.98F, 1.00F);
 		style.Colors[ImGuiCol_TextDisabled] = ImVec4(0.36F, 0.42F, 0.47F, 1.00F);
 		style.Colors[ImGuiCol_WindowBg] = ImVec4(0.11F, 0.15F, 0.17F, 1.00F);
@@ -118,8 +117,9 @@ namespace dce::gui {
 		style.Colors[ImGuiCol_NavWindowingHighlight] = ImVec4(1.00F, 1.00F, 1.00F, 0.70F);
 		style.Colors[ImGuiCol_NavWindowingDimBg] = ImVec4(0.80F, 0.80F, 0.80F, 0.20F);
 		style.Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.80F, 0.80F, 0.80F, 0.35F);
+		*/
 	}
-	
+
 	void style_dark() noexcept {
 		auto& style = ImGui::GetStyle();
 		style.Colors[ImGuiCol_Text] = ImVec4(1.00F, 1.00F, 1.00F, 1.00F);
@@ -340,17 +340,17 @@ namespace dce::gui {
 		style.WindowRounding = rounding;
 	}
 
-	void style_apply(const SystemStyle style) noexcept {
+	void style_apply(const SystemTheme style) noexcept {
 		switch (style) {
-		case SystemStyle::DARK: style_dark();
+		case SystemTheme::DARK: style_dark();
 			return;
-		case SystemStyle::BLUE: style_blue();
+		case SystemTheme::BLUE: style_blue();
 			return;
-		case SystemStyle::GREEN: style_green();
+		case SystemTheme::GREEN: style_green();
 			return;
-		case SystemStyle::CHERRY: style_cherry();
+		case SystemTheme::CHERRY: style_cherry();
 			return;
-		case SystemStyle::LIGHT: style_light();
+		case SystemTheme::LIGHT: style_light();
 		}
 	}
 } // namespace dce::gui // namespace dce::gui

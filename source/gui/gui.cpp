@@ -35,7 +35,7 @@ namespace dce::gui {
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
 		auto& cfg = _rt.config().overlay;
-		style_apply(SystemStyle::BLUE);
+		style_apply(cfg.theme);
 		style_antialiasing_apply(cfg.enable_antialiasing);
 		style_alpha_apply(cfg.transparency);
 		style_rounding_apply(cfg.rounding);

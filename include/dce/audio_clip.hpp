@@ -51,7 +51,7 @@ namespace dce {
 		AudioClip(AudioClip&&) = delete;
 		auto operator=(const AudioClip&) -> AudioClip& = delete;
 		auto operator=(AudioClip&&) -> AudioClip& = delete;
-		~AudioClip() override;
+		~AudioClip() override = default;
 
 		/// <summary>
 		/// All associated file types.
@@ -67,6 +67,15 @@ namespace dce {
 		/// NO-OP.
 		/// </summary>
 		virtual void offload() override;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>The native handle pointer.</returns>
+		[[nodiscard]] auto get_handle() const noexcept -> void*;
+
+	private:
+		void* handle_ = nullptr;
 	};
 
 	/// <summary>

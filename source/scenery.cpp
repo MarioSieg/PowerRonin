@@ -46,7 +46,6 @@ namespace dce {
 			aumeta.enable_3d_sound = false;
 			aumeta.is_stream = true;
 			audio.clip = _resource_manager.load<AudioClip>("audio/music/entry.ogg", &aumeta);
-			audio.play();
 		}
 
 		// Create platform:

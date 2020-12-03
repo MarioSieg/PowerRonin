@@ -30,6 +30,19 @@ extern const float *VIEW, *PROJ;
 namespace dce::gui::widgets {
 	void Inspector::initialize() {
 		this->current_path_ = std::filesystem::current_path().string();
+
+		auto build_filter_extensions = [](auto& _string, const auto& _extensions) {
+			for (const auto& ext : _extensions) {
+				for (auto i = 1; i < ext.size(); ++i) {
+					_string.push_back(ext[i]);
+				}
+				_string.push_back(',');
+			}
+		};
+
+		build_filter_extensions(this->mesh_filer_, Mesh::FILE_EXTENSIONS);
+		build_filter_extensions(this->texture_filer_, Texture::FILE_EXTENSIONS);
+		build_filter_extensions(this->audio_filter_, AudioClip::FILE_EXTENSIONS);
 	}
 
 	void Inspector::update(bool& _show, Registry& _registry, ResourceManager& _resource_manager, const ERef _entity) {
@@ -44,7 +57,7 @@ namespace dce::gui::widgets {
 			[[likely]] if (BeginChild("", {.0, -footer_height_to_reserve}, false)) {
 				[[likely]] if (_registry.has<MetaData>(_entity)) {
 					auto& meta = _registry.get<MetaData>(_entity);
-					[[likely]] if (CollapsingHeader(ICON_FA_COGS " Metadata")) {
+					[[likely]] if (CollapsingHeader(ICON_FA_COGS " Metadata", ImGuiTreeNodeFlags_DefaultOpen)) {
 						std::strncpy(this->string_buffer_.data(), meta.name.data(), BUFFER_SIZE);
 						if (InputText("Name", this->string_buffer_.data(), BUFFER_SIZE)) {
 							meta.name = this->string_buffer_.data();
@@ -68,7 +81,7 @@ namespace dce::gui::widgets {
 				}
 				[[likely]] if (_registry.has<Transform>(_entity)) {
 					auto& transform = _registry.get<Transform>(_entity);
-					[[likely]] if (CollapsingHeader(ICON_FA_MAP_MARKER_ALT " Transform ")) {
+					[[likely]] if (CollapsingHeader(ICON_FA_MAP_MARKER_ALT " Transform ", ImGuiTreeNodeFlags_DefaultOpen)) {
 						[[unlikely]] if (Button(ICON_FA_ARROWS)) {
 							this->modifier_ = ImGuizmo::TRANSLATE;
 						}
@@ -80,24 +93,23 @@ namespace dce::gui::widgets {
 						[[unlikely]] if (Button(ICON_FA_EXPAND)) {
 							this->modifier_ = ImGuizmo::SCALE;
 						}
-						/*
 						Separator();
-			  
+
 						DragFloat3("Position", value_ptr(transform.position));
-			  
-						Vec3 euler_angles = eulerAngles(transform.rotation);
+
+						Vector3<> euler_angles = eulerAngles(transform.rotation);
 						euler_angles.x = math::degrees(euler_angles.x);
 						euler_angles.y = math::degrees(euler_angles.y);
 						euler_angles.z = math::degrees(euler_angles.z);
 						[[unlikely]] if (DragFloat3("Rotation", value_ptr(euler_angles))) {
-						        euler_angles.x = math::radians(euler_angles.x);
-						        euler_angles.y = math::radians(euler_angles.y);
-						        euler_angles.z = math::radians(euler_angles.z);
-						        transform.rotation = Quaternion(euler_angles);
+							euler_angles.x = math::radians(euler_angles.x);
+							euler_angles.y = math::radians(euler_angles.y);
+							euler_angles.z = math::radians(euler_angles.z);
+							transform.rotation = Quaternion<>(euler_angles);
 						}
-			  
+
 						DragFloat3("Scale ", value_ptr(transform.scale));
-						*/
+						/*
 						auto matrix = transform.calculate_matrix();
 						ImGuizmo::Enable(true);
 						ImGuizmo::BeginFrame();
@@ -108,11 +120,12 @@ namespace dce::gui::widgets {
 							glm::vec4 perspective;
 							decompose(matrix, transform.scale, transform.rotation, transform.position, skew, perspective);
 						}
+						*/
 					}
 				}
 				[[likely]] if (_registry.has<MeshRenderer>(_entity)) {
 					auto& renderer = _registry.get<MeshRenderer>(_entity);
-					[[likely]] if (CollapsingHeader(ICON_FA_CUBE " Mesh Renderer")) {
+					[[likely]] if (CollapsingHeader(ICON_FA_CUBE " Mesh Renderer", ImGuiTreeNodeFlags_DefaultOpen)) {
 						Checkbox("Visible", &renderer.is_visible);
 
 						{
@@ -123,7 +136,7 @@ namespace dce::gui::widgets {
 							SameLine();
 							if (embedded_button(ICON_FA_FOLDER_OPEN "##mesh")) {
 								char* path = nullptr;
-								open_file_dialog(path, MESH_FILE_FILTER, this->current_path_.c_str());
+								open_file_dialog(path, this->mesh_filer_.c_str(), this->current_path_.c_str());
 								[[likely]] if (path) {
 									renderer.mesh = _resource_manager.load<Mesh>(path);
 								}
@@ -141,7 +154,7 @@ namespace dce::gui::widgets {
 							SameLine();
 							if (embedded_button(ICON_FA_FOLDER_OPEN "##tex")) {
 								char* path = nullptr;
-								open_file_dialog(path, TEX_FILE_FILTER, this->current_path_.c_str());
+								open_file_dialog(path, this->texture_filer_.c_str(), this->current_path_.c_str());
 								[[likely]] if (path) {
 									props.albedo = _resource_manager.load<Texture>(path);
 								}
@@ -156,20 +169,45 @@ namespace dce::gui::widgets {
 							SameLine();
 							if (embedded_button(ICON_FA_FOLDER_OPEN "##tex2")) {
 								char* path = nullptr;
-								open_file_dialog(path, TEX_FILE_FILTER, this->current_path_.c_str());
+								open_file_dialog(path, this->texture_filer_.c_str(), this->current_path_.c_str());
 								[[likely]] if (path) {
 									props.albedo = _resource_manager.load<Texture>(path);
 								}
 							}
-							ColorPicker4("Diffuse Color", value_ptr(props.color), ImGuiColorEditFlags_PickerHueWheel);
+							ColorEdit3("Diffuse Color", value_ptr(props.color), ImGuiColorEditFlags_PickerHueWheel | ImGuiColorEditFlags_NoInputs);
 						}
 					}
 				}
-				[[likely]] if (_registry.has<Rigidbody>(_entity)) {
+				[[unlikely]] if (_registry.has<Rigidbody>(_entity)) {
 					auto& rigidbody = _registry.get<Rigidbody>(_entity);
-					[[likely]] if (CollapsingHeader(ICON_FA_GLOBE " Rigidbody")) {
+					[[likely]] if (CollapsingHeader(ICON_FA_GLOBE " Rigidbody", ImGuiTreeNodeFlags_DefaultOpen)) {
 						DragFloat("Mass", &rigidbody.mass);
 						Checkbox("Is Kinematic", &rigidbody.is_kinematic);
+					}
+				}
+
+				[[unlikely]] if (_registry.has<AudioSource>(_entity)) {
+					auto& audio_source = _registry.get<AudioSource>(_entity);
+					[[likely]] if (CollapsingHeader(ICON_FA_VOLUME " Audio Source", ImGuiTreeNodeFlags_DefaultOpen)) {
+						[[unlikely]] if (Button(ICON_FA_PLAY_CIRCLE)) {
+							audio_source.play();
+						}
+						SameLine();
+						[[unlikely]] if (Button(ICON_FA_STOP_CIRCLE)) {
+							audio_source.stop();
+						}
+						const auto file_name = audio_source.clip->get_file_path().filename().string();
+						TextUnformatted(file_name.c_str());
+						SameLine();
+						TextUnformatted("Clip");
+						SameLine();
+						if (embedded_button(ICON_FA_FOLDER_OPEN "##clip")) {
+							char* path = nullptr;
+							open_file_dialog(path, this->audio_filter_.c_str(), this->current_path_.c_str());
+							[[likely]] if (path) {
+								audio_source.clip = _resource_manager.load<AudioClip>(path);
+							}
+						}
 					}
 				}
 				EndChild();

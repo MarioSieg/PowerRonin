@@ -24,7 +24,7 @@ namespace dce {
 		_j["display_maximize"] = this->display.maximize;
 
 		_j["overlay_font_size"] = this->overlay.font_size;
-		_j["overlay_style"] = this->overlay.style;
+		_j["overlay_theme"] = this->overlay.theme;
 		_j["overlay_antialiasing"] = this->overlay.enable_antialiasing;
 		_j["overlay_transparency"] = this->overlay.transparency;
 		_j["overlay_rounding"] = this->overlay.rounding;
@@ -37,7 +37,7 @@ namespace dce {
 		this->display.maximize = _j["display_maximize"];
 
 		this->overlay.font_size = _j["overlay_font_size"];
-		this->overlay.style = _j["overlay_style"];
+		this->overlay.theme = _j["overlay_theme"];
 		this->overlay.enable_antialiasing = _j["overlay_antialiasing"];
 		this->overlay.transparency = _j["overlay_transparency"];
 		this->overlay.rounding = _j["overlay_rounding"];
