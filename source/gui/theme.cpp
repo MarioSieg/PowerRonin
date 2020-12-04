@@ -317,31 +317,31 @@ namespace dce::gui {
 		style.Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.80F, 0.80F, 0.80F, 0.35F);
 	}
 
-	void style_alpha_apply(const float alpha) noexcept {
+	void style_alpha_apply(const float _alpha) noexcept {
 		auto& style = ImGui::GetStyle();
-		style.Alpha = alpha;
+		style.Alpha = _alpha;
 	}
 
-	void style_antialiasing_apply(const bool enable_aa) noexcept {
+	void style_antialiasing_apply(const bool _enable_aa) noexcept {
 		auto& style = ImGui::GetStyle();
-		style.AntiAliasedFill = enable_aa;
-		style.AntiAliasedLines = enable_aa;
-		style.AntiAliasedLinesUseTex = enable_aa;
+		style.AntiAliasedFill = _enable_aa;
+		style.AntiAliasedLines = _enable_aa;
+		style.AntiAliasedLinesUseTex = _enable_aa;
 	}
 
-	void style_rounding_apply(const float rounding) noexcept {
+	void style_rounding_apply(const float _rounding) noexcept {
 		auto& style = ImGui::GetStyle();
-		style.ChildRounding = rounding;
-		style.FrameRounding = rounding;
-		style.GrabRounding = rounding;
-		style.PopupRounding = rounding;
-		style.ScrollbarRounding = rounding;
-		style.TabRounding = rounding;
-		style.WindowRounding = rounding;
+		style.ChildRounding = _rounding;
+		style.FrameRounding = _rounding;
+		style.GrabRounding = _rounding;
+		style.PopupRounding = _rounding;
+		style.ScrollbarRounding = _rounding;
+		style.TabRounding = _rounding;
+		style.WindowRounding = _rounding;
 	}
 
-	void style_apply(const SystemTheme style) noexcept {
-		switch (style) {
+	void style_apply(const SystemTheme _style) noexcept {
+		switch (_style) {
 		case SystemTheme::DARK: style_dark();
 			return;
 		case SystemTheme::BLUE: style_blue();

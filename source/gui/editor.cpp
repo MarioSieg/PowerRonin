@@ -110,18 +110,18 @@ namespace dce::gui {
 		DockBuilderSetNodeSize(this->dockspace_id_, GetMainViewport()->Size);
 		auto main_id = this->dockspace_id_;
 
-		const auto dock_id_bottom = DockBuilderSplitNode(this->dockspace_id_, ImGuiDir_Down, .20f, nullptr, &main_id);
-		const auto dock_id_left = DockBuilderSplitNode(this->dockspace_id_, ImGuiDir_Left, .20f, nullptr, &main_id);
-		const auto dock_id_right = DockBuilderSplitNode(this->dockspace_id_, ImGuiDir_Right, .20f, nullptr, &main_id);
+		const auto dock_id_left = DockBuilderSplitNode(main_id, ImGuiDir_Left, .20f, nullptr, &main_id);
+		const auto dock_id_right = DockBuilderSplitNode(main_id, ImGuiDir_Right, .20f, nullptr, &main_id);
+		const auto dock_id_bottom = DockBuilderSplitNode(main_id, ImGuiDir_Down, .20f, nullptr, &main_id);
+
+		DockBuilderDockWindow(RESOURCE_VIEWER_NAME, dock_id_left);
+		DockBuilderDockWindow(HIERARCHY_NAME, dock_id_left);
+
+		DockBuilderDockWindow(CONFIG_EDITOR_NAME, dock_id_right);
+		DockBuilderDockWindow(INSPECTOR_NAME, dock_id_right);
 
 		DockBuilderDockWindow(TERMINAL_NAME, dock_id_bottom);
 		DockBuilderDockWindow(PROFILER_NAME, dock_id_bottom);
-
-		DockBuilderDockWindow(HIERARCHY_NAME, dock_id_left);
-		DockBuilderDockWindow(RESOURCE_VIEWER_NAME, dock_id_left);
-
-		DockBuilderDockWindow(INSPECTOR_NAME, dock_id_right);
-		DockBuilderDockWindow(CONFIG_EDITOR_NAME, dock_id_right);
 
 		DockBuilderFinish(this->dockspace_id_);
 	}

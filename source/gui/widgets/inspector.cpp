@@ -130,17 +130,17 @@ namespace dce::gui::widgets {
 
 						{
 							const auto file_name = renderer.mesh->get_file_path().filename().string();
-							TextUnformatted(file_name.c_str());
-							SameLine();
-							TextUnformatted("Mesh");
-							SameLine();
-							if (embedded_button(ICON_FA_FOLDER_OPEN "##mesh")) {
+							PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
+							if (Button(file_name.c_str())) {
 								char* path = nullptr;
 								open_file_dialog(path, this->mesh_filer_.c_str(), this->current_path_.c_str());
 								[[likely]] if (path) {
 									renderer.mesh = _resource_manager.load<Mesh>(path);
 								}
 							}
+							PopStyleColor();
+							SameLine();
+							TextUnformatted("Mesh");
 						}
 
 						Separator();
@@ -148,32 +148,32 @@ namespace dce::gui::widgets {
 						if (*renderer.material == MaterialType::UNLIT) {
 							auto& props = renderer.material->get<Material::Unlit>();
 							const auto file_name = props.albedo->get_file_path().filename().string();
-							TextUnformatted(file_name.c_str());
-							SameLine();
-							TextUnformatted("Albedo");
-							SameLine();
-							if (embedded_button(ICON_FA_FOLDER_OPEN "##tex")) {
+							PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
+							if (Button(file_name.c_str())) {
 								char* path = nullptr;
 								open_file_dialog(path, this->texture_filer_.c_str(), this->current_path_.c_str());
 								[[likely]] if (path) {
 									props.albedo = _resource_manager.load<Texture>(path);
 								}
 							}
+							PopStyleColor();
+							SameLine();
+							TextUnformatted("Albedo");
 						}
 						else if (*renderer.material == MaterialType::LAMBERT) {
 							auto& props = renderer.material->get<Material::Lambert>();
 							const auto file_name = props.albedo->get_file_path().filename().string();
-							TextUnformatted(file_name.c_str());
-							SameLine();
-							TextUnformatted("Albedo");
-							SameLine();
-							if (embedded_button(ICON_FA_FOLDER_OPEN "##tex2")) {
+							PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
+							if (Button(file_name.c_str())) {
 								char* path = nullptr;
 								open_file_dialog(path, this->texture_filer_.c_str(), this->current_path_.c_str());
 								[[likely]] if (path) {
 									props.albedo = _resource_manager.load<Texture>(path);
 								}
 							}
+							PopStyleColor();
+							SameLine();
+							TextUnformatted("Albedo");
 							ColorEdit3("Diffuse Color", value_ptr(props.color), ImGuiColorEditFlags_PickerHueWheel | ImGuiColorEditFlags_NoInputs);
 						}
 					}
@@ -197,17 +197,18 @@ namespace dce::gui::widgets {
 							audio_source.stop();
 						}
 						const auto file_name = audio_source.clip->get_file_path().filename().string();
-						TextUnformatted(file_name.c_str());
-						SameLine();
-						TextUnformatted("Clip");
-						SameLine();
-						if (embedded_button(ICON_FA_FOLDER_OPEN "##clip")) {
+
+						PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
+						if (Button(file_name.c_str())) {
 							char* path = nullptr;
 							open_file_dialog(path, this->audio_filter_.c_str(), this->current_path_.c_str());
 							[[likely]] if (path) {
 								audio_source.clip = _resource_manager.load<AudioClip>(path);
 							}
 						}
+						PopStyleColor();
+						SameLine();
+						TextUnformatted("Clip");
 					}
 				}
 				EndChild();

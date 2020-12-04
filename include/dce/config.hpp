@@ -53,7 +53,7 @@ namespace dce {
 			std::uint8_t font_size = 24;
 			SystemTheme theme = SystemTheme::DARK;
 			bool enable_antialiasing = true;
-			float transparency = 1.5F;
+			float transparency = 1.F;
 			float rounding = 4.F;
 		} overlay;
 

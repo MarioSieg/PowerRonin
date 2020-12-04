@@ -40,11 +40,11 @@ namespace dce {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload texture!");
 		}
 
-		[[unlikely]] if (!isTextureValid(1, false, 1, format, BGFX_TEXTURE_NONE)) {
+		[[unlikely]] if (!isTextureValid(1, this->is_cubemap_, this->layer_count_, format, BGFX_TEXTURE_NONE)) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload texture!");
 		}
 
-		const bgfx::TextureHandle texture_handle = this->is_cubemap_ ? createTextureCube(this->width_, this->mipmap_count_ > 1, this->layer_count_, format, 0, mem) : createTexture2D(this->width_, this->height_, this->mipmap_count_ > 1, this->layer_count_, format, 0, mem);
+		const bgfx::TextureHandle texture_handle = this->is_cubemap_ ? createTextureCube(this->width_, false, this->layer_count_, format, 0, mem) : createTexture2D(this->width_, this->height_, this->mipmap_count_ > 1, this->layer_count_, format, 0, mem);
 		[[unlikely]] if (!isValid(texture_handle)) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload texture!");
 		}
@@ -96,7 +96,7 @@ namespace dce {
 			imageFree(image);
 
 			bgfx::TextureInfo info = {};
-			calcTextureSize(info, static_cast<std::uint16_t>(self->width_), static_cast<std::uint16_t>(self->height_), 1, false, self->mipmap_count_, 1, static_cast<bgfx::TextureFormat::Enum>(self->format_));
+			calcTextureSize(info, static_cast<std::uint16_t>(self->width_), static_cast<std::uint16_t>(self->height_), 1, self->is_cubemap_, self->mipmap_count_ > 1, 1, static_cast<bgfx::TextureFormat::Enum>(self->format_));
 
 			self->size_ = info.storageSize;
 			self->bits_per_pel_ = info.bitsPerPixel;
