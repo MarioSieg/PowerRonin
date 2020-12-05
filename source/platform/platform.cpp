@@ -313,6 +313,7 @@ namespace dce::platform {
 
 	auto Platform::on_post_startup(Runtime& _rt) -> bool {
 		this->splash_screen_.close();
+		glfwFocusWindow(this->window_);
 		[[likely]] if (_rt.config().display.maximize) {
 			glfwMaximizeWindow(this->window_);
 		}
@@ -320,22 +321,22 @@ namespace dce::platform {
 		return true;
 	}
 
-	auto Platform::on_pre_tick(Runtime& /*unused*/) -> bool {
+	auto Platform::on_pre_tick(Runtime&) -> bool {
 		glfwPollEvents();
 		return true;
 	}
 
-	auto Platform::on_post_tick(Runtime& /*unused*/) -> bool {
+	auto Platform::on_post_tick(Runtime&) -> bool {
 		/* Return false to quit if the window is closed: */
-		return glfwWindowShouldClose(this->window_) == 0;
+		return glfwWindowShouldClose(this->window_) == GLFW_FALSE;
 	}
 
-	auto Platform::on_pre_shutdown(Runtime& /*unused*/) -> bool {
+	auto Platform::on_pre_shutdown(Runtime&) -> bool {
 		glfwHideWindow(this->window_);
 		return true;
 	}
 
-	auto Platform::on_post_shutdown(Runtime& /*unused*/) -> bool {
+	auto Platform::on_post_shutdown(Runtime&) -> bool {
 		/* Destroy the window: */
 		glfwDestroyWindow(this->window_);
 

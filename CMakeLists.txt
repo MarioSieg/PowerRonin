@@ -172,8 +172,9 @@ add_library(
 
 include("extern/CMakeLists.txt")
 
-add_executable("dreamcreator" WIN32 "entry.cpp")
-target_link_libraries("dreamcreator" "dreamcast_runtime")
+set_property(TARGET "dreamcast_runtime" PROPERTY "MSVC_RUNTIME_LIBRARY" "MultiThreaded")
 
 add_executable("dreamcast" WIN32 "entry.cpp")
 target_link_libraries("dreamcast" "dreamcast_runtime")
+
+set_property(TARGET "dreamcast" PROPERTY "MSVC_RUNTIME_LIBRARY" "MultiThreaded")
