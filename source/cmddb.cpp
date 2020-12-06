@@ -226,10 +226,11 @@ namespace dce {
 		/* reload system resources */
 		{
 			auto functor = [ ](Runtime& _rt, [[maybe_unused]] std::string&& _args) -> bool {
+				_rt.resource_manager().unload_all_resources();
 				_rt.resource_manager().system_resources.load_all(_rt.resource_manager());
 				return true;
 			};
-			registry += Command{.token = "relsysres", .help = "Reload system resources.", .functor = +functor};
+			registry += Command{.token = "rr", .help = "Reload system resources.", .functor = +functor};
 		}
 	}
 } // namespace dce // namespace dce

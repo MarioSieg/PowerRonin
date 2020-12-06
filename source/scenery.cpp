@@ -39,8 +39,9 @@ namespace dce {
 			auto& collider = this->registry_.emplace<Collider>(cube);
 
 			meta.name = "Cube";
-
-			renderer.material = Material::create_from_data(Material::Lambert{.albedo = _resource_manager.system_resources.checkerboard, .color = {1, 1, 1, 1}}, "lambert", _resource_manager);
+			Material::Lambert lambert;
+			Material::get_default_properties(lambert, _resource_manager);
+			renderer.material = Material::create_from_data(lambert, "cube", _resource_manager);
 			renderer.mesh = _resource_manager.system_resources.cube;
 			AudioClipMeta aumeta = {};
 			aumeta.enable_3d_sound = false;
@@ -59,8 +60,9 @@ namespace dce {
 			meta.name = "Platform";
 			transform.position.y = -1.f;
 			transform.scale *= 3.f;
-
-			renderer.material = Material::create_from_data(Material::Lambert{.albedo = _resource_manager.system_resources.checkerboard, .color = {1, 1, 1, 1}}, "lambert", _resource_manager);
+			Material::Lambert lambert;
+			Material::get_default_properties(lambert, _resource_manager);
+			renderer.material = Material::create_from_data(lambert, "platform", _resource_manager);
 			renderer.mesh = _resource_manager.load<Mesh>("meshes/common/platform.obj");
 		}
 

@@ -17,8 +17,10 @@
 
 namespace dce {
 	void SystemResources::load_all(ResourceManager& _importeur) {
-		this->black_1x1 = _importeur.load<Texture>(std::filesystem::absolute("textures/common/unit/black.png"));
-		this->white_1x1 = _importeur.load<Texture>(std::filesystem::absolute("textures/common/unit/white.png"));
+		this->empty_black_1x1 = _importeur.load<Texture>(std::filesystem::absolute("textures/common/unit/black.png"));
+		this->empty_white_1x1 = _importeur.load<Texture>(std::filesystem::absolute("textures/common/unit/white.png"));
+		this->empty_normal_1x1 = _importeur.load<Texture>(std::filesystem::absolute("textures/common/unit/normal.png"));
+		this->empty_pbr_1x1 = _importeur.load<Texture>(std::filesystem::absolute("textures/common/unit/pbr.png"));
 		this->error_marker = _importeur.load<Texture>(std::filesystem::absolute("textures/common/invalid.dds"));
 		this->checkerboard = _importeur.load<Texture>(std::filesystem::absolute("textures/common/checkerboard.dds"));
 		this->error_text = _importeur.load<Mesh>(std::filesystem::absolute("meshes/common/invalid.obj"));

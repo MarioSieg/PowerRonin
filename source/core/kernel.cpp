@@ -91,7 +91,7 @@ namespace dce::core {
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Bad \"on_pre_startup\" call!");
 			}
 			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
-			proto.info("OK! \"on_pre_startup\" invoked! {}s elapsed!", std::get<1>(*sys)->pre_startup_time = dur);
+			proto.info("OK! \"on_pre_startup\" invoked! {}s elapsed!", std::get<1>(*sys)->pre_startup_time_ = dur);
 		}
 
 		/* Startup state. */
@@ -112,7 +112,7 @@ namespace dce::core {
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Bad \"on_post_startup\" call!");
 			}
 			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
-			proto.info("OK! \"on_post_startup\" invoked! {}s elapsed!", std::get<1>(*sys)->post_startup_time = dur);
+			proto.info("OK! \"on_post_startup\" invoked! {}s elapsed!", std::get<1>(*sys)->post_startup_time_ = dur);
 		}
 
 		proto.separator();
@@ -150,7 +150,7 @@ namespace dce::core {
 					return false;
 				}
 				const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
-				std::get<1>(*sys)->pre_tick_time = dur;
+				std::get<1>(*sys)->pre_tick_time_ = dur;
 			}
 
 			/* Invoke "on_post_tick()" on all subsystems, which have this event registered. */
@@ -160,7 +160,7 @@ namespace dce::core {
 					return false;
 				}
 				const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
-				std::get<1>(*sys)->post_tick_time = dur;
+				std::get<1>(*sys)->post_tick_time_ = dur;
 			}
 
 			/* Update hook. */
@@ -203,7 +203,7 @@ namespace dce::core {
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Bad \"on_pre_shutdown\" call!");
 			}
 			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
-			std::get<1>(*sys)->pre_shutdown_time = dur;
+			std::get<1>(*sys)->pre_shutdown_time_ = dur;
 		}
 
 		/* Invoke "on_post_shutdown()" on all subsystems, which have this event registered. */
@@ -215,7 +215,7 @@ namespace dce::core {
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Bad \"on_post_shutdown\" call!");
 			}
 			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
-			std::get<1>(*sys)->post_shutdown_time = dur;
+			std::get<1>(*sys)->post_shutdown_time_ = dur;
 		}
 
 		delete this->core_->runtime;

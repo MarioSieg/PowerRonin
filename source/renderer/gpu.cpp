@@ -114,14 +114,14 @@ namespace dce::renderer {
 		setVertexBuffer(0, vb_buffer);
 	}
 
-	void GPU::set_texture(const Texture& _texture, const bgfx::UniformHandle _sampler) const noexcept {
+	void GPU::set_texture(const Texture& _texture, const bgfx::UniformHandle _sampler, const std::uint8_t _stage) const noexcept {
 		assert(_texture.is_uploaded());
 
 		const auto view = bgfx::TextureHandle{_texture.get_texel_buffer_id()};
 
 		assert(bgfx::isValid(view));
 
-		setTexture(0, _sampler, view);
+		setTexture(_stage, _sampler, view);
 	}
 
 	void GPU::draw(const bgfx::ProgramHandle _shader, const bgfx::ViewId _view_id, const std::uint64_t _state_flags, const std::uint8_t _depth) const noexcept {

@@ -59,22 +59,22 @@ namespace dce::gui::widgets {
 					auto& meta = _registry.get<MetaData>(_entity);
 					[[likely]] if (CollapsingHeader(ICON_FA_COGS " Metadata", ImGuiTreeNodeFlags_DefaultOpen)) {
 						std::strncpy(this->string_buffer_.data(), meta.name.data(), BUFFER_SIZE);
-						if (InputText("Name", this->string_buffer_.data(), BUFFER_SIZE)) {
+						[[unlikely]] if (InputText("Name", this->string_buffer_.data(), BUFFER_SIZE)) {
 							meta.name = this->string_buffer_.data();
 						}
 
 						std::strncpy(this->string_buffer_.data(), meta.description.data(), BUFFER_SIZE);
-						if (InputText("Description", this->string_buffer_.data(), BUFFER_SIZE)) {
+						[[unlikely]] if (InputText("Description", this->string_buffer_.data(), BUFFER_SIZE)) {
 							meta.description = this->string_buffer_.data();
 						}
 
 						int tag = static_cast<int>(meta.tag);
-						if (InputInt("Tag", &tag)) {
+						[[unlikely]] if (InputInt("Tag", &tag)) {
 							meta.tag = static_cast<std::uint16_t>(tag);
 						}
 
 						int layer = static_cast<int>(meta.layer);
-						if (InputInt("Layer", &layer)) {
+						[[unlikely]] if (InputInt("Layer", &layer)) {
 							meta.layer = static_cast<std::uint16_t>(layer);
 						}
 					}
@@ -142,8 +142,45 @@ namespace dce::gui::widgets {
 							SameLine();
 							TextUnformatted("Mesh");
 						}
+					}
 
-						Separator();
+
+					[[likely]] if (CollapsingHeader(ICON_FA_ADJUST " Material", ImGuiTreeNodeFlags_DefaultOpen)) {
+
+						constexpr static const char* const material_names[] = {"Unlit", "Lambert"};
+
+						auto current = static_cast<int>(renderer.material->get_material_type());
+						const auto prev = current;
+						[[unlikely]] if (BeginCombo("Shader", material_names[current])) {
+							for (int i = 0; i < sizeof material_names / sizeof *material_names; ++i) {
+								if (Selectable(material_names[i], current == i)) {
+									current = i;
+								}
+								if (current == i) {
+									SetItemDefaultFocus();
+								}
+							}
+							EndCombo();
+						}
+
+						[[unlikely]] if (current != prev) {
+							const auto mat = static_cast<MaterialType>(current);
+							switch (mat) {
+							case MaterialType::UNLIT: {
+								Material::Unlit properties{};
+								Material::get_default_properties(properties, _resource_manager);
+								renderer.material->set(std::move(properties));
+							}
+							break;
+
+							case MaterialType::LAMBERT: {
+								Material::Lambert properties{};
+								Material::get_default_properties(properties, _resource_manager);
+								renderer.material->set(std::move(properties));
+							}
+							break;
+							}
+						}
 
 						if (*renderer.material == MaterialType::UNLIT) {
 							auto& props = renderer.material->get<Material::Unlit>();
@@ -172,9 +209,6 @@ namespace dce::gui::widgets {
 								}
 							}
 							PopStyleColor();
-							SameLine();
-							TextUnformatted("Albedo");
-							ColorEdit3("Diffuse Color", value_ptr(props.color), ImGuiColorEditFlags_PickerHueWheel | ImGuiColorEditFlags_NoInputs);
 						}
 					}
 				}

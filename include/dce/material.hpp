@@ -64,7 +64,7 @@ namespace dce {
 		/// </summary>
 		struct Lambert final {
 			RRef<Texture> albedo = {};
-			Color<> color = {};
+			RRef<Texture> normal = {};
 		};
 
 		/// <summary>
@@ -132,6 +132,7 @@ namespace dce {
 		/// Deserialize properties from file.
 		/// </summary>
 		/// <param name="_j"></param>
+		/// <param name="_rm"></param>
 		void deserialize(const JsonStream& _j, ResourceManager& _rm);
 
 		/// <summary>
@@ -154,7 +155,7 @@ namespace dce {
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
 		template <typename T>
-		[[nodiscard]] auto get() const noexcept -> const T&;
+		[[nodiscard]] auto get() const -> const T&;
 
 		/// <summary>
 		/// Returns the material type data, if valid.
@@ -162,7 +163,7 @@ namespace dce {
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
 		template <typename T>
-		[[nodiscard]] auto get() noexcept -> T&;
+		[[nodiscard]] auto get() -> T&;
 
 		/// <summary>
 		/// Sets the material to a new type with new data.
@@ -180,18 +181,35 @@ namespace dce {
 		/// <returns></returns>
 		void set(Properties&& _props) noexcept;
 
+		/// <summary>
+		/// Set all default properties via type.
+		/// </summary>
+		/// <param name="_type"></param>
+		/// <returns></returns>
+		void set(const MaterialType _type) noexcept;
+
+		/// <summary>
+		/// Get default properties for material type.
+		/// </summary>
+		static void get_default_properties(Unlit& _mat, ResourceManager& _rm) noexcept;
+
+		/// <summary>
+		/// Get default properties for material type.
+		/// </summary>
+		static void get_default_properties(Lambert& _mat, ResourceManager& _rm) noexcept;
+
 	private:
 		Properties properties_ = {Unlit{}};
 		MaterialType mat_type_ = MaterialType::UNLIT;
 	};
 
 	template <typename T>
-	inline auto Material::get() const noexcept -> const T& {
+	inline auto Material::get() const -> const T& {
 		return std::get<T>(this->properties_);
 	}
 
 	template <typename T>
-	inline auto Material::get() noexcept -> T& {
+	inline auto Material::get() -> T& {
 		return std::get<T>(this->properties_);
 	}
 

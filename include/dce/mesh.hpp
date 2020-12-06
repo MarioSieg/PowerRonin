@@ -38,6 +38,18 @@ namespace dce {
 			float y = .0f;
 			float z = .0f;
 		} normal = {};
+
+		struct {
+			float x = .0f;
+			float y = .0f;
+			float z = .0f;
+		} tangent = {};
+
+		struct {
+			float x = .0f;
+			float y = .0f;
+			float z = .0f;
+		} bitangent = {};
 	};
 
 	struct MeshMeta final : ISerializable {

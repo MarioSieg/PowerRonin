@@ -30,6 +30,7 @@ namespace dce::renderer::shaders {
 
 	private:
 		bgfx::UniformHandle u_s_tex_color_ = {bgfx::kInvalidHandle};
+		bgfx::UniformHandle u_s_normal_map = {bgfx::kInvalidHandle};
 		bgfx::UniformHandle u_mat_color_ = {bgfx::kInvalidHandle};
 		bgfx::UniformHandle u_light_dir_ = {bgfx::kInvalidHandle};
 		bgfx::UniformHandle u_ambient_color_ = {bgfx::kInvalidHandle};

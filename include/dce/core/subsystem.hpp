@@ -42,7 +42,7 @@ namespace dce {
 			friend class Kernel;
 
 		protected:
-			ISubsystem(std::string_view name, std::underlying_type<ServiceEvents::Enum>::type subscribed_events) noexcept;
+			ISubsystem(const std::string_view _name, const std::underlying_type<ServiceEvents::Enum>::type _subscribed_events) noexcept;
 
 		public:
 			/* Name of the subsystem */
@@ -54,7 +54,7 @@ namespace dce {
 			/* 16-bit short UUID for this subsystem */
 			const std::uint_fast16_t id;
 
-			/* Delete copy and move constructor and assignment operators */
+			/* Delete copy, move constructors and assignment operators */
 			ISubsystem(const ISubsystem&) = delete;
 			ISubsystem(ISubsystem&&) = delete;
 			auto operator=(const ISubsystem&) -> ISubsystem& = delete;
@@ -83,25 +83,25 @@ namespace dce {
 
 
 		protected:
-			[[nodiscard]] virtual auto on_pre_startup(Runtime& /*unused*/) -> bool;
+			[[nodiscard]] virtual auto on_pre_startup([[maybe_unused]] Runtime&) -> bool;
 
-			[[nodiscard]] virtual auto on_post_startup(Runtime& /*unused*/) -> bool;
+			[[nodiscard]] virtual auto on_post_startup([[maybe_unused]] Runtime&) -> bool;
 
-			[[nodiscard]] virtual auto on_pre_tick(Runtime& /*unused*/) -> bool;
+			[[nodiscard]] virtual auto on_pre_tick([[maybe_unused]] Runtime&) -> bool;
 
-			[[nodiscard]] virtual auto on_post_tick(Runtime& /*unused*/) -> bool;
+			[[nodiscard]] virtual auto on_post_tick([[maybe_unused]] Runtime&) -> bool;
 
-			[[nodiscard]] virtual auto on_pre_shutdown(Runtime& /*unused*/) -> bool;
+			[[nodiscard]] virtual auto on_pre_shutdown([[maybe_unused]] Runtime&) -> bool;
 
-			[[nodiscard]] virtual auto on_post_shutdown(Runtime& /*unused*/) -> bool;
+			[[nodiscard]] virtual auto on_post_shutdown([[maybe_unused]] Runtime&) -> bool;
 
 		private:
-			double pre_startup_time = 0.;
-			double post_startup_time = 0.;
-			double pre_tick_time = 0.;
-			double post_tick_time = 0.;
-			double pre_shutdown_time = 0.;
-			double post_shutdown_time = 0.;
+			double pre_startup_time_ = 0.;
+			double post_startup_time_ = 0.;
+			double pre_tick_time_ = 0.;
+			double post_tick_time_ = 0.;
+			double pre_shutdown_time_ = 0.;
+			double post_shutdown_time_ = 0.;
 		};
 	} // namespace core // namespace core
 } // namespace dce // namespace dce

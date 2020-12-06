@@ -30,7 +30,6 @@ namespace dce {
 		case MaterialType::LAMBERT: {
 			const auto& props = this->get<Lambert>();
 			_j["_albedo"] = props.albedo->get_file_path().string();
-			_j["_albedo_color"] = std::make_tuple(props.color.r, props.color.g, props.color.b, props.color.a);
 		}
 		break;
 		}
@@ -47,8 +46,6 @@ namespace dce {
 		case MaterialType::LAMBERT: {
 			auto& lambert = this->get<Lambert>();
 			lambert.albedo = _rm.load<Texture>(std::string(_j["_albedo"]));
-			const std::tuple<float, float, float, float> albedo_color = _j["_albedo_color"];
-			lambert.color = {std::get<0>(albedo_color), std::get<1>(albedo_color), std::get<2>(albedo_color), std::get<3>(albedo_color)};
 		}
 		break;
 		}
@@ -70,6 +67,25 @@ namespace dce {
 			this->mat_type_ = MaterialType::LAMBERT;
 		}
 		this->properties_ = std::move(_props);
+	}
+
+	void Material::set(const MaterialType _type) noexcept {
+		switch (_type) {
+		case MaterialType::UNLIT: this->properties_ = Unlit{};
+			break;
+		case MaterialType::LAMBERT: this->properties_ = Lambert{};
+			break;
+		}
+		this->mat_type_ = _type;
+	}
+
+	void Material::get_default_properties(Unlit& _mat, ResourceManager& _rm) noexcept {
+		_mat.albedo = _rm.system_resources.checkerboard;
+	}
+
+	void Material::get_default_properties(Lambert& _mat, ResourceManager& _rm) noexcept {
+		_mat.albedo = _rm.system_resources.checkerboard;
+		_mat.normal = _rm.system_resources.empty_normal_1x1;
 	}
 
 	auto MaterialImporteur::load(std::filesystem::path&& _path, const MaterialMeta* const _meta) const -> std::shared_ptr<Material> {

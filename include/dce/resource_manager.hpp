@@ -27,8 +27,10 @@ namespace dce {
 	/// Contains all resources needed by the engine.
 	/// </summary>
 	struct SystemResources {
-		RRef<Texture> black_1x1 = {};
-		RRef<Texture> white_1x1 = {};
+		RRef<Texture> empty_black_1x1 = {};
+		RRef<Texture> empty_white_1x1 = {};
+		RRef<Texture> empty_normal_1x1 = {};
+		RRef<Texture> empty_pbr_1x1 = {};
 		RRef<Texture> error_marker = {};
 		RRef<Texture> checkerboard = {};
 		RRef<Mesh> error_text = {};

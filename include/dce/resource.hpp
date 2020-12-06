@@ -19,6 +19,8 @@
 #include "serial.hpp"
 #include <filesystem>
 
+#include "utils.hpp"
+
 namespace dce {
 	/// <summary>
 	/// Base class for all runtime resources.
@@ -82,14 +84,16 @@ namespace dce {
 		/// </summary>
 		/// <typeparam name="T">The type of resource.</typeparam>
 		/// <typeparam name="...Q">The constructor arguments.</typeparam>
-		/// <param name="..._args">The constructor arguments.</param>
+		/// <param name="_x">The constructor arguments.</param>
 		/// <returns>The shared_ptr with the allocated resource.</returns>
-		template <typename T, typename... Q> requires std::is_base_of_v<IResource<M>, T> [[nodiscard]] inline static auto allocate(Q&&... _args) -> std::shared_ptr<T> {
-			return std::shared_ptr<T>(new T(_args...), [](T* const _ptr) {
-				[[likely]] if (_ptr) {
-					_ptr->offload();
-					delete _ptr;
-				}
+		template <typename T, typename... Q> requires requires {
+			requires std::is_base_of_v<IResource<M>, T>; requires std::is_constructible_v<T, Q...>;
+		} [[nodiscard]] inline static auto allocate(Q&&... _x) -> std::shared_ptr<T> {
+			auto* const mem = new(std::nothrow) T(_x...);
+			[[unlikely]] if (!mem) throw MAKE_FATAL_ENGINE_EXCEPTION("Bad allocation!");
+			return std::shared_ptr<T>(mem, [](T*& _y) mutable {
+				[[likely]] if (_y) _y->offload();
+				delete _y, _y = nullptr;
 			});
 		}
 

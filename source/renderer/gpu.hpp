@@ -121,7 +121,7 @@ namespace dce::renderer {
 		/// <param name="_texture"></param>
 		/// <param name="_sampler"></param>
 		/// <returns></returns>
-		void set_texture(const Texture& _texture, bgfx::UniformHandle _sampler) const noexcept;
+		void set_texture(const Texture& _texture, bgfx::UniformHandle _sampler, const std::uint8_t _stage) const noexcept;
 
 		/// <summary>
 		/// Draw mesh

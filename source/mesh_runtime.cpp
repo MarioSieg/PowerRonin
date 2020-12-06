@@ -23,7 +23,7 @@
 namespace {
 	auto create_vertex_layout() -> bgfx::VertexLayout {
 		bgfx::VertexLayout layout;
-		layout.begin().add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float).add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float).add(bgfx::Attrib::Normal, 3, bgfx::AttribType::Float, true).end();
+		layout.begin().add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float).add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float).add(bgfx::Attrib::Normal, 3, bgfx::AttribType::Float).add(bgfx::Attrib::Tangent, 3, bgfx::AttribType::Float).add(bgfx::Attrib::Bitangent, 3, bgfx::AttribType::Float).end();
 		return layout;
 	}
 } // namespace
@@ -91,7 +91,7 @@ namespace dce {
 	auto MeshImporteur::load(std::filesystem::path&& _path, const MeshMeta* const _meta) const -> std::shared_ptr<Mesh> {
 		Assimp::Importer importer;
 
-		constexpr unsigned flags = aiProcess_JoinIdenticalVertices | aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_GenSmoothNormals | aiProcess_ConvertToLeftHanded;
+		constexpr unsigned flags = aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace | aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_GenSmoothNormals | aiProcess_ConvertToLeftHanded;
 
 		//importer.SetPropertyFloat(AI_CONFIG_GLOBAL_SCALE_FACTOR_KEY, .1f);
 
@@ -134,6 +134,16 @@ namespace dce {
 			[[likely]] if (mesh->mNormals) {
 				const auto& normal = mesh->mNormals[i];
 				o_vertex.normal = {normal.x, normal.y, normal.z};
+			}
+
+			[[likely]] if (mesh->mTangents) {
+				const auto& tangent = mesh->mTangents[i];
+				o_vertex.tangent = {tangent.x, tangent.y, tangent.z};
+			}
+
+			[[likely]] if (mesh->mBitangents) {
+				const auto& bi_tangent = mesh->mBitangents[i];
+				o_vertex.bitangent = {bi_tangent.x, bi_tangent.y, bi_tangent.z};
 			}
 
 			vertices.push_back(o_vertex);

@@ -100,6 +100,41 @@ namespace dce::gui {
 				}
 				EndMenu();
 			}
+			PushStyleColor(ImGuiCol_Button, 0x00000000);
+			Separator();
+
+			[[unlikely]] if (Button(ICON_FA_HAND_ROCK)) { }
+
+			[[unlikely]] if (Button(ICON_FA_ARROWS)) { }
+
+			[[unlikely]] if (Button(ICON_FA_SYNC)) { }
+
+			[[unlikely]] if (Button(ICON_FA_EXPAND)) { }
+
+			Separator();
+
+			[[unlikely]] if (Button(ICON_FA_CUBES)) { }
+
+			[[unlikely]] if (Button(ICON_FA_LIGHTBULB_ON)) { }
+
+			[[unlikely]] if (Button(ICON_FA_VOLUME_UP)) { }
+
+			[[unlikely]] if (Button(ICON_FA_TH)) { }
+
+			[[unlikely]] if (Button(ICON_FA_MAP_MARKER_SMILE)) { }
+
+			[[unlikely]] if (Button(ICON_FA_FUNCTION)) { }
+
+			[[unlikely]] if (Button(ICON_FA_SMILE)) { }
+
+			[[unlikely]] if (Button(ICON_FA_CAMERA)) { }
+
+			Separator();
+
+			[[unlikely]] if (Button(ICON_FA_PLAY)) { }
+			[[unlikely]] if (Button(ICON_FA_PAUSE)) { }
+			[[unlikely]] if (Button(ICON_FA_STOP)) { }
+			PopStyleColor();
 			EndMainMenuBar();
 		}
 	}
