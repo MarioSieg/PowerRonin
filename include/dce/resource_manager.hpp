@@ -21,12 +21,13 @@
 #include "audio_clip.hpp"
 
 namespace dce {
+	class AsyncProtocol;
 	class ResourceManager;
 
 	/// <summary>
 	/// Contains all resources needed by the engine.
 	/// </summary>
-	struct SystemResources {
+	struct SystemResources final {
 		RRef<Texture> empty_black_1x1 = {};
 		RRef<Texture> empty_white_1x1 = {};
 		RRef<Texture> empty_normal_1x1 = {};
@@ -38,14 +39,25 @@ namespace dce {
 		RRef<Mesh> skydome = {};
 		RRef<Texture> skybox = {};
 
-		void load_all(ResourceManager& _importeur);
+		void load_all(ResourceManager& _rm);
 	};
 
 	/// <summary>
 	/// Manager of all resources like textures or meshes.
 	/// </summary>
 	class ResourceManager final {
+		friend SystemResources;
 	public:
+		explicit ResourceManager(AsyncProtocol& _proto) noexcept;
+		ResourceManager(const ResourceManager&) = delete;
+		ResourceManager(ResourceManager&&) = delete;
+		auto operator=(const ResourceManager&)->ResourceManager & = delete;
+		auto operator=(ResourceManager&&)->ResourceManager & = delete;
+		~ResourceManager() = default;
+
+		/// <summary>
+		/// Build in system resources.
+		/// </summary>
 		SystemResources system_resources = {};
 
 		/// <summary>
@@ -90,7 +102,7 @@ namespace dce {
 		template <typename T> requires std::is_base_of_v<IResource<typename T::Meta>, T> [[nodiscard]] auto load(std::filesystem::path&& _file, const typename T::Meta* const _meta) -> RRef<T>;
 
 		/// <summary>
-		/// Destroyes all resources. (!DANGEROUS!)
+		/// Destroys all resources. (!DANGEROUS!)
 		/// </summary>
 		void unload_all_resources();
 
@@ -100,7 +112,7 @@ namespace dce {
 		[[nodiscard]] auto load_material(std::filesystem::path&& _file, const MaterialMeta* const _meta) -> RRef<Material>;
 		[[nodiscard]] auto load_audio_clip(std::filesystem::path&& _file, const AudioClipMeta* const _meta) -> RRef<AudioClip>;
 
-
+		AsyncProtocol& proto_;
 		ResourceCache<Texture> texture_cache_ = {};
 		ResourceCache<Mesh> mesh_cache_ = {};
 		ResourceCache<Material> material_cache_ = {};

@@ -62,7 +62,7 @@ namespace dce {
 
 		[[nodiscard]] auto input() & noexcept -> Input&;
 
-		Runtime() = default;
+		Runtime();
 		Runtime(const Runtime&) = delete;
 		Runtime(Runtime&&) noexcept = delete;
 		auto operator=(const Runtime&) -> Runtime& = delete;
@@ -73,14 +73,14 @@ namespace dce {
 		void shutdown();
 
 	private:
-		AsyncProtocol protocol_ = {};
-		Config config_ = {};
-		ClassDB class_db_ = {};
-		CmdDB command_db_ = {};
-		ResourceManager resource_manager_ = {};
-		Diagnostics diagnostics_ = {};
-		Chrono chrono_ = {};
-		Scenery scenery_ = {};
-		Input input_ = {};
+		AsyncProtocol protocol_;
+		Config config_;
+		ClassDB class_db_;
+		CmdDB command_db_;
+		ResourceManager resource_manager_;
+		Diagnostics diagnostics_;
+		Chrono chrono_;
+		Scenery scenery_;
+		Input input_;
 	};
 } // namespace dce // namespace dce

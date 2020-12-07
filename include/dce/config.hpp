@@ -57,6 +57,10 @@ namespace dce {
 			float rounding = 4.F;
 		} overlay;
 
+		struct {
+			std::uint16_t max_channels = 2048;
+		} audio;
+
 		virtual void serialize(JsonStream& _j) const override;
 		virtual void deserialize(const JsonStream& _j) override;
 	};

@@ -80,6 +80,11 @@ namespace dce {
 		return this->input_;
 	}
 
+	Runtime::Runtime() : protocol_(), config_(), class_db_(),
+	command_db_(), resource_manager_(this->protocol_),
+	diagnostics_(), chrono_(), scenery_(), input_(){
+	}
+
 	void Runtime::initialize() {
 		this->command_db_.install_common_commands();
 		this->resource_manager_.system_resources.load_all(this->resource_manager_);

@@ -30,17 +30,24 @@ namespace dce::audio {
 		co_initialize();
 
 		proto.info("Creating audio system...");
+		
 		FMOD_RESULT result = System_Create(&this->system_);
 		[[unlikely]] if (result != FMOD_OK) {
 			return false;
 		}
-
+		
+		const auto max_channels = _rt.config().audio.max_channels;
+		constexpr auto flags = FMOD_INIT_NORMAL | FMOD_INIT_3D_RIGHTHANDED;
 		proto.info("Initializing audio system...");
-		result = this->system_->init(2048, FMOD_INIT_NORMAL | FMOD_INIT_3D_RIGHTHANDED, nullptr);
+		
+		result = this->system_->init(max_channels, flags, nullptr);
 		[[unlikely]] if (result != FMOD_OK) {
 			return false;
 		}
-
+		
+		proto.info("Max channels: {}", max_channels);
+		proto.info("Creation flags: {:B}", flags);
+		
 		AUDIO_SYSTEM_HANDLE = this->system_;
 
 		return true;
