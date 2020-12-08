@@ -1,3 +1,6 @@
+$input a_position, a_texcoord0, a_color0
+$output v_color0, v_texcoord0
+
 // *******************************************************************************
 // The content of this file includes portions of the KerboGames Dreamcast Technology
 // released in source code form as part of the SDK package.
@@ -13,21 +16,11 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-#include <cstdint>
-#include "embedded_shaders.hpp"
-#include "embedded_shaders/imgui_fs.bin.inl.cpp"
-#include "embedded_shaders/imgui_img_fs.bin.inl.cpp"
-#include "embedded_shaders/imgui_img_vs.bin.inl.cpp"
-#include "embedded_shaders/imgui_vs.bin.inl.cpp"
+#include "../../common.shader"
 
-
-namespace dce::renderer {
-	const bgfx::EmbeddedShader EMBEDDED_SHADERS[5]{
-		BGFX_EMBEDDED_SHADER(VS_GUI)
-		, BGFX_EMBEDDED_SHADER(FS_GUI)
-		, BGFX_EMBEDDED_SHADER(VS_GUI_IMAGE)
-		, BGFX_EMBEDDED_SHADER(FS_GUI_IMAGE)
-		, BGFX_EMBEDDED_SHADER_END()
-		,
-	};
-} // namespace dce::renderer
+void main() {
+	vec2 pos = 2.0*a_position.xy*u_viewTexel.xy;
+	gl_Position = vec4(pos.x - 1.0, 1.0 - pos.y, 0.0, 1.0);
+	v_texcoord0 = a_texcoord0;
+	v_color0    = a_color0;
+}

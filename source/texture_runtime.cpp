@@ -124,11 +124,9 @@ namespace dce {
 
 			const auto texel_count = static_cast<std::size_t>(width) * height * STBI_rgb_alpha;
 
-			self->texels_.reserve(texel_count);
+			self->texels_.resize(texel_count);
 
-			for (std::size_t i = 0; i < texel_count; ++i) {
-				self->texels_.push_back(*reinterpret_cast<const std::byte* const>(image_data + i));
-			}
+			::memcpy(self->texels_.data(), image_data, texel_count);
 
 			stbi_image_free(image_data);
 

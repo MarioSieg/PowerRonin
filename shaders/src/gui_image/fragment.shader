@@ -1,5 +1,4 @@
-$input a_position
-$output v_texcoord0
+$input v_texcoord0
 
 // *******************************************************************************
 // The content of this file includes portions of the KerboGames Dreamcast Technology
@@ -18,8 +17,14 @@ $output v_texcoord0
 
 #include "../../common.shader"
 
+uniform vec4 u_imageLodEnabled;
+SAMPLER2D(s_texColor, 0);
+
+#define u_imageLod     u_imageLodEnabled.x
+#define u_imageEnabled u_imageLodEnabled.y
+
 void main() {
-	v_texcoord0 = a_position;
-	gl_Position = mul(u_modelViewProj, vec4(a_position, 1.0));
-	gl_Position.z = gl_Position.w - 0.0001;
+	vec3 color = texture2DLod(s_texColor, v_texcoord0, u_imageLod).xyz;
+	float alpha = 0.2 + 0.8*u_imageEnabled;
+	gl_FragColor = vec4(color, alpha);
 }

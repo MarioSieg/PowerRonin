@@ -44,8 +44,6 @@ add_library(
     "source/core/subsystem.cpp" 
     "source/cmddb.cpp" 
     "source/runtime.cpp" 
-    "source/renderer/embedded_shaders.hpp" 
-    "source/renderer/embedded_shaders.cpp" 
     "source/renderer/gui_renderer.hpp" 
     "source/renderer/gui_renderer.cpp" 
     "source/renderer/gl_headers.hpp" 

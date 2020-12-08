@@ -1,4 +1,4 @@
-$input a_position
+$input a_position, a_texcoord0
 $output v_texcoord0
 
 // *******************************************************************************
@@ -19,7 +19,6 @@ $output v_texcoord0
 #include "../../common.shader"
 
 void main() {
-	v_texcoord0 = a_position;
-	gl_Position = mul(u_modelViewProj, vec4(a_position, 1.0));
-	gl_Position.z = gl_Position.w - 0.0001;
+	gl_Position = mul(u_viewProj, vec4(a_position.xy, 0.0, 1.0) );
+	v_texcoord0 = a_texcoord0;
 }

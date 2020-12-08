@@ -14,13 +14,12 @@
 // *******************************************************************************
 
 #include "gui_renderer.hpp"
-#include "embedded_shaders.hpp"
 #include "renderer.hpp"
 #include "utils.hpp"
 #include "../../include/dce/mathlib.hpp"
 #include "../gui/font_headers.hpp"
 #include "../gui/gui_headers.hpp"
-#include "bgfx/embedded_shader.h"
+#include "../renderer/program_loader.hpp"
 
 #include <algorithm>
 
@@ -28,23 +27,22 @@ namespace dce::renderer {
 	auto GuiRenderer::initialize(const std::uint8_t _font_size) -> bool {
 		auto& io = ImGui::GetIO();
 		const auto type = bgfx::getRendererType();
-		this->gui_program_ = createProgram(createEmbeddedShader(EMBEDDED_SHADERS, type, "VS_GUI")
-		                                   , createEmbeddedShader(EMBEDDED_SHADERS, type, "FS_GUI"), true);
 
-		if (this->gui_program_.idx == bgfx::kInvalidHandle) {
+		this->gui_program_ = load_shader_program("gui_color");
+
+		[[unlikely]] if (this->gui_program_.idx == bgfx::kInvalidHandle) {
 			return false;
 		}
 
 		this->image_lod_enabled_ = createUniform("u_imageLodEnabled", bgfx::UniformType::Vec4);
 
-		if (this->image_lod_enabled_.idx == bgfx::kInvalidHandle) {
+		[[unlikely]] if (this->image_lod_enabled_.idx == bgfx::kInvalidHandle) {
 			return false;
 		}
 
-		this->gui_image_program_ = createProgram(createEmbeddedShader(EMBEDDED_SHADERS, type, "VS_GUI_IMAGE")
-		                                         , createEmbeddedShader(EMBEDDED_SHADERS, type, "FS_GUI_IMAGE"), true);
+		this->gui_image_program_ = load_shader_program("gui_image");
 
-		if (this->gui_image_program_.idx == bgfx::kInvalidHandle) {
+		[[unlikely]] if (this->gui_image_program_.idx == bgfx::kInvalidHandle) {
 			return false;
 		}
 
@@ -53,7 +51,7 @@ namespace dce::renderer {
 		       end();
 
 		this->texture_uniform_ = createUniform("s_tex", bgfx::UniformType::Sampler);
-		if (this->texture_uniform_.idx == bgfx::kInvalidHandle) {
+		[[unlikely]] if (this->texture_uniform_.idx == bgfx::kInvalidHandle) {
 			return false;
 		}
 
@@ -66,8 +64,8 @@ namespace dce::renderer {
 			config.FontDataOwnedByAtlas = false;
 			config.MergeMode = false;
 
-			if (io.Fonts->AddFontFromFileTTF("fonts/jet_brains_mono_regular.ttf", static_cast<float>(_font_size) - 3.F, &config
-			                                 , ranges) == nullptr) {
+			[[unlikely]] if (io.Fonts->AddFontFromFileTTF("fonts/jet_brains_mono_regular.ttf", static_cast<float>(_font_size) - 3.F
+			                                              , &config, ranges) == nullptr) {
 				return false;
 			}
 
@@ -85,8 +83,8 @@ namespace dce::renderer {
 			        return false;
 			}
 			*/
-			if (!io.Fonts->AddFontFromFileTTF("fonts/font_awesome_pro_regular.ttf", static_cast<float>(_font_size) - 3.F, &config
-			                                  , glyph_ranges)) {
+			[[unlikely]] if (!io.Fonts->AddFontFromFileTTF("fonts/font_awesome_pro_regular.ttf"
+			                                               , static_cast<float>(_font_size) - 3.F, &config, glyph_ranges)) {
 				return false;
 			}
 

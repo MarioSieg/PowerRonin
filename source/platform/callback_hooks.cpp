@@ -22,6 +22,7 @@ namespace dce::platform {
 	bool (*MOUSE_STATES)[5] = nullptr;
 
 	void mouse_button_callback([[maybe_unused]] GLFWwindow* const /*win*/
+
 	                           
 	                           , [[maybe_unused]] const int _button
 	                           , [[maybe_unused]] const int _action
@@ -34,6 +35,7 @@ namespace dce::platform {
 	}
 
 	void scroll_callback([[maybe_unused]] GLFWwindow* const /*win*/
+
 	                     
 	                     , [[maybe_unused]] const double _x
 	                     , [[maybe_unused]] const double _y) noexcept {
@@ -43,8 +45,10 @@ namespace dce::platform {
 	}
 
 	void key_callback([[maybe_unused]] GLFWwindow* const /*win*/
+	                  
 	                  , const int _key
 	                  , [[maybe_unused]] const int /*scancode*/
+
 	                  
 	                  , const int _action
 	                  , [[maybe_unused]] const int /*mods*/) noexcept {
@@ -66,6 +70,7 @@ namespace dce::platform {
 	}
 
 	void char_callback([[maybe_unused]] GLFWwindow* const /*win*/
+
 	                   
 	                   , const unsigned _c) noexcept {
 		ImGui::GetIO().AddInputCharacter(_c);

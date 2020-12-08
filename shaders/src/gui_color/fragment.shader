@@ -1,3 +1,5 @@
+$input v_color0, v_texcoord0
+
 // *******************************************************************************
 // The content of this file includes portions of the KerboGames Dreamcast Technology
 // released in source code form as part of the SDK package.
@@ -13,10 +15,12 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-#pragma once
+#include "../../common.shader"
 
-#include "gl_headers.hpp"
+SAMPLER2D(s_tex, 0);
 
-namespace dce::renderer {
-	extern const bgfx::EmbeddedShader EMBEDDED_SHADERS[5];
-} // namespace dce::renderer
+void main() {
+	vec4 texel = texture2D(s_tex, v_texcoord0);
+	gl_FragColor = texel * v_color0; 
+	gl_FragColor.rgb = pow(gl_FragColor.rgb, vec3_splat(2.2));
+}
