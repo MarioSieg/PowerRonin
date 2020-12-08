@@ -21,8 +21,8 @@
 
 namespace dce::renderer {
 	enum class ShaderType {
-		UNLIT,
-		LAMBERT
+		UNLIT
+		, LAMBERT
 	};
 
 	class ShaderBucket final {

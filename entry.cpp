@@ -9,16 +9,19 @@
 
 #include "include/dce/core/kernel.hpp"
 #include "include/dce/core/installer.hpp"
-#include "include/dce/core/misc.hpp"
+#include "include/dce/core/entry.hpp"
+#include "include/dce/break_interrupt_handler.hpp"
+#include "include/dce/error_dump.hpp"
 
-using namespace dce::core;
+using namespace dce;
+using namespace core;
 
 /* Main function where the dream starts and ends. */
 auto DREAM_ENTRY(const int _argc, const char* const* const _argv, const char* const* const _envp) -> int {
 #if !IS_DEBUG
 	try {
 #endif
-		ScopedVectoredExceptionHandler _ = {};
+	ScopedVectoredExceptionHandler _ = {};
 
 		auto kernel = Kernel::create(_argc, _argv, _envp);
 		kernel->install_subsystems(&install_common);
@@ -28,7 +31,7 @@ auto DREAM_ENTRY(const int _argc, const char* const* const _argv, const char* co
 		return 0;
 #if !IS_DEBUG
 	}
-	catch (const dce::FatalEngineException& ex) {
+	catch (const FatalEngineException& ex) {
 		create_fatal_dump(ex);
 		return -1;
 	}

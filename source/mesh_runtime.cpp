@@ -17,19 +17,16 @@
 #include "../extern/assimp/include/assimp/Importer.hpp"
 #include "../extern/assimp/include/assimp/postprocess.h"
 #include "../extern/assimp/include/assimp/scene.h"
-#include "../include/dce/utils.hpp"
+#include "../include/dce/time_utils.hpp"
 #include "renderer/gl_headers.hpp"
 
 namespace {
 	auto create_vertex_layout() -> bgfx::VertexLayout {
 		bgfx::VertexLayout layout;
-		layout.begin()
-		.add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float)
-		.add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float)
-		.add(bgfx::Attrib::Normal, 3, bgfx::AttribType::Float)
-		.add(bgfx::Attrib::Tangent, 3, bgfx::AttribType::Float)
-		.add(bgfx::Attrib::Bitangent, 3, bgfx::AttribType::Float)
-		.end();
+		layout.begin().add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float).
+		       add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float).add(bgfx::Attrib::Normal, 3, bgfx::AttribType::Float).
+		       add(bgfx::Attrib::Tangent, 3, bgfx::AttribType::Float).add(bgfx::Attrib::Bitangent, 3, bgfx::AttribType::Float).
+		       end();
 		return layout;
 	}
 } // namespace
@@ -46,7 +43,9 @@ namespace dce {
 
 		static const auto VERTEX_LAYOUT = create_vertex_layout();
 
-		const auto* const index_buffer_mem = bgfx::makeRef(this->indices_.data(), static_cast<std::uint32_t>(sizeof(std::uint16_t) * this->indices_.size()), nullptr, nullptr);
+		const auto* const index_buffer_mem = bgfx::makeRef(this->indices_.data()
+		                                                   , static_cast<std::uint32_t>(sizeof(std::uint16_t) * this->indices_.
+			                                                   size()), nullptr, nullptr);
 
 		[[unlikely]] if (index_buffer_mem == nullptr) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload mesh!");
@@ -58,7 +57,9 @@ namespace dce {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload mesh!");
 		}
 
-		const auto* const vertex_buffer_mem = bgfx::makeRef(this->vertices_.data(), static_cast<std::uint32_t>(this->vertices_.size() * VERTEX_LAYOUT.getStride()), nullptr, nullptr);
+		const auto* const vertex_buffer_mem = bgfx::makeRef(this->vertices_.data()
+		                                                    , static_cast<std::uint32_t>(this->vertices_.size() * VERTEX_LAYOUT.
+			                                                    getStride()), nullptr, nullptr);
 		[[unlikely]] if (vertex_buffer_mem == nullptr) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload mesh!");
 		}
@@ -97,7 +98,8 @@ namespace dce {
 	auto MeshImporteur::load(std::filesystem::path&& _path, const MeshMeta* const _meta) const -> std::shared_ptr<Mesh> {
 		Assimp::Importer importer;
 
-		constexpr unsigned flags = aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace | aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_GenSmoothNormals | aiProcess_ConvertToLeftHanded;
+		constexpr unsigned flags = aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace | aiProcess_Triangulate |
+			aiProcess_GenUVCoords | aiProcess_GenSmoothNormals | aiProcess_ConvertToLeftHanded;
 
 		//importer.SetPropertyFloat(AI_CONFIG_GLOBAL_SCALE_FACTOR_KEY, .1f);
 
@@ -130,26 +132,26 @@ namespace dce {
 		for (unsigned i = 0; i < mesh->mNumVertices; ++i) {
 			const auto& vertex = mesh->mVertices[i];
 
-			auto o_vertex = Vertex{.position = {vertex.x, vertex.y, vertex.z}};
+			auto o_vertex = Vertex{Vertex::Data{.position = {vertex.x, vertex.y, vertex.z}}};
 
 			[[likely]] if (mesh->mTextureCoords[0]) {
 				const auto& uv = mesh->mTextureCoords[0][i];
-				o_vertex.uv = {uv.x, uv.y};
+				o_vertex.data.uv = {uv.x, uv.y};
 			}
 
 			[[likely]] if (mesh->mNormals) {
 				const auto& normal = mesh->mNormals[i];
-				o_vertex.normal = {normal.x, normal.y, normal.z};
+				o_vertex.data.normal = {normal.x, normal.y, normal.z};
 			}
 
 			[[likely]] if (mesh->mTangents) {
 				const auto& tangent = mesh->mTangents[i];
-				o_vertex.tangent = {tangent.x, tangent.y, tangent.z};
+				o_vertex.data.tangent = {tangent.x, tangent.y, tangent.z};
 			}
 
 			[[likely]] if (mesh->mBitangents) {
 				const auto& bi_tangent = mesh->mBitangents[i];
-				o_vertex.bitangent = {bi_tangent.x, bi_tangent.y, bi_tangent.z};
+				o_vertex.data.bitangent = {bi_tangent.x, bi_tangent.y, bi_tangent.z};
 			}
 
 			vertices.push_back(o_vertex);

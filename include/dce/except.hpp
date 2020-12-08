@@ -15,8 +15,6 @@
 
 #pragma once
 
-#include <ctime>
-#include <string>
 #include <stdexcept>
 
 namespace dce {
@@ -48,28 +46,4 @@ namespace dce {
 
 	/// If C++20 std::source_location is supported, we no longer need this.
 #define MAKE_FATAL_ENGINE_EXCEPTION(_msg) FatalEngineException((_msg), __LINE__, __FILE__)
-
-	/// <summary>
-	/// Safe alternative for std::localtime
-	/// </summary>
-	/// <param name="_time"></param>
-	/// <returns></returns>
-	[[nodiscard]] extern auto safe_localtime(const std::time_t& _time) -> std::tm;
-
-	/// <summary>
-	/// Returns safe_localtime as timestamp string.
-	/// </summary>
-	/// <returns></returns>
-	[[nodiscard]] extern auto time_stamp() -> std::string;
-
-	/// <summary>
-	/// Writes safe_localtime as timestamp string into a fixed buffer.
-	/// </summary>
-	/// <param name="_buffer"></param>
-	[[nodiscard]] extern void time_stamp(char (&_buffer)[32]);
-
-	/// <summary>
-	/// Returns the name of the executable.
-	/// </summary>
-	[[nodiscard]] extern auto get_executable_name() -> std::string;
 }

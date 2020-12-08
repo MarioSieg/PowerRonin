@@ -21,35 +21,41 @@ namespace dce {
 	/// <summary>
 	/// Vertex type.
 	/// </summary>
-	struct Vertex final {
-		struct {
-			float x = .0f;
-			float y = .0f;
-			float z = .0f;
-		} position = {};
+	union Vertex {
+		struct Data final {
 
-		struct {
-			float u = .0f;
-			float v = .0f;
-		} uv = {};
+			struct {
+				float x = .0f;
+				float y = .0f;
+				float z = .0f;
+			} position = {};
 
-		struct {
-			float x = .0f;
-			float y = .0f;
-			float z = .0f;
-		} normal = {};
+			struct {
+				float u = .0f;
+				float v = .0f;
+			} uv = {};
 
-		struct {
-			float x = .0f;
-			float y = .0f;
-			float z = .0f;
-		} tangent = {};
+			struct {
+				float x = .0f;
+				float y = .0f;
+				float z = .0f;
+			} normal = {};
 
-		struct {
-			float x = .0f;
-			float y = .0f;
-			float z = .0f;
-		} bitangent = {};
+			struct {
+				float x = .0f;
+				float y = .0f;
+				float z = .0f;
+			} tangent = {};
+
+			struct {
+				float x = .0f;
+				float y = .0f;
+				float z = .0f;
+			} bitangent = {};
+
+		} data = {};
+
+		std::uint8_t raw[sizeof(Data)];
 	};
 
 	struct MeshMeta final : ISerializable {
@@ -67,7 +73,45 @@ namespace dce {
 		/// <summary>
 		/// All associated file types.
 		/// </summary>
-		static constexpr std::array<std::string_view, 37> FILE_EXTENSIONS = {".dae", ".blend", ".bvh", ".3ds", ".ase", ".obj", ".ply", ".dxf", ".ifc", ".nff", ".smd", ".vta", ".mdl", ".md2", ".md3", ".pk3", ".mdc", ".md5mesh", ".x", ".raw", ".ac", ".stl", ".dxf", ".irrmesh", ".xml", ".off", ".ter", ".mdl", ".hmp", ".mesh.xml", ".ms3d", ".lwo", ".lws", ".lxo", ".csm", ".cob", ".scn"};
+		static constexpr std::array<std::string_view, 37> FILE_EXTENSIONS = {
+			".dae"
+			, ".blend"
+			, ".bvh"
+			, ".3ds"
+			, ".ase"
+			, ".obj"
+			, ".ply"
+			, ".dxf"
+			, ".ifc"
+			, ".nff"
+			, ".smd"
+			, ".vta"
+			, ".mdl"
+			, ".md2"
+			, ".md3"
+			, ".pk3"
+			, ".mdc"
+			, ".md5mesh"
+			, ".x"
+			, ".raw"
+			, ".ac"
+			, ".stl"
+			, ".dxf"
+			, ".irrmesh"
+			, ".xml"
+			, ".off"
+			, ".ter"
+			, ".mdl"
+			, ".hmp"
+			, ".mesh.xml"
+			, ".ms3d"
+			, ".lwo"
+			, ".lws"
+			, ".lxo"
+			, ".csm"
+			, ".cob"
+			, ".scn"
+		};
 
 		/// <summary>
 		/// 

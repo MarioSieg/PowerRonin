@@ -31,7 +31,8 @@ namespace dce::audio {
 		~Audio() override = default;
 
 	private:
-		static constexpr auto EVENTS = core::ServiceEvents::PRE_STARTUP | core::ServiceEvents::PRE_TICK | core::ServiceEvents::PRE_SHUTDOWN;
+		static constexpr auto EVENTS = core::ServiceEvents::PRE_STARTUP | core::ServiceEvents::PRE_TICK |
+			core::ServiceEvents::PRE_SHUTDOWN;
 
 		virtual auto on_pre_startup([[maybe_unused]] Runtime& _rt) -> bool override;
 		virtual auto on_pre_tick([[maybe_unused]] Runtime& _rt) -> bool override;

@@ -20,12 +20,13 @@
 namespace dce {
 	class Input;
 
-	/* Header only helper class for a flying editor camera. */
+	/// <summary>
+	/// Helper class for a flying editor camera.
+	/// </summary>
 	class FlyCam final {
 	public:
-		float move_speed = 3.f;
-		float fast_move_speed = 6.f;
-		float sensitivity = 100.f;
+		float move_speed = 6.f;
+		float sensitivity = 50.f;
 		float fov = 80.0f;
 		float near_clip = 0.01f;
 		float far_clip = 2000.0f;

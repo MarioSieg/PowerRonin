@@ -62,7 +62,9 @@ namespace dce::renderer {
 		/// Begin and clear frame.
 		/// </summary>
 		/// <returns></returns>
-		void clear_view(const bgfx::ViewId _view = 0, const std::uint16_t _flags = BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, const float _depth = 1.F) const noexcept;
+		void clear_view(const bgfx::ViewId _view = 0
+		                , const std::uint16_t _flags = BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH
+		                , const float _depth = 1.F) const noexcept;
 
 
 		/// <summary>
@@ -131,7 +133,11 @@ namespace dce::renderer {
 		/// <param name="_view_id"></param>
 		/// <param name="_depth"></param>
 		/// <returns></returns>
-		void draw(bgfx::ProgramHandle _shader, bgfx::ViewId _view_id = 0, const std::uint64_t _state_flags = BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_Z | BGFX_STATE_DEPTH_TEST_LESS | BGFX_STATE_MSAA | BGFX_STATE_CULL_CCW, std::uint8_t _depth = 0) const noexcept;
+		void draw(bgfx::ProgramHandle _shader
+		          , bgfx::ViewId _view_id = 0
+		          , const std::uint64_t _state_flags = BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_Z | BGFX_STATE_DEPTH_TEST_LESS |
+			          BGFX_STATE_MSAA | BGFX_STATE_CULL_CCW
+		          , std::uint8_t _depth = 0) const noexcept;
 
 		/// <summary>
 		/// Set uniform.

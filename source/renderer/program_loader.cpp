@@ -15,7 +15,7 @@
 
 #include "program_loader.hpp"
 #include "../../include/dce/blob.hpp"
-#include "../../include/dce/utils.hpp"
+#include "../../include/dce/except.hpp"
 #include <filesystem>
 
 namespace dce::renderer {

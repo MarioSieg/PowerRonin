@@ -53,7 +53,11 @@ namespace dce {
 			this->mouse_angles_.x += delta_x * sensitivity * _delta_time;
 			this->mouse_angles_.y -= delta_y * sensitivity * _delta_time;
 
-			this->dir_ = {math::cos(math::radians(this->mouse_angles_.y)) * math::sin(math::radians(this->mouse_angles_.x)), math::sin(math::radians(this->mouse_angles_.y)), math::cos(math::radians(this->mouse_angles_.y)) * math::cos(math::radians(this->mouse_angles_.x))};
+			this->dir_ = {
+				math::cos(math::radians(this->mouse_angles_.y)) * math::sin(math::radians(this->mouse_angles_.x))
+				, math::sin(math::radians(this->mouse_angles_.y))
+				, math::cos(math::radians(this->mouse_angles_.y)) * math::cos(math::radians(this->mouse_angles_.x))
+			};
 
 			this->mouse_prev_.x = mouse.x;
 			this->mouse_prev_.y = mouse.y;
@@ -67,23 +71,24 @@ namespace dce {
 		this->left_ = normalize(cross(this->forward_, math::UP));
 		this->at_ = this->eye_ + dir_;
 
-		[[unlikely]] if (_input.is_key_down(Key::W)) {
+		[[likely]] if (_input.is_key_down(Key::W)) {
 			this->eye_ += Vector3<>{speed * _delta_time} * this->forward_;
 		}
 
-		[[unlikely]] if (_input.is_key_down(Key::A)) {
+		[[likely]] if (_input.is_key_down(Key::A)) {
 			this->eye_ += Vector3<>{speed * _delta_time} * this->left_;
 		}
 
-		[[unlikely]] if (_input.is_key_down(Key::S)) {
+		[[likely]] if (_input.is_key_down(Key::S)) {
 			this->eye_ -= Vector3<>{speed * _delta_time} * this->forward_;
 		}
 
-		[[unlikely]] if (_input.is_key_down(Key::D)) {
+		[[likely]] if (_input.is_key_down(Key::D)) {
 			this->eye_ -= Vector3<>{speed * _delta_time} * this->left_;
 		}
 
 		this->view_ = lookAtLH(this->eye_, this->at_, math::UP);
-		this->proj_ = math::perspectiveFovLH<float>(math::radians(this->fov), _viewport_x, _viewport_y, this->near_clip, this->far_clip);
+		this->proj_ = math::perspectiveFovLH<float>(math::radians(this->fov), _viewport_x, _viewport_y, this->near_clip
+		                                            , this->far_clip);
 	}
 }

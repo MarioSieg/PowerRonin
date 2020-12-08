@@ -28,7 +28,8 @@ namespace dce {
 		/// <summary>
 		/// Dynamic skybox (based on scenery daytime, weather)
 		/// </summary>
-		DYNAMIC,
+		DYNAMIC
+		,
 
 		/// <summary>
 		/// Static skybox (cubemap image).

@@ -151,7 +151,8 @@ namespace dce::gui {
 						switch (auto& proto = _rt.protocol(); _rt.command_db().analyze_and_call(_rt, std::move(dyn_str))) {
 						case CommandExecutionResult::COMMAND_DOES_NOT_EXIST: proto.error("Command does not exist!");
 							break;
-						case CommandExecutionResult::ARGS_SEPARATOR_MISSING: proto.error("Missing '{}' as separator!", CmdDB::ARGUMENT_SEPARATOR);
+						case CommandExecutionResult::ARGS_SEPARATOR_MISSING: proto.error(
+								"Missing '{}' as separator!", CmdDB::ARGUMENT_SEPARATOR);
 							break;
 						case CommandExecutionResult::NO_ARGS_PROVIDED: proto.error("Missing arguments!");
 							break;

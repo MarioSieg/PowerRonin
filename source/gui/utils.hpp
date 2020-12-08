@@ -21,11 +21,18 @@
 #include <cstdint>
 
 namespace dce::gui {
-	constexpr auto imgui_rgba(const std::uint8_t _r, const std::uint8_t _g, const std::uint8_t _b, const std::uint8_t _a = 0xFF) noexcept -> std::uint32_t {
-		return static_cast<std::uint32_t>(_r) << 0 | static_cast<std::uint32_t>(_g) << 8 | static_cast<std::uint32_t>(_b) << 16 | static_cast<std::uint32_t>(_a) << 24;
+	constexpr auto imgui_rgba(const std::uint8_t _r
+	                          , const std::uint8_t _g
+	                          , const std::uint8_t _b
+	                          , const std::uint8_t _a = 0xFF) noexcept -> std::uint32_t {
+		return static_cast<std::uint32_t>(_r) << 0 | static_cast<std::uint32_t>(_g) << 8 | static_cast<std::uint32_t>(_b) << 16 |
+			static_cast<std::uint32_t>(_a) << 24;
 	}
 
-	inline auto imgui_rgba_to_norm_vec4(const std::uint8_t _r, const std::uint8_t _g, const std::uint8_t _b, const std::uint8_t _a = 0xFF) noexcept -> ImVec4 {
+	inline auto imgui_rgba_to_norm_vec4(const std::uint8_t _r
+	                                    , const std::uint8_t _g
+	                                    , const std::uint8_t _b
+	                                    , const std::uint8_t _a = 0xFF) noexcept -> ImVec4 {
 		return ImVec4{_r / 255.f, _g / 255.f, _b / 255.f, _a / 255.f,};
 	}
 
@@ -45,27 +52,64 @@ namespace dce::gui {
 		return tex.id;
 	}
 
-	inline void image(const bgfx::TextureHandle handle, const std::uint8_t flags, const std::uint8_t mip, const ImVec2& size, const ImVec2& uv0 = ImVec2(0.0F, 0.0F), const ImVec2& uv1 = ImVec2(1.0F, 1.0F), const ImVec4& tint_col = ImVec4(1.0F, 1.0F, 1.0F, 1.0F), const ImVec4& border_col = ImVec4(0.0F, 0.0F, 0.0F, 0.0F)) noexcept {
+	inline void image(const bgfx::TextureHandle handle
+	                  , const std::uint8_t flags
+	                  , const std::uint8_t mip
+	                  , const ImVec2& size
+	                  , const ImVec2& uv0 = ImVec2(0.0F, 0.0F)
+	                  , const ImVec2& uv1 = ImVec2(1.0F, 1.0F)
+	                  , const ImVec4& tint_col = ImVec4(1.0F, 1.0F, 1.0F, 1.0F)
+	                  , const ImVec4& border_col = ImVec4(0.0F, 0.0F, 0.0F, 0.0F)) noexcept {
 		ImGui::Image(to_imgui_id(handle, flags, mip), size, uv0, uv1, tint_col, border_col);
 	}
 
-	inline auto image(const bgfx::TextureHandle handle, const ImVec2& size, const ImVec2& uv0 = ImVec2(0.0F, 0.0F), const ImVec2& uv1 = ImVec2(1.0F, 1.0F), const ImVec4& tint_col = ImVec4(1.0F, 1.0F, 1.0F, 1.0F), const ImVec4& border_col = ImVec4(0.0F, 0.0F, 0.0F, 0.0F)) noexcept -> void {
+	inline auto image(const bgfx::TextureHandle handle
+	                  , const ImVec2& size
+	                  , const ImVec2& uv0 = ImVec2(0.0F, 0.0F)
+	                  , const ImVec2& uv1 = ImVec2(1.0F, 1.0F)
+	                  , const ImVec4& tint_col = ImVec4(1.0F, 1.0F, 1.0F, 1.0F)
+	                  , const ImVec4& border_col = ImVec4(0.0F, 0.0F, 0.0F, 0.0F)) noexcept -> void {
 		image(handle, UINT8_C(0x01), 0, size, uv0, uv1, tint_col, border_col);
 	}
 
-	inline auto image(const RRef<Texture>& texture, const ImVec2& size, const ImVec2& uv0 = ImVec2(0.0F, 0.0F), const ImVec2& uv1 = ImVec2(1.0F, 1.0F), const ImVec4& tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f), const ImVec4& border_col = ImVec4(0.0f, 0.0f, 0.0f, 0.0f)) noexcept -> void {
+	inline auto image(const RRef<Texture>& texture
+	                  , const ImVec2& size
+	                  , const ImVec2& uv0 = ImVec2(0.0F, 0.0F)
+	                  , const ImVec2& uv1 = ImVec2(1.0F, 1.0F)
+	                  , const ImVec4& tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f)
+	                  , const ImVec4& border_col = ImVec4(0.0f, 0.0f, 0.0f, 0.0f)) noexcept -> void {
 		image({texture->get_texel_buffer_id()}, UINT8_C(0x01), 0, size, uv0, uv1, tint_col, border_col);
 	}
 
-	inline auto image_button(const bgfx::TextureHandle handle, const std::uint8_t flags, const std::uint8_t mip, const ImVec2& size, const ImVec2& uv0 = ImVec2(0.0F, 0.0F), const ImVec2& uv1 = ImVec2(1.0F, 1.0F), const int frame_padding = -1, const ImVec4& bg_col = ImVec4(0.0F, 0.0F, 0.0F, 0.0F), const ImVec4& tint_col = ImVec4(1.0F, 1.0F, 1.0F, 1.0F)) noexcept -> bool {
+	inline auto image_button(const bgfx::TextureHandle handle
+	                         , const std::uint8_t flags
+	                         , const std::uint8_t mip
+	                         , const ImVec2& size
+	                         , const ImVec2& uv0 = ImVec2(0.0F, 0.0F)
+	                         , const ImVec2& uv1 = ImVec2(1.0F, 1.0F)
+	                         , const int frame_padding = -1
+	                         , const ImVec4& bg_col = ImVec4(0.0F, 0.0F, 0.0F, 0.0F)
+	                         , const ImVec4& tint_col = ImVec4(1.0F, 1.0F, 1.0F, 1.0F)) noexcept -> bool {
 		return ImGui::ImageButton(to_imgui_id(handle, flags, mip), size, uv0, uv1, frame_padding, bg_col, tint_col);
 	}
 
-	inline auto image_button(const bgfx::TextureHandle handle, const ImVec2& size, const ImVec2& uv0 = ImVec2(0.0F, 0.0F), const ImVec2& uv1 = ImVec2(1.0F, 1.0F), const int frame_padding = -1, const ImVec4& bg_col = ImVec4(0.0F, 0.0F, 0.0F, 0.0F), const ImVec4& tint_col = ImVec4(1.0F, 1.0F, 1.0F, 1.0F)) noexcept -> bool {
+	inline auto image_button(const bgfx::TextureHandle handle
+	                         , const ImVec2& size
+	                         , const ImVec2& uv0 = ImVec2(0.0F, 0.0F)
+	                         , const ImVec2& uv1 = ImVec2(1.0F, 1.0F)
+	                         , const int frame_padding = -1
+	                         , const ImVec4& bg_col = ImVec4(0.0F, 0.0F, 0.0F, 0.0F)
+	                         , const ImVec4& tint_col = ImVec4(1.0F, 1.0F, 1.0F, 1.0F)) noexcept -> bool {
 		return image_button(handle, UINT8_C(0x01), 0, size, uv0, uv1, frame_padding, bg_col, tint_col);
 	}
 
-	inline auto image_button(const RRef<Texture>& texture, const ImVec2& size, const ImVec2& uv0 = ImVec2(0.0F, 0.0F), const ImVec2& uv1 = ImVec2(1.0F, 1.0F), const int frame_padding = -1, const ImVec4& bg_col = ImVec4(0.0F, 0.0F, 0.0F, 0.0F), const ImVec4& tint_col = ImVec4(1.0F, 1.0F, 1.0F, 1.0F)) noexcept -> bool {
+	inline auto image_button(const RRef<Texture>& texture
+	                         , const ImVec2& size
+	                         , const ImVec2& uv0 = ImVec2(0.0F, 0.0F)
+	                         , const ImVec2& uv1 = ImVec2(1.0F, 1.0F)
+	                         , const int frame_padding = -1
+	                         , const ImVec4& bg_col = ImVec4(0.0F, 0.0F, 0.0F, 0.0F)
+	                         , const ImVec4& tint_col = ImVec4(1.0F, 1.0F, 1.0F, 1.0F)) noexcept -> bool {
 		return image_button({texture->get_texel_buffer_id()}, UINT8_C(0x01), 0, size, uv0, uv1, frame_padding, bg_col, tint_col);
 	}
 

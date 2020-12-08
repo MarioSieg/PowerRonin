@@ -32,8 +32,7 @@ namespace dce {
 		_rm.proto_.info("System resources loaded!");
 	}
 
-	ResourceManager::ResourceManager(AsyncProtocol& _proto) noexcept : proto_(_proto) {
-	}
+	ResourceManager::ResourceManager(AsyncProtocol& _proto) noexcept : proto_(_proto) { }
 
 	auto ResourceManager::get_texture_cache() const noexcept -> const ResourceCache<Texture>& {
 		return this->texture_cache_;
@@ -63,8 +62,9 @@ namespace dce {
 		const auto id = HString(_file.string().c_str());
 		const auto file = _file.filename().string();
 		auto ptr = this->texture_cache_.load<TextureImporteur>(id, std::move(_file));
-		const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - state_clock).count()) / 1000000.0;
-		this->proto_.critical("Loaded texture {} in {}s!", file,  dur);
+		const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(
+			std::chrono::high_resolution_clock::now() - state_clock).count()) / 1000000.0;
+		this->proto_.critical("Loaded texture {} in {}s!", file, dur);
 		return ptr;
 	}
 
@@ -73,7 +73,8 @@ namespace dce {
 		const auto id = HString(_file.string().c_str());
 		const auto file = _file.filename().string();
 		auto ptr = this->mesh_cache_.load<MeshImporteur>(id, std::move(_file));
-		const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - state_clock).count()) / 1000000.0;
+		const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(
+			std::chrono::high_resolution_clock::now() - state_clock).count()) / 1000000.0;
 		this->proto_.critical("Loaded mesh {} in {}s!", file, dur);
 		return ptr;
 	}
@@ -83,7 +84,8 @@ namespace dce {
 		const auto id = HString(_file.string().c_str());
 		const auto file = _file.filename().string();
 		auto ptr = this->material_cache_.load<MaterialImporteur>(id, std::move(_file));
-		const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - state_clock).count()) / 1000000.0;
+		const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(
+			std::chrono::high_resolution_clock::now() - state_clock).count()) / 1000000.0;
 		this->proto_.critical("Loaded material {} in {}s!", file, dur);
 		return ptr;
 	}
@@ -93,7 +95,8 @@ namespace dce {
 		const auto id = HString(_file.string().c_str());
 		const auto file = _file.filename().string();
 		auto ptr = this->audio_clip_cache_.load<AudioClipImporteur>(id, std::move(_file));
-		const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - state_clock).count()) / 1000000.0;
+		const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(
+			std::chrono::high_resolution_clock::now() - state_clock).count()) / 1000000.0;
 		this->proto_.critical("Loaded audio clip {} in {}s!", file, dur);
 		return ptr;
 	}

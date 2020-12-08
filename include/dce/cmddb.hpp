@@ -24,11 +24,12 @@ namespace dce {
 	class Runtime;
 
 	enum class CommandExecutionResult: std::int8_t {
-		OK = 0,
-		COMMAND_DOES_NOT_EXIST = -1,
-		ARGS_SEPARATOR_MISSING = -2,
-		NO_ARGS_PROVIDED = -3,
-		COMMAND_FUNCTOR_FAILED = -4,
+		OK = 0
+		, COMMAND_DOES_NOT_EXIST = -1
+		, ARGS_SEPARATOR_MISSING = -2
+		, NO_ARGS_PROVIDED = -3
+		, COMMAND_FUNCTOR_FAILED = -4
+		,
 	};
 
 	/* Represents a command in the cmd. */

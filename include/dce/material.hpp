@@ -37,7 +37,8 @@ namespace dce {
 		/// <summary>
 		/// Has a simple texture and no lighting.
 		/// </summary>
-		UNLIT,
+		UNLIT
+		,
 
 		/// <summary>
 		/// Has a simple texture but lambertian diffuse lighting.
@@ -98,7 +99,9 @@ namespace dce {
 		/// <param name="_name_path_alias"></param>
 		/// <param name="_rm"></param>
 		/// <returns></returns>
-		[[nodiscard]] static auto create_from_data(Properties&& _props, std::filesystem::path&& _name_path_alias, ResourceManager& _rm) -> IRef<Material>;
+		[[nodiscard]] static auto create_from_data(Properties&& _props
+		                                           , std::filesystem::path&& _name_path_alias
+		                                           , ResourceManager& _rm) -> IRef<Material>;
 
 		/// <summary>
 		///

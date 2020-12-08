@@ -21,9 +21,12 @@
 #include "util.hpp"
 
 namespace {
-	constexpr const char* const VERTEX_SHADER = "#version 110\n" "uniform mat4 mvp;\n" "attribute vec2 pos;\n" "varying vec2 texcoord;\n" "void main()\n" "{\n" "    gl_Position = mvp * vec4(pos, 0.0, 1.0);\n" "    texcoord = pos;\n" "}\n";
+	constexpr const char* const VERTEX_SHADER = "#version 110\n" "uniform mat4 mvp;\n" "attribute vec2 pos;\n"
+		"varying vec2 texcoord;\n" "void main()\n" "{\n" "    gl_Position = mvp * vec4(pos, 0.0, 1.0);\n" "    texcoord = pos;\n"
+		"}\n";
 
-	constexpr const char* const FRAGMENT_SHADER = "#version 110\n" "uniform sampler2D tex;\n" "varying vec2 texcoord;\n" "void main()\n" "{\n" "    gl_FragColor = texture2D(tex, texcoord);\n" "}\n";
+	constexpr const char* const FRAGMENT_SHADER = "#version 110\n" "uniform sampler2D tex;\n" "varying vec2 texcoord;\n"
+		"void main()\n" "{\n" "    gl_FragColor = texture2D(tex, texcoord);\n" "}\n";
 
 	constexpr float VERTICES[4][2]{{0.f, 0.f}, {1.f, 0.f}, {1.f, 1.f}, {0.f, 1.f}};
 
@@ -94,7 +97,8 @@ namespace dce::platform {
 			GLuint texture, vertex_buffer;
 			glGenTextures(1, &texture);
 			glBindTexture(GL_TEXTURE_2D, texture);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->splash_image_->width, this->splash_image_->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->splash_image_data_);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->splash_image_->width, this->splash_image_->height, 0, GL_RGBA
+			             , GL_UNSIGNED_BYTE, this->splash_image_data_);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 

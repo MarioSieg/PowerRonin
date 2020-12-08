@@ -42,8 +42,8 @@ namespace dce {
 
 		/* Discriminator */
 		enum class Type : std::uint8_t {
-			BOX,
-			SPHERE
+			BOX
+			, SPHERE
 		} type = Type::BOX;
 	};
 }

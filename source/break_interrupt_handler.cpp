@@ -13,33 +13,22 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-#include "../../include/dce/core/misc.hpp"
-#include "../../include/dce/utils.hpp"
-#include "../../include/dce/env.hpp"
+#include "../include/dce/break_interrupt_handler.hpp"
+#include "../include/dce/env.hpp"
+#include "../include/dce/time_utils.hpp"
 
+#include <filesystem>
+#include <iomanip>
+#include <iostream>
 #include <fstream>
 #include <sstream>
-#include <filesystem>
-#include <iostream>
 
 #if SYS_WINDOWS
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #endif
 
-namespace dce::core {
-	void call_to_interrupt() {
-#if COM_MSVC
-		__debugbreak();
-#elif CPU_ARM
-		asm("bkpt 0");
-#elif CPU_X86 && (COM_GCC || COM_CLANG)
-		__asm__ __volatile__("int $3");
-#else
-		int* int3 = reinterpret_cast<int*>(3L);
-		*int3 = 3;
-#endif
-	}
+namespace dce {
 
 #if SYS_WINDOWS
 #define CALL_FIRST 1
@@ -76,7 +65,8 @@ namespace dce::core {
 		return EXCEPTION_CONTINUE_EXECUTION;
 	}
 
-	ScopedVectoredExceptionHandler::ScopedVectoredExceptionHandler() : handler_(&handler_) {
+	ScopedVectoredExceptionHandler::ScopedVectoredExceptionHandler()
+		: handler_(&handler_) {
 		AddVectoredExceptionHandler(CALL_FIRST, &handler);
 	}
 
@@ -85,7 +75,7 @@ namespace dce::core {
 	}
 
 #else
-	
+
 	ScopedVectoredExceptionHandler::ScopedVectoredExceptionHandler() {
 
 	}
@@ -93,59 +83,6 @@ namespace dce::core {
 	ScopedVectoredExceptionHandler::~ScopedVectoredExceptionHandler() {
 
 	}
-	
+
 #endif
-
-	void create_fatal_dump() {
-		if (!std::filesystem::is_directory("crashes")) {
-			std::filesystem::create_directory("crashes");
-		}
-		std::stringstream ss;
-		const auto now = std::time(nullptr);
-		const auto tm = safe_localtime(now);
-		ss << "crashes/" << std::put_time(&tm, "%d-%m-%Y-%H-%M-%S") << ".crash";
-		std::ofstream file(ss.str());
-		ss.str("");
-		ss << "MSG: Fatal unknown error!";
-		[[likely]] if (file) {
-			file << ss.str();
-		}
-		std::cerr << ss.str();
-	}
-
-	void create_fatal_dump(const std::exception& _ex) {
-		if (!std::filesystem::is_directory("crashes")) {
-			std::filesystem::create_directory("crashes");
-		}
-		std::stringstream ss;
-		const auto now = std::time(nullptr);
-		const auto tm = safe_localtime(now);
-		ss << "crashes/" << std::put_time(&tm, "%d-%m-%Y-%H-%M-%S") << ".crash";
-		std::ofstream file(ss.str());
-		ss.str("");
-		ss << "MSG: " << _ex.what();
-		[[likely]] if (file) {
-			file << ss.str();
-		}
-		std::cerr << ss.str();
-	}
-
-	void create_fatal_dump(const FatalEngineException& _ex) {
-		if (!std::filesystem::is_directory("crashes")) {
-			std::filesystem::create_directory("crashes");
-		}
-		std::stringstream ss;
-		const auto now = std::time(nullptr);
-		const auto tm = safe_localtime(now);
-		ss << "crashes/" << std::put_time(&tm, "%d-%m-%Y-%H-%M-%S") << ".crash";
-		std::ofstream file(ss.str());
-		ss.str("");
-		ss << "MSG: " << _ex.what();
-		ss << "\nFile: " << _ex.get_source_file();
-		ss << "\nLine: " << _ex.get_source_line();
-		[[likely]] if (file) {
-			file << ss.str();
-		}
-		std::cerr << ss.str();
-	}
 }

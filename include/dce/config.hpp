@@ -20,20 +20,21 @@
 
 namespace dce {
 	enum class SystemTheme {
-		DARK,
-		LIGHT,
-		CHERRY,
-		BLUE,
-		GREEN,
+		DARK
+		, LIGHT
+		, CHERRY
+		, BLUE
+		, GREEN
+		,
 	};
 
 	enum class GraphicsBackend {
-		AUTO,
-		DIRECT_3D11,
-		DIRECT_3D12,
-		METAL,
-		OPEN_GL,
-		VULKAN
+		AUTO
+		, DIRECT_3D11
+		, DIRECT_3D12
+		, METAL
+		, OPEN_GL
+		, VULKAN
 	};
 
 	class Config final : ISerializable {
@@ -45,8 +46,8 @@ namespace dce {
 		struct {
 			std::uint16_t width = 1920;
 			std::uint16_t height = 1080;
-			bool full_screen = false;
-			bool maximize = true;
+			bool is_full_screen = false;
+			bool is_maximized = true;
 		} display;
 
 		struct {

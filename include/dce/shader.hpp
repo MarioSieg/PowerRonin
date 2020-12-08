@@ -23,10 +23,11 @@
 
 namespace dce {
 	enum class UniformType {
-		SAMPLER,
-		VEC_4,
-		MATRIX_3x3,
-		MATRIX_4x4,
+		SAMPLER
+		, VEC_4
+		, MATRIX_3x3
+		, MATRIX_4x4
+		,
 	};
 
 	struct ShaderMeta final : ISerializable {
@@ -54,7 +55,8 @@ namespace dce {
 
 		[[nodiscard]] auto get_program_id() const noexcept -> std::uint16_t;
 
-		[[nodiscard]] auto get_uniforms() const noexcept -> const std::unordered_map<std::string_view, std::tuple<UniformType, std::uint16_t>>&;
+		[[nodiscard]] auto get_uniforms() const noexcept -> const std::unordered_map<
+			std::string_view, std::tuple<UniformType, std::uint16_t>>&;
 
 		void set_uniform(std::string_view _name, const Vector4<>& _value) const noexcept;
 		void set_uniform(std::string_view _name, const Matrix3x3<>& _value) const noexcept;
@@ -83,7 +85,9 @@ namespace dce {
 
 	class ShaderImporteur final : public ResourceImporteur<ShaderImporteur, Shader> {
 	public:
-		auto load(std::filesystem::path&& _path, std::unordered_map<std::string_view, std::tuple<UniformType, std::uint16_t>>&& _uniforms, const ShaderMeta* const _meta = nullptr) const -> std::shared_ptr<Shader>;
+		auto load(std::filesystem::path&& _path
+		          , std::unordered_map<std::string_view, std::tuple<UniformType, std::uint16_t>>&& _uniforms
+		          , const ShaderMeta* const _meta = nullptr) const -> std::shared_ptr<Shader>;
 	};
 
 	class ShaderCompiler final : public ResourceImporteur<ShaderCompiler, Shader> {

@@ -132,7 +132,8 @@ namespace dce::platform {
 
 		/* Show splash screen: */
 		const auto sp_result = this->splash_screen_.open(4, primary_monitor, "textures/splash/splash.png");
-		proto.info("Opened splash screen with size {}x{}: {}", this->splash_screen_.get_width(), this->splash_screen_.get_height(), sp_result);
+		proto.info("Opened splash screen with size {}x{}: {}", this->splash_screen_.get_width(), this->splash_screen_.get_height()
+		           , sp_result);
 
 		/*  Get all connected monitors: */
 		int all_monitors_count = 0;
@@ -187,7 +188,8 @@ namespace dce::platform {
 		proto.info("Setting window hint: {:X} to {}", GLFW_VISIBLE, GLFW_FALSE);
 
 		/* Create window: */
-		this->window_ = glfwCreateWindow(display_settings.width, display_settings.height, "Dreamcast Engine", display_settings.full_screen ? primary_monitor : nullptr, nullptr);
+		this->window_ = glfwCreateWindow(display_settings.width, display_settings.height, "Dreamcast Engine"
+		                                 , display_settings.is_full_screen ? primary_monitor : nullptr, nullptr);
 
 		[[unlikely]] if (this->window_ == nullptr) {
 			proto.error("Failed to create window!");
@@ -195,8 +197,8 @@ namespace dce::platform {
 		}
 
 
-		[[likely]] if (display_settings.full_screen || display_settings.maximize) {
-			[[likely]] if (display_settings.maximize) {
+		[[likely]] if (display_settings.is_full_screen || display_settings.is_maximized) {
+			[[likely]] if (display_settings.is_maximized) {
 				glfwMaximizeWindow(this->window_);
 				glfwHideWindow(this->window_);
 			}
@@ -209,7 +211,7 @@ namespace dce::platform {
 			}
 		}
 
-		[[unlikely]] if (!display_settings.full_screen) {
+		[[unlikely]] if (!display_settings.is_full_screen) {
 			center_window(this->window_, primary_monitor);
 		}
 
@@ -250,8 +252,10 @@ namespace dce::platform {
 
 			proto.info("RAM physical: {}B, available: {}B", memory.physical_total, memory.physical_available);
 			proto.info("RAM virtual: {}B, available: {}B", memory.virtual_available, memory.virtual_total);
-			proto.info("Kernel: {}, version: {}.{}.{}.{}", kernel_variant_name(kernel_info.variant), kernel_info.major, kernel_info.minor, kernel_info.patch, kernel_info.build_number);
-			proto.info("OS: {}, version: {}.{}.{}.{}", os_info.full_name, os_info.major, os_info.minor, os_info.patch, os_info.build_number);
+			proto.info("Kernel: {}, version: {}.{}.{}.{}", kernel_variant_name(kernel_info.variant), kernel_info.major
+			           , kernel_info.minor, kernel_info.patch, kernel_info.build_number);
+			proto.info("OS: {}, version: {}.{}.{}.{}", os_info.full_name, os_info.major, os_info.minor, os_info.patch
+			           , os_info.build_number);
 			proto.info("CPU model: {}", iware::cpu::model_name());
 			proto.info("CPU architecture: {}", architecture_name(iware::cpu::architecture()));
 			proto.info("CPU frequency: {}Hz", iware::cpu::frequency());
@@ -261,7 +265,8 @@ namespace dce::platform {
 
 			for (auto i = 1U; i <= 3; ++i) {
 				const auto cache = iware::cpu::cache(i);
-				proto.info("CPU cache L{} size: {}B, line size: {}B, associativity: {}, type: {}", i, cache.size, cache.line_size, cache.associativity, cache_type_name(cache.type));
+				proto.info("CPU cache L{} size: {}B, line size: {}B, associativity: {}, type: {}", i, cache.size, cache.line_size
+				           , cache.associativity, cache_type_name(cache.type));
 			}
 
 			proto.separator();
@@ -304,7 +309,8 @@ namespace dce::platform {
 			proto.info("RDRAND: {}", instruction_set_supported(iware::cpu::instruction_set_t::rd_rand));
 			proto.info("x64: {}", instruction_set_supported(iware::cpu::instruction_set_t::x64));
 			proto.info("x87FPU: {}", instruction_set_supported(iware::cpu::instruction_set_t::x87_fpu));
-			proto.info("Periphery: mice: {}, keyboards: {}, other: {}", iware::system::mouse_amount(), iware::system::keyboard_amount(), iware::system::other_HID_amount());
+			proto.info("Periphery: mice: {}, keyboards: {}, other: {}", iware::system::mouse_amount()
+			           , iware::system::keyboard_amount(), iware::system::other_HID_amount());
 			proto.separator();
 		}
 
@@ -314,7 +320,7 @@ namespace dce::platform {
 	auto Platform::on_post_startup(Runtime& _rt) -> bool {
 		this->splash_screen_.close();
 		glfwFocusWindow(this->window_);
-		[[likely]] if (_rt.config().display.maximize) {
+		[[likely]] if (_rt.config().display.is_maximized) {
 			glfwMaximizeWindow(this->window_);
 		}
 		glfwShowWindow(this->window_);

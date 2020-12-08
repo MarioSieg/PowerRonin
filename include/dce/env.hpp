@@ -26,9 +26,9 @@
 
 /* Contains all supported operating systems. */
 enum class System {
-	LINUX,
-	WINDOWS,
-	MAC
+	LINUX
+	, WINDOWS
+	, MAC
 };
 
 #define SYS_LINUX false
@@ -38,10 +38,12 @@ enum class System {
 /* Contains all supported compiler. */
 enum class Compiler {
 	/* GNU compiler collection. */
-	GCC,
+	GCC
+	,
 
 	/* Microsoft Visual C++ */
-	MSVC,
+	MSVC
+	,
 
 	/* LLVM Clang */
 	CLANG

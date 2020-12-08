@@ -31,7 +31,8 @@ namespace dce::physics {
 
 	private:
 		/* Required kernel events */
-		static constexpr auto EVENTS = core::ServiceEvents::PRE_STARTUP | core::ServiceEvents::POST_TICK | core::ServiceEvents::PRE_SHUTDOWN;
+		static constexpr auto EVENTS = core::ServiceEvents::PRE_STARTUP | core::ServiceEvents::POST_TICK |
+			core::ServiceEvents::PRE_SHUTDOWN;
 
 		/* Kernel events */
 		virtual auto on_pre_startup([[maybe_unused]] Runtime&) -> bool override;

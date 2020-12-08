@@ -20,8 +20,8 @@ namespace dce {
 	void Config::serialize(JsonStream& _j) const {
 		_j["display_width"] = this->display.width;
 		_j["display_height"] = this->display.height;
-		_j["display_fullscreen"] = this->display.full_screen;
-		_j["display_maximize"] = this->display.maximize;
+		_j["display_fullscreen"] = this->display.is_full_screen;
+		_j["display_maximize"] = this->display.is_maximized;
 
 		_j["overlay_font_size"] = this->overlay.font_size;
 		_j["overlay_theme"] = this->overlay.theme;
@@ -33,8 +33,8 @@ namespace dce {
 	void Config::deserialize(const JsonStream& _j) {
 		this->display.width = _j["display_width"];
 		this->display.height = _j["display_height"];
-		this->display.full_screen = _j["display_fullscreen"];
-		this->display.maximize = _j["display_maximize"];
+		this->display.is_full_screen = _j["display_fullscreen"];
+		this->display.is_maximized = _j["display_maximize"];
 
 		this->overlay.font_size = _j["overlay_font_size"];
 		this->overlay.theme = _j["overlay_theme"];

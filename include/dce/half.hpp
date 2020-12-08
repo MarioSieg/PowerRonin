@@ -32,7 +32,9 @@ namespace dce {
 
 	template <>
 	constexpr auto uint32_cntlz(const uint64_t x) noexcept -> std::uint32_t {
-		return (x & UINT64_C(0xffffffff00000000)) != 0u ? uint32_cntlz(static_cast<uint32_t>(x >> 32)) : uint32_cntlz(static_cast<uint32_t>(x)) + 32;
+		return (x & UINT64_C(0xffffffff00000000)) != 0u
+			       ? uint32_cntlz(static_cast<uint32_t>(x >> 32))
+			       : uint32_cntlz(static_cast<uint32_t>(x)) + 32;
 	}
 
 	template <>

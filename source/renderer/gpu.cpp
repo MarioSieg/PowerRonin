@@ -31,12 +31,11 @@ namespace dce::renderer {
 		}
 
 		bgfx::Init init{};
-		init.limits.maxEncoders = 16;
 		init.type = bgfx::RendererType::Direct3D11;
 		init.debug = DEBUG_MODE;
 		init.platformData.nwh = platform::NATIVE_WINDOW_HANDLE;
 		init.profile = DEBUG_MODE;
-		init.resolution.reset = BGFX_RESET_MSAA_X16 | BGFX_RESET_HIDPI | BGFX_RESET_MAXANISOTROPY | BGFX_RESET_DEPTH_CLAMP;
+		init.resolution.reset = BGFX_RESET_MSAA_X16 | BGFX_RESET_HIDPI | BGFX_RESET_MAXANISOTROPY | BGFX_RESET_SRGB_BACKBUFFER;
 		init.resolution.width = _config.display.width;
 		init.resolution.height = _config.display.height;
 
@@ -124,7 +123,10 @@ namespace dce::renderer {
 		setTexture(_stage, _sampler, view);
 	}
 
-	void GPU::draw(const bgfx::ProgramHandle _shader, const bgfx::ViewId _view_id, const std::uint64_t _state_flags, const std::uint8_t _depth) const noexcept {
+	void GPU::draw(const bgfx::ProgramHandle _shader
+	               , const bgfx::ViewId _view_id
+	               , const std::uint64_t _state_flags
+	               , const std::uint8_t _depth) const noexcept {
 		assert(bgfx::isValid(_shader));
 		bgfx::setState(_state_flags);
 		submit(_view_id, _shader, _depth);

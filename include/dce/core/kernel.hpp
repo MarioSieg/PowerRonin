@@ -37,7 +37,9 @@ namespace dce {
 		/* Represents an engine kernel, containing all subsystems  */
 		class Kernel {
 		public:
-			[[nodiscard]] static auto create(const int _in_argc, const char* const* const _in_argv, const char* const* const _in_envp) -> std::unique_ptr<Kernel>;
+			[[nodiscard]] static auto create(const int _in_argc
+			                                 , const char* const* const _in_argv
+			                                 , const char* const* const _in_envp) -> std::unique_ptr<Kernel>;
 
 			/* Argument count */
 			const int argc;
@@ -75,7 +77,8 @@ namespace dce {
 			void install_subsystem(std::unique_ptr<ISubsystem>&& _subsystem) const;
 
 			/* Returns installed subsystems */
-			[[nodiscard]] auto installed_subsystems() const noexcept -> const std::vector<std::tuple<std::uint_fast16_t, std::unique_ptr<ISubsystem>>>&;
+			[[nodiscard]] auto installed_subsystems() const noexcept -> const std::vector<std::tuple<
+				std::uint_fast16_t, std::unique_ptr<ISubsystem>>>&;
 
 			/* Returns the current simulation state. */
 			[[nodiscard]] auto get_runtime() const noexcept -> Runtime*;

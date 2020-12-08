@@ -15,38 +15,26 @@
 
 #pragma once
 
-#include "mathlib.hpp"
+#include <ctime>
+#include <string>
 
 namespace dce {
 	/// <summary>
-	/// Represents a light.
+	/// Safe alternative for std::localtime
 	/// </summary>
-	class Light final {
-	public:
-		Light() noexcept = default;
-		Light(const Light&) noexcept = delete;
-		Light(Light&&) noexcept = default;
-		auto operator=(const Light&) noexcept -> Light& = delete;
-		auto operator=(Light&&) noexcept -> Light& = default;
-		~Light() = default;
+	/// <param name="_time"></param>
+	/// <returns></returns>
+	[[nodiscard]] extern auto safe_localtime(const std::time_t& _time) -> std::tm;
 
-		/// <summary>
-		/// The type of the light.
-		/// </summary>
-		enum class Type {
-			DIRECTIONAL
-			, SPOT
-			, POINT
-		} type = Type::DIRECTIONAL;
+	/// <summary>
+	/// Returns safe_localtime as timestamp string.
+	/// </summary>
+	/// <returns></returns>
+	[[nodiscard]] extern auto time_stamp() -> std::string;
 
-		/// <summary>
-		/// The light color.
-		/// </summary>
-		Color<> color = {1.f, 1.f, 1.f, 1.f};
-
-		/// <summary>
-		/// The light intensity in Lux.
-		/// </summary>
-		float intensity = 1.f;
-	};
+	/// <summary>
+	/// Writes safe_localtime as timestamp string into a fixed buffer.
+	/// </summary>
+	/// <param name="_buffer"></param>
+	[[nodiscard]] extern void time_stamp(char (&_buffer)[32]);
 }

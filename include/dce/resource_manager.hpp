@@ -51,8 +51,8 @@ namespace dce {
 		explicit ResourceManager(AsyncProtocol& _proto) noexcept;
 		ResourceManager(const ResourceManager&) = delete;
 		ResourceManager(ResourceManager&&) = delete;
-		auto operator=(const ResourceManager&)->ResourceManager & = delete;
-		auto operator=(ResourceManager&&)->ResourceManager & = delete;
+		auto operator=(const ResourceManager&) -> ResourceManager& = delete;
+		auto operator=(ResourceManager&&) -> ResourceManager& = delete;
 		~ResourceManager() = default;
 
 		/// <summary>
@@ -90,7 +90,8 @@ namespace dce {
 		/// <typeparam name="T">The type to load. For example Texture or Mesh.</typeparam>
 		/// <param name="_file">The file path to the file to be loaded.</param>
 		/// <returns>A resource reference to the newly loaded resource.</returns>
-		template <typename T> requires std::is_base_of_v<IResource<typename T::Meta>, T> [[nodiscard]] auto load(std::filesystem::path&& _file) -> RRef<T>;
+		template <typename T> requires std::is_base_of_v<IResource<typename T::Meta>, T> [[nodiscard]] auto load(
+			std::filesystem::path&& _file) -> RRef<T>;
 
 		/// <summary>
 		/// Loads a resource of type T from a file and stores it in the corresponding resource cache but with metadata.
@@ -99,7 +100,9 @@ namespace dce {
 		/// <param name="_file">The file path to the file to be loaded.</param>
 		/// <param name="_meta">The metadata pointer. Pass nullptr to load it from file.</param>
 		/// <returns>A resource reference to the newly loaded resource.</returns>
-		template <typename T> requires std::is_base_of_v<IResource<typename T::Meta>, T> [[nodiscard]] auto load(std::filesystem::path&& _file, const typename T::Meta* const _meta) -> RRef<T>;
+		template <typename T> requires std::is_base_of_v<IResource<typename T::Meta>, T> [[nodiscard]] auto load(
+			std::filesystem::path&& _file
+			, const typename T::Meta* const _meta) -> RRef<T>;
 
 		/// <summary>
 		/// Destroys all resources. (!DANGEROUS!)

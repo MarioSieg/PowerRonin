@@ -83,12 +83,14 @@ namespace dce::renderer {
 					           // Render with unlit material:
 					           [this, mesh](const Material::Unlit& _material) {
 						           this->shader_bucket_.unlit.per_object(mesh, _material);
-					           },
+					           }
+					           ,
 
 					           // Render with lambert material:
 					           [this, mesh](const Material::Lambert& _material) {
 						           this->shader_bucket_.lambert.per_object(mesh, _material);
-					           },
+					           }
+					           ,
 				           }, _mesh_renderer.material->get_properties());
 			};
 
@@ -111,7 +113,8 @@ namespace dce::renderer {
 	}
 
 	void Renderer::update_camera(const Runtime& _rt) {
-		this->fly_cam_.update(_rt.input(), _rt.config().display.width, _rt.config().display.height, static_cast<float>(_rt.chrono().delta_time));
+		this->fly_cam_.update(_rt.input(), _rt.config().display.width, _rt.config().display.height
+		                      , static_cast<float>(_rt.chrono().delta_time));
 		this->view_ = this->fly_cam_.get_view_matrix();
 		this->projection_ = this->fly_cam_.get_projection_matrix();
 		this->gpu_.set_camera(SCENERY_VIEW, this->view_, this->projection_);
@@ -138,7 +141,9 @@ namespace dce::renderer {
 	}
 
 	void Renderer::set_per_frame_data(const Scenery::Configuration::Lighting& _lighting) const {
-		const auto sun_dir = Vector4<>(calculate_sun_dir(_lighting.sun.hour, _lighting.sun.latitude, calculate_sun_orbit(6, math::radians(23.4f)), math::UP, math::NORTH), 1.f);
+		const auto sun_dir = Vector4<>(calculate_sun_dir(_lighting.sun.hour, _lighting.sun.latitude
+		                                                 , calculate_sun_orbit(6, math::radians(23.4f)), math::UP, math::NORTH)
+		                               , 1.f);
 		this->shader_bucket_.lambert.per_frame(sun_dir, _lighting.sun.color, _lighting.const_ambient_color);
 	}
 } // namespace dce::renderer // namespace dce::renderer

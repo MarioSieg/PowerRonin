@@ -13,40 +13,20 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-#pragma once
-
-#include "mathlib.hpp"
+#include "../include/dce/interrupt.hpp"
+#include "../include/dce/env.hpp"
 
 namespace dce {
-	/// <summary>
-	/// Represents a light.
-	/// </summary>
-	class Light final {
-	public:
-		Light() noexcept = default;
-		Light(const Light&) noexcept = delete;
-		Light(Light&&) noexcept = default;
-		auto operator=(const Light&) noexcept -> Light& = delete;
-		auto operator=(Light&&) noexcept -> Light& = default;
-		~Light() = default;
-
-		/// <summary>
-		/// The type of the light.
-		/// </summary>
-		enum class Type {
-			DIRECTIONAL
-			, SPOT
-			, POINT
-		} type = Type::DIRECTIONAL;
-
-		/// <summary>
-		/// The light color.
-		/// </summary>
-		Color<> color = {1.f, 1.f, 1.f, 1.f};
-
-		/// <summary>
-		/// The light intensity in Lux.
-		/// </summary>
-		float intensity = 1.f;
-	};
+	void interrupt() {
+#if COM_MSVC
+		__debugbreak();
+#elif CPU_ARM
+		asm("bkpt 0");
+#elif CPU_X86 && (COM_GCC || COM_CLANG)
+		asm volatile("int $3");
+#else
+		int* int3 = reinterpret_cast<int*>(3L);
+		*int3 = 3;
+#endif
+	}
 }

@@ -26,14 +26,14 @@ namespace dce {
 		// Bitmask to subscribe to subsystem events
 		struct ServiceEvents {
 			enum Enum : std::uint8_t {
-				NONE = 0,
-				PRE_STARTUP = 1 << 0,
-				POST_STARTUP = 1 << 1,
-				PRE_TICK = 1 << 2,
-				POST_TICK = 1 << 3,
-				PRE_SHUTDOWN = 1 << 4,
-				POST_SHUTDOWN = 1 << 5,
-				ALL = std::numeric_limits<std::uint8_t>::max()
+				NONE = 0
+				, PRE_STARTUP = 1 << 0
+				, POST_STARTUP = 1 << 1
+				, PRE_TICK = 1 << 2
+				, POST_TICK = 1 << 3
+				, PRE_SHUTDOWN = 1 << 4
+				, POST_SHUTDOWN = 1 << 5
+				, ALL = std::numeric_limits<std::uint8_t>::max()
 			};
 		};
 
@@ -42,7 +42,8 @@ namespace dce {
 			friend class Kernel;
 
 		protected:
-			ISubsystem(const std::string_view _name, const std::underlying_type<ServiceEvents::Enum>::type _subscribed_events) noexcept;
+			ISubsystem(const std::string_view _name
+			           , const std::underlying_type<ServiceEvents::Enum>::type _subscribed_events) noexcept;
 
 		public:
 			/* Name of the subsystem */

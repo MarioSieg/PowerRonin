@@ -19,7 +19,7 @@
 #include "serial.hpp"
 #include <filesystem>
 
-#include "utils.hpp"
+#include "except.hpp"
 
 namespace dce {
 	/// <summary>

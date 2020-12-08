@@ -30,13 +30,13 @@ namespace dce {
 	/// Contains all used sound formats.
 	/// </summary>
 	enum class SoundFormat {
-		NONE,
-		PCM8,
-		PCM16,
-		PCM24,
-		PCM32,
-		PCM_FLOAT,
-		BIT_STREAM
+		NONE
+		, PCM8
+		, PCM16
+		, PCM24
+		, PCM32
+		, PCM_FLOAT
+		, BIT_STREAM
 	};
 
 	/// <summary>
@@ -56,7 +56,29 @@ namespace dce {
 		/// <summary>
 		/// All associated file types.
 		/// </summary>
-		static constexpr std::array<std::string_view, 21> FILE_EXTENSIONS = {".aiff", ".asf", ".asx", ".dls", ".flac", ".fsb", ".it", ".m3u", ".midi", ".mod", ".mp2", ".mp3", ".ogg", ".pls", ".s3m", ".vag", ".wav", ".wax", ".wma", ".xm", ".xma"};
+		static constexpr std::array<std::string_view, 21> FILE_EXTENSIONS = {
+			".aiff"
+			, ".asf"
+			, ".asx"
+			, ".dls"
+			, ".flac"
+			, ".fsb"
+			, ".it"
+			, ".m3u"
+			, ".midi"
+			, ".mod"
+			, ".mp2"
+			, ".mp3"
+			, ".ogg"
+			, ".pls"
+			, ".s3m"
+			, ".vag"
+			, ".wav"
+			, ".wax"
+			, ".wma"
+			, ".xm"
+			, ".xma"
+		};
 
 		/// <summary>
 		/// NO-OP.

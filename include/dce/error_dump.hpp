@@ -15,19 +15,15 @@
 
 #pragma once
 
-#include "../env.hpp"
-#include "../utils.hpp"
+namespace std {
+	class exception;
+}
 
-#if SYS_WINDOWS
-#define DREAM_ENTRY WinMain /* On Windows we need WinMain */
-#else
-#define DREAM_ENTRY main
-#endif
-
-namespace dce::core {
+namespace dce {
+	class FatalEngineException;
 	/// <summary>
-	/// (ERROR ROUTINE) Creates error dump to std::cerr and a file.
-	/// </summary>
+/// (ERROR ROUTINE) Creates error dump to std::cerr and a file.
+/// </summary>
 	extern void create_fatal_dump();
 
 	/// <summary>
@@ -39,22 +35,4 @@ namespace dce::core {
 	/// (ERROR ROUTINE) Creates error dump to std::cerr and a file.
 	/// </summary>
 	extern void create_fatal_dump(const FatalEngineException& _ex);
-
-
-	/// <summary>
-	/// Cross platform debug break (int $3)
-	/// </summary>
-	extern void call_to_interrupt();
-
-	struct ScopedVectoredExceptionHandler final {
-		ScopedVectoredExceptionHandler();
-		ScopedVectoredExceptionHandler(const ScopedVectoredExceptionHandler&) = delete;
-		ScopedVectoredExceptionHandler(ScopedVectoredExceptionHandler&&) = delete;
-		auto operator=(const ScopedVectoredExceptionHandler&) = delete;
-		auto operator=(ScopedVectoredExceptionHandler&&) = delete;
-		~ScopedVectoredExceptionHandler();
-
-	private:
-		void* handler_ = nullptr;
-	};
 }
