@@ -35,8 +35,8 @@ namespace dce::gui::widgets {
 		void update(bool& _show, Registry& _registry, ResourceManager& _resource_manager, ERef _entity);
 
 	private:
-		std::array<char, BUFFER_SIZE> string_buffer_ = {};
 		ImGuizmo::OPERATION modifier_ = {};
+		std::array<char, BUFFER_SIZE> string_buffer_ = {};
 		std::string current_path_ = {};
 		std::string mesh_filer_ = {};
 		std::string texture_filer_ = {};

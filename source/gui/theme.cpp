@@ -319,7 +319,7 @@ namespace dce::gui {
 
 	void style_alpha_apply(const float _alpha) noexcept {
 		auto& style = ImGui::GetStyle();
-		style.Alpha = _alpha;
+		style.Alpha = std::clamp(_alpha, 0.1f, 1.0f);
 	}
 
 	void style_antialiasing_apply(const bool _enable_aa) noexcept {

@@ -36,7 +36,7 @@ namespace dce::gui {
 
 		auto& cfg = _rt.config().overlay;
 		style_apply(cfg.theme);
-		style_antialiasing_apply(cfg.enable_antialiasing);
+		style_antialiasing_apply(cfg.enable_anti_aliasing);
 		style_alpha_apply(cfg.transparency);
 		style_rounding_apply(cfg.rounding);
 
@@ -62,12 +62,12 @@ namespace dce::gui {
 	}
 
 	auto Gui::on_post_tick(Runtime& _rt) -> bool {
-		this->editor_.update(_rt, this->show_terminal_);
+		this->editor_.update(_rt, _rt.config().overlay.show_terminal);
 		[[unlikely]] if (_rt.input().is_key_down(Key::GRAVE_ACCENT)) {
-			this->show_terminal_ = true;
+			_rt.config().overlay.show_terminal = true;
 		}
-		[[unlikely]] if (this->show_terminal_) {
-			this->terminal_.update(this->show_terminal_, _rt);
+		[[unlikely]] if (_rt.config().overlay.show_terminal) {
+			this->terminal_.update(_rt.config().overlay.show_terminal, _rt);
 		}
 		this->end();
 

@@ -53,9 +53,11 @@ namespace dce {
 		struct {
 			std::uint8_t font_size = 24;
 			SystemTheme theme = SystemTheme::DARK;
-			bool enable_antialiasing = true;
+			bool enable_anti_aliasing = true;
 			float transparency = 1.F;
 			float rounding = 4.F;
+			bool show_terminal = true;
+			bool show_stats = true;
 		} overlay;
 
 		struct {

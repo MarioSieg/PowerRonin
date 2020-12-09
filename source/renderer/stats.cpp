@@ -15,8 +15,7 @@
 
 #include "stats.hpp"
 
-#include "../../include/dce/proto.hpp"
-#include "../../include/dce/diagnostics.hpp"
+#include "../../include/dce/runtime.hpp"
 #include "../../extern/bgfx/bgfx/include/bgfx/bgfx.h"
 
 namespace dce::renderer {
@@ -87,5 +86,13 @@ namespace dce::renderer {
 		_diag.graphics.used_dynamic_vertex_buffers = stats.numDynamicVertexBuffers;
 		_diag.graphics.used_dynamic_index_buffers = stats.numDynamicIndexBuffers;
 		_diag.graphics.used_frame_buffers = stats.numFrameBuffers;
+	}
+
+	void render_stats(const Runtime& _runtime) {
+		const auto& chrono = _runtime.chrono();
+		const auto x = static_cast<std::uint16_t>(_runtime.render_data().scenery_viewport_position.x);
+		const auto y = static_cast<std::uint16_t>(_runtime.render_data().scenery_viewport_position.y);
+		bgfx::dbgTextClear();
+		bgfx::dbgTextPrintf(0, 0, 0xF, "C: %u", chrono.cycles);
 	}
 }

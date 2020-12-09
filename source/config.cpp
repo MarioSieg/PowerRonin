@@ -25,7 +25,7 @@ namespace dce {
 
 		_j["overlay_font_size"] = this->overlay.font_size;
 		_j["overlay_theme"] = this->overlay.theme;
-		_j["overlay_antialiasing"] = this->overlay.enable_antialiasing;
+		_j["overlay_antialiasing"] = this->overlay.enable_anti_aliasing;
 		_j["overlay_transparency"] = this->overlay.transparency;
 		_j["overlay_rounding"] = this->overlay.rounding;
 	}
@@ -38,7 +38,7 @@ namespace dce {
 
 		this->overlay.font_size = _j["overlay_font_size"];
 		this->overlay.theme = _j["overlay_theme"];
-		this->overlay.enable_antialiasing = _j["overlay_antialiasing"];
+		this->overlay.enable_anti_aliasing = _j["overlay_antialiasing"];
 		this->overlay.transparency = _j["overlay_transparency"];
 		this->overlay.rounding = _j["overlay_rounding"];
 	}

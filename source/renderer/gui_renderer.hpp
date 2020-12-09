@@ -18,6 +18,10 @@
 #include "gl_headers.hpp"
 #include <cstdint>
 
+namespace dce {
+	class RenderData;
+}
+
 struct ImDrawData;
 struct ImFont;
 

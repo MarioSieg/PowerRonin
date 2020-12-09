@@ -178,7 +178,12 @@ add_library(
     "include/dce/error_dump.hpp"
     "source/error_dump.cpp" 
     "include/dce/break_interrupt_handler.hpp" 
-    "source/break_interrupt_handler.cpp")
+    "source/break_interrupt_handler.cpp" 
+    "include/dce/renderer_data.hpp" 
+    "source/renderer.cpp"
+    "source/gui/widgets/scenery_viewer.hpp"
+    "source/gui/widgets/scenery_viewer.cpp"
+    )
 
 include("extern/CMakeLists.txt")
 

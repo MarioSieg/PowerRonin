@@ -27,4 +27,5 @@ namespace dce::gui {
 	constexpr const char* const RESOURCE_VIEWER_NAME = ICON_FA_DATABASE " Resource Viewer";
 	constexpr const char* const MEMORY_EDITOR_NAME = ICON_FA_MEMORY " Memory Editor";
 	constexpr const char* const TERMINAL_NAME = ICON_FA_TERMINAL " Terminal";
+	constexpr const char* const SCENERY_VIEWER_NAME = ICON_FA_EYE " Scenery";
 }

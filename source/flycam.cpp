@@ -39,9 +39,9 @@ namespace dce {
 	}
 
 	void FlyCam::update(const Input& _input, const float _viewport_x, const float _viewport_y, const float _delta_time) {
-		[[unlikely]] if (ImGui::IsAnyItemHovered() || ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow)) {
+		/*[[unlikely]] if (ImGui::IsAnyItemHovered() || ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow)) {
 			return;
-		}
+		}*/
 		const auto mouse = _input.get_mouse_position();
 
 		const float speed = this->move_speed;

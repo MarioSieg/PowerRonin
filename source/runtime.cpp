@@ -80,6 +80,14 @@ namespace dce {
 		return this->input_;
 	}
 
+	auto Runtime::render_data() const & noexcept -> const RenderData& {
+		return this->render_data_;
+	}
+
+	auto Runtime::render_data() & noexcept -> RenderData& {
+		return this->render_data_;
+	}
+
 	Runtime::Runtime()
 		: protocol_(),
 		  config_(),
@@ -89,7 +97,8 @@ namespace dce {
 		  diagnostics_(),
 		  chrono_(),
 		  scenery_(),
-		  input_() { }
+		  input_(),
+		  render_data_() { }
 
 	void Runtime::initialize() {
 		this->command_db_.install_common_commands();

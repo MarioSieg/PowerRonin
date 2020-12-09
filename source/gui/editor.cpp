@@ -28,7 +28,7 @@ namespace dce::gui {
 	}
 
 	void Editor::update(Runtime& _rt, bool& _show_terminal) {
-		this->dockspace_id_ = DockSpaceOverViewport(GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
+		this->dockspace_id_ = DockSpaceOverViewport(GetMainViewport());
 
 		[[unlikely]] if (this->first_use_) {
 			this->default_layout();
@@ -36,7 +36,7 @@ namespace dce::gui {
 		}
 
 		[[likely]] if (this->show_menu_) {
-			this->main_menu(_show_terminal);
+			this->main_menu(_rt, _show_terminal);
 		}
 
 		[[likely]] if (this->show_hierarchy_viewer_) {
@@ -63,9 +63,13 @@ namespace dce::gui {
 		[[unlikely]] if (this->show_config_editor_) {
 			this->config_editor_.update(this->show_config_editor_, _rt.config(), _rt.scenery().config);
 		}
+
+		[[likely]] if(this->show_scenery_viewer_) {
+			this->scenery_viewer_.update(this->show_scenery_viewer_, _rt.render_data());
+		}
 	}
 
-	void Editor::main_menu(bool& _show_terminal) {
+	void Editor::main_menu(Runtime& _rt, bool& _show_terminal) {
 		[[likely]] if (BeginMainMenuBar()) {
 			[[unlikely]] if (BeginMenu("File")) {
 				if (MenuItem("New")) { }
@@ -120,7 +124,9 @@ namespace dce::gui {
 
 			[[unlikely]] if (Button(ICON_FA_VOLUME_UP)) { }
 
-			[[unlikely]] if (Button(ICON_FA_TH)) { }
+			[[unlikely]] if (Button(ICON_FA_TH)) {
+				_rt.render_data().enable_wireframe = !_rt.render_data().enable_wireframe;
+			}
 
 			[[unlikely]] if (Button(ICON_FA_MAP_MARKER_SMILE)) { }
 
@@ -158,6 +164,8 @@ namespace dce::gui {
 
 		DockBuilderDockWindow(TERMINAL_NAME, dock_id_bottom);
 		DockBuilderDockWindow(PROFILER_NAME, dock_id_bottom);
+
+		DockBuilderDockWindow(SCENERY_VIEWER_NAME, main_id);
 
 		DockBuilderFinish(this->dockspace_id_);
 	}

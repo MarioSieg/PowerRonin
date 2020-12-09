@@ -51,11 +51,12 @@ namespace dce {
 			virtual auto on_post_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
 
 			void update_camera(const Runtime& _rt);
-			void draw_skybox(const Scenery::Configuration::Lighting& _lighting);
+			void render_skybox(const Scenery::Configuration::Lighting& _lighting, const RenderData& _data);
 			void set_per_frame_data(const Scenery::Configuration::Lighting& _lighting) const;
+			void render_scene(Runtime& _rt);
 
-			std::uint64_t tick_prev_ = 0;
 			FlyCam fly_cam_ = {};
+			std::uint64_t tick_prev_ = 0;
 			GPU gpu_ = {};
 			ShaderBucket shader_bucket_;
 			Matrix4x4<> view_ = math::identity<Matrix4x4<>>();

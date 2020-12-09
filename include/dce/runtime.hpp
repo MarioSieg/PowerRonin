@@ -19,12 +19,12 @@
 #include "cmddb.hpp"
 #include "config.hpp"
 #include "diagnostics.hpp"
-#include "event_behaviour.hpp"
 #include "resource_manager.hpp"
 #include "proto.hpp"
 #include "chrono.hpp"
 #include "scenery.hpp"
 #include "input.hpp"
+#include "renderer_data.hpp"
 
 namespace dce {
 	/* Contains all system states and data. */
@@ -62,6 +62,10 @@ namespace dce {
 
 		[[nodiscard]] auto input() & noexcept -> Input&;
 
+		[[nodiscard]] auto render_data() const & noexcept -> const RenderData&;
+		
+		[[nodiscard]] auto render_data() & noexcept -> RenderData&;
+
 		Runtime();
 		Runtime(const Runtime&) = delete;
 		Runtime(Runtime&&) noexcept = delete;
@@ -82,5 +86,6 @@ namespace dce {
 		Chrono chrono_;
 		Scenery scenery_;
 		Input input_;
+		RenderData render_data_;
 	};
 } // namespace dce // namespace dce

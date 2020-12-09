@@ -54,6 +54,5 @@ namespace dce::gui {
 		ImPlotContext* plot_context_ = nullptr;
 		Editor editor_ = {};
 		Terminal terminal_ = {};
-		bool show_terminal_ = true;
 	};
 } // namespace dce::gui // namespace dce::gui

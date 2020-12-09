@@ -125,6 +125,9 @@ namespace dce::renderer {
 		/// <returns></returns>
 		void set_texture(const Texture& _texture, bgfx::UniformHandle _sampler, const std::uint8_t _stage) const noexcept;
 
+		static constexpr auto DEFAULT_STATE_FLAGS = BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_Z | BGFX_STATE_DEPTH_TEST_LESS |
+			BGFX_STATE_MSAA | BGFX_STATE_CULL_CCW;
+
 		/// <summary>
 		/// Draw mesh
 		/// </summary>
@@ -134,10 +137,18 @@ namespace dce::renderer {
 		/// <param name="_depth"></param>
 		/// <returns></returns>
 		void draw(bgfx::ProgramHandle _shader
-		          , bgfx::ViewId _view_id = 0
-		          , const std::uint64_t _state_flags = BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_Z | BGFX_STATE_DEPTH_TEST_LESS |
-			          BGFX_STATE_MSAA | BGFX_STATE_CULL_CCW
+		          , bgfx::ViewId _view_id
+		          , const std::uint64_t _state_flags = DEFAULT_STATE_FLAGS
 		          , std::uint8_t _depth = 0) const noexcept;
+
+		/// <summary>
+		/// Set the set_viewport.
+		/// </summary>
+		/// <param name="_xy"></param>
+		/// <param name="_wh"></param>
+		/// <param name="_view_id"></param>
+		/// <returns></returns>
+		void set_viewport(const Vector2<> _xy, const Vector2<> _wh, const bgfx::ViewId _view_id) noexcept;
 
 		/// <summary>
 		/// Set uniform.
@@ -186,10 +197,5 @@ namespace dce::renderer {
 		/// <param name="_value"></param>
 		/// <returns></returns>
 		void set_uniform(bgfx::UniformHandle _handle, const float (&_value)[16]) const noexcept;
-
-
-	private:
-		std::uint16_t width_ = 0;
-		std::uint16_t height_ = 0;
 	};
 }

@@ -22,6 +22,7 @@
 #include "widgets/hierarchy.hpp"
 #include "widgets/inspector.hpp"
 #include "widgets/config_editor.hpp"
+#include "widgets/scenery_viewer.hpp"
 
 namespace dce::gui::widgets {
 #include "widgets/ram_editor.hpp"
@@ -35,7 +36,7 @@ namespace dce {
 		public:
 			void initialize(Runtime& _rt);
 			void update(Runtime& _rt, bool& _show_terminal);
-			void main_menu(bool& _show_terminal);
+			void main_menu(Runtime& _rt, bool& _show_terminal);
 
 		private:
 			void default_layout() const;
@@ -47,6 +48,7 @@ namespace dce {
 			widgets::Hierarchy hierarchy_ = {};
 			widgets::Inspector inspector_ = {};
 			widgets::ConfigEditor config_editor_ = {};
+			widgets::SceneryViewer scenery_viewer_ = {};
 
 			bool show_menu_ = true;
 			bool show_resource_viewer_ = true;
@@ -54,6 +56,7 @@ namespace dce {
 			bool show_hierarchy_viewer_ = true;
 			bool show_inspector_ = true;
 			bool show_config_editor_ = true;
+			bool show_scenery_viewer_ = true;
 
 			bool first_use_ = true;
 			ImGuiID dockspace_id_ = 0;

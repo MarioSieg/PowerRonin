@@ -44,8 +44,7 @@ namespace dce::renderer {
 			return false;
 		}
 
-		this->width_ = _config.display.width;
-		this->height_ = _config.display.height;
+		bgfx::setDebug(BGFX_DEBUG_TEXT);
 
 		_proto.separator();
 		_proto.critical("Initializing GPU engine backend...");
@@ -73,7 +72,6 @@ namespace dce::renderer {
 
 	void GPU::clear_view(const bgfx::ViewId _view, const std::uint16_t _flags, const float _depth) const noexcept {
 		bgfx::setViewClear(_view, _flags, 0xFFFFFFFF, _depth, 0);
-		bgfx::setViewRect(_view, 0, 0, this->width_, this->height_);
 	}
 
 	void GPU::sort_draw_calls(const bgfx::ViewId _view) const noexcept {
@@ -130,6 +128,10 @@ namespace dce::renderer {
 		assert(bgfx::isValid(_shader));
 		bgfx::setState(_state_flags);
 		submit(_view_id, _shader, _depth);
+	}
+
+	void GPU::set_viewport(const Vector2<> _xy, const Vector2<> _wh, const bgfx::ViewId _view_id) noexcept {
+		bgfx::setViewRect(_view_id, _xy.x, _xy.y, _wh.x, _wh.y);
 	}
 
 	void GPU::set_uniform(const bgfx::UniformHandle _handle, const Vector4<>& _value) const noexcept {

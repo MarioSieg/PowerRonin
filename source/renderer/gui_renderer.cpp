@@ -99,8 +99,7 @@ namespace dce::renderer {
 		return this->texture_.idx != bgfx::kInvalidHandle;
 	}
 
-	void GuiRenderer::render(const ImDrawData* const /*data*/) const {
-		const auto* const drawData = ImGui::GetDrawData();
+	void GuiRenderer::render(const ImDrawData* const _data) const {
 		const auto& io = ImGui::GetIO();
 		const auto width = static_cast<std::uint16_t>(io.DisplaySize.x);
 		const auto height = static_cast<std::uint16_t>(io.DisplaySize.y);
@@ -111,8 +110,8 @@ namespace dce::renderer {
 			bgfx::setViewRect(GUI_VIEW, 0, 0, width, height);
 		}
 
-		for (auto i = 0; i < drawData->CmdListsCount; ++i) {
-			const auto* draw_list = drawData->CmdLists[i];
+		for (auto i = 0; i < _data->CmdListsCount; ++i) {
+			const auto* draw_list = _data->CmdLists[i];
 			const auto vertex_count = draw_list->VtxBuffer.size();
 			const auto index_count = draw_list->IdxBuffer.size();
 
