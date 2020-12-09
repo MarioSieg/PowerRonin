@@ -9,7 +9,7 @@
 // with the software or, alternatively, in accordance with the terms contained in a
 // written agreement between you and KerboGames.
 // 
-// Copyright (c) 20013-2020 KerboGames, MarioSieg.
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
 // support@kerbogames.com
 // *******************************************************************************
 
@@ -24,7 +24,7 @@
 #include "../platform/platform.hpp"
 
 namespace dce::renderer {
-	auto GPU::initialize_drivers(const Config& _config, AsyncProtocol& _proto) -> bool {
+	auto GPU::initialize_drivers(const Config& _config, AsyncProtocol& _proto) const -> bool {
 		if (platform::NATIVE_WINDOW_HANDLE == nullptr) {
 			_proto.error("platform::NATIVE_WINDOW_HANDLE was nullptr! Platform system must be initialized before render system!");
 			return false;
@@ -130,7 +130,7 @@ namespace dce::renderer {
 		submit(_view_id, _shader, _depth);
 	}
 
-	void GPU::set_viewport(const Vector2<> _xy, const Vector2<> _wh, const bgfx::ViewId _view_id) noexcept {
+	void GPU::set_viewport(const Vector2<> _xy, const Vector2<> _wh, const bgfx::ViewId _view_id) const noexcept {
 		bgfx::setViewRect(_view_id, _xy.x, _xy.y, _wh.x, _wh.y);
 	}
 

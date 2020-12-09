@@ -9,7 +9,7 @@
 // with the software or, alternatively, in accordance with the terms contained in a
 // written agreement between you and KerboGames.
 // 
-// Copyright (c) 20013-2020 KerboGames, MarioSieg.
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
 // support@kerbogames.com
 // *******************************************************************************
 
@@ -63,7 +63,7 @@ namespace dce {
 		[[nodiscard]] auto input() & noexcept -> Input&;
 
 		[[nodiscard]] auto render_data() const & noexcept -> const RenderData&;
-		
+
 		[[nodiscard]] auto render_data() & noexcept -> RenderData&;
 
 		Runtime();

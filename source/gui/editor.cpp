@@ -9,7 +9,7 @@
 // with the software or, alternatively, in accordance with the terms contained in a
 // written agreement between you and KerboGames.
 // 
-// Copyright (c) 20013-2020 KerboGames, MarioSieg.
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
 // support@kerbogames.com
 // *******************************************************************************
 
@@ -28,7 +28,7 @@ namespace dce::gui {
 	}
 
 	void Editor::update(Runtime& _rt, bool& _show_terminal) {
-		this->dockspace_id_ = DockSpaceOverViewport(GetMainViewport());
+		this->dockspace_id_ = DockSpaceOverViewport(nullptr, ImGuiDockNodeFlags_PassthruCentralNode);
 
 		[[unlikely]] if (this->first_use_) {
 			this->default_layout();
@@ -64,7 +64,7 @@ namespace dce::gui {
 			this->config_editor_.update(this->show_config_editor_, _rt.config(), _rt.scenery().config);
 		}
 
-		[[likely]] if(this->show_scenery_viewer_) {
+		[[likely]] if (this->show_scenery_viewer_) {
 			this->scenery_viewer_.update(this->show_scenery_viewer_, _rt.render_data());
 		}
 	}

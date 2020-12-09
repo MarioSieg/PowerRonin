@@ -9,7 +9,7 @@
 // with the software or, alternatively, in accordance with the terms contained in a
 // written agreement between you and KerboGames.
 // 
-// Copyright (c) 20013-2020 KerboGames, MarioSieg.
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
 // support@kerbogames.com
 // *******************************************************************************
 
@@ -42,7 +42,7 @@ namespace dce::renderer {
 		this->fly_cam_.set_position({0.0f, 0.0f, -5.0f});
 
 		auto& viewport = _rt.render_data().scenery_viewport_size;
-		[[likely]] if(!viewport.x || !viewport.y) {
+		[[likely]] if (!viewport.x || !viewport.y) {
 			viewport.x = _rt.config().display.width;
 			viewport.y = _rt.config().display.height;
 			[[likely]] if (!viewport.x || !viewport.y) {
@@ -55,9 +55,10 @@ namespace dce::renderer {
 
 	/* Prepare frame */
 	auto Renderer::on_pre_tick(Runtime& _rt) -> bool {
-		[[unlikely]] if(_rt.render_data().enable_wireframe) {
+		[[unlikely]] if (_rt.render_data().enable_wireframe) {
 			bgfx::setDebug(BGFX_DEBUG_TEXT | BGFX_DEBUG_WIREFRAME);
-		} else {
+		}
+		else {
 			bgfx::setDebug(BGFX_DEBUG_TEXT);
 		}
 		get_runtime_stats(const_cast<Diagnostics&>(_rt.diagnostics()));
@@ -81,27 +82,28 @@ namespace dce::renderer {
 		return true;
 	}
 
-	void Renderer::update_camera(const Runtime& _rt) {
-		this->fly_cam_.update(_rt.input(), _rt.render_data().scenery_viewport_size.x, _rt.render_data().scenery_viewport_size.y, static_cast<float>(_rt.chrono().delta_time));
-		this->view_ = this->fly_cam_.get_view_matrix();
-		this->projection_ = this->fly_cam_.get_projection_matrix();
-		this->gpu_.set_camera(SCENERY_VIEW, this->view_, this->projection_);
+	void Renderer::update_camera(Runtime& _rt) {
+		this->fly_cam_.update(_rt.input(), _rt.render_data().scenery_viewport_size.x, _rt.render_data().scenery_viewport_size.y
+		                      , static_cast<float>(_rt.chrono().delta_time));
+		auto& data = _rt.render_data();
+		data.view_matrix = this->fly_cam_.get_view_matrix();
+		data.projection_matrix = this->fly_cam_.get_projection_matrix();
+		this->gpu_.set_camera(SCENERY_VIEW, data.view_matrix, data.projection_matrix);
 	}
 
-	void Renderer::render_skybox(const Scenery::Configuration::Lighting& _lighting, const RenderData& _data) {
+	void Renderer::render_skybox(const Scenery::Configuration::Lighting& _lighting, RenderData& _data) const {
 		this->gpu_.clear_view(SKYBOX_VIEW, BGFX_CLEAR_NONE);
 		this->gpu_.set_viewport(_data.scenery_viewport_position, _data.scenery_viewport_size, SKYBOX_VIEW);
 		// Create transform matrix:
 		auto skybox_matrix = math::identity<Matrix4x4<>>();
 		skybox_matrix = scale(skybox_matrix, Vector3<>{10});
-
 		// Remove translation:
-		this->view_[3][0] = .0f;
-		this->view_[3][1] = .0f;
-		this->view_[3][2] = .0f;
+		_data.view_matrix[3][0] = .0f;
+		_data.view_matrix[3][1] = .0f;
+		_data.view_matrix[3][2] = .0f;
 
 		// Set camera:
-		this->gpu_.set_camera(SKYBOX_VIEW, this->view_, this->projection_);
+		this->gpu_.set_camera(SKYBOX_VIEW, _data.view_matrix, _data.projection_matrix);
 
 		// Set transform:
 		this->gpu_.set_transform(value_ptr(skybox_matrix));
@@ -112,7 +114,8 @@ namespace dce::renderer {
 
 	void Renderer::set_per_frame_data(const Scenery::Configuration::Lighting& _lighting) const {
 		const auto orbit = calculate_sun_orbit(6, math::radians(23.4f));
-		const auto sun_dir = Vector4<>(calculate_sun_dir(_lighting.sun.hour, _lighting.sun.latitude, orbit, math::UP, math::NORTH), 1.f);
+		const auto sun_dir = Vector4<>(calculate_sun_dir(_lighting.sun.hour, _lighting.sun.latitude, orbit, math::UP, math::NORTH)
+		                               , 1.f);
 		this->shader_bucket_.lambert.per_frame(sun_dir, _lighting.sun.color, _lighting.const_ambient_color);
 	}
 
@@ -140,18 +143,18 @@ namespace dce::renderer {
 			// Render each material with the corresponding shader:
 			std::visit(overload{
 
-				// Render with unlit material:
-				[this, mesh](const Material::Unlit& _material) {
-					this->shader_bucket_.unlit.per_object(mesh, _material);
-				}
-				,
+				           // Render with unlit material:
+				           [this, mesh](const Material::Unlit& _material) {
+					           this->shader_bucket_.unlit.per_object(mesh, _material);
+				           }
+				           ,
 
-					// Render with lambert material:
-					[this, mesh](const Material::Lambert& _material) {
-						this->shader_bucket_.lambert.per_object(mesh, _material);
-					}
-					,
-				}, _mesh_renderer.material->get_properties());
+				           // Render with lambert material:
+				           [this, mesh](const Material::Lambert& _material) {
+					           this->shader_bucket_.lambert.per_object(mesh, _material);
+				           }
+				           ,
+			           }, _mesh_renderer.material->get_properties());
 		};
 
 		// Iterate and draw:

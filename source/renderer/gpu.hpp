@@ -9,7 +9,7 @@
 // with the software or, alternatively, in accordance with the terms contained in a
 // written agreement between you and KerboGames.
 // 
-// Copyright (c) 20013-2020 KerboGames, MarioSieg.
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
 // support@kerbogames.com
 // *******************************************************************************
 
@@ -51,7 +51,7 @@ namespace dce::renderer {
 		/// <param name="_config"></param>
 		/// <param name="_proto"></param>
 		/// <returns></returns>
-		auto initialize_drivers(const Config& _config, AsyncProtocol& _proto) -> bool;
+		auto initialize_drivers(const Config& _config, AsyncProtocol& _proto) const -> bool;
 
 		/// <summary>
 		/// Shutdown rendering backend.
@@ -148,7 +148,7 @@ namespace dce::renderer {
 		/// <param name="_wh"></param>
 		/// <param name="_view_id"></param>
 		/// <returns></returns>
-		void set_viewport(const Vector2<> _xy, const Vector2<> _wh, const bgfx::ViewId _view_id) noexcept;
+		void set_viewport(const Vector2<> _xy, const Vector2<> _wh, const bgfx::ViewId _view_id) const noexcept;
 
 		/// <summary>
 		/// Set uniform.

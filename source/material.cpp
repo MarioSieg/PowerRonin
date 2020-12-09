@@ -9,7 +9,7 @@
 // with the software or, alternatively, in accordance with the terms contained in a
 // written agreement between you and KerboGames.
 // 
-// Copyright (c) 20013-2020 KerboGames, MarioSieg.
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
 // support@kerbogames.com
 // *******************************************************************************
 
@@ -85,7 +85,6 @@ namespace dce {
 
 	void Material::get_default_properties(Lambert& _mat, ResourceManager& _rm) noexcept {
 		_mat.albedo = _rm.system_resources.checkerboard;
-		_mat.normal = _rm.system_resources.empty_normal_1x1;
 	}
 
 	auto MaterialImporteur::load(std::filesystem::path&& _path

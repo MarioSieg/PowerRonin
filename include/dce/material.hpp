@@ -9,7 +9,7 @@
 // with the software or, alternatively, in accordance with the terms contained in a
 // written agreement between you and KerboGames.
 // 
-// Copyright (c) 20013-2020 KerboGames, MarioSieg.
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
 // support@kerbogames.com
 // *******************************************************************************
 
@@ -65,7 +65,6 @@ namespace dce {
 		/// </summary>
 		struct Lambert final {
 			RRef<Texture> albedo = {};
-			RRef<Texture> normal = {};
 		};
 
 		/// <summary>

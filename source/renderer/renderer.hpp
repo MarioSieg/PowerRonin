@@ -9,7 +9,7 @@
 // with the software or, alternatively, in accordance with the terms contained in a
 // written agreement between you and KerboGames.
 // 
-// Copyright (c) 20013-2020 KerboGames, MarioSieg.
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
 // support@kerbogames.com
 // *******************************************************************************
 
@@ -50,17 +50,15 @@ namespace dce {
 			virtual auto on_post_tick([[maybe_unused]] Runtime& _rt) -> bool override;
 			virtual auto on_post_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
 
-			void update_camera(const Runtime& _rt);
-			void render_skybox(const Scenery::Configuration::Lighting& _lighting, const RenderData& _data);
+			void render_skybox(const Scenery::Configuration::Lighting& _lighting, RenderData& _data) const;
 			void set_per_frame_data(const Scenery::Configuration::Lighting& _lighting) const;
 			void render_scene(Runtime& _rt);
+			void update_camera(Runtime& _rt);
 
 			FlyCam fly_cam_ = {};
 			std::uint64_t tick_prev_ = 0;
 			GPU gpu_ = {};
 			ShaderBucket shader_bucket_;
-			Matrix4x4<> view_ = math::identity<Matrix4x4<>>();
-			Matrix4x4<> projection_ = math::identity<Matrix4x4<>>();
 		};
 	} // namespace dce::renderer // namespace dce::renderer
 }

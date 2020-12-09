@@ -9,7 +9,7 @@
 // with the software or, alternatively, in accordance with the terms contained in a
 // written agreement between you and KerboGames.
 // 
-// Copyright (c) 20013-2020 KerboGames, MarioSieg.
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
 // support@kerbogames.com
 // *******************************************************************************
 
@@ -22,6 +22,7 @@ namespace dce::platform {
 	bool (*MOUSE_STATES)[5] = nullptr;
 
 	void mouse_button_callback([[maybe_unused]] GLFWwindow* const /*win*/
+
 
 	                           
 	                           , [[maybe_unused]] const int _button
@@ -36,6 +37,7 @@ namespace dce::platform {
 
 	void scroll_callback([[maybe_unused]] GLFWwindow* const /*win*/
 
+
 	                     
 	                     , [[maybe_unused]] const double _x
 	                     , [[maybe_unused]] const double _y) noexcept {
@@ -45,9 +47,12 @@ namespace dce::platform {
 	}
 
 	void key_callback([[maybe_unused]] GLFWwindow* const /*win*/
+
+
 	                  
 	                  , const int _key
 	                  , [[maybe_unused]] const int /*scancode*/
+
 
 	                  
 	                  , const int _action
@@ -70,6 +75,7 @@ namespace dce::platform {
 	}
 
 	void char_callback([[maybe_unused]] GLFWwindow* const /*win*/
+
 
 	                   
 	                   , const unsigned _c) noexcept {

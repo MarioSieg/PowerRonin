@@ -9,7 +9,7 @@
 // with the software or, alternatively, in accordance with the terms contained in a
 // written agreement between you and KerboGames.
 // 
-// Copyright (c) 20013-2020 KerboGames, MarioSieg.
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
 // support@kerbogames.com
 // *******************************************************************************
 
@@ -36,10 +36,10 @@ namespace dce {
 		public:
 			void initialize(Runtime& _rt);
 			void update(Runtime& _rt, bool& _show_terminal);
-			void main_menu(Runtime& _rt, bool& _show_terminal);
 
 		private:
 			void default_layout() const;
+			void main_menu(Runtime& _rt, bool& _show_terminal);
 
 			/* Widgets: */
 			widgets::ResourceViewer resource_viewer_ = {};

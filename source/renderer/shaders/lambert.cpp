@@ -9,7 +9,7 @@
 // with the software or, alternatively, in accordance with the terms contained in a
 // written agreement between you and KerboGames.
 // 
-// Copyright (c) 20013-2020 KerboGames, MarioSieg.
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
 // support@kerbogames.com
 // *******************************************************************************
 
@@ -47,7 +47,6 @@ namespace dce::renderer::shaders {
 	void Lambert::per_object(const Mesh& _mesh, const Material::Lambert& _mat) const {
 		this->gpu_.set_mesh_buffer(_mesh);
 		this->gpu_.set_texture(_mat.albedo, this->u_s_tex_color_, 0);
-		this->gpu_.set_texture(_mat.normal, this->u_s_normal_map, 1);
 		this->gpu_.draw(this->program_, SCENERY_VIEW);
 	}
 }
