@@ -89,7 +89,7 @@ namespace dce::gui {
 				if (MenuItem(INSPECTOR_NAME)) {
 					this->show_inspector_ = true;
 				}
-				if(MenuItem(SCENERY_VIEWER_NAME)) {
+				if (MenuItem(SCENERY_VIEWER_NAME)) {
 					this->show_scenery_viewer_ = true;
 				}
 				if (MenuItem(CONFIG_EDITOR_NAME)) {

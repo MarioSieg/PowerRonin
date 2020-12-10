@@ -28,7 +28,7 @@ namespace dce {
 		this->error_text = _rm.load<Mesh>(std::filesystem::absolute("meshes/common/invalid.obj"));
 		this->cube = _rm.load<Mesh>(std::filesystem::absolute("meshes/common/cube.obj"));
 		this->skydome = _rm.load<Mesh>(std::filesystem::absolute("meshes/common/skydome.obj"));
-		this->skybox = _rm.load<Texture>(std::filesystem::absolute("textures/skybox/wispy.dds"));
+		this->skybox = _rm.load<Texture>(std::filesystem::absolute("textures/skybox/default.dds"));
 		_rm.proto_.info("System resources loaded!");
 	}
 

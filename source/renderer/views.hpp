@@ -19,8 +19,11 @@
 
 namespace dce::renderer {
 
+	/// <summary>
+	/// Fullscreen view for effects and clearing.
+	/// </summary>
 	constexpr bgfx::ViewId FULLSCREEN_VIEW = 0;
-	
+
 	/// <summary>
 	/// View to draw the main scenery.
 	/// </summary>

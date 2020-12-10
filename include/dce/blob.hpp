@@ -19,7 +19,15 @@
 #include <vector>
 
 namespace dce {
+	/// <summary>
+	/// Represents a binary large object. (Byte array buffer).
+	/// </summary>
 	using Blob = std::vector<std::byte>;
 
-	extern auto blob_from_disk(const std::filesystem::path& file) -> Blob;
+	/// <summary>
+	/// Loads a blob from a file.
+	/// </summary>
+	/// <param name="_file"></param>
+	/// <returns></returns>
+	extern auto blob_from_disk(const std::filesystem::path& _file) -> Blob;
 }
