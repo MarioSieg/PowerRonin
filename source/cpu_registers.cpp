@@ -13,26 +13,23 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-#pragma once
+#include "../include/dce/cpu_registers.hpp"
+#include "../include/dce/env.hpp"
 
-#include "gl_headers.hpp"
+namespace dce {
 
-namespace dce::renderer {
-
-	constexpr bgfx::ViewId FULLSCREEN_VIEW = 0;
-	
-	/// <summary>
-	/// View to draw the main scenery.
-	/// </summary>
-	constexpr bgfx::ViewId SCENERY_VIEW = 1;
-
-	/// <summary>
-	/// View for the 3D skybox and background stuff.
-	/// </summary>
-	constexpr bgfx::ViewId SKYBOX_VIEW = 2;
-
-	/// <summary>
-	/// View for GUI.
-	/// </summary>
-	constexpr bgfx::ViewId GUI_VIEW = 0xFF;
+	void query_gpr(RAX& _out, const GprRegisters _target) noexcept {
+#if !CPU_X86 || COM_MSVC
+		_out = {0};
+#else
+		switch (_target) {
+		case GprRegisters::RAX:
+#if COM_GCC | COM_CLANG
+			std::uint64_t x;
+			asm volatile("\t movq %%rax, %0" : "=r"(x));
+			_out.value = x;
+#endif
+		} break;
+#endif
+	}
 }

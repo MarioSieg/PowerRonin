@@ -64,7 +64,8 @@ namespace dce::renderer {
 		/// <returns></returns>
 		void clear_view(const bgfx::ViewId _view = 0
 		                , const std::uint16_t _flags = BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH
-		                , const float _depth = 1.F) const noexcept;
+		                , const float _depth = 1.F
+		                , const std::uint32_t _rgba = 0xFFFFFFFF) const noexcept;
 
 
 		/// <summary>

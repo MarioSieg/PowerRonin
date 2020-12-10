@@ -28,7 +28,8 @@ namespace dce::gui {
 	}
 
 	void Editor::update(Runtime& _rt, bool& _show_terminal) {
-		this->dockspace_id_ = DockSpaceOverViewport(nullptr, ImGuiDockNodeFlags_PassthruCentralNode);
+		SetNextWindowBgAlpha(.0F);
+		this->dockspace_id_ = DockSpaceOverViewport(nullptr);
 
 		[[unlikely]] if (this->first_use_) {
 			this->default_layout();
@@ -87,6 +88,9 @@ namespace dce::gui {
 				}
 				if (MenuItem(INSPECTOR_NAME)) {
 					this->show_inspector_ = true;
+				}
+				if(MenuItem(SCENERY_VIEWER_NAME)) {
+					this->show_scenery_viewer_ = true;
 				}
 				if (MenuItem(CONFIG_EDITOR_NAME)) {
 					this->show_config_editor_ = true;
@@ -147,26 +151,28 @@ namespace dce::gui {
 	}
 
 	void Editor::default_layout() const {
-		DockBuilderRemoveNode(this->dockspace_id_);
-		DockBuilderAddNode(this->dockspace_id_, ImGuiDockNodeFlags_DockSpace);
-		DockBuilderSetNodeSize(this->dockspace_id_, GetMainViewport()->Size);
-		auto main_id = this->dockspace_id_;
+		[[likely]] if (this->dockspace_id_) {
+			DockBuilderRemoveNode(this->dockspace_id_);
+			DockBuilderAddNode(this->dockspace_id_, ImGuiDockNodeFlags_DockSpace);
+			DockBuilderSetNodeSize(this->dockspace_id_, GetMainViewport()->Size);
+			auto main_id = this->dockspace_id_;
 
-		const auto dock_id_left = DockBuilderSplitNode(main_id, ImGuiDir_Left, .20f, nullptr, &main_id);
-		const auto dock_id_right = DockBuilderSplitNode(main_id, ImGuiDir_Right, .20f, nullptr, &main_id);
-		const auto dock_id_bottom = DockBuilderSplitNode(main_id, ImGuiDir_Down, .20f, nullptr, &main_id);
+			const auto dock_id_left = DockBuilderSplitNode(main_id, ImGuiDir_Left, .20f, nullptr, &main_id);
+			const auto dock_id_right = DockBuilderSplitNode(main_id, ImGuiDir_Right, .20f, nullptr, &main_id);
+			const auto dock_id_bottom = DockBuilderSplitNode(main_id, ImGuiDir_Down, .20f, nullptr, &main_id);
 
-		DockBuilderDockWindow(HIERARCHY_NAME, dock_id_left);
-		DockBuilderDockWindow(RESOURCE_VIEWER_NAME, dock_id_left);
+			DockBuilderDockWindow(HIERARCHY_NAME, dock_id_left);
+			DockBuilderDockWindow(RESOURCE_VIEWER_NAME, dock_id_left);
 
-		DockBuilderDockWindow(INSPECTOR_NAME, dock_id_right);
-		DockBuilderDockWindow(CONFIG_EDITOR_NAME, dock_id_right);
+			DockBuilderDockWindow(INSPECTOR_NAME, dock_id_right);
+			DockBuilderDockWindow(CONFIG_EDITOR_NAME, dock_id_right);
 
-		DockBuilderDockWindow(TERMINAL_NAME, dock_id_bottom);
-		DockBuilderDockWindow(PROFILER_NAME, dock_id_bottom);
+			DockBuilderDockWindow(TERMINAL_NAME, dock_id_bottom);
+			DockBuilderDockWindow(PROFILER_NAME, dock_id_bottom);
 
-		DockBuilderDockWindow(SCENERY_VIEWER_NAME, main_id);
+			DockBuilderDockWindow(SCENERY_VIEWER_NAME, main_id);
 
-		DockBuilderFinish(this->dockspace_id_);
+			DockBuilderFinish(this->dockspace_id_);
+		}
 	}
 }

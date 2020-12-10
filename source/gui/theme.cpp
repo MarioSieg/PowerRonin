@@ -132,7 +132,7 @@ namespace dce::gui {
 		style.Colors[ImGuiCol_FrameBg] = ImVec4(0.20F, 0.21F, 0.22F, 0.54F);
 		style.Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.40F, 0.40F, 0.40F, 0.40F);
 		style.Colors[ImGuiCol_FrameBgActive] = ImVec4(0.18F, 0.18F, 0.18F, 0.67F);
-		style.Colors[ImGuiCol_TitleBg] = ImVec4(0.04F, 0.04F, 0.04F, 1.00F);
+		style.Colors[ImGuiCol_TitleBg] = ImVec4(0.29F, 0.29F, 0.29F, 1.00F);
 		style.Colors[ImGuiCol_TitleBgActive] = ImVec4(0.29F, 0.29F, 0.29F, 1.00F);
 		style.Colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.00F, 0.00F, 0.00F, 0.51F);
 		style.Colors[ImGuiCol_MenuBarBg] = ImVec4(0.14F, 0.14F, 0.14F, 1.00F);
@@ -164,11 +164,11 @@ namespace dce::gui {
 		style.Colors[ImGuiCol_DragDropTarget] = ImVec4(1.00F, 1.00F, 0.00F, 0.90F);
 		style.Colors[ImGuiCol_NavHighlight] = ImVec4(0.60F, 0.60F, 0.60F, 1.00F);
 		style.Colors[ImGuiCol_NavWindowingHighlight] = ImVec4(1.00F, 1.00F, 1.00F, 0.70F);
-		style.Colors[ImGuiCol_Tab] = ImVec4(0.04F, 0.04F, 0.04F, 1.00F);
-		style.Colors[ImGuiCol_TabActive] = ImVec4(0.29F, 0.29F, 0.29F, 1.00F);
+		style.Colors[ImGuiCol_TabActive] = ImVec4(.15F, .15F, .15F, 1.F);
+		style.Colors[ImGuiCol_Tab] = ImVec4(0.29F, 0.29F, 0.29F, 1.00F);
 		style.Colors[ImGuiCol_TabHovered] = ImVec4(0.20F, 0.21F, 0.22F, 0.54F);
-		style.Colors[ImGuiCol_TabUnfocused] = ImVec4(0.00F, 0.00F, 0.00F, 0.51F);
-		style.Colors[ImGuiCol_TabUnfocusedActive] = ImVec4(0.00F, 0.00F, 0.00F, 0.51F);
+		style.Colors[ImGuiCol_TabUnfocused] = ImVec4(0.29F, 0.29F, 0.29F, 1.00F);
+		style.Colors[ImGuiCol_TabUnfocusedActive] = ImVec4(.15F, .15F, .15F, 1.F);
 	}
 
 	void style_light() noexcept {

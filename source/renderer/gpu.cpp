@@ -70,8 +70,11 @@ namespace dce::renderer {
 		//bgfx::shutdown();
 	}
 
-	void GPU::clear_view(const bgfx::ViewId _view, const std::uint16_t _flags, const float _depth) const noexcept {
-		bgfx::setViewClear(_view, _flags, 0xFFFFFFFF, _depth, 0);
+	void GPU::clear_view(const bgfx::ViewId _view
+	                     , const std::uint16_t _flags
+	                     , const float _depth
+	                     , const std::uint32_t _rgba) const noexcept {
+		bgfx::setViewClear(_view, _flags, _rgba, _depth, 0);
 	}
 
 	void GPU::sort_draw_calls(const bgfx::ViewId _view) const noexcept {

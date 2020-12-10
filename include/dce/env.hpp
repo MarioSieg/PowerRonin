@@ -170,3 +170,42 @@ constexpr auto MEMORY_KEY = '&';
 #	undef  CPU_JIT
 #	define CPU_JIT true
 #endif
+
+#define SIMD_SSE false
+#define SIMD_SSE2 false
+#define SIMD_SSE3 false
+#define SIMD_AVX false
+#define SIMD_AVX2 false
+#define SIMD_AVX512 false
+
+#if __SSE__
+#undef SIMD_SEE
+#define SIMD_SEE true
+#endif
+
+#if __SSE2__
+#undef SIMD_SEE2
+#define SIMD_SEE2 true
+#endif
+
+#if __SSE3__
+#undef SIMD_SEE3
+#define SIMD_SEE3 true
+#endif
+
+#if __AVX__
+#undef SIMD_AVX
+#define SIMD_AVX true
+#endif
+
+
+#if __AVX2__
+#undef SIMD_AVX2
+#define SIMD_AVX2 true
+#endif
+
+
+#if __AVX512__
+#undef SIMD_AVX512
+#define SIMD_AVX512 true
+#endif
