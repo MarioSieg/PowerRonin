@@ -164,7 +164,8 @@ namespace dce {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load shader from file!");
 		}
 
-		Blob vs_bytecode = blob_from_disk(_path);
+		Blob vs_bytecode = {};
+		blob_from_disk(_path, vs_bytecode);
 		[[unlikely]] if (vs_bytecode.empty()) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load shader from file!");
 		}
@@ -172,7 +173,7 @@ namespace dce {
 		Blob fs_bytecode = {};
 		const auto fragment_file = _path.replace_filename("fragment.shc");
 		[[likely]] if (is_regular_file(fragment_file)) {
-			fs_bytecode = blob_from_disk(fragment_file);
+			blob_from_disk(fragment_file, fs_bytecode);
 		}
 
 		auto self = IResource<ShaderMeta>::allocate<Shader>();

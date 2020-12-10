@@ -42,10 +42,8 @@ namespace dce::renderer {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load shader program!");
 		}
 
-		const Blob vs_bytecode = blob_from_disk(file);
-		[[unlikely]] if (vs_bytecode.empty()) {
-			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load shader program!");
-		}
+		Blob vs_bytecode;
+		blob_from_disk(file, vs_bytecode);
 
 		const auto* const vs_mem = bgfx::alloc(static_cast<std::uint32_t>(vs_bytecode.size() * sizeof(std::byte)));
 		memcpy(vs_mem->data, vs_bytecode.data(), vs_bytecode.size() * sizeof(std::byte));
@@ -62,10 +60,8 @@ namespace dce::renderer {
 		auto fs = bgfx::ShaderHandle{bgfx::kInvalidHandle};
 
 		[[likely]] if (is_regular_file(file.replace_filename("fragment.shc"))) {
-			const Blob fs_bytecode = blob_from_disk(file);
-			if (fs_bytecode.empty()) {
-				throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load shader program!");
-			}
+			Blob fs_bytecode = {};
+			blob_from_disk(file, fs_bytecode);
 
 			const auto* const fs_mem = bgfx::alloc(static_cast<std::uint32_t>(fs_bytecode.size() * sizeof(std::byte)));
 			memcpy(fs_mem->data, fs_bytecode.data(), fs_bytecode.size() * sizeof(std::byte));

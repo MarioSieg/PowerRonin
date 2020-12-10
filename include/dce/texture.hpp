@@ -15,6 +15,7 @@
 
 #pragma once
 
+#include "blob.hpp"
 #include "resource.hpp"
 
 namespace dce {
@@ -372,7 +373,7 @@ namespace dce {
 			, ".pgm"
 		};
 
-		[[nodiscard]] auto get_texels() const noexcept -> const std::vector<std::byte>&;
+		[[nodiscard]] auto get_texels() const noexcept -> const Blob&;
 
 		[[nodiscard]] auto get_storage_size() const noexcept -> std::size_t;
 
@@ -401,7 +402,7 @@ namespace dce {
 		virtual void offload() override;
 
 	private:
-		std::vector<std::byte> texels_ = {};
+		Blob texels_ = {};
 		std::size_t size_ = 0;
 		std::uint16_t width_ = 0;
 		std::uint16_t height_ = 0;

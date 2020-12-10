@@ -21,6 +21,8 @@
 #include <unordered_map>
 #include <tuple>
 
+#include "blob.hpp"
+
 namespace dce {
 	enum class UniformType {
 		SAMPLER
@@ -45,9 +47,9 @@ namespace dce {
 		/* All associated file types. */
 		static constexpr std::array<std::string_view, 4> FILE_EXTENSIONS = {".shc", ".shb"};
 
-		[[nodiscard]] auto get_vertex_shader_bytecode() const noexcept -> const std::vector<std::byte>&;
+		[[nodiscard]] auto get_vertex_shader_bytecode() const noexcept -> const Blob&;
 
-		[[nodiscard]] auto get_fragment_shader_bytecode() const noexcept -> const std::optional<std::vector<std::byte>>&;
+		[[nodiscard]] auto get_fragment_shader_bytecode() const noexcept -> const std::optional<Blob>&;
 
 		[[nodiscard]] auto get_vertex_shader_textcode() const noexcept -> const std::optional<std::string>&;
 
@@ -72,8 +74,8 @@ namespace dce {
 		virtual void offload() override;
 
 	private:
-		std::vector<std::byte> vertex_shader_bytecode_ = {};
-		std::optional<std::vector<std::byte>> fragment_shader_bytecode_ = {};
+		Blob vertex_shader_bytecode_ = {};
+		std::optional<Blob> fragment_shader_bytecode_ = {};
 		std::optional<std::string> vertex_shader_textcode_ = {};
 		std::optional<std::string> fragment_shader_textcode_ = {};
 

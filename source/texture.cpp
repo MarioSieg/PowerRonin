@@ -114,7 +114,7 @@ namespace dce {
 		return NAMES[static_cast<std::size_t>(_format)];
 	}
 
-	auto Texture::get_texels() const noexcept -> const std::vector<std::byte>& {
+	auto Texture::get_texels() const noexcept -> const Blob& {
 		return this->texels_;
 	}
 

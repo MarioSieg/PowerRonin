@@ -29,5 +29,5 @@ namespace dce {
 	/// </summary>
 	/// <param name="_file"></param>
 	/// <returns></returns>
-	extern auto blob_from_disk(const std::filesystem::path& _file) -> Blob;
+	extern void blob_from_disk(const std::filesystem::path& _file, Blob& _blob);
 }

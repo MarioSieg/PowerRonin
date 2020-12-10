@@ -16,11 +16,11 @@
 #include "../include/dce/shader.hpp"
 
 namespace dce {
-	auto Shader::get_vertex_shader_bytecode() const noexcept -> const std::vector<std::byte>& {
+	auto Shader::get_vertex_shader_bytecode() const noexcept -> const Blob& {
 		return this->vertex_shader_bytecode_;
 	}
 
-	auto Shader::get_fragment_shader_bytecode() const noexcept -> const std::optional<std::vector<std::byte>>& {
+	auto Shader::get_fragment_shader_bytecode() const noexcept -> const std::optional<Blob>& {
 		return this->fragment_shader_bytecode_;
 	}
 

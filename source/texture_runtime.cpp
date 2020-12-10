@@ -76,7 +76,8 @@ namespace dce {
 
 		const auto ext = _path.extension();
 		[[likely]] if (ext == ".dds" || ext == ".ktx") {
-			Blob blob = blob_from_disk(_path);
+			Blob blob = {};
+			blob_from_disk(_path, blob);
 			[[unlikely]] if (blob.empty()) {
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load texture from file!");
 			}
