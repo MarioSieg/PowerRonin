@@ -93,7 +93,7 @@ namespace dce {
 			[[nodiscard]] auto lookup_subsystem(std::uint_fast16_t _id) const -> bool;
 
 			/* Install some subsystem via a hook. */
-			auto install_subsystems(auto (* _hook)(Kernel&) -> bool) -> std::size_t;
+			auto install_subsystems(auto (*const _hook)(Kernel&) -> bool) -> std::size_t;
 
 			/* Uninstalls all subsystems */
 			void uninstall_all() const;

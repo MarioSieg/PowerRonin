@@ -15,7 +15,6 @@
 
 #include "../../include/dce/audio_clip.hpp"
 #include "../include/dce/blob.hpp"
-#include "../include/dce/time_utils.hpp"
 #include "audio/audio_headers.hpp"
 
 
@@ -38,7 +37,7 @@ namespace dce {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload audio clip!");
 		}
 
-		FMOD_MODE mode = FMOD_DEFAULT;
+		FMOD_MODE mode = FMOD_DEFAULT | FMOD_LOOP_NORMAL;
 		mode |= self->meta_data_.enable_3d_sound ? FMOD_3D : FMOD_2D;
 		mode |= self->meta_data_.is_stream ? FMOD_CREATESTREAM : FMOD_CREATECOMPRESSEDSAMPLE;
 

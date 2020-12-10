@@ -296,7 +296,7 @@ namespace dce::core {
 		return false;
 	}
 
-	auto Kernel::install_subsystems(auto (* const _hook)(Kernel&) -> bool) -> std::size_t {
+	auto Kernel::install_subsystems(auto (*const _hook)(Kernel&) -> bool) -> std::size_t {
 		[[likely]] if (_hook) {
 			_hook(*this);
 		}

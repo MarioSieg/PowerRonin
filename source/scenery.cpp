@@ -46,7 +46,8 @@ namespace dce {
 			AudioClipMeta aumeta = {};
 			aumeta.enable_3d_sound = false;
 			aumeta.is_stream = true;
-			audio.clip = _resource_manager.load<AudioClip>("audio/music/entry.ogg", &aumeta);
+			audio.clip = _resource_manager.load<AudioClip>("audio/music/scifi_ambience.ogg", &aumeta);
+			audio.play();
 		}
 
 		// Create platform:

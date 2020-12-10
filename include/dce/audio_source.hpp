@@ -63,10 +63,22 @@ namespace dce {
 		/// </summary>
 		/// <param name="_priority">The new priority.</param>
 		/// <returns></returns>
-		void set_priority(const std::uint8_t _priority) noexcept;
+		void set_priority(const std::uint8_t _priority) const noexcept;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_count"></param>
+		/// <returns></returns>
+		void set_loop_count(const std::uint32_t _count) const noexcept;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		auto get_loop_count() const noexcept -> std::uint32_t;
 
 	private:
 		void* channel_ = nullptr;
-		std::uint8_t priority_ = 128;
 	};
 }

@@ -33,7 +33,7 @@ namespace dce {
 			return;
 		}
 
-		result = channel->setPriority(this->priority_);
+		result = channel->setPriority(128);
 		[[unlikely]] if (result != FMOD_OK) {
 			return;
 		}
@@ -51,11 +51,29 @@ namespace dce {
 	}
 
 	auto AudioSource::get_priority() const noexcept -> std::uint8_t {
-		return this->priority_;
+		[[likely]] if (this->channel_) {
+			int prio;
+			static_cast<FMOD::Channel*>(this->channel_)->getPriority(&prio);
+			return prio;
+		}
+		return 0;
 	}
 
-	void AudioSource::set_priority(const std::uint8_t _priority) noexcept {
-		this->priority_ = _priority;
-		this->channel_ && static_cast<FMOD::Channel*>(this->channel_)->setPriority(this->priority_);
+	void AudioSource::set_priority(const std::uint8_t _priority) const noexcept {
+		this->channel_ && static_cast<FMOD::Channel*>(this->channel_)->setPriority(_priority);
 	}
+
+	void AudioSource::set_loop_count(const std::uint32_t _count) const noexcept {
+		this->channel_ && static_cast<FMOD::Channel*>(this->channel_)->setLoopCount(_count);
+	}
+
+	auto AudioSource::get_loop_count() const noexcept -> std::uint32_t {
+		[[likely]] if (this->channel_) {
+			int count;
+			static_cast<FMOD::Channel*>(this->channel_)->getLoopCount(&count);
+			return count;
+		}
+		return 0;
+	}
+
 }

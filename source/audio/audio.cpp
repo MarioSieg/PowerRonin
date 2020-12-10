@@ -37,7 +37,7 @@ namespace dce::audio {
 		}
 
 		const auto max_channels = _rt.config().audio.max_channels;
-		constexpr auto flags = FMOD_INIT_NORMAL | FMOD_INIT_3D_RIGHTHANDED;
+		constexpr auto flags = FMOD_INIT_NORMAL; //| FMOD_INIT_3D_RIGHTHANDED;
 		proto.info("Initializing audio system...");
 
 		result = this->system_->init(max_channels, flags, nullptr);
