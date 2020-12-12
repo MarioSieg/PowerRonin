@@ -144,13 +144,10 @@ namespace dce::gui::widgets {
 						}
 					}
 
-
 					[[likely]] if (CollapsingHeader(ICON_FA_ADJUST " Material", ImGuiTreeNodeFlags_DefaultOpen)) {
 
 						constexpr static const char* const material_names[] = {"Unlit", "Lambert"};
-
-						auto current = static_cast<int>(renderer.material->get_material_type());
-						const auto prev = current;
+						/*
 						[[unlikely]] if (BeginCombo("Shader", material_names[current])) {
 							for (int i = 0; i < sizeof material_names / sizeof *material_names; ++i) {
 								if (Selectable(material_names[i], current == i)) {
@@ -162,28 +159,10 @@ namespace dce::gui::widgets {
 							}
 							EndCombo();
 						}
+						*/
 
-						[[unlikely]] if (current != prev) {
-							const auto mat = static_cast<MaterialType>(current);
-							switch (mat) {
-							case MaterialType::UNLIT: {
-								Material::Unlit properties{};
-								Material::get_default_properties(properties, _resource_manager);
-								renderer.material->set(std::move(properties));
-							}
-							break;
-
-							case MaterialType::LAMBERT: {
-								Material::Lambert properties{};
-								Material::get_default_properties(properties, _resource_manager);
-								renderer.material->set(std::move(properties));
-							}
-							break;
-							}
-						}
-
-						if (*renderer.material == MaterialType::UNLIT) {
-							auto& props = renderer.material->get<Material::Unlit>();
+						if (std::holds_alternative<Material::Unlit>(renderer.material->properties)) {
+							auto& props = std::get<Material::Unlit>(renderer.material->properties);
 							const auto file_name = props.albedo->get_file_path().filename().string();
 							PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
 							if (Button(file_name.c_str())) {
@@ -197,8 +176,8 @@ namespace dce::gui::widgets {
 							SameLine();
 							TextUnformatted("Albedo");
 						}
-						else if (*renderer.material == MaterialType::LAMBERT) {
-							auto& props = renderer.material->get<Material::Lambert>();
+						else if (std::holds_alternative<Material::Lambert>(renderer.material->properties)) {
+							auto& props = std::get<Material::Lambert>(renderer.material->properties);
 							const auto file_name = props.albedo->get_file_path().filename().string();
 							PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
 							if (Button(file_name.c_str())) {
@@ -212,6 +191,7 @@ namespace dce::gui::widgets {
 						}
 					}
 				}
+
 				[[unlikely]] if (_registry.has<Rigidbody>(_entity)) {
 					auto& rigidbody = _registry.get<Rigidbody>(_entity);
 					[[likely]] if (CollapsingHeader(ICON_FA_GLOBE " Rigidbody", ImGuiTreeNodeFlags_DefaultOpen)) {

@@ -131,7 +131,7 @@ namespace dce::platform {
 		}
 
 		/* Show splash screen: */
-		const auto sp_result = this->splash_screen_.open(4, primary_monitor, "textures/splash/splash.png");
+		const auto sp_result = this->splash_screen_.open(4, primary_monitor, _rt.config().app.splash_image.string().c_str());
 		proto.info("Opened splash screen with size {}x{}: {}", this->splash_screen_.get_width(), this->splash_screen_.get_height()
 		           , sp_result);
 
@@ -181,11 +181,11 @@ namespace dce::platform {
 		/* Disable any GLFW side API: */
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+		glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_FALSE);
+		glfwSwapInterval(0);
 
 		proto.separator();
 		proto.info("Initializing window...");
-		proto.info("Setting window hint: {:X} to {}", GLFW_CLIENT_API, GLFW_NO_API);
-		proto.info("Setting window hint: {:X} to {}", GLFW_VISIBLE, GLFW_FALSE);
 
 		/* Create window: */
 		this->window_ = glfwCreateWindow(display_settings.width, display_settings.height, "Dreamcast Engine"
@@ -195,7 +195,6 @@ namespace dce::platform {
 			proto.error("Failed to create window!");
 			return false;
 		}
-
 
 		[[likely]] if (display_settings.is_full_screen || display_settings.is_maximized) {
 			[[likely]] if (display_settings.is_maximized) {
@@ -216,7 +215,7 @@ namespace dce::platform {
 		}
 
 		/* Native handle: */
-		void* volatile nat_handle = nullptr;
+		void* nat_handle = nullptr;
 
 #if SYS_LINUX
 		nat_handle = reinterpret_cast<void*>(reinterpret_cast<std::uintptr_t>(glfwGetX11Window(this->window_)));
@@ -250,8 +249,12 @@ namespace dce::platform {
 			const auto os_info = iware::system::OS_info();
 			const auto quantities = iware::cpu::quantities();
 
-			proto.info("RAM physical: {}B, available: {}B", memory.physical_total, memory.physical_available);
-			proto.info("RAM virtual: {}B, available: {}B", memory.virtual_available, memory.virtual_total);
+			proto.info("RAM physical: {}B -> {}GB, available: {}B -> {}GB", memory.physical_total, memory.physical_available
+			           , static_cast<float>(memory.physical_total) / (1024.F * 1024.F * 1024.F)
+			           , static_cast<float>(memory.physical_available) / (1024.F * 1024.F * 1024.F));
+			proto.info("RAM virtual: {}B -> {}GB, available: {}B -> {}GB", memory.virtual_available, memory.virtual_total
+			           , static_cast<float>(memory.virtual_available) / (1024.F * 1024.F * 1024.F)
+			           , static_cast<float>(memory.virtual_total) / (1024.F * 1024.F * 1024.F));
 			proto.info("Kernel: {}, version: {}.{}.{}.{}", kernel_variant_name(kernel_info.variant), kernel_info.major
 			           , kernel_info.minor, kernel_info.patch, kernel_info.build_number);
 			proto.info("OS: {}, version: {}.{}.{}.{}", os_info.full_name, os_info.major, os_info.minor, os_info.patch

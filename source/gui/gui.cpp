@@ -33,6 +33,7 @@ namespace dce::gui {
 		auto& io = ImGui::GetIO();
 		io.IniFilename = nullptr;
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+		//io.MouseDrawCursor = true;
 
 		auto& cfg = _rt.config().overlay;
 		style_apply(cfg.theme);
@@ -81,8 +82,6 @@ namespace dce::gui {
 	}
 
 	void Gui::begin(const std::uint16_t _width, const std::uint16_t _height) {
-		auto& io = ImGui::GetIO();
-		io.DisplaySize = {static_cast<float>(_width), static_cast<float>(_height)};
 		this->gui_input_.update();
 		ImGui::NewFrame();
 	}

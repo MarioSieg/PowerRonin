@@ -64,6 +64,12 @@ namespace dce {
 			std::uint16_t max_channels = 2048;
 		} audio;
 
+		struct {
+			std::string app_name = {};
+			std::string app_company = {};
+			std::filesystem::path splash_image = "textures/splash/splash.png";
+		} app;
+
 		virtual void serialize(JsonStream& _j) const override;
 		virtual void deserialize(const JsonStream& _j) override;
 	};

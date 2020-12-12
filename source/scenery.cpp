@@ -40,14 +40,15 @@ namespace dce {
 
 			meta.name = "Cube";
 			Material::Lambert lambert;
-			Material::get_default_properties(lambert, _resource_manager);
+			lambert.albedo = _resource_manager.system_resources.checkerboard;
 			renderer.material = Material::create_from_data(lambert, "cube", _resource_manager);
 			renderer.mesh = _resource_manager.system_resources.cube;
 			AudioClipMeta aumeta = {};
 			aumeta.enable_3d_sound = false;
 			aumeta.is_stream = true;
 			audio.clip = _resource_manager.load<AudioClip>("audio/music/scifi_ambience.ogg", &aumeta);
-			audio.play();
+			//audio.play();
+			audio.set_volume(0.1F);
 		}
 
 		// Create platform:
@@ -62,7 +63,7 @@ namespace dce {
 			transform.position.y = -1.f;
 			transform.scale *= 3.f;
 			Material::Lambert lambert;
-			Material::get_default_properties(lambert, _resource_manager);
+			lambert.albedo = _resource_manager.system_resources.checkerboard;
 			renderer.material = Material::create_from_data(lambert, "platform", _resource_manager);
 			renderer.mesh = _resource_manager.load<Mesh>("meshes/common/platform.obj");
 		}

@@ -89,10 +89,16 @@ namespace dce::renderer {
 	}
 
 	void render_stats(const Runtime& _runtime) {
-		const auto& chrono = _runtime.chrono();
-		const auto x = static_cast<std::uint16_t>(_runtime.render_data().scenery_viewport_position.x);
-		const auto y = static_cast<std::uint16_t>(_runtime.render_data().scenery_viewport_position.y);
+		/*const auto& chrono = _runtime.chrono();
+		
+		const auto x = static_cast<unsigned int>(_runtime.render_data().scenery_viewport_position.x);
+		const auto y = static_cast<unsigned int>(_runtime.render_data().scenery_viewport_position.y);
+		const auto w = static_cast<unsigned int>(_runtime.render_data().scenery_viewport_size.x);
+		const auto h = static_cast<unsigned int>(_runtime.render_data().scenery_viewport_size.y);
+		
 		bgfx::dbgTextClear();
-		bgfx::dbgTextPrintf(0, 0, 0xF, "C: %u", chrono.cycles);
+		bgfx::dbgTextPrintf(100, 5, 0xF, "VP x: %u y: %u w: %u h: %u", x, y, w, h);
+		bgfx::dbgTextPrintf(100, 6, 0xF, "Tick: %u", chrono.cycles);*/
+
 	}
 }

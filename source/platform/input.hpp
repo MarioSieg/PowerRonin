@@ -25,7 +25,7 @@ namespace dce::platform {
 		void shutdown();
 		void update_mouse();
 		void update_cursor();
-		static void update_gamepads();
+		void update_gamepads();
 		void install_callback_procedures() const;
 
 	private:

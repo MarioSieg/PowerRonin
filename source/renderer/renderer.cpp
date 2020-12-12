@@ -42,10 +42,10 @@ namespace dce::renderer {
 		this->fly_cam_.set_position({0.0f, 0.0f, -5.0f});
 
 		auto& viewport = _rt.render_data().scenery_viewport_size;
-		[[likely]] if (!viewport.x || !viewport.y) {
+		[[likely]] if (viewport.x == .0F || viewport.y == .0F) {
 			viewport.x = _rt.config().display.width;
 			viewport.y = _rt.config().display.height;
-			[[likely]] if (!viewport.x || !viewport.y) {
+			[[likely]] if (viewport.x == .0F || viewport.y == .0F) {
 				return false;
 			}
 		}
@@ -98,10 +98,11 @@ namespace dce::renderer {
 		// Create transform matrix:
 		auto skybox_matrix = math::identity<Matrix4x4<>>();
 		skybox_matrix = scale(skybox_matrix, Vector3<>{10});
+
 		// Remove translation:
-		_data.view_matrix[3][0] = .0f;
-		_data.view_matrix[3][1] = .0f;
-		_data.view_matrix[3][2] = .0f;
+		_data.view_matrix[3][0] = .0F;
+		_data.view_matrix[3][1] = .0F;
+		_data.view_matrix[3][2] = .0F;
 
 		// Set camera:
 		this->gpu_.set_camera(SKYBOX_VIEW, _data.view_matrix, _data.projection_matrix);
@@ -155,7 +156,7 @@ namespace dce::renderer {
 					           this->shader_bucket_.lambert.per_object(mesh, _material);
 				           }
 				           ,
-			           }, _mesh_renderer.material->get_properties());
+			           }, _mesh_renderer.material->properties);
 		};
 
 		// Iterate and draw:

@@ -31,22 +31,6 @@ namespace dce {
 	};
 
 	/// <summary>
-	/// Type of this material.
-	/// </summary>
-	enum class MaterialType {
-		/// <summary>
-		/// Has a simple texture and no lighting.
-		/// </summary>
-		UNLIT
-		,
-
-		/// <summary>
-		/// Has a simple texture but lambertian diffuse lighting.
-		/// </summary>
-		LAMBERT
-	};
-
-	/// <summary>
 	/// Represents a material which contains properties to draw some surface.
 	/// </summary>
 	class Material final : public IResource<MaterialMeta> {
@@ -78,20 +62,6 @@ namespace dce {
 		static constexpr std::array<std::string_view, 2> FILE_EXTENSION = {".mat", ".bmt"};
 
 		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="_type"></param>
-		/// <returns>The material types as string.</returns>
-		[[nodiscard]] static constexpr auto type_to_string(const MaterialType _type) noexcept -> std::string_view;
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="_str"></param>
-		/// <returns>The material type is the string was valid, else std::nullopt.</returns>
-		[[nodiscard]] static constexpr auto type_from_string(const std::string_view _str) noexcept -> std::optional<MaterialType>;
-
-		/// <summary>
 		/// Creates a material from preloaded memory data.
 		/// </summary>
 		/// <param name="_props"></param>
@@ -101,18 +71,6 @@ namespace dce {
 		[[nodiscard]] static auto create_from_data(Properties&& _props
 		                                           , std::filesystem::path&& _name_path_alias
 		                                           , ResourceManager& _rm) -> IRef<Material>;
-
-		/// <summary>
-		///
-		/// </summary>
-		/// <returns>A reference to the material's properties.</returns>
-		[[nodiscard]] auto get_properties() const noexcept -> const Properties&;
-
-		/// <summary>
-		///
-		/// </summary>
-		/// <returns>The type of the material.</returns>
-		[[nodiscard]] auto get_material_type() const noexcept -> MaterialType;
 
 		/// <summary>
 		/// NO-OP
@@ -125,127 +83,10 @@ namespace dce {
 		virtual void offload() override;
 
 		/// <summary>
-		/// Serialize properties to file.
+		/// Material properties.
 		/// </summary>
-		/// <param name="_j"></param>
-		void serialize(JsonStream& _j) const;
-
-		/// <summary>
-		/// Deserialize properties from file.
-		/// </summary>
-		/// <param name="_j"></param>
-		/// <param name="_rm"></param>
-		void deserialize(const JsonStream& _j, ResourceManager& _rm);
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="_type"></param>
-		/// <returns>True if material type is equals, else false.</returns>
-		[[nodiscard]] auto operator==(const MaterialType _type) const noexcept -> bool;
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="_type"></param>
-		/// <returns>True if material type is not equals, else false.</returns>
-		[[nodiscard]] auto operator!=(const MaterialType _type) const noexcept -> bool;
-
-		/// <summary>
-		/// Returns the material type data, if valid.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <returns></returns>
-		template <typename T>
-		[[nodiscard]] auto get() const -> const T&;
-
-		/// <summary>
-		/// Returns the material type data, if valid.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <returns></returns>
-		template <typename T>
-		[[nodiscard]] auto get() -> T&;
-
-		/// <summary>
-		/// Sets the material to a new type with new data.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="_variant"></param>
-		/// <returns></returns>
-		template <typename T>
-		void set(T&& _variant) noexcept;
-
-		/// <summary>
-		/// Direct set all properties.
-		/// </summary>
-		/// <param name="_props"></param>
-		/// <returns></returns>
-		void set(Properties&& _props) noexcept;
-
-		/// <summary>
-		/// Set all default properties via type.
-		/// </summary>
-		/// <param name="_type"></param>
-		/// <returns></returns>
-		void set(const MaterialType _type) noexcept;
-
-		/// <summary>
-		/// Get default properties for material type.
-		/// </summary>
-		static void get_default_properties(Unlit& _mat, ResourceManager& _rm) noexcept;
-
-		/// <summary>
-		/// Get default properties for material type.
-		/// </summary>
-		static void get_default_properties(Lambert& _mat, ResourceManager& _rm) noexcept;
-
-	private:
-		Properties properties_ = {Unlit{}};
-		MaterialType mat_type_ = MaterialType::UNLIT;
+		Properties properties = {Unlit{}};
 	};
-
-	template <typename T>
-	inline auto Material::get() const -> const T& {
-		return std::get<T>(this->properties_);
-	}
-
-	template <typename T>
-	inline auto Material::get() -> T& {
-		return std::get<T>(this->properties_);
-	}
-
-	template <>
-	inline void Material::set(Unlit&& _variant) noexcept {
-		this->properties_ = std::move(_variant);
-		this->mat_type_ = MaterialType::UNLIT;
-	}
-
-	template <>
-	inline void Material::set(Lambert&& _variant) noexcept {
-		this->properties_ = std::move(_variant);
-		this->mat_type_ = MaterialType::LAMBERT;
-	}
-
-	constexpr auto Material::type_to_string(const MaterialType _type) noexcept -> std::string_view {
-		switch (_type) {
-		case MaterialType::UNLIT: return "Unlit";
-		case MaterialType::LAMBERT: return "Lambert";
-		}
-		return "";
-	}
-
-	constexpr auto Material::type_from_string(const std::string_view _str) noexcept -> std::optional<MaterialType> {
-		if (_str == "Unlit") {
-			return MaterialType::UNLIT;
-		}
-
-		if (_str == "Lambert") {
-			return MaterialType::LAMBERT;
-		}
-
-		return std::nullopt;
-	}
 
 	/// <summary>
 	/// Material loader class.

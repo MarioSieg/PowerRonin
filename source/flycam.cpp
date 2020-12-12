@@ -47,29 +47,36 @@ namespace dce {
 		const float speed = this->move_speed;
 
 		[[unlikely]] if (_input.is_mouse_button_down(MouseButton::RIGHT)) {
-			const auto delta_x = mouse.x - this->mouse_prev_.x;
-			const auto delta_y = mouse.y - this->mouse_prev_.y;
+			auto delta_x = mouse.x - this->mouse_prev_.x;
+			auto delta_y = mouse.y - this->mouse_prev_.y;
 
-			this->mouse_angles_.x += delta_x * sensitivity * _delta_time;
-			this->mouse_angles_.y -= delta_y * sensitivity * _delta_time;
+			delta_x = delta_x * sensitivity;
+			delta_y = delta_y * sensitivity;
 
-			this->dir_ = {
-				math::cos(math::radians(this->mouse_angles_.y)) * math::sin(math::radians(this->mouse_angles_.x))
-				, math::sin(math::radians(this->mouse_angles_.y))
-				, math::cos(math::radians(this->mouse_angles_.y)) * math::cos(math::radians(this->mouse_angles_.x))
-			};
+			this->smooth_mouse_angles_.x = std::lerp(smooth_mouse_angles_.x, delta_x, 1.F / this->smoothness);
+			this->smooth_mouse_angles_.y = std::lerp(smooth_mouse_angles_.y, delta_y, 1.F / this->smoothness);
+
+			this->mouse_angles_.x += (delta_x + this->smooth_mouse_angles_.x) * _delta_time;
+			this->mouse_angles_.y -= (delta_y + this->smooth_mouse_angles_.y) * _delta_time;
+
+			this->mouse_angles_.y = std::clamp(this->mouse_angles_.y, -this->clamp_y, this->clamp_y);
+
+			const auto dir_x = math::cos(math::radians(this->mouse_angles_.y)) * math::sin(math::radians(this->mouse_angles_.x));
+			const auto dir_y = math::sin(math::radians(this->mouse_angles_.y));
+			const auto dir_z = math::cos(math::radians(this->mouse_angles_.y)) * math::cos(math::radians(this->mouse_angles_.x));
+
+			this->dir_ = {dir_x, dir_y, dir_z};
 
 			this->mouse_prev_.x = mouse.x;
 			this->mouse_prev_.y = mouse.y;
 		}
 		else {
-			mouse_prev_.x = mouse.x;
-			mouse_prev_.y = mouse.y;
+			this->mouse_prev_.x = mouse.x;
+			this->mouse_prev_.y = mouse.y;
 		}
 
 		this->forward_ = normalize(this->dir_);
 		this->left_ = normalize(cross(this->forward_, math::UP));
-		this->at_ = this->eye_ + dir_;
 
 		[[likely]] if (_input.is_key_down(Key::W)) {
 			this->eye_ += Vector3<>{speed * _delta_time} * this->forward_;
@@ -86,6 +93,8 @@ namespace dce {
 		[[likely]] if (_input.is_key_down(Key::D)) {
 			this->eye_ -= Vector3<>{speed * _delta_time} * this->left_;
 		}
+
+		this->at_ = this->eye_ + dir_;
 
 		this->view_ = lookAtLH(this->eye_, this->at_, math::UP);
 		this->proj_ = math::perspectiveFovLH<float>(math::radians(this->fov), _viewport_x, _viewport_y, this->near_clip

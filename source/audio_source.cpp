@@ -52,9 +52,9 @@ namespace dce {
 
 	auto AudioSource::get_priority() const noexcept -> std::uint8_t {
 		[[likely]] if (this->channel_) {
-			int prio;
-			static_cast<FMOD::Channel*>(this->channel_)->getPriority(&prio);
-			return prio;
+			int priority;
+			static_cast<FMOD::Channel*>(this->channel_)->getPriority(&priority);
+			return static_cast<std::uint8_t>(priority);
 		}
 		return 0;
 	}
@@ -71,7 +71,20 @@ namespace dce {
 		[[likely]] if (this->channel_) {
 			int count;
 			static_cast<FMOD::Channel*>(this->channel_)->getLoopCount(&count);
-			return count;
+			return static_cast<std::uint8_t>(count);
+		}
+		return 0;
+	}
+
+	void AudioSource::set_volume(const float _volume) const noexcept {
+		this->channel_ && static_cast<FMOD::Channel*>(this->channel_)->setVolume(_volume);
+	}
+
+	auto AudioSource::get_volume() const noexcept -> float {
+		[[likely]] if (this->channel_) {
+			float volume;
+			static_cast<FMOD::Channel*>(this->channel_)->getVolume(&volume);
+			return volume;
 		}
 		return 0;
 	}

@@ -119,60 +119,47 @@ namespace dce::platform {
 		auto* const win = static_cast<GLFWwindow*>(this->window);
 		auto& io = ImGui::GetIO();
 
-		for (std::size_t i = 0; i < sizeof io.MouseDown / sizeof *io.MouseDown; i++) {
+		for (int i = 0; i < sizeof io.MouseDown / sizeof *io.MouseDown; i++) {
 			io.MouseDown[i] = this->mouse_buttons[i] || glfwGetMouseButton(win, i) != 0;
 			this->mouse_buttons[i] = false;
 		}
 
-		// Update mouse position:
-		const ImVec2 mouse_pos_backup = io.MousePos;
-		io.MousePos = ImVec2(-std::numeric_limits<float>::max(), -std::numeric_limits<float>::max());
-
-		const bool focused = glfwGetWindowAttrib(win, GLFW_FOCUSED) != 0;
-
-		if (focused) {
-			if (io.WantSetMousePos) {
-				glfwSetCursorPos(win, static_cast<double>(mouse_pos_backup.x), static_cast<double>(mouse_pos_backup.y));
-			}
-			else {
-				double mouse_x = NAN;
-				double mouse_y = NAN;
-				glfwGetCursorPos(win, &mouse_x, &mouse_y);
-				io.MousePos = ImVec2(static_cast<float>(mouse_x), static_cast<float>(mouse_y));
-			}
-		}
+		double mouse_x;
+		double mouse_y;
+		glfwGetCursorPos(win, &mouse_x, &mouse_y);
+		io.MousePos = ImVec2(static_cast<float>(mouse_x), static_cast<float>(mouse_y));
 	}
 
 	void GuiInput::update_cursor() {
 		auto* const win = static_cast<GLFWwindow*>(this->window);
 		auto& io = ImGui::GetIO();
-		if ((io.ConfigFlags & ImGuiConfigFlags_NoMouseCursorChange) != 0 || glfwGetInputMode(win, GLFW_CURSOR) ==
+		[[unlikely]] if ((io.ConfigFlags & ImGuiConfigFlags_NoMouseCursorChange) != 0 || glfwGetInputMode(win, GLFW_CURSOR) ==
 			GLFW_CURSOR_DISABLED) {
 			return;
 		}
 
 		const auto gui_mouse_cursor = ImGui::GetMouseCursor();
-		if (gui_mouse_cursor == ImGuiMouseCursor_None || io.MouseDrawCursor) {
-			// Hide OS mouse cursor if imgui is drawing it or if it wants no cursor:
-			glfwSetInputMode(win, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-		}
-		else {
+		[[likely]] if (gui_mouse_cursor != ImGuiMouseCursor_None && !io.MouseDrawCursor) {
 			// Show OS mouse cursor:
 			glfwSetCursor(win, this->cursors[gui_mouse_cursor] != nullptr
 				                   ? this->cursors[gui_mouse_cursor]
 				                   : this->cursors[ImGuiMouseCursor_Arrow]);
 			glfwSetInputMode(win, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 		}
+		else {
+			// Hide OS mouse cursor if imgui is drawing it or if it wants no cursor:
+			glfwSetInputMode(win, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+		}
 	}
 
 	void GuiInput::update_gamepads() {
 		ImGuiIO& io = ImGui::GetIO();
 
-		memset(io.NavInputs, 0, sizeof io.NavInputs);
-
-		if ((io.ConfigFlags & ImGuiConfigFlags_NavEnableGamepad) != 0) {
+		[[likely]] if ((io.ConfigFlags & ImGuiConfigFlags_NavEnableGamepad) != 0) {
 			return;
 		}
+
+		memset(io.NavInputs, 0, sizeof io.NavInputs);
 
 		auto axes_count = 0;
 		auto buttons_count = 0;
@@ -195,7 +182,7 @@ namespace dce::platform {
 		MAP_ANALOG(ImGuiNavInput_LStickUp, 1, +0.3F, +0.9F)
 		MAP_ANALOG(ImGuiNavInput_LStickDown, 1, -0.3F, -0.9F)
 
-		if (axes_count > 0 && buttons_count > 0) {
+		[[likely]] if (axes_count > 0 && buttons_count > 0) {
 			io.BackendFlags |= ImGuiBackendFlags_HasGamepad;
 		}
 		else {
@@ -214,7 +201,7 @@ namespace dce::platform {
 	void GuiInput::shutdown() {
 		MOUSE_STATES = nullptr;
 		for (auto*& cur : this->cursors) {
-			if (cur == nullptr) {
+			[[unlikely]] if (cur == nullptr) {
 				continue;
 			}
 			glfwDestroyCursor(cur);

@@ -18,75 +18,6 @@
 #include "../../include/dce/resource_manager.hpp"
 
 namespace dce {
-	void Material::serialize(JsonStream& _j) const {
-		_j["type"] = type_to_string(this->mat_type_);
-		switch (this->mat_type_) {
-		case MaterialType::UNLIT: {
-			const auto& props = this->get<Unlit>();
-			_j["_albedo"] = props.albedo->get_file_path().string();
-		}
-		break;
-
-		case MaterialType::LAMBERT: {
-			const auto& props = this->get<Lambert>();
-			_j["_albedo"] = props.albedo->get_file_path().string();
-		}
-		break;
-		}
-	}
-
-	void Material::deserialize(const JsonStream& _j, ResourceManager& _rm) {
-		this->mat_type_ = *type_from_string(_j["type"]);
-		switch (this->mat_type_) {
-		case MaterialType::UNLIT: {
-			this->get<Unlit>().albedo = _rm.load<Texture>(std::string(_j["_albedo"]));
-		}
-		break;
-
-		case MaterialType::LAMBERT: {
-			auto& lambert = this->get<Lambert>();
-			lambert.albedo = _rm.load<Texture>(std::string(_j["_albedo"]));
-		}
-		break;
-		}
-	}
-
-	auto Material::operator==(const MaterialType _type) const noexcept -> bool {
-		return this->mat_type_ == _type;
-	}
-
-	auto Material::operator!=(const MaterialType _type) const noexcept -> bool {
-		return this->mat_type_ != _type;
-	}
-
-	void Material::set(Properties&& _props) noexcept {
-		if (std::holds_alternative<Unlit>(_props)) {
-			this->mat_type_ = MaterialType::UNLIT;
-		}
-		else if (std::holds_alternative<Lambert>(_props)) {
-			this->mat_type_ = MaterialType::LAMBERT;
-		}
-		this->properties_ = std::move(_props);
-	}
-
-	void Material::set(const MaterialType _type) noexcept {
-		switch (_type) {
-		case MaterialType::UNLIT: this->properties_ = Unlit{};
-			break;
-		case MaterialType::LAMBERT: this->properties_ = Lambert{};
-			break;
-		}
-		this->mat_type_ = _type;
-	}
-
-	void Material::get_default_properties(Unlit& _mat, ResourceManager& _rm) noexcept {
-		_mat.albedo = _rm.system_resources.checkerboard;
-	}
-
-	void Material::get_default_properties(Lambert& _mat, ResourceManager& _rm) noexcept {
-		_mat.albedo = _rm.system_resources.checkerboard;
-	}
-
 	auto MaterialImporteur::load(std::filesystem::path&& _path
 	                             , const MaterialMeta* const _meta) const -> std::shared_ptr<Material> {
 		auto self = IResource<MaterialMeta>::allocate<Material>();
@@ -103,7 +34,7 @@ namespace dce {
 		public:
 			auto load(Properties&& _props, std::filesystem::path&& _name_path_alias) const -> std::shared_ptr<Material> {
 				auto self = allocate<Material>();
-				self->set(std::move(_props));
+				self->properties = std::move(_props);
 				self->file_path_ = std::move(_name_path_alias);
 
 				return self;
@@ -112,13 +43,5 @@ namespace dce {
 		const auto id = HString(_name_path_alias.string().c_str());
 		return const_cast<ResourceCache<Material>&>(_rm.get_material_cache()).load<MaterialFactory>(
 			id, std::move(_props), std::move(_name_path_alias));
-	}
-
-	auto Material::get_properties() const noexcept -> const Properties& {
-		return this->properties_;
-	}
-
-	auto Material::get_material_type() const noexcept -> MaterialType {
-		return this->mat_type_;
 	}
 }

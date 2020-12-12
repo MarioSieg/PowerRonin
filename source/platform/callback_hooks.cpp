@@ -21,13 +21,10 @@
 namespace dce::platform {
 	bool (*MOUSE_STATES)[5] = nullptr;
 
-	void mouse_button_callback([[maybe_unused]] GLFWwindow* const /*win*/
-
-
-	                           
+	void mouse_button_callback([[maybe_unused]] GLFWwindow* const
 	                           , [[maybe_unused]] const int _button
 	                           , [[maybe_unused]] const int _action
-	                           , [[maybe_unused]] const int /*mods*/) noexcept {
+	                           , [[maybe_unused]] const int _mods) noexcept {
 		assert(MOUSE_STATES);
 		[[likely]] if (_action == GLFW_PRESS && _button >= 0 && _button < static_cast<int>(sizeof *MOUSE_STATES / sizeof **
 			MOUSE_STATES)) {
@@ -35,10 +32,7 @@ namespace dce::platform {
 		}
 	}
 
-	void scroll_callback([[maybe_unused]] GLFWwindow* const /*win*/
-
-
-	                     
+	void scroll_callback([[maybe_unused]] GLFWwindow* const
 	                     , [[maybe_unused]] const double _x
 	                     , [[maybe_unused]] const double _y) noexcept {
 		auto& io = ImGui::GetIO();
@@ -46,17 +40,11 @@ namespace dce::platform {
 		io.MouseWheel += static_cast<float>(_y);
 	}
 
-	void key_callback([[maybe_unused]] GLFWwindow* const /*win*/
-
-
-	                  
+	void key_callback([[maybe_unused]] GLFWwindow* const
 	                  , const int _key
-	                  , [[maybe_unused]] const int /*scancode*/
-
-
-	                  
+	                  , [[maybe_unused]] const int _scancode
 	                  , const int _action
-	                  , [[maybe_unused]] const int /*mods*/) noexcept {
+	                  , [[maybe_unused]] const int _mods) noexcept {
 		auto& io = ImGui::GetIO();
 		[[likely]] if (_action == GLFW_PRESS) {
 			io.KeysDown[_key] = true;
@@ -74,11 +62,7 @@ namespace dce::platform {
 #endif
 	}
 
-	void char_callback([[maybe_unused]] GLFWwindow* const /*win*/
-
-
-	                   
-	                   , const unsigned _c) noexcept {
+	void char_callback([[maybe_unused]] GLFWwindow* const, const unsigned _c) noexcept {
 		ImGui::GetIO().AddInputCharacter(_c);
 	}
 } // namespace dce::platform // namespace dce::platform

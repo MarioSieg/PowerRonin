@@ -78,6 +78,19 @@ namespace dce {
 		/// <returns></returns>
 		auto get_loop_count() const noexcept -> std::uint32_t;
 
+		/// <summary>
+		/// Sets the audio source volume (0.0-1.0).
+		/// </summary>
+		/// <param name="_volume"></param>
+		/// <returns></returns>
+		void set_volume(const float _volume) const noexcept;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>The audio source volume.</returns>
+		auto get_volume() const noexcept -> float;
+
 	private:
 		void* channel_ = nullptr;
 	};
