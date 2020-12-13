@@ -22,7 +22,7 @@ namespace dce {
 	/* Contains time info and clocks. */
 	class Chrono final {
 	public:
-		std::uint_fast32_t cycles = 0;
+		std::uint32_t cycles = 0;
 		std::chrono::system_clock::time_point start_time = std::chrono::system_clock::now();
 		double time = .0;
 		double delta_time = .0;

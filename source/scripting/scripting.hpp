@@ -16,6 +16,7 @@
 #pragma once
 
 #include "../../include/dce/core/kernel.hpp"
+#include "mono_headers.hpp"
 
 namespace dce::scripting {
 	class Scripting final : public core::ISubsystem {
@@ -39,5 +40,7 @@ namespace dce::scripting {
 		virtual auto on_post_tick([[maybe_unused]] Runtime& _rt) -> bool override;
 		virtual auto on_pre_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
 		virtual auto on_post_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
+
+		MonoDomain* domain_ = nullptr;
 	};
 }

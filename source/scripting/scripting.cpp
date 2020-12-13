@@ -14,12 +14,21 @@
 // *******************************************************************************
 
 #include "scripting.hpp"
+#include "../../include/dce/procinfo.hpp"
 
 namespace dce::scripting {
 	Scripting::Scripting() : ISubsystem("Scripting", EVENTS) { }
 
 	auto Scripting::on_pre_startup(Runtime& _rt) -> bool {
+
 		auto& proto = _rt.protocol();
+
+		mono_set_dirs("extern/mono/lib", "extern/mono/etc");
+		mono_config_parse(nullptr);
+
+		const auto exe_name = get_executable_name();
+		this->domain_ = mono_jit_init(exe_name.c_str());
+
 		return true;
 	}
 

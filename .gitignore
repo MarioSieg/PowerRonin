@@ -3,4 +3,7 @@
 /proto/
 /cache/
 /crashes/
-extern/assimp/out/
+/extern/assimp/out/
+/scripts/dreamcast/.idea
+/scripts/dreamcast/bin
+/scripts/dreamcast/obj

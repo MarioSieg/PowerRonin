@@ -93,25 +93,25 @@ namespace dce {
 		~AsyncProtocol() = default;
 
 	private:
-		std::shared_ptr<spdlog::logger> core = {};
-		spdlog::sink_ptr file_sink = {};
-		spdlog::sink_ptr terminal_sink = {};
+		std::shared_ptr<spdlog::logger> core_ = {};
+		spdlog::sink_ptr file_sink_ = {};
+		spdlog::sink_ptr terminal_sink_ = {};
 	};
 
 	inline auto AsyncProtocol::separator() -> AsyncProtocol& {
-		this->core->info("---------------------------------------------------------------");
+		this->core_->info("----------------------------------------------------------------");
 		return *this;
 	}
 
 	template <typename T>
 	inline auto AsyncProtocol::log(const LogLevel _level, T&& _msg) -> AsyncProtocol& {
-		this->core->log(spdlog::source_loc{}, static_cast<spdlog::level::level_enum>(_level), _msg);
+		this->core_->log(spdlog::source_loc{}, static_cast<spdlog::level::level_enum>(_level), _msg);
 		return *this;
 	}
 
 	template <typename T, typename... Q>
 	inline auto AsyncProtocol::log(const LogLevel _level, T&& _msg, Q&&... _args) -> AsyncProtocol& {
-		this->core->log(spdlog::source_loc{}, static_cast<spdlog::level::level_enum>(_level), _msg, _args...);
+		this->core_->log(spdlog::source_loc{}, static_cast<spdlog::level::level_enum>(_level), _msg, _args...);
 		return *this;
 	}
 
@@ -176,10 +176,10 @@ namespace dce {
 	}
 
 	inline auto AsyncProtocol::sink_to_file() const noexcept -> const spdlog::sink_ptr& {
-		return this->file_sink;
+		return this->file_sink_;
 	}
 
 	inline auto AsyncProtocol::sink_to_terminal() const noexcept -> const spdlog::sink_ptr& {
-		return this->terminal_sink;
+		return this->terminal_sink_;
 	}
 } // namespace dce // namespace dce
