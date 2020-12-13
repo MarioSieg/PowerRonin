@@ -42,8 +42,7 @@ namespace dce {
 		/*[[unlikely]] if (ImGui::IsAnyItemHovered() || ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow)) {
 			return;
 		}*/
-		const auto mouse = _input.get_mouse_position();
-
+		auto mouse = _input.get_mouse_position();
 		const float speed = this->move_speed;
 
 		[[unlikely]] if (_input.is_mouse_button_down(MouseButton::RIGHT)) {
@@ -56,8 +55,8 @@ namespace dce {
 			this->smooth_mouse_angles_.x = std::lerp(smooth_mouse_angles_.x, delta_x, 1.F / this->smoothness);
 			this->smooth_mouse_angles_.y = std::lerp(smooth_mouse_angles_.y, delta_y, 1.F / this->smoothness);
 
-			this->mouse_angles_.x += (delta_x + this->smooth_mouse_angles_.x) * _delta_time;
-			this->mouse_angles_.y -= (delta_y + this->smooth_mouse_angles_.y) * _delta_time;
+			this->mouse_angles_.x += delta_x * _delta_time + this->smooth_mouse_angles_.x;
+			this->mouse_angles_.y -= delta_y * _delta_time + this->smooth_mouse_angles_.y;
 
 			this->mouse_angles_.y = std::clamp(this->mouse_angles_.y, -this->clamp_y, this->clamp_y);
 

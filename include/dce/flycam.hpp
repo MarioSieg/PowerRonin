@@ -25,12 +25,12 @@ namespace dce {
 	/// </summary>
 	class FlyCam final {
 	public:
-		float move_speed = 8.f;
-		float sensitivity = 10.f;
-		float fov = 80.0f;
-		float near_clip = 0.01f;
-		float far_clip = 2000.0f;
-		float smoothness = 3.F;
+		float move_speed = 8.F;
+		float sensitivity = 0.5F;
+		float fov = 80.F;
+		float near_clip = 0.01F;
+		float far_clip = 2000.F;
+		float smoothness = 1.F;
 		float clamp_y = 80.F;
 
 		[[nodiscard]] auto get_projection_matrix() const noexcept -> const Matrix4x4<>&;
