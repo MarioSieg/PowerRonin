@@ -58,26 +58,30 @@ namespace dce::scripting {
 			return false;
 		}
 
-		this->engine_class_ = mono_class_from_name(this->engine_image_, "Dreamcast", "Core");
+		this->engine_class_ = mono_class_from_name(this->engine_image_, "Dreamcast.Core", "Core");
 		[[unlikely]] if(!this->engine_class_) {
-			return false;
-		}
-
-		this->engine_instance_ = mono_object_new(this->domain_, this->engine_class_);
-		[[unlikely]] if(!this->engine_instance_) {
 			return false;
 		}
 		
 		register_basic_internal_calls(_rt);
-		mono_runtime_object_init(this->engine_instance_);
 
 		this->engine_on_start_ = mono_class_get_method_from_name(this->engine_class_, "OnStart", 0);
 		[[unlikely]] if(!this->engine_on_start_) {
 			return false;
 		}
 
+		this->engine_on_update_ = mono_class_get_method_from_name(this->engine_class_, "OnUpdate", 0);
+		[[unlikely]] if (!this->engine_on_update_) {
+			return false;
+		}
+
+		this->engine_on_exit_ = mono_class_get_method_from_name(this->engine_class_, "OnExit", 0);
+		[[unlikely]] if (!this->engine_on_exit_) {
+			return false;
+		}
+
 		MonoObject* ex = nullptr;
-		auto* ret = mono_runtime_invoke(this->engine_on_start_, this->engine_instance_, nullptr, &ex);
+		auto* ret = mono_runtime_invoke(this->engine_on_start_, nullptr, nullptr, &ex);
 		[[unlikely]] if(ex) {
 			mono_print_unhandled_exception(ex);
 		}
@@ -90,7 +94,10 @@ namespace dce::scripting {
 	}
 
 	auto Scripting::on_pre_tick(Runtime& _rt) -> bool {
-		return true;
+
+		MonoObject* ex = nullptr;
+		auto* ret = mono_runtime_invoke(this->engine_on_update_, nullptr, nullptr, &ex);
+		return !ret && !ex;
 	}
 
 	auto Scripting::on_post_tick(Runtime& _rt) -> bool {
@@ -98,6 +105,11 @@ namespace dce::scripting {
 	}
 
 	auto Scripting::on_pre_shutdown(Runtime& _rt) -> bool {
+		MonoObject* ex = nullptr;
+		auto* ret = mono_runtime_invoke(this->engine_on_exit_, nullptr, nullptr, &ex);
+		[[unlikely]] if (ex) {
+			mono_print_unhandled_exception(ex);
+		}
 		return true;
 	}
 

@@ -20,7 +20,7 @@
 
 namespace dce {
 	/* Represents a keyboard key. */
-	enum class Key : std::int_fast16_t {
+	enum class Key : std::int16_t {
 		UNKNOWN = - 1
 
 		/* Printable keys */
@@ -151,7 +151,7 @@ namespace dce {
 	};
 
 	/* Represents a mouse button. */
-	enum class MouseButton : std::uint_fast8_t {
+	enum class MouseButton : std::uint8_t {
 		LEFT = 0
 		, RIGHT = 1
 		, MIDDLE = 2

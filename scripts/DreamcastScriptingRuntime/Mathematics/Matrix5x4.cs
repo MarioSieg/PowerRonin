@@ -1,4 +1,19 @@
-﻿using System;
+﻿// *******************************************************************************
+// The content of this file includes portions of the KerboGames Dreamcast Technology
+// released in source code form as part of the SDK package.
+// 
+// Commercial License Usage
+// 
+// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// may use this file in accordance with the end user license agreement provided 
+// with the software or, alternatively, in accordance with the terms contained in a
+// written agreement between you and KerboGames.
+// 
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
+// support@kerbogames.com
+// *******************************************************************************
+
+using System;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -6,136 +21,137 @@ using System.Runtime.InteropServices;
 namespace Dreamcast.Mathematics
 {
     /// <summary>
-    /// Represents a 4x4 mathematical Matrix5x4.
+    ///     Represents a 4x4 mathematical Matrix5x4.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
     public struct Matrix5x4 : IEquatable<Matrix5x4>, IFormattable
     {
         /// <summary>
-        /// A <see cref="Matrix5x4"/> with all of its components set to zero.
+        ///     A <see cref="Matrix5x4" /> with all of its components set to zero.
         /// </summary>
-        public static readonly Matrix5x4 Zero = new Matrix5x4();
+        public static readonly Matrix5x4 Zero;
 
         /// <summary>
-        /// The identity <see cref="Matrix5x4"/>.
+        ///     The identity <see cref="Matrix5x4" />.
         /// </summary>
-        public static readonly Matrix5x4 Identity = new Matrix5x4() { M11 = 1.0f, M22 = 1.0f, M33 = 1.0f, M44 = 1.0f, M54 = 0.0f };
+        public static readonly Matrix5x4 Identity = new Matrix5x4
+            {M11 = 1.0f, M22 = 1.0f, M33 = 1.0f, M44 = 1.0f, M54 = 0.0f};
 
         /// <summary>
-        /// Value at row 1 column 1 of the Matrix5x4.
+        ///     Value at row 1 column 1 of the Matrix5x4.
         /// </summary>
         public float M11;
 
         /// <summary>
-        /// Value at row 1 column 2 of the Matrix5x4.
+        ///     Value at row 1 column 2 of the Matrix5x4.
         /// </summary>
         public float M12;
 
         /// <summary>
-        /// Value at row 1 column 3 of the Matrix5x4.
+        ///     Value at row 1 column 3 of the Matrix5x4.
         /// </summary>
         public float M13;
 
         /// <summary>
-        /// Value at row 1 column 4 of the Matrix5x4.
+        ///     Value at row 1 column 4 of the Matrix5x4.
         /// </summary>
         public float M14;
 
         /// <summary>
-        /// Value at row 2 column 1 of the Matrix5x4.
+        ///     Value at row 2 column 1 of the Matrix5x4.
         /// </summary>
         public float M21;
 
         /// <summary>
-        /// Value at row 2 column 2 of the Matrix5x4.
+        ///     Value at row 2 column 2 of the Matrix5x4.
         /// </summary>
         public float M22;
 
         /// <summary>
-        /// Value at row 2 column 3 of the Matrix5x4.
+        ///     Value at row 2 column 3 of the Matrix5x4.
         /// </summary>
         public float M23;
 
         /// <summary>
-        /// Value at row 2 column 4 of the Matrix5x4.
+        ///     Value at row 2 column 4 of the Matrix5x4.
         /// </summary>
         public float M24;
 
         /// <summary>
-        /// Value at row 3 column 1 of the Matrix5x4.
+        ///     Value at row 3 column 1 of the Matrix5x4.
         /// </summary>
         public float M31;
 
         /// <summary>
-        /// Value at row 3 column 2 of the Matrix5x4.
+        ///     Value at row 3 column 2 of the Matrix5x4.
         /// </summary>
         public float M32;
 
         /// <summary>
-        /// Value at row 3 column 3 of the Matrix5x4.
+        ///     Value at row 3 column 3 of the Matrix5x4.
         /// </summary>
         public float M33;
 
         /// <summary>
-        /// Value at row 3 column 4 of the Matrix5x4.
+        ///     Value at row 3 column 4 of the Matrix5x4.
         /// </summary>
         public float M34;
 
         /// <summary>
-        /// Value at row 4 column 1 of the Matrix5x4.
+        ///     Value at row 4 column 1 of the Matrix5x4.
         /// </summary>
         public float M41;
 
         /// <summary>
-        /// Value at row 4 column 2 of the Matrix5x4.
+        ///     Value at row 4 column 2 of the Matrix5x4.
         /// </summary>
         public float M42;
 
         /// <summary>
-        /// Value at row 4 column 3 of the Matrix5x4.
+        ///     Value at row 4 column 3 of the Matrix5x4.
         /// </summary>
         public float M43;
 
         /// <summary>
-        /// Value at row 4 column 4 of the Matrix5x4.
+        ///     Value at row 4 column 4 of the Matrix5x4.
         /// </summary>
         public float M44;
 
         /// <summary>
-        /// Value at row 5 column 1 of the Matrix5x4.
+        ///     Value at row 5 column 1 of the Matrix5x4.
         /// </summary>
         public float M51;
 
         /// <summary>
-        /// Value at row 5 column 2 of the Matrix5x4.
+        ///     Value at row 5 column 2 of the Matrix5x4.
         /// </summary>
         public float M52;
 
         /// <summary>
-        /// Value at row 5 column 3 of the Matrix5x4.
+        ///     Value at row 5 column 3 of the Matrix5x4.
         /// </summary>
         public float M53;
 
         /// <summary>
-        /// Value at row 5 column 4 of the Matrix5x4.
+        ///     Value at row 5 column 4 of the Matrix5x4.
         /// </summary>
         public float M54;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Matrix5x4"/> struct.
+        ///     Initializes a new instance of the <see cref="Matrix5x4" /> struct.
         /// </summary>
         /// <param name="value">The value that will be assigned to all components.</param>
         public Matrix5x4(float value)
         {
             M11 = M12 = M13 = M14 =
-            M21 = M22 = M23 = M24 =
-            M31 = M32 = M33 = M34 =
-            M41 = M42 = M43 = M44 =
-            M51 = M52 = M53 = M54 = value;
+                M21 = M22 = M23 = M24 =
+                    M31 = M32 = M33 = M34 =
+                        M41 = M42 = M43 = M44 =
+                            M51 = M52 = M53 = M54 = value;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Matrix5x4"/> struct.
+        ///     Initializes a new instance of the <see cref="Matrix5x4" /> struct.
         /// </summary>
         /// <param name="M11">The value to assign at row 1 column 1 of the Matrix5x4.</param>
         /// <param name="M12">The value to assign at row 1 column 2 of the Matrix5x4.</param>
@@ -163,19 +179,40 @@ namespace Dreamcast.Mathematics
             float M41, float M42, float M43, float M44,
             float M51, float M52, float M53, float M54)
         {
-            this.M11 = M11; this.M12 = M12; this.M13 = M13; this.M14 = M14;
-            this.M21 = M21; this.M22 = M22; this.M23 = M23; this.M24 = M24;
-            this.M31 = M31; this.M32 = M32; this.M33 = M33; this.M34 = M34;
-            this.M41 = M41; this.M42 = M42; this.M43 = M43; this.M44 = M44;
-            this.M51 = M51; this.M52 = M52; this.M53 = M53; this.M54 = M54;
+            this.M11 = M11;
+            this.M12 = M12;
+            this.M13 = M13;
+            this.M14 = M14;
+            this.M21 = M21;
+            this.M22 = M22;
+            this.M23 = M23;
+            this.M24 = M24;
+            this.M31 = M31;
+            this.M32 = M32;
+            this.M33 = M33;
+            this.M34 = M34;
+            this.M41 = M41;
+            this.M42 = M42;
+            this.M43 = M43;
+            this.M44 = M44;
+            this.M51 = M51;
+            this.M52 = M52;
+            this.M53 = M53;
+            this.M54 = M54;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Matrix5x4"/> struct.
+        ///     Initializes a new instance of the <see cref="Matrix5x4" /> struct.
         /// </summary>
-        /// <param name="values">The values to assign to the components of the Matrix5x4. This must be an array with sixteen elements.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="values"/> is <c>null</c>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="values"/> contains more or less than sixteen elements.</exception>
+        /// <param name="values">
+        ///     The values to assign to the components of the Matrix5x4. This must be an array with sixteen
+        ///     elements.
+        /// </param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="values" /> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     Thrown when <paramref name="values" /> contains more or less than sixteen
+        ///     elements.
+        /// </exception>
         public Matrix5x4(float[] values)
         {
             if (values == null)
@@ -210,86 +247,128 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets the first row in the Matrix5x4; that is M11, M12, M13, and M14.
+        ///     Gets or sets the first row in the Matrix5x4; that is M11, M12, M13, and M14.
         /// </summary>
         public Vector4 Row1
         {
-            get { return new Vector4(M11, M12, M13, M14); }
-            set { M11 = value.X; M12 = value.Y; M13 = value.Z; M14 = value.W; }
+            get => new Vector4(M11, M12, M13, M14);
+            set
+            {
+                M11 = value.X;
+                M12 = value.Y;
+                M13 = value.Z;
+                M14 = value.W;
+            }
         }
 
         /// <summary>
-        /// Gets or sets the second row in the Matrix5x4; that is M21, M22, M23, and M24.
+        ///     Gets or sets the second row in the Matrix5x4; that is M21, M22, M23, and M24.
         /// </summary>
         public Vector4 Row2
         {
-            get { return new Vector4(M21, M22, M23, M24); }
-            set { M21 = value.X; M22 = value.Y; M23 = value.Z; M24 = value.W; }
+            get => new Vector4(M21, M22, M23, M24);
+            set
+            {
+                M21 = value.X;
+                M22 = value.Y;
+                M23 = value.Z;
+                M24 = value.W;
+            }
         }
 
         /// <summary>
-        /// Gets or sets the third row in the Matrix5x4; that is M31, M32, M33, and M34.
+        ///     Gets or sets the third row in the Matrix5x4; that is M31, M32, M33, and M34.
         /// </summary>
         public Vector4 Row3
         {
-            get { return new Vector4(M31, M32, M33, M34); }
-            set { M31 = value.X; M32 = value.Y; M33 = value.Z; M34 = value.W; }
+            get => new Vector4(M31, M32, M33, M34);
+            set
+            {
+                M31 = value.X;
+                M32 = value.Y;
+                M33 = value.Z;
+                M34 = value.W;
+            }
         }
 
         /// <summary>
-        /// Gets or sets the fourth row in the Matrix5x4; that is M41, M42, M43, and M44.
+        ///     Gets or sets the fourth row in the Matrix5x4; that is M41, M42, M43, and M44.
         /// </summary>
         public Vector4 Row4
         {
-            get { return new Vector4(M41, M42, M43, M44); }
-            set { M41 = value.X; M42 = value.Y; M43 = value.Z; M44 = value.W; }
+            get => new Vector4(M41, M42, M43, M44);
+            set
+            {
+                M41 = value.X;
+                M42 = value.Y;
+                M43 = value.Z;
+                M44 = value.W;
+            }
         }
 
         /// <summary>
-        /// Gets or sets the fifth row in the Matrix5x4; that is M51, M52, M53, and M54.
+        ///     Gets or sets the fifth row in the Matrix5x4; that is M51, M52, M53, and M54.
         /// </summary>
         public Vector4 Row5
         {
-            get { return new Vector4(M51, M52, M53, M54); }
-            set { M51 = value.X; M52 = value.Y; M53 = value.Z; M54 = value.W; }
+            get => new Vector4(M51, M52, M53, M54);
+            set
+            {
+                M51 = value.X;
+                M52 = value.Y;
+                M53 = value.Z;
+                M54 = value.W;
+            }
         }
 
         /// <summary>
-        /// Gets or sets the translation of the Matrix5x4; that is M41, M42, and M43.
+        ///     Gets or sets the translation of the Matrix5x4; that is M41, M42, and M43.
         /// </summary>
         public Vector4 TranslationVector
         {
-            get { return new Vector4(M51, M52, M53, M54); }
-            set { M51 = value.X; M52 = value.Y; M53 = value.Z; M54 = value.W; }
+            get => new Vector4(M51, M52, M53, M54);
+            set
+            {
+                M51 = value.X;
+                M52 = value.Y;
+                M53 = value.Z;
+                M54 = value.W;
+            }
         }
 
         /// <summary>
-        /// Gets or sets the scale of the Matrix5x4; that is M11, M22, and M33.
+        ///     Gets or sets the scale of the Matrix5x4; that is M11, M22, and M33.
         /// </summary>
         public Vector4 ScaleVector
         {
-            get { return new Vector4(M11, M22, M33, M44); }
-            set { M11 = value.X; M22 = value.Y; M33 = value.Z; M44 = value.W; }
+            get => new Vector4(M11, M22, M33, M44);
+            set
+            {
+                M11 = value.X;
+                M22 = value.Y;
+                M33 = value.Z;
+                M44 = value.W;
+            }
         }
 
         /// <summary>
-        /// Gets a value indicating whether this instance is an identity Matrix5x4.
+        ///     Gets a value indicating whether this instance is an identity Matrix5x4.
         /// </summary>
         /// <value>
-        /// <c>true</c> if this instance is an identity Matrix5x4; otherwise, <c>false</c>.
+        ///     <c>true</c> if this instance is an identity Matrix5x4; otherwise, <c>false</c>.
         /// </value>
-        public bool IsIdentity
-        {
-            get { return this.Equals(Identity); }
-        }
+        public bool IsIdentity => Equals(Identity);
 
         /// <summary>
-        /// Gets or sets the component at the specified index.
+        ///     Gets or sets the component at the specified index.
         /// </summary>
         /// <value>The value of the Matrix5x4 component, depending on the index.</value>
         /// <param name="index">The zero-based index of the component to access.</param>
         /// <returns>The value of the component at the specified index.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">Thrown when the <paramref name="index"/> is out of the range [0, 15].</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        ///     Thrown when the <paramref name="index" /> is out of the range [0,
+        ///     15].
+        /// </exception>
         public float this[int index]
         {
             get
@@ -325,39 +404,84 @@ namespace Dreamcast.Mathematics
             {
                 switch (index)
                 {
-                    case 0: M11 = value; break;
-                    case 1: M12 = value; break;
-                    case 2: M13 = value; break;
-                    case 3: M14 = value; break;
-                    case 4: M21 = value; break;
-                    case 5: M22 = value; break;
-                    case 6: M23 = value; break;
-                    case 7: M24 = value; break;
-                    case 8: M31 = value; break;
-                    case 9: M32 = value; break;
-                    case 10: M33 = value; break;
-                    case 11: M34 = value; break;
-                    case 12: M41 = value; break;
-                    case 13: M42 = value; break;
-                    case 14: M43 = value; break;
-                    case 15: M44 = value; break;
-                    case 16: M51 = value; break;
-                    case 17: M52 = value; break;
-                    case 18: M53 = value; break;
-                    case 19: M54 = value; break;
-                    default: throw new ArgumentOutOfRangeException("index", "Indices for Matrix5x4 run from 0 to 19, inclusive.");
+                    case 0:
+                        M11 = value;
+                        break;
+                    case 1:
+                        M12 = value;
+                        break;
+                    case 2:
+                        M13 = value;
+                        break;
+                    case 3:
+                        M14 = value;
+                        break;
+                    case 4:
+                        M21 = value;
+                        break;
+                    case 5:
+                        M22 = value;
+                        break;
+                    case 6:
+                        M23 = value;
+                        break;
+                    case 7:
+                        M24 = value;
+                        break;
+                    case 8:
+                        M31 = value;
+                        break;
+                    case 9:
+                        M32 = value;
+                        break;
+                    case 10:
+                        M33 = value;
+                        break;
+                    case 11:
+                        M34 = value;
+                        break;
+                    case 12:
+                        M41 = value;
+                        break;
+                    case 13:
+                        M42 = value;
+                        break;
+                    case 14:
+                        M43 = value;
+                        break;
+                    case 15:
+                        M44 = value;
+                        break;
+                    case 16:
+                        M51 = value;
+                        break;
+                    case 17:
+                        M52 = value;
+                        break;
+                    case 18:
+                        M53 = value;
+                        break;
+                    case 19:
+                        M54 = value;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException("index",
+                            "Indices for Matrix5x4 run from 0 to 19, inclusive.");
                 }
             }
         }
 
         /// <summary>
-        /// Gets or sets the component at the specified index.
+        ///     Gets or sets the component at the specified index.
         /// </summary>
         /// <value>The value of the Matrix5x4 component, depending on the index.</value>
         /// <param name="row">The row of the Matrix5x4 to access.</param>
         /// <param name="column">The column of the Matrix5x4 to access.</param>
         /// <returns>The value of the component at the specified index.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">Thrown when the <paramref name="row"/> or <paramref name="column"/>is out of the range [0, 3].</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        ///     Thrown when the <paramref name="row" /> or
+        ///     <paramref name="column" />is out of the range [0, 3].
+        /// </exception>
         public float this[int row, int column]
         {
             get
@@ -367,7 +491,7 @@ namespace Dreamcast.Mathematics
                 if (column < 0 || column > 3)
                     throw new ArgumentOutOfRangeException("column", "Columns for matrices run from 0 to 3, inclusive.");
 
-                return this[(row * 4) + column];
+                return this[row * 4 + column];
             }
 
             set
@@ -377,12 +501,12 @@ namespace Dreamcast.Mathematics
                 if (column < 0 || column > 3)
                     throw new ArgumentOutOfRangeException("column", "Columns for matrices run from 0 to 3, inclusive.");
 
-                this[(row * 4) + column] = value;
+                this[row * 4 + column] = value;
             }
         }
 
         /// <summary>
-        /// Determines the sum of two matrices.
+        ///     Determines the sum of two matrices.
         /// </summary>
         /// <param name="left">The first Matrix5x4 to add.</param>
         /// <param name="right">The second Matrix5x4 to add.</param>
@@ -412,7 +536,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Determines the sum of two matrices.
+        ///     Determines the sum of two matrices.
         /// </summary>
         /// <param name="left">The first Matrix5x4 to add.</param>
         /// <param name="right">The second Matrix5x4 to add.</param>
@@ -425,7 +549,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Determines the difference between two matrices.
+        ///     Determines the difference between two matrices.
         /// </summary>
         /// <param name="left">The first Matrix5x4 to subtract.</param>
         /// <param name="right">The second Matrix5x4 to subtract.</param>
@@ -455,7 +579,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Determines the difference between two matrices.
+        ///     Determines the difference between two matrices.
         /// </summary>
         /// <param name="left">The first Matrix5x4 to subtract.</param>
         /// <param name="right">The second Matrix5x4 to subtract.</param>
@@ -468,7 +592,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Scales a Matrix5x4 by the given value.
+        ///     Scales a Matrix5x4 by the given value.
         /// </summary>
         /// <param name="left">The Matrix5x4 to scale.</param>
         /// <param name="right">The amount by which to scale.</param>
@@ -498,14 +622,14 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Scales a Matrix5x4 by the given value.
+        ///     Scales a Matrix5x4 by the given value.
         /// </summary>
         /// <param name="left">The Matrix5x4 to scale.</param>
         /// <param name="right">The amount by which to scale.</param>
         /// <param name="result">When the method completes, contains the scaled Matrix5x4.</param>
         public static void Divide(ref Matrix5x4 left, float right, out Matrix5x4 result)
         {
-            float inv = 1.0f / right;
+            var inv = 1.0f / right;
 
             result.M11 = left.M11 * inv;
             result.M12 = left.M12 * inv;
@@ -530,7 +654,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Negates a Matrix5x4.
+        ///     Negates a Matrix5x4.
         /// </summary>
         /// <param name="value">The Matrix5x4 to be negated.</param>
         /// <param name="result">When the method completes, contains the negated Matrix5x4.</param>
@@ -559,7 +683,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Negates a Matrix5x4.
+        ///     Negates a Matrix5x4.
         /// </summary>
         /// <param name="value">The Matrix5x4 to be negated.</param>
         /// <returns>The negated Matrix5x4.</returns>
@@ -571,14 +695,15 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Performs a linear interpolation between two matrices.
+        ///     Performs a linear interpolation between two matrices.
         /// </summary>
         /// <param name="start">Start Matrix5x4.</param>
         /// <param name="end">End Matrix5x4.</param>
-        /// <param name="amount">Value between 0 and 1 indicating the weight of <paramref name="end"/>.</param>
+        /// <param name="amount">Value between 0 and 1 indicating the weight of <paramref name="end" />.</param>
         /// <param name="result">When the method completes, contains the linear interpolation of the two matrices.</param>
         /// <remarks>
-        /// Passing <paramref name="amount"/> a value of 0 will cause <paramref name="start"/> to be returned; a value of 1 will cause <paramref name="end"/> to be returned. 
+        ///     Passing <paramref name="amount" /> a value of 0 will cause <paramref name="start" /> to be returned; a value of 1
+        ///     will cause <paramref name="end" /> to be returned.
         /// </remarks>
         public static void Lerp(ref Matrix5x4 start, ref Matrix5x4 end, float amount, out Matrix5x4 result)
         {
@@ -605,14 +730,15 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Performs a linear interpolation between two matrices.
+        ///     Performs a linear interpolation between two matrices.
         /// </summary>
         /// <param name="start">Start Matrix5x4.</param>
         /// <param name="end">End Matrix5x4.</param>
-        /// <param name="amount">Value between 0 and 1 indicating the weight of <paramref name="end"/>.</param>
+        /// <param name="amount">Value between 0 and 1 indicating the weight of <paramref name="end" />.</param>
         /// <returns>The linear interpolation of the two matrices.</returns>
         /// <remarks>
-        /// Passing <paramref name="amount"/> a value of 0 will cause <paramref name="start"/> to be returned; a value of 1 will cause <paramref name="end"/> to be returned. 
+        ///     Passing <paramref name="amount" /> a value of 0 will cause <paramref name="start" /> to be returned; a value of 1
+        ///     will cause <paramref name="end" /> to be returned.
         /// </remarks>
         public static Matrix5x4 Lerp(Matrix5x4 start, Matrix5x4 end, float amount)
         {
@@ -622,11 +748,11 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Performs a cubic interpolation between two matrices.
+        ///     Performs a cubic interpolation between two matrices.
         /// </summary>
         /// <param name="start">Start Matrix5x4.</param>
         /// <param name="end">End Matrix5x4.</param>
-        /// <param name="amount">Value between 0 and 1 indicating the weight of <paramref name="end"/>.</param>
+        /// <param name="amount">Value between 0 and 1 indicating the weight of <paramref name="end" />.</param>
         /// <param name="result">When the method completes, contains the cubic interpolation of the two matrices.</param>
         public static void SmoothStep(ref Matrix5x4 start, ref Matrix5x4 end, float amount, out Matrix5x4 result)
         {
@@ -635,11 +761,11 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Performs a cubic interpolation between two matrices.
+        ///     Performs a cubic interpolation between two matrices.
         /// </summary>
         /// <param name="start">Start Matrix5x4.</param>
         /// <param name="end">End Matrix5x4.</param>
-        /// <param name="amount">Value between 0 and 1 indicating the weight of <paramref name="end"/>.</param>
+        /// <param name="amount">Value between 0 and 1 indicating the weight of <paramref name="end" />.</param>
         /// <returns>The cubic interpolation of the two matrices.</returns>
         public static Matrix5x4 SmoothStep(Matrix5x4 start, Matrix5x4 end, float amount)
         {
@@ -649,7 +775,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Creates a Matrix5x4 that scales along the x-axis, y-axis, y-axis and w-axis
+        ///     Creates a Matrix5x4 that scales along the x-axis, y-axis, y-axis and w-axis
         /// </summary>
         /// <param name="scale">Scaling factor for all three axes.</param>
         /// <param name="result">When the method completes, contains the created scaling Matrix5x4.</param>
@@ -659,7 +785,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Creates a Matrix5x4 that scales along the x-axis, y-axis, and y-axis.
+        ///     Creates a Matrix5x4 that scales along the x-axis, y-axis, and y-axis.
         /// </summary>
         /// <param name="scale">Scaling factor for all three axes.</param>
         /// <returns>The created scaling Matrix5x4.</returns>
@@ -671,7 +797,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Creates a Matrix5x4 that scales along the x-axis, y-axis, z-axis and w-axis.
+        ///     Creates a Matrix5x4 that scales along the x-axis, y-axis, z-axis and w-axis.
         /// </summary>
         /// <param name="x">Scaling factor that is applied along the x-axis.</param>
         /// <param name="y">Scaling factor that is applied along the y-axis.</param>
@@ -680,7 +806,7 @@ namespace Dreamcast.Mathematics
         /// <param name="result">When the method completes, contains the created scaling Matrix5x4.</param>
         public static void Scaling(float x, float y, float z, float w, out Matrix5x4 result)
         {
-            result = Matrix5x4.Identity;
+            result = Identity;
             result.M11 = x;
             result.M22 = y;
             result.M33 = z;
@@ -688,7 +814,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Creates a Matrix5x4 that scales along the x-axis, y-axis, z-axis and w-axis.
+        ///     Creates a Matrix5x4 that scales along the x-axis, y-axis, z-axis and w-axis.
         /// </summary>
         /// <param name="x">Scaling factor that is applied along the x-axis.</param>
         /// <param name="y">Scaling factor that is applied along the y-axis.</param>
@@ -703,18 +829,18 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Creates a Matrix5x4 that uniformly scales along all three axis.
+        ///     Creates a Matrix5x4 that uniformly scales along all three axis.
         /// </summary>
         /// <param name="scale">The uniform scale that is applied along all axis.</param>
         /// <param name="result">When the method completes, contains the created scaling Matrix5x4.</param>
         public static void Scaling(float scale, out Matrix5x4 result)
         {
-            result = Matrix5x4.Identity;
+            result = Identity;
             result.M11 = result.M22 = result.M33 = result.M44 = scale;
         }
 
         /// <summary>
-        /// Creates a Matrix5x4 that uniformly scales along all three axis.
+        ///     Creates a Matrix5x4 that uniformly scales along all three axis.
         /// </summary>
         /// <param name="scale">The uniform scale that is applied along all axis.</param>
         /// <returns>The created scaling Matrix5x4.</returns>
@@ -726,7 +852,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Creates a translation Matrix5x4 using the specified offsets.
+        ///     Creates a translation Matrix5x4 using the specified offsets.
         /// </summary>
         /// <param name="value">The offset for all three coordinate planes.</param>
         /// <param name="result">When the method completes, contains the created translation Matrix5x4.</param>
@@ -736,7 +862,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Creates a translation Matrix5x4 using the specified offsets.
+        ///     Creates a translation Matrix5x4 using the specified offsets.
         /// </summary>
         /// <param name="value">The offset for all three coordinate planes.</param>
         /// <returns>The created translation Matrix5x4.</returns>
@@ -748,7 +874,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Creates a translation Matrix5x4 using the specified offsets.
+        ///     Creates a translation Matrix5x4 using the specified offsets.
         /// </summary>
         /// <param name="x">X-coordinate offset.</param>
         /// <param name="y">Y-coordinate offset.</param>
@@ -757,7 +883,7 @@ namespace Dreamcast.Mathematics
         /// <param name="result">When the method completes, contains the created translation Matrix5x4.</param>
         public static void Translation(float x, float y, float z, float w, out Matrix5x4 result)
         {
-            result = Matrix5x4.Identity;
+            result = Identity;
             result.M51 = x;
             result.M52 = y;
             result.M53 = z;
@@ -765,7 +891,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Creates a translation Matrix5x4 using the specified offsets.
+        ///     Creates a translation Matrix5x4 using the specified offsets.
         /// </summary>
         /// <param name="x">X-coordinate offset.</param>
         /// <param name="y">Y-coordinate offset.</param>
@@ -780,7 +906,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Adds two matrices.
+        ///     Adds two matrices.
         /// </summary>
         /// <param name="left">The first Matrix5x4 to add.</param>
         /// <param name="right">The second Matrix5x4 to add.</param>
@@ -793,7 +919,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Assert a Matrix5x4 (return it unchanged).
+        ///     Assert a Matrix5x4 (return it unchanged).
         /// </summary>
         /// <param name="value">The Matrix5x4 to assert (unchanged).</param>
         /// <returns>The asserted (unchanged) Matrix5x4.</returns>
@@ -803,7 +929,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Subtracts two matrices.
+        ///     Subtracts two matrices.
         /// </summary>
         /// <param name="left">The first Matrix5x4 to subtract.</param>
         /// <param name="right">The second Matrix5x4 to subtract.</param>
@@ -816,7 +942,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Negates a Matrix5x4.
+        ///     Negates a Matrix5x4.
         /// </summary>
         /// <param name="value">The Matrix5x4 to negate.</param>
         /// <returns>The negated Matrix5x4.</returns>
@@ -828,7 +954,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Scales a Matrix5x4 by a given value.
+        ///     Scales a Matrix5x4 by a given value.
         /// </summary>
         /// <param name="right">The Matrix5x4 to scale.</param>
         /// <param name="left">The amount by which to scale.</param>
@@ -841,7 +967,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Scales a Matrix5x4 by a given value.
+        ///     Scales a Matrix5x4 by a given value.
         /// </summary>
         /// <param name="left">The Matrix5x4 to scale.</param>
         /// <param name="right">The amount by which to scale.</param>
@@ -854,7 +980,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Scales a Matrix5x4 by a given value.
+        ///     Scales a Matrix5x4 by a given value.
         /// </summary>
         /// <param name="left">The Matrix5x4 to scale.</param>
         /// <param name="right">The amount by which to scale.</param>
@@ -867,104 +993,129 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Tests for equality between two objects.
+        ///     Tests for equality between two objects.
         /// </summary>
         /// <param name="left">The first value to compare.</param>
         /// <param name="right">The second value to compare.</param>
-        /// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-        [MethodImpl((MethodImplOptions)0x100)] // MethodImplOptions.AggressiveInlining
+        /// <returns>
+        ///     <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />; otherwise,
+        ///     <c>false</c>.
+        /// </returns>
+        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(Matrix5x4 left, Matrix5x4 right)
         {
             return left.Equals(ref right);
         }
 
         /// <summary>
-        /// Tests for inequality between two objects.
+        ///     Tests for inequality between two objects.
         /// </summary>
         /// <param name="left">The first value to compare.</param>
         /// <param name="right">The second value to compare.</param>
-        /// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-        [MethodImpl((MethodImplOptions)0x100)] // MethodImplOptions.AggressiveInlining
+        /// <returns>
+        ///     <c>true</c> if <paramref name="left" /> has a different value than <paramref name="right" />; otherwise,
+        ///     <c>false</c>.
+        /// </returns>
+        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(Matrix5x4 left, Matrix5x4 right)
         {
             return !left.Equals(ref right);
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String"/> that represents this instance.
+        ///     Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>
-        /// A <see cref="System.String"/> that represents this instance.
+        ///     A <see cref="System.String" /> that represents this instance.
         /// </returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.CurrentCulture, "[M11:{0} M12:{1} M13:{2} M14:{3}] [M21:{4} M22:{5} M3:{6} M24:{7}] [M31:{8} M32:{9} M33:{10} M34:{11}] [M41:{12} M42:{13} M43:{14} M44:{15}] [M51:{16} M52:{17} M53:{18} M54:{19}]",
+            return string.Format(CultureInfo.CurrentCulture,
+                "[M11:{0} M12:{1} M13:{2} M14:{3}] [M21:{4} M22:{5} M3:{6} M24:{7}] [M31:{8} M32:{9} M33:{10} M34:{11}] [M41:{12} M42:{13} M43:{14} M44:{15}] [M51:{16} M52:{17} M53:{18} M54:{19}]",
                 M11, M12, M13, M14, M21, M22, M23, M24, M31, M32, M33, M34, M41, M42, M43, M44, M51, M52, M53, M54);
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String"/> that represents this instance.
+        ///     Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <param name="format">The format.</param>
         /// <returns>
-        /// A <see cref="System.String"/> that represents this instance.
+        ///     A <see cref="System.String" /> that represents this instance.
         /// </returns>
         public string ToString(string format)
         {
             if (format == null)
                 return ToString();
 
-            return string.Format(format, CultureInfo.CurrentCulture, "[M11:{0} M12:{1} M13:{2} M14:{3}] [M21:{4} M22:{5} M3:{6} M24:{7}] [M31:{8} M32:{9} M33:{10} M34:{11}] [M41:{12} M42:{13} M43:{14} M44:{15}] [M51:{16} M52:{17} M53:{18} M54:{19}]",
-                M11.ToString(format, CultureInfo.CurrentCulture), M12.ToString(format, CultureInfo.CurrentCulture), M13.ToString(format, CultureInfo.CurrentCulture), M14.ToString(format, CultureInfo.CurrentCulture),
-                M21.ToString(format, CultureInfo.CurrentCulture), M22.ToString(format, CultureInfo.CurrentCulture), M23.ToString(format, CultureInfo.CurrentCulture), M24.ToString(format, CultureInfo.CurrentCulture),
-                M31.ToString(format, CultureInfo.CurrentCulture), M32.ToString(format, CultureInfo.CurrentCulture), M33.ToString(format, CultureInfo.CurrentCulture), M34.ToString(format, CultureInfo.CurrentCulture),
-                M41.ToString(format, CultureInfo.CurrentCulture), M42.ToString(format, CultureInfo.CurrentCulture), M43.ToString(format, CultureInfo.CurrentCulture), M44.ToString(format, CultureInfo.CurrentCulture),
-                M51.ToString(format, CultureInfo.CurrentCulture), M52.ToString(format, CultureInfo.CurrentCulture), M53.ToString(format, CultureInfo.CurrentCulture), M54.ToString(format, CultureInfo.CurrentCulture));
+            return string.Format(format, CultureInfo.CurrentCulture,
+                "[M11:{0} M12:{1} M13:{2} M14:{3}] [M21:{4} M22:{5} M3:{6} M24:{7}] [M31:{8} M32:{9} M33:{10} M34:{11}] [M41:{12} M42:{13} M43:{14} M44:{15}] [M51:{16} M52:{17} M53:{18} M54:{19}]",
+                M11.ToString(format, CultureInfo.CurrentCulture), M12.ToString(format, CultureInfo.CurrentCulture),
+                M13.ToString(format, CultureInfo.CurrentCulture), M14.ToString(format, CultureInfo.CurrentCulture),
+                M21.ToString(format, CultureInfo.CurrentCulture), M22.ToString(format, CultureInfo.CurrentCulture),
+                M23.ToString(format, CultureInfo.CurrentCulture), M24.ToString(format, CultureInfo.CurrentCulture),
+                M31.ToString(format, CultureInfo.CurrentCulture), M32.ToString(format, CultureInfo.CurrentCulture),
+                M33.ToString(format, CultureInfo.CurrentCulture), M34.ToString(format, CultureInfo.CurrentCulture),
+                M41.ToString(format, CultureInfo.CurrentCulture), M42.ToString(format, CultureInfo.CurrentCulture),
+                M43.ToString(format, CultureInfo.CurrentCulture), M44.ToString(format, CultureInfo.CurrentCulture),
+                M51.ToString(format, CultureInfo.CurrentCulture), M52.ToString(format, CultureInfo.CurrentCulture),
+                M53.ToString(format, CultureInfo.CurrentCulture), M54.ToString(format, CultureInfo.CurrentCulture));
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String"/> that represents this instance.
+        ///     Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <param name="formatProvider">The format provider.</param>
         /// <returns>
-        /// A <see cref="System.String"/> that represents this instance.
+        ///     A <see cref="System.String" /> that represents this instance.
         /// </returns>
         public string ToString(IFormatProvider formatProvider)
         {
-            return string.Format(formatProvider, "[M11:{0} M12:{1} M13:{2} M14:{3}] [M21:{4} M22:{5} M3:{6} M24:{7}] [M31:{8} M32:{9} M33:{10} M34:{11}] [M41:{12} M42:{13} M43:{14} M44:{15}] [M51:{16} M52:{17} M53:{18} M54:{19}]",
-                M11.ToString(formatProvider), M12.ToString(formatProvider), M13.ToString(formatProvider), M14.ToString(formatProvider),
-                M21.ToString(formatProvider), M22.ToString(formatProvider), M23.ToString(formatProvider), M24.ToString(formatProvider),
-                M31.ToString(formatProvider), M32.ToString(formatProvider), M33.ToString(formatProvider), M34.ToString(formatProvider),
-                M41.ToString(formatProvider), M42.ToString(formatProvider), M43.ToString(formatProvider), M44.ToString(formatProvider),
-                M51.ToString(formatProvider), M52.ToString(formatProvider), M53.ToString(formatProvider), M54.ToString(formatProvider));
+            return string.Format(formatProvider,
+                "[M11:{0} M12:{1} M13:{2} M14:{3}] [M21:{4} M22:{5} M3:{6} M24:{7}] [M31:{8} M32:{9} M33:{10} M34:{11}] [M41:{12} M42:{13} M43:{14} M44:{15}] [M51:{16} M52:{17} M53:{18} M54:{19}]",
+                M11.ToString(formatProvider), M12.ToString(formatProvider), M13.ToString(formatProvider),
+                M14.ToString(formatProvider),
+                M21.ToString(formatProvider), M22.ToString(formatProvider), M23.ToString(formatProvider),
+                M24.ToString(formatProvider),
+                M31.ToString(formatProvider), M32.ToString(formatProvider), M33.ToString(formatProvider),
+                M34.ToString(formatProvider),
+                M41.ToString(formatProvider), M42.ToString(formatProvider), M43.ToString(formatProvider),
+                M44.ToString(formatProvider),
+                M51.ToString(formatProvider), M52.ToString(formatProvider), M53.ToString(formatProvider),
+                M54.ToString(formatProvider));
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String"/> that represents this instance.
+        ///     Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <param name="format">The format.</param>
         /// <param name="formatProvider">The format provider.</param>
         /// <returns>
-        /// A <see cref="System.String"/> that represents this instance.
+        ///     A <see cref="System.String" /> that represents this instance.
         /// </returns>
         public string ToString(string format, IFormatProvider formatProvider)
         {
             if (format == null)
                 return ToString(formatProvider);
 
-            return string.Format(format, formatProvider, "[M11:{0} M12:{1} M13:{2} M14:{3}] [M21:{4} M22:{5} M3:{6} M24:{7}] [M31:{8} M32:{9} M33:{10} M34:{11}] [M41:{12} M42:{13} M43:{14} M44:{15}] [M51:{16} M52:{17} M53:{18} M54:{19}]",
-                M11.ToString(format, formatProvider), M12.ToString(format, formatProvider), M13.ToString(format, formatProvider), M14.ToString(format, formatProvider),
-                M21.ToString(format, formatProvider), M22.ToString(format, formatProvider), M23.ToString(format, formatProvider), M24.ToString(format, formatProvider),
-                M31.ToString(format, formatProvider), M32.ToString(format, formatProvider), M33.ToString(format, formatProvider), M34.ToString(format, formatProvider),
-                M41.ToString(format, formatProvider), M42.ToString(format, formatProvider), M43.ToString(format, formatProvider), M44.ToString(format, formatProvider),
-                M51.ToString(format, formatProvider), M52.ToString(format, formatProvider), M53.ToString(format, formatProvider), M54.ToString(format, formatProvider));
+            return string.Format(format, formatProvider,
+                "[M11:{0} M12:{1} M13:{2} M14:{3}] [M21:{4} M22:{5} M3:{6} M24:{7}] [M31:{8} M32:{9} M33:{10} M34:{11}] [M41:{12} M42:{13} M43:{14} M44:{15}] [M51:{16} M52:{17} M53:{18} M54:{19}]",
+                M11.ToString(format, formatProvider), M12.ToString(format, formatProvider),
+                M13.ToString(format, formatProvider), M14.ToString(format, formatProvider),
+                M21.ToString(format, formatProvider), M22.ToString(format, formatProvider),
+                M23.ToString(format, formatProvider), M24.ToString(format, formatProvider),
+                M31.ToString(format, formatProvider), M32.ToString(format, formatProvider),
+                M33.ToString(format, formatProvider), M34.ToString(format, formatProvider),
+                M41.ToString(format, formatProvider), M42.ToString(format, formatProvider),
+                M43.ToString(format, formatProvider), M44.ToString(format, formatProvider),
+                M51.ToString(format, formatProvider), M52.ToString(format, formatProvider),
+                M53.ToString(format, formatProvider), M54.ToString(format, formatProvider));
         }
 
         /// <summary>
-        /// Returns a hash code for this instance.
+        ///     Returns a hash code for this instance.
         /// </summary>
         /// <returns>
-        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        ///     A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
         /// </returns>
         public override int GetHashCode()
         {
@@ -995,61 +1146,62 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="Matrix5x4"/> is equal to this instance.
+        ///     Determines whether the specified <see cref="Matrix5x4" /> is equal to this instance.
         /// </summary>
-        /// <param name="other">The <see cref="Matrix5x4"/> to compare with this instance.</param>
+        /// <param name="other">The <see cref="Matrix5x4" /> to compare with this instance.</param>
         /// <returns>
-        /// <c>true</c> if the specified <see cref="Matrix5x4"/> is equal to this instance; otherwise, <c>false</c>.
+        ///     <c>true</c> if the specified <see cref="Matrix5x4" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(ref Matrix5x4 other)
         {
-            return (MathUtil.NearEqual(other.M11, M11) &&
-                MathUtil.NearEqual(other.M12, M12) &&
-                MathUtil.NearEqual(other.M13, M13) &&
-                MathUtil.NearEqual(other.M14, M14) &&
-                MathUtil.NearEqual(other.M21, M21) &&
-                MathUtil.NearEqual(other.M22, M22) &&
-                MathUtil.NearEqual(other.M23, M23) &&
-                MathUtil.NearEqual(other.M24, M24) &&
-                MathUtil.NearEqual(other.M31, M31) &&
-                MathUtil.NearEqual(other.M32, M32) &&
-                MathUtil.NearEqual(other.M33, M33) &&
-                MathUtil.NearEqual(other.M34, M34) &&
-                MathUtil.NearEqual(other.M41, M41) &&
-                MathUtil.NearEqual(other.M42, M42) &&
-                MathUtil.NearEqual(other.M43, M43) &&
-                MathUtil.NearEqual(other.M44, M44) &&
-                MathUtil.NearEqual(other.M51, M51) &&
-                MathUtil.NearEqual(other.M52, M52) &&
-                MathUtil.NearEqual(other.M53, M53) &&
-                MathUtil.NearEqual(other.M54, M54));
+            return MathUtil.NearEqual(other.M11, M11) &&
+                   MathUtil.NearEqual(other.M12, M12) &&
+                   MathUtil.NearEqual(other.M13, M13) &&
+                   MathUtil.NearEqual(other.M14, M14) &&
+                   MathUtil.NearEqual(other.M21, M21) &&
+                   MathUtil.NearEqual(other.M22, M22) &&
+                   MathUtil.NearEqual(other.M23, M23) &&
+                   MathUtil.NearEqual(other.M24, M24) &&
+                   MathUtil.NearEqual(other.M31, M31) &&
+                   MathUtil.NearEqual(other.M32, M32) &&
+                   MathUtil.NearEqual(other.M33, M33) &&
+                   MathUtil.NearEqual(other.M34, M34) &&
+                   MathUtil.NearEqual(other.M41, M41) &&
+                   MathUtil.NearEqual(other.M42, M42) &&
+                   MathUtil.NearEqual(other.M43, M43) &&
+                   MathUtil.NearEqual(other.M44, M44) &&
+                   MathUtil.NearEqual(other.M51, M51) &&
+                   MathUtil.NearEqual(other.M52, M52) &&
+                   MathUtil.NearEqual(other.M53, M53) &&
+                   MathUtil.NearEqual(other.M54, M54);
         }
+
         /// <summary>
-        /// Determines whether the specified <see cref="Matrix5x4"/> is equal to this instance.
+        ///     Determines whether the specified <see cref="Matrix5x4" /> is equal to this instance.
         /// </summary>
-        /// <param name="other">The <see cref="Matrix5x4"/> to compare with this instance.</param>
+        /// <param name="other">The <see cref="Matrix5x4" /> to compare with this instance.</param>
         /// <returns>
-        /// <c>true</c> if the specified <see cref="Matrix5x4"/> is equal to this instance; otherwise, <c>false</c>.
+        ///     <c>true</c> if the specified <see cref="Matrix5x4" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions)0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
         public bool Equals(Matrix5x4 other)
         {
             return Equals(ref other);
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="System.Object"/> is equal to this instance.
+        ///     Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
-        /// <param name="value">The <see cref="System.Object"/> to compare with this instance.</param>
+        /// <param name="value">The <see cref="System.Object" /> to compare with this instance.</param>
         /// <returns>
-        /// <c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+        ///     <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
         public override bool Equals(object value)
         {
             if (!(value is Matrix5x4))
                 return false;
 
-            var strongValue = (Matrix5x4)value;
+            var strongValue = (Matrix5x4) value;
             return Equals(ref strongValue);
         }
     }

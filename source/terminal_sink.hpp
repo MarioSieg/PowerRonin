@@ -25,12 +25,13 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <string>
 
 namespace dce {
 	template <typename Mutex = std::mutex>
 	class TerminalSink final : public spdlog::sinks::base_sink<Mutex> {
 	public:
-		TerminalSink();
+		explicit TerminalSink(std::string&& _file_name);
 		TerminalSink(const TerminalSink&) = delete;
 		TerminalSink(TerminalSink&&) noexcept = default;
 		auto operator=(const TerminalSink&) -> TerminalSink& = delete;
@@ -40,24 +41,25 @@ namespace dce {
 		[[nodiscard]] auto string_buffer() const noexcept -> const std::vector<std::tuple<std::string, LogLevel>>&;
 
 	protected:
-		virtual void sink_it_(const spdlog::details::log_msg& msg) override;
+		virtual void sink_it_(const spdlog::details::log_msg& _msg) override;
 		virtual void flush_() override;
-		std::vector<std::tuple<std::string, LogLevel>> buffer = {};
+		std::vector<std::tuple<std::string, LogLevel>> buffer_ = {};
+		std::string file_name_ = {};
 	};
 
 	template <typename Mutex>
-	TerminalSink<Mutex>::TerminalSink() : spdlog::sinks::base_sink<Mutex>() { }
+	TerminalSink<Mutex>::TerminalSink(std::string&& _file_name) : spdlog::sinks::base_sink<Mutex>(), file_name_(std::move(_file_name)) { }
 
 	template <typename Mutex>
 	auto TerminalSink<Mutex>::string_buffer() const noexcept -> const std::vector<std::tuple<std::string, LogLevel>>& {
-		return this->buffer;
+		return this->buffer_;
 	}
 
 	template <typename Mutex>
-	void TerminalSink<Mutex>::sink_it_(const spdlog::details::log_msg& msg) {
+	void TerminalSink<Mutex>::sink_it_(const spdlog::details::log_msg& _msg) {
 		spdlog::memory_buf_t formatted;
-		spdlog::sinks::base_sink<Mutex>::formatter_->format(msg, formatted);
-		this->buffer.emplace_back(std::make_tuple(fmt::to_string(formatted), static_cast<LogLevel>(msg.level)));
+		spdlog::sinks::base_sink<Mutex>::formatter_->format(_msg, formatted);
+		this->buffer_.emplace_back(std::make_tuple(fmt::to_string(formatted), static_cast<LogLevel>(_msg.level)));
 	}
 
 	template <typename Mutex>
@@ -65,14 +67,16 @@ namespace dce {
 		const auto tm = safe_localtime(std::time(nullptr));
 		std::stringstream ss;
 		ss << "proto/session-";
+		ss << this->file_name_;
+		ss << '-';
 		ss << std::put_time(&tm, "%d-%m-%Y-%H-%M-%S");
 		ss << ".log";
 		std::ofstream f(ss.str());
 		[[likely]] if(f) {
-			for(const auto& msg : this->buffer) {
+			for(const auto& msg : this->buffer_) {
 				f << std::get<0>(msg);
 			}
 		}
-		this->buffer.clear();
+		this->buffer_.clear();
 	}
 } // namespace dce // namespace dce

@@ -1,46 +1,66 @@
-﻿using System;
+﻿// *******************************************************************************
+// The content of this file includes portions of the KerboGames Dreamcast Technology
+// released in source code form as part of the SDK package.
+// 
+// Commercial License Usage
+// 
+// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// may use this file in accordance with the end user license agreement provided 
+// with the software or, alternatively, in accordance with the terms contained in a
+// written agreement between you and KerboGames.
+// 
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
+// support@kerbogames.com
+// *******************************************************************************
+
+using System;
 
 namespace Dreamcast.Mathematics
 {
     public static class MathUtil
     {
         /// <summary>
-        /// The value for which all absolute numbers smaller than are considered equal to zero.
+        ///     The value for which all absolute numbers smaller than are considered equal to zero.
         /// </summary>
         public const float ZeroTolerance = 1e-6f; // Value a 8x higher than 1.19209290E-07F
 
         /// <summary>
-        /// A value specifying the approximation of π which is 180 degrees.
+        ///     A value specifying the approximation of π which is 180 degrees.
         /// </summary>
-        public const float Pi = (float)System.Math.PI;
+        public const float Pi = (float) Math.PI;
 
         /// <summary>
-        /// A value specifying the approximation of 2π which is 360 degrees.
+        ///     A value specifying the approximation of 2π which is 360 degrees.
         /// </summary>
-        public const float TwoPi = (float)(2 * System.Math.PI);
+        public const float TwoPi = (float) (2 * Math.PI);
 
         /// <summary>
-        /// A value specifying the approximation of π/2 which is 90 degrees.
+        ///     A value specifying the approximation of π/2 which is 90 degrees.
         /// </summary>
-        public const float PiOverTwo = (float)(System.Math.PI / 2);
+        public const float PiOverTwo = (float) (Math.PI / 2);
 
         /// <summary>
-        /// A value specifying the approximation of π/4 which is 45 degrees.
+        ///     A value specifying the approximation of π/4 which is 45 degrees.
         /// </summary>
-        public const float PiOverFour = (float)(System.Math.PI / 4);
+        public const float PiOverFour = (float) (Math.PI / 4);
 
         /// <summary>
-        /// Checks if a and b are almost equals, taking into account the magnitude of floating point numbers (unlike <see cref="WithinEpsilon"/> method). See Remarks.
-        /// See remarks.
+        ///     Checks if a and b are almost equals, taking into account the magnitude of floating point numbers (unlike
+        ///     <see cref="WithinEpsilon" /> method). See Remarks.
+        ///     See remarks.
         /// </summary>
         /// <param name="a">The left value to compare.</param>
         /// <param name="b">The right value to compare.</param>
         /// <returns><c>true</c> if a almost equal to b, <c>false</c> otherwise</returns>
         /// <remarks>
-        /// The code is using the technique described by Bruce Dawson in 
-        /// <a href="http://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/">Comparing Floating point numbers 2012 edition</a>. 
+        ///     The code is using the technique described by Bruce Dawson in
+        ///     <a href="http://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/">
+        ///         Comparing
+        ///         Floating point numbers 2012 edition
+        ///     </a>
+        ///     .
         /// </remarks>
-        public unsafe static bool NearEqual(float a, float b)
+        public static unsafe bool NearEqual(float a, float b)
         {
             // Check if the numbers are really close -- needed
             // when comparing numbers near zero.
@@ -48,34 +68,34 @@ namespace Dreamcast.Mathematics
                 return true;
 
             // Original from Bruce Dawson: http://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
-            int aInt = *(int*)&a;
-            int bInt = *(int*)&b;
+            var aInt = *(int*) &a;
+            var bInt = *(int*) &b;
 
             // Different signs means they do not match.
-            if ((aInt < 0) != (bInt < 0))
+            if (aInt < 0 != bInt < 0)
                 return false;
 
             // Find the difference in ULPs.
-            int ulp = System.Math.Abs(aInt - bInt);
+            var ulp = Math.Abs(aInt - bInt);
 
             // Choose of maxUlp = 4
             // according to http://code.google.com/p/googletest/source/browse/trunk/include/gtest/internal/gtest-internal.h
             const int maxUlp = 4;
-            return (ulp <= maxUlp);
+            return ulp <= maxUlp;
         }
 
         /// <summary>
-        /// Determines whether the specified value is close to zero (0.0f).
+        ///     Determines whether the specified value is close to zero (0.0f).
         /// </summary>
         /// <param name="a">The floating value.</param>
         /// <returns><c>true</c> if the specified value is close to zero (0.0f); otherwise, <c>false</c>.</returns>
         public static bool IsZero(float a)
         {
-            return System.Math.Abs(a) < ZeroTolerance;
+            return Math.Abs(a) < ZeroTolerance;
         }
 
         /// <summary>
-        /// Determines whether the specified value is close to one (1.0f).
+        ///     Determines whether the specified value is close to one (1.0f).
         /// </summary>
         /// <param name="a">The floating value.</param>
         /// <returns><c>true</c> if the specified value is close to one (1.0f); otherwise, <c>false</c>.</returns>
@@ -85,7 +105,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Checks if a - b are almost equals within a float epsilon.
+        ///     Checks if a - b are almost equals within a float epsilon.
         /// </summary>
         /// <param name="a">The left value to compare.</param>
         /// <param name="b">The right value to compare.</param>
@@ -93,12 +113,12 @@ namespace Dreamcast.Mathematics
         /// <returns><c>true</c> if a almost equal to b within a float epsilon, <c>false</c> otherwise</returns>
         public static bool WithinEpsilon(float a, float b, float epsilon)
         {
-            float num = a - b;
-            return ((-epsilon <= num) && (num <= epsilon));
+            var num = a - b;
+            return -epsilon <= num && num <= epsilon;
         }
 
         /// <summary>
-        /// Converts revolutions to degrees.
+        ///     Converts revolutions to degrees.
         /// </summary>
         /// <param name="revolution">The value to convert.</param>
         /// <returns>The converted value.</returns>
@@ -108,7 +128,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Converts revolutions to radians.
+        ///     Converts revolutions to radians.
         /// </summary>
         /// <param name="revolution">The value to convert.</param>
         /// <returns>The converted value.</returns>
@@ -118,7 +138,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Converts revolutions to gradians.
+        ///     Converts revolutions to gradians.
         /// </summary>
         /// <param name="revolution">The value to convert.</param>
         /// <returns>The converted value.</returns>
@@ -128,7 +148,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Converts degrees to revolutions.
+        ///     Converts degrees to revolutions.
         /// </summary>
         /// <param name="degree">The value to convert.</param>
         /// <returns>The converted value.</returns>
@@ -138,7 +158,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Converts degrees to radians.
+        ///     Converts degrees to radians.
         /// </summary>
         /// <param name="degree">The value to convert.</param>
         /// <returns>The converted value.</returns>
@@ -148,7 +168,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Converts radians to revolutions.
+        ///     Converts radians to revolutions.
         /// </summary>
         /// <param name="radian">The value to convert.</param>
         /// <returns>The converted value.</returns>
@@ -158,7 +178,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Converts radians to gradians.
+        ///     Converts radians to gradians.
         /// </summary>
         /// <param name="radian">The value to convert.</param>
         /// <returns>The converted value.</returns>
@@ -168,7 +188,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Converts gradians to revolutions.
+        ///     Converts gradians to revolutions.
         /// </summary>
         /// <param name="gradian">The value to convert.</param>
         /// <returns>The converted value.</returns>
@@ -178,7 +198,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Converts gradians to degrees.
+        ///     Converts gradians to degrees.
         /// </summary>
         /// <param name="gradian">The value to convert.</param>
         /// <returns>The converted value.</returns>
@@ -188,7 +208,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Converts gradians to radians.
+        ///     Converts gradians to radians.
         /// </summary>
         /// <param name="gradian">The value to convert.</param>
         /// <returns>The converted value.</returns>
@@ -198,7 +218,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Converts radians to degrees.
+        ///     Converts radians to degrees.
         /// </summary>
         /// <param name="radian">The value to convert.</param>
         /// <returns>The converted value.</returns>
@@ -208,7 +228,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Clamps the specified value.
+        ///     Clamps the specified value.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <param name="min">The min.</param>
@@ -220,7 +240,7 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Clamps the specified value.
+        ///     Clamps the specified value.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <param name="min">The min.</param>
@@ -232,11 +252,11 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Interpolates between two values using a linear function by a given amount.
+        ///     Interpolates between two values using a linear function by a given amount.
         /// </summary>
         /// <remarks>
-        /// See http://www.encyclopediaofmath.org/index.php/Linear_interpolation and
-        /// http://fgiesen.wordpress.com/2012/08/15/linear-interpolation-past-present-and-future/
+        ///     See http://www.encyclopediaofmath.org/index.php/Linear_interpolation and
+        ///     http://fgiesen.wordpress.com/2012/08/15/linear-interpolation-past-present-and-future/
         /// </remarks>
         /// <param name="from">Value to interpolate from.</param>
         /// <param name="to">Value to interpolate to.</param>
@@ -248,11 +268,11 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Interpolates between two values using a linear function by a given amount.
+        ///     Interpolates between two values using a linear function by a given amount.
         /// </summary>
         /// <remarks>
-        /// See http://www.encyclopediaofmath.org/index.php/Linear_interpolation and
-        /// http://fgiesen.wordpress.com/2012/08/15/linear-interpolation-past-present-and-future/
+        ///     See http://www.encyclopediaofmath.org/index.php/Linear_interpolation and
+        ///     http://fgiesen.wordpress.com/2012/08/15/linear-interpolation-past-present-and-future/
         /// </remarks>
         /// <param name="from">Value to interpolate from.</param>
         /// <param name="to">Value to interpolate to.</param>
@@ -264,11 +284,11 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Interpolates between two values using a linear function by a given amount.
+        ///     Interpolates between two values using a linear function by a given amount.
         /// </summary>
         /// <remarks>
-        /// See http://www.encyclopediaofmath.org/index.php/Linear_interpolation and
-        /// http://fgiesen.wordpress.com/2012/08/15/linear-interpolation-past-present-and-future/
+        ///     See http://www.encyclopediaofmath.org/index.php/Linear_interpolation and
+        ///     http://fgiesen.wordpress.com/2012/08/15/linear-interpolation-past-present-and-future/
         /// </remarks>
         /// <param name="from">Value to interpolate from.</param>
         /// <param name="to">Value to interpolate to.</param>
@@ -276,55 +296,52 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of linear interpolation of values based on the amount.</returns>
         public static byte Lerp(byte from, byte to, float amount)
         {
-            return (byte)Lerp((float)from, (float)to, amount);
+            return (byte) Lerp(@from, (float) to, amount);
         }
 
         /// <summary>
-        /// Performs smooth (cubic Hermite) interpolation between 0 and 1.
+        ///     Performs smooth (cubic Hermite) interpolation between 0 and 1.
         /// </summary>
         /// <remarks>
-        /// See https://en.wikipedia.org/wiki/Smoothstep
+        ///     See https://en.wikipedia.org/wiki/Smoothstep
         /// </remarks>
         /// <param name="amount">Value between 0 and 1 indicating interpolation amount.</param>
         public static float SmoothStep(float amount)
         {
-            return (amount <= 0) ? 0
-                : (amount >= 1) ? 1
-                : amount * amount * (3 - (2 * amount));
+            return amount <= 0 ? 0
+                : amount >= 1 ? 1
+                : amount * amount * (3 - 2 * amount);
         }
 
         /// <summary>
-        /// Performs a smooth(er) interpolation between 0 and 1 with 1st and 2nd order derivatives of zero at endpoints.
+        ///     Performs a smooth(er) interpolation between 0 and 1 with 1st and 2nd order derivatives of zero at endpoints.
         /// </summary>
         /// <remarks>
-        /// See https://en.wikipedia.org/wiki/Smoothstep
+        ///     See https://en.wikipedia.org/wiki/Smoothstep
         /// </remarks>
         /// <param name="amount">Value between 0 and 1 indicating interpolation amount.</param>
         public static float SmootherStep(float amount)
         {
-            return (amount <= 0) ? 0
-                : (amount >= 1) ? 1
-                : amount * amount * amount * (amount * ((amount * 6) - 15) + 10);
+            return amount <= 0 ? 0
+                : amount >= 1 ? 1
+                : amount * amount * amount * (amount * (amount * 6 - 15) + 10);
         }
 
         /// <summary>
-        /// Calculates the modulo of the specified value.
+        ///     Calculates the modulo of the specified value.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <param name="modulo">The modulo.</param>
         /// <returns>The result of the modulo applied to value</returns>
         public static float Mod(float value, float modulo)
         {
-            if (modulo == 0.0f)
-            {
-                return value;
-            }
+            if (modulo == 0.0f) return value;
 
             return value % modulo;
         }
 
         /// <summary>
-        /// Calculates the modulo 2*PI of the specified value.
+        ///     Calculates the modulo 2*PI of the specified value.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the modulo applied to value</returns>
@@ -334,20 +351,21 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Wraps the specified value into a range [min, max]
+        ///     Wraps the specified value into a range [min, max]
         /// </summary>
         /// <param name="value">The value to wrap.</param>
         /// <param name="min">The min.</param>
         /// <param name="max">The max.</param>
         /// <returns>Result of the wrapping.</returns>
-        /// <exception cref="ArgumentException">Is thrown when <paramref name="min"/> is greater than <paramref name="max"/>.</exception>
+        /// <exception cref="ArgumentException">Is thrown when <paramref name="min" /> is greater than <paramref name="max" />.</exception>
         public static int Wrap(int value, int min, int max)
         {
             if (min > max)
-                throw new ArgumentException(string.Format("min {0} should be less than or equal to max {1}", min, max), "min");
+                throw new ArgumentException(string.Format("min {0} should be less than or equal to max {1}", min, max),
+                    "min");
 
             // Code from http://stackoverflow.com/a/707426/1356325
-            int range_size = max - min + 1;
+            var range_size = max - min + 1;
 
             if (value < min)
                 value += range_size * ((min - value) / range_size + 1);
@@ -356,13 +374,13 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        /// Wraps the specified value into a range [min, max[
+        ///     Wraps the specified value into a range [min, max[
         /// </summary>
         /// <param name="value">The value.</param>
         /// <param name="min">The min.</param>
         /// <param name="max">The max.</param>
         /// <returns>Result of the wrapping.</returns>
-        /// <exception cref="ArgumentException">Is thrown when <paramref name="min"/> is greater than <paramref name="max"/>.</exception>
+        /// <exception cref="ArgumentException">Is thrown when <paramref name="min" /> is greater than <paramref name="max" />.</exception>
         public static float Wrap(float value, float min, float max)
         {
             if (NearEqual(min, max)) return min;
@@ -372,15 +390,16 @@ namespace Dreamcast.Mathematics
             double valued = value;
 
             if (mind > maxd)
-                throw new ArgumentException(string.Format("min {0} should be less than or equal to max {1}", min, max), "min");
+                throw new ArgumentException(string.Format("min {0} should be less than or equal to max {1}", min, max),
+                    "min");
 
             var range_size = maxd - mind;
-            return (float)(mind + (valued - mind) - (range_size * System.Math.Floor((valued - mind) / range_size)));
+            return (float) (mind + (valued - mind) - range_size * Math.Floor((valued - mind) / range_size));
         }
 
         /// <summary>
-        /// Gauss function.
-        /// http://en.wikipedia.org/wiki/Gaussian_function#Two-dimensional_Gaussian_function
+        ///     Gauss function.
+        ///     http://en.wikipedia.org/wiki/Gaussian_function#Two-dimensional_Gaussian_function
         /// </summary>
         /// <param name="amplitude">Curve amplitude.</param>
         /// <param name="x">Position X.</param>
@@ -390,14 +409,15 @@ namespace Dreamcast.Mathematics
         /// <param name="sigmaX">Curve sigma X.</param>
         /// <param name="sigmaY">Curve sigma Y.</param>
         /// <returns>The result of Gaussian function.</returns>
-        public static float Gauss(float amplitude, float x, float y, float centerX, float centerY, float sigmaX, float sigmaY)
+        public static float Gauss(float amplitude, float x, float y, float centerX, float centerY, float sigmaX,
+            float sigmaY)
         {
-            return (float)Gauss((double)amplitude, x, y, centerX, centerY, sigmaX, sigmaY);
+            return (float) Gauss((double) amplitude, x, y, centerX, centerY, sigmaX, sigmaY);
         }
 
         /// <summary>
-        /// Gauss function.
-        /// http://en.wikipedia.org/wiki/Gaussian_function#Two-dimensional_Gaussian_function
+        ///     Gauss function.
+        ///     http://en.wikipedia.org/wiki/Gaussian_function#Two-dimensional_Gaussian_function
         /// </summary>
         /// <param name="amplitude">Curve amplitude.</param>
         /// <param name="x">Position X.</param>
@@ -407,15 +427,16 @@ namespace Dreamcast.Mathematics
         /// <param name="sigmaX">Curve sigma X.</param>
         /// <param name="sigmaY">Curve sigma Y.</param>
         /// <returns>The result of Gaussian function.</returns>
-        public static double Gauss(double amplitude, double x, double y, double centerX, double centerY, double sigmaX, double sigmaY)
+        public static double Gauss(double amplitude, double x, double y, double centerX, double centerY, double sigmaX,
+            double sigmaY)
         {
             var cx = x - centerX;
             var cy = y - centerY;
 
-            var componentX = (cx * cx) / (2 * sigmaX * sigmaX);
-            var componentY = (cy * cy) / (2 * sigmaY * sigmaY);
+            var componentX = cx * cx / (2 * sigmaX * sigmaX);
+            var componentY = cy * cy / (2 * sigmaY * sigmaY);
 
-            return amplitude * System.Math.Exp(-(componentX + componentY));
+            return amplitude * Math.Exp(-(componentX + componentY));
         }
     }
 }

@@ -31,6 +31,7 @@ namespace dce {
 			spdlog::init_thread_pool(QUEUE_SIZE, THREAD_COUNT);
 		}
 		const auto thread_pool = spdlog::thread_pool();
-		this->core_ = std::make_shared<spdlog::async_logger>(_name, std::make_shared<TerminalSink<>>(), thread_pool);
+		auto name = _name;
+		this->core_ = std::make_shared<spdlog::async_logger>(_name, std::make_shared<TerminalSink<>>(std::move(name)), thread_pool);
 	}
 } // namespace dce // namespace dce

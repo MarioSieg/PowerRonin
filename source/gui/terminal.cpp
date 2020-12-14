@@ -143,7 +143,7 @@ namespace dce::gui {
 				Checkbox("##out", &this->show_scripting_protocol_);
 				[[unlikely]] if(IsItemHovered()) {
 					BeginTooltip();
-					TextUnformatted("Show scripting protocol instead of system protocol.");
+					TextUnformatted("Show scripting protocol instead of system protocol");
 					EndTooltip();
 				}
 			}

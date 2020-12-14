@@ -45,9 +45,9 @@ namespace dce::scripting {
 		MonoAssembly* engine_runtime_ = nullptr;
 		MonoImage* engine_image_ = nullptr;
 		MonoClass* engine_class_ = nullptr;
-		MonoObject* engine_instance_ = nullptr;
+		
 		MonoMethod* engine_on_start_ = nullptr;
 		MonoMethod* engine_on_update_ = nullptr;
-		MonoMethod* engine_on_end_ = nullptr;
+		MonoMethod* engine_on_exit_ = nullptr;
 	};
 }
