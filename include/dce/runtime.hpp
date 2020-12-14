@@ -27,44 +27,125 @@
 #include "renderer_data.hpp"
 
 namespace dce {
-	/* Contains all system states and data. */
+	/// <summary>
+	/// Runtime system state.
+	/// </summary>
 	class Runtime final {
 	public:
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>Returns the main logger protocol for the engine.</returns>
 		[[nodiscard]] auto protocol() & noexcept -> AsyncProtocol&;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>Returns the main logger protocol for the engine.</returns>
 		[[nodiscard]] auto protocol() const & noexcept -> const AsyncProtocol&;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>Returns the engine config.</returns>
 		[[nodiscard]] auto config() & noexcept -> Config&;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>Returns the engine config.</returns>
 		[[nodiscard]] auto config() const & noexcept -> const Config&;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>Returns the class database.</returns>
 		[[nodiscard]] auto class_db() & noexcept -> ClassDB&;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>Returns the class database.</returns>
 		[[nodiscard]] auto class_db() const & noexcept -> const ClassDB&;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>Returns the terminal command database.</returns>
 		[[nodiscard]] auto command_db() & noexcept -> CmdDB&;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>Returns the terminal command database.</returns>
 		[[nodiscard]] auto command_db() const & noexcept -> const CmdDB&;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>Returns the resource manager.</returns>
 		[[nodiscard]] auto resource_manager() & noexcept -> ResourceManager&;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>Returns the resource manager.</returns>
 		[[nodiscard]] auto resource_manager() const & noexcept -> const ResourceManager&;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>Returns the runtime diagnostics data.</returns>
 		[[nodiscard]] auto diagnostics() const & noexcept -> const Diagnostics&;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>Returns the runtime clock and stats data.</returns>
 		[[nodiscard]] auto chrono() const & noexcept -> const Chrono&;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>Returns the current scenery.</returns>
 		[[nodiscard]] auto scenery() const & noexcept -> const Scenery&;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>Returns the current scenery.</returns>
 		[[nodiscard]] auto scenery() & noexcept -> Scenery&;
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>Returns the current input state.</returns>
 		[[nodiscard]] auto input() const & noexcept -> const Input&;
 
-		[[nodiscard]] auto input() & noexcept -> Input&;
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>Returns the render data.</returns>
 		[[nodiscard]] auto render_data() const & noexcept -> const RenderData&;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>Returns the render data.</returns>
 		[[nodiscard]] auto render_data() & noexcept -> RenderData&;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>Returns the protocol for the C# scripting runtime.</returns>
+		[[nodiscard]] auto scripting_protocol() const& noexcept -> const AsyncProtocol&;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>Returns the protocol for the C# scripting runtime.</returns>
+		[[nodiscard]] auto scripting_protocol() & noexcept -> AsyncProtocol&;
 
 		Runtime();
 		Runtime(const Runtime&) = delete;
@@ -78,6 +159,7 @@ namespace dce {
 
 	private:
 		AsyncProtocol protocol_;
+		AsyncProtocol scripting_protocol_;
 		Config config_;
 		ClassDB class_db_;
 		CmdDB command_db_;

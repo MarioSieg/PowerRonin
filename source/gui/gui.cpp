@@ -49,7 +49,7 @@ namespace dce::gui {
 			return false;
 		}
 
-		this->terminal_.initialize(_rt.protocol().sink_to_terminal());
+		this->terminal_.initialize(_rt.protocol(), _rt.scripting_protocol());
 		this->editor_.initialize(_rt);
 
 		return true;

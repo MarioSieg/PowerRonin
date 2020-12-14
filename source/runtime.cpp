@@ -76,10 +76,6 @@ namespace dce {
 		return this->input_;
 	}
 
-	auto Runtime::input() & noexcept -> Input& {
-		return this->input_;
-	}
-
 	auto Runtime::render_data() const & noexcept -> const RenderData& {
 		return this->render_data_;
 	}
@@ -88,8 +84,17 @@ namespace dce {
 		return this->render_data_;
 	}
 
+	auto Runtime::scripting_protocol() const & noexcept -> const AsyncProtocol& {
+		return this->scripting_protocol_;
+	}
+
+	auto Runtime::scripting_protocol() & noexcept -> AsyncProtocol& {
+		return this->scripting_protocol_;
+	}
+
 	Runtime::Runtime()
-		: protocol_(),
+		: protocol_("native"),
+		  scripting_protocol_("managed"),
 		  config_(),
 		  class_db_(),
 		  command_db_(),
@@ -110,5 +115,6 @@ namespace dce {
 	void Runtime::shutdown() {
 		this->scenery_.unload_all_entities();
 		this->resource_manager_.unload_all_resources();
+		this->protocol_.get_logger()->flush();
 	}
 } // namespace dce // namespace dce

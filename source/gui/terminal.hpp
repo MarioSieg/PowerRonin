@@ -33,18 +33,20 @@ namespace dce {
 			static constexpr auto COLOR_TRACE = 0xFF'BB'BB'BB;
 			static constexpr auto COLOR_WARN = 0xFF'66'AA'FF;
 
-			auto initialize(const spdlog::sink_ptr& _term_sink) noexcept -> bool;
+			auto initialize(const AsyncProtocol& _system_protocol, const AsyncProtocol& _scripting_protocol) noexcept -> bool;
 			void update(bool& _show, Runtime& _rt);
 			void clear_buffer();
 			[[nodiscard]] auto get_buffer() const noexcept -> const std::array<char, BUFFER_SIZE>&;
 
 		private:
-			const TerminalSink<>* sink_ = nullptr;
+			const TerminalSink<>* system_protocol_ = nullptr;
+			const TerminalSink<>* scripting_protocol_ = nullptr;
 			std::array<char, BUFFER_SIZE> buffer_ = {};
 			std::size_t history_index_ = 0;
 			std::size_t warning_messages_count_ = 0;
 			std::size_t error_messages_count_ = 0;
 			bool scroll_ = true;
+			bool show_scripting_protocol_ = true;
 		};
 	} // namespace gui::widgets // namespace gui::widgets
 } // namespace dce // namespace dce

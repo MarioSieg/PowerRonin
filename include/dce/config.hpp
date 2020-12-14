@@ -65,6 +65,11 @@ namespace dce {
 		} audio;
 
 		struct {
+			std::filesystem::path config_dir = "extern/mono/etc";
+			std::filesystem::path library_dir = "extern/mono/lib";
+		} scripting;
+
+		struct {
 			std::string app_name = {};
 			std::string app_company = {};
 			std::filesystem::path splash_image = "textures/splash/splash.png";

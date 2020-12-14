@@ -4,6 +4,6 @@
 /cache/
 /crashes/
 /extern/assimp/out/
-/scripts/dreamcast/.idea
-/scripts/dreamcast/bin
-/scripts/dreamcast/obj
+/scripts/DreamcastScriptingRuntime/.vs/
+/scripts/DreamcastScriptingRuntime/bin/
+/scripts/DreamcastScriptingRuntime/obj/

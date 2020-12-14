@@ -34,7 +34,7 @@ namespace dce {
 	class AsyncProtocol final {
 	public:
 		static constexpr auto QUEUE_SIZE = 0xFFFF;
-		static constexpr auto THREAD_COUNT = 1;
+		static constexpr auto THREAD_COUNT = 4;
 
 		auto separator() -> AsyncProtocol&;
 
@@ -80,9 +80,7 @@ namespace dce {
 		template <typename T, typename ...Q>
 		auto critical(T&& _msg, Q&&... _args) -> AsyncProtocol&;
 
-		[[nodiscard]] auto sink_to_file() const noexcept -> const spdlog::sink_ptr&;
-
-		[[nodiscard]] auto sink_to_terminal() const noexcept -> const spdlog::sink_ptr&;
+		auto get_logger() const noexcept -> const std::shared_ptr<spdlog::logger>&;
 
 		AsyncProtocol();
 		explicit AsyncProtocol(const std::string& _name);
@@ -94,9 +92,11 @@ namespace dce {
 
 	private:
 		std::shared_ptr<spdlog::logger> core_ = {};
-		spdlog::sink_ptr file_sink_ = {};
-		spdlog::sink_ptr terminal_sink_ = {};
 	};
+
+	inline auto AsyncProtocol::get_logger() const noexcept -> const std::shared_ptr<spdlog::logger>& {
+		return this->core_;
+	}
 
 	inline auto AsyncProtocol::separator() -> AsyncProtocol& {
 		this->core_->info("----------------------------------------------------------------");
@@ -173,13 +173,5 @@ namespace dce {
 	template <typename T, typename ...Q>
 	inline auto AsyncProtocol::critical(T&& _msg, Q&&... _args) -> AsyncProtocol& {
 		return this->log(LogLevel::CRITICAL, _msg, _args...);
-	}
-
-	inline auto AsyncProtocol::sink_to_file() const noexcept -> const spdlog::sink_ptr& {
-		return this->file_sink_;
-	}
-
-	inline auto AsyncProtocol::sink_to_terminal() const noexcept -> const spdlog::sink_ptr& {
-		return this->terminal_sink_;
 	}
 } // namespace dce // namespace dce

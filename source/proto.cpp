@@ -27,19 +27,10 @@ namespace dce {
 	AsyncProtocol::AsyncProtocol() : AsyncProtocol("engine") { }
 
 	AsyncProtocol::AsyncProtocol(const std::string& _name) {
-		auto tm = safe_localtime(std::time(nullptr));
-		std::stringstream ss;
-		ss << "proto/session-";
-		ss << std::put_time(&tm, "%d-%m-%Y-%H-%M-%S");
-		ss << ".log";
-		spdlog::init_thread_pool(QUEUE_SIZE, THREAD_COUNT);
+		[[unlikely]] if (!spdlog::thread_pool()) {
+			spdlog::init_thread_pool(QUEUE_SIZE, THREAD_COUNT);
+		}
 		const auto thread_pool = spdlog::thread_pool();
-		std::array<spdlog::sink_ptr, 2> sinks = {
-			std::make_shared<spdlog::sinks::basic_file_sink_mt>(ss.str())
-			, std::make_shared<TerminalSink<>>()
-		};
-		this->core_ = std::make_shared<spdlog::async_logger>(_name, sinks.begin(), sinks.end(), thread_pool);
-		this->file_sink_ = std::move(sinks[0]);
-		this->terminal_sink_ = std::move(sinks[1]);
+		this->core_ = std::make_shared<spdlog::async_logger>(_name, std::make_shared<TerminalSink<>>(), thread_pool);
 	}
 } // namespace dce // namespace dce

@@ -17,10 +17,14 @@
 
 #include "../extern/spdlog/include/spdlog/sinks/base_sink.h"
 #include "../include/dce/proto.hpp"
+#include "../include/dce/time_utils.hpp"
 #include <mutex>
 #include <string>
 #include <tuple>
 #include <vector>
+#include <fstream>
+#include <sstream>
+#include <iomanip>
 
 namespace dce {
 	template <typename Mutex = std::mutex>
@@ -57,5 +61,18 @@ namespace dce {
 	}
 
 	template <typename Mutex>
-	void TerminalSink<Mutex>::flush_() { }
+	void TerminalSink<Mutex>::flush_() {
+		const auto tm = safe_localtime(std::time(nullptr));
+		std::stringstream ss;
+		ss << "proto/session-";
+		ss << std::put_time(&tm, "%d-%m-%Y-%H-%M-%S");
+		ss << ".log";
+		std::ofstream f(ss.str());
+		[[likely]] if(f) {
+			for(const auto& msg : this->buffer) {
+				f << std::get<0>(msg);
+			}
+		}
+		this->buffer.clear();
+	}
 } // namespace dce // namespace dce
