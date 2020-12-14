@@ -23,20 +23,19 @@ namespace Dreamcast.Core
     /// </summary>
     public static class Core
     {
-        private static void OnStart()
+        private static void OnSystemStart()
         {
-            var stopwatch = Stopwatch.StartNew();
             PrintInformation();
-            Protocol.Info($"Scripting backend online! Boot took: {stopwatch.Elapsed.TotalSeconds}s!");
+            Protocol.Info($"Scripting backend online!");
             Protocol.Separator();
         }
 
-        private static void OnUpdate()
+        private static void OnSystemUpdate()
         {
             Input.UpdateMouseCursor();
         }
 
-        private static void OnExit()
+        private static void OnSystemExit()
         {
         }
 
@@ -47,16 +46,10 @@ namespace Dreamcast.Core
         {
             Protocol.Info("C# CLR v." + Environment.Version);
             Protocol.Info("Current directory: " + Environment.CurrentDirectory);
-            Protocol.Info("Is 64-bit operating system? " + Environment.Is64BitOperatingSystem);
-            Protocol.Info("Is 64-bit process? " + Environment.Is64BitProcess);
             Protocol.Info("Machine: " + Environment.MachineName);
             Protocol.Info("Operating system version: " + Environment.OSVersion);
-            Protocol.Info("Processor count: " + Environment.ProcessorCount);
-            Protocol.Info("System page size: " + Environment.SystemPageSize);
-            Protocol.Info("Tick count: " + Environment.TickCount);
-            Protocol.Info("Working set: " + Environment.WorkingSet);
+            Protocol.Info("Logical cores: " + Environment.ProcessorCount);
             Protocol.Info("User: " + Environment.UserName);
-            Protocol.Info("User domain: " + Environment.UserDomainName);
         }
     }
 }

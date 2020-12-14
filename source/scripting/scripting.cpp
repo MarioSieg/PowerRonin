@@ -63,17 +63,17 @@ namespace dce::scripting {
 
 		register_basic_internal_calls(_rt);
 
-		this->engine_on_start_ = mono_class_get_method_from_name(this->engine_class_, "OnStart", 0);
+		this->engine_on_start_ = mono_class_get_method_from_name(this->engine_class_, "OnSystemStart", 0);
 		[[unlikely]] if (!this->engine_on_start_) {
 			return false;
 		}
 
-		this->engine_on_update_ = mono_class_get_method_from_name(this->engine_class_, "OnUpdate", 0);
+		this->engine_on_update_ = mono_class_get_method_from_name(this->engine_class_, "OnSystemUpdate", 0);
 		[[unlikely]] if (!this->engine_on_update_) {
 			return false;
 		}
 
-		this->engine_on_exit_ = mono_class_get_method_from_name(this->engine_class_, "OnExit", 0);
+		this->engine_on_exit_ = mono_class_get_method_from_name(this->engine_class_, "OnSystemExit", 0);
 		[[unlikely]] if (!this->engine_on_exit_) {
 			return false;
 		}
@@ -81,7 +81,10 @@ namespace dce::scripting {
 		MonoObject* ex = nullptr;
 		auto* ret = mono_runtime_invoke(this->engine_on_start_, nullptr, nullptr, &ex);
 		[[unlikely]] if (ex) {
-			mono_print_unhandled_exception(ex);
+			MonoString* mono_msg = mono_object_to_string(ex, nullptr);
+			char* msg = mono_string_to_utf8(mono_msg);
+			_rt.scripting_protocol().error(msg);
+			mono_free(msg);
 		}
 
 		return true;
@@ -95,6 +98,12 @@ namespace dce::scripting {
 
 		MonoObject* ex = nullptr;
 		auto* ret = mono_runtime_invoke(this->engine_on_update_, nullptr, nullptr, &ex);
+		[[unlikely]] if (ex) {
+			MonoString* mono_msg = mono_object_to_string(ex, nullptr);
+			char* msg = mono_string_to_utf8(mono_msg);
+			_rt.scripting_protocol().error(msg);
+			mono_free(msg);
+		}
 		return !ret && !ex;
 	}
 
@@ -106,7 +115,10 @@ namespace dce::scripting {
 		MonoObject* ex = nullptr;
 		auto* ret = mono_runtime_invoke(this->engine_on_exit_, nullptr, nullptr, &ex);
 		[[unlikely]] if (ex) {
-			mono_print_unhandled_exception(ex);
+			MonoString* mono_msg = mono_object_to_string(ex, nullptr);
+			char* msg = mono_string_to_utf8(mono_msg);
+			_rt.scripting_protocol().error(msg);
+			mono_free(msg);
 		}
 		return true;
 	}
