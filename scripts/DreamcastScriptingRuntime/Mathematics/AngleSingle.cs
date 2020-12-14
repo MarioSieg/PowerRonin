@@ -5,7 +5,7 @@
 // Commercial License Usage
 // 
 // Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
+// may use this file in accordance with the end user license agreement provided
 // with the software or, alternatively, in accordance with the terms contained in a
 // written agreement between you and KerboGames.
 // 
@@ -19,32 +19,6 @@ using System.Runtime.InteropServices;
 
 namespace Dreamcast.Mathematics
 {
-    /// <summary>
-    ///     Describes the type of angle.
-    /// </summary>
-    public enum AngleType
-    {
-        /// <summary>
-        ///     Specifies an angle measurement in revolutions.
-        /// </summary>
-        Revolution,
-
-        /// <summary>
-        ///     Specifies an angle measurement in degrees.
-        /// </summary>
-        Degree,
-
-        /// <summary>
-        ///     Specifies an angle measurement in radians.
-        /// </summary>
-        Radian,
-
-        /// <summary>
-        ///     Specifies an angle measurement in gradians.
-        /// </summary>
-        Gradian
-    }
-
     /// <summary>
     ///     Represents a unit independent angle using a single-precision floating-point
     ///     internal representation.

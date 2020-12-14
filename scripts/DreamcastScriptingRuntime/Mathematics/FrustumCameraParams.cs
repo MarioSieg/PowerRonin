@@ -13,26 +13,49 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-namespace Dreamcast.Core
+using System.Runtime.InteropServices;
+
+namespace Dreamcast.Mathematics
 {
     /// <summary>
-    ///     Contains all mouse buttons.
+    ///     Frustum camera parameters.
     /// </summary>
-    public enum MouseButton : byte
+    [StructLayout(LayoutKind.Sequential, Pack = 4)]
+    public struct FrustumCameraParams
     {
         /// <summary>
-        ///     Left mouse button.
+        ///     Position of the camera.
         /// </summary>
-        Left = 0,
+        public Vector3 Position;
 
         /// <summary>
-        ///     Right mouse button.
+        ///     Looking at direction of the camera.
         /// </summary>
-        Right = 1,
+        public Vector3 LookAtDir;
 
         /// <summary>
-        ///     Middle mouse button.
+        ///     Up direction.
         /// </summary>
-        Middle = 2
+        public Vector3 UpDir;
+
+        /// <summary>
+        ///     Field of view.
+        /// </summary>
+        public float FOV;
+
+        /// <summary>
+        ///     Z near distance.
+        /// </summary>
+        public float ZNear;
+
+        /// <summary>
+        ///     Z far distance.
+        /// </summary>
+        public float ZFar;
+
+        /// <summary>
+        ///     Aspect ratio.
+        /// </summary>
+        public float AspectRatio;
     }
 }

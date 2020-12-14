@@ -1,11 +1,17 @@
-// Warning! This is an engine system file! 
-// Any changes could break internal systems!
-// Standard: C++20
-// File: entry.cpp
-// Author: Mario
-// Solution: 
-// Project: DreamcastSDK
-// Created: 15.11.2020 21:36
+// *******************************************************************************
+// The content of this file includes portions of the KerboGames Dreamcast Technology
+// released in source code form as part of the SDK package.
+// 
+// Commercial License Usage
+// 
+// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// may use this file in accordance with the end user license agreement provided 
+// with the software or, alternatively, in accordance with the terms contained in a
+// written agreement between you and KerboGames.
+// 
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
+// support@kerbogames.com
+// *******************************************************************************
 
 #include "include/dce/core/kernel.hpp"
 #include "include/dce/core/installer.hpp"
@@ -21,7 +27,7 @@ auto DREAM_ENTRY(const int _argc, const char* const* const _argv, const char* co
 #if !IS_DEBUG
 	try {
 #endif
-	ScopedVectoredExceptionHandler _ = {};
+		ScopedVectoredExceptionHandler _ = {};
 
 		auto kernel = Kernel::create(_argc, _argv, _envp);
 		kernel->install_subsystems(&install_common);
@@ -34,12 +40,10 @@ auto DREAM_ENTRY(const int _argc, const char* const* const _argv, const char* co
 	catch (const FatalEngineException& ex) {
 		create_fatal_dump(ex);
 		return -1;
-	}
-	catch (const std::runtime_error& ex) {
+	} catch (const std::runtime_error& ex) {
 		create_fatal_dump(ex);
 		return -1;
-	}
-	catch (...) {
+	} catch (...) {
 		create_fatal_dump();
 		return -1;
 	}

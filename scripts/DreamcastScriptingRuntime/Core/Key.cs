@@ -5,7 +5,7 @@
 // Commercial License Usage
 // 
 // Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
+// may use this file in accordance with the end user license agreement provided
 // with the software or, alternatively, in accordance with the terms contained in a
 // written agreement between you and KerboGames.
 // 
@@ -21,603 +21,603 @@ namespace Dreamcast.Core
     public enum Key : short
     {
         /// <summary>
-        /// Unknown key.
+        ///     Unknown key.
         /// </summary>
         Unknown = -1,
-        
+
         /// <summary>
-        /// Space key.
+        ///     Space key.
         /// </summary>
         Space = 32,
 
         /// <summary>
-        /// ' key.
+        ///     ' key.
         /// </summary>
         Apostrophe = 39,
 
         /// <summary>
-        /// , key.
+        ///     , key.
         /// </summary>
         Comma = 44,
 
         /// <summary>
-        /// - key.
+        ///     - key.
         /// </summary>
         Minus = 45,
 
         /// <summary>
-        /// . key.
+        ///     . key.
         /// </summary>
         Period = 46,
 
         /// <summary>
-        /// / key.
+        ///     / key.
         /// </summary>
         Slash = 47,
 
         /// <summary>
-        /// 0 key.
+        ///     0 key.
         /// </summary>
         N0 = 48,
 
         /// <summary>
-        /// 1 key.
+        ///     1 key.
         /// </summary>
         N1 = 49,
 
         /// <summary>
-        /// 2 key.
+        ///     2 key.
         /// </summary>
         N2 = 50,
 
         /// <summary>
-        /// 3 key.
+        ///     3 key.
         /// </summary>
         N3 = 51,
 
         /// <summary>
-        /// 4 key.
+        ///     4 key.
         /// </summary>
         N4 = 52,
 
         /// <summary>
-        /// 5 key.
+        ///     5 key.
         /// </summary>
         N5 = 53,
 
         /// <summary>
-        /// 6 key.
+        ///     6 key.
         /// </summary>
         N6 = 54,
 
         /// <summary>
-        /// 7 key.
+        ///     7 key.
         /// </summary>
         N7 = 55,
 
         /// <summary>
-        /// 8 key.
+        ///     8 key.
         /// </summary>
         N8 = 56,
 
         /// <summary>
-        /// 9 key.
+        ///     9 key.
         /// </summary>
         N9 = 57,
 
         /// <summary>
-        /// ; key.
+        ///     ; key.
         /// </summary>
         Semicolon = 59,
 
         /// <summary>
-        /// A key.
+        ///     A key.
         /// </summary>
         Equal = 61,
         A = 65,
 
         /// <summary>
-        /// B key.
+        ///     B key.
         /// </summary>
         B = 66,
 
         /// <summary>
-        /// C key.
+        ///     C key.
         /// </summary>
         C = 67,
 
         /// <summary>
-        /// D key.
+        ///     D key.
         /// </summary>
         D = 68,
 
         /// <summary>
-        /// E key.
+        ///     E key.
         /// </summary>
         E = 69,
 
         /// <summary>
-        /// F key.
+        ///     F key.
         /// </summary>
         F = 70,
 
         /// <summary>
-        /// G key.
+        ///     G key.
         /// </summary>
         G = 71,
 
         /// <summary>
-        /// H key.
+        ///     H key.
         /// </summary>
         H = 72,
 
         /// <summary>
-        /// I key.
+        ///     I key.
         /// </summary>
         I = 73,
 
         /// <summary>
-        /// J key.
+        ///     J key.
         /// </summary>
         J = 74,
 
         /// <summary>
-        /// K key.
+        ///     K key.
         /// </summary>
         K = 75,
 
         /// <summary>
-        /// L key.
+        ///     L key.
         /// </summary>
         L = 76,
 
         /// <summary>
-        /// M key.
+        ///     M key.
         /// </summary>
         M = 77,
 
         /// <summary>
-        /// N key.
+        ///     N key.
         /// </summary>
         N = 78,
 
         /// <summary>
-        /// O key.
+        ///     O key.
         /// </summary>
         O = 79,
 
         /// <summary>
-        /// P key.
+        ///     P key.
         /// </summary>
         P = 80,
 
         /// <summary>
-        /// Q key.
+        ///     Q key.
         /// </summary>
         Q = 81,
 
         /// <summary>
-        /// R key.
+        ///     R key.
         /// </summary>
         R = 82,
 
         /// <summary>
-        /// S key.
+        ///     S key.
         /// </summary>
         S = 83,
 
         /// <summary>
-        /// T key.
+        ///     T key.
         /// </summary>
         T = 84,
 
         /// <summary>
-        /// U key.
+        ///     U key.
         /// </summary>
         U = 85,
 
         /// <summary>
-        /// V key.
+        ///     V key.
         /// </summary>
         V = 86,
 
         /// <summary>
-        /// W key.
+        ///     W key.
         /// </summary>
         W = 87,
 
         /// <summary>
-        /// X key.
+        ///     X key.
         /// </summary>
         X = 88,
 
         /// <summary>
-        /// Y key.
+        ///     Y key.
         /// </summary>
         Y = 89,
 
         /// <summary>
-        /// Z key.
+        ///     Z key.
         /// </summary>
         Z = 90,
 
         /// <summary>
-        /// ([  key.
+        ///     ([  key.
         /// </summary>
         LeftBracket = 91,
-        
+
         /// <summary>
-        /// \ key.
+        ///     \ key.
         /// </summary>
         BackSlash = 92,
 
         /// <summary>
-        /// ]) key.
+        ///     ]) key.
         /// </summary>
         RightBracket = 93,
-        
+
         /// <summary>
-        /// ^ key.
+        ///     ^ key.
         /// </summary>
         GraveAccent = 96,
-        
+
         /// <summary>
-        /// World 1 key.
+        ///     World 1 key.
         /// </summary>
         World1 = 161,
-        
+
         /// <summary>
-        /// World 2 key.
+        ///     World 2 key.
         /// </summary>
         World2 = 162,
 
         /// <summary>
-        /// Escape key.
+        ///     Escape key.
         /// </summary>
         Escape = 256,
 
         /// <summary>
-        /// Enter key.
+        ///     Enter key.
         /// </summary>
         Enter = 257,
 
         /// <summary>
-        /// Tab key.
+        ///     Tab key.
         /// </summary>
         Tab = 258,
 
         /// <summary>
-        /// Backspace key.
+        ///     Backspace key.
         /// </summary>
         Backspace = 259,
 
         /// <summary>
-        /// Insert key.
+        ///     Insert key.
         /// </summary>
         Insert = 260,
 
         /// <summary>
-        /// Delete key.
+        ///     Delete key.
         /// </summary>
         Delete = 261,
 
         /// <summary>
-        /// Right key.
+        ///     Right key.
         /// </summary>
         Right = 262,
 
         /// <summary>
-        /// Left key.
+        ///     Left key.
         /// </summary>
         Left = 263,
 
         /// <summary>
-        /// Down key.
+        ///     Down key.
         /// </summary>
         Down = 264,
 
         /// <summary>
-        /// Up key.
+        ///     Up key.
         /// </summary>
         Up = 265,
 
         /// <summary>
-        /// Page up key.
+        ///     Page up key.
         /// </summary>
         PageUp = 266,
 
         /// <summary>
-        /// Page down key.
+        ///     Page down key.
         /// </summary>
         PageDown = 267,
 
         /// <summary>
-        /// Home key key.
+        ///     Home key key.
         /// </summary>
         Home = 268,
 
         /// <summary>
-        /// End key.
+        ///     End key.
         /// </summary>
         End = 269,
 
         /// <summary>
-        /// Caps lock key.
+        ///     Caps lock key.
         /// </summary>
         CapsCock = 280,
 
         /// <summary>
-        /// Scroll lock key.
+        ///     Scroll lock key.
         /// </summary>
         ScrollLock = 281,
 
         /// <summary>
-        /// Num lock key.
+        ///     Num lock key.
         /// </summary>
         NumLock = 282,
 
         /// <summary>
-        /// Print screen key.
+        ///     Print screen key.
         /// </summary>
         PrintScreen = 283,
 
         /// <summary>
-        /// Pause key.
+        ///     Pause key.
         /// </summary>
         Pause = 284,
 
         /// <summary>
-        /// F1 key.
+        ///     F1 key.
         /// </summary>
         F1 = 290,
 
         /// <summary>
-        /// F2 key.
+        ///     F2 key.
         /// </summary>
         F2 = 291,
 
         /// <summary>
-        /// F3 key.
+        ///     F3 key.
         /// </summary>
         F3 = 292,
 
         /// <summary>
-        /// F4 key.
+        ///     F4 key.
         /// </summary>
         F4 = 293,
 
         /// <summary>
-        /// F5 key.
+        ///     F5 key.
         /// </summary>
         F5 = 294,
 
         /// <summary>
-        /// F6 key.
+        ///     F6 key.
         /// </summary>
         F6 = 295,
 
         /// <summary>
-        /// F7 key.
+        ///     F7 key.
         /// </summary>
         F7 = 296,
 
         /// <summary>
-        /// F8 key.
+        ///     F8 key.
         /// </summary>
         F8 = 297,
 
         /// <summary>
-        /// F9 key.
+        ///     F9 key.
         /// </summary>
         F9 = 298,
 
         /// <summary>
-        /// F10 key.
+        ///     F10 key.
         /// </summary>
         F10 = 299,
 
         /// <summary>
-        /// F11 key.
+        ///     F11 key.
         /// </summary>
         F11 = 300,
 
         /// <summary>
-        /// F12 key.
+        ///     F12 key.
         /// </summary>
         F12 = 301,
 
         /// <summary>
-        /// F13 key.
+        ///     F13 key.
         /// </summary>
         F13 = 302,
 
         /// <summary>
-        /// F14 key.
+        ///     F14 key.
         /// </summary>
         F14 = 303,
 
         /// <summary>
-        /// F15 key.
+        ///     F15 key.
         /// </summary>
         F15 = 304,
 
         /// <summary>
-        /// F16 key.
+        ///     F16 key.
         /// </summary>
         F16 = 305,
 
         /// <summary>
-        /// F17 key.
+        ///     F17 key.
         /// </summary>
         F17 = 306,
 
         /// <summary>
-        /// F18 key.
+        ///     F18 key.
         /// </summary>
         F18 = 307,
 
         /// <summary>
-        /// F19 key.
+        ///     F19 key.
         /// </summary>
         F19 = 308,
 
         /// <summary>
-        /// F20 key.
+        ///     F20 key.
         /// </summary>
         F20 = 309,
-        
+
         /// <summary>
-        /// F21 key.
+        ///     F21 key.
         /// </summary>
         F21 = 310,
 
         /// <summary>
-        /// F22 key.
+        ///     F22 key.
         /// </summary>
         F22 = 311,
 
         /// <summary>
-        /// F23 key.
+        ///     F23 key.
         /// </summary>
         F23 = 312,
 
         /// <summary>
-        /// F24 key.
+        ///     F24 key.
         /// </summary>
         F24 = 313,
 
         /// <summary>
-        /// F25 key.
+        ///     F25 key.
         /// </summary>
         F25 = 314,
-        
+
         /// <summary>
-        /// Numpad 0 key.
+        ///     Numpad 0 key.
         /// </summary>
         NumPad0 = 320,
 
         /// <summary>
-        /// Numpad 1 key.
+        ///     Numpad 1 key.
         /// </summary>
         NumPad1 = 321,
 
         /// <summary>
-        /// Numpad 2 key.
+        ///     Numpad 2 key.
         /// </summary>
         NumPad2 = 322,
 
         /// <summary>
-        /// Numbpad 3 key.
+        ///     Numbpad 3 key.
         /// </summary>
         NumPad3 = 323,
 
         /// <summary>
-        /// Numpad 4 key.
+        ///     Numpad 4 key.
         /// </summary>
         NumPad4 = 324,
 
         /// <summary>
-        /// Numpad 5 key.
+        ///     Numpad 5 key.
         /// </summary>
         NumPad5 = 325,
 
         /// <summary>
-        /// Numpad 6 key.
+        ///     Numpad 6 key.
         /// </summary>
         NumPad6 = 326,
 
         /// <summary>
-        /// Numpad 7 key.
+        ///     Numpad 7 key.
         /// </summary>
         NumPad7 = 327,
 
         /// <summary>
-        /// Numpad 8 key.
+        ///     Numpad 8 key.
         /// </summary>
         NumPad8 = 328,
 
         /// <summary>
-        /// Numpad 9 key.
+        ///     Numpad 9 key.
         /// </summary>
         NumPad9 = 329,
 
         /// <summary>
-        /// Numpad decimal key.
+        ///     Numpad decimal key.
         /// </summary>
         NumPadDecimal = 330,
 
         /// <summary>
-        /// Numpad divide key.
+        ///     Numpad divide key.
         /// </summary>
         NumPadDivide = 331,
 
         /// <summary>
-        /// Numpad multiply key.
+        ///     Numpad multiply key.
         /// </summary>
         NumPadMultiply = 332,
 
         /// <summary>
-        /// Numpad subtract key.
+        ///     Numpad subtract key.
         /// </summary>
         NumPadSubtract = 333,
 
         /// <summary>
-        /// Numpad add key.
+        ///     Numpad add key.
         /// </summary>
         NumPadAdd = 334,
-        
+
         /// <summary>
-        /// Numpad enter key.
+        ///     Numpad enter key.
         /// </summary>
         NumPadEnter = 335,
-        
+
         /// <summary>
-        /// Numpad equal key.
+        ///     Numpad equal key.
         /// </summary>
         NumPadEqual = 336,
 
         /// <summary>
-        /// Left shift key.
+        ///     Left shift key.
         /// </summary>
         LeftShift = 340,
-        
+
         /// <summary>
-        /// Left control key.
+        ///     Left control key.
         /// </summary>
         LeftControl = 341,
 
         /// <summary>
-        /// Left alt key.
+        ///     Left alt key.
         /// </summary>
         LeftAlt = 342,
 
         /// <summary>
-        /// Left super key.
+        ///     Left super key.
         /// </summary>
         LeftSuper = 343,
 
         /// <summary>
-        /// Right shift key.
+        ///     Right shift key.
         /// </summary>
         RightShift = 344,
 
         /// <summary>
-        /// Right control key.
+        ///     Right control key.
         /// </summary>
         RightControl = 345,
 
         /// <summary>
-        /// Right alt key.
+        ///     Right alt key.
         /// </summary>
         RightAlt = 346,
 
         /// <summary>
-        /// Right super key.
+        ///     Right super key.
         /// </summary>
         RightSuper = 347,
 
         /// <summary>
-        /// Menu key.
+        ///     Menu key.
         /// </summary>
         Menu = 348
     }

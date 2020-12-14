@@ -35,6 +35,7 @@
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x64</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
@@ -74,26 +75,44 @@
     <Compile Include="Core\Key.cs" />
     <Compile Include="Core\MouseButton.cs" />
     <Compile Include="Mathematics\AngleSingle.cs" />
+    <Compile Include="Mathematics\AngleType.cs" />
+    <Compile Include="Mathematics\BoundingBox.cs" />
+    <Compile Include="Mathematics\BoundingFrustum.cs" />
+    <Compile Include="Mathematics\BoundingSphere.cs" />
+    <Compile Include="Mathematics\FrustumCameraParams.cs" />
+    <Compile Include="Mathematics\Plane.cs" />
+    <Compile Include="Mathematics\Point.cs" />
+    <Compile Include="Mathematics\Ray.cs" />
+    <Compile Include="Mathematics\Collision.cs" />
     <Compile Include="Mathematics\Color.cs" />
     <Compile Include="Mathematics\Color3.cs" />
     <Compile Include="Mathematics\Color4.cs" />
     <Compile Include="Mathematics\ColorBGRA.cs" />
+    <Compile Include="Mathematics\ContainmentType.cs" />
     <Compile Include="Mathematics\Half.cs" />
     <Compile Include="Mathematics\Half2.cs" />
     <Compile Include="Mathematics\Half3.cs" />
     <Compile Include="Mathematics\Half4.cs" />
     <Compile Include="Mathematics\HalfUtils.cs" />
-    <Compile Include="Mathematics\IVector3.cs" />
-    <Compile Include="Mathematics\IVector4.cs" />
+    <Compile Include="Mathematics\Vector3I.cs" />
+    <Compile Include="Mathematics\Vector4I.cs" />
     <Compile Include="Mathematics\MathUtil.cs" />
     <Compile Include="Mathematics\Matrix4x4.cs" />
     <Compile Include="Mathematics\Matrix3x2.cs" />
     <Compile Include="Mathematics\Matrix3x3.cs" />
     <Compile Include="Mathematics\Matrix5x4.cs" />
+    <Compile Include="Mathematics\OrientedBoundingBox.cs" />
+    <Compile Include="Mathematics\PlaneIntersectionType.cs" />
     <Compile Include="Mathematics\Quaternion.cs" />
+    <Compile Include="Mathematics\Rectangle.cs" />
+    <Compile Include="Mathematics\RectangleF.cs" />
+    <Compile Include="Mathematics\Size2.cs" />
+    <Compile Include="Mathematics\Size2F.cs" />
     <Compile Include="Mathematics\Vector2.cs" />
     <Compile Include="Mathematics\Vector3.cs" />
     <Compile Include="Mathematics\Vector4.cs" />
+    <Compile Include="Mathematics\Viewport.cs" />
+    <Compile Include="Mathematics\ViewportF.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Protocol.cs" />
   </ItemGroup>

@@ -5,7 +5,7 @@
 // Commercial License Usage
 // 
 // Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
+// may use this file in accordance with the end user license agreement provided
 // with the software or, alternatively, in accordance with the terms contained in a
 // written agreement between you and KerboGames.
 // 
@@ -18,50 +18,16 @@ using System.Runtime.InteropServices;
 namespace Dreamcast.Mathematics
 {
     /// <summary>
-    /// Helper class to perform Half/Float conversion.
-    /// Code extract from paper : www.fox-toolkit.org/ftp/fasthalffloatconversion.pdf by Jeroen van der Zijp
+    ///     Helper class to perform Half/Float conversion.
+    ///     Code extract from paper : www.fox-toolkit.org/ftp/fasthalffloatconversion.pdf by Jeroen van der Zijp
     /// </summary>
     internal static class HalfUtils
     {
-
-        [StructLayout(LayoutKind.Explicit)]
-        private struct FloatToUint
-        {
-            [FieldOffset(0)]
-            public uint uintValue;
-            [FieldOffset(0)]
-            public float floatValue;
-        }
-
-        /// <summary>
-        /// Unpacks the specified h.
-        /// </summary>
-        /// <param name="h">The h.</param>
-        /// <returns></returns>
-        public static float Unpack(ushort h)
-        {
-            var conv = new FloatToUint();
-            conv.uintValue = HalfToFloatMantissaTable[HalfToFloatOffsetTable[h >> 10] + (((uint)h) & 0x3ff)] + HalfToFloatExponentTable[h >> 10];
-            return conv.floatValue;
-        }
-
-        /// <summary>
-        /// Packs the specified f.
-        /// </summary>
-        /// <param name="f">The f.</param>
-        /// <returns></returns>
-        public static ushort Pack(float f)
-        {
-            FloatToUint conv = new FloatToUint();
-            conv.floatValue = f;
-            return (ushort)(FloatToHalfBaseTable[(conv.uintValue >> 23) & 0x1ff] + ((conv.uintValue & 0x007fffff) >> FloatToHalfShiftTable[(conv.uintValue >> 23) & 0x1ff]));
-        }
-
-        static readonly uint[] HalfToFloatMantissaTable = new uint[2048];
-        static readonly uint[] HalfToFloatExponentTable = new uint[64];
-        static readonly uint[] HalfToFloatOffsetTable = new uint[64];
-        static readonly ushort[] FloatToHalfBaseTable = new ushort[512];
-        static readonly byte[] FloatToHalfShiftTable = new byte[512];
+        private static readonly uint[] HalfToFloatMantissaTable = new uint[2048];
+        private static readonly uint[] HalfToFloatExponentTable = new uint[64];
+        private static readonly uint[] HalfToFloatOffsetTable = new uint[64];
+        private static readonly ushort[] FloatToHalfBaseTable = new ushort[512];
+        private static readonly byte[] FloatToHalfShiftTable = new byte[512];
 
         static HalfUtils()
         {
@@ -79,7 +45,7 @@ namespace Dreamcast.Mathematics
             // Transform subnormal to normalized
             for (i = 1; i < 1024; i++)
             {
-                uint m = ((uint)i) << 13;
+                var m = (uint) i << 13;
                 uint e = 0;
 
                 while ((m & 0x00800000) == 0)
@@ -87,6 +53,7 @@ namespace Dreamcast.Mathematics
                     e -= 0x00800000;
                     m <<= 1;
                 }
+
                 m &= ~0x00800000U;
                 e += 0x38800000;
                 HalfToFloatMantissaTable[i] = m | e;
@@ -94,7 +61,7 @@ namespace Dreamcast.Mathematics
 
             // Normal case
             for (i = 1024; i < 2048; i++)
-                HalfToFloatMantissaTable[i] = 0x38000000 + (((uint)(i - 1024)) << 13);
+                HalfToFloatMantissaTable[i] = 0x38000000 + ((uint) (i - 1024) << 13);
 
             // Exponent table
 
@@ -102,12 +69,11 @@ namespace Dreamcast.Mathematics
             HalfToFloatExponentTable[0] = 0;
 
             for (i = 1; i < 63; i++)
-            {
                 if (i < 31) // Positive Numbers
-                    HalfToFloatExponentTable[i] = ((uint)i) << 23;
+                    HalfToFloatExponentTable[i] = (uint) i << 23;
                 else // Negative Numbers
-                    HalfToFloatExponentTable[i] = 0x80000000 + (((uint)(i - 32)) << 23);
-            }
+                    HalfToFloatExponentTable[i] = 0x80000000 + ((uint) (i - 32) << 23);
+
             HalfToFloatExponentTable[31] = 0x47800000;
             HalfToFloatExponentTable[32] = 0x80000000;
             HalfToFloatExponentTable[63] = 0xC7800000;
@@ -124,43 +90,81 @@ namespace Dreamcast.Mathematics
 
             for (i = 0; i < 256; i++)
             {
-                int e = i - 127;
+                var e = i - 127;
                 if (e < -24)
-                { // Very small numbers map to zero
+                {
+                    // Very small numbers map to zero
                     FloatToHalfBaseTable[i | 0x000] = 0x0000;
                     FloatToHalfBaseTable[i | 0x100] = 0x8000;
                     FloatToHalfShiftTable[i | 0x000] = 24;
                     FloatToHalfShiftTable[i | 0x100] = 24;
                 }
                 else if (e < -14)
-                { // Small numbers map to denorms
-                    FloatToHalfBaseTable[i | 0x000] = (ushort)((0x0400 >> (-e - 14)));
-                    FloatToHalfBaseTable[i | 0x100] = (ushort)((0x0400 >> (-e - 14)) | 0x8000);
-                    FloatToHalfShiftTable[i | 0x000] = (byte)(-e - 1);
-                    FloatToHalfShiftTable[i | 0x100] = (byte)(-e - 1);
+                {
+                    // Small numbers map to denorms
+                    FloatToHalfBaseTable[i | 0x000] = (ushort) (0x0400 >> (-e - 14));
+                    FloatToHalfBaseTable[i | 0x100] = (ushort) ((0x0400 >> (-e - 14)) | 0x8000);
+                    FloatToHalfShiftTable[i | 0x000] = (byte) (-e - 1);
+                    FloatToHalfShiftTable[i | 0x100] = (byte) (-e - 1);
                 }
                 else if (e <= 15)
-                { // Normal numbers just lose precision
-                    FloatToHalfBaseTable[i | 0x000] = (ushort)(((e + 15) << 10));
-                    FloatToHalfBaseTable[i | 0x100] = (ushort)(((e + 15) << 10) | 0x8000);
+                {
+                    // Normal numbers just lose precision
+                    FloatToHalfBaseTable[i | 0x000] = (ushort) ((e + 15) << 10);
+                    FloatToHalfBaseTable[i | 0x100] = (ushort) (((e + 15) << 10) | 0x8000);
                     FloatToHalfShiftTable[i | 0x000] = 13;
                     FloatToHalfShiftTable[i | 0x100] = 13;
                 }
                 else if (e < 128)
-                { // Large numbers map to Infinity
+                {
+                    // Large numbers map to Infinity
                     FloatToHalfBaseTable[i | 0x000] = 0x7C00;
                     FloatToHalfBaseTable[i | 0x100] = 0xFC00;
                     FloatToHalfShiftTable[i | 0x000] = 24;
                     FloatToHalfShiftTable[i | 0x100] = 24;
                 }
                 else
-                { // Infinity and NaN's stay Infinity and NaN's
+                {
+                    // Infinity and NaN's stay Infinity and NaN's
                     FloatToHalfBaseTable[i | 0x000] = 0x7C00;
                     FloatToHalfBaseTable[i | 0x100] = 0xFC00;
                     FloatToHalfShiftTable[i | 0x000] = 13;
                     FloatToHalfShiftTable[i | 0x100] = 13;
                 }
             }
+        }
+
+        /// <summary>
+        ///     Unpacks the specified h.
+        /// </summary>
+        /// <param name="h">The h.</param>
+        /// <returns></returns>
+        public static float Unpack(ushort h)
+        {
+            var conv = new FloatToUint();
+            conv.uintValue = HalfToFloatMantissaTable[HalfToFloatOffsetTable[h >> 10] + ((uint) h & 0x3ff)] +
+                             HalfToFloatExponentTable[h >> 10];
+            return conv.floatValue;
+        }
+
+        /// <summary>
+        ///     Packs the specified f.
+        /// </summary>
+        /// <param name="f">The f.</param>
+        /// <returns></returns>
+        public static ushort Pack(float f)
+        {
+            var conv = new FloatToUint();
+            conv.floatValue = f;
+            return (ushort) (FloatToHalfBaseTable[(conv.uintValue >> 23) & 0x1ff] + ((conv.uintValue & 0x007fffff) >>
+                FloatToHalfShiftTable[(conv.uintValue >> 23) & 0x1ff]));
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        private struct FloatToUint
+        {
+            [FieldOffset(0)] public uint uintValue;
+            [FieldOffset(0)] public float floatValue;
         }
     }
 }

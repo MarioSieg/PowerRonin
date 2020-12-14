@@ -5,7 +5,7 @@
 // Commercial License Usage
 // 
 // Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
+// may use this file in accordance with the end user license agreement provided
 // with the software or, alternatively, in accordance with the terms contained in a
 // written agreement between you and KerboGames.
 // 
@@ -311,7 +311,7 @@ namespace Dreamcast.Mathematics
                 throw new ArgumentNullException("values");
             if (values.Length != 16)
                 throw new ArgumentOutOfRangeException("values",
-                    "There must be sixteen and only sixteen input values for Matrix.");
+                    "There must be sixteen and only sixteen input values for Matrix4x4.");
 
             M11 = values[0];
             M12 = values[1];
@@ -524,7 +524,7 @@ namespace Dreamcast.Mathematics
                     case 15: return M44;
                 }
 
-                throw new ArgumentOutOfRangeException("index", "Indices for Matrix run from 0 to 15, inclusive.");
+                throw new ArgumentOutOfRangeException("index", "Indices for Matrix4x4 run from 0 to 15, inclusive.");
             }
 
             set
@@ -581,7 +581,7 @@ namespace Dreamcast.Mathematics
                         break;
                     default:
                         throw new ArgumentOutOfRangeException("index",
-                            "Indices for Matrix run from 0 to 15, inclusive.");
+                            "Indices for Matrix4x4 run from 0 to 15, inclusive.");
                 }
             }
         }
@@ -1199,7 +1199,7 @@ namespace Dreamcast.Mathematics
         public static void Exponent(ref Matrix4x4 value, int exponent, out Matrix4x4 result)
         {
             //Source: http://rosettacode.org
-            //Reference: http://rosettacode.org/wiki/Matrix-exponentiation_operator
+            //Reference: http://rosettacode.org/wiki/Matrix4x4-exponentiation_operator
 
             if (exponent < 0)
                 throw new ArgumentOutOfRangeException("exponent", "The exponent can not be negative.");
@@ -2333,7 +2333,8 @@ namespace Dreamcast.Mathematics
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <returns>The created projection matrix.</returns>
-        public static Matrix4x4 OrthoOffCenterLH(float left, float right, float bottom, float top, float znear, float zfar)
+        public static Matrix4x4 OrthoOffCenterLH(float left, float right, float bottom, float top, float znear,
+            float zfar)
         {
             Matrix4x4 result;
             OrthoOffCenterLH(left, right, bottom, top, znear, zfar, out result);
@@ -2367,7 +2368,8 @@ namespace Dreamcast.Mathematics
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <returns>The created projection matrix.</returns>
-        public static Matrix4x4 OrthoOffCenterRH(float left, float right, float bottom, float top, float znear, float zfar)
+        public static Matrix4x4 OrthoOffCenterRH(float left, float right, float bottom, float top, float znear,
+            float zfar)
         {
             Matrix4x4 result;
             OrthoOffCenterRH(left, right, bottom, top, znear, zfar, out result);

@@ -5,7 +5,7 @@
 // Commercial License Usage
 // 
 // Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
+// may use this file in accordance with the end user license agreement provided
 // with the software or, alternatively, in accordance with the terms contained in a
 // written agreement between you and KerboGames.
 // 
@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 namespace Dreamcast.Mathematics
 {
     /// <summary>
-    ///     Represents a 3x3 Matrix ( contains only Scale and Rotation ).
+    ///     Represents a 3x3 Matrix4x4 ( contains only Scale and Rotation ).
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
     public struct Matrix3x3 : IEquatable<Matrix3x3>, IFormattable
@@ -2107,9 +2107,9 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        ///     Convert the 3x3 Matrix to a 4x4 Matrix.
+        ///     Convert the 3x3 Matrix4x4 to a 4x4 Matrix4x4.
         /// </summary>
-        /// <returns>A 4x4 Matrix with zero translation and M44=1</returns>
+        /// <returns>A 4x4 Matrix4x4 with zero translation and M44=1</returns>
         public static explicit operator Matrix4x4(Matrix3x3 Value)
         {
             return new Matrix4x4(
@@ -2121,9 +2121,9 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        ///     Convert the 4x4 Matrix to a 3x3 Matrix.
+        ///     Convert the 4x4 Matrix4x4 to a 3x3 Matrix4x4.
         /// </summary>
-        /// <returns>A 3x3 Matrix</returns>
+        /// <returns>A 3x3 Matrix4x4</returns>
         public static explicit operator Matrix3x3(Matrix4x4 Value)
         {
             return new Matrix3x3(

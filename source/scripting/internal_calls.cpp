@@ -1,3 +1,18 @@
+// *******************************************************************************
+// The content of this file includes portions of the KerboGames Dreamcast Technology
+// released in source code form as part of the SDK package.
+// 
+// Commercial License Usage
+// 
+// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// may use this file in accordance with the end user license agreement provided 
+// with the software or, alternatively, in accordance with the terms contained in a
+// written agreement between you and KerboGames.
+// 
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
+// support@kerbogames.com
+// *******************************************************************************
+
 #include "../../include/dce/runtime.hpp"
 #include "internal_calls.hpp"
 #include "mono_headers.hpp"
@@ -39,10 +54,10 @@ namespace dce::scripting {
 			};
 			mono_add_internal_call("Dreamcast.Core.Input::IsKeyDown", reinterpret_cast<void*>(NATIVE_PROC));
 		}
-		
+
 		{
 			static constexpr auto* NATIVE_PROC = +[](float* const _x, float* const _y) noexcept {
-				const auto cursor_pos =  RUNTIME->input().get_mouse_position();
+				const auto cursor_pos = RUNTIME->input().get_mouse_position();
 				*_x = cursor_pos.x;
 				*_y = cursor_pos.y;
 			};

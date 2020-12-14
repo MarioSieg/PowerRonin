@@ -48,7 +48,8 @@ namespace dce {
 	};
 
 	template <typename Mutex>
-	TerminalSink<Mutex>::TerminalSink(std::string&& _file_name) : spdlog::sinks::base_sink<Mutex>(), file_name_(std::move(_file_name)) { }
+	TerminalSink<Mutex>::TerminalSink(std::string&& _file_name)
+		: spdlog::sinks::base_sink<Mutex>(), file_name_(std::move(_file_name)) { }
 
 	template <typename Mutex>
 	auto TerminalSink<Mutex>::string_buffer() const noexcept -> const std::vector<std::tuple<std::string, LogLevel>>& {
@@ -72,8 +73,8 @@ namespace dce {
 		ss << std::put_time(&tm, "%d-%m-%Y-%H-%M-%S");
 		ss << ".log";
 		std::ofstream f(ss.str());
-		[[likely]] if(f) {
-			for(const auto& msg : this->buffer_) {
+		[[likely]] if (f) {
+			for (const auto& msg : this->buffer_) {
 				f << std::get<0>(msg);
 			}
 		}

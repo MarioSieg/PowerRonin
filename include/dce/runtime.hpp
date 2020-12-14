@@ -139,7 +139,7 @@ namespace dce {
 		/// 
 		/// </summary>
 		/// <returns>Returns the protocol for the C# scripting runtime.</returns>
-		[[nodiscard]] auto scripting_protocol() const& noexcept -> const AsyncProtocol&;
+		[[nodiscard]] auto scripting_protocol() const & noexcept -> const AsyncProtocol&;
 
 		/// <summary>
 		/// 
@@ -175,7 +175,7 @@ namespace dce {
 		return this->protocol_;
 	}
 
-	inline auto Runtime::protocol() const& noexcept -> const AsyncProtocol& {
+	inline auto Runtime::protocol() const & noexcept -> const AsyncProtocol& {
 		return this->protocol_;
 	}
 
@@ -183,7 +183,7 @@ namespace dce {
 		return this->config_;
 	}
 
-	inline auto Runtime::config() const& noexcept -> const Config& {
+	inline auto Runtime::config() const & noexcept -> const Config& {
 		return this->config_;
 	}
 
@@ -191,7 +191,7 @@ namespace dce {
 		return this->class_db_;
 	}
 
-	inline auto Runtime::class_db() const& noexcept -> const ClassDB& {
+	inline auto Runtime::class_db() const & noexcept -> const ClassDB& {
 		return this->class_db_;
 	}
 
@@ -199,7 +199,7 @@ namespace dce {
 		return this->command_db_;
 	}
 
-	inline auto Runtime::command_db() const& noexcept -> const CmdDB& {
+	inline auto Runtime::command_db() const & noexcept -> const CmdDB& {
 		return this->command_db_;
 	}
 
@@ -207,19 +207,19 @@ namespace dce {
 		return this->resource_manager_;
 	}
 
-	inline auto Runtime::resource_manager() const& noexcept -> const ResourceManager& {
+	inline auto Runtime::resource_manager() const & noexcept -> const ResourceManager& {
 		return this->resource_manager_;
 	}
 
-	inline auto Runtime::diagnostics() const& noexcept -> const Diagnostics& {
+	inline auto Runtime::diagnostics() const & noexcept -> const Diagnostics& {
 		return this->diagnostics_;
 	}
 
-	inline auto Runtime::chrono() const& noexcept -> const Chrono& {
+	inline auto Runtime::chrono() const & noexcept -> const Chrono& {
 		return this->chrono_;
 	}
 
-	inline auto Runtime::scenery() const& noexcept -> const Scenery& {
+	inline auto Runtime::scenery() const & noexcept -> const Scenery& {
 		return this->scenery_;
 	}
 
@@ -227,11 +227,11 @@ namespace dce {
 		return this->scenery_;
 	}
 
-	inline auto Runtime::input() const& noexcept -> const Input& {
+	inline auto Runtime::input() const & noexcept -> const Input& {
 		return this->input_;
 	}
 
-	inline auto Runtime::render_data() const& noexcept -> const RenderData& {
+	inline auto Runtime::render_data() const & noexcept -> const RenderData& {
 		return this->render_data_;
 	}
 
@@ -239,7 +239,7 @@ namespace dce {
 		return this->render_data_;
 	}
 
-	inline auto Runtime::scripting_protocol() const& noexcept -> const AsyncProtocol& {
+	inline auto Runtime::scripting_protocol() const & noexcept -> const AsyncProtocol& {
 		return this->scripting_protocol_;
 	}
 

@@ -25,7 +25,7 @@ namespace dce::scripting {
 		auto& proto = _rt.protocol();
 		const auto lib_dir = _rt.config().scripting.library_dir.string();
 		const auto cfg_dir = _rt.config().scripting.config_dir.string();
-		
+
 		proto.info("Initializing scripting backend (Mono)...");
 		proto.info("Library dir: {}, config dir: {}", lib_dir, cfg_dir);
 
@@ -35,7 +35,7 @@ namespace dce::scripting {
 		const auto exe_name = get_executable_name();
 		this->domain_ = mono_jit_init(exe_name.c_str());
 
-		[[unlikely]] if(!this->domain_) {
+		[[unlikely]] if (!this->domain_) {
 			return false;
 		}
 
@@ -45,28 +45,26 @@ namespace dce::scripting {
 		}
 
 		this->engine_image_ = mono_assembly_get_image(this->engine_runtime_);
-		[[unlikely]] if(!this->engine_image_) {
+		[[unlikely]] if (!this->engine_image_) {
 			return false;
 		}
 
-		int argc = 1;
-		char* argv[1] = {
-			const_cast<char*>("Test")
-		};
-		
-		[[unlikely]] if(!mono_jit_exec(this->domain_, this->engine_runtime_, argc, argv)) {
+		const int argc = 1;
+		char* argv[1] = {const_cast<char*>("Test")};
+
+		[[unlikely]] if (!mono_jit_exec(this->domain_, this->engine_runtime_, argc, argv)) {
 			return false;
 		}
 
 		this->engine_class_ = mono_class_from_name(this->engine_image_, "Dreamcast.Core", "Core");
-		[[unlikely]] if(!this->engine_class_) {
+		[[unlikely]] if (!this->engine_class_) {
 			return false;
 		}
-		
+
 		register_basic_internal_calls(_rt);
 
 		this->engine_on_start_ = mono_class_get_method_from_name(this->engine_class_, "OnStart", 0);
-		[[unlikely]] if(!this->engine_on_start_) {
+		[[unlikely]] if (!this->engine_on_start_) {
 			return false;
 		}
 
@@ -82,10 +80,10 @@ namespace dce::scripting {
 
 		MonoObject* ex = nullptr;
 		auto* ret = mono_runtime_invoke(this->engine_on_start_, nullptr, nullptr, &ex);
-		[[unlikely]] if(ex) {
+		[[unlikely]] if (ex) {
 			mono_print_unhandled_exception(ex);
 		}
-		
+
 		return true;
 	}
 

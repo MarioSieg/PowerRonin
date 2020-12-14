@@ -40,20 +40,16 @@ namespace dce::gui {
 			const auto print_sink = [this](const TerminalSink<>* const _sink) {
 				for (const auto& msg : _sink->string_buffer()) {
 					switch (std::get<1>(msg)) {
-					[[unlikely]] case LogLevel::ERROR:
-						PushStyleColor(ImGuiCol_Text, COLOR_ERROR);
+						[[unlikely]] case LogLevel::ERROR: PushStyleColor(ImGuiCol_Text, COLOR_ERROR);
 						++this->error_messages_count_;
 						break;
-					[[likely]] case LogLevel::INFO:
-						PushStyleColor(ImGuiCol_Text, COLOR_INFO);
+						[[likely]] case LogLevel::INFO: PushStyleColor(ImGuiCol_Text, COLOR_INFO);
 						break;
-					[[unlikely]] case LogLevel::DEBUG:
-					case LogLevel::TRACE:
-						PushStyleColor(ImGuiCol_Text, COLOR_TRACE);
+						[[unlikely]] case LogLevel::DEBUG:
+					case LogLevel::TRACE: PushStyleColor(ImGuiCol_Text, COLOR_TRACE);
 						break;
-					[[unlikely]] case LogLevel::CRITICAL:
-					case LogLevel::WARN:
-						PushStyleColor(ImGuiCol_Text, COLOR_WARN);
+						[[unlikely]] case LogLevel::CRITICAL:
+					case LogLevel::WARN: PushStyleColor(ImGuiCol_Text, COLOR_WARN);
 						++this->warning_messages_count_;
 						break;
 					default: case LogLevel::OFF: [[fallthrough]];
@@ -66,9 +62,10 @@ namespace dce::gui {
 			if (BeginChild("", {.0, -footer_height_to_reserve}, false)) {
 				PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 1));
 
-				[[likely]] if(this->show_scripting_protocol_) {
+				[[likely]] if (this->show_scripting_protocol_) {
 					print_sink(this->scripting_protocol_);
-				} else {
+				}
+				else {
 					print_sink(this->system_protocol_);
 				}
 
@@ -137,11 +134,11 @@ namespace dce::gui {
 			}
 
 			SameLine();
-			
+
 			/* Show scripting output. */
 			{
 				Checkbox("##out", &this->show_scripting_protocol_);
-				[[unlikely]] if(IsItemHovered()) {
+				[[unlikely]] if (IsItemHovered()) {
 					BeginTooltip();
 					TextUnformatted("Show scripting protocol instead of system protocol");
 					EndTooltip();
@@ -193,7 +190,7 @@ namespace dce::gui {
 	}
 
 	auto Terminal::initialize(const AsyncProtocol& _system_protocol, const AsyncProtocol& _scripting_protocol) noexcept -> bool {
-		[[unlikely]] if(_system_protocol.get_logger()->sinks().empty() || _scripting_protocol.get_logger()->sinks().empty()) {
+		[[unlikely]] if (_system_protocol.get_logger()->sinks().empty() || _scripting_protocol.get_logger()->sinks().empty()) {
 			return false;
 		}
 		this->system_protocol_ = dynamic_cast<const TerminalSink<>*>(&*_system_protocol.get_logger()->sinks()[0]);

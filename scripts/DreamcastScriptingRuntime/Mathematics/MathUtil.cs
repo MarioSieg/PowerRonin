@@ -5,7 +5,7 @@
 // Commercial License Usage
 // 
 // Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
+// may use this file in accordance with the end user license agreement provided
 // with the software or, alternatively, in accordance with the terms contained in a
 // written agreement between you and KerboGames.
 // 
@@ -296,7 +296,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of linear interpolation of values based on the amount.</returns>
         public static byte Lerp(byte from, byte to, float amount)
         {
-            return (byte) Lerp(@from, (float) to, amount);
+            return (byte) Lerp(from, (float) to, amount);
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace Dreamcast.Mathematics
         public static int Wrap(int value, int min, int max)
         {
             if (min > max)
-                throw new ArgumentException(string.Format("min {0} should be less than or equal to max {1}", min, max),
+                throw new ArgumentException($"min {min} should be less than or equal to max {max}",
                     "min");
 
             // Code from http://stackoverflow.com/a/707426/1356325
@@ -390,7 +390,7 @@ namespace Dreamcast.Mathematics
             double valued = value;
 
             if (mind > maxd)
-                throw new ArgumentException(string.Format("min {0} should be less than or equal to max {1}", min, max),
+                throw new ArgumentException($"min {min} should be less than or equal to max {max}",
                     "min");
 
             var range_size = maxd - mind;

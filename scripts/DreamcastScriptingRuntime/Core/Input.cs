@@ -5,7 +5,7 @@
 // Commercial License Usage
 // 
 // Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
+// may use this file in accordance with the end user license agreement provided
 // with the software or, alternatively, in accordance with the terms contained in a
 // written agreement between you and KerboGames.
 // 
@@ -24,10 +24,10 @@ namespace Dreamcast.Core
     public static class Input
     {
         /// <summary>
-        /// The mouse cursor position.
+        ///     The mouse cursor position.
         /// </summary>
         public static Vector2 CursorPosition { get; private set; }
-        
+
         /// <summary>
         /// </summary>
         /// <param name="key">The key.</param>
@@ -36,7 +36,6 @@ namespace Dreamcast.Core
         public static extern bool IsKeyDown(Key key);
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="mouseButton">The mouse button.</param>
         /// <returns>True if the mouse button is currently pressed, else false.</returns>
@@ -48,7 +47,7 @@ namespace Dreamcast.Core
 
         internal static void UpdateMouseCursor()
         {
-            GetCursorPosition(out float x, out float y);
+            GetCursorPosition(out var x, out var y);
             CursorPosition = new Vector2(x, y);
         }
     }

@@ -25,8 +25,8 @@ namespace dce::scripting {
 		Scripting();
 		Scripting(const Scripting&) = delete;
 		Scripting(Scripting&&) = delete;
-		auto operator=(const Scripting&)->Scripting & = delete;
-		auto operator=(Scripting&&)->Scripting & = delete;
+		auto operator=(const Scripting&) -> Scripting& = delete;
+		auto operator=(Scripting&&) -> Scripting& = delete;
 		~Scripting() override = default;
 
 	private:
@@ -40,12 +40,12 @@ namespace dce::scripting {
 		virtual auto on_post_tick([[maybe_unused]] Runtime& _rt) -> bool override;
 		virtual auto on_pre_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
 		virtual auto on_post_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
-		
+
 		MonoDomain* domain_ = nullptr;
 		MonoAssembly* engine_runtime_ = nullptr;
 		MonoImage* engine_image_ = nullptr;
 		MonoClass* engine_class_ = nullptr;
-		
+
 		MonoMethod* engine_on_start_ = nullptr;
 		MonoMethod* engine_on_update_ = nullptr;
 		MonoMethod* engine_on_exit_ = nullptr;

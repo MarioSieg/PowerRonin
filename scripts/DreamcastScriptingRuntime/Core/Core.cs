@@ -5,7 +5,7 @@
 // Commercial License Usage
 // 
 // Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
+// may use this file in accordance with the end user license agreement provided
 // with the software or, alternatively, in accordance with the terms contained in a
 // written agreement between you and KerboGames.
 // 
@@ -19,7 +19,7 @@ using System.Diagnostics;
 namespace Dreamcast.Core
 {
     /// <summary>
-    /// Engine core class.
+    ///     Engine core class.
     /// </summary>
     public static class Core
     {
@@ -38,11 +38,10 @@ namespace Dreamcast.Core
 
         private static void OnExit()
         {
-            
         }
 
         /// <summary>
-        /// Prints some general system information from System.Environment.
+        ///     Prints some general system information from System.Environment.
         /// </summary>
         public static void PrintInformation()
         {
