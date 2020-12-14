@@ -1,172 +1,17 @@
-//  Apache License
-//                            Version 2.0, January 2004
-//                         http://www.apache.org/licenses/
-//    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
-//    1. Definitions.
-//       "License" shall mean the terms and conditions for use, reproduction,
-//       and distribution as defined by Sections 1 through 9 of this document.
-//       "Licensor" shall mean the copyright owner or entity authorized by
-//       the copyright owner that is granting the License.
-//       "Legal Entity" shall mean the union of the acting entity and all
-//       other entities that control, are controlled by, or are under common
-//       control with that entity. For the purposes of this definition,
-//       "control" means (i) the power, direct or indirect, to cause the
-//       direction or management of such entity, whether by contract or
-//       otherwise, or (ii) ownership of fifty percent (50%) or more of the
-//       outstanding shares, or (iii) beneficial ownership of such entity.
-//       "You" (or "Your") shall mean an individual or Legal Entity
-//       exercising permissions granted by this License.
-//       "Source" form shall mean the preferred form for making modifications,
-//       including but not limited to software source code, documentation
-//       source, and configuration files.
-//       "Object" form shall mean any form resulting from mechanical
-//       transformation or translation of a Source form, including but
-//       not limited to compiled object code, generated documentation,
-//       and conversions to other media types.
-//       "Work" shall mean the work of authorship, whether in Source or
-//       Object form, made available under the License, as indicated by a
-//       copyright notice that is included in or attached to the work
-//       (an example is provided in the Appendix below).
-//       "Derivative Works" shall mean any work, whether in Source or Object
-//       form, that is based on (or derived from) the Work and for which the
-//       editorial revisions, annotations, elaborations, or other modifications
-//       represent, as a whole, an original work of authorship. For the purposes
-//       of this License, Derivative Works shall not include works that remain
-//       separable from, or merely link (or bind by name) to the interfaces of,
-//       the Work and Derivative Works thereof.
-//       "Contribution" shall mean any work of authorship, including
-//       the original version of the Work and any modifications or additions
-//       to that Work or Derivative Works thereof, that is intentionally
-//       submitted to Licensor for inclusion in the Work by the copyright owner
-//       or by an individual or Legal Entity authorized to submit on behalf of
-//       the copyright owner. For the purposes of this definition, "submitted"
-//       means any form of electronic, verbal, or written communication sent
-//       to the Licensor or its representatives, including but not limited to
-//       communication on electronic mailing lists, source code control systems,
-//       and issue tracking systems that are managed by, or on behalf of, the
-//       Licensor for the purpose of discussing and improving the Work, but
-//       excluding communication that is conspicuously marked or otherwise
-//       designated in writing by the copyright owner as "Not a Contribution."
-//       "Contributor" shall mean Licensor and any individual or Legal Entity
-//       on behalf of whom a Contribution has been received by Licensor and
-//       subsequently incorporated within the Work.
-//    2. Grant of Copyright License. Subject to the terms and conditions of
-//       this License, each Contributor hereby grants to You a perpetual,
-//       worldwide, non-exclusive, no-charge, royalty-free, irrevocable
-//       copyright license to reproduce, prepare Derivative Works of,
-//       publicly display, publicly perform, sublicense, and distribute the
-//       Work and such Derivative Works in Source or Object form.
-//    3. Grant of Patent License. Subject to the terms and conditions of
-//       this License, each Contributor hereby grants to You a perpetual,
-//       worldwide, non-exclusive, no-charge, royalty-free, irrevocable
-//       (except as stated in this section) patent license to make, have made,
-//       use, offer to sell, sell, import, and otherwise transfer the Work,
-//       where such license applies only to those patent claims licensable
-//       by such Contributor that are necessarily infringed by their
-//       Contribution(s) alone or by combination of their Contribution(s)
-//       with the Work to which such Contribution(s) was submitted. If You
-//       institute patent litigation against any entity (including a
-//       cross-claim or counterclaim in a lawsuit) alleging that the Work
-//       or a Contribution incorporated within the Work constitutes direct
-//       or contributory patent infringement, then any patent licenses
-//       granted to You under this License for that Work shall terminate
-//       as of the date such litigation is filed.
-//    4. Redistribution. You may reproduce and distribute copies of the
-//       Work or Derivative Works thereof in any medium, with or without
-//       modifications, and in Source or Object form, provided that You
-//       meet the following conditions:
-//       (a) You must give any other recipients of the Work or
-//           Derivative Works a copy of this License; and
-//       (b) You must cause any modified files to carry prominent notices
-//           stating that You changed the files; and
-//       (c) You must retain, in the Source form of any Derivative Works
-//           that You distribute, all copyright, patent, trademark, and
-//           attribution notices from the Source form of the Work,
-//           excluding those notices that do not pertain to any part of
-//           the Derivative Works; and
-//       (d) If the Work includes a "NOTICE" text file as part of its
-//           distribution, then any Derivative Works that You distribute must
-//           include a readable copy of the attribution notices contained
-//           within such NOTICE file, excluding those notices that do not
-//           pertain to any part of the Derivative Works, in at least one
-//           of the following places: within a NOTICE text file distributed
-//           as part of the Derivative Works; within the Source form or
-//           documentation, if provided along with the Derivative Works; or,
-//           within a display generated by the Derivative Works, if and
-//           wherever such third-party notices normally appear. The contents
-//           of the NOTICE file are for informational purposes only and
-//           do not modify the License. You may add Your own attribution
-//           notices within Derivative Works that You distribute, alongside
-//           or as an addendum to the NOTICE text from the Work, provided
-//           that such additional attribution notices cannot be construed
-//           as modifying the License.
-//       You may add Your own copyright statement to Your modifications and
-//       may provide additional or different license terms and conditions
-//       for use, reproduction, or distribution of Your modifications, or
-//       for any such Derivative Works as a whole, provided Your use,
-//       reproduction, and distribution of the Work otherwise complies with
-//       the conditions stated in this License.
-//    5. Submission of Contributions. Unless You explicitly state otherwise,
-//       any Contribution intentionally submitted for inclusion in the Work
-//       by You to the Licensor shall be under the terms and conditions of
-//       this License, without any additional terms or conditions.
-//       Notwithstanding the above, nothing herein shall supersede or modify
-//       the terms of any separate license agreement you may have executed
-//       with Licensor regarding such Contributions.
-//    6. Trademarks. This License does not grant permission to use the trade
-//       names, trademarks, service marks, or product names of the Licensor,
-//       except as required for reasonable and customary use in describing the
-//       origin of the Work and reproducing the content of the NOTICE file.
-//    7. Disclaimer of Warranty. Unless required by applicable law or
-//       agreed to in writing, Licensor provides the Work (and each
-//       Contributor provides its Contributions) on an "AS IS" BASIS,
-//       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-//       implied, including, without limitation, any warranties or conditions
-//       of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
-//       PARTICULAR PURPOSE. You are solely responsible for determining the
-//       appropriateness of using or redistributing the Work and assume any
-//       risks associated with Your exercise of permissions under this License.
-//    8. Limitation of Liability. In no event and under no legal theory,
-//       whether in tort (including negligence), contract, or otherwise,
-//       unless required by applicable law (such as deliberate and grossly
-//       negligent acts) or agreed to in writing, shall any Contributor be
-//       liable to You for damages, including any direct, indirect, special,
-//       incidental, or consequential damages of any character arising as a
-//       result of this License or out of the use or inability to use the
-//       Work (including but not limited to damages for loss of goodwill,
-//       work stoppage, computer failure or malfunction, or any and all
-//       other commercial damages or losses), even if such Contributor
-//       has been advised of the possibility of such damages.
-//    9. Accepting Warranty or Additional Liability. While redistributing
-//       the Work or Derivative Works thereof, You may choose to offer,
-//       and charge a fee for, acceptance of support, warranty, indemnity,
-//       or other liability obligations and/or rights consistent with this
-//       License. However, in accepting such obligations, You may act only
-//       on Your own behalf and on Your sole responsibility, not on behalf
-//       of any other Contributor, and only if You agree to indemnify,
-//       defend, and hold each Contributor harmless for any liability
-//       incurred by, or claims asserted against, such Contributor by reason
-//       of your accepting any such warranty or additional liability.
-//    END OF TERMS AND CONDITIONS
-//    APPENDIX: How to apply the Apache License to your work.
-//       To apply the Apache License to your work, attach the following
-//       boilerplate notice, with the fields enclosed by brackets "[]"
-//       replaced with your own identifying information. (Don't include
-//       the brackets!)  The text should be enclosed in the appropriate
-//       comment syntax for the file format. We also recommend that a
-//       file or class name and description of purpose be included on the
-//       same "printed page" as the copyright notice for easier
-//       identification within third-party archives.
+// *******************************************************************************
+// The content of this file includes portions of the KerboGames Dreamcast Technology
+// released in source code form as part of the SDK package.
 // 
-//    Copyright 2020 Mario Sieg <support@kerbogames.com>
-//    Licensed under the Apache License, Version 2.0 (the "License");
-//    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
-//    Unless required by applicable law or agreed to in writing, software
-//    distributed under the License is distributed on an "AS IS" BASIS,
-//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//    See the License for the specific language governing permissions and
-//    limitations under the License.
+// Commercial License Usage
+// 
+// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// may use this file in accordance with the end user license agreement provided 
+// with the software or, alternatively, in accordance with the terms contained in a
+// written agreement between you and KerboGames.
+// 
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
+// support@kerbogames.com
+// *******************************************************************************
 
 #include "inspector.hpp"
 #include "../gui_headers.hpp"
@@ -175,7 +20,7 @@
 #include "../../include/dce/comcollections.hpp"
 #include "../../include/dce/resource_manager.hpp"
 #include "../file_dialog_tool.hpp"
-#include <variant>
+#include "../window_names.hpp"
 
 using namespace ImGui;
 
@@ -185,11 +30,24 @@ extern const float *VIEW, *PROJ;
 namespace dce::gui::widgets {
 	void Inspector::initialize() {
 		this->current_path_ = std::filesystem::current_path().string();
+
+		auto build_filter_extensions = [](auto& _string, const auto& _extensions) {
+			for (const auto& ext : _extensions) {
+				for (auto i = 1; i < ext.size(); ++i) {
+					_string.push_back(ext[i]);
+				}
+				_string.push_back(',');
+			}
+		};
+
+		build_filter_extensions(this->mesh_filer_, Mesh::FILE_EXTENSIONS);
+		build_filter_extensions(this->texture_filer_, Texture::FILE_EXTENSIONS);
+		build_filter_extensions(this->audio_filter_, AudioClip::FILE_EXTENSIONS);
 	}
 
 	void Inspector::update(bool& _show, Registry& _registry, ResourceManager& _resource_manager, const ERef _entity) {
 		SetNextWindowSize({300, 800}, ImGuiCond_FirstUseEver);
-		[[likely]] if (Begin(ICON_FA_SLIDERS_H " Inspector", &_show)) {
+		[[likely]] if (Begin(INSPECTOR_NAME, &_show)) {
 			[[unlikely]] if (!_registry.valid(_entity)) {
 				TextUnformatted("No entity selected!");
 				End();
@@ -199,31 +57,31 @@ namespace dce::gui::widgets {
 			[[likely]] if (BeginChild("", {.0, -footer_height_to_reserve}, false)) {
 				[[likely]] if (_registry.has<MetaData>(_entity)) {
 					auto& meta = _registry.get<MetaData>(_entity);
-					[[likely]] if (CollapsingHeader(ICON_FA_COGS " Metadata")) {
+					[[likely]] if (CollapsingHeader(ICON_FA_COGS " Metadata", ImGuiTreeNodeFlags_DefaultOpen)) {
 						std::strncpy(this->string_buffer_.data(), meta.name.data(), BUFFER_SIZE);
-						if (InputText("Name", this->string_buffer_.data(), BUFFER_SIZE)) {
+						[[unlikely]] if (InputText("Name", this->string_buffer_.data(), BUFFER_SIZE)) {
 							meta.name = this->string_buffer_.data();
 						}
 
 						std::strncpy(this->string_buffer_.data(), meta.description.data(), BUFFER_SIZE);
-						if (InputText("Description", this->string_buffer_.data(), BUFFER_SIZE)) {
+						[[unlikely]] if (InputText("Description", this->string_buffer_.data(), BUFFER_SIZE)) {
 							meta.description = this->string_buffer_.data();
 						}
 
 						int tag = static_cast<int>(meta.tag);
-						if (InputInt("Tag", &tag)) {
+						[[unlikely]] if (InputInt("Tag", &tag)) {
 							meta.tag = static_cast<std::uint16_t>(tag);
 						}
 
 						int layer = static_cast<int>(meta.layer);
-						if (InputInt("Layer", &layer)) {
+						[[unlikely]] if (InputInt("Layer", &layer)) {
 							meta.layer = static_cast<std::uint16_t>(layer);
 						}
 					}
 				}
 				[[likely]] if (_registry.has<Transform>(_entity)) {
 					auto& transform = _registry.get<Transform>(_entity);
-					[[likely]] if (CollapsingHeader(ICON_FA_MAP_MARKER_ALT " Transform ")) {
+					[[likely]] if (CollapsingHeader(ICON_FA_MAP_MARKER_ALT " Transform ", ImGuiTreeNodeFlags_DefaultOpen)) {
 						[[unlikely]] if (Button(ICON_FA_ARROWS)) {
 							this->modifier_ = ImGuizmo::TRANSLATE;
 						}
@@ -235,24 +93,23 @@ namespace dce::gui::widgets {
 						[[unlikely]] if (Button(ICON_FA_EXPAND)) {
 							this->modifier_ = ImGuizmo::SCALE;
 						}
-						/*
 						Separator();
-			  
+
 						DragFloat3("Position", value_ptr(transform.position));
-			  
-						Vec3 euler_angles = eulerAngles(transform.rotation);
+
+						Vector3<> euler_angles = eulerAngles(transform.rotation);
 						euler_angles.x = math::degrees(euler_angles.x);
 						euler_angles.y = math::degrees(euler_angles.y);
 						euler_angles.z = math::degrees(euler_angles.z);
 						[[unlikely]] if (DragFloat3("Rotation", value_ptr(euler_angles))) {
-						        euler_angles.x = math::radians(euler_angles.x);
-						        euler_angles.y = math::radians(euler_angles.y);
-						        euler_angles.z = math::radians(euler_angles.z);
-						        transform.rotation = Quaternion(euler_angles);
+							euler_angles.x = math::radians(euler_angles.x);
+							euler_angles.y = math::radians(euler_angles.y);
+							euler_angles.z = math::radians(euler_angles.z);
+							transform.rotation = Quaternion<>(euler_angles);
 						}
-			  
+
 						DragFloat3("Scale ", value_ptr(transform.scale));
-						*/
+						/*
 						auto matrix = transform.calculate_matrix();
 						ImGuizmo::Enable(true);
 						ImGuizmo::BeginFrame();
@@ -263,68 +120,109 @@ namespace dce::gui::widgets {
 							glm::vec4 perspective;
 							decompose(matrix, transform.scale, transform.rotation, transform.position, skew, perspective);
 						}
+						*/
 					}
 				}
 				[[likely]] if (_registry.has<MeshRenderer>(_entity)) {
 					auto& renderer = _registry.get<MeshRenderer>(_entity);
-					[[likely]] if (CollapsingHeader(ICON_FA_CUBE " Mesh Renderer")) {
+					[[likely]] if (CollapsingHeader(ICON_FA_CUBE " Mesh Renderer", ImGuiTreeNodeFlags_DefaultOpen)) {
 						Checkbox("Visible", &renderer.is_visible);
 
 						{
 							const auto file_name = renderer.mesh->get_file_path().filename().string();
-							TextUnformatted(file_name.c_str());
-							SameLine();
-							TextUnformatted("Mesh");
-							SameLine();
-							if (embedded_button(ICON_FA_FOLDER_OPEN "##mesh")) {
+							PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
+							if (Button(file_name.c_str())) {
 								char* path = nullptr;
-								open_file_dialog(path, MESH_FILE_FILTER, this->current_path_.c_str());
+								open_file_dialog(path, this->mesh_filer_.c_str(), this->current_path_.c_str());
 								[[likely]] if (path) {
 									renderer.mesh = _resource_manager.load<Mesh>(path);
 								}
 							}
+							PopStyleColor();
+							SameLine();
+							TextUnformatted("Mesh");
 						}
+					}
 
-						Separator();
+					[[likely]] if (CollapsingHeader(ICON_FA_ADJUST " Material", ImGuiTreeNodeFlags_DefaultOpen)) {
 
-						if (*renderer.material == MaterialType::UNLIT) {
-							auto& props = renderer.material->get<Material::Unlit>();
+						constexpr static const char* const material_names[] = {"Unlit", "Lambert"};
+						/*
+						[[unlikely]] if (BeginCombo("Shader", material_names[current])) {
+							for (int i = 0; i < sizeof material_names / sizeof *material_names; ++i) {
+								if (Selectable(material_names[i], current == i)) {
+									current = i;
+								}
+								if (current == i) {
+									SetItemDefaultFocus();
+								}
+							}
+							EndCombo();
+						}
+						*/
+
+						if (std::holds_alternative<Material::Unlit>(renderer.material->properties)) {
+							auto& props = std::get<Material::Unlit>(renderer.material->properties);
 							const auto file_name = props.albedo->get_file_path().filename().string();
-							TextUnformatted(file_name.c_str());
-							SameLine();
-							TextUnformatted("Albedo");
-							SameLine();
-							if (embedded_button(ICON_FA_FOLDER_OPEN "##tex")) {
+							PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
+							if (Button(file_name.c_str())) {
 								char* path = nullptr;
-								open_file_dialog(path, TEX_FILE_FILTER, this->current_path_.c_str());
+								open_file_dialog(path, this->texture_filer_.c_str(), this->current_path_.c_str());
 								[[likely]] if (path) {
 									props.albedo = _resource_manager.load<Texture>(path);
 								}
 							}
-						}
-						else if (*renderer.material == MaterialType::LAMBERT) {
-							auto& props = renderer.material->get<Material::Lambert>();
-							const auto file_name = props.albedo->get_file_path().filename().string();
-							TextUnformatted(file_name.c_str());
+							PopStyleColor();
 							SameLine();
 							TextUnformatted("Albedo");
-							SameLine();
-							if (embedded_button(ICON_FA_FOLDER_OPEN "##tex2")) {
+						}
+						else if (std::holds_alternative<Material::Lambert>(renderer.material->properties)) {
+							auto& props = std::get<Material::Lambert>(renderer.material->properties);
+							const auto file_name = props.albedo->get_file_path().filename().string();
+							PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
+							if (Button(file_name.c_str())) {
 								char* path = nullptr;
-								open_file_dialog(path, TEX_FILE_FILTER, this->current_path_.c_str());
+								open_file_dialog(path, this->texture_filer_.c_str(), this->current_path_.c_str());
 								[[likely]] if (path) {
 									props.albedo = _resource_manager.load<Texture>(path);
 								}
 							}
-							ColorPicker4("Diffuse Color", value_ptr(props.color), ImGuiColorEditFlags_PickerHueWheel);
+							PopStyleColor();
 						}
 					}
 				}
-				[[likely]] if (_registry.has<Rigidbody>(_entity)) {
+
+				[[unlikely]] if (_registry.has<Rigidbody>(_entity)) {
 					auto& rigidbody = _registry.get<Rigidbody>(_entity);
-					[[likely]] if (CollapsingHeader(ICON_FA_GLOBE " Rigidbody")) {
+					[[likely]] if (CollapsingHeader(ICON_FA_GLOBE " Rigidbody", ImGuiTreeNodeFlags_DefaultOpen)) {
 						DragFloat("Mass", &rigidbody.mass);
 						Checkbox("Is Kinematic", &rigidbody.is_kinematic);
+					}
+				}
+
+				[[unlikely]] if (_registry.has<AudioSource>(_entity)) {
+					auto& audio_source = _registry.get<AudioSource>(_entity);
+					[[likely]] if (CollapsingHeader(ICON_FA_VOLUME " Audio Source", ImGuiTreeNodeFlags_DefaultOpen)) {
+						[[unlikely]] if (Button(ICON_FA_PLAY_CIRCLE)) {
+							audio_source.play();
+						}
+						SameLine();
+						[[unlikely]] if (Button(ICON_FA_STOP_CIRCLE)) {
+							audio_source.stop();
+						}
+						const auto file_name = audio_source.clip->get_file_path().filename().string();
+
+						PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
+						if (Button(file_name.c_str())) {
+							char* path = nullptr;
+							open_file_dialog(path, this->audio_filter_.c_str(), this->current_path_.c_str());
+							[[likely]] if (path) {
+								audio_source.clip = _resource_manager.load<AudioClip>(path);
+							}
+						}
+						PopStyleColor();
+						SameLine();
+						TextUnformatted("Clip");
 					}
 				}
 				EndChild();

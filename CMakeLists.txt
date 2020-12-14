@@ -4,8 +4,15 @@ message("Initializing DreamcastSDK CMake")
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 project ("DreamcastSDK" CXX C ASM)
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    SET(COVERAGE_COMPILE_FLAGS "-march=native -Ofast")
+    SET(COVERAGE_LINK_FLAGS    "")
+    SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${COVERAGE_COMPILE_FLAGS}")
+    SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${COVERAGE_LINK_FLAGS}")
+endif()
 
 add_library(
     "dreamcast_runtime" STATIC
@@ -37,13 +44,11 @@ add_library(
     "source/core/subsystem.cpp" 
     "source/cmddb.cpp" 
     "source/runtime.cpp" 
-    "source/renderer/embedded_shaders.hpp" 
-    "source/renderer/embedded_shaders.cpp" 
     "source/renderer/gui_renderer.hpp" 
     "source/renderer/gui_renderer.cpp" 
     "source/renderer/gl_headers.hpp" 
     "source/gui/font_headers.hpp" 
-    "source/renderer/utils.cpp" 
+    "source/time_utils.cpp" 
     "source/renderer/utils.hpp"  
     "source/gui/gui.hpp" 
     "source/gui/gui.cpp" 
@@ -56,12 +61,13 @@ add_library(
     "source/platform/callback_hooks.cpp"
     "source/gui/terminal.hpp"
     "source/gui/terminal.cpp" 
-    "include/dce/core/misc.hpp"
+    "include/dce/core/entry.hpp"
     "source/terminal_sink.hpp"    
     "source/half.cpp"   
     "source/texture.cpp" 
     "include/dce/texture.hpp" 
-    "source/gui/utils.hpp" 
+    "source/gui/utils.hpp"
+    "source/renderer/utils.cpp"
     "include/dce/resource_manager.hpp" 
     "source/resource_manager.cpp"  
     "source/gui/widgets/resource_viewer.hpp" 
@@ -135,9 +141,8 @@ add_library(
     "source/sun.cpp" 
     "source/gui/widgets/config_editor.hpp"
     "source/gui/widgets/config_editor.cpp" 
-    "source/core/misc.cpp"
-    "include/dce/utils.hpp" 
-    "source/utils.cpp" 
+    "include/dce/time_utils.hpp" 
+    "source/time_utils.cpp" 
     "source/scripting/scripting.hpp"
     "source/scripting/scripting.cpp" 
     "source/renderer/shaders/skybox.hpp"
@@ -160,12 +165,31 @@ add_library(
     "include/dce/audio_source.hpp" 
     "source/audio_source.cpp" 
     "source/wincom.hpp"
-    "source/wincom.cpp")
+    "source/wincom.cpp"
+    "source/gui/window_names.hpp" 
+    "include/dce/fence.hpp" 
+    "source/fence.cpp" 
+    "include/dce/except.hpp" 
+    "source/except.cpp" 
+    "include/dce/procinfo.hpp"
+    "source/procinfo.cpp" 
+    "include/dce/interrupt.hpp"
+    "source/interrupt.cpp" 
+    "include/dce/error_dump.hpp"
+    "source/error_dump.cpp" 
+    "include/dce/break_interrupt_handler.hpp" 
+    "source/break_interrupt_handler.cpp" 
+    "include/dce/renderer_data.hpp" 
+    "source/renderer.cpp"
+    "source/gui/widgets/scenery_viewer.hpp"
+    "source/gui/widgets/scenery_viewer.cpp"
+     "source/cpu_registers.cpp" "source/scripting/mono_headers.hpp" "source/scripting/internal_calls.cpp" "source/scripting/helpers.hpp" "source/scripting/helpers.cpp")
 
 include("extern/CMakeLists.txt")
 
-add_executable("dreamcreator" WIN32 "entry.cpp")
-target_link_libraries("dreamcreator" "dreamcast_runtime")
+set_property(TARGET "dreamcast_runtime" PROPERTY "MSVC_RUNTIME_LIBRARY" "MultiThreaded")
 
 add_executable("dreamcast" WIN32 "entry.cpp")
 target_link_libraries("dreamcast" "dreamcast_runtime")
+
+set_property(TARGET "dreamcast" PROPERTY "MSVC_RUNTIME_LIBRARY" "MultiThreaded")

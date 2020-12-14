@@ -1,7 +1,3 @@
-# Resonance Audio SDK for [FMOD](http://www.fmod.com) v1.0
-
-Enables high-quality spatial audio on mobile and desktop platforms.
-
-To get started read the online [documentation](https://resonance-audio.github.io/resonance-audio/develop/fmod/getting-started).
-
-Copyright (c) 2019 Google Inc. All rights reserved.
+version https://git-lfs.github.com/spec/v1
+oid sha256:9ad7740d13ab5af1ab04fa361249763400ed7351ab556699d4c8de5cd2c94ed1
+size 315
