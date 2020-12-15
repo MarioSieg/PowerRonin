@@ -16,7 +16,11 @@
 #pragma once
 
 #include "../../include/dce/core/kernel.hpp"
+
+#include "assembly.hpp"
 #include "environment.hpp"
+#include "class.hpp"
+#include "static_method.hpp"
 
 namespace dce::scripting {
 	class Scripting final : public core::ISubsystem {
@@ -44,9 +48,9 @@ namespace dce::scripting {
 		RuntimeEnvironment runtime_environment_ = {};
 		Assembly dreamcast_core_assembly_ = {};
 
-		MonoClass* engine_class_ = nullptr;
-		MonoMethod* engine_on_start_ = nullptr;
-		MonoMethod* engine_on_update_ = nullptr;
-		MonoMethod* engine_on_exit_ = nullptr;
+		Class core_class_ = {};
+		StaticMethod on_start_ = {};
+		StaticMethod on_update_ = {};
+		StaticMethod on_exit_ = {};
 	};
 }

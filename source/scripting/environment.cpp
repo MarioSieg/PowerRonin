@@ -19,6 +19,16 @@
 #include <filesystem>
 
 namespace dce::scripting {
+	void default_exception_handler(AsyncProtocol& _proto, MonoObject* const _ex) {
+		MonoObject* ex = nullptr;
+		MonoString* const mono_msg = mono_object_to_string(_ex, &ex);
+		[[likely]] if (!ex && mono_msg) {
+			char* const msg = mono_string_to_utf8(mono_msg);
+			_proto.error(msg);
+			mono_free(msg);
+		}
+	}
+
 	void RuntimeEnvironment::initialize(const std::string_view _lib_dir, const std::string_view _cfg_dir) {
 		mono_set_dirs(_lib_dir.data(), _cfg_dir.data());
 		mono_config_parse(nullptr);

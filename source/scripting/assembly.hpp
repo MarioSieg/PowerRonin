@@ -22,11 +22,6 @@
 
 namespace dce::scripting {
 	/// <summary>
-	/// Exception hook.
-	/// </summary>
-	using ExceptionHook = void(MonoException* const);
-
-	/// <summary>
 	/// Represents a managed mono assembly.
 	/// </summary>
 	class Assembly final {

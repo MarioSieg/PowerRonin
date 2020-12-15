@@ -181,16 +181,20 @@ add_library(
     "source/renderer.cpp"
     "source/gui/widgets/scenery_viewer.hpp"
     "source/gui/widgets/scenery_viewer.cpp"
-     "source/cpu_registers.cpp" 
-     "source/scripting/mono_headers.hpp" 
-     "source/scripting/internal_calls.cpp" 
-     "source/scripting/helpers.hpp" 
-     "source/scripting/helpers.cpp" 
-     "source/scripting/dreamcast.dll.hpp" 
-     "source/scripting/assembly.hpp" 
-     "source/scripting/assembly.cpp" 
-     "source/scripting/environment.hpp" 
-     "source/scripting/environment.cpp")
+    "source/cpu_registers.cpp" 
+    "source/scripting/mono_headers.hpp" 
+    "source/scripting/internal_calls.cpp" 
+    "source/scripting/helpers.hpp" 
+    "source/scripting/helpers.cpp" 
+    "source/scripting/dreamcast.dll.hpp" 
+    "source/scripting/assembly.hpp" 
+    "source/scripting/assembly.cpp" 
+    "source/scripting/environment.hpp" 
+    "source/scripting/environment.cpp" 
+    "source/scripting/class.hpp"
+    "source/scripting/class.cpp" 
+    "source/scripting/static_method.hpp"
+    "source/scripting/static_method.cpp" "source/scripting/member_method.hpp")
 
 include("extern/CMakeLists.txt")
 

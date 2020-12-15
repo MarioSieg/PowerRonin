@@ -15,12 +15,23 @@
 
 #pragma once
 
+#include <functional>
 #include <string_view>
 
 #include "mono_headers.hpp"
-#include "assembly.hpp"
+#include "../../include/dce/proto.hpp"
 
 namespace dce::scripting {
+	/// <summary>
+	/// Exception hook.
+	/// </summary>
+	using ExceptionHook = void(MonoException* const);
+
+	/// <summary>
+	/// Default exception handler.
+	/// </summary>
+	extern void default_exception_handler(AsyncProtocol& _proto, MonoObject* const _ex);
+
 	/// <summary>
 	/// Represents a mono runtime environment.
 	/// </summary>
@@ -51,7 +62,13 @@ namespace dce::scripting {
 		/// <returns></returns>
 		[[nodiscard]] auto get_domain() const noexcept -> MonoDomain*;
 
+		/// <summary>
+		/// Exception hook.
+		/// </summary>
+		std::function<void(MonoObject*)> exception_hook = nullptr;
+
 	private:
+		ExceptionHook* const hook_ = nullptr;
 		MonoDomain* domain_ = nullptr;
 	};
 
