@@ -16,7 +16,7 @@
 #pragma once
 
 #include "../../include/dce/core/kernel.hpp"
-#include "mono_headers.hpp"
+#include "environment.hpp"
 
 namespace dce::scripting {
 	class Scripting final : public core::ISubsystem {
@@ -41,11 +41,10 @@ namespace dce::scripting {
 		virtual auto on_pre_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
 		virtual auto on_post_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
 
-		MonoDomain* domain_ = nullptr;
-		MonoAssembly* engine_runtime_ = nullptr;
-		MonoImage* engine_image_ = nullptr;
-		MonoClass* engine_class_ = nullptr;
+		RuntimeEnvironment runtime_environment_ = {};
+		Assembly dreamcast_core_assembly_ = {};
 
+		MonoClass* engine_class_ = nullptr;
 		MonoMethod* engine_on_start_ = nullptr;
 		MonoMethod* engine_on_update_ = nullptr;
 		MonoMethod* engine_on_exit_ = nullptr;

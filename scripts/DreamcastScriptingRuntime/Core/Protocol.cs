@@ -74,6 +74,7 @@ namespace Dreamcast.Core
         /// </summary>
         /// <param name="level">The log level.</param>
         /// <param name="message">The message to log.</param>
+        [NativeRuntimeCall]
         [MethodImpl(MethodImplOptions.InternalCall)]
         public static extern void Log(LogLevel level, string message);
 
@@ -144,14 +145,16 @@ namespace Dreamcast.Core
         /// <summary>
         ///     Flushes the protocol into a log file.
         /// </summary>
+        [NativeRuntimeCall]
         [MethodImpl(MethodImplOptions.InternalCall)]
         public static extern void Flush();
 
         /// <summary>
         ///     Sets the formatting pattern of the protocol scripting formatter.
         /// </summary>
-        /// <param name="patter"></param>
+        /// <param name="pattern"></param>
+        [NativeRuntimeCall]
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public static extern void SetFormatPattern(string patter);
+        public static extern void SetFormatPattern(string pattern);
     }
 }

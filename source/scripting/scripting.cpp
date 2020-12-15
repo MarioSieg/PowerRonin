@@ -13,9 +13,10 @@
 // support@kerbogames.com
 // *******************************************************************************
 
+#include "../../include/dce/procinfo.hpp"
 #include "scripting.hpp"
 #include "internal_calls.hpp"
-#include "../../include/dce/procinfo.hpp"
+#include "dreamcast.dll.hpp"
 
 namespace dce::scripting {
 	Scripting::Scripting() : ISubsystem("Scripting", EVENTS) { }
@@ -29,34 +30,10 @@ namespace dce::scripting {
 		proto.info("Initializing scripting backend (Mono)...");
 		proto.info("Library dir: {}, config dir: {}", lib_dir, cfg_dir);
 
-		mono_set_dirs(lib_dir.c_str(), cfg_dir.c_str());
-		mono_config_parse(nullptr);
+		this->runtime_environment_.initialize(lib_dir, cfg_dir);
+		this->dreamcast_core_assembly_.load(std::string(DREAMCAST_DLL_NAME), this->runtime_environment_);
 
-		const auto exe_name = get_executable_name();
-		this->domain_ = mono_jit_init(exe_name.c_str());
-
-		[[unlikely]] if (!this->domain_) {
-			return false;
-		}
-
-		this->engine_runtime_ = mono_domain_assembly_open(this->domain_, "bin/dreamcast.dll");
-		[[unlikely]] if (!this->engine_runtime_) {
-			return false;
-		}
-
-		this->engine_image_ = mono_assembly_get_image(this->engine_runtime_);
-		[[unlikely]] if (!this->engine_image_) {
-			return false;
-		}
-
-		const int argc = 1;
-		char* argv[1] = {const_cast<char*>("Test")};
-
-		[[unlikely]] if (!mono_jit_exec(this->domain_, this->engine_runtime_, argc, argv)) {
-			return false;
-		}
-
-		this->engine_class_ = mono_class_from_name(this->engine_image_, "Dreamcast.Core", "Core");
+		this->engine_class_ = mono_class_from_name(this->dreamcast_core_assembly_.get_image(), "Dreamcast.Core", "Core");
 		[[unlikely]] if (!this->engine_class_) {
 			return false;
 		}
@@ -120,6 +97,8 @@ namespace dce::scripting {
 			_rt.scripting_protocol().error(msg);
 			mono_free(msg);
 		}
+		this->dreamcast_core_assembly_.unload();
+		this->runtime_environment_.shutdown();
 		return true;
 	}
 

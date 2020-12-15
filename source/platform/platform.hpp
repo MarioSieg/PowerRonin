@@ -16,7 +16,6 @@
 #pragma once
 
 #include "../../include/dce/core/kernel.hpp"
-#include "splash.hpp"
 
 struct GLFWwindow;
 struct GLFWmonitor;
@@ -96,10 +95,5 @@ namespace dce::platform {
 		/// Video mode list
 		/// </summary>
 		const GLFWvidmode* all_vidmodes_ = nullptr;
-
-		/// <summary>
-		/// Splash screen.
-		/// </summary>
-		SplashScreen splash_screen_ = {};
 	};
 } // namespace dce::platform // namespace dce::platform

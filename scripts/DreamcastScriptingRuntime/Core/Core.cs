@@ -14,7 +14,6 @@
 // *******************************************************************************
 
 using System;
-using System.Diagnostics;
 
 namespace Dreamcast.Core
 {
@@ -26,7 +25,7 @@ namespace Dreamcast.Core
         private static void OnSystemStart()
         {
             PrintInformation();
-            Protocol.Info($"Scripting backend online!");
+            Protocol.Info("Scripting backend online!");
             Protocol.Separator();
         }
 

@@ -72,7 +72,6 @@ namespace dce {
 		struct {
 			std::string app_name = {};
 			std::string app_company = {};
-			std::filesystem::path splash_image = "textures/splash/splash.png";
 		} app;
 
 		virtual void serialize(JsonStream& _j) const override;

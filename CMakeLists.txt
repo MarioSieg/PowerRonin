@@ -152,8 +152,6 @@ add_library(
     "source/renderer/views.hpp" 
     "source/material_runtime.cpp"
     "source/material.cpp"
-    "source/platform/splash.hpp" 
-    "source/platform/splash.cpp" 
     "source/platform/util.hpp"
     "source/platform/util.cpp" 
     "source/audio/audio.hpp"
@@ -183,7 +181,16 @@ add_library(
     "source/renderer.cpp"
     "source/gui/widgets/scenery_viewer.hpp"
     "source/gui/widgets/scenery_viewer.cpp"
-     "source/cpu_registers.cpp" "source/scripting/mono_headers.hpp" "source/scripting/internal_calls.cpp" "source/scripting/helpers.hpp" "source/scripting/helpers.cpp")
+     "source/cpu_registers.cpp" 
+     "source/scripting/mono_headers.hpp" 
+     "source/scripting/internal_calls.cpp" 
+     "source/scripting/helpers.hpp" 
+     "source/scripting/helpers.cpp" 
+     "source/scripting/dreamcast.dll.hpp" 
+     "source/scripting/assembly.hpp" 
+     "source/scripting/assembly.cpp" 
+     "source/scripting/environment.hpp" 
+     "source/scripting/environment.cpp")
 
 include("extern/CMakeLists.txt")
 
