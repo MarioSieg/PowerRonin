@@ -45,12 +45,27 @@ namespace dce::scripting {
 		virtual auto on_pre_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
 		virtual auto on_post_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
 
-		RuntimeEnvironment runtime_environment_ = {};
-		Assembly dreamcast_core_assembly_ = {};
+		void setup_hooks();
 
-		StaticClass core_class_ = {};
-		StaticMethod on_start_ = {};
-		StaticMethod on_update_ = {};
-		StaticMethod on_exit_ = {};
+		RuntimeEnvironment runtime_environment_ = {};
+		Assembly core_assembly_ = {};
+
+		/// <summary>
+		/// Core class.
+		/// </summary>
+		struct {
+			StaticClass klass = {};
+			StaticMethod on_start = {};
+			StaticMethod on_update = {};
+			StaticMethod on_exit = {};
+		} core_;
+
+		/// <summary>
+		/// Command database class.
+		/// </summary>
+		struct {
+			StaticClass klass = {};
+			StaticMethod on_command_enter = {}; // Called when command is enter to terminal.
+		} command_db_;
 	};
 }

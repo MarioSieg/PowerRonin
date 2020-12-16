@@ -16,42 +16,6 @@
 namespace Dreamcast.Core
 {
     /// <summary>
-    ///     Contains all log levels.
-    /// </summary>
-    public enum LogLevel : byte
-    {
-        /// <summary>
-        ///     Trace log.
-        /// </summary>
-        Trace = 0,
-
-        /// <summary>
-        ///     Debug log.
-        /// </summary>
-        Debug = 1,
-
-        /// <summary>
-        ///     Info log.
-        /// </summary>
-        Info = 2,
-
-        /// <summary>
-        ///     Warning log.
-        /// </summary>
-        Warn = 3,
-
-        /// <summary>
-        ///     Error log.
-        /// </summary>
-        Error = 4,
-
-        /// <summary>
-        ///     Criticial.
-        /// </summary>
-        Critical = 5
-    }
-
-    /// <summary>
     ///     Contains methods to write logs into the protocol,
     ///     which is displayed in the terminal and written into a log file.
     /// </summary>
@@ -108,7 +72,7 @@ namespace Dreamcast.Core
         ///     Shorthand for Log(LogLevel.Warn, message);
         /// </summary>
         /// <param name="message">The message to log.</param>
-        public static void Warn(string message)
+        public static void Warn(in string message)
         {
             Log(LogLevel.Warn, message);
             ++WarningMessagesCount;

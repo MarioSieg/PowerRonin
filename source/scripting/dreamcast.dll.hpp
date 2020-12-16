@@ -18,10 +18,15 @@
 #include <string_view>
 
 namespace dce::scripting {
-	constexpr std::string_view DREAMCAST_DLL_NAME = "dreamcast";
-	constexpr std::string_view DREAMCAST_DLL_CORE_CLASS_NAMESPACE = "Dreamcast.Core";
-	constexpr std::string_view DREAMCAST_DLL_CORE_CLASS = "Core";
-	constexpr std::string_view DREAMCAST_DLL_CORE_START = "OnSystemStart";
-	constexpr std::string_view DREAMCAST_DLL_CORE_UPDATE = "OnSystemUpdate";
-	constexpr std::string_view DREAMCAST_DLL_CORE_EXIT = "OnSystemExit";
+	constexpr std::string_view ASSEMBLY_NAME_ID = "dreamcast";
+	constexpr std::string_view ASSEMBLY_NAMESPACE_ID = "Dreamcast.Core";
+	
+	constexpr std::string_view CORE_CLASS_ID = "Core";
+	constexpr std::string_view CORE_START_ID = "OnSystemStart";
+	constexpr std::string_view CORE_UPDATE_ID = "OnSystemUpdate";
+	constexpr std::string_view CORE_EXIT_ID = "OnSystemExit";
+	
+	constexpr std::string_view COMMAND_DB_CLASS_ID = "CommandDB";
+	constexpr std::string_view COMMAND_DB_CMD_ENTER_ID = "OnCommandEnter";
+	constexpr std::uint8_t COMMAND_DB_CMD_ENTER_PARAMS = 1;
 }

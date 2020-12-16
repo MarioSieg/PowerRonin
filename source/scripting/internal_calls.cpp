@@ -21,54 +21,57 @@
 namespace dce::scripting {
 
 	void register_basic_internal_calls(Runtime& _rt) {
+
+#define REGISTER_CALL(_x) mono_add_internal_call("Dreamcast.Core.NativeRuntime::" _x , NATIVE_PROC)
+		
 		static auto* const RUNTIME = &_rt;
 
 		{
-			static constexpr auto* NATIVE_PROC = +[](const std::uint8_t _level, MonoString* const _message) {
+			static constexpr void* const NATIVE_PROC = +[](const std::uint8_t _level, MonoString* const _message) {
 				auto* const str = mono_string_to_utf8(_message);
 				RUNTIME->scripting_protocol().log(static_cast<LogLevel>(_level), std::string(str));
 				mono_free(str);
 			};
-			mono_add_internal_call("Dreamcast.Core.NativeRuntime::ProtocolLog", reinterpret_cast<void*>(NATIVE_PROC));
+			REGISTER_CALL("ProtocolLog");
 		}
 
 		{
-			static constexpr auto* NATIVE_PROC = +[]() {
+			static constexpr void* const NATIVE_PROC = +[]() {
 				RUNTIME->scripting_protocol().get_logger()->flush();
 			};
-			mono_add_internal_call("Dreamcast.Core.NativeRuntime::ProtocolFlush", reinterpret_cast<void*>(NATIVE_PROC));
+			REGISTER_CALL("ProtocolFlush");
 		}
 
 		{
-			static constexpr auto* NATIVE_PROC = +[](MonoString* const _pattern) {
+			static constexpr void* const NATIVE_PROC = +[](MonoString* const _pattern) {
 				auto* const str = mono_string_to_utf8(_pattern);
 				RUNTIME->scripting_protocol().get_logger()->set_pattern(str);
 				mono_free(str);
 			};
-			mono_add_internal_call("Dreamcast.Core.NativeRuntime::ProtocolSetFormatPattern", reinterpret_cast<void*>(NATIVE_PROC));
+			REGISTER_CALL("ProtocolSetFormatPattern");
 		}
 
 		{
-			static constexpr auto* NATIVE_PROC = +[](const std::int16_t _key) noexcept -> bool {
+			static constexpr void* const NATIVE_PROC = +[](const std::int16_t _key) noexcept -> bool {
 				return RUNTIME->input().is_key_down(static_cast<Key>(_key));
 			};
-			mono_add_internal_call("Dreamcast.Core.NativeRuntime::InputIsKeyDown", reinterpret_cast<void*>(NATIVE_PROC));
+			REGISTER_CALL("InputIsKeyDown");
 		}
 
 		{
-			static constexpr auto* NATIVE_PROC = +[](float* const _x, float* const _y) noexcept {
+			static constexpr void* const NATIVE_PROC = +[](float* const _x, float* const _y) noexcept {
 				const auto cursor_pos = RUNTIME->input().get_mouse_position();
 				*_x = cursor_pos.x;
 				*_y = cursor_pos.y;
 			};
-			mono_add_internal_call("Dreamcast.Core.NativeRuntime::InputGetCursorPosition", reinterpret_cast<void*>(NATIVE_PROC));
+			REGISTER_CALL("InputGetCursorPosition");
 		}
 
 		{
-			static constexpr auto* NATIVE_PROC = +[](const std::uint16_t _mouse_button) noexcept {
+			static constexpr void* const NATIVE_PROC = +[](const std::uint16_t _mouse_button) noexcept {
 				return RUNTIME->input().is_mouse_button_down(static_cast<MouseButton>(_mouse_button));
 			};
-			mono_add_internal_call("Dreamcast.Core.NativeRuntime::InputIsMouseDown", reinterpret_cast<void*>(NATIVE_PROC));
+			REGISTER_CALL("InputIsMouseDown");
 		}
 	}
 }

@@ -33,16 +33,21 @@ namespace dce::scripting {
 		this->runtime_environment_.exception_hook = [&_rt](auto* const _ex) {
 			default_exception_handler(_rt.scripting_protocol(), _ex);
 		};
-		this->dreamcast_core_assembly_.load(std::string(DREAMCAST_DLL_NAME), this->runtime_environment_);
-		this->core_class_.load_from_name(this->dreamcast_core_assembly_, DREAMCAST_DLL_CORE_CLASS_NAMESPACE, DREAMCAST_DLL_CORE_CLASS);
+		
+		this->core_assembly_.load(std::string(ASSEMBLY_NAME_ID), this->runtime_environment_);
 
 		register_basic_internal_calls(_rt);
 
-		this->on_start_.query_from_class(this->core_class_, DREAMCAST_DLL_CORE_START);
-		this->on_update_.query_from_class(this->core_class_, DREAMCAST_DLL_CORE_UPDATE);
-		this->on_exit_.query_from_class(this->core_class_, DREAMCAST_DLL_CORE_EXIT);
+		this->setup_hooks();
 
-		this->on_start_(this->runtime_environment_);
+		_rt.terminal_hook() = [this](char* const _str) {
+			void* params[] = {
+				mono_string_new(this->runtime_environment_.get_domain(), _str)
+			};
+			this->command_db_.on_command_enter(this->runtime_environment_, params);
+		};
+
+		this->core_.on_start(this->runtime_environment_);
 
 		return true;
 	}
@@ -52,7 +57,7 @@ namespace dce::scripting {
 	}
 
 	auto Scripting::on_pre_tick(Runtime& _rt) -> bool {
-		this->on_update_.call(this->runtime_environment_);
+		this->core_.on_update.call(this->runtime_environment_);
 		return true;
 	}
 
@@ -61,13 +66,23 @@ namespace dce::scripting {
 	}
 
 	auto Scripting::on_pre_shutdown(Runtime& _rt) -> bool {
-		this->on_update_.call(this->runtime_environment_);
-		this->dreamcast_core_assembly_.unload();
+		this->core_.on_update.call(this->runtime_environment_);
+		this->core_assembly_.unload();
 		this->runtime_environment_.shutdown();
 		return true;
 	}
 
 	auto Scripting::on_post_shutdown(Runtime& _rt) -> bool {
 		return true;
+	}
+
+	void Scripting::setup_hooks() {
+		this->core_.klass.load_from_name(this->core_assembly_, ASSEMBLY_NAMESPACE_ID, CORE_CLASS_ID);
+		this->core_.on_start.query_from_class(this->core_.klass, CORE_START_ID);
+		this->core_.on_update.query_from_class(this->core_.klass, CORE_UPDATE_ID);
+		this->core_.on_exit.query_from_class(this->core_.klass, CORE_EXIT_ID);
+
+		this->command_db_.klass.load_from_name(this->core_assembly_, ASSEMBLY_NAMESPACE_ID, COMMAND_DB_CLASS_ID);
+		this->command_db_.on_command_enter.query_from_class(this->command_db_.klass, COMMAND_DB_CMD_ENTER_ID, COMMAND_DB_CMD_ENTER_PARAMS);
 	}
 }

@@ -16,7 +16,6 @@
 #pragma once
 
 #include "classdb.hpp"
-#include "cmddb.hpp"
 #include "config.hpp"
 #include "diagnostics.hpp"
 #include "resource_manager.hpp"
@@ -68,17 +67,6 @@ namespace dce {
 		/// <returns>Returns the class database.</returns>
 		[[nodiscard]] auto class_db() const & noexcept -> const ClassDB&;
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns>Returns the terminal command database.</returns>
-		[[nodiscard]] auto command_db() & noexcept -> CmdDB&;
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns>Returns the terminal command database.</returns>
-		[[nodiscard]] auto command_db() const & noexcept -> const CmdDB&;
 
 		/// <summary>
 		/// 
@@ -147,6 +135,18 @@ namespace dce {
 		/// <returns>Returns the protocol for the C# scripting runtime.</returns>
 		[[nodiscard]] auto scripting_protocol() & noexcept -> AsyncProtocol&;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>The terminal callback hook.</returns>
+		[[nodiscard]] auto terminal_hook() const& noexcept -> const std::function<void(char*)>&;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>The terminal callback hook.</returns>
+		[[nodiscard]] auto terminal_hook() & noexcept -> std::function<void(char*)>&;
+
 		Runtime();
 		Runtime(const Runtime&) = delete;
 		Runtime(Runtime&&) noexcept = delete;
@@ -162,12 +162,12 @@ namespace dce {
 		AsyncProtocol scripting_protocol_;
 		Config config_;
 		ClassDB class_db_;
-		CmdDB command_db_;
 		ResourceManager resource_manager_;
 		Diagnostics diagnostics_;
 		Chrono chrono_;
 		Scenery scenery_;
 		Input input_;
 		RenderData render_data_;
+		std::function<void(char*)> terminal_hook_;
 	};
 } // namespace dce // namespace dce

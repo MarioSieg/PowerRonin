@@ -16,6 +16,7 @@
 #pragma once
 
 #include "../terminal_sink.hpp"
+
 #include <array>
 
 namespace dce {
@@ -23,10 +24,11 @@ namespace dce {
 	class CmdDB;
 	class AsyncProtocol;
 
+	extern void(*TERMINAL_UPDATE)();
+
 	namespace gui {
 		class Terminal final {
 		public:
-			static constexpr auto BUFFER_SIZE = 32;
 			static constexpr auto COLOR_CRITICAL = 0xFF'88'BB'FF;
 			static constexpr auto COLOR_ERROR = 0xFF'36'36'C9;
 			static constexpr auto COLOR_INFO = 0xFF'EE'EE'EE;
@@ -35,18 +37,16 @@ namespace dce {
 
 			auto initialize(const AsyncProtocol& _system_protocol, const AsyncProtocol& _scripting_protocol) noexcept -> bool;
 			void update(bool& _show, Runtime& _rt);
-			void clear_buffer();
-			[[nodiscard]] auto get_buffer() const noexcept -> const std::array<char, BUFFER_SIZE>&;
 
 		private:
 			const TerminalSink<>* system_protocol_ = nullptr;
 			const TerminalSink<>* scripting_protocol_ = nullptr;
-			std::array<char, BUFFER_SIZE> buffer_ = {};
 			std::size_t history_index_ = 0;
 			std::size_t warning_messages_count_ = 0;
 			std::size_t error_messages_count_ = 0;
 			bool scroll_ = true;
 			bool show_scripting_protocol_ = true;
+			char buffer_[128] = {};
 		};
 	} // namespace gui::widgets // namespace gui::widgets
 } // namespace dce // namespace dce

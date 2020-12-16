@@ -71,10 +71,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\CalledFromNativeRuntime.cs" />
+    <Compile Include="Core\CallToNativeRuntime.cs" />
+    <Compile Include="Core\CommandDB.cs" />
     <Compile Include="Core\Core.cs" />
     <Compile Include="Core\Entry.cs" />
     <Compile Include="Core\Input.cs" />
     <Compile Include="Core\Key.cs" />
+    <Compile Include="Core\LogLevel.cs" />
     <Compile Include="Core\MouseButton.cs" />
     <Compile Include="Core\NativeRuntime.cs" />
     <Compile Include="Mathematics\AngleSingle.cs" />

@@ -1,3 +1,4 @@
+#include "..\include\dce\runtime.hpp"
 // *******************************************************************************
 // The content of this file includes portions of the KerboGames Dreamcast Technology
 // released in source code form as part of the SDK package.
@@ -22,16 +23,15 @@ namespace dce {
 		  scripting_protocol_("managed"),
 		  config_(),
 		  class_db_(),
-		  command_db_(),
 		  resource_manager_(this->protocol_),
 		  diagnostics_(),
 		  chrono_(),
 		  scenery_(),
 		  input_(),
-		  render_data_() { }
+		  render_data_(),
+		 terminal_hook_(nullptr) { }
 
 	void Runtime::initialize() {
-		this->command_db_.install_common_commands();
 		this->resource_manager_.system_resources.load_all(this->resource_manager_);
 		this->scenery_.initialize();
 		this->scenery_.new_default(this->resource_manager_);
@@ -66,14 +66,6 @@ namespace dce {
 
 	auto Runtime::class_db() const & noexcept -> const ClassDB& {
 		return this->class_db_;
-	}
-
-	auto Runtime::command_db() & noexcept -> CmdDB& {
-		return this->command_db_;
-	}
-
-	auto Runtime::command_db() const & noexcept -> const CmdDB& {
-		return this->command_db_;
 	}
 
 	auto Runtime::resource_manager() & noexcept -> ResourceManager& {
@@ -118,5 +110,13 @@ namespace dce {
 
 	auto Runtime::scripting_protocol() & noexcept -> AsyncProtocol& {
 		return this->scripting_protocol_;
+	}
+	
+	auto Runtime::terminal_hook() const& noexcept -> const std::function<void(char*)>& {
+		return this->terminal_hook_;
+	}
+
+	auto Runtime::terminal_hook() & noexcept -> std::function<void(char*)>& {
+		return this->terminal_hook_;
 	}
 } // namespace dce // namespace dce

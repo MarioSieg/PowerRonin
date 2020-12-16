@@ -19,21 +19,27 @@ namespace Dreamcast.Core
 {
     public static class NativeRuntime
     {
+        [CallToNativeRuntime]
         [MethodImpl(MethodImplOptions.InternalCall)]
         internal static extern bool InputIsKeyDown(Key key);
 
+        [CallToNativeRuntime]
         [MethodImpl(MethodImplOptions.InternalCall)]
         internal static extern bool InputIsMouseDown(MouseButton mouseButton);
 
+        [CallToNativeRuntime]
         [MethodImpl(MethodImplOptions.InternalCall)]
         internal static extern void InputGetCursorPosition(out float x, out float y);
 
+        [CallToNativeRuntime]
         [MethodImpl(MethodImplOptions.InternalCall)]
         internal static extern void ProtocolFlush();
 
+        [CallToNativeRuntime]
         [MethodImpl(MethodImplOptions.InternalCall)]
         internal static extern void ProtocolSetFormatPattern(string pattern);
 
+        [CallToNativeRuntime]
         [MethodImpl(MethodImplOptions.InternalCall)]
         internal static extern void ProtocolLog(LogLevel level, string message);
     }
