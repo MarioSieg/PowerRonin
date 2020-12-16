@@ -34,8 +34,7 @@ namespace dce::scripting {
 			default_exception_handler(_rt.scripting_protocol(), _ex);
 		};
 		this->dreamcast_core_assembly_.load(std::string(DREAMCAST_DLL_NAME), this->runtime_environment_);
-		this->core_class_.load_from_name(this->runtime_environment_, this->dreamcast_core_assembly_
-		                                 , DREAMCAST_DLL_CORE_CLASS_NAMESPACE, DREAMCAST_DLL_CORE_CLASS);
+		this->core_class_.load_from_name(this->dreamcast_core_assembly_, DREAMCAST_DLL_CORE_CLASS_NAMESPACE, DREAMCAST_DLL_CORE_CLASS);
 
 		register_basic_internal_calls(_rt);
 
@@ -43,7 +42,7 @@ namespace dce::scripting {
 		this->on_update_.query_from_class(this->core_class_, DREAMCAST_DLL_CORE_UPDATE);
 		this->on_exit_.query_from_class(this->core_class_, DREAMCAST_DLL_CORE_EXIT);
 
-		this->on_start_(this->runtime_environment_, this->core_class_);
+		this->on_start_(this->runtime_environment_);
 
 		return true;
 	}
@@ -53,7 +52,7 @@ namespace dce::scripting {
 	}
 
 	auto Scripting::on_pre_tick(Runtime& _rt) -> bool {
-		this->on_update_.call(this->runtime_environment_, this->core_class_);
+		this->on_update_.call(this->runtime_environment_);
 		return true;
 	}
 
@@ -62,7 +61,7 @@ namespace dce::scripting {
 	}
 
 	auto Scripting::on_pre_shutdown(Runtime& _rt) -> bool {
-		this->on_update_.call(this->runtime_environment_, this->core_class_);
+		this->on_update_.call(this->runtime_environment_);
 		this->dreamcast_core_assembly_.unload();
 		this->runtime_environment_.shutdown();
 		return true;

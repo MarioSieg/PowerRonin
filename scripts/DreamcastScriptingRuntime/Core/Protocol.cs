@@ -13,8 +13,6 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-using System.Runtime.CompilerServices;
-
 namespace Dreamcast.Core
 {
     /// <summary>
