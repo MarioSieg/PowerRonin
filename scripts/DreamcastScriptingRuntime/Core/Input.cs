@@ -34,25 +34,24 @@ namespace Dreamcast.Core
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns>True if the key is currently pressed, else false.</returns>
-        [NativeRuntimeCall]
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public static extern bool IsKeyDown(Key key);
+        public static bool IsKeyDown(Key key)
+        {
+            return NativeRuntime.InputIsKeyDown(key);
+        }
 
         /// <summary>
         /// </summary>
         /// <param name="mouseButton">The mouse button.</param>
         /// <returns>True if the mouse button is currently pressed, else false.</returns>
-        [NativeRuntimeCall]
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public static extern bool IsMouseDown(MouseButton mouseButton);
-
-        [NativeRuntimeCall]
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        private static extern void GetCursorPosition(out float x, out float y);
-
-        internal static void UpdateMouseCursor()
+        public static bool IsMouseDown(MouseButton mouseButton)
         {
-            GetCursorPosition(out var x, out var y);
+            return NativeRuntime.InputIsMouseDown(mouseButton);
+        }
+
+        internal static void Update()
+        {
+            NativeRuntime.InputGetCursorPosition(out var x, out var y);
             CursorPos.X = x;
             CursorPos.Y = y;
         }

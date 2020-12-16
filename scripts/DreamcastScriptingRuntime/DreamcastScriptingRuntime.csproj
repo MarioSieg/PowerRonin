@@ -76,7 +76,7 @@
     <Compile Include="Core\Input.cs" />
     <Compile Include="Core\Key.cs" />
     <Compile Include="Core\MouseButton.cs" />
-    <Compile Include="Core\NativeRuntimeCall.cs" />
+    <Compile Include="Core\NativeRuntime.cs" />
     <Compile Include="Mathematics\AngleSingle.cs" />
     <Compile Include="Mathematics\AngleType.cs" />
     <Compile Include="Mathematics\BoundingBox.cs" />

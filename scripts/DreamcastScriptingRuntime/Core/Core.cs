@@ -20,28 +20,28 @@ namespace Dreamcast.Core
     /// <summary>
     ///     Engine core class.
     /// </summary>
-    public static class Core
+    public class Core
     {
-        private static void OnSystemStart()
+        private void OnSystemStart()
         {
             PrintInformation();
             Protocol.Info("Scripting backend online!");
             Protocol.Separator();
         }
 
-        private static void OnSystemUpdate()
+        private void OnSystemUpdate()
         {
-            Input.UpdateMouseCursor();
+            Input.Update();
         }
 
-        private static void OnSystemExit()
+        private void OnSystemExit()
         {
         }
 
         /// <summary>
         ///     Prints some general system information from System.Environment.
         /// </summary>
-        public static void PrintInformation()
+        public void PrintInformation()
         {
             Protocol.Info("C# CLR v." + Environment.Version);
             Protocol.Info("Current directory: " + Environment.CurrentDirectory);

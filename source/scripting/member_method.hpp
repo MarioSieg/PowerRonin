@@ -16,18 +16,18 @@
 #pragma once
 
 #include "mono_headers.hpp"
-#include "class.hpp"
+#include "instance_class.hpp"
 #include "environment.hpp"
 
 namespace dce::scripting {
-	class StaticMethod final {
+	class MemberMethod final {
 	public:
-		StaticMethod() noexcept = default;
-		StaticMethod(const StaticMethod&) noexcept = default;
-		StaticMethod(StaticMethod&&) = delete;
-		auto operator=(const StaticMethod&) noexcept -> StaticMethod& = default;
-		auto operator=(StaticMethod&&) = delete;
-		~StaticMethod() = default;
+		MemberMethod() noexcept = default;
+		MemberMethod(const MemberMethod&) noexcept = default;
+		MemberMethod(MemberMethod&&) = delete;
+		auto operator=(const MemberMethod&) noexcept -> MemberMethod& = default;
+		auto operator=(MemberMethod&&) -> MemberMethod& = delete;
+		~MemberMethod() = default;
 
 		/// <summary>
 		/// 
@@ -54,21 +54,27 @@ namespace dce::scripting {
 		/// <param name="_class">The class to query from.</param>
 		/// <param name="_name">The name of the method.</param>
 		/// <param name="_params_count_"></param>
-		void query_from_class(Class& _class, const std::string_view _name, const std::uint8_t _params_count_ = 0);
+		void query_from_class(ClassInstance& _class, const std::string_view _name, const std::uint8_t _params_count_ = 0);
+
+		/// <summary>
+		/// JIT-compiles this method into native machine code.
+		/// </summary>
+		/// <returns>The pointer to the native code.</returns>
+		auto jit_compile() const -> void*;
 
 		/// <summary>
 		/// Call the static method.
 		/// </summary>
 		/// <param name="_env"></param>
 		/// <param name="_args"></param>
-		void call(RuntimeEnvironment& _env, Class& _instance, void** const _args = nullptr) const;
+		void call(RuntimeEnvironment& _env, ClassInstance& _instance, void** const _args = nullptr) const;
 
 		/// <summary>
 		/// Same as .call()
 		/// </summary>
 		/// <param name="_env"></param>
 		/// <param name="_args"></param>
-		void operator()(RuntimeEnvironment& _env, Class& _instance, void** const _args = nullptr) const;
+		void operator()(RuntimeEnvironment& _env, ClassInstance& _instance, void** const _args = nullptr) const;
 
 	private:
 		MonoMethod* handle_ = nullptr;

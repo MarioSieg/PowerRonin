@@ -40,7 +40,8 @@ namespace dce::scripting {
 	}
 
 	void RuntimeEnvironment::shutdown() {
-		mono_jit_cleanup(this->domain_);
-		this->domain_ = nullptr;
+		// TODO
+		//mono_jit_cleanup(this->domain_);
+		//this->domain_ = nullptr;
 	}
 }

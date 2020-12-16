@@ -29,14 +29,14 @@ namespace dce::scripting {
 				RUNTIME->scripting_protocol().log(static_cast<LogLevel>(_level), std::string(str));
 				mono_free(str);
 			};
-			mono_add_internal_call("Dreamcast.Core.Protocol::Log", reinterpret_cast<void*>(NATIVE_PROC));
+			mono_add_internal_call("Dreamcast.Core.NativeRuntime::ProtocolLog", reinterpret_cast<void*>(NATIVE_PROC));
 		}
 
 		{
 			static constexpr auto* NATIVE_PROC = +[]() {
 				RUNTIME->scripting_protocol().get_logger()->flush();
 			};
-			mono_add_internal_call("Dreamcast.Core.Protocol::Flush", reinterpret_cast<void*>(NATIVE_PROC));
+			mono_add_internal_call("Dreamcast.Core.NativeRuntime::ProtocolFlush", reinterpret_cast<void*>(NATIVE_PROC));
 		}
 
 		{
@@ -45,14 +45,14 @@ namespace dce::scripting {
 				RUNTIME->scripting_protocol().get_logger()->set_pattern(str);
 				mono_free(str);
 			};
-			mono_add_internal_call("Dreamcast.Core.Protocol::SetFormatPattern", reinterpret_cast<void*>(NATIVE_PROC));
+			mono_add_internal_call("Dreamcast.Core.NativeRuntime::ProtocolSetFormatPattern", reinterpret_cast<void*>(NATIVE_PROC));
 		}
 
 		{
 			static constexpr auto* NATIVE_PROC = +[](const std::int16_t _key) noexcept -> bool {
 				return RUNTIME->input().is_key_down(static_cast<Key>(_key));
 			};
-			mono_add_internal_call("Dreamcast.Core.Input::IsKeyDown", reinterpret_cast<void*>(NATIVE_PROC));
+			mono_add_internal_call("Dreamcast.Core.NativeRuntime::InputIsKeyDown", reinterpret_cast<void*>(NATIVE_PROC));
 		}
 
 		{
@@ -61,14 +61,14 @@ namespace dce::scripting {
 				*_x = cursor_pos.x;
 				*_y = cursor_pos.y;
 			};
-			mono_add_internal_call("Dreamcast.Core.Input::GetCursorPosition", reinterpret_cast<void*>(NATIVE_PROC));
+			mono_add_internal_call("Dreamcast.Core.NativeRuntime::InputGetCursorPosition", reinterpret_cast<void*>(NATIVE_PROC));
 		}
 
 		{
 			static constexpr auto* NATIVE_PROC = +[](const std::uint16_t _mouse_button) noexcept {
 				return RUNTIME->input().is_mouse_button_down(static_cast<MouseButton>(_mouse_button));
 			};
-			mono_add_internal_call("Dreamcast.Core.Input::IsMouseDown", reinterpret_cast<void*>(NATIVE_PROC));
+			mono_add_internal_call("Dreamcast.Core.NativeRuntime::InputIsMouseDown", reinterpret_cast<void*>(NATIVE_PROC));
 		}
 	}
 }

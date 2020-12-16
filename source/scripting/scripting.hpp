@@ -19,8 +19,7 @@
 
 #include "assembly.hpp"
 #include "environment.hpp"
-#include "class.hpp"
-#include "static_method.hpp"
+#include "member_method.hpp"
 
 namespace dce::scripting {
 	class Scripting final : public core::ISubsystem {
@@ -48,9 +47,9 @@ namespace dce::scripting {
 		RuntimeEnvironment runtime_environment_ = {};
 		Assembly dreamcast_core_assembly_ = {};
 
-		Class core_class_ = {};
-		StaticMethod on_start_ = {};
-		StaticMethod on_update_ = {};
-		StaticMethod on_exit_ = {};
+		ClassInstance core_class_ = {};
+		MemberMethod on_start_ = {};
+		MemberMethod on_update_ = {};
+		MemberMethod on_exit_ = {};
 	};
 }

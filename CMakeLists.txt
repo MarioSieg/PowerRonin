@@ -191,10 +191,14 @@ add_library(
     "source/scripting/assembly.cpp" 
     "source/scripting/environment.hpp" 
     "source/scripting/environment.cpp" 
-    "source/scripting/class.hpp"
-    "source/scripting/class.cpp" 
+    "source/scripting/static_class.hpp"
+    "source/scripting/static_class.cpp" 
     "source/scripting/static_method.hpp"
-    "source/scripting/static_method.cpp" "source/scripting/member_method.hpp")
+    "source/scripting/static_method.cpp" 
+    "source/scripting/member_method.hpp"
+    "source/scripting/member_method.cpp"
+    "source/scripting/instance_class.hpp"
+    "source/scripting/instance_class.cpp")
 
 include("extern/CMakeLists.txt")
 

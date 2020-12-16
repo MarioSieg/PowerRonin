@@ -16,7 +16,7 @@
 #pragma once
 
 #include "mono_headers.hpp"
-#include "class.hpp"
+#include "static_class.hpp"
 #include "environment.hpp"
 
 namespace dce::scripting {
@@ -54,7 +54,13 @@ namespace dce::scripting {
 		/// <param name="_class">The class to query from.</param>
 		/// <param name="_name">The name of the method.</param>
 		/// <param name="_params_count_"></param>
-		void query_from_class(Class& _class, const std::string_view _name, const std::uint8_t _params_count_ = 0);
+		void query_from_class(StaticClass& _class, const std::string_view _name, const std::uint8_t _params_count_ = 0);
+
+		/// <summary>
+		/// JIT-compiles this method into native machine code.
+		/// </summary>
+		/// <returns>The pointer to the native code.</returns>
+		auto jit_compile() const -> void*;
 
 		/// <summary>
 		/// Call the static method.

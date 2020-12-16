@@ -20,15 +20,16 @@
 
 namespace dce::scripting {
 	class Assembly;
+	class RuntimeEnvironment;
 
-	class Class final {
+	class ClassInstance final {
 	public:
-		Class() noexcept = default;
-		Class(const Class&) = delete;
-		Class(Class&&) = delete;
-		auto operator=(const Class&) -> Class& = delete;
-		auto operator=(Class&&) -> Class& = delete;
-		~Class() = default;
+		ClassInstance() noexcept = default;
+		ClassInstance(const ClassInstance&) = delete;
+		ClassInstance(ClassInstance&&) = delete;
+		auto operator=(const ClassInstance&) -> ClassInstance& = delete;
+		auto operator=(ClassInstance&&) -> ClassInstance& = delete;
+		~ClassInstance() = default;
 
 		/// <summary>
 		/// 
@@ -36,12 +37,22 @@ namespace dce::scripting {
 		/// <returns>The mono class ptr.</returns>
 		[[nodiscard]] auto get_handle() const noexcept -> MonoClass*;
 
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>The object instance ptr.</returns>
+		auto get_object_instance() const noexcept -> MonoObject*;
+
 		/// <summary>
 		/// Loads the class from a name.
 		/// </summary>
 		/// <param name="_namespace"></param>
 		/// <param name="_name"></param>
-		void load_from_name(Assembly& _assm, const std::string_view _namespace, const std::string_view _name);
+		void load_from_name(RuntimeEnvironment& _env
+		                    , Assembly& _assm
+		                    , const std::string_view _namespace
+		                    , const std::string_view _name);
 
 		/// <summary>
 		/// 
@@ -59,5 +70,6 @@ namespace dce::scripting {
 		std::string_view namespace_ = {};
 		std::string_view name_ = {};
 		MonoClass* handle_ = nullptr;
+		MonoObject* instance_ = nullptr;
 	};
 }

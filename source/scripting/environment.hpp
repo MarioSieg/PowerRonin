@@ -20,6 +20,7 @@
 
 #include "mono_headers.hpp"
 #include "../../include/dce/proto.hpp"
+#include "../../include/dce/except.hpp"
 
 namespace dce::scripting {
 	/// <summary>

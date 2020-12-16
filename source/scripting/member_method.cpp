@@ -17,19 +17,19 @@
 #include "../../include/dce/except.hpp"
 
 namespace dce::scripting {
-	auto StaticMethod::get_handle() const noexcept -> MonoMethod* {
+	auto MemberMethod::get_handle() const noexcept -> MonoMethod* {
 		return this->handle_;
 	}
 
-	auto StaticMethod::get_parameter_count() const noexcept -> std::uint8_t {
+	auto MemberMethod::get_parameter_count() const noexcept -> std::uint8_t {
 		return this->params_count_;
 	}
 
-	auto StaticMethod::get_name() const noexcept -> std::string_view {
+	auto MemberMethod::get_name() const noexcept -> std::string_view {
 		return this->name_;
 	}
 
-	void StaticMethod::query_from_class(Class& _class, const std::string_view _name, const std::uint8_t _params_count_) {
+	void MemberMethod::query_from_class(ClassInstance& _class, const std::string_view _name, const std::uint8_t _params_count_) {
 		this->handle_ = mono_class_get_method_from_name(_class.get_handle(), _name.data(), _params_count_);
 		[[unlikely]] if (!this->handle_) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to get method from class by name!");
@@ -38,7 +38,11 @@ namespace dce::scripting {
 		this->name_ = _name;
 	}
 
-	void StaticMethod::call(RuntimeEnvironment& _env, Class& _instance, void** const _args) const {
+	auto MemberMethod::jit_compile() const -> void* {
+		return mono_compile_method(this->handle_);
+	}
+
+	void MemberMethod::call(RuntimeEnvironment& _env, ClassInstance& _instance, void** const _args) const {
 		MonoObject* ex = nullptr;
 		auto* const _ = mono_runtime_invoke(this->handle_, _instance.get_handle(), _args, &ex);
 		[[unlikely]] if (ex) {
@@ -46,7 +50,7 @@ namespace dce::scripting {
 		}
 	}
 
-	void StaticMethod::operator()(RuntimeEnvironment& _env, Class& _instance, void** const _args) const {
+	void MemberMethod::operator()(RuntimeEnvironment& _env, ClassInstance& _instance, void** const _args) const {
 		this->call(_env, _instance, _args);
 	}
 }
