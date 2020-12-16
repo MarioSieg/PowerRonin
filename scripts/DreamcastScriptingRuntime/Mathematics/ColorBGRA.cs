@@ -616,8 +616,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The clamped value.</returns>
         public static ColorBGRA Clamp(ColorBGRA value, ColorBGRA min, ColorBGRA max)
         {
-            ColorBGRA result;
-            Clamp(ref value, ref min, ref max, out result);
+            Clamp(ref value, ref min, ref max, out var result);
             return result;
         }
 
@@ -653,8 +652,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public static ColorBGRA Lerp(ColorBGRA start, ColorBGRA end, float amount)
         {
-            ColorBGRA result;
-            Lerp(ref start, ref end, amount, out result);
+            Lerp(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -680,8 +678,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The cubic interpolation of the two colors.</returns>
         public static ColorBGRA SmoothStep(ColorBGRA start, ColorBGRA end, float amount)
         {
-            ColorBGRA result;
-            SmoothStep(ref start, ref end, amount, out result);
+            SmoothStep(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -710,8 +707,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A color containing the largest components of the source colors.</returns>
         public static ColorBGRA Max(ColorBGRA left, ColorBGRA right)
         {
-            ColorBGRA result;
-            Max(ref left, ref right, out result);
+            Max(ref left, ref right, out var result);
             return result;
         }
 
@@ -740,8 +736,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A color containing the smallest components of the source colors.</returns>
         public static ColorBGRA Min(ColorBGRA left, ColorBGRA right)
         {
-            ColorBGRA result;
-            Min(ref left, ref right, out result);
+            Min(ref left, ref right, out var result);
             return result;
         }
 
@@ -828,8 +823,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The premultiplied result.</returns>
         public static ColorBGRA Premultiply(ColorBGRA value)
         {
-            ColorBGRA result;
-            Premultiply(ref value, out result);
+            Premultiply(ref value, out var result);
             return result;
         }
 
@@ -920,7 +914,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(ColorBGRA left, ColorBGRA right)
         {
             return left.Equals(ref right);
@@ -935,7 +929,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has a different value than <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(ColorBGRA left, ColorBGRA right)
         {
             return !left.Equals(ref right);
@@ -1146,7 +1140,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="ColorBGRA" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ref ColorBGRA other)
         {
             return R == other.R && G == other.G && B == other.B && A == other.A;
@@ -1159,7 +1153,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="ColorBGRA" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ColorBGRA other)
         {
             return Equals(ref other);

@@ -54,8 +54,7 @@ namespace Dreamcast.Mathematics
         /// <returns>Whether the two objects intersected.</returns>
         public bool Intersects(ref Ray ray)
         {
-            float distance;
-            return Collision.RayIntersectsSphere(ref ray, ref this, out distance);
+            return Collision.RayIntersectsSphere(ref ray, ref this, out float distance);
         }
 
         /// <summary>
@@ -232,8 +231,7 @@ namespace Dreamcast.Mathematics
             {
                 //We are doing a relative distance comparison to find the maximum distance
                 //from the center of our sphere.
-                float distance;
-                Vector3.DistanceSquared(ref center, ref points[i], out distance);
+                Vector3.DistanceSquared(ref center, ref points[i], out var distance);
 
                 if (distance > radius)
                     radius = distance;
@@ -266,8 +264,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The newly constructed bounding sphere.</returns>
         public static BoundingSphere FromPoints(Vector3[] points)
         {
-            BoundingSphere result;
-            FromPoints(points, out result);
+            FromPoints(points, out var result);
             return result;
         }
 
@@ -295,8 +292,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The newly constructed bounding sphere.</returns>
         public static BoundingSphere FromBox(BoundingBox box)
         {
-            BoundingSphere result;
-            FromBox(ref box, out result);
+            FromBox(ref box, out var result);
             return result;
         }
 
@@ -347,8 +343,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The newly constructed bounding sphere.</returns>
         public static BoundingSphere Merge(BoundingSphere value1, BoundingSphere value2)
         {
-            BoundingSphere result;
-            Merge(ref value1, ref value2, out result);
+            Merge(ref value1, ref value2, out var result);
             return result;
         }
 
@@ -361,7 +356,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(BoundingSphere left, BoundingSphere right)
         {
             return left.Equals(ref right);
@@ -376,7 +371,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has a different value than <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(BoundingSphere left, BoundingSphere right)
         {
             return !left.Equals(ref right);
@@ -461,7 +456,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Vector4" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ref BoundingSphere value)
         {
             return Center == value.Center && Radius == value.Radius;
@@ -474,7 +469,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Vector4" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(BoundingSphere value)
         {
             return Equals(ref value);

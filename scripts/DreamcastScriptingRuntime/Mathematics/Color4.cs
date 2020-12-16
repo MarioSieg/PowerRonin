@@ -473,8 +473,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The clamped value.</returns>
         public static Color4 Clamp(Color4 value, Color4 min, Color4 max)
         {
-            Color4 result;
-            Clamp(ref value, ref min, ref max, out result);
+            Clamp(ref value, ref min, ref max, out var result);
             return result;
         }
 
@@ -510,8 +509,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public static Color4 Lerp(Color4 start, Color4 end, float amount)
         {
-            Color4 result;
-            Lerp(ref start, ref end, amount, out result);
+            Lerp(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -537,8 +535,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The cubic interpolation of the two colors.</returns>
         public static Color4 SmoothStep(Color4 start, Color4 end, float amount)
         {
-            Color4 result;
-            SmoothStep(ref start, ref end, amount, out result);
+            SmoothStep(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -567,8 +564,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A color containing the largest components of the source colors.</returns>
         public static Color4 Max(Color4 left, Color4 right)
         {
-            Color4 result;
-            Max(ref left, ref right, out result);
+            Max(ref left, ref right, out var result);
             return result;
         }
 
@@ -597,8 +593,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A color containing the smallest components of the source colors.</returns>
         public static Color4 Min(Color4 left, Color4 right)
         {
-            Color4 result;
-            Min(ref left, ref right, out result);
+            Min(ref left, ref right, out var result);
             return result;
         }
 
@@ -684,8 +679,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The premultiplied result.</returns>
         public static Color4 Premultiply(Color4 value)
         {
-            Color4 result;
-            Premultiply(ref value, out result);
+            Premultiply(ref value, out var result);
             return result;
         }
 
@@ -776,7 +770,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(Color4 left, Color4 right)
         {
             return left.Equals(ref right);
@@ -791,7 +785,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has a different value than <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(Color4 left, Color4 right)
         {
             return !left.Equals(ref right);
@@ -972,7 +966,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Color4" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ref Color4 other)
         {
             return Alpha == other.Alpha && Red == other.Red && Green == other.Green && Blue == other.Blue;
@@ -985,7 +979,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Color4" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(Color4 other)
         {
             return Equals(ref other);

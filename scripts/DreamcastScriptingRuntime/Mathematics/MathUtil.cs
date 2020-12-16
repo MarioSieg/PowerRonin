@@ -17,6 +17,9 @@ using System;
 
 namespace Dreamcast.Mathematics
 {
+    /// <summary>
+    ///     Contains math utilities.
+    /// </summary>
     public static class MathUtil
     {
         /// <summary>

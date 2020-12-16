@@ -16,38 +16,48 @@
 namespace Dreamcast.Core
 {
     /// <summary>
-    ///     Contains all log levels.
+    ///     Executor hook for a command.
     /// </summary>
-    public enum LogLevel : byte
+    /// <param name="args"></param>
+    public delegate void CommandExecutor(string args);
+
+    /// <summary>
+    ///     Represents an executable terminal command.
+    /// </summary>
+    public struct Command
     {
         /// <summary>
-        ///     Trace log.
+        ///     The name used in the terminal.
         /// </summary>
-        Trace = 0,
+        public string name;
 
         /// <summary>
-        ///     Debug log.
+        ///     Short description.
         /// </summary>
-        Debug = 1,
+        public string brief;
 
         /// <summary>
-        ///     Info log.
+        ///     Number of parameters. 0 if none.
         /// </summary>
-        Info = 2,
+        public byte parameterCount;
 
         /// <summary>
-        ///     Warning log.
+        ///     True if it requires native engine root privileges, else false.
         /// </summary>
-        Warn = 3,
+        public bool requiresRootPrivileges;
 
         /// <summary>
-        ///     Error log.
+        ///     Executor hook.
         /// </summary>
-        Error = 4,
+        public CommandExecutor executor;
 
         /// <summary>
-        ///     Criticial.
         /// </summary>
-        Critical = 5
+        /// <returns>The string.</returns>
+        public override string ToString()
+        {
+            return
+                $"{nameof(name)}: {name}, {nameof(brief)}: {brief}, {nameof(parameterCount)}: {parameterCount}, {nameof(requiresRootPrivileges)}: {requiresRootPrivileges}";
+        }
     }
 }

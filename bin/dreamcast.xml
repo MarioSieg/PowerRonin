@@ -4,14 +4,76 @@
         <name>dreamcast</name>
     </assembly>
     <members>
+        <member name="T:Dreamcast.Core.CommandExecutor">
+            <summary>
+                Executor hook for a command.
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="T:Dreamcast.Core.Command">
+            <summary>
+                Represents an executable terminal command.
+            </summary>
+        </member>
+        <member name="F:Dreamcast.Core.Command.name">
+            <summary>
+                The name used in the terminal.
+            </summary>
+        </member>
+        <member name="F:Dreamcast.Core.Command.brief">
+            <summary>
+                Short description.
+            </summary>
+        </member>
+        <member name="F:Dreamcast.Core.Command.parameterCount">
+            <summary>
+                Number of parameters. 0 if none.
+            </summary>
+        </member>
+        <member name="F:Dreamcast.Core.Command.requiresRootPrivileges">
+            <summary>
+                True if it requires native engine root privileges, else false.
+            </summary>
+        </member>
+        <member name="F:Dreamcast.Core.Command.executor">
+            <summary>
+                Executor hook.
+            </summary>
+        </member>
+        <member name="M:Dreamcast.Core.Command.ToString">
+            <summary>
+            </summary>
+            <returns>The string.</returns>
+        </member>
+        <member name="T:Dreamcast.Core.CommandDB">
+            <summary>
+                Contains command functionality.
+            </summary>
+        </member>
+        <member name="P:Dreamcast.Core.CommandDB.RegisteredCommands">
+            <summary>
+                All currently registered commands.
+            </summary>
+        </member>
+        <member name="P:Dreamcast.Core.CommandDB.CommandHistory">
+            <summary>
+                The history of commands entered.
+            </summary>
+        </member>
+        <member name="M:Dreamcast.Core.CommandDB.RegisterCommonCommands">
+            <summary>
+                Registers most basic common commands.
+            </summary>
+        </member>
+        <member name="M:Dreamcast.Core.CommandDB.Execute(System.String)">
+            <summary>
+                Executes the command.
+            </summary>
+            <param name="commandText">The command text to execute.</param>
+        </member>
         <member name="T:Dreamcast.Core.Core">
             <summary>
                 Engine core class.
-            </summary>
-        </member>
-        <member name="M:Dreamcast.Core.Core.PrintInformation">
-            <summary>
-                Prints some general system information from System.Environment.
             </summary>
         </member>
         <member name="T:Dreamcast.Core.Input">
@@ -132,6 +194,11 @@
             </summary>
         </member>
         <member name="F:Dreamcast.Core.Key.Equal">
+            <summary>
+                = key.
+            </summary>
+        </member>
+        <member name="F:Dreamcast.Core.Key.A">
             <summary>
                 A key.
             </summary>
@@ -641,26 +708,6 @@
                 Menu key.
             </summary>
         </member>
-        <member name="T:Dreamcast.Core.MouseButton">
-            <summary>
-                Contains all mouse buttons.
-            </summary>
-        </member>
-        <member name="F:Dreamcast.Core.MouseButton.Left">
-            <summary>
-                Left mouse button.
-            </summary>
-        </member>
-        <member name="F:Dreamcast.Core.MouseButton.Right">
-            <summary>
-                Right mouse button.
-            </summary>
-        </member>
-        <member name="F:Dreamcast.Core.MouseButton.Middle">
-            <summary>
-                Middle mouse button.
-            </summary>
-        </member>
         <member name="T:Dreamcast.Core.LogLevel">
             <summary>
                 Contains all log levels.
@@ -694,6 +741,31 @@
         <member name="F:Dreamcast.Core.LogLevel.Critical">
             <summary>
                 Criticial.
+            </summary>
+        </member>
+        <member name="T:Dreamcast.Core.MouseButton">
+            <summary>
+                Contains all mouse buttons.
+            </summary>
+        </member>
+        <member name="F:Dreamcast.Core.MouseButton.Left">
+            <summary>
+                Left mouse button.
+            </summary>
+        </member>
+        <member name="F:Dreamcast.Core.MouseButton.Right">
+            <summary>
+                Right mouse button.
+            </summary>
+        </member>
+        <member name="F:Dreamcast.Core.MouseButton.Middle">
+            <summary>
+                Middle mouse button.
+            </summary>
+        </member>
+        <member name="T:Dreamcast.Core.NativeRuntime">
+            <summary>
+                Contains all internal calls.
             </summary>
         </member>
         <member name="T:Dreamcast.Core.Protocol">
@@ -737,7 +809,7 @@
             </summary>
             <param name="message">The message to log.</param>
         </member>
-        <member name="M:Dreamcast.Core.Protocol.Warn(System.String)">
+        <member name="M:Dreamcast.Core.Protocol.Warn(System.String@)">
             <summary>
                 Shorthand for Log(LogLevel.Warn, message);
             </summary>
@@ -769,7 +841,7 @@
             <summary>
                 Sets the formatting pattern of the protocol scripting formatter.
             </summary>
-            <param name="patter"></param>
+            <param name="pattern"></param>
         </member>
         <member name="T:Dreamcast.Mathematics.AngleSingle">
             <summary>
@@ -1586,6 +1658,11 @@
                 Creates a new instance of BoundingFrustum.
             </summary>
             <param name="matrix">Combined matrix that usually takes view × projection matrix.</param>
+        </member>
+        <member name="M:Dreamcast.Mathematics.BoundingFrustum.GetHashCode">
+            <summary>
+            </summary>
+            <returns>The hash code.</returns>
         </member>
         <member name="M:Dreamcast.Mathematics.BoundingFrustum.Equals(Dreamcast.Mathematics.BoundingFrustum@)">
             <summary>
@@ -2787,6 +2864,11 @@
             <returns>
                 The result of the operator.
             </returns>
+        </member>
+        <member name="M:Dreamcast.Mathematics.Point.ToString">
+            <summary>
+            </summary>
+            <returns>The string.</returns>
         </member>
         <member name="M:Dreamcast.Mathematics.Point.op_Explicit(Dreamcast.Mathematics.Vector2)~Dreamcast.Mathematics.Point">
             <summary>
@@ -4194,6 +4276,20 @@
             <returns>
                 <c>true</c> if the specified <see cref="T:System.Object" /> is equal to this instance; otherwise, <c>false</c>.
             </returns>
+        </member>
+        <member name="M:Dreamcast.Mathematics.Color.ToByte(System.Single)">
+            <summary>
+                Converts a normalized float to a byte.
+            </summary>
+            <param name="component"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dreamcast.Mathematics.Color.ToByte(System.Int32)">
+            <summary>
+                Safely converts an int to a byte.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
         </member>
         <member name="F:Dreamcast.Mathematics.Color.Zero">
             <summary>
@@ -8158,6 +8254,11 @@
             </summary>
             <param name="input">The input.</param>
             <returns>The result of the conversion.</returns>
+        </member>
+        <member name="T:Dreamcast.Mathematics.MathUtil">
+            <summary>
+                Contains math utilities.
+            </summary>
         </member>
         <member name="F:Dreamcast.Mathematics.MathUtil.ZeroTolerance">
             <summary>
@@ -13626,6 +13727,11 @@
             <param name="right">The right.</param>
             <returns>The result of the operator.</returns>
         </member>
+        <member name="M:Dreamcast.Mathematics.Rectangle.ToString">
+            <summary>
+            </summary>
+            <returns>The string.</returns>
+        </member>
         <member name="T:Dreamcast.Mathematics.RectangleF">
             <summary>
                 Define a RectangleF. This structure is slightly different from System.Drawing.RectangleF as it is
@@ -13970,9 +14076,14 @@
                 The result of the operator.
             </returns>
         </member>
+        <member name="M:Dreamcast.Mathematics.Size2.ToString">
+            <summary>
+            </summary>
+            <returns>The string.</returns>
+        </member>
         <member name="T:Dreamcast.Mathematics.Size2F">
             <summary>
-                Structure using the same layout than <see cref="!:System.Drawing.SizeF" />.
+                Structure using the same layout than System.Drawing.SizeF.
             </summary>
         </member>
         <member name="F:Dreamcast.Mathematics.Size2F.Zero">
@@ -17518,7 +17629,16 @@
             </summary>
             <returns>A <see cref="T:System.String" /> that represents this instance.</returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Dreamcast.Mathematics.ViewportF.Project(Dreamcast.Mathematics.Vector3,Dreamcast.Mathematics.Matrix4x4,Dreamcast.Mathematics.Matrix4x4,Dreamcast.Mathematics.Matrix4x4)" -->
+        <member name="M:Dreamcast.Mathematics.ViewportF.Project(Dreamcast.Mathematics.Vector3,Dreamcast.Mathematics.Matrix4x4,Dreamcast.Mathematics.Matrix4x4,Dreamcast.Mathematics.Matrix4x4)">
+            <summary>
+                Projects a 3D vector from object space into screen space.
+            </summary>
+            <param name="source">The vector to project.</param>
+            <param name="projection">The projection matrix.</param>
+            <param name="view">The view matrix.</param>
+            <param name="world">The world matrix.</param>
+            <returns>The projected vector.</returns>
+        </member>
         <member name="M:Dreamcast.Mathematics.ViewportF.Project(Dreamcast.Mathematics.Vector3@,Dreamcast.Mathematics.Matrix4x4@,Dreamcast.Mathematics.Vector3@)">
             <summary>
                 Projects a 3D vector from object space into screen space.

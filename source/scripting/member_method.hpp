@@ -54,7 +54,7 @@ namespace dce::scripting {
 		/// <param name="_class">The class to query from.</param>
 		/// <param name="_name">The name of the method.</param>
 		/// <param name="_params_count_"></param>
-		void query_from_class(ClassInstance& _class, const std::string_view _name, const std::uint8_t _params_count_ = 0);
+		void query_from_class(ClassInstance& _class, const std::string_view _name, const std::uint8_t _params_count_ = 0, const bool _do_not_jit_compile = false);
 
 		/// <summary>
 		/// JIT-compiles this method into native machine code.

@@ -273,7 +273,7 @@ namespace Dreamcast.Mathematics
                 X = -X * lengthSq;
                 Y = -Y * lengthSq;
                 Z = -Z * lengthSq;
-                W = W * lengthSq;
+                W *= lengthSq;
             }
         }
 
@@ -350,8 +350,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two quaternions.</returns>
         public static Quaternion Add(Quaternion left, Quaternion right)
         {
-            Quaternion result;
-            Add(ref left, ref right, out result);
+            Add(ref left, ref right, out var result);
             return result;
         }
 
@@ -377,8 +376,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference of the two quaternions.</returns>
         public static Quaternion Subtract(Quaternion left, Quaternion right)
         {
-            Quaternion result;
-            Subtract(ref left, ref right, out result);
+            Subtract(ref left, ref right, out var result);
             return result;
         }
 
@@ -404,8 +402,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled quaternion.</returns>
         public static Quaternion Multiply(Quaternion value, float scale)
         {
-            Quaternion result;
-            Multiply(ref value, scale, out result);
+            Multiply(ref value, scale, out var result);
             return result;
         }
 
@@ -443,8 +440,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The multiplied quaternion.</returns>
         public static Quaternion Multiply(Quaternion left, Quaternion right)
         {
-            Quaternion result;
-            Multiply(ref left, ref right, out result);
+            Multiply(ref left, ref right, out var result);
             return result;
         }
 
@@ -468,8 +464,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A quaternion facing in the opposite direction.</returns>
         public static Quaternion Negate(Quaternion value)
         {
-            Quaternion result;
-            Negate(ref value, out result);
+            Negate(ref value, out var result);
             return result;
         }
 
@@ -495,9 +490,8 @@ namespace Dreamcast.Mathematics
         public static void Barycentric(ref Quaternion value1, ref Quaternion value2, ref Quaternion value3,
             float amount1, float amount2, out Quaternion result)
         {
-            Quaternion start, end;
-            Slerp(ref value1, ref value2, amount1 + amount2, out start);
-            Slerp(ref value1, ref value3, amount1 + amount2, out end);
+            Slerp(ref value1, ref value2, amount1 + amount2, out var start);
+            Slerp(ref value1, ref value3, amount1 + amount2, out var end);
             Slerp(ref start, ref end, amount2 / (amount1 + amount2), out result);
         }
 
@@ -520,8 +514,7 @@ namespace Dreamcast.Mathematics
         public static Quaternion Barycentric(Quaternion value1, Quaternion value2, Quaternion value3, float amount1,
             float amount2)
         {
-            Quaternion result;
-            Barycentric(ref value1, ref value2, ref value3, amount1, amount2, out result);
+            Barycentric(ref value1, ref value2, ref value3, amount1, amount2, out var result);
             return result;
         }
 
@@ -545,8 +538,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The conjugated quaternion.</returns>
         public static Quaternion Conjugate(Quaternion value)
         {
-            Quaternion result;
-            Conjugate(ref value, out result);
+            Conjugate(ref value, out var result);
             return result;
         }
 
@@ -604,8 +596,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The exponentiated quaternion.</returns>
         public static Quaternion Exponential(Quaternion value)
         {
-            Quaternion result;
-            Exponential(ref value, out result);
+            Exponential(ref value, out var result);
             return result;
         }
 
@@ -627,8 +618,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The conjugated and renormalized quaternion.</returns>
         public static Quaternion Invert(Quaternion value)
         {
-            Quaternion result;
-            Invert(ref value, out result);
+            Invert(ref value, out var result);
             return result;
         }
 
@@ -682,8 +672,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public static Quaternion Lerp(Quaternion start, Quaternion end, float amount)
         {
-            Quaternion result;
-            Lerp(ref start, ref end, amount, out result);
+            Lerp(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -726,8 +715,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The natural logarithm of the quaternion.</returns>
         public static Quaternion Logarithm(Quaternion value)
         {
-            Quaternion result;
-            Logarithm(ref value, out result);
+            Logarithm(ref value, out var result);
             return result;
         }
 
@@ -762,8 +750,7 @@ namespace Dreamcast.Mathematics
         /// <param name="result">When the method completes, contains the newly created quaternion.</param>
         public static void RotationAxis(ref Vector3 axis, float angle, out Quaternion result)
         {
-            Vector3 normalized;
-            Vector3.Normalize(ref axis, out normalized);
+            Vector3.Normalize(ref axis, out var normalized);
 
             var half = angle * 0.5f;
             var sin = (float) Math.Sin(half);
@@ -783,8 +770,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The newly created quaternion.</returns>
         public static Quaternion RotationAxis(Vector3 axis, float angle)
         {
-            Quaternion result;
-            RotationAxis(ref axis, angle, out result);
+            RotationAxis(ref axis, angle, out var result);
             return result;
         }
 
@@ -903,8 +889,7 @@ namespace Dreamcast.Mathematics
         /// <param name="result">When the method completes, contains the created look-at quaternion.</param>
         public static void LookAtLH(ref Vector3 eye, ref Vector3 target, ref Vector3 up, out Quaternion result)
         {
-            Matrix3x3 matrix;
-            Matrix3x3.LookAtLH(ref eye, ref target, ref up, out matrix);
+            Matrix3x3.LookAtLH(ref eye, ref target, ref up, out var matrix);
             RotationMatrix(ref matrix, out result);
         }
 
@@ -917,8 +902,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The created look-at quaternion.</returns>
         public static Quaternion LookAtLH(Vector3 eye, Vector3 target, Vector3 up)
         {
-            Quaternion result;
-            LookAtLH(ref eye, ref target, ref up, out result);
+            LookAtLH(ref eye, ref target, ref up, out var result);
             return result;
         }
 
@@ -942,8 +926,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The created look-at quaternion.</returns>
         public static Quaternion RotationLookAtLH(Vector3 forward, Vector3 up)
         {
-            Quaternion result;
-            RotationLookAtLH(ref forward, ref up, out result);
+            RotationLookAtLH(ref forward, ref up, out var result);
             return result;
         }
 
@@ -956,8 +939,7 @@ namespace Dreamcast.Mathematics
         /// <param name="result">When the method completes, contains the created look-at quaternion.</param>
         public static void LookAtRH(ref Vector3 eye, ref Vector3 target, ref Vector3 up, out Quaternion result)
         {
-            Matrix3x3 matrix;
-            Matrix3x3.LookAtRH(ref eye, ref target, ref up, out matrix);
+            Matrix3x3.LookAtRH(ref eye, ref target, ref up, out var matrix);
             RotationMatrix(ref matrix, out result);
         }
 
@@ -970,8 +952,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The created look-at quaternion.</returns>
         public static Quaternion LookAtRH(Vector3 eye, Vector3 target, Vector3 up)
         {
-            Quaternion result;
-            LookAtRH(ref eye, ref target, ref up, out result);
+            LookAtRH(ref eye, ref target, ref up, out var result);
             return result;
         }
 
@@ -995,8 +976,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The created look-at quaternion.</returns>
         public static Quaternion RotationLookAtRH(Vector3 forward, Vector3 up)
         {
-            Quaternion result;
-            RotationLookAtRH(ref forward, ref up, out result);
+            RotationLookAtRH(ref forward, ref up, out var result);
             return result;
         }
 
@@ -1011,9 +991,8 @@ namespace Dreamcast.Mathematics
         public static void BillboardLH(ref Vector3 objectPosition, ref Vector3 cameraPosition,
             ref Vector3 cameraUpVector, ref Vector3 cameraForwardVector, out Quaternion result)
         {
-            Matrix3x3 matrix;
             Matrix3x3.BillboardLH(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector,
-                out matrix);
+                out var matrix);
             RotationMatrix(ref matrix, out result);
         }
 
@@ -1028,9 +1007,8 @@ namespace Dreamcast.Mathematics
         public static Quaternion BillboardLH(Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector,
             Vector3 cameraForwardVector)
         {
-            Quaternion result;
             BillboardLH(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector,
-                out result);
+                out var result);
             return result;
         }
 
@@ -1045,9 +1023,8 @@ namespace Dreamcast.Mathematics
         public static void BillboardRH(ref Vector3 objectPosition, ref Vector3 cameraPosition,
             ref Vector3 cameraUpVector, ref Vector3 cameraForwardVector, out Quaternion result)
         {
-            Matrix3x3 matrix;
             Matrix3x3.BillboardRH(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector,
-                out matrix);
+                out var matrix);
             RotationMatrix(ref matrix, out result);
         }
 
@@ -1062,9 +1039,8 @@ namespace Dreamcast.Mathematics
         public static Quaternion BillboardRH(Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector,
             Vector3 cameraForwardVector)
         {
-            Quaternion result;
             BillboardRH(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector,
-                out result);
+                out var result);
             return result;
         }
 
@@ -1075,8 +1051,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The newly created quaternion.</returns>
         public static Quaternion RotationMatrix(Matrix4x4 matrix)
         {
-            Quaternion result;
-            RotationMatrix(ref matrix, out result);
+            RotationMatrix(ref matrix, out var result);
             return result;
         }
 
@@ -1115,8 +1090,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The newly created quaternion.</returns>
         public static Quaternion RotationYawPitchRoll(float yaw, float pitch, float roll)
         {
-            Quaternion result;
-            RotationYawPitchRoll(yaw, pitch, roll, out result);
+            RotationYawPitchRoll(yaw, pitch, roll, out var result);
             return result;
         }
 
@@ -1162,8 +1136,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The spherical linear interpolation of the two quaternions.</returns>
         public static Quaternion Slerp(Quaternion start, Quaternion end, float amount)
         {
-            Quaternion result;
-            Slerp(ref start, ref end, amount, out result);
+            Slerp(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -1179,9 +1152,8 @@ namespace Dreamcast.Mathematics
         public static void Squad(ref Quaternion value1, ref Quaternion value2, ref Quaternion value3,
             ref Quaternion value4, float amount, out Quaternion result)
         {
-            Quaternion start, end;
-            Slerp(ref value1, ref value4, amount, out start);
-            Slerp(ref value2, ref value3, amount, out end);
+            Slerp(ref value1, ref value4, amount, out var start);
+            Slerp(ref value2, ref value3, amount, out var end);
             Slerp(ref start, ref end, 2.0f * amount * (1.0f - amount), out result);
         }
 
@@ -1197,8 +1169,7 @@ namespace Dreamcast.Mathematics
         public static Quaternion Squad(Quaternion value1, Quaternion value2, Quaternion value3, Quaternion value4,
             float amount)
         {
-            Quaternion result;
-            Squad(ref value1, ref value2, ref value3, ref value4, amount, out result);
+            Squad(ref value1, ref value2, ref value3, ref value4, amount, out var result);
             return result;
         }
 
@@ -1218,9 +1189,8 @@ namespace Dreamcast.Mathematics
             var q3 = (value3 + value4).LengthSquared() < (value3 - value4).LengthSquared() ? -value4 : value4;
             var q1 = value2;
 
-            Quaternion q1Exp, q2Exp;
-            Exponential(ref q1, out q1Exp);
-            Exponential(ref q2, out q2Exp);
+            Exponential(ref q1, out var q1Exp);
+            Exponential(ref q2, out var q2Exp);
 
             var results = new Quaternion[3];
             results[0] = q1 * Exponential(-0.25f * (Logarithm(q1Exp * q2) + Logarithm(q1Exp * q0)));
@@ -1238,8 +1208,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two quaternions.</returns>
         public static Quaternion operator +(Quaternion left, Quaternion right)
         {
-            Quaternion result;
-            Add(ref left, ref right, out result);
+            Add(ref left, ref right, out var result);
             return result;
         }
 
@@ -1251,8 +1220,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference of the two quaternions.</returns>
         public static Quaternion operator -(Quaternion left, Quaternion right)
         {
-            Quaternion result;
-            Subtract(ref left, ref right, out result);
+            Subtract(ref left, ref right, out var result);
             return result;
         }
 
@@ -1263,8 +1231,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A quaternion facing in the opposite direction.</returns>
         public static Quaternion operator -(Quaternion value)
         {
-            Quaternion result;
-            Negate(ref value, out result);
+            Negate(ref value, out var result);
             return result;
         }
 
@@ -1276,8 +1243,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled quaternion.</returns>
         public static Quaternion operator *(float scale, Quaternion value)
         {
-            Quaternion result;
-            Multiply(ref value, scale, out result);
+            Multiply(ref value, scale, out var result);
             return result;
         }
 
@@ -1289,8 +1255,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled quaternion.</returns>
         public static Quaternion operator *(Quaternion value, float scale)
         {
-            Quaternion result;
-            Multiply(ref value, scale, out result);
+            Multiply(ref value, scale, out var result);
             return result;
         }
 
@@ -1302,8 +1267,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The multiplied quaternion.</returns>
         public static Quaternion operator *(Quaternion left, Quaternion right)
         {
-            Quaternion result;
-            Multiply(ref left, ref right, out result);
+            Multiply(ref left, ref right, out var result);
             return result;
         }
 
@@ -1316,7 +1280,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(Quaternion left, Quaternion right)
         {
             return left.Equals(ref right);
@@ -1331,7 +1295,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has a different value than <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(Quaternion left, Quaternion right)
         {
             return !left.Equals(ref right);
@@ -1421,7 +1385,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Quaternion" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ref Quaternion other)
         {
             return MathUtil.NearEqual(other.X, X) && MathUtil.NearEqual(other.Y, Y) && MathUtil.NearEqual(other.Z, Z) &&
@@ -1435,7 +1399,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Quaternion" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(Quaternion other)
         {
             return Equals(ref other);

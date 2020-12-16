@@ -87,6 +87,9 @@ namespace Dreamcast.Mathematics
             GetPlanesFromMatrix(ref pMatrix, out pNear, out pFar, out pLeft, out pRight, out pTop, out pBottom);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <returns>The hash code.</returns>
         public override int GetHashCode()
         {
             return pMatrix.GetHashCode();
@@ -99,7 +102,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="BoundingFrustum" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ref BoundingFrustum other)
         {
             return pMatrix == other.pMatrix;
@@ -112,7 +115,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="BoundingFrustum" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(BoundingFrustum other)
         {
             return Equals(ref other);
@@ -142,7 +145,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     The result of the operator.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(BoundingFrustum left, BoundingFrustum right)
         {
             return left.Equals(ref right);
@@ -156,7 +159,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     The result of the operator.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(BoundingFrustum left, BoundingFrustum right)
         {
             return !left.Equals(ref right);
@@ -505,13 +508,12 @@ namespace Dreamcast.Mathematics
         /// <returns>Type of the containment</returns>
         public ContainmentType Contains(ref BoundingBox box)
         {
-            Vector3 p, n;
             Plane plane;
             var result = ContainmentType.Contains;
             for (var i = 0; i < 6; i++)
             {
                 plane = GetPlane(i);
-                GetBoxToPlanePVertexNVertex(ref box, ref plane.Normal, out p, out n);
+                GetBoxToPlanePVertexNVertex(ref box, ref plane.Normal, out var p, out var n);
                 if (Collision.PlaneIntersectsPoint(ref plane, ref p) == PlaneIntersectionType.Back)
                     return ContainmentType.Disjoint;
 
@@ -752,8 +754,7 @@ namespace Dreamcast.Mathematics
         /// <returns><c>true</c> if the current BoundingFrustum intersects the specified Ray.</returns>
         public bool Intersects(ref Ray ray)
         {
-            float? inDist, outDist;
-            return Intersects(ref ray, out inDist, out outDist);
+            return Intersects(ref ray, out var inDist, out var outDist);
         }
 
         /// <summary>
@@ -774,8 +775,8 @@ namespace Dreamcast.Mathematics
                 for (var i = 0; i < 6; i++)
                 {
                     var plane = GetPlane(i);
-                    float distance;
-                    if (Collision.RayIntersectsPlane(ref ray, ref plane, out distance) && distance < nearstPlaneDistance
+                    if (Collision.RayIntersectsPlane(ref ray, ref plane, out float distance) &&
+                        distance < nearstPlaneDistance
                     ) nearstPlaneDistance = distance;
                 }
 
@@ -792,8 +793,7 @@ namespace Dreamcast.Mathematics
             for (var i = 0; i < 6; i++)
             {
                 var plane = GetPlane(i);
-                float distance;
-                if (Collision.RayIntersectsPlane(ref ray, ref plane, out distance))
+                if (Collision.RayIntersectsPlane(ref ray, ref plane, out float distance))
                 {
                     minDist = Math.Min(minDist, distance);
                     maxDist = Math.Max(maxDist, distance);

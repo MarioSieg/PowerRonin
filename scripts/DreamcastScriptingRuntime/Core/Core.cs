@@ -13,8 +13,6 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-using System;
-
 namespace Dreamcast.Core
 {
     /// <summary>
@@ -24,9 +22,8 @@ namespace Dreamcast.Core
     {
         private static void OnSystemStart()
         {
-            PrintInformation();
-            Protocol.Info("Scripting backend online!");
-            Protocol.Separator();
+            CommandDB.RegisterCommonCommands();
+            CommandDB.Execute("info");
         }
 
         private static void OnSystemUpdate()
@@ -36,19 +33,6 @@ namespace Dreamcast.Core
 
         private static void OnSystemExit()
         {
-        }
-
-        /// <summary>
-        ///     Prints some general system information from System.Environment.
-        /// </summary>
-        public static void PrintInformation()
-        {
-            Protocol.Info("C# CLR v." + Environment.Version);
-            Protocol.Info("Current directory: " + Environment.CurrentDirectory);
-            Protocol.Info("Machine: " + Environment.MachineName);
-            Protocol.Info("Operating system version: " + Environment.OSVersion);
-            Protocol.Info("Logical cores: " + Environment.ProcessorCount);
-            Protocol.Info("User: " + Environment.UserName);
         }
     }
 }

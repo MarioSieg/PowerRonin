@@ -529,8 +529,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A new <see cref="Vector4" /> containing the 4D Cartesian coordinates of the specified point.</returns>
         public static Vector4 Barycentric(Vector4 value1, Vector4 value2, Vector4 value3, float amount1, float amount2)
         {
-            Vector4 result;
-            Barycentric(ref value1, ref value2, ref value3, amount1, amount2, out result);
+            Barycentric(ref value1, ref value2, ref value3, amount1, amount2, out var result);
             return result;
         }
 
@@ -571,8 +570,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The clamped value.</returns>
         public static Vector4 Clamp(Vector4 value, Vector4 min, Vector4 max)
         {
-            Vector4 result;
-            Clamp(ref value, ref min, ref max, out result);
+            Clamp(ref value, ref min, ref max, out var result);
             return result;
         }
 
@@ -742,8 +740,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public static Vector4 Lerp(Vector4 start, Vector4 end, float amount)
         {
-            Vector4 result;
-            Lerp(ref start, ref end, amount, out result);
+            Lerp(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -769,8 +766,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The cubic interpolation of the two vectors.</returns>
         public static Vector4 SmoothStep(Vector4 start, Vector4 end, float amount)
         {
-            Vector4 result;
-            SmoothStep(ref start, ref end, amount, out result);
+            SmoothStep(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -810,8 +806,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the Hermite spline interpolation.</returns>
         public static Vector4 Hermite(Vector4 value1, Vector4 tangent1, Vector4 value2, Vector4 tangent2, float amount)
         {
-            Vector4 result;
-            Hermite(ref value1, ref tangent1, ref value2, ref tangent2, amount, out result);
+            Hermite(ref value1, ref tangent1, ref value2, ref tangent2, amount, out var result);
             return result;
         }
 
@@ -855,8 +850,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector that is the result of the Catmull-Rom interpolation.</returns>
         public static Vector4 CatmullRom(Vector4 value1, Vector4 value2, Vector4 value3, Vector4 value4, float amount)
         {
-            Vector4 result;
-            CatmullRom(ref value1, ref value2, ref value3, ref value4, amount, out result);
+            CatmullRom(ref value1, ref value2, ref value3, ref value4, amount, out var result);
             return result;
         }
 
@@ -885,8 +879,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector containing the largest components of the source vectors.</returns>
         public static Vector4 Max(Vector4 left, Vector4 right)
         {
-            Vector4 result;
-            Max(ref left, ref right, out result);
+            Max(ref left, ref right, out var result);
             return result;
         }
 
@@ -915,8 +908,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector containing the smallest components of the source vectors.</returns>
         public static Vector4 Min(Vector4 left, Vector4 right)
         {
-            Vector4 result;
-            Min(ref left, ref right, out result);
+            Min(ref left, ref right, out var result);
             return result;
         }
 
@@ -1066,8 +1058,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The transformed <see cref="Vector4" />.</returns>
         public static Vector4 Transform(Vector4 vector, Quaternion rotation)
         {
-            Vector4 result;
-            Transform(ref vector, ref rotation, out result);
+            Transform(ref vector, ref rotation, out var result);
             return result;
         }
 
@@ -1156,8 +1147,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The transformed <see cref="Vector4" />.</returns>
         public static Vector4 Transform(Vector4 vector, Matrix4x4 transform)
         {
-            Vector4 result;
-            Transform(ref vector, ref transform, out result);
+            Transform(ref vector, ref transform, out var result);
             return result;
         }
 
@@ -1188,8 +1178,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The transformed <see cref="Vector4" />.</returns>
         public static Vector4 Transform(Vector4 vector, Matrix5x4 transform)
         {
-            Vector4 result;
-            Transform(ref vector, ref transform, out result);
+            Transform(ref vector, ref transform, out var result);
             return result;
         }
 
@@ -1385,7 +1374,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(Vector4 left, Vector4 right)
         {
             return left.Equals(ref right);
@@ -1400,7 +1389,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has a different value than <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(Vector4 left, Vector4 right)
         {
             return !left.Equals(ref right);
@@ -1525,7 +1514,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Vector4" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(Vector4 other)
         {
             return Equals(ref other);

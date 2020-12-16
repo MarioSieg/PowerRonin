@@ -111,6 +111,9 @@ namespace Dreamcast.Mathematics
             return !left.Equals(right);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <returns>The string.</returns>
         public override string ToString()
         {
             return $"({Width},{Height})";

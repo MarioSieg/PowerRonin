@@ -485,8 +485,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A new <see cref="Vector2" /> containing the 2D Cartesian coordinates of the specified point.</returns>
         public static Vector2 Barycentric(Vector2 value1, Vector2 value2, Vector2 value3, float amount1, float amount2)
         {
-            Vector2 result;
-            Barycentric(ref value1, ref value2, ref value3, amount1, amount2, out result);
+            Barycentric(ref value1, ref value2, ref value3, amount1, amount2, out var result);
             return result;
         }
 
@@ -519,8 +518,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The clamped value.</returns>
         public static Vector2 Clamp(Vector2 value, Vector2 min, Vector2 max)
         {
-            Vector2 result;
-            Clamp(ref value, ref min, ref max, out result);
+            Clamp(ref value, ref min, ref max, out var result);
             return result;
         }
 
@@ -688,8 +686,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public static Vector2 Lerp(Vector2 start, Vector2 end, float amount)
         {
-            Vector2 result;
-            Lerp(ref start, ref end, amount, out result);
+            Lerp(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -715,8 +712,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The cubic interpolation of the two vectors.</returns>
         public static Vector2 SmoothStep(Vector2 start, Vector2 end, float amount)
         {
-            Vector2 result;
-            SmoothStep(ref start, ref end, amount, out result);
+            SmoothStep(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -754,8 +750,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the Hermite spline interpolation.</returns>
         public static Vector2 Hermite(Vector2 value1, Vector2 tangent1, Vector2 value2, Vector2 tangent2, float amount)
         {
-            Vector2 result;
-            Hermite(ref value1, ref tangent1, ref value2, ref tangent2, amount, out result);
+            Hermite(ref value1, ref tangent1, ref value2, ref tangent2, amount, out var result);
             return result;
         }
 
@@ -794,8 +789,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector that is the result of the Catmull-Rom interpolation.</returns>
         public static Vector2 CatmullRom(Vector2 value1, Vector2 value2, Vector2 value3, Vector2 value4, float amount)
         {
-            Vector2 result;
-            CatmullRom(ref value1, ref value2, ref value3, ref value4, amount, out result);
+            CatmullRom(ref value1, ref value2, ref value3, ref value4, amount, out var result);
             return result;
         }
 
@@ -822,8 +816,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector containing the largest components of the source vectors.</returns>
         public static Vector2 Max(Vector2 left, Vector2 right)
         {
-            Vector2 result;
-            Max(ref left, ref right, out result);
+            Max(ref left, ref right, out var result);
             return result;
         }
 
@@ -850,8 +843,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector containing the smallest components of the source vectors.</returns>
         public static Vector2 Min(Vector2 left, Vector2 right)
         {
-            Vector2 result;
-            Min(ref left, ref right, out result);
+            Min(ref left, ref right, out var result);
             return result;
         }
 
@@ -885,8 +877,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public static Vector2 Reflect(Vector2 vector, Vector2 normal)
         {
-            Vector2 result;
-            Reflect(ref vector, ref normal, out result);
+            Reflect(ref vector, ref normal, out var result);
             return result;
         }
 
@@ -1029,8 +1020,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The transformed <see cref="Vector4" />.</returns>
         public static Vector2 Transform(Vector2 vector, Quaternion rotation)
         {
-            Vector2 result;
-            Transform(ref vector, ref rotation, out result);
+            Transform(ref vector, ref rotation, out var result);
             return result;
         }
 
@@ -1104,8 +1094,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The transformed <see cref="Vector4" />.</returns>
         public static Vector4 Transform(Vector2 vector, Matrix4x4 transform)
         {
-            Vector4 result;
-            Transform(ref vector, ref transform, out result);
+            Transform(ref vector, ref transform, out var result);
             return result;
         }
 
@@ -1175,8 +1164,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public static Vector2 TransformCoordinate(Vector2 coordinate, Matrix4x4 transform)
         {
-            Vector2 result;
-            TransformCoordinate(ref coordinate, ref transform, out result);
+            TransformCoordinate(ref coordinate, ref transform, out var result);
             return result;
         }
 
@@ -1253,8 +1241,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public static Vector2 TransformNormal(Vector2 normal, Matrix4x4 transform)
         {
-            Vector2 result;
-            TransformNormal(ref normal, ref transform, out result);
+            TransformNormal(ref normal, ref transform, out var result);
             return result;
         }
 
@@ -1457,7 +1444,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(Vector2 left, Vector2 right)
         {
             return left.Equals(ref right);
@@ -1472,7 +1459,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has a different value than <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(Vector2 left, Vector2 right)
         {
             return !left.Equals(ref right);
@@ -1575,7 +1562,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Vector2" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ref Vector2 other)
         {
             return MathUtil.NearEqual(other.X, X) && MathUtil.NearEqual(other.Y, Y);
@@ -1588,7 +1575,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Vector2" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(Vector2 other)
         {
             return Equals(ref other);

@@ -17,6 +17,9 @@ using System.Runtime.CompilerServices;
 
 namespace Dreamcast.Core
 {
+    /// <summary>
+    ///     Contains all internal calls.
+    /// </summary>
     public static class NativeRuntime
     {
         [CallToNativeRuntime]

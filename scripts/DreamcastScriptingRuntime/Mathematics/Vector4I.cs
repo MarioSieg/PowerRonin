@@ -360,8 +360,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The clamped value.</returns>
         public static Int4 Clamp(Int4 value, Int4 min, Int4 max)
         {
-            Int4 result;
-            Clamp(ref value, ref min, ref max, out result);
+            Clamp(ref value, ref min, ref max, out var result);
             return result;
         }
 
@@ -390,8 +389,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector containing the largest components of the source vectors.</returns>
         public static Int4 Max(Int4 left, Int4 right)
         {
-            Int4 result;
-            Max(ref left, ref right, out result);
+            Max(ref left, ref right, out var result);
             return result;
         }
 
@@ -420,8 +418,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector containing the smallest components of the source vectors.</returns>
         public static Int4 Min(Int4 left, Int4 right)
         {
-            Int4 result;
-            Min(ref left, ref right, out result);
+            Min(ref left, ref right, out var result);
             return result;
         }
 
@@ -509,7 +506,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(Int4 left, Int4 right)
         {
             return left.Equals(ref right);
@@ -524,7 +521,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has a different value than <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(Int4 left, Int4 right)
         {
             return !left.Equals(ref right);
@@ -645,7 +642,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Int4" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ref Int4 other)
         {
             return other.X == X && other.Y == Y && other.Z == Z && other.W == W;
@@ -658,7 +655,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Int4" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(Int4 other)
         {
             return Equals(ref other);

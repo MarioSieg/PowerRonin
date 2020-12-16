@@ -338,8 +338,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The clamped value.</returns>
         public static Vector3I Clamp(Vector3I value, Vector3I min, Vector3I max)
         {
-            Vector3I result;
-            Clamp(ref value, ref min, ref max, out result);
+            Clamp(ref value, ref min, ref max, out var result);
             return result;
         }
 
@@ -367,8 +366,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector containing the largest components of the source vectors.</returns>
         public static Vector3I Max(Vector3I left, Vector3I right)
         {
-            Vector3I result;
-            Max(ref left, ref right, out result);
+            Max(ref left, ref right, out var result);
             return result;
         }
 
@@ -396,8 +394,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector containing the smallest components of the source vectors.</returns>
         public static Vector3I Min(Vector3I left, Vector3I right)
         {
-            Vector3I result;
-            Min(ref left, ref right, out result);
+            Min(ref left, ref right, out var result);
             return result;
         }
 
@@ -485,7 +482,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(Vector3I left, Vector3I right)
         {
             return left.Equals(ref right);
@@ -500,7 +497,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has a different value than <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(Vector3I left, Vector3I right)
         {
             return !left.Equals(ref right);
@@ -608,7 +605,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Vector3I" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ref Vector3I other)
         {
             return other.X == X && other.Y == Y && other.Z == Z;
@@ -621,7 +618,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Vector3I" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(Vector3I other)
         {
             return Equals(ref other);

@@ -222,8 +222,7 @@ namespace Dreamcast.Mathematics
         /// <returns>Whether the two objects intersected.</returns>
         public bool Intersects(ref Ray ray)
         {
-            float distance;
-            return Collision.RayIntersectsPlane(ref ray, ref this, out distance);
+            return Collision.RayIntersectsPlane(ref ray, ref this, out float distance);
         }
 
         /// <summary>
@@ -348,8 +347,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The reflection matrix.</returns>
         public Matrix4x4 Reflection()
         {
-            Matrix4x4 result;
-            Reflection(out result);
+            Reflection(out Matrix4x4 result);
             return result;
         }
 
@@ -401,8 +399,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The shadow matrix.</returns>
         public Matrix4x4 Shadow(Vector4 light)
         {
-            Matrix4x4 result;
-            Shadow(ref light, out result);
+            Shadow(ref light, out var result);
             return result;
         }
 
@@ -438,8 +435,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The reflection Matrix3x3.</returns>
         public Matrix3x3 Reflection3x3()
         {
-            Matrix3x3 result;
-            Reflection(out result);
+            Reflection(out Matrix3x3 result);
             return result;
         }
 
@@ -489,8 +485,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The shadow Matrix3x3.</returns>
         public static Matrix3x3 Shadow(Vector4 light, Plane plane)
         {
-            Matrix3x3 result;
-            Shadow(ref light, ref plane, out result);
+            Shadow(ref light, ref plane, out var result);
             return result;
         }
 
@@ -739,8 +734,7 @@ namespace Dreamcast.Mathematics
             var z = plane.Normal.Z;
             var d = plane.D;
 
-            Matrix4x4 inverse;
-            Matrix4x4.Invert(ref transformation, out inverse);
+            Matrix4x4.Invert(ref transformation, out var inverse);
 
             result.Normal.X = x * inverse.M11 + y * inverse.M12 + z * inverse.M13 + d * inverse.M14;
             result.Normal.Y = x * inverse.M21 + y * inverse.M22 + z * inverse.M23 + d * inverse.M24;
@@ -786,8 +780,7 @@ namespace Dreamcast.Mathematics
             if (planes == null)
                 throw new ArgumentNullException("planes");
 
-            Matrix4x4 inverse;
-            Matrix4x4.Invert(ref transformation, out inverse);
+            Matrix4x4.Invert(ref transformation, out var inverse);
 
             for (var i = 0; i < planes.Length; ++i) Transform(ref planes[i], ref transformation, out planes[i]);
         }
@@ -823,7 +816,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(Plane left, Plane right)
         {
             return left.Equals(ref right);
@@ -838,7 +831,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has a different value than <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(Plane left, Plane right)
         {
             return !left.Equals(ref right);
@@ -919,7 +912,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Vector4" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ref Plane value)
         {
             return Normal == value.Normal && D == value.D;
@@ -932,7 +925,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Vector4" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(Plane value)
         {
             return Equals(ref value);

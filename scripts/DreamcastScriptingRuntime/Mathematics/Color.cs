@@ -666,8 +666,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The premultiplied result.</returns>
         public static Color Premultiply(Color value)
         {
-            Color result;
-            Premultiply(ref value, out result);
+            Premultiply(ref value, out var result);
             return result;
         }
 
@@ -741,8 +740,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The clamped value.</returns>
         public static Color Clamp(Color value, Color min, Color max)
         {
-            Color result;
-            Clamp(ref value, ref min, ref max, out result);
+            Clamp(ref value, ref min, ref max, out var result);
             return result;
         }
 
@@ -778,8 +776,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public static Color Lerp(Color start, Color end, float amount)
         {
-            Color result;
-            Lerp(ref start, ref end, amount, out result);
+            Lerp(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -805,8 +802,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The cubic interpolation of the two colors.</returns>
         public static Color SmoothStep(Color start, Color end, float amount)
         {
-            Color result;
-            SmoothStep(ref start, ref end, amount, out result);
+            SmoothStep(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -835,8 +831,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A color containing the largest components of the source colors.</returns>
         public static Color Max(Color left, Color right)
         {
-            Color result;
-            Max(ref left, ref right, out result);
+            Max(ref left, ref right, out var result);
             return result;
         }
 
@@ -865,8 +860,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A color containing the smallest components of the source colors.</returns>
         public static Color Min(Color left, Color right)
         {
-            Color result;
-            Min(ref left, ref right, out result);
+            Min(ref left, ref right, out var result);
             return result;
         }
 
@@ -1019,7 +1013,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(Color left, Color right)
         {
             return left.Equals(ref right);
@@ -1034,7 +1028,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has a different value than <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(Color left, Color right)
         {
             return !left.Equals(ref right);
@@ -1234,7 +1228,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Color" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ref Color other)
         {
             return R == other.R && G == other.G && B == other.B && A == other.A;
@@ -1247,7 +1241,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Color" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(Color other)
         {
             return Equals(ref other);
@@ -1269,13 +1263,23 @@ namespace Dreamcast.Mathematics
             return Equals(ref strongValue);
         }
 
+        /// <summary>
+        ///     Converts a normalized float to a byte.
+        /// </summary>
+        /// <param name="component"></param>
+        /// <returns></returns>
         private static byte ToByte(float component)
         {
             var value = (int) (component * 255.0f);
             return ToByte(value);
         }
 
-        public static byte ToByte(int value)
+        /// <summary>
+        ///     Safely converts an int to a byte.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private static byte ToByte(int value)
         {
             return (byte) (value < 0 ? 0 : value > 255 ? 255 : value);
         }

@@ -138,8 +138,7 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 126
 
-            float dot;
-            Vector3.Dot(ref plane.Normal, ref point, out dot);
+            Vector3.Dot(ref plane.Normal, ref point, out var dot);
             var t = dot - plane.D;
 
             result = point - t * plane.Normal;
@@ -156,8 +155,7 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 130
 
-            Vector3 temp;
-            Vector3.Max(ref point, ref box.Minimum, out temp);
+            Vector3.Max(ref point, ref box.Minimum, out var temp);
             Vector3.Min(ref temp, ref box.Maximum, out result);
         }
 
@@ -230,8 +228,7 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 127
 
-            float dot;
-            Vector3.Dot(ref plane.Normal, ref point, out dot);
+            Vector3.Dot(ref plane.Normal, ref point, out var dot);
             return dot - plane.D;
         }
 
@@ -329,8 +326,7 @@ namespace Dreamcast.Mathematics
             //Source: Jorgy343
             //Reference: None
 
-            float distance;
-            Vector3.Distance(ref sphere.Center, ref point, out distance);
+            Vector3.Distance(ref sphere.Center, ref point, out var distance);
             distance -= sphere.Radius;
 
             return Math.Max(distance, 0f);
@@ -347,8 +343,7 @@ namespace Dreamcast.Mathematics
             //Source: Jorgy343
             //Reference: None
 
-            float distance;
-            Vector3.Distance(ref sphere1.Center, ref sphere2.Center, out distance);
+            Vector3.Distance(ref sphere1.Center, ref sphere2.Center, out var distance);
             distance -= sphere1.Radius + sphere2.Radius;
 
             return Math.Max(distance, 0f);
@@ -365,8 +360,7 @@ namespace Dreamcast.Mathematics
             //Source: RayIntersectsSphere
             //Reference: None
 
-            Vector3 m;
-            Vector3.Subtract(ref ray.Position, ref point, out m);
+            Vector3.Subtract(ref ray.Position, ref point, out var m);
 
             //Same thing as RayIntersectsSphere except that the radius of the sphere (point)
             //is the epsilon for zero.
@@ -409,9 +403,7 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Rendering, Third Edition
             //Reference: Page 780
 
-            Vector3 cross;
-
-            Vector3.Cross(ref ray1.Direction, ref ray2.Direction, out cross);
+            Vector3.Cross(ref ray1.Direction, ref ray2.Direction, out var cross);
             var denominator = cross.Length();
 
             //Lines are parallel.
@@ -425,7 +417,7 @@ namespace Dreamcast.Mathematics
                     return true;
                 }
 
-            denominator = denominator * denominator;
+            denominator *= denominator;
 
             //3x3 matrix for the first ray.
             var m11 = ray2.Position.X - ray1.Position.X;
@@ -497,8 +489,7 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 175
 
-            float direction;
-            Vector3.Dot(ref plane.Normal, ref ray.Direction, out direction);
+            Vector3.Dot(ref plane.Normal, ref ray.Direction, out var direction);
 
             if (MathUtil.IsZero(direction))
             {
@@ -506,8 +497,7 @@ namespace Dreamcast.Mathematics
                 return false;
             }
 
-            float position;
-            Vector3.Dot(ref plane.Normal, ref ray.Position, out position);
+            Vector3.Dot(ref plane.Normal, ref ray.Position, out var position);
             distance = (-plane.D - position) / direction;
 
             if (distance < 0f)
@@ -534,8 +524,7 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 175
 
-            float distance;
-            if (!RayIntersectsPlane(ref ray, ref plane, out distance))
+            if (!RayIntersectsPlane(ref ray, ref plane, out float distance))
             {
                 point = Vector3.Zero;
                 return false;
@@ -674,8 +663,7 @@ namespace Dreamcast.Mathematics
         public static bool RayIntersectsTriangle(ref Ray ray, ref Vector3 vertex1, ref Vector3 vertex2,
             ref Vector3 vertex3, out Vector3 point)
         {
-            float distance;
-            if (!RayIntersectsTriangle(ref ray, ref vertex1, ref vertex2, ref vertex3, out distance))
+            if (!RayIntersectsTriangle(ref ray, ref vertex1, ref vertex2, ref vertex3, out float distance))
             {
                 point = Vector3.Zero;
                 return false;
@@ -811,8 +799,7 @@ namespace Dreamcast.Mathematics
         /// <returns>Whether the two objects intersected.</returns>
         public static bool RayIntersectsBox(ref Ray ray, ref BoundingBox box, out Vector3 point)
         {
-            float distance;
-            if (!RayIntersectsBox(ref ray, ref box, out distance))
+            if (!RayIntersectsBox(ref ray, ref box, out float distance))
             {
                 point = Vector3.Zero;
                 return false;
@@ -837,8 +824,7 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 177
 
-            Vector3 m;
-            Vector3.Subtract(ref ray.Position, ref sphere.Center, out m);
+            Vector3.Subtract(ref ray.Position, ref sphere.Center, out var m);
 
             var b = Vector3.Dot(m, ray.Direction);
             var c = Vector3.Dot(m, m) - sphere.Radius * sphere.Radius;
@@ -877,8 +863,7 @@ namespace Dreamcast.Mathematics
         /// <returns>Whether the two objects intersected.</returns>
         public static bool RayIntersectsSphere(ref Ray ray, ref BoundingSphere sphere, out Vector3 point)
         {
-            float distance;
-            if (!RayIntersectsSphere(ref ray, ref sphere, out distance))
+            if (!RayIntersectsSphere(ref ray, ref sphere, out float distance))
             {
                 point = Vector3.Zero;
                 return false;
@@ -896,8 +881,7 @@ namespace Dreamcast.Mathematics
         /// <returns>Whether the two objects intersected.</returns>
         public static PlaneIntersectionType PlaneIntersectsPoint(ref Plane plane, ref Vector3 point)
         {
-            float distance;
-            Vector3.Dot(ref plane.Normal, ref point, out distance);
+            Vector3.Dot(ref plane.Normal, ref point, out var distance);
             distance += plane.D;
 
             if (distance > 0f)
@@ -917,13 +901,11 @@ namespace Dreamcast.Mathematics
         /// <returns>Whether the two objects intersected.</returns>
         public static bool PlaneIntersectsPlane(ref Plane plane1, ref Plane plane2)
         {
-            Vector3 direction;
-            Vector3.Cross(ref plane1.Normal, ref plane2.Normal, out direction);
+            Vector3.Cross(ref plane1.Normal, ref plane2.Normal, out var direction);
 
             //If direction is the zero vector, the planes are parallel and possibly
             //coincident. It is not an intersection. The dot product will tell us.
-            float denominator;
-            Vector3.Dot(ref direction, ref direction, out denominator);
+            Vector3.Dot(ref direction, ref direction, out var denominator);
 
             if (MathUtil.IsZero(denominator))
                 return false;
@@ -951,13 +933,11 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 207
 
-            Vector3 direction;
-            Vector3.Cross(ref plane1.Normal, ref plane2.Normal, out direction);
+            Vector3.Cross(ref plane1.Normal, ref plane2.Normal, out var direction);
 
             //If direction is the zero vector, the planes are parallel and possibly
             //coincident. It is not an intersection. The dot product will tell us.
-            float denominator;
-            Vector3.Dot(ref direction, ref direction, out denominator);
+            Vector3.Dot(ref direction, ref direction, out var denominator);
 
             //We assume the planes are normalized, therefore the denominator
             //only serves as a parallel and coincident check. Otherwise we need
@@ -968,9 +948,8 @@ namespace Dreamcast.Mathematics
                 return false;
             }
 
-            Vector3 point;
             var temp = plane1.D * plane2.Normal - plane2.D * plane1.Normal;
-            Vector3.Cross(ref temp, ref direction, out point);
+            Vector3.Cross(ref temp, ref direction, out var point);
 
             line.Position = point;
             line.Direction = direction;
@@ -1029,8 +1008,7 @@ namespace Dreamcast.Mathematics
             min.Y = plane.Normal.Y >= 0.0f ? box.Maximum.Y : box.Minimum.Y;
             min.Z = plane.Normal.Z >= 0.0f ? box.Maximum.Z : box.Minimum.Z;
 
-            float distance;
-            Vector3.Dot(ref plane.Normal, ref max, out distance);
+            Vector3.Dot(ref plane.Normal, ref max, out var distance);
 
             if (distance + plane.D > 0.0f)
                 return PlaneIntersectionType.Front;
@@ -1054,8 +1032,7 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 160
 
-            float distance;
-            Vector3.Dot(ref plane.Normal, ref sphere.Center, out distance);
+            Vector3.Dot(ref plane.Normal, ref sphere.Center, out var distance);
             distance += plane.D;
 
             if (distance > sphere.Radius)
@@ -1120,8 +1097,7 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 166
 
-            Vector3 vector;
-            Vector3.Clamp(ref sphere.Center, ref box.Minimum, ref box.Maximum, out vector);
+            Vector3.Clamp(ref sphere.Center, ref box.Minimum, ref box.Maximum, out var vector);
             var distance = Vector3.DistanceSquared(sphere.Center, vector);
 
             return distance <= sphere.Radius * sphere.Radius;
@@ -1141,12 +1117,10 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 167
 
-            Vector3 point;
-            ClosestPointPointTriangle(ref sphere.Center, ref vertex1, ref vertex2, ref vertex3, out point);
+            ClosestPointPointTriangle(ref sphere.Center, ref vertex1, ref vertex2, ref vertex3, out var point);
             var v = point - sphere.Center;
 
-            float dot;
-            Vector3.Dot(ref v, ref v, out dot);
+            Vector3.Dot(ref v, ref v, out var dot);
 
             return dot <= sphere.Radius * sphere.Radius;
         }
@@ -1234,8 +1208,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The type of containment the two objects have.</returns>
         public static ContainmentType BoxContainsSphere(ref BoundingBox box, ref BoundingSphere sphere)
         {
-            Vector3 vector;
-            Vector3.Clamp(ref sphere.Center, ref box.Minimum, ref box.Maximum, out vector);
+            Vector3.Clamp(ref sphere.Center, ref box.Minimum, ref box.Maximum, out var vector);
             var distance = Vector3.DistanceSquared(sphere.Center, vector);
 
             if (distance > sphere.Radius * sphere.Radius)

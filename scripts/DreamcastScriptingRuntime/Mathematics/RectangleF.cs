@@ -302,8 +302,7 @@ namespace Dreamcast.Mathematics
         /// <param name="value">The rectangle to evaluate.</param>
         public bool Intersects(RectangleF value)
         {
-            bool result;
-            Intersects(ref value, out result);
+            Intersects(ref value, out var result);
             return result;
         }
 
@@ -325,8 +324,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The intersection rectangle.</returns>
         public static RectangleF Intersect(RectangleF value1, RectangleF value2)
         {
-            RectangleF result;
-            Intersect(ref value1, ref value2, out result);
+            Intersect(ref value1, ref value2, out var result);
             return result;
         }
 
@@ -354,8 +352,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The union rectangle.</returns>
         public static RectangleF Union(RectangleF value1, RectangleF value2)
         {
-            RectangleF result;
-            Union(ref value1, ref value2, out result);
+            Union(ref value1, ref value2, out var result);
             return result;
         }
 
@@ -412,7 +409,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="RectangleF" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(RectangleF other)
         {
             return Equals(ref other);
@@ -447,7 +444,7 @@ namespace Dreamcast.Mathematics
         /// <param name="left">The left.</param>
         /// <param name="right">The right.</param>
         /// <returns>The result of the operator.</returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(RectangleF left, RectangleF right)
         {
             return left.Equals(ref right);
@@ -459,7 +456,7 @@ namespace Dreamcast.Mathematics
         /// <param name="left">The left.</param>
         /// <param name="right">The right.</param>
         /// <returns>The result of the operator.</returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(RectangleF left, RectangleF right)
         {
             return !left.Equals(ref right);

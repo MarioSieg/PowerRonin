@@ -543,8 +543,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two matrices.</returns>
         public static Matrix5x4 Add(Matrix5x4 left, Matrix5x4 right)
         {
-            Matrix5x4 result;
-            Add(ref left, ref right, out result);
+            Add(ref left, ref right, out var result);
             return result;
         }
 
@@ -586,8 +585,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference between the two matrices.</returns>
         public static Matrix5x4 Subtract(Matrix5x4 left, Matrix5x4 right)
         {
-            Matrix5x4 result;
-            Subtract(ref left, ref right, out result);
+            Subtract(ref left, ref right, out var result);
             return result;
         }
 
@@ -689,8 +687,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The negated Matrix5x4.</returns>
         public static Matrix5x4 Negate(Matrix5x4 value)
         {
-            Matrix5x4 result;
-            Negate(ref value, out result);
+            Negate(ref value, out var result);
             return result;
         }
 
@@ -742,8 +739,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public static Matrix5x4 Lerp(Matrix5x4 start, Matrix5x4 end, float amount)
         {
-            Matrix5x4 result;
-            Lerp(ref start, ref end, amount, out result);
+            Lerp(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -769,8 +765,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The cubic interpolation of the two matrices.</returns>
         public static Matrix5x4 SmoothStep(Matrix5x4 start, Matrix5x4 end, float amount)
         {
-            Matrix5x4 result;
-            SmoothStep(ref start, ref end, amount, out result);
+            SmoothStep(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -791,8 +786,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The created scaling Matrix5x4.</returns>
         public static Matrix5x4 Scaling(Vector4 scale)
         {
-            Matrix5x4 result;
-            Scaling(ref scale, out result);
+            Scaling(ref scale, out var result);
             return result;
         }
 
@@ -823,8 +817,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The created scaling Matrix5x4.</returns>
         public static Matrix5x4 Scaling(float x, float y, float z, float w)
         {
-            Matrix5x4 result;
-            Scaling(x, y, z, w, out result);
+            Scaling(x, y, z, w, out var result);
             return result;
         }
 
@@ -846,8 +839,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The created scaling Matrix5x4.</returns>
         public static Matrix5x4 Scaling(float scale)
         {
-            Matrix5x4 result;
-            Scaling(scale, out result);
+            Scaling(scale, out var result);
             return result;
         }
 
@@ -868,8 +860,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The created translation Matrix5x4.</returns>
         public static Matrix5x4 Translation(Vector4 value)
         {
-            Matrix5x4 result;
-            Translation(ref value, out result);
+            Translation(ref value, out var result);
             return result;
         }
 
@@ -900,8 +891,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The created translation Matrix5x4.</returns>
         public static Matrix5x4 Translation(float x, float y, float z, float w)
         {
-            Matrix5x4 result;
-            Translation(x, y, z, w, out result);
+            Translation(x, y, z, w, out var result);
             return result;
         }
 
@@ -913,8 +903,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two matrices.</returns>
         public static Matrix5x4 operator +(Matrix5x4 left, Matrix5x4 right)
         {
-            Matrix5x4 result;
-            Add(ref left, ref right, out result);
+            Add(ref left, ref right, out var result);
             return result;
         }
 
@@ -936,8 +925,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference between the two matrices.</returns>
         public static Matrix5x4 operator -(Matrix5x4 left, Matrix5x4 right)
         {
-            Matrix5x4 result;
-            Subtract(ref left, ref right, out result);
+            Subtract(ref left, ref right, out var result);
             return result;
         }
 
@@ -948,8 +936,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The negated Matrix5x4.</returns>
         public static Matrix5x4 operator -(Matrix5x4 value)
         {
-            Matrix5x4 result;
-            Negate(ref value, out result);
+            Negate(ref value, out var result);
             return result;
         }
 
@@ -961,8 +948,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled Matrix5x4.</returns>
         public static Matrix5x4 operator *(float left, Matrix5x4 right)
         {
-            Matrix5x4 result;
-            Multiply(ref right, left, out result);
+            Multiply(ref right, left, out var result);
             return result;
         }
 
@@ -974,8 +960,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled Matrix5x4.</returns>
         public static Matrix5x4 operator *(Matrix5x4 left, float right)
         {
-            Matrix5x4 result;
-            Multiply(ref left, right, out result);
+            Multiply(ref left, right, out var result);
             return result;
         }
 
@@ -987,8 +972,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled Matrix5x4.</returns>
         public static Matrix5x4 operator /(Matrix5x4 left, float right)
         {
-            Matrix5x4 result;
-            Divide(ref left, right, out result);
+            Divide(ref left, right, out var result);
             return result;
         }
 
@@ -1001,7 +985,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(Matrix5x4 left, Matrix5x4 right)
         {
             return left.Equals(ref right);
@@ -1016,7 +1000,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has a different value than <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(Matrix5x4 left, Matrix5x4 right)
         {
             return !left.Equals(ref right);
@@ -1183,7 +1167,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Matrix5x4" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(Matrix5x4 other)
         {
             return Equals(ref other);

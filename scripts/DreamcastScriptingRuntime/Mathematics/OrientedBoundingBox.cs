@@ -259,11 +259,9 @@ namespace Dreamcast.Mathematics
         public ContainmentType Contains(ref Vector3 point)
         {
             // Transform the point into the obb coordinates
-            Matrix4x4 invTrans;
-            Matrix4x4.Invert(ref Transformation, out invTrans);
+            Matrix4x4.Invert(ref Transformation, out var invTrans);
 
-            Vector3 locPoint;
-            Vector3.TransformCoordinate(ref point, ref invTrans, out locPoint);
+            Vector3.TransformCoordinate(ref point, ref invTrans, out var locPoint);
 
             locPoint.X = Math.Abs(locPoint.X);
             locPoint.Y = Math.Abs(locPoint.Y);
@@ -295,16 +293,14 @@ namespace Dreamcast.Mathematics
         /// <returns>The type of containment.</returns>
         public ContainmentType Contains(Vector3[] points)
         {
-            Matrix4x4 invTrans;
-            Matrix4x4.Invert(ref Transformation, out invTrans);
+            Matrix4x4.Invert(ref Transformation, out var invTrans);
 
             var containsAll = true;
             var containsAny = false;
 
             for (var i = 0; i < points.Length; i++)
             {
-                Vector3 locPoint;
-                Vector3.TransformCoordinate(ref points[i], ref invTrans, out locPoint);
+                Vector3.TransformCoordinate(ref points[i], ref invTrans, out var locPoint);
 
                 locPoint.X = Math.Abs(locPoint.X);
                 locPoint.Y = Math.Abs(locPoint.Y);
@@ -344,12 +340,10 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public ContainmentType Contains(BoundingSphere sphere, bool IgnoreScale = false)
         {
-            Matrix4x4 invTrans;
-            Matrix4x4.Invert(ref Transformation, out invTrans);
+            Matrix4x4.Invert(ref Transformation, out var invTrans);
 
             // Transform sphere center into the obb coordinates
-            Vector3 locCenter;
-            Vector3.TransformCoordinate(ref sphere.Center, ref invTrans, out locCenter);
+            Vector3.TransformCoordinate(ref sphere.Center, ref invTrans, out var locCenter);
 
             float locRadius;
             if (IgnoreScale)
@@ -366,8 +360,7 @@ namespace Dreamcast.Mathematics
 
             //Perform regular BoundingBox to BoundingSphere containment check
             var minusExtens = -Extents;
-            Vector3 vector;
-            Vector3.Clamp(ref locCenter, ref minusExtens, ref Extents, out vector);
+            Vector3.Clamp(ref locCenter, ref minusExtens, ref Extents, out var vector);
             var distance = Vector3.DistanceSquared(locCenter, vector);
 
             if (distance > locRadius * locRadius)
@@ -493,13 +486,10 @@ namespace Dreamcast.Mathematics
 
             //http://www.3dkingdoms.com/weekly/bbox.cpp
             // Put line in box space
-            Matrix4x4 invTrans;
-            Matrix4x4.Invert(ref Transformation, out invTrans);
+            Matrix4x4.Invert(ref Transformation, out var invTrans);
 
-            Vector3 LB1;
-            Vector3.TransformCoordinate(ref L1, ref invTrans, out LB1);
-            Vector3 LB2;
-            Vector3.TransformCoordinate(ref L1, ref invTrans, out LB2);
+            Vector3.TransformCoordinate(ref L1, ref invTrans, out var LB1);
+            Vector3.TransformCoordinate(ref L1, ref invTrans, out var LB2);
 
             // Get line midpoint and extent
             var LMid = (LB1 + LB2) * 0.5f;
@@ -548,8 +538,7 @@ namespace Dreamcast.Mathematics
             float ExtentA, ExtentB, Separation;
             int i, k;
 
-            Matrix4x4 R; // Rotation from B to A
-            Matrix4x4.Invert(ref Transformation, out R);
+            Matrix4x4.Invert(ref Transformation, out var R);
             var AR = new Matrix4x4(); // absolute values of R matrix, to use with box extents
 
             for (i = 0; i < 3; i++)
@@ -614,8 +603,7 @@ namespace Dreamcast.Mathematics
         public bool Intersects(ref Ray ray, out Vector3 point)
         {
             // Put ray in box space
-            Matrix4x4 invTrans;
-            Matrix4x4.Invert(ref Transformation, out invTrans);
+            Matrix4x4.Invert(ref Transformation, out var invTrans);
 
             Ray bRay;
             Vector3.TransformNormal(ref ray.Direction, ref invTrans, out bRay.Direction);
@@ -639,8 +627,7 @@ namespace Dreamcast.Mathematics
         /// <returns>Whether the two objects intersected.</returns>
         public bool Intersects(ref Ray ray)
         {
-            Vector3 point;
-            return Intersects(ref ray, out point);
+            return Intersects(ref ray, out var point);
         }
 
         private Vector3[] GetLocalCorners()
@@ -705,8 +692,7 @@ namespace Dreamcast.Mathematics
             }
             else
             {
-                Matrix4x4 AInvMat;
-                Matrix4x4.Invert(ref A.Transformation, out AInvMat);
+                Matrix4x4.Invert(ref A.Transformation, out var AInvMat);
                 AtoB_Matrix = B.Transformation * AInvMat;
             }
 
@@ -743,8 +729,7 @@ namespace Dreamcast.Mathematics
             var B_LocalBB = BoundingBox.FromPoints(bCorners);
 
             //Merger A and B local Bounding Boxes
-            BoundingBox mergedBB;
-            BoundingBox.Merge(ref B_LocalBB, ref A_LocalBB, out mergedBB);
+            BoundingBox.Merge(ref B_LocalBB, ref A_LocalBB, out var mergedBB);
 
             //Find the new Extents and Center, Transform Center back to world
             var newCenter = mergedBB.Minimum + (mergedBB.Maximum - mergedBB.Minimum) / 2f;
@@ -786,7 +771,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Vector4" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ref OrientedBoundingBox value)
         {
             return Extents == value.Extents && Transformation == value.Transformation;
@@ -799,7 +784,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Vector4" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(OrientedBoundingBox value)
         {
             return Equals(ref value);
@@ -830,7 +815,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(OrientedBoundingBox left, OrientedBoundingBox right)
         {
             return left.Equals(ref right);
@@ -845,7 +830,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has a different value than <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(OrientedBoundingBox left, OrientedBoundingBox right)
         {
             return !left.Equals(ref right);
