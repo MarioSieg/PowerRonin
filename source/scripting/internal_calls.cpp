@@ -23,7 +23,7 @@ namespace dce::scripting {
 	void register_basic_internal_calls(Runtime& _rt) {
 
 #define REGISTER_CALL(_x) mono_add_internal_call("Dreamcast.Core.NativeRuntime::" _x , NATIVE_PROC)
-		
+
 		static auto* const RUNTIME = &_rt;
 
 		{

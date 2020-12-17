@@ -35,7 +35,8 @@ namespace dce::renderer {
 		init.debug = DEBUG_MODE;
 		init.platformData.nwh = platform::NATIVE_WINDOW_HANDLE;
 		init.profile = DEBUG_MODE;
-		init.resolution.reset = BGFX_RESET_MSAA_X16 | BGFX_RESET_HIDPI | BGFX_RESET_MAXANISOTROPY | BGFX_RESET_SRGB_BACKBUFFER;
+		init.resolution.reset = BGFX_RESET_MSAA_X16 | BGFX_RESET_HIDPI | BGFX_RESET_MAXANISOTROPY | BGFX_RESET_SRGB_BACKBUFFER |
+			BGFX_RESET_VSYNC;
 		init.resolution.width = _config.display.width;
 		init.resolution.height = _config.display.height;
 

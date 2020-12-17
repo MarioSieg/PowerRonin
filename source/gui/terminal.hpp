@@ -24,7 +24,7 @@ namespace dce {
 	class CmdDB;
 	class AsyncProtocol;
 
-	extern void(*TERMINAL_UPDATE)();
+	extern void (*TERMINAL_UPDATE)();
 
 	namespace gui {
 		class Terminal final {

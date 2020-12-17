@@ -23,7 +23,7 @@
 using namespace ImGui;
 
 namespace dce {
-	void(*TERMINAL_UPDATE)() = nullptr;
+	void (*TERMINAL_UPDATE)() = nullptr;
 }
 
 namespace dce::gui {

@@ -2478,7 +2478,6 @@
             <summary>
                 Builds a matrix that can be used to reflect vectors about a plane.
             </summary>
-            <param name="plane">The plane for which the reflection occurs. This parameter is assumed to be normalized.</param>
             <param name="result">When the method completes, contains the reflection matrix.</param>
         </member>
         <member name="M:Dreamcast.Mathematics.Plane.Reflection">
@@ -7818,79 +7817,79 @@
             <param name="input">The input.</param>
             <returns>The result of the conversion.</returns>
         </member>
-        <member name="T:Dreamcast.Mathematics.Int4">
+        <member name="T:Dreamcast.Mathematics.Vector4I">
             <summary>
                 Represents a four dimensional mathematical vector.
             </summary>
         </member>
-        <member name="F:Dreamcast.Mathematics.Int4.Zero">
+        <member name="F:Dreamcast.Mathematics.Vector4I.Zero">
             <summary>
-                A <see cref="T:Dreamcast.Mathematics.Int4" /> with all of its components set to zero.
+                A <see cref="T:Dreamcast.Mathematics.Vector4I" /> with all of its components set to zero.
             </summary>
         </member>
-        <member name="F:Dreamcast.Mathematics.Int4.UnitX">
+        <member name="F:Dreamcast.Mathematics.Vector4I.UnitX">
             <summary>
-                The X unit <see cref="T:Dreamcast.Mathematics.Int4" /> (1, 0, 0, 0).
+                The X unit <see cref="T:Dreamcast.Mathematics.Vector4I" /> (1, 0, 0, 0).
             </summary>
         </member>
-        <member name="F:Dreamcast.Mathematics.Int4.UnitY">
+        <member name="F:Dreamcast.Mathematics.Vector4I.UnitY">
             <summary>
-                The Y unit <see cref="T:Dreamcast.Mathematics.Int4" /> (0, 1, 0, 0).
+                The Y unit <see cref="T:Dreamcast.Mathematics.Vector4I" /> (0, 1, 0, 0).
             </summary>
         </member>
-        <member name="F:Dreamcast.Mathematics.Int4.UnitZ">
+        <member name="F:Dreamcast.Mathematics.Vector4I.UnitZ">
             <summary>
-                The Z unit <see cref="T:Dreamcast.Mathematics.Int4" /> (0, 0, 1, 0).
+                The Z unit <see cref="T:Dreamcast.Mathematics.Vector4I" /> (0, 0, 1, 0).
             </summary>
         </member>
-        <member name="F:Dreamcast.Mathematics.Int4.UnitW">
+        <member name="F:Dreamcast.Mathematics.Vector4I.UnitW">
             <summary>
-                The W unit <see cref="T:Dreamcast.Mathematics.Int4" /> (0, 0, 0, 1).
+                The W unit <see cref="T:Dreamcast.Mathematics.Vector4I" /> (0, 0, 0, 1).
             </summary>
         </member>
-        <member name="F:Dreamcast.Mathematics.Int4.One">
+        <member name="F:Dreamcast.Mathematics.Vector4I.One">
             <summary>
-                A <see cref="T:Dreamcast.Mathematics.Int4" /> with all of its components set to one.
+                A <see cref="T:Dreamcast.Mathematics.Vector4I" /> with all of its components set to one.
             </summary>
         </member>
-        <member name="F:Dreamcast.Mathematics.Int4.X">
+        <member name="F:Dreamcast.Mathematics.Vector4I.X">
             <summary>
                 The X component of the vector.
             </summary>
         </member>
-        <member name="F:Dreamcast.Mathematics.Int4.Y">
+        <member name="F:Dreamcast.Mathematics.Vector4I.Y">
             <summary>
                 The Y component of the vector.
             </summary>
         </member>
-        <member name="F:Dreamcast.Mathematics.Int4.Z">
+        <member name="F:Dreamcast.Mathematics.Vector4I.Z">
             <summary>
                 The Z component of the vector.
             </summary>
         </member>
-        <member name="F:Dreamcast.Mathematics.Int4.W">
+        <member name="F:Dreamcast.Mathematics.Vector4I.W">
             <summary>
                 The W component of the vector.
             </summary>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.#ctor(System.Int32)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.#ctor(System.Int32)">
             <summary>
-                Initializes a new instance of the <see cref="T:Dreamcast.Mathematics.Int4" /> struct.
+                Initializes a new instance of the <see cref="T:Dreamcast.Mathematics.Vector4I" /> struct.
             </summary>
             <param name="value">The value that will be assigned to all components.</param>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
-                Initializes a new instance of the <see cref="T:Dreamcast.Mathematics.Int4" /> struct.
+                Initializes a new instance of the <see cref="T:Dreamcast.Mathematics.Vector4I" /> struct.
             </summary>
             <param name="x">Initial value for the X component of the vector.</param>
             <param name="y">Initial value for the Y component of the vector.</param>
             <param name="z">Initial value for the Z component of the vector.</param>
             <param name="w">Initial value for the W component of the vector.</param>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.#ctor(System.Int32[])">
+        <member name="M:Dreamcast.Mathematics.Vector4I.#ctor(System.Int32[])">
             <summary>
-                Initializes a new instance of the <see cref="T:Dreamcast.Mathematics.Int4" /> struct.
+                Initializes a new instance of the <see cref="T:Dreamcast.Mathematics.Vector4I" /> struct.
             </summary>
             <param name="values">
                 The values to assign to the X, Y, Z, and W components of the vector. This must be an array with
@@ -7902,7 +7901,7 @@
                 elements.
             </exception>
         </member>
-        <member name="P:Dreamcast.Mathematics.Int4.Item(System.Int32)">
+        <member name="P:Dreamcast.Mathematics.Vector4I.Item(System.Int32)">
             <summary>
                 Gets or sets the component at the specified index.
             </summary>
@@ -7917,13 +7916,13 @@
                 3].
             </exception>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.ToArray">
+        <member name="M:Dreamcast.Mathematics.Vector4I.ToArray">
             <summary>
                 Creates an array containing the elements of the vector.
             </summary>
             <returns>A four-element array containing the components of the vector.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Add(Dreamcast.Mathematics.Int4@,Dreamcast.Mathematics.Int4@,Dreamcast.Mathematics.Int4@)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Add(Dreamcast.Mathematics.Vector4I@,Dreamcast.Mathematics.Vector4I@,Dreamcast.Mathematics.Vector4I@)">
             <summary>
                 Adds two vectors.
             </summary>
@@ -7931,7 +7930,7 @@
             <param name="right">The second vector to add.</param>
             <param name="result">When the method completes, contains the sum of the two vectors.</param>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Add(Dreamcast.Mathematics.Int4,Dreamcast.Mathematics.Int4)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Add(Dreamcast.Mathematics.Vector4I,Dreamcast.Mathematics.Vector4I)">
             <summary>
                 Adds two vectors.
             </summary>
@@ -7939,7 +7938,7 @@
             <param name="right">The second vector to add.</param>
             <returns>The sum of the two vectors.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Subtract(Dreamcast.Mathematics.Int4@,Dreamcast.Mathematics.Int4@,Dreamcast.Mathematics.Int4@)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Subtract(Dreamcast.Mathematics.Vector4I@,Dreamcast.Mathematics.Vector4I@,Dreamcast.Mathematics.Vector4I@)">
             <summary>
                 Subtracts two vectors.
             </summary>
@@ -7947,7 +7946,7 @@
             <param name="right">The second vector to subtract.</param>
             <param name="result">When the method completes, contains the difference of the two vectors.</param>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Subtract(Dreamcast.Mathematics.Int4,Dreamcast.Mathematics.Int4)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Subtract(Dreamcast.Mathematics.Vector4I,Dreamcast.Mathematics.Vector4I)">
             <summary>
                 Subtracts two vectors.
             </summary>
@@ -7955,7 +7954,7 @@
             <param name="right">The second vector to subtract.</param>
             <returns>The difference of the two vectors.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Multiply(Dreamcast.Mathematics.Int4@,System.Int32,Dreamcast.Mathematics.Int4@)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Multiply(Dreamcast.Mathematics.Vector4I@,System.Int32,Dreamcast.Mathematics.Vector4I@)">
             <summary>
                 Scales a vector by the given value.
             </summary>
@@ -7963,7 +7962,7 @@
             <param name="scale">The amount by which to scale the vector.</param>
             <param name="result">When the method completes, contains the scaled vector.</param>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Multiply(Dreamcast.Mathematics.Int4,System.Int32)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Multiply(Dreamcast.Mathematics.Vector4I,System.Int32)">
             <summary>
                 Scales a vector by the given value.
             </summary>
@@ -7971,7 +7970,7 @@
             <param name="scale">The amount by which to scale the vector.</param>
             <returns>The scaled vector.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Modulate(Dreamcast.Mathematics.Int4@,Dreamcast.Mathematics.Int4@,Dreamcast.Mathematics.Int4@)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Modulate(Dreamcast.Mathematics.Vector4I@,Dreamcast.Mathematics.Vector4I@,Dreamcast.Mathematics.Vector4I@)">
             <summary>
                 Modulates a vector with another by performing component-wise multiplication.
             </summary>
@@ -7979,7 +7978,7 @@
             <param name="right">The second vector to modulate.</param>
             <param name="result">When the method completes, contains the modulated vector.</param>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Modulate(Dreamcast.Mathematics.Int4,Dreamcast.Mathematics.Int4)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Modulate(Dreamcast.Mathematics.Vector4I,Dreamcast.Mathematics.Vector4I)">
             <summary>
                 Modulates a vector with another by performing component-wise multiplication.
             </summary>
@@ -7987,7 +7986,7 @@
             <param name="right">The second vector to modulate.</param>
             <returns>The modulated vector.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Divide(Dreamcast.Mathematics.Int4@,System.Int32,Dreamcast.Mathematics.Int4@)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Divide(Dreamcast.Mathematics.Vector4I@,System.Int32,Dreamcast.Mathematics.Vector4I@)">
             <summary>
                 Scales a vector by the given value.
             </summary>
@@ -7995,7 +7994,7 @@
             <param name="scale">The amount by which to scale the vector.</param>
             <param name="result">When the method completes, contains the scaled vector.</param>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Divide(Dreamcast.Mathematics.Int4,System.Int32)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Divide(Dreamcast.Mathematics.Vector4I,System.Int32)">
             <summary>
                 Scales a vector by the given value.
             </summary>
@@ -8003,21 +8002,21 @@
             <param name="scale">The amount by which to scale the vector.</param>
             <returns>The scaled vector.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Negate(Dreamcast.Mathematics.Int4@,Dreamcast.Mathematics.Int4@)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Negate(Dreamcast.Mathematics.Vector4I@,Dreamcast.Mathematics.Vector4I@)">
             <summary>
                 Reverses the direction of a given vector.
             </summary>
             <param name="value">The vector to negate.</param>
             <param name="result">When the method completes, contains a vector facing in the opposite direction.</param>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Negate(Dreamcast.Mathematics.Int4)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Negate(Dreamcast.Mathematics.Vector4I)">
             <summary>
                 Reverses the direction of a given vector.
             </summary>
             <param name="value">The vector to negate.</param>
             <returns>A vector facing in the opposite direction.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Clamp(Dreamcast.Mathematics.Int4@,Dreamcast.Mathematics.Int4@,Dreamcast.Mathematics.Int4@,Dreamcast.Mathematics.Int4@)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Clamp(Dreamcast.Mathematics.Vector4I@,Dreamcast.Mathematics.Vector4I@,Dreamcast.Mathematics.Vector4I@,Dreamcast.Mathematics.Vector4I@)">
             <summary>
                 Restricts a value to be within a specified range.
             </summary>
@@ -8026,7 +8025,7 @@
             <param name="max">The maximum value.</param>
             <param name="result">When the method completes, contains the clamped value.</param>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Clamp(Dreamcast.Mathematics.Int4,Dreamcast.Mathematics.Int4,Dreamcast.Mathematics.Int4)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Clamp(Dreamcast.Mathematics.Vector4I,Dreamcast.Mathematics.Vector4I,Dreamcast.Mathematics.Vector4I)">
             <summary>
                 Restricts a value to be within a specified range.
             </summary>
@@ -8035,7 +8034,7 @@
             <param name="max">The maximum value.</param>
             <returns>The clamped value.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Max(Dreamcast.Mathematics.Int4@,Dreamcast.Mathematics.Int4@,Dreamcast.Mathematics.Int4@)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Max(Dreamcast.Mathematics.Vector4I@,Dreamcast.Mathematics.Vector4I@,Dreamcast.Mathematics.Vector4I@)">
             <summary>
                 Returns a vector containing the smallest components of the specified vectors.
             </summary>
@@ -8046,7 +8045,7 @@
                 vectors.
             </param>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Max(Dreamcast.Mathematics.Int4,Dreamcast.Mathematics.Int4)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Max(Dreamcast.Mathematics.Vector4I,Dreamcast.Mathematics.Vector4I)">
             <summary>
                 Returns a vector containing the largest components of the specified vectors.
             </summary>
@@ -8054,7 +8053,7 @@
             <param name="right">The second source vector.</param>
             <returns>A vector containing the largest components of the source vectors.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Min(Dreamcast.Mathematics.Int4@,Dreamcast.Mathematics.Int4@,Dreamcast.Mathematics.Int4@)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Min(Dreamcast.Mathematics.Vector4I@,Dreamcast.Mathematics.Vector4I@,Dreamcast.Mathematics.Vector4I@)">
             <summary>
                 Returns a vector containing the smallest components of the specified vectors.
             </summary>
@@ -8065,7 +8064,7 @@
                 source vectors.
             </param>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Min(Dreamcast.Mathematics.Int4,Dreamcast.Mathematics.Int4)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Min(Dreamcast.Mathematics.Vector4I,Dreamcast.Mathematics.Vector4I)">
             <summary>
                 Returns a vector containing the smallest components of the specified vectors.
             </summary>
@@ -8073,7 +8072,7 @@
             <param name="right">The second source vector.</param>
             <returns>A vector containing the smallest components of the source vectors.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.op_Addition(Dreamcast.Mathematics.Int4,Dreamcast.Mathematics.Int4)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.op_Addition(Dreamcast.Mathematics.Vector4I,Dreamcast.Mathematics.Vector4I)">
             <summary>
                 Adds two vectors.
             </summary>
@@ -8081,14 +8080,14 @@
             <param name="right">The second vector to add.</param>
             <returns>The sum of the two vectors.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.op_UnaryPlus(Dreamcast.Mathematics.Int4)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.op_UnaryPlus(Dreamcast.Mathematics.Vector4I)">
             <summary>
                 Assert a vector (return it unchanged).
             </summary>
             <param name="value">The vector to assert (unchanged).</param>
             <returns>The asserted (unchanged) vector.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.op_Subtraction(Dreamcast.Mathematics.Int4,Dreamcast.Mathematics.Int4)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.op_Subtraction(Dreamcast.Mathematics.Vector4I,Dreamcast.Mathematics.Vector4I)">
             <summary>
                 Subtracts two vectors.
             </summary>
@@ -8096,14 +8095,14 @@
             <param name="right">The second vector to subtract.</param>
             <returns>The difference of the two vectors.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.op_UnaryNegation(Dreamcast.Mathematics.Int4)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.op_UnaryNegation(Dreamcast.Mathematics.Vector4I)">
             <summary>
                 Reverses the direction of a given vector.
             </summary>
             <param name="value">The vector to negate.</param>
             <returns>A vector facing in the opposite direction.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.op_Multiply(System.Int32,Dreamcast.Mathematics.Int4)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.op_Multiply(System.Int32,Dreamcast.Mathematics.Vector4I)">
             <summary>
                 Scales a vector by the given value.
             </summary>
@@ -8111,7 +8110,7 @@
             <param name="scale">The amount by which to scale the vector.</param>
             <returns>The scaled vector.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.op_Multiply(Dreamcast.Mathematics.Int4,System.Int32)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.op_Multiply(Dreamcast.Mathematics.Vector4I,System.Int32)">
             <summary>
                 Scales a vector by the given value.
             </summary>
@@ -8119,7 +8118,7 @@
             <param name="scale">The amount by which to scale the vector.</param>
             <returns>The scaled vector.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.op_Division(Dreamcast.Mathematics.Int4,System.Int32)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.op_Division(Dreamcast.Mathematics.Vector4I,System.Int32)">
             <summary>
                 Scales a vector by the given value.
             </summary>
@@ -8127,7 +8126,7 @@
             <param name="scale">The amount by which to scale the vector.</param>
             <returns>The scaled vector.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.op_Equality(Dreamcast.Mathematics.Int4,Dreamcast.Mathematics.Int4)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.op_Equality(Dreamcast.Mathematics.Vector4I,Dreamcast.Mathematics.Vector4I)">
             <summary>
                 Tests for equality between two objects.
             </summary>
@@ -8138,7 +8137,7 @@
                 <c>false</c>.
             </returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.op_Inequality(Dreamcast.Mathematics.Int4,Dreamcast.Mathematics.Int4)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.op_Inequality(Dreamcast.Mathematics.Vector4I,Dreamcast.Mathematics.Vector4I)">
             <summary>
                 Tests for inequality between two objects.
             </summary>
@@ -8149,28 +8148,28 @@
                 <c>false</c>.
             </returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.op_Explicit(Dreamcast.Mathematics.Int4)~Dreamcast.Mathematics.Vector2">
+        <member name="M:Dreamcast.Mathematics.Vector4I.op_Explicit(Dreamcast.Mathematics.Vector4I)~Dreamcast.Mathematics.Vector2">
             <summary>
-                Performs an explicit conversion from <see cref="T:Dreamcast.Mathematics.Int4" /> to <see cref="T:Dreamcast.Mathematics.Vector2" />.
+                Performs an explicit conversion from <see cref="T:Dreamcast.Mathematics.Vector4I" /> to <see cref="T:Dreamcast.Mathematics.Vector2" />.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.op_Explicit(Dreamcast.Mathematics.Int4)~Dreamcast.Mathematics.Vector3">
+        <member name="M:Dreamcast.Mathematics.Vector4I.op_Explicit(Dreamcast.Mathematics.Vector4I)~Dreamcast.Mathematics.Vector3">
             <summary>
-                Performs an explicit conversion from <see cref="T:Dreamcast.Mathematics.Int4" /> to <see cref="T:Dreamcast.Mathematics.Vector3" />.
+                Performs an explicit conversion from <see cref="T:Dreamcast.Mathematics.Vector4I" /> to <see cref="T:Dreamcast.Mathematics.Vector3" />.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.op_Explicit(Dreamcast.Mathematics.Int4)~Dreamcast.Mathematics.Vector4">
+        <member name="M:Dreamcast.Mathematics.Vector4I.op_Explicit(Dreamcast.Mathematics.Vector4I)~Dreamcast.Mathematics.Vector4">
             <summary>
-                Performs an explicit conversion from <see cref="T:Dreamcast.Mathematics.Int4" /> to <see cref="T:Dreamcast.Mathematics.Vector4" />.
+                Performs an explicit conversion from <see cref="T:Dreamcast.Mathematics.Vector4I" /> to <see cref="T:Dreamcast.Mathematics.Vector4" />.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.ToString">
+        <member name="M:Dreamcast.Mathematics.Vector4I.ToString">
             <summary>
                 Returns a <see cref="T:System.String" /> that represents this instance.
             </summary>
@@ -8178,7 +8177,7 @@
                 A <see cref="T:System.String" /> that represents this instance.
             </returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.ToString(System.String)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.ToString(System.String)">
             <summary>
                 Returns a <see cref="T:System.String" /> that represents this instance.
             </summary>
@@ -8187,7 +8186,7 @@
                 A <see cref="T:System.String" /> that represents this instance.
             </returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.ToString(System.IFormatProvider)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.ToString(System.IFormatProvider)">
             <summary>
                 Returns a <see cref="T:System.String" /> that represents this instance.
             </summary>
@@ -8196,7 +8195,7 @@
                 A <see cref="T:System.String" /> that represents this instance.
             </returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.ToString(System.String,System.IFormatProvider)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.ToString(System.String,System.IFormatProvider)">
             <summary>
                 Returns a <see cref="T:System.String" /> that represents this instance.
             </summary>
@@ -8206,7 +8205,7 @@
                 A <see cref="T:System.String" /> that represents this instance.
             </returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.GetHashCode">
+        <member name="M:Dreamcast.Mathematics.Vector4I.GetHashCode">
             <summary>
                 Returns a hash code for this instance.
             </summary>
@@ -8214,25 +8213,25 @@
                 A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
             </returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Equals(Dreamcast.Mathematics.Int4@)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Equals(Dreamcast.Mathematics.Vector4I@)">
             <summary>
-                Determines whether the specified <see cref="T:Dreamcast.Mathematics.Int4" /> is equal to this instance.
+                Determines whether the specified <see cref="T:Dreamcast.Mathematics.Vector4I" /> is equal to this instance.
             </summary>
-            <param name="other">The <see cref="T:Dreamcast.Mathematics.Int4" /> to compare with this instance.</param>
+            <param name="other">The <see cref="T:Dreamcast.Mathematics.Vector4I" /> to compare with this instance.</param>
             <returns>
-                <c>true</c> if the specified <see cref="T:Dreamcast.Mathematics.Int4" /> is equal to this instance; otherwise, <c>false</c>.
+                <c>true</c> if the specified <see cref="T:Dreamcast.Mathematics.Vector4I" /> is equal to this instance; otherwise, <c>false</c>.
             </returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Equals(Dreamcast.Mathematics.Int4)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Equals(Dreamcast.Mathematics.Vector4I)">
             <summary>
-                Determines whether the specified <see cref="T:Dreamcast.Mathematics.Int4" /> is equal to this instance.
+                Determines whether the specified <see cref="T:Dreamcast.Mathematics.Vector4I" /> is equal to this instance.
             </summary>
-            <param name="other">The <see cref="T:Dreamcast.Mathematics.Int4" /> to compare with this instance.</param>
+            <param name="other">The <see cref="T:Dreamcast.Mathematics.Vector4I" /> to compare with this instance.</param>
             <returns>
-                <c>true</c> if the specified <see cref="T:Dreamcast.Mathematics.Int4" /> is equal to this instance; otherwise, <c>false</c>.
+                <c>true</c> if the specified <see cref="T:Dreamcast.Mathematics.Vector4I" /> is equal to this instance; otherwise, <c>false</c>.
             </returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.Equals(System.Object)">
+        <member name="M:Dreamcast.Mathematics.Vector4I.Equals(System.Object)">
             <summary>
                 Determines whether the specified <see cref="T:System.Object" /> is equal to this instance.
             </summary>
@@ -8241,16 +8240,16 @@
                 <c>true</c> if the specified <see cref="T:System.Object" /> is equal to this instance; otherwise, <c>false</c>.
             </returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.op_Implicit(System.Int32[])~Dreamcast.Mathematics.Int4">
+        <member name="M:Dreamcast.Mathematics.Vector4I.op_Implicit(System.Int32[])~Dreamcast.Mathematics.Vector4I">
             <summary>
-                Performs an implicit conversion from <see cref="T:System.Int32" /> array to <see cref="T:Dreamcast.Mathematics.Int4" />.
+                Performs an implicit conversion from <see cref="T:System.Int32" /> array to <see cref="T:Dreamcast.Mathematics.Vector4I" />.
             </summary>
             <param name="input">The input.</param>
             <returns>The result of the conversion.</returns>
         </member>
-        <member name="M:Dreamcast.Mathematics.Int4.op_Implicit(Dreamcast.Mathematics.Int4)~System.Int32[]">
+        <member name="M:Dreamcast.Mathematics.Vector4I.op_Implicit(Dreamcast.Mathematics.Vector4I)~System.Int32[]">
             <summary>
-                Performs an implicit conversion from <see cref="T:Dreamcast.Mathematics.Int4" /> to <see cref="T:System.Int32" /> array.
+                Performs an implicit conversion from <see cref="T:Dreamcast.Mathematics.Vector4I" /> to <see cref="T:System.Int32" /> array.
             </summary>
             <param name="input">The input.</param>
             <returns>The result of the conversion.</returns>
@@ -14011,7 +14010,7 @@
         </member>
         <member name="T:Dreamcast.Mathematics.Size2">
             <summary>
-                Structure using the same layout than <see cref="!:System.Drawing.Size" />.
+                Structure using the same layout than System.Drawing.Size />.
             </summary>
         </member>
         <member name="F:Dreamcast.Mathematics.Size2.Zero">

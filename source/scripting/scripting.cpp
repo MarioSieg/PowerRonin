@@ -33,7 +33,7 @@ namespace dce::scripting {
 		this->runtime_environment_.exception_hook = [&_rt](auto* const _ex) {
 			default_exception_handler(_rt.scripting_protocol(), _ex);
 		};
-		
+
 		this->core_assembly_.load(std::string(ASSEMBLY_NAME_ID), this->runtime_environment_);
 
 		register_basic_internal_calls(_rt);
@@ -41,9 +41,7 @@ namespace dce::scripting {
 		this->setup_hooks();
 
 		_rt.terminal_hook() = [this](char* const _str) {
-			void* params[] = {
-				mono_string_new(this->runtime_environment_.get_domain(), _str)
-			};
+			void* params[] = {mono_string_new(this->runtime_environment_.get_domain(), _str)};
 			this->command_db_.on_command_enter(this->runtime_environment_, params);
 		};
 
@@ -83,6 +81,7 @@ namespace dce::scripting {
 		this->core_.on_exit.query_from_class(this->core_.klass, CORE_EXIT_ID);
 
 		this->command_db_.klass.load_from_name(this->core_assembly_, ASSEMBLY_NAMESPACE_ID, COMMAND_DB_CLASS_ID);
-		this->command_db_.on_command_enter.query_from_class(this->command_db_.klass, COMMAND_DB_CMD_ENTER_ID, COMMAND_DB_CMD_ENTER_PARAMS);
+		this->command_db_.on_command_enter.query_from_class(this->command_db_.klass, COMMAND_DB_CMD_ENTER_ID
+		                                                    , COMMAND_DB_CMD_ENTER_PARAMS);
 	}
 }

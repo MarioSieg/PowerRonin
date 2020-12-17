@@ -29,13 +29,20 @@ namespace dce::scripting {
 		return this->name_;
 	}
 
-	void StaticMethod::query_from_class(StaticClass& _class, const std::string_view _name, const std::uint8_t _params_count_) {
+	void StaticMethod::query_from_class(StaticClass& _class
+	                                    , const std::string_view _name
+	                                    , const std::uint8_t _params_count_
+	                                    , const bool _do_not_jit_compile) {
 		this->handle_ = mono_class_get_method_from_name(_class.get_handle(), _name.data(), _params_count_);
 		[[unlikely]] if (!this->handle_) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to get method from class by name!");
 		}
 		this->params_count_ = _params_count_;
 		this->name_ = _name;
+		this->name_ = _name;
+		[[likely]] if (!_do_not_jit_compile) {
+			this->jit_compile();
+		}
 	}
 
 	auto StaticMethod::jit_compile() const -> void* {

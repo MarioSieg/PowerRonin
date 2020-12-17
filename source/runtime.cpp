@@ -1,4 +1,19 @@
-#include "..\include\dce\runtime.hpp"
+// *******************************************************************************
+// The content of this file includes portions of the KerboGames Dreamcast Technology
+// released in source code form as part of the SDK package.
+// 
+// Commercial License Usage
+// 
+// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// may use this file in accordance with the end user license agreement provided 
+// with the software or, alternatively, in accordance with the terms contained in a
+// written agreement between you and KerboGames.
+// 
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
+// support@kerbogames.com
+// *******************************************************************************
+
+#include "../include/dce/runtime.hpp"
 // *******************************************************************************
 // The content of this file includes portions of the KerboGames Dreamcast Technology
 // released in source code form as part of the SDK package.
@@ -29,7 +44,7 @@ namespace dce {
 		  scenery_(),
 		  input_(),
 		  render_data_(),
-		 terminal_hook_(nullptr) { }
+		  terminal_hook_(nullptr) { }
 
 	void Runtime::initialize() {
 		this->resource_manager_.system_resources.load_all(this->resource_manager_);
@@ -111,8 +126,8 @@ namespace dce {
 	auto Runtime::scripting_protocol() & noexcept -> AsyncProtocol& {
 		return this->scripting_protocol_;
 	}
-	
-	auto Runtime::terminal_hook() const& noexcept -> const std::function<void(char*)>& {
+
+	auto Runtime::terminal_hook() const & noexcept -> const std::function<void(char*)>& {
 		return this->terminal_hook_;
 	}
 

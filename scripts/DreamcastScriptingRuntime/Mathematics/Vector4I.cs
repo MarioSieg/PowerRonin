@@ -24,37 +24,37 @@ namespace Dreamcast.Mathematics
     ///     Represents a four dimensional mathematical vector.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
-    public struct Int4 : IEquatable<Int4>, IFormattable
+    public struct Vector4I : IEquatable<Vector4I>, IFormattable
     {
         /// <summary>
-        ///     A <see cref="Int4" /> with all of its components set to zero.
+        ///     A <see cref="Vector4I" /> with all of its components set to zero.
         /// </summary>
-        public static readonly Int4 Zero;
+        public static readonly Vector4I Zero;
 
         /// <summary>
-        ///     The X unit <see cref="Int4" /> (1, 0, 0, 0).
+        ///     The X unit <see cref="Vector4I" /> (1, 0, 0, 0).
         /// </summary>
-        public static readonly Int4 UnitX = new Int4(1, 0, 0, 0);
+        public static readonly Vector4I UnitX = new Vector4I(1, 0, 0, 0);
 
         /// <summary>
-        ///     The Y unit <see cref="Int4" /> (0, 1, 0, 0).
+        ///     The Y unit <see cref="Vector4I" /> (0, 1, 0, 0).
         /// </summary>
-        public static readonly Int4 UnitY = new Int4(0, 1, 0, 0);
+        public static readonly Vector4I UnitY = new Vector4I(0, 1, 0, 0);
 
         /// <summary>
-        ///     The Z unit <see cref="Int4" /> (0, 0, 1, 0).
+        ///     The Z unit <see cref="Vector4I" /> (0, 0, 1, 0).
         /// </summary>
-        public static readonly Int4 UnitZ = new Int4(0, 0, 1, 0);
+        public static readonly Vector4I UnitZ = new Vector4I(0, 0, 1, 0);
 
         /// <summary>
-        ///     The W unit <see cref="Int4" /> (0, 0, 0, 1).
+        ///     The W unit <see cref="Vector4I" /> (0, 0, 0, 1).
         /// </summary>
-        public static readonly Int4 UnitW = new Int4(0, 0, 0, 1);
+        public static readonly Vector4I UnitW = new Vector4I(0, 0, 0, 1);
 
         /// <summary>
-        ///     A <see cref="Int4" /> with all of its components set to one.
+        ///     A <see cref="Vector4I" /> with all of its components set to one.
         /// </summary>
-        public static readonly Int4 One = new Int4(1, 1, 1, 1);
+        public static readonly Vector4I One = new Vector4I(1, 1, 1, 1);
 
         /// <summary>
         ///     The X component of the vector.
@@ -77,10 +77,10 @@ namespace Dreamcast.Mathematics
         public int W;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Int4" /> struct.
+        ///     Initializes a new instance of the <see cref="Vector4I" /> struct.
         /// </summary>
         /// <param name="value">The value that will be assigned to all components.</param>
-        public Int4(int value)
+        public Vector4I(int value)
         {
             X = value;
             Y = value;
@@ -89,13 +89,13 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Int4" /> struct.
+        ///     Initializes a new instance of the <see cref="Vector4I" /> struct.
         /// </summary>
         /// <param name="x">Initial value for the X component of the vector.</param>
         /// <param name="y">Initial value for the Y component of the vector.</param>
         /// <param name="z">Initial value for the Z component of the vector.</param>
         /// <param name="w">Initial value for the W component of the vector.</param>
-        public Int4(int x, int y, int z, int w)
+        public Vector4I(int x, int y, int z, int w)
         {
             X = x;
             Y = y;
@@ -105,7 +105,7 @@ namespace Dreamcast.Mathematics
 
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Int4" /> struct.
+        ///     Initializes a new instance of the <see cref="Vector4I" /> struct.
         /// </summary>
         /// <param name="values">
         ///     The values to assign to the X, Y, Z, and W components of the vector. This must be an array with
@@ -116,7 +116,7 @@ namespace Dreamcast.Mathematics
         ///     Thrown when <paramref name="values" /> contains more or less than four
         ///     elements.
         /// </exception>
-        public Int4(int[] values)
+        public Vector4I(int[] values)
         {
             if (values == null)
                 throw new ArgumentNullException("values");
@@ -199,9 +199,9 @@ namespace Dreamcast.Mathematics
         /// <param name="left">The first vector to add.</param>
         /// <param name="right">The second vector to add.</param>
         /// <param name="result">When the method completes, contains the sum of the two vectors.</param>
-        public static void Add(ref Int4 left, ref Int4 right, out Int4 result)
+        public static void Add(ref Vector4I left, ref Vector4I right, out Vector4I result)
         {
-            result = new Int4(left.X + right.X, left.Y + right.Y, left.Z + right.Z, left.W + right.W);
+            result = new Vector4I(left.X + right.X, left.Y + right.Y, left.Z + right.Z, left.W + right.W);
         }
 
         /// <summary>
@@ -210,9 +210,9 @@ namespace Dreamcast.Mathematics
         /// <param name="left">The first vector to add.</param>
         /// <param name="right">The second vector to add.</param>
         /// <returns>The sum of the two vectors.</returns>
-        public static Int4 Add(Int4 left, Int4 right)
+        public static Vector4I Add(Vector4I left, Vector4I right)
         {
-            return new Int4(left.X + right.X, left.Y + right.Y, left.Z + right.Z, left.W + right.W);
+            return new Vector4I(left.X + right.X, left.Y + right.Y, left.Z + right.Z, left.W + right.W);
         }
 
         /// <summary>
@@ -221,9 +221,9 @@ namespace Dreamcast.Mathematics
         /// <param name="left">The first vector to subtract.</param>
         /// <param name="right">The second vector to subtract.</param>
         /// <param name="result">When the method completes, contains the difference of the two vectors.</param>
-        public static void Subtract(ref Int4 left, ref Int4 right, out Int4 result)
+        public static void Subtract(ref Vector4I left, ref Vector4I right, out Vector4I result)
         {
-            result = new Int4(left.X - right.X, left.Y - right.Y, left.Z - right.Z, left.W - right.W);
+            result = new Vector4I(left.X - right.X, left.Y - right.Y, left.Z - right.Z, left.W - right.W);
         }
 
         /// <summary>
@@ -232,9 +232,9 @@ namespace Dreamcast.Mathematics
         /// <param name="left">The first vector to subtract.</param>
         /// <param name="right">The second vector to subtract.</param>
         /// <returns>The difference of the two vectors.</returns>
-        public static Int4 Subtract(Int4 left, Int4 right)
+        public static Vector4I Subtract(Vector4I left, Vector4I right)
         {
-            return new Int4(left.X - right.X, left.Y - right.Y, left.Z - right.Z, left.W - right.W);
+            return new Vector4I(left.X - right.X, left.Y - right.Y, left.Z - right.Z, left.W - right.W);
         }
 
         /// <summary>
@@ -243,9 +243,9 @@ namespace Dreamcast.Mathematics
         /// <param name="value">The vector to scale.</param>
         /// <param name="scale">The amount by which to scale the vector.</param>
         /// <param name="result">When the method completes, contains the scaled vector.</param>
-        public static void Multiply(ref Int4 value, int scale, out Int4 result)
+        public static void Multiply(ref Vector4I value, int scale, out Vector4I result)
         {
-            result = new Int4(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
+            result = new Vector4I(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
         }
 
         /// <summary>
@@ -254,9 +254,9 @@ namespace Dreamcast.Mathematics
         /// <param name="value">The vector to scale.</param>
         /// <param name="scale">The amount by which to scale the vector.</param>
         /// <returns>The scaled vector.</returns>
-        public static Int4 Multiply(Int4 value, int scale)
+        public static Vector4I Multiply(Vector4I value, int scale)
         {
-            return new Int4(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
+            return new Vector4I(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
         }
 
         /// <summary>
@@ -265,9 +265,9 @@ namespace Dreamcast.Mathematics
         /// <param name="left">The first vector to modulate.</param>
         /// <param name="right">The second vector to modulate.</param>
         /// <param name="result">When the method completes, contains the modulated vector.</param>
-        public static void Modulate(ref Int4 left, ref Int4 right, out Int4 result)
+        public static void Modulate(ref Vector4I left, ref Vector4I right, out Vector4I result)
         {
-            result = new Int4(left.X * right.X, left.Y * right.Y, left.Z * right.Z, left.W * right.W);
+            result = new Vector4I(left.X * right.X, left.Y * right.Y, left.Z * right.Z, left.W * right.W);
         }
 
         /// <summary>
@@ -276,9 +276,9 @@ namespace Dreamcast.Mathematics
         /// <param name="left">The first vector to modulate.</param>
         /// <param name="right">The second vector to modulate.</param>
         /// <returns>The modulated vector.</returns>
-        public static Int4 Modulate(Int4 left, Int4 right)
+        public static Vector4I Modulate(Vector4I left, Vector4I right)
         {
-            return new Int4(left.X * right.X, left.Y * right.Y, left.Z * right.Z, left.W * right.W);
+            return new Vector4I(left.X * right.X, left.Y * right.Y, left.Z * right.Z, left.W * right.W);
         }
 
         /// <summary>
@@ -287,9 +287,9 @@ namespace Dreamcast.Mathematics
         /// <param name="value">The vector to scale.</param>
         /// <param name="scale">The amount by which to scale the vector.</param>
         /// <param name="result">When the method completes, contains the scaled vector.</param>
-        public static void Divide(ref Int4 value, int scale, out Int4 result)
+        public static void Divide(ref Vector4I value, int scale, out Vector4I result)
         {
-            result = new Int4(value.X / scale, value.Y / scale, value.Z / scale, value.W / scale);
+            result = new Vector4I(value.X / scale, value.Y / scale, value.Z / scale, value.W / scale);
         }
 
         /// <summary>
@@ -298,9 +298,9 @@ namespace Dreamcast.Mathematics
         /// <param name="value">The vector to scale.</param>
         /// <param name="scale">The amount by which to scale the vector.</param>
         /// <returns>The scaled vector.</returns>
-        public static Int4 Divide(Int4 value, int scale)
+        public static Vector4I Divide(Vector4I value, int scale)
         {
-            return new Int4(value.X / scale, value.Y / scale, value.Z / scale, value.W / scale);
+            return new Vector4I(value.X / scale, value.Y / scale, value.Z / scale, value.W / scale);
         }
 
         /// <summary>
@@ -308,9 +308,9 @@ namespace Dreamcast.Mathematics
         /// </summary>
         /// <param name="value">The vector to negate.</param>
         /// <param name="result">When the method completes, contains a vector facing in the opposite direction.</param>
-        public static void Negate(ref Int4 value, out Int4 result)
+        public static void Negate(ref Vector4I value, out Vector4I result)
         {
-            result = new Int4(-value.X, -value.Y, -value.Z, -value.W);
+            result = new Vector4I(-value.X, -value.Y, -value.Z, -value.W);
         }
 
         /// <summary>
@@ -318,9 +318,9 @@ namespace Dreamcast.Mathematics
         /// </summary>
         /// <param name="value">The vector to negate.</param>
         /// <returns>A vector facing in the opposite direction.</returns>
-        public static Int4 Negate(Int4 value)
+        public static Vector4I Negate(Vector4I value)
         {
-            return new Int4(-value.X, -value.Y, -value.Z, -value.W);
+            return new Vector4I(-value.X, -value.Y, -value.Z, -value.W);
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Dreamcast.Mathematics
         /// <param name="min">The minimum value.</param>
         /// <param name="max">The maximum value.</param>
         /// <param name="result">When the method completes, contains the clamped value.</param>
-        public static void Clamp(ref Int4 value, ref Int4 min, ref Int4 max, out Int4 result)
+        public static void Clamp(ref Vector4I value, ref Vector4I min, ref Vector4I max, out Vector4I result)
         {
             var x = value.X;
             x = x > max.X ? max.X : x;
@@ -348,7 +348,7 @@ namespace Dreamcast.Mathematics
             w = w > max.W ? max.W : w;
             w = w < min.W ? min.W : w;
 
-            result = new Int4(x, y, z, w);
+            result = new Vector4I(x, y, z, w);
         }
 
         /// <summary>
@@ -358,7 +358,7 @@ namespace Dreamcast.Mathematics
         /// <param name="min">The minimum value.</param>
         /// <param name="max">The maximum value.</param>
         /// <returns>The clamped value.</returns>
-        public static Int4 Clamp(Int4 value, Int4 min, Int4 max)
+        public static Vector4I Clamp(Vector4I value, Vector4I min, Vector4I max)
         {
             Clamp(ref value, ref min, ref max, out var result);
             return result;
@@ -373,7 +373,7 @@ namespace Dreamcast.Mathematics
         ///     When the method completes, contains an new vector composed of the largest components of the source
         ///     vectors.
         /// </param>
-        public static void Max(ref Int4 left, ref Int4 right, out Int4 result)
+        public static void Max(ref Vector4I left, ref Vector4I right, out Vector4I result)
         {
             result.X = left.X > right.X ? left.X : right.X;
             result.Y = left.Y > right.Y ? left.Y : right.Y;
@@ -387,7 +387,7 @@ namespace Dreamcast.Mathematics
         /// <param name="left">The first source vector.</param>
         /// <param name="right">The second source vector.</param>
         /// <returns>A vector containing the largest components of the source vectors.</returns>
-        public static Int4 Max(Int4 left, Int4 right)
+        public static Vector4I Max(Vector4I left, Vector4I right)
         {
             Max(ref left, ref right, out var result);
             return result;
@@ -402,7 +402,7 @@ namespace Dreamcast.Mathematics
         ///     When the method completes, contains an new vector composed of the smallest components of the
         ///     source vectors.
         /// </param>
-        public static void Min(ref Int4 left, ref Int4 right, out Int4 result)
+        public static void Min(ref Vector4I left, ref Vector4I right, out Vector4I result)
         {
             result.X = left.X < right.X ? left.X : right.X;
             result.Y = left.Y < right.Y ? left.Y : right.Y;
@@ -416,7 +416,7 @@ namespace Dreamcast.Mathematics
         /// <param name="left">The first source vector.</param>
         /// <param name="right">The second source vector.</param>
         /// <returns>A vector containing the smallest components of the source vectors.</returns>
-        public static Int4 Min(Int4 left, Int4 right)
+        public static Vector4I Min(Vector4I left, Vector4I right)
         {
             Min(ref left, ref right, out var result);
             return result;
@@ -428,9 +428,9 @@ namespace Dreamcast.Mathematics
         /// <param name="left">The first vector to add.</param>
         /// <param name="right">The second vector to add.</param>
         /// <returns>The sum of the two vectors.</returns>
-        public static Int4 operator +(Int4 left, Int4 right)
+        public static Vector4I operator +(Vector4I left, Vector4I right)
         {
-            return new Int4(left.X + right.X, left.Y + right.Y, left.Z + right.Z, left.W + right.W);
+            return new Vector4I(left.X + right.X, left.Y + right.Y, left.Z + right.Z, left.W + right.W);
         }
 
         /// <summary>
@@ -438,7 +438,7 @@ namespace Dreamcast.Mathematics
         /// </summary>
         /// <param name="value">The vector to assert (unchanged).</param>
         /// <returns>The asserted (unchanged) vector.</returns>
-        public static Int4 operator +(Int4 value)
+        public static Vector4I operator +(Vector4I value)
         {
             return value;
         }
@@ -449,9 +449,9 @@ namespace Dreamcast.Mathematics
         /// <param name="left">The first vector to subtract.</param>
         /// <param name="right">The second vector to subtract.</param>
         /// <returns>The difference of the two vectors.</returns>
-        public static Int4 operator -(Int4 left, Int4 right)
+        public static Vector4I operator -(Vector4I left, Vector4I right)
         {
-            return new Int4(left.X - right.X, left.Y - right.Y, left.Z - right.Z, left.W - right.W);
+            return new Vector4I(left.X - right.X, left.Y - right.Y, left.Z - right.Z, left.W - right.W);
         }
 
         /// <summary>
@@ -459,9 +459,9 @@ namespace Dreamcast.Mathematics
         /// </summary>
         /// <param name="value">The vector to negate.</param>
         /// <returns>A vector facing in the opposite direction.</returns>
-        public static Int4 operator -(Int4 value)
+        public static Vector4I operator -(Vector4I value)
         {
-            return new Int4(-value.X, -value.Y, -value.Z, -value.W);
+            return new Vector4I(-value.X, -value.Y, -value.Z, -value.W);
         }
 
         /// <summary>
@@ -470,9 +470,9 @@ namespace Dreamcast.Mathematics
         /// <param name="value">The vector to scale.</param>
         /// <param name="scale">The amount by which to scale the vector.</param>
         /// <returns>The scaled vector.</returns>
-        public static Int4 operator *(int scale, Int4 value)
+        public static Vector4I operator *(int scale, Vector4I value)
         {
-            return new Int4(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
+            return new Vector4I(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
         }
 
         /// <summary>
@@ -481,9 +481,9 @@ namespace Dreamcast.Mathematics
         /// <param name="value">The vector to scale.</param>
         /// <param name="scale">The amount by which to scale the vector.</param>
         /// <returns>The scaled vector.</returns>
-        public static Int4 operator *(Int4 value, int scale)
+        public static Vector4I operator *(Vector4I value, int scale)
         {
-            return new Int4(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
+            return new Vector4I(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
         }
 
         /// <summary>
@@ -492,9 +492,9 @@ namespace Dreamcast.Mathematics
         /// <param name="value">The vector to scale.</param>
         /// <param name="scale">The amount by which to scale the vector.</param>
         /// <returns>The scaled vector.</returns>
-        public static Int4 operator /(Int4 value, int scale)
+        public static Vector4I operator /(Vector4I value, int scale)
         {
-            return new Int4(value.X / scale, value.Y / scale, value.Z / scale, value.W / scale);
+            return new Vector4I(value.X / scale, value.Y / scale, value.Z / scale, value.W / scale);
         }
 
         /// <summary>
@@ -507,7 +507,7 @@ namespace Dreamcast.Mathematics
         ///     <c>false</c>.
         /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
-        public static bool operator ==(Int4 left, Int4 right)
+        public static bool operator ==(Vector4I left, Vector4I right)
         {
             return left.Equals(ref right);
         }
@@ -522,37 +522,37 @@ namespace Dreamcast.Mathematics
         ///     <c>false</c>.
         /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
-        public static bool operator !=(Int4 left, Int4 right)
+        public static bool operator !=(Vector4I left, Vector4I right)
         {
             return !left.Equals(ref right);
         }
 
         /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int4" /> to <see cref="Vector2" />.
+        ///     Performs an explicit conversion from <see cref="Vector4I" /> to <see cref="Vector2" />.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator Vector2(Int4 value)
+        public static explicit operator Vector2(Vector4I value)
         {
             return new Vector2(value.X, value.Y);
         }
 
         /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int4" /> to <see cref="Vector3" />.
+        ///     Performs an explicit conversion from <see cref="Vector4I" /> to <see cref="Vector3" />.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator Vector3(Int4 value)
+        public static explicit operator Vector3(Vector4I value)
         {
             return new Vector3(value.X, value.Y, value.Z);
         }
 
         /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int4" /> to <see cref="Vector4" />.
+        ///     Performs an explicit conversion from <see cref="Vector4I" /> to <see cref="Vector4" />.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator Vector4(Int4 value)
+        public static explicit operator Vector4(Vector4I value)
         {
             return new Vector4(value.X, value.Y, value.Z, value.W);
         }
@@ -636,27 +636,27 @@ namespace Dreamcast.Mathematics
         }
 
         /// <summary>
-        ///     Determines whether the specified <see cref="Int4" /> is equal to this instance.
+        ///     Determines whether the specified <see cref="Vector4I" /> is equal to this instance.
         /// </summary>
-        /// <param name="other">The <see cref="Int4" /> to compare with this instance.</param>
+        /// <param name="other">The <see cref="Vector4I" /> to compare with this instance.</param>
         /// <returns>
-        ///     <c>true</c> if the specified <see cref="Int4" /> is equal to this instance; otherwise, <c>false</c>.
+        ///     <c>true</c> if the specified <see cref="Vector4I" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
-        public bool Equals(ref Int4 other)
+        public bool Equals(ref Vector4I other)
         {
             return other.X == X && other.Y == Y && other.Z == Z && other.W == W;
         }
 
         /// <summary>
-        ///     Determines whether the specified <see cref="Int4" /> is equal to this instance.
+        ///     Determines whether the specified <see cref="Vector4I" /> is equal to this instance.
         /// </summary>
-        /// <param name="other">The <see cref="Int4" /> to compare with this instance.</param>
+        /// <param name="other">The <see cref="Vector4I" /> to compare with this instance.</param>
         /// <returns>
-        ///     <c>true</c> if the specified <see cref="Int4" /> is equal to this instance; otherwise, <c>false</c>.
+        ///     <c>true</c> if the specified <see cref="Vector4I" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
-        public bool Equals(Int4 other)
+        public bool Equals(Vector4I other)
         {
             return Equals(ref other);
         }
@@ -670,29 +670,29 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public override bool Equals(object value)
         {
-            if (!(value is Int4))
+            if (!(value is Vector4I))
                 return false;
 
-            var strongValue = (Int4) value;
+            var strongValue = (Vector4I) value;
             return Equals(ref strongValue);
         }
 
         /// <summary>
-        ///     Performs an implicit conversion from <see cref="int" /> array to <see cref="Int4" />.
+        ///     Performs an implicit conversion from <see cref="int" /> array to <see cref="Vector4I" />.
         /// </summary>
         /// <param name="input">The input.</param>
         /// <returns>The result of the conversion.</returns>
-        public static implicit operator Int4(int[] input)
+        public static implicit operator Vector4I(int[] input)
         {
-            return new Int4(input);
+            return new Vector4I(input);
         }
 
         /// <summary>
-        ///     Performs an implicit conversion from <see cref="Int4" /> to <see cref="System.Int32" /> array.
+        ///     Performs an implicit conversion from <see cref="Vector4I" /> to <see cref="System.Int32" /> array.
         /// </summary>
         /// <param name="input">The input.</param>
         /// <returns>The result of the conversion.</returns>
-        public static implicit operator int[](Int4 input)
+        public static implicit operator int[](Vector4I input)
         {
             return input.ToArray();
         }
