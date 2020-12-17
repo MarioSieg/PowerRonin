@@ -307,14 +307,6 @@ namespace Dreamcast.Core
 
                         Protocol.Info("Local IP: " + localIp);
                     }
-                },
-                new Command
-                {
-                    name = "ping",
-                    brief = "Tries to ping popular websites.",
-                    parameterCount = 0,
-                    requiresRootPrivileges = false,
-                    executor = delegate { }
                 }
             });
         }

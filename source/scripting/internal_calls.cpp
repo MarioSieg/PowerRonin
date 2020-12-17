@@ -27,9 +27,9 @@ namespace dce::scripting {
 		static auto* const RUNTIME = &_rt;
 
 		{
-			static constexpr void* const NATIVE_PROC = +[](const std::uint8_t _level, MonoString* const _message) {
+			static constexpr void* const NATIVE_PROC = +[](const LogLevel _level, MonoString* const _message) {
 				auto* const str = mono_string_to_utf8(_message);
-				RUNTIME->scripting_protocol().log(static_cast<LogLevel>(_level), std::string(str));
+				RUNTIME->scripting_protocol().log(_level, std::string(str));
 				mono_free(str);
 			};
 			REGISTER_CALL("ProtocolLog");
