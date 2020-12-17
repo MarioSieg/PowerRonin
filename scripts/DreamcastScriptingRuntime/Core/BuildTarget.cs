@@ -16,36 +16,23 @@
 namespace Dreamcast.Core
 {
     /// <summary>
-    ///     Engine core class.
+    ///     Contains all build targets.
     /// </summary>
-    public static class Core
+    public enum BuildTarget
     {
-        private static void OnPreStartup()
-        {
-            Configuration.LoadCurrent();
-        }
+        /// <summary>
+        ///     Windows standalone app.
+        /// </summary>
+        StandaloneWindows,
 
-        private static void OnPostStartup()
-        {
-            CommandDB.RegisterCommonCommands();
-            CommandDB.Execute("info");
-        }
+        /// <summary>
+        ///     Linux standalone app.
+        /// </summary>
+        StandaloneLinux,
 
-        private static void OnPreTick()
-        {
-            Input.Update();
-        }
-
-        private static void OnPostTick()
-        {
-        }
-
-        private static void OnPreShutdown()
-        {
-        }
-
-        private static void OnPostShutdown()
-        {
-        }
+        /// <summary>
+        ///     Mac standalone app.
+        /// </summary>
+        StandaloneMac
     }
 }

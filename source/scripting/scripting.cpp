@@ -45,40 +45,49 @@ namespace dce::scripting {
 			this->command_db_.on_command_enter(this->runtime_environment_, params);
 		};
 
-		this->core_.on_start(this->runtime_environment_);
+		this->core_.on_pre_startup(this->runtime_environment_);
 
 		return true;
 	}
 
 	auto Scripting::on_post_startup(Runtime& _rt) -> bool {
+		this->core_.on_post_startup(this->runtime_environment_);
 		return true;
 	}
 
 	auto Scripting::on_pre_tick(Runtime& _rt) -> bool {
-		this->core_.on_update.call(this->runtime_environment_);
+		this->core_.on_pre_tick(this->runtime_environment_);
 		return true;
 	}
 
 	auto Scripting::on_post_tick(Runtime& _rt) -> bool {
+		this->core_.on_post_tick(this->runtime_environment_);
 		return true;
 	}
 
 	auto Scripting::on_pre_shutdown(Runtime& _rt) -> bool {
-		this->core_.on_update.call(this->runtime_environment_);
+		this->core_.on_pre_shutdown(this->runtime_environment_);
+		return true;
+	}
+
+	auto Scripting::on_post_shutdown(Runtime& _rt) -> bool {
+		this->core_.on_post_shutdown(this->runtime_environment_);
 		this->core_assembly_.unload();
 		this->runtime_environment_.shutdown();
 		return true;
 	}
 
-	auto Scripting::on_post_shutdown(Runtime& _rt) -> bool {
-		return true;
-	}
-
 	void Scripting::setup_hooks() {
 		this->core_.klass.load_from_name(this->core_assembly_, ASSEMBLY_NAMESPACE_ID, CORE_CLASS_ID);
-		this->core_.on_start.query_from_class(this->core_.klass, CORE_START_ID);
-		this->core_.on_update.query_from_class(this->core_.klass, CORE_UPDATE_ID);
-		this->core_.on_exit.query_from_class(this->core_.klass, CORE_EXIT_ID);
+
+		this->core_.on_pre_startup.query_from_class(this->core_.klass, CORE_ON_PRE_STARTUP_ID);
+		this->core_.on_post_startup.query_from_class(this->core_.klass, CORE_ON_POST_STARTUP_ID);
+
+		this->core_.on_pre_tick.query_from_class(this->core_.klass, CORE_ON_PRE_TICK_ID);
+		this->core_.on_post_tick.query_from_class(this->core_.klass, CORE_ON_POST_TICK_ID);
+
+		this->core_.on_pre_shutdown.query_from_class(this->core_.klass, CORE_PRE_SHUTDOWN_ID);
+		this->core_.on_post_shutdown.query_from_class(this->core_.klass, CORE_POST_SHUTDOWN_ID);
 
 		this->command_db_.klass.load_from_name(this->core_assembly_, ASSEMBLY_NAMESPACE_ID, COMMAND_DB_CLASS_ID);
 		this->command_db_.on_command_enter.query_from_class(this->command_db_.klass, COMMAND_DB_CMD_ENTER_ID

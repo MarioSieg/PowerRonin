@@ -15,7 +15,7 @@
 
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Xml.Serialization;
+using YAXLib;
 
 namespace Dreamcast.Core
 {
@@ -30,44 +30,76 @@ namespace Dreamcast.Core
         /// </summary>
         /// <param name="instance">The instance to serialize.</param>
         /// <returns></returns>
-        public static string Serialize(in T instance)
+        public static string SerializeToXml(in T instance)
         {
-            var serializer = new XmlSerializer(typeof(T));
-            using (var stream = new StringWriter())
-            {
-                serializer.Serialize(stream, instance);
-                return stream.ToString();
-            }
+            var serializer = new YAXSerializer(typeof(T));
+            return serializer.Serialize(instance);
         }
 
         /// <summary>
-        ///     Serializes T into a XML string and writes it into a file.
+        ///     Deserializes the object from a XML string.
+        /// </summary>
+        /// <param name="data">The XML string.</param>
+        /// <returns>The deserialized object.</returns>
+        public static T DeserializeFromXml(string data)
+        {
+            var serializer = new YAXSerializer(typeof(T));
+            using var stream = new StringReader(data);
+            return (T) serializer.Deserialize(stream);
+        }
+
+        /// <summary>
+        ///     Serializes T into a XML file.
         /// </summary>
         /// <param name="instance">The instance to serialize.</param>
-        /// <param name="fileName">The file to serialize into.</param>
-        public static void SerializeToFile(in T instance, string fileName)
+        /// <param name="path">The file to serialize into.</param>
+        public static void SerializeToXmlFile(in T instance, string path)
         {
-            var serializer = new XmlSerializer(typeof(T));
-            using (var stream = new FileStream(fileName, FileMode.OpenOrCreate))
-            {
-                serializer.Serialize(stream, instance);
-                stream.Flush(true);
-            }
+            var serializer = new YAXSerializer(typeof(T));
+            serializer.SerializeToFile(instance, path);
+        }
+
+        /// <summary>
+        ///     Deserializes the object from a XML file.
+        /// </summary>
+        /// <param name="path">The file to serialize from.</param>
+        /// <returns>The deserialized object.</returns>
+        public static T DeserializeFromXmlFile(string path)
+        {
+            var serializer = new YAXSerializer(typeof(T));
+            return (T) serializer.DeserializeFromFile(path);
         }
 
         /// <summary>
         ///     Serializes T into a binary file.
         /// </summary>
         /// <param name="instance">The instance to serialize.</param>
-        /// <param name="fileName">The file to serialize into.</param>
-        public static void SerializeToBinaryFile(in T instance, string fileName)
+        /// <param name="path">The file to serialize into.</param>
+        public static void SerializeToBinaryFile(in T instance, string path)
         {
             var formatter = new BinaryFormatter();
-            using (var stream = new FileStream(fileName, FileMode.OpenOrCreate))
+            using (var stream = new FileStream(path, FileMode.OpenOrCreate))
             {
                 formatter.Serialize(stream, instance);
                 stream.Flush(true);
             }
+        }
+
+        /// <summary>
+        ///     Deserializes the object from a binary file.
+        /// </summary>
+        /// <param name="path">The file to serialize from.</param>
+        /// <returns>The deserialized object.</returns>
+        public static T DeserializeFromBinaryFile(string path)
+        {
+            object result;
+            var formatter = new BinaryFormatter();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                result = formatter.Deserialize(stream);
+            }
+
+            return (T) result;
         }
     }
 }

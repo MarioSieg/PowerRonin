@@ -55,9 +55,15 @@ namespace dce::scripting {
 		/// </summary>
 		struct {
 			StaticClass klass = {};
-			StaticMethod on_start = {};
-			StaticMethod on_update = {};
-			StaticMethod on_exit = {};
+
+			StaticMethod on_pre_startup = {};
+			StaticMethod on_post_startup = {};
+
+			StaticMethod on_pre_tick = {};
+			StaticMethod on_post_tick = {};
+
+			StaticMethod on_pre_shutdown = {};
+			StaticMethod on_post_shutdown = {};
 		} core_;
 
 		/// <summary>

@@ -16,36 +16,33 @@
 namespace Dreamcast.Core
 {
     /// <summary>
-    ///     Engine core class.
+    ///     Contains all supported graphics APIs.
     /// </summary>
-    public static class Core
+    public enum GraphicsAPI
     {
-        private static void OnPreStartup()
-        {
-            Configuration.LoadCurrent();
-        }
+        /// <summary>
+        ///     Windows only.
+        /// </summary>
+        Direct3D11,
 
-        private static void OnPostStartup()
-        {
-            CommandDB.RegisterCommonCommands();
-            CommandDB.Execute("info");
-        }
+        /// <summary>
+        ///     Windows only.
+        /// </summary>
+        Direct3D12,
 
-        private static void OnPreTick()
-        {
-            Input.Update();
-        }
+        /// <summary>
+        ///     Mac only.
+        /// </summary>
+        Metal,
 
-        private static void OnPostTick()
-        {
-        }
+        /// <summary>
+        ///     Cross platform.
+        /// </summary>
+        Vulkan,
 
-        private static void OnPreShutdown()
-        {
-        }
-
-        private static void OnPostShutdown()
-        {
-        }
+        /// <summary>
+        ///     Cross platform.
+        /// </summary>
+        OpenGL
     }
 }

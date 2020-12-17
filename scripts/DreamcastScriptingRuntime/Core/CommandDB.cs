@@ -22,6 +22,8 @@ using System.Net;
 using System.Net.Sockets;
 using Dreamcast.Mathematics;
 
+#nullable enable
+
 namespace Dreamcast.Core
 {
     /// <summary>
@@ -297,7 +299,7 @@ namespace Dreamcast.Core
                     requiresRootPrivileges = false,
                     executor = delegate
                     {
-                        string localIp;
+                        string? localIp;
                         using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0))
                         {
                             socket.Connect("8.8.8.8", 65530);
@@ -306,6 +308,51 @@ namespace Dreamcast.Core
                         }
 
                         Protocol.Info("Local IP: " + localIp);
+                    }
+                },
+                new Command
+                {
+                    name = "config",
+                    brief = "Prints the system config.",
+                    parameterCount = 0,
+                    requiresRootPrivileges = false,
+                    executor = delegate
+                    {
+                        Protocol.Info(Configuration.FilePath + ":\n" +
+                                      Serializer<Configuration>.SerializeToXml(Configuration.Current));
+                    }
+                },
+                new Command()
+                {
+                    name = "config_apply",
+                    brief = "Applies the whole config to all systems.",
+                    parameterCount = 0,
+                    requiresRootPrivileges = false,
+                    executor = delegate
+                    {
+                        Configuration.Current.Apply();
+                    }
+                },
+                new Command()
+                {
+                    name = "config_load",
+                    brief = "Loads the current config from the config file.",
+                    parameterCount = 0,
+                    requiresRootPrivileges = false,
+                    executor = delegate
+                    {
+                        Configuration.LoadCurrent();
+                    }
+                },
+                new Command()
+                {
+                    name = "config_save",
+                    brief = "Saves the current config to the config file.",
+                    parameterCount = 0,
+                    requiresRootPrivileges = false,
+                    executor = delegate
+                    {
+                        Configuration.SaveCurrent();
                     }
                 }
             });

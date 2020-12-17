@@ -19,6 +19,8 @@ namespace Dreamcast.Core
 {
     /// <summary>
     ///     Contains all internal calls.
+    ///     Warning! None of these methods should be renamed because
+    ///     they are mapped to native functions.
     /// </summary>
     public static class NativeRuntime
     {
@@ -45,5 +47,9 @@ namespace Dreamcast.Core
         [CallToNativeRuntime]
         [MethodImpl(MethodImplOptions.InternalCall)]
         internal static extern void ProtocolLog(LogLevel level, string message);
+
+        [CallToNativeRuntime]
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        internal static extern void CfgSetWindowFullscreen(bool fullScreen);
     }
 }

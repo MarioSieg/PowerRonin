@@ -13,39 +13,17 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-namespace Dreamcast.Core
+namespace YAXLib
 {
     /// <summary>
-    ///     Engine core class.
+    ///     Defines the interface to all custom deserializers used with YAXLib.
+    ///     Note that normally you don't need to implement all the methods.
     /// </summary>
-    public static class Core
+    /// <typeparam name="T">
+    ///     The type of field, property, class, or struct for which custom deserializer
+    ///     is provided
+    /// </typeparam>
+    public interface ICustomDeserializer<T>
     {
-        private static void OnPreStartup()
-        {
-            Configuration.LoadCurrent();
-        }
-
-        private static void OnPostStartup()
-        {
-            CommandDB.RegisterCommonCommands();
-            CommandDB.Execute("info");
-        }
-
-        private static void OnPreTick()
-        {
-            Input.Update();
-        }
-
-        private static void OnPostTick()
-        {
-        }
-
-        private static void OnPreShutdown()
-        {
-        }
-
-        private static void OnPostShutdown()
-        {
-        }
     }
 }
