@@ -63,7 +63,7 @@ namespace dce::scripting {
 		/// JIT-compiles this method into native machine code.
 		/// </summary>
 		/// <returns>The pointer to the native code.</returns>
-		auto jit_compile() const -> void*;
+		[[nodiscard]] auto jit_compile() const -> void*;
 
 		/// <summary>
 		/// Call the static method.

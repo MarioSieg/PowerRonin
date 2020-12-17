@@ -83,6 +83,7 @@
     <Compile Include="Core\LogLevel.cs" />
     <Compile Include="Core\MouseButton.cs" />
     <Compile Include="Core\NativeRuntime.cs" />
+    <Compile Include="Core\Serializer.cs" />
     <Compile Include="Mathematics\AngleSingle.cs" />
     <Compile Include="Mathematics\AngleType.cs" />
     <Compile Include="Mathematics\BoundingBox.cs" />

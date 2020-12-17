@@ -768,6 +768,33 @@
                 Contains all internal calls.
             </summary>
         </member>
+        <member name="T:Dreamcast.Core.Serializer`1">
+            <summary>
+                Contains helpers for de/serialization.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Dreamcast.Core.Serializer`1.Serialize(`0@)">
+            <summary>
+                Serializes T into a XML string.
+            </summary>
+            <param name="instance">The instance to serialize.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Dreamcast.Core.Serializer`1.SerializeToFile(`0@,System.String)">
+            <summary>
+                Serializes T into a XML string and writes it into a file.
+            </summary>
+            <param name="instance">The instance to serialize.</param>
+            <param name="fileName">The file to serialize into.</param>
+        </member>
+        <member name="M:Dreamcast.Core.Serializer`1.SerializeToBinaryFile(`0@,System.String)">
+            <summary>
+                Serializes T into a binary file.
+            </summary>
+            <param name="instance">The instance to serialize.</param>
+            <param name="fileName">The file to serialize into.</param>
+        </member>
         <member name="T:Dreamcast.Core.Protocol">
             <summary>
                 Contains methods to write logs into the protocol,

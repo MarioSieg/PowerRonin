@@ -40,7 +40,7 @@ namespace dce::scripting {
 		this->params_count_ = _params_count_;
 		this->name_ = _name;
 		[[likely]] if (!_do_not_jit_compile) {
-			this->jit_compile();
+			auto* const _ = this->jit_compile();
 		}
 	}
 
