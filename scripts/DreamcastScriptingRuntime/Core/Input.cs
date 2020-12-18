@@ -23,32 +23,37 @@ namespace Dreamcast.Core
     /// </summary>
     public static class Input
     {
+        private static Vector2 CursorPos = Vector2.Zero;
+
         /// <summary>
         ///     The mouse cursor position.
         /// </summary>
-        public static Vector2 CursorPosition { get; private set; }
+        public static Vector2 CursorPosition => CursorPos;
 
         /// <summary>
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns>True if the key is currently pressed, else false.</returns>
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public static extern bool IsKeyDown(Key key);
+        public static bool IsKeyDown(Key key)
+        {
+            return NativeRuntime.InputIsKeyDown(key);
+        }
 
         /// <summary>
         /// </summary>
         /// <param name="mouseButton">The mouse button.</param>
         /// <returns>True if the mouse button is currently pressed, else false.</returns>
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public static extern bool IsMouseDown(MouseButton mouseButton);
-
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        private static extern void GetCursorPosition(out float x, out float y);
-
-        internal static void UpdateMouseCursor()
+        public static bool IsMouseDown(MouseButton mouseButton)
         {
-            GetCursorPosition(out var x, out var y);
-            CursorPosition = new Vector2(x, y);
+            return NativeRuntime.InputIsMouseDown(mouseButton);
+        }
+
+        internal static void Update()
+        {
+            NativeRuntime.InputGetCursorPosition(out var x, out var y);
+            CursorPos.X = x;
+            CursorPos.Y = y;
         }
     }
 }

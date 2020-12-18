@@ -130,11 +130,6 @@ namespace dce::platform {
 			return false;
 		}
 
-		/* Show splash screen: */
-		const auto sp_result = this->splash_screen_.open(4, primary_monitor, _rt.config().app.splash_image.string().c_str());
-		proto.info("Opened splash screen with size {}x{}: {}", this->splash_screen_.get_width(), this->splash_screen_.get_height()
-		           , sp_result);
-
 		/*  Get all connected monitors: */
 		int all_monitors_count = 0;
 		GLFWmonitor** const all_monitors = glfwGetMonitors(&all_monitors_count);
@@ -199,7 +194,6 @@ namespace dce::platform {
 		[[likely]] if (display_settings.is_full_screen || display_settings.is_maximized) {
 			[[likely]] if (display_settings.is_maximized) {
 				glfwMaximizeWindow(this->window_);
-				glfwHideWindow(this->window_);
 			}
 			int w = 0;
 			int h = 0;
@@ -321,7 +315,6 @@ namespace dce::platform {
 	}
 
 	auto Platform::on_post_startup(Runtime& _rt) -> bool {
-		this->splash_screen_.close();
 		glfwFocusWindow(this->window_);
 		[[likely]] if (_rt.config().display.is_maximized) {
 			glfwMaximizeWindow(this->window_);

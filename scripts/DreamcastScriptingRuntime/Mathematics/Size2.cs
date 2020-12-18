@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 namespace Dreamcast.Mathematics
 {
     /// <summary>
-    ///     Structure using the same layout than <see cref="System.Drawing.Size" />.
+    ///     Structure using the same layout than System.Drawing.Size />.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct Size2 : IEquatable<Size2>
@@ -111,6 +111,9 @@ namespace Dreamcast.Mathematics
             return !left.Equals(right);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <returns>The string.</returns>
         public override string ToString()
         {
             return $"({Width},{Height})";

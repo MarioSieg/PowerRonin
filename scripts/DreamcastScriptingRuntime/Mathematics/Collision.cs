@@ -54,8 +54,7 @@ namespace Dreamcast.Mathematics
         /// <param name="vertex2">The second vertex to test.</param>
         /// <param name="vertex3">The third vertex to test.</param>
         /// <param name="result">When the method completes, contains the closest point between the two objects.</param>
-        public static void ClosestPointPointTriangle(ref Vector3 point, ref Vector3 vertex1, ref Vector3 vertex2,
-            ref Vector3 vertex3, out Vector3 result)
+        public static void ClosestPointPointTriangle(ref Vector3 point, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3, out Vector3 result)
         {
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 136
@@ -138,8 +137,7 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 126
 
-            float dot;
-            Vector3.Dot(ref plane.Normal, ref point, out dot);
+            Vector3.Dot(ref plane.Normal, ref point, out var dot);
             var t = dot - plane.D;
 
             result = point - t * plane.Normal;
@@ -156,8 +154,7 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 130
 
-            Vector3 temp;
-            Vector3.Max(ref point, ref box.Minimum, out temp);
+            Vector3.Max(ref point, ref box.Minimum, out var temp);
             Vector3.Min(ref temp, ref box.Maximum, out result);
         }
 
@@ -201,8 +198,7 @@ namespace Dreamcast.Mathematics
         ///     is the 'closest' point of intersection. This can also be considered is the deepest point of
         ///     intersection.
         /// </remarks>
-        public static void ClosestPointSphereSphere(ref BoundingSphere sphere1, ref BoundingSphere sphere2,
-            out Vector3 result)
+        public static void ClosestPointSphereSphere(ref BoundingSphere sphere1, ref BoundingSphere sphere2, out Vector3 result)
         {
             //Source: Jorgy343
             //Reference: None
@@ -230,8 +226,7 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 127
 
-            float dot;
-            Vector3.Dot(ref plane.Normal, ref point, out dot);
+            Vector3.Dot(ref plane.Normal, ref point, out var dot);
             return dot - plane.D;
         }
 
@@ -329,8 +324,7 @@ namespace Dreamcast.Mathematics
             //Source: Jorgy343
             //Reference: None
 
-            float distance;
-            Vector3.Distance(ref sphere.Center, ref point, out distance);
+            Vector3.Distance(ref sphere.Center, ref point, out var distance);
             distance -= sphere.Radius;
 
             return Math.Max(distance, 0f);
@@ -347,8 +341,7 @@ namespace Dreamcast.Mathematics
             //Source: Jorgy343
             //Reference: None
 
-            float distance;
-            Vector3.Distance(ref sphere1.Center, ref sphere2.Center, out distance);
+            Vector3.Distance(ref sphere1.Center, ref sphere2.Center, out var distance);
             distance -= sphere1.Radius + sphere2.Radius;
 
             return Math.Max(distance, 0f);
@@ -365,8 +358,7 @@ namespace Dreamcast.Mathematics
             //Source: RayIntersectsSphere
             //Reference: None
 
-            Vector3 m;
-            Vector3.Subtract(ref ray.Position, ref point, out m);
+            Vector3.Subtract(ref ray.Position, ref point, out var m);
 
             //Same thing as RayIntersectsSphere except that the radius of the sphere (point)
             //is the epsilon for zero.
@@ -409,23 +401,20 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Rendering, Third Edition
             //Reference: Page 780
 
-            Vector3 cross;
-
-            Vector3.Cross(ref ray1.Direction, ref ray2.Direction, out cross);
+            Vector3.Cross(ref ray1.Direction, ref ray2.Direction, out var cross);
             var denominator = cross.Length();
 
             //Lines are parallel.
             if (MathUtil.IsZero(denominator))
                 //Lines are parallel and on top of each other.
-                if (MathUtil.NearEqual(ray2.Position.X, ray1.Position.X) &&
-                    MathUtil.NearEqual(ray2.Position.Y, ray1.Position.Y) &&
+                if (MathUtil.NearEqual(ray2.Position.X, ray1.Position.X) && MathUtil.NearEqual(ray2.Position.Y, ray1.Position.Y) &&
                     MathUtil.NearEqual(ray2.Position.Z, ray1.Position.Z))
                 {
                     point = Vector3.Zero;
                     return true;
                 }
 
-            denominator = denominator * denominator;
+            denominator *= denominator;
 
             //3x3 matrix for the first ray.
             var m11 = ray2.Position.X - ray1.Position.X;
@@ -439,13 +428,7 @@ namespace Dreamcast.Mathematics
             var m33 = cross.Z;
 
             //Determinant of first matrix.
-            var dets =
-                m11 * m22 * m33 +
-                m12 * m23 * m31 +
-                m13 * m21 * m32 -
-                m11 * m23 * m32 -
-                m12 * m21 * m33 -
-                m13 * m22 * m31;
+            var dets = m11 * m22 * m33 + m12 * m23 * m31 + m13 * m21 * m32 - m11 * m23 * m32 - m12 * m21 * m33 - m13 * m22 * m31;
 
             //3x3 matrix for the second ray.
             m21 = ray1.Direction.X;
@@ -453,13 +436,7 @@ namespace Dreamcast.Mathematics
             m23 = ray1.Direction.Z;
 
             //Determinant of the second matrix.
-            var dett =
-                m11 * m22 * m33 +
-                m12 * m23 * m31 +
-                m13 * m21 * m32 -
-                m11 * m23 * m32 -
-                m12 * m21 * m33 -
-                m13 * m22 * m31;
+            var dett = m11 * m22 * m33 + m12 * m23 * m31 + m13 * m21 * m32 - m11 * m23 * m32 - m12 * m21 * m33 - m13 * m22 * m31;
 
             //t values of the point of intersection.
             var s = dets / denominator;
@@ -470,9 +447,7 @@ namespace Dreamcast.Mathematics
             var point2 = ray2.Position + t * ray2.Direction;
 
             //If the points are not equal, no intersection has occurred.
-            if (!MathUtil.NearEqual(point2.X, point1.X) ||
-                !MathUtil.NearEqual(point2.Y, point1.Y) ||
-                !MathUtil.NearEqual(point2.Z, point1.Z))
+            if (!MathUtil.NearEqual(point2.X, point1.X) || !MathUtil.NearEqual(point2.Y, point1.Y) || !MathUtil.NearEqual(point2.Z, point1.Z))
             {
                 point = Vector3.Zero;
                 return false;
@@ -497,8 +472,7 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 175
 
-            float direction;
-            Vector3.Dot(ref plane.Normal, ref ray.Direction, out direction);
+            Vector3.Dot(ref plane.Normal, ref ray.Direction, out var direction);
 
             if (MathUtil.IsZero(direction))
             {
@@ -506,8 +480,7 @@ namespace Dreamcast.Mathematics
                 return false;
             }
 
-            float position;
-            Vector3.Dot(ref plane.Normal, ref ray.Position, out position);
+            Vector3.Dot(ref plane.Normal, ref ray.Position, out var position);
             distance = (-plane.D - position) / direction;
 
             if (distance < 0f)
@@ -534,8 +507,7 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 175
 
-            float distance;
-            if (!RayIntersectsPlane(ref ray, ref plane, out distance))
+            if (!RayIntersectsPlane(ref ray, ref plane, out float distance))
             {
                 point = Vector3.Zero;
                 return false;
@@ -564,8 +536,7 @@ namespace Dreamcast.Mathematics
         ///     the ray, no intersection is assumed to have happened. In both cases of assumptions,
         ///     this method returns false.
         /// </remarks>
-        public static bool RayIntersectsTriangle(ref Ray ray, ref Vector3 vertex1, ref Vector3 vertex2,
-            ref Vector3 vertex3, out float distance)
+        public static bool RayIntersectsTriangle(ref Ray ray, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3, out float distance)
         {
             //Source: Fast Minimum Storage Ray / Triangle Intersection
             //Reference: http://www.cs.virginia.edu/~gfx/Courses/2003/ImageSynthesis/papers/Acceleration/Fast%20MinimumStorage%20RayTriangle%20Intersection.pdf
@@ -592,8 +563,7 @@ namespace Dreamcast.Mathematics
             //Compute the determinant.
             float determinant;
             //Dot product of edge1 and the first part of determinant.
-            determinant = edge1.X * directioncrossedge2.X + edge1.Y * directioncrossedge2.Y +
-                          edge1.Z * directioncrossedge2.Z;
+            determinant = edge1.X * directioncrossedge2.X + edge1.Y * directioncrossedge2.Y + edge1.Z * directioncrossedge2.Z;
 
             //If the ray is parallel to the triangle plane, there is no collision.
             //This also means that we are not culling, the ray may hit both the
@@ -613,8 +583,7 @@ namespace Dreamcast.Mathematics
             distanceVector.Z = ray.Position.Z - vertex1.Z;
 
             float triangleU;
-            triangleU = distanceVector.X * directioncrossedge2.X + distanceVector.Y * directioncrossedge2.Y +
-                        distanceVector.Z * directioncrossedge2.Z;
+            triangleU = distanceVector.X * directioncrossedge2.X + distanceVector.Y * directioncrossedge2.Y + distanceVector.Z * directioncrossedge2.Z;
             triangleU *= inversedeterminant;
 
             //Make sure it is inside the triangle.
@@ -631,8 +600,7 @@ namespace Dreamcast.Mathematics
             distancecrossedge1.Z = distanceVector.X * edge1.Y - distanceVector.Y * edge1.X;
 
             float triangleV;
-            triangleV = ray.Direction.X * distancecrossedge1.X + ray.Direction.Y * distancecrossedge1.Y +
-                        ray.Direction.Z * distancecrossedge1.Z;
+            triangleV = ray.Direction.X * distancecrossedge1.X + ray.Direction.Y * distancecrossedge1.Y + ray.Direction.Z * distancecrossedge1.Z;
             triangleV *= inversedeterminant;
 
             //Make sure it is inside the triangle.
@@ -644,8 +612,7 @@ namespace Dreamcast.Mathematics
 
             //Compute the distance along the ray to the triangle.
             float raydistance;
-            raydistance = edge2.X * distancecrossedge1.X + edge2.Y * distancecrossedge1.Y +
-                          edge2.Z * distancecrossedge1.Z;
+            raydistance = edge2.X * distancecrossedge1.X + edge2.Y * distancecrossedge1.Y + edge2.Z * distancecrossedge1.Z;
             raydistance *= inversedeterminant;
 
             //Is the triangle behind the ray origin?
@@ -671,11 +638,9 @@ namespace Dreamcast.Mathematics
         ///     or <see cref="Vector3.Zero" /> if there was no intersection.
         /// </param>
         /// <returns>Whether the two objects intersected.</returns>
-        public static bool RayIntersectsTriangle(ref Ray ray, ref Vector3 vertex1, ref Vector3 vertex2,
-            ref Vector3 vertex3, out Vector3 point)
+        public static bool RayIntersectsTriangle(ref Ray ray, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3, out Vector3 point)
         {
-            float distance;
-            if (!RayIntersectsTriangle(ref ray, ref vertex1, ref vertex2, ref vertex3, out distance))
+            if (!RayIntersectsTriangle(ref ray, ref vertex1, ref vertex2, ref vertex3, out float distance))
             {
                 point = Vector3.Zero;
                 return false;
@@ -811,8 +776,7 @@ namespace Dreamcast.Mathematics
         /// <returns>Whether the two objects intersected.</returns>
         public static bool RayIntersectsBox(ref Ray ray, ref BoundingBox box, out Vector3 point)
         {
-            float distance;
-            if (!RayIntersectsBox(ref ray, ref box, out distance))
+            if (!RayIntersectsBox(ref ray, ref box, out float distance))
             {
                 point = Vector3.Zero;
                 return false;
@@ -837,8 +801,7 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 177
 
-            Vector3 m;
-            Vector3.Subtract(ref ray.Position, ref sphere.Center, out m);
+            Vector3.Subtract(ref ray.Position, ref sphere.Center, out var m);
 
             var b = Vector3.Dot(m, ray.Direction);
             var c = Vector3.Dot(m, m) - sphere.Radius * sphere.Radius;
@@ -877,8 +840,7 @@ namespace Dreamcast.Mathematics
         /// <returns>Whether the two objects intersected.</returns>
         public static bool RayIntersectsSphere(ref Ray ray, ref BoundingSphere sphere, out Vector3 point)
         {
-            float distance;
-            if (!RayIntersectsSphere(ref ray, ref sphere, out distance))
+            if (!RayIntersectsSphere(ref ray, ref sphere, out float distance))
             {
                 point = Vector3.Zero;
                 return false;
@@ -896,8 +858,7 @@ namespace Dreamcast.Mathematics
         /// <returns>Whether the two objects intersected.</returns>
         public static PlaneIntersectionType PlaneIntersectsPoint(ref Plane plane, ref Vector3 point)
         {
-            float distance;
-            Vector3.Dot(ref plane.Normal, ref point, out distance);
+            Vector3.Dot(ref plane.Normal, ref point, out var distance);
             distance += plane.D;
 
             if (distance > 0f)
@@ -917,13 +878,11 @@ namespace Dreamcast.Mathematics
         /// <returns>Whether the two objects intersected.</returns>
         public static bool PlaneIntersectsPlane(ref Plane plane1, ref Plane plane2)
         {
-            Vector3 direction;
-            Vector3.Cross(ref plane1.Normal, ref plane2.Normal, out direction);
+            Vector3.Cross(ref plane1.Normal, ref plane2.Normal, out var direction);
 
             //If direction is the zero vector, the planes are parallel and possibly
             //coincident. It is not an intersection. The dot product will tell us.
-            float denominator;
-            Vector3.Dot(ref direction, ref direction, out denominator);
+            Vector3.Dot(ref direction, ref direction, out var denominator);
 
             if (MathUtil.IsZero(denominator))
                 return false;
@@ -951,13 +910,11 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 207
 
-            Vector3 direction;
-            Vector3.Cross(ref plane1.Normal, ref plane2.Normal, out direction);
+            Vector3.Cross(ref plane1.Normal, ref plane2.Normal, out var direction);
 
             //If direction is the zero vector, the planes are parallel and possibly
             //coincident. It is not an intersection. The dot product will tell us.
-            float denominator;
-            Vector3.Dot(ref direction, ref direction, out denominator);
+            Vector3.Dot(ref direction, ref direction, out var denominator);
 
             //We assume the planes are normalized, therefore the denominator
             //only serves as a parallel and coincident check. Otherwise we need
@@ -968,9 +925,8 @@ namespace Dreamcast.Mathematics
                 return false;
             }
 
-            Vector3 point;
             var temp = plane1.D * plane2.Normal - plane2.D * plane1.Normal;
-            Vector3.Cross(ref temp, ref direction, out point);
+            Vector3.Cross(ref temp, ref direction, out var point);
 
             line.Position = point;
             line.Direction = direction;
@@ -987,8 +943,7 @@ namespace Dreamcast.Mathematics
         /// <param name="vertex2">The second vertex of the triangle to test.</param>
         /// <param name="vertex3">The third vertex of the triangle to test.</param>
         /// <returns>Whether the two objects intersected.</returns>
-        public static PlaneIntersectionType PlaneIntersectsTriangle(ref Plane plane, ref Vector3 vertex1,
-            ref Vector3 vertex2, ref Vector3 vertex3)
+        public static PlaneIntersectionType PlaneIntersectsTriangle(ref Plane plane, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
         {
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 207
@@ -997,12 +952,10 @@ namespace Dreamcast.Mathematics
             var test2 = PlaneIntersectsPoint(ref plane, ref vertex2);
             var test3 = PlaneIntersectsPoint(ref plane, ref vertex3);
 
-            if (test1 == PlaneIntersectionType.Front && test2 == PlaneIntersectionType.Front &&
-                test3 == PlaneIntersectionType.Front)
+            if (test1 == PlaneIntersectionType.Front && test2 == PlaneIntersectionType.Front && test3 == PlaneIntersectionType.Front)
                 return PlaneIntersectionType.Front;
 
-            if (test1 == PlaneIntersectionType.Back && test2 == PlaneIntersectionType.Back &&
-                test3 == PlaneIntersectionType.Back)
+            if (test1 == PlaneIntersectionType.Back && test2 == PlaneIntersectionType.Back && test3 == PlaneIntersectionType.Back)
                 return PlaneIntersectionType.Back;
 
             return PlaneIntersectionType.Intersecting;
@@ -1029,8 +982,7 @@ namespace Dreamcast.Mathematics
             min.Y = plane.Normal.Y >= 0.0f ? box.Maximum.Y : box.Minimum.Y;
             min.Z = plane.Normal.Z >= 0.0f ? box.Maximum.Z : box.Minimum.Z;
 
-            float distance;
-            Vector3.Dot(ref plane.Normal, ref max, out distance);
+            Vector3.Dot(ref plane.Normal, ref max, out var distance);
 
             if (distance + plane.D > 0.0f)
                 return PlaneIntersectionType.Front;
@@ -1054,8 +1006,7 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 160
 
-            float distance;
-            Vector3.Dot(ref plane.Normal, ref sphere.Center, out distance);
+            Vector3.Dot(ref plane.Normal, ref sphere.Center, out var distance);
             distance += plane.D;
 
             if (distance > sphere.Radius)
@@ -1120,8 +1071,7 @@ namespace Dreamcast.Mathematics
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 166
 
-            Vector3 vector;
-            Vector3.Clamp(ref sphere.Center, ref box.Minimum, ref box.Maximum, out vector);
+            Vector3.Clamp(ref sphere.Center, ref box.Minimum, ref box.Maximum, out var vector);
             var distance = Vector3.DistanceSquared(sphere.Center, vector);
 
             return distance <= sphere.Radius * sphere.Radius;
@@ -1135,18 +1085,15 @@ namespace Dreamcast.Mathematics
         /// <param name="vertex2">The second vertex of the triangle to test.</param>
         /// <param name="vertex3">The third vertex of the triangle to test.</param>
         /// <returns>Whether the two objects intersected.</returns>
-        public static bool SphereIntersectsTriangle(ref BoundingSphere sphere, ref Vector3 vertex1, ref Vector3 vertex2,
-            ref Vector3 vertex3)
+        public static bool SphereIntersectsTriangle(ref BoundingSphere sphere, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
         {
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 167
 
-            Vector3 point;
-            ClosestPointPointTriangle(ref sphere.Center, ref vertex1, ref vertex2, ref vertex3, out point);
+            ClosestPointPointTriangle(ref sphere.Center, ref vertex1, ref vertex2, ref vertex3, out var point);
             var v = point - sphere.Center;
 
-            float dot;
-            Vector3.Dot(ref v, ref v, out dot);
+            Vector3.Dot(ref v, ref v, out var dot);
 
             return dot <= sphere.Radius * sphere.Radius;
         }
@@ -1172,9 +1119,8 @@ namespace Dreamcast.Mathematics
         /// <returns>The type of containment the two objects have.</returns>
         public static ContainmentType BoxContainsPoint(ref BoundingBox box, ref Vector3 point)
         {
-            if (box.Minimum.X <= point.X && box.Maximum.X >= point.X &&
-                box.Minimum.Y <= point.Y && box.Maximum.Y >= point.Y &&
-                box.Minimum.Z <= point.Z && box.Maximum.Z >= point.Z)
+            if (box.Minimum.X <= point.X && box.Maximum.X >= point.X && box.Minimum.Y <= point.Y && box.Maximum.Y >= point.Y && box.Minimum.Z <= point.Z &&
+                box.Maximum.Z >= point.Z)
                 return ContainmentType.Contains;
 
             return ContainmentType.Disjoint;
@@ -1219,8 +1165,7 @@ namespace Dreamcast.Mathematics
             if (box1.Maximum.Z < box2.Minimum.Z || box1.Minimum.Z > box2.Maximum.Z)
                 return ContainmentType.Disjoint;
 
-            if (box1.Minimum.X <= box2.Minimum.X && box2.Maximum.X <= box1.Maximum.X &&
-                box1.Minimum.Y <= box2.Minimum.Y && box2.Maximum.Y <= box1.Maximum.Y &&
+            if (box1.Minimum.X <= box2.Minimum.X && box2.Maximum.X <= box1.Maximum.X && box1.Minimum.Y <= box2.Minimum.Y && box2.Maximum.Y <= box1.Maximum.Y &&
                 box1.Minimum.Z <= box2.Minimum.Z && box2.Maximum.Z <= box1.Maximum.Z) return ContainmentType.Contains;
 
             return ContainmentType.Intersects;
@@ -1234,8 +1179,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The type of containment the two objects have.</returns>
         public static ContainmentType BoxContainsSphere(ref BoundingBox box, ref BoundingSphere sphere)
         {
-            Vector3 vector;
-            Vector3.Clamp(ref sphere.Center, ref box.Minimum, ref box.Maximum, out vector);
+            Vector3.Clamp(ref sphere.Center, ref box.Minimum, ref box.Maximum, out var vector);
             var distance = Vector3.DistanceSquared(sphere.Center, vector);
 
             if (distance > sphere.Radius * sphere.Radius)
@@ -1272,8 +1216,7 @@ namespace Dreamcast.Mathematics
         /// <param name="vertex2">The second vertex of the triangle to test.</param>
         /// <param name="vertex3">The third vertex of the triangle to test.</param>
         /// <returns>The type of containment the two objects have.</returns>
-        public static ContainmentType SphereContainsTriangle(ref BoundingSphere sphere, ref Vector3 vertex1,
-            ref Vector3 vertex2, ref Vector3 vertex3)
+        public static ContainmentType SphereContainsTriangle(ref BoundingSphere sphere, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
         {
             //Source: Jorgy343
             //Reference: None
@@ -1282,8 +1225,7 @@ namespace Dreamcast.Mathematics
             var test2 = SphereContainsPoint(ref sphere, ref vertex2);
             var test3 = SphereContainsPoint(ref sphere, ref vertex3);
 
-            if (test1 == ContainmentType.Contains && test2 == ContainmentType.Contains &&
-                test3 == ContainmentType.Contains)
+            if (test1 == ContainmentType.Contains && test2 == ContainmentType.Contains && test3 == ContainmentType.Contains)
                 return ContainmentType.Contains;
 
             if (SphereIntersectsTriangle(ref sphere, ref vertex1, ref vertex2, ref vertex3))

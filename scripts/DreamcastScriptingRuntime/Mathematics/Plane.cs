@@ -124,8 +124,7 @@ namespace Dreamcast.Mathematics
             if (values == null)
                 throw new ArgumentNullException("values");
             if (values.Length != 4)
-                throw new ArgumentOutOfRangeException("values",
-                    "There must be four and only four input values for Plane.");
+                throw new ArgumentOutOfRangeException("values", "There must be four and only four input values for Plane.");
 
             Normal.X = values[0];
             Normal.Y = values[1];
@@ -222,8 +221,7 @@ namespace Dreamcast.Mathematics
         /// <returns>Whether the two objects intersected.</returns>
         public bool Intersects(ref Ray ray)
         {
-            float distance;
-            return Collision.RayIntersectsPlane(ref ray, ref this, out distance);
+            return Collision.RayIntersectsPlane(ref ray, ref this, out float distance);
         }
 
         /// <summary>
@@ -313,7 +311,6 @@ namespace Dreamcast.Mathematics
         /// <summary>
         ///     Builds a matrix that can be used to reflect vectors about a plane.
         /// </summary>
-        /// <param name="plane">The plane for which the reflection occurs. This parameter is assumed to be normalized.</param>
         /// <param name="result">When the method completes, contains the reflection matrix.</param>
         public void Reflection(out Matrix4x4 result)
         {
@@ -348,8 +345,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The reflection matrix.</returns>
         public Matrix4x4 Reflection()
         {
-            Matrix4x4 result;
-            Reflection(out result);
+            Reflection(out Matrix4x4 result);
             return result;
         }
 
@@ -401,8 +397,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The shadow matrix.</returns>
         public Matrix4x4 Shadow(Vector4 light)
         {
-            Matrix4x4 result;
-            Shadow(ref light, out result);
+            Shadow(ref light, out var result);
             return result;
         }
 
@@ -438,8 +433,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The reflection Matrix3x3.</returns>
         public Matrix3x3 Reflection3x3()
         {
-            Matrix3x3 result;
-            Reflection(out result);
+            Reflection(out Matrix3x3 result);
             return result;
         }
 
@@ -457,8 +451,7 @@ namespace Dreamcast.Mathematics
         /// <param name="result">When the method completes, contains the shadow Matrix3x3.</param>
         public static void Shadow(ref Vector4 light, ref Plane plane, out Matrix3x3 result)
         {
-            var dot = plane.Normal.X * light.X + plane.Normal.Y * light.Y + plane.Normal.Z * light.Z +
-                      plane.D * light.W;
+            var dot = plane.Normal.X * light.X + plane.Normal.Y * light.Y + plane.Normal.Z * light.Z + plane.D * light.W;
             var x = -plane.Normal.X;
             var y = -plane.Normal.Y;
             var z = -plane.Normal.Z;
@@ -489,8 +482,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The shadow Matrix3x3.</returns>
         public static Matrix3x3 Shadow(Vector4 light, Plane plane)
         {
-            Matrix3x3 result;
-            Shadow(ref light, ref plane, out result);
+            Shadow(ref light, ref plane, out var result);
             return result;
         }
 
@@ -599,8 +591,7 @@ namespace Dreamcast.Mathematics
         /// <param name="result">When the method completes, contains the normalized plane.</param>
         public static void Normalize(ref Plane plane, out Plane result)
         {
-            var magnitude = 1.0f / (float) Math.Sqrt(plane.Normal.X * plane.Normal.X + plane.Normal.Y * plane.Normal.Y +
-                                                     plane.Normal.Z * plane.Normal.Z);
+            var magnitude = 1.0f / (float) Math.Sqrt(plane.Normal.X * plane.Normal.X + plane.Normal.Y * plane.Normal.Y + plane.Normal.Z * plane.Normal.Z);
 
             result.Normal.X = plane.Normal.X * magnitude;
             result.Normal.Y = plane.Normal.Y * magnitude;
@@ -615,10 +606,8 @@ namespace Dreamcast.Mathematics
         /// <returns>The normalized plane.</returns>
         public static Plane Normalize(Plane plane)
         {
-            var magnitude = 1.0f / (float) Math.Sqrt(plane.Normal.X * plane.Normal.X + plane.Normal.Y * plane.Normal.Y +
-                                                     plane.Normal.Z * plane.Normal.Z);
-            return new Plane(plane.Normal.X * magnitude, plane.Normal.Y * magnitude, plane.Normal.Z * magnitude,
-                plane.D * magnitude);
+            var magnitude = 1.0f / (float) Math.Sqrt(plane.Normal.X * plane.Normal.X + plane.Normal.Y * plane.Normal.Y + plane.Normal.Z * plane.Normal.Z);
+            return new Plane(plane.Normal.X * magnitude, plane.Normal.Y * magnitude, plane.Normal.Z * magnitude, plane.D * magnitude);
         }
 
         /// <summary>
@@ -739,8 +728,7 @@ namespace Dreamcast.Mathematics
             var z = plane.Normal.Z;
             var d = plane.D;
 
-            Matrix4x4 inverse;
-            Matrix4x4.Invert(ref transformation, out inverse);
+            Matrix4x4.Invert(ref transformation, out var inverse);
 
             result.Normal.X = x * inverse.M11 + y * inverse.M12 + z * inverse.M13 + d * inverse.M14;
             result.Normal.Y = x * inverse.M21 + y * inverse.M22 + z * inverse.M23 + d * inverse.M24;
@@ -763,14 +751,10 @@ namespace Dreamcast.Mathematics
             var d = plane.D;
 
             transformation.Invert();
-            result.Normal.X = x * transformation.M11 + y * transformation.M12 + z * transformation.M13 +
-                              d * transformation.M14;
-            result.Normal.Y = x * transformation.M21 + y * transformation.M22 + z * transformation.M23 +
-                              d * transformation.M24;
-            result.Normal.Z = x * transformation.M31 + y * transformation.M32 + z * transformation.M33 +
-                              d * transformation.M34;
-            result.D = x * transformation.M41 + y * transformation.M42 + z * transformation.M43 +
-                       d * transformation.M44;
+            result.Normal.X = x * transformation.M11 + y * transformation.M12 + z * transformation.M13 + d * transformation.M14;
+            result.Normal.Y = x * transformation.M21 + y * transformation.M22 + z * transformation.M23 + d * transformation.M24;
+            result.Normal.Z = x * transformation.M31 + y * transformation.M32 + z * transformation.M33 + d * transformation.M34;
+            result.D = x * transformation.M41 + y * transformation.M42 + z * transformation.M43 + d * transformation.M44;
 
             return result;
         }
@@ -786,8 +770,7 @@ namespace Dreamcast.Mathematics
             if (planes == null)
                 throw new ArgumentNullException("planes");
 
-            Matrix4x4 inverse;
-            Matrix4x4.Invert(ref transformation, out inverse);
+            Matrix4x4.Invert(ref transformation, out var inverse);
 
             for (var i = 0; i < planes.Length; ++i) Transform(ref planes[i], ref transformation, out planes[i]);
         }
@@ -823,7 +806,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(Plane left, Plane right)
         {
             return left.Equals(ref right);
@@ -838,7 +821,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has a different value than <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(Plane left, Plane right)
         {
             return !left.Equals(ref right);
@@ -852,8 +835,7 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.CurrentCulture, "A:{0} B:{1} C:{2} D:{3}", Normal.X, Normal.Y, Normal.Z,
-                D);
+            return string.Format(CultureInfo.CurrentCulture, "A:{0} B:{1} C:{2} D:{3}", Normal.X, Normal.Y, Normal.Z, D);
         }
 
         /// <summary>
@@ -865,10 +847,9 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public string ToString(string format)
         {
-            return string.Format(CultureInfo.CurrentCulture, "A:{0} B:{1} C:{2} D:{3}",
-                Normal.X.ToString(format, CultureInfo.CurrentCulture),
-                Normal.Y.ToString(format, CultureInfo.CurrentCulture),
-                Normal.Z.ToString(format, CultureInfo.CurrentCulture), D.ToString(format, CultureInfo.CurrentCulture));
+            return string.Format(CultureInfo.CurrentCulture, "A:{0} B:{1} C:{2} D:{3}", Normal.X.ToString(format, CultureInfo.CurrentCulture),
+                Normal.Y.ToString(format, CultureInfo.CurrentCulture), Normal.Z.ToString(format, CultureInfo.CurrentCulture),
+                D.ToString(format, CultureInfo.CurrentCulture));
         }
 
         /// <summary>
@@ -894,8 +875,7 @@ namespace Dreamcast.Mathematics
         public string ToString(string format, IFormatProvider formatProvider)
         {
             return string.Format(formatProvider, "A:{0} B:{1} C:{2} D:{3}", Normal.X.ToString(format, formatProvider),
-                Normal.Y.ToString(format, formatProvider), Normal.Z.ToString(format, formatProvider),
-                D.ToString(format, formatProvider));
+                Normal.Y.ToString(format, formatProvider), Normal.Z.ToString(format, formatProvider), D.ToString(format, formatProvider));
         }
 
         /// <summary>
@@ -919,7 +899,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Vector4" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ref Plane value)
         {
             return Normal == value.Normal && D == value.D;
@@ -932,7 +912,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Vector4" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(Plane value)
         {
             return Equals(ref value);

@@ -16,7 +16,11 @@
 #pragma once
 
 #include "../../include/dce/core/kernel.hpp"
-#include "mono_headers.hpp"
+
+#include "assembly.hpp"
+#include "environment.hpp"
+#include "static_class.hpp"
+#include "static_method.hpp"
 
 namespace dce::scripting {
 	class Scripting final : public core::ISubsystem {
@@ -41,13 +45,33 @@ namespace dce::scripting {
 		virtual auto on_pre_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
 		virtual auto on_post_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
 
-		MonoDomain* domain_ = nullptr;
-		MonoAssembly* engine_runtime_ = nullptr;
-		MonoImage* engine_image_ = nullptr;
-		MonoClass* engine_class_ = nullptr;
+		void setup_hooks();
 
-		MonoMethod* engine_on_start_ = nullptr;
-		MonoMethod* engine_on_update_ = nullptr;
-		MonoMethod* engine_on_exit_ = nullptr;
+		RuntimeEnvironment runtime_environment_ = {};
+		Assembly core_assembly_ = {};
+
+		/// <summary>
+		/// Core class.
+		/// </summary>
+		struct {
+			StaticClass klass = {};
+
+			StaticMethod on_pre_startup = {};
+			StaticMethod on_post_startup = {};
+
+			StaticMethod on_pre_tick = {};
+			StaticMethod on_post_tick = {};
+
+			StaticMethod on_pre_shutdown = {};
+			StaticMethod on_post_shutdown = {};
+		} core_;
+
+		/// <summary>
+		/// Command database class.
+		/// </summary>
+		struct {
+			StaticClass klass = {};
+			StaticMethod on_command_enter = {}; // Called when command is enter to terminal.
+		} command_db_;
 	};
 }

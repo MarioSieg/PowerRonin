@@ -260,8 +260,7 @@ namespace Dreamcast.Mathematics
         /// <param name="value">The rectangle to evaluate.</param>
         public bool Contains(Rectangle value)
         {
-            bool result;
-            Contains(ref value, out result);
+            Contains(ref value, out var result);
             return result;
         }
 
@@ -301,8 +300,7 @@ namespace Dreamcast.Mathematics
         /// <param name="value">The rectangle to evaluate.</param>
         public bool Intersects(Rectangle value)
         {
-            bool result;
-            Intersects(ref value, out result);
+            Intersects(ref value, out var result);
             return result;
         }
 
@@ -324,8 +322,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The intersection rectangle.</returns>
         public static Rectangle Intersect(Rectangle value1, Rectangle value2)
         {
-            Rectangle result;
-            Intersect(ref value1, ref value2, out result);
+            Intersect(ref value1, ref value2, out var result);
             return result;
         }
 
@@ -353,8 +350,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The union rectangle.</returns>
         public static Rectangle Union(Rectangle value1, Rectangle value2)
         {
-            Rectangle result;
-            Union(ref value1, ref value2, out result);
+            Union(ref value1, ref value2, out var result);
             return result;
         }
 
@@ -396,7 +392,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Rectangle" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ref Rectangle other)
         {
             return other.Left == Left && other.Top == Top && other.Right == Right && other.Bottom == Bottom;
@@ -409,7 +405,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Rectangle" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(Rectangle other)
         {
             return Equals(ref other);
@@ -439,7 +435,7 @@ namespace Dreamcast.Mathematics
         /// <param name="left">The left.</param>
         /// <param name="right">The right.</param>
         /// <returns>The result of the operator.</returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(Rectangle left, Rectangle right)
         {
             return left.Equals(ref right);
@@ -451,7 +447,7 @@ namespace Dreamcast.Mathematics
         /// <param name="left">The left.</param>
         /// <param name="right">The right.</param>
         /// <returns>The result of the operator.</returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(Rectangle left, Rectangle right)
         {
             return !left.Equals(ref right);
@@ -468,6 +464,9 @@ namespace Dreamcast.Mathematics
         //    return new RectangleF(value.X, value.Y, value.Width, value.Height);
         //}
 
+        /// <summary>
+        /// </summary>
+        /// <returns>The string.</returns>
         public override string ToString()
         {
             return string.Format(CultureInfo.InvariantCulture, "X:{0} Y:{1} Width:{2} Height:{3}", X, Y, Width, Height);
@@ -475,8 +474,8 @@ namespace Dreamcast.Mathematics
 
         internal void MakeXYAndWidthHeight()
         {
-            Right = Right - Left;
-            Bottom = Bottom - Top;
+            Right -= Left;
+            Bottom -= Top;
         }
     }
 }

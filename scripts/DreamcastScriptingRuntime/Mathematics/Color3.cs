@@ -117,8 +117,7 @@ namespace Dreamcast.Mathematics
             if (values == null)
                 throw new ArgumentNullException("values");
             if (values.Length != 3)
-                throw new ArgumentOutOfRangeException("values",
-                    "There must be three and only three input values for Color3.");
+                throw new ArgumentOutOfRangeException("values", "There must be three and only three input values for Color3.");
 
             Red = values[0];
             Green = values[1];
@@ -166,8 +165,7 @@ namespace Dreamcast.Mathematics
                         Blue = value;
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException("index",
-                            "Indices for Color3 run from 0 to 2, inclusive.");
+                        throw new ArgumentOutOfRangeException("index", "Indices for Color3 run from 0 to 2, inclusive.");
                 }
             }
         }
@@ -385,8 +383,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The clamped value.</returns>
         public static Color3 Clamp(Color3 value, Color3 min, Color3 max)
         {
-            Color3 result;
-            Clamp(ref value, ref min, ref max, out result);
+            Clamp(ref value, ref min, ref max, out var result);
             return result;
         }
 
@@ -421,8 +418,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public static Color3 Lerp(Color3 start, Color3 end, float amount)
         {
-            Color3 result;
-            Lerp(ref start, ref end, amount, out result);
+            Lerp(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -448,8 +444,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The cubic interpolation of the two colors.</returns>
         public static Color3 SmoothStep(Color3 start, Color3 end, float amount)
         {
-            Color3 result;
-            SmoothStep(ref start, ref end, amount, out result);
+            SmoothStep(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -477,8 +472,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A color containing the largest components of the source colors.</returns>
         public static Color3 Max(Color3 left, Color3 right)
         {
-            Color3 result;
-            Max(ref left, ref right, out result);
+            Max(ref left, ref right, out var result);
             return result;
         }
 
@@ -506,8 +500,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A color containing the smallest components of the source colors.</returns>
         public static Color3 Min(Color3 left, Color3 right)
         {
-            Color3 result;
-            Min(ref left, ref right, out result);
+            Min(ref left, ref right, out var result);
             return result;
         }
 
@@ -532,10 +525,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The adjusted color.</returns>
         public static Color3 AdjustContrast(Color3 value, float contrast)
         {
-            return new Color3(
-                0.5f + contrast * (value.Red - 0.5f),
-                0.5f + contrast * (value.Green - 0.5f),
-                0.5f + contrast * (value.Blue - 0.5f));
+            return new Color3(0.5f + contrast * (value.Red - 0.5f), 0.5f + contrast * (value.Green - 0.5f), 0.5f + contrast * (value.Blue - 0.5f));
         }
 
         /// <summary>
@@ -563,10 +553,7 @@ namespace Dreamcast.Mathematics
         {
             var grey = value.Red * 0.2125f + value.Green * 0.7154f + value.Blue * 0.0721f;
 
-            return new Color3(
-                grey + saturation * (value.Red - grey),
-                grey + saturation * (value.Green - grey),
-                grey + saturation * (value.Blue - grey));
+            return new Color3(grey + saturation * (value.Red - grey), grey + saturation * (value.Green - grey), grey + saturation * (value.Blue - grey));
         }
 
         /// <summary>
@@ -590,8 +577,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The premultiplied color.</returns>
         public static Color3 Premultiply(Color3 value, float alpha)
         {
-            Color3 result;
-            Premultiply(ref value, alpha, out result);
+            Premultiply(ref value, alpha, out var result);
             return result;
         }
 
@@ -679,7 +665,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(Color3 left, Color3 right)
         {
             return left.Equals(ref right);
@@ -694,7 +680,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has a different value than <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(Color3 left, Color3 right)
         {
             return !left.Equals(ref right);
@@ -788,10 +774,7 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString(formatProvider);
 
-            return string.Format(formatProvider,
-                toStringFormat,
-                Red.ToString(format, formatProvider),
-                Green.ToString(format, formatProvider),
+            return string.Format(formatProvider, toStringFormat, Red.ToString(format, formatProvider), Green.ToString(format, formatProvider),
                 Blue.ToString(format, formatProvider));
         }
 
@@ -819,7 +802,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Color3" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ref Color3 other)
         {
             return Red == other.Red && Green == other.Green && Blue == other.Blue;
@@ -832,7 +815,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Color3" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(Color3 other)
         {
             return Equals(ref other);

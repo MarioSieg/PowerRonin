@@ -159,8 +159,7 @@ namespace Dreamcast.Mathematics
             if (values == null)
                 throw new ArgumentNullException("values");
             if (values.Length != 3)
-                throw new ArgumentOutOfRangeException("values",
-                    "There must be three and only three input values for Vector3.");
+                throw new ArgumentOutOfRangeException("values", "There must be three and only three input values for Vector3.");
 
             X = values[0];
             Y = values[1];
@@ -218,8 +217,7 @@ namespace Dreamcast.Mathematics
                         Z = value;
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException("index",
-                            "Indices for Vector3 run from 0 to 2, inclusive.");
+                        throw new ArgumentOutOfRangeException("index", "Indices for Vector3 run from 0 to 2, inclusive.");
                 }
             }
         }
@@ -502,9 +500,7 @@ namespace Dreamcast.Mathematics
         /// </param>
         public static void Abs(ref Vector3 value, out Vector3 result)
         {
-            result = new Vector3(value.X > 0.0f ? value.X : -value.X,
-                value.Y > 0.0f ? value.Y : -value.Y,
-                value.Z > 0.0f ? value.Z : -value.Z);
+            result = new Vector3(value.X > 0.0f ? value.X : -value.X, value.Y > 0.0f ? value.Y : -value.Y, value.Z > 0.0f ? value.Z : -value.Z);
         }
 
         /// <summary>
@@ -514,10 +510,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector with each component being the absolute value of the input component</returns>
         public static Vector3 Abs(Vector3 value)
         {
-            return new Vector3(
-                value.X > 0.0f ? value.X : -value.X,
-                value.Y > 0.0f ? value.Y : -value.Y,
-                value.Z > 0.0f ? value.Z : -value.Z);
+            return new Vector3(value.X > 0.0f ? value.X : -value.X, value.Y > 0.0f ? value.Y : -value.Y, value.Z > 0.0f ? value.Z : -value.Z);
         }
 
         /// <summary>
@@ -536,8 +529,7 @@ namespace Dreamcast.Mathematics
         ///     <paramref name="value3" />).
         /// </param>
         /// <param name="result">When the method completes, contains the 3D Cartesian coordinates of the specified point.</param>
-        public static void Barycentric(ref Vector3 value1, ref Vector3 value2, ref Vector3 value3, float amount1,
-            float amount2, out Vector3 result)
+        public static void Barycentric(ref Vector3 value1, ref Vector3 value2, ref Vector3 value3, float amount1, float amount2, out Vector3 result)
         {
             result = new Vector3(value1.X + amount1 * (value2.X - value1.X) + amount2 * (value3.X - value1.X),
                 value1.Y + amount1 * (value2.Y - value1.Y) + amount2 * (value3.Y - value1.Y),
@@ -562,8 +554,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A new <see cref="Vector3" /> containing the 3D Cartesian coordinates of the specified point.</returns>
         public static Vector3 Barycentric(Vector3 value1, Vector3 value2, Vector3 value3, float amount1, float amount2)
         {
-            Vector3 result;
-            Barycentric(ref value1, ref value2, ref value3, amount1, amount2, out result);
+            Barycentric(ref value1, ref value2, ref value3, amount1, amount2, out var result);
             return result;
         }
 
@@ -600,8 +591,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The clamped value.</returns>
         public static Vector3 Clamp(Vector3 value, Vector3 min, Vector3 max)
         {
-            Vector3 result;
-            Clamp(ref value, ref min, ref max, out result);
+            Clamp(ref value, ref min, ref max, out var result);
             return result;
         }
 
@@ -613,10 +603,7 @@ namespace Dreamcast.Mathematics
         /// <param name="result">When the method completes, contains he cross product of the two vectors.</param>
         public static void Cross(ref Vector3 left, ref Vector3 right, out Vector3 result)
         {
-            result = new Vector3(
-                left.Y * right.Z - left.Z * right.Y,
-                left.Z * right.X - left.X * right.Z,
-                left.X * right.Y - left.Y * right.X);
+            result = new Vector3(left.Y * right.Z - left.Z * right.Y, left.Z * right.X - left.X * right.Z, left.X * right.Y - left.Y * right.X);
         }
 
         /// <summary>
@@ -627,8 +614,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The cross product of the two vectors.</returns>
         public static Vector3 Cross(Vector3 left, Vector3 right)
         {
-            Vector3 result;
-            Cross(ref left, ref right, out result);
+            Cross(ref left, ref right, out var result);
             return result;
         }
 
@@ -738,8 +724,7 @@ namespace Dreamcast.Mathematics
         /// <returns><c>true</c> if left and right are near another 3D, <c>false</c> otherwise</returns>
         public static bool NearEqual(ref Vector3 left, ref Vector3 right, ref Vector3 epsilon)
         {
-            return MathUtil.WithinEpsilon(left.X, right.X, epsilon.X) &&
-                   MathUtil.WithinEpsilon(left.Y, right.Y, epsilon.Y) &&
+            return MathUtil.WithinEpsilon(left.X, right.X, epsilon.X) && MathUtil.WithinEpsilon(left.Y, right.Y, epsilon.Y) &&
                    MathUtil.WithinEpsilon(left.Z, right.Z, epsilon.Z);
         }
 
@@ -818,8 +803,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public static Vector3 Lerp(Vector3 start, Vector3 end, float amount)
         {
-            Vector3 result;
-            Lerp(ref start, ref end, amount, out result);
+            Lerp(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -845,8 +829,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The cubic interpolation of the two vectors.</returns>
         public static Vector3 SmoothStep(Vector3 start, Vector3 end, float amount)
         {
-            Vector3 result;
-            SmoothStep(ref start, ref end, amount, out result);
+            SmoothStep(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -859,8 +842,7 @@ namespace Dreamcast.Mathematics
         /// <param name="tangent2">Second source tangent vector.</param>
         /// <param name="amount">Weighting factor.</param>
         /// <param name="result">When the method completes, contains the result of the Hermite spline interpolation.</param>
-        public static void Hermite(ref Vector3 value1, ref Vector3 tangent1, ref Vector3 value2, ref Vector3 tangent2,
-            float amount, out Vector3 result)
+        public static void Hermite(ref Vector3 value1, ref Vector3 tangent1, ref Vector3 value2, ref Vector3 tangent2, float amount, out Vector3 result)
         {
             var squared = amount * amount;
             var cubed = amount * squared;
@@ -885,8 +867,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the Hermite spline interpolation.</returns>
         public static Vector3 Hermite(Vector3 value1, Vector3 tangent1, Vector3 value2, Vector3 tangent2, float amount)
         {
-            Vector3 result;
-            Hermite(ref value1, ref tangent1, ref value2, ref tangent2, amount, out result);
+            Hermite(ref value1, ref tangent1, ref value2, ref tangent2, amount, out var result);
             return result;
         }
 
@@ -899,22 +880,18 @@ namespace Dreamcast.Mathematics
         /// <param name="value4">The fourth position in the interpolation.</param>
         /// <param name="amount">Weighting factor.</param>
         /// <param name="result">When the method completes, contains the result of the Catmull-Rom interpolation.</param>
-        public static void CatmullRom(ref Vector3 value1, ref Vector3 value2, ref Vector3 value3, ref Vector3 value4,
-            float amount, out Vector3 result)
+        public static void CatmullRom(ref Vector3 value1, ref Vector3 value2, ref Vector3 value3, ref Vector3 value4, float amount, out Vector3 result)
         {
             var squared = amount * amount;
             var cubed = amount * squared;
 
-            result.X = 0.5f * (2.0f * value2.X + (-value1.X + value3.X) * amount +
-                               (2.0f * value1.X - 5.0f * value2.X + 4.0f * value3.X - value4.X) * squared +
+            result.X = 0.5f * (2.0f * value2.X + (-value1.X + value3.X) * amount + (2.0f * value1.X - 5.0f * value2.X + 4.0f * value3.X - value4.X) * squared +
                                (-value1.X + 3.0f * value2.X - 3.0f * value3.X + value4.X) * cubed);
 
-            result.Y = 0.5f * (2.0f * value2.Y + (-value1.Y + value3.Y) * amount +
-                               (2.0f * value1.Y - 5.0f * value2.Y + 4.0f * value3.Y - value4.Y) * squared +
+            result.Y = 0.5f * (2.0f * value2.Y + (-value1.Y + value3.Y) * amount + (2.0f * value1.Y - 5.0f * value2.Y + 4.0f * value3.Y - value4.Y) * squared +
                                (-value1.Y + 3.0f * value2.Y - 3.0f * value3.Y + value4.Y) * cubed);
 
-            result.Z = 0.5f * (2.0f * value2.Z + (-value1.Z + value3.Z) * amount +
-                               (2.0f * value1.Z - 5.0f * value2.Z + 4.0f * value3.Z - value4.Z) * squared +
+            result.Z = 0.5f * (2.0f * value2.Z + (-value1.Z + value3.Z) * amount + (2.0f * value1.Z - 5.0f * value2.Z + 4.0f * value3.Z - value4.Z) * squared +
                                (-value1.Z + 3.0f * value2.Z - 3.0f * value3.Z + value4.Z) * cubed);
         }
 
@@ -929,8 +906,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector that is the result of the Catmull-Rom interpolation.</returns>
         public static Vector3 CatmullRom(Vector3 value1, Vector3 value2, Vector3 value3, Vector3 value4, float amount)
         {
-            Vector3 result;
-            CatmullRom(ref value1, ref value2, ref value3, ref value4, amount, out result);
+            CatmullRom(ref value1, ref value2, ref value3, ref value4, amount, out var result);
             return result;
         }
 
@@ -958,8 +934,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector containing the largest components of the source vectors.</returns>
         public static Vector3 Max(Vector3 left, Vector3 right)
         {
-            Vector3 result;
-            Max(ref left, ref right, out result);
+            Max(ref left, ref right, out var result);
             return result;
         }
 
@@ -987,8 +962,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector containing the smallest components of the source vectors.</returns>
         public static Vector3 Min(Vector3 left, Vector3 right)
         {
-            Vector3 result;
-            Min(ref left, ref right, out result);
+            Min(ref left, ref right, out var result);
             return result;
         }
 
@@ -1004,14 +978,13 @@ namespace Dreamcast.Mathematics
         /// <param name="maxZ">The maximum depth of the viewport.</param>
         /// <param name="worldViewProjection">The combined world-view-projection matrix.</param>
         /// <param name="result">When the method completes, contains the vector in screen space.</param>
-        public static void Project(ref Vector3 vector, float x, float y, float width, float height, float minZ,
-            float maxZ, ref Matrix4x4 worldViewProjection, out Vector3 result)
+        public static void Project(ref Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, ref Matrix4x4 worldViewProjection,
+            out Vector3 result)
         {
             var v = new Vector3();
             TransformCoordinate(ref vector, ref worldViewProjection, out v);
 
-            result = new Vector3((1.0f + v.X) * 0.5f * width + x, (1.0f - v.Y) * 0.5f * height + y,
-                v.Z * (maxZ - minZ) + minZ);
+            result = new Vector3((1.0f + v.X) * 0.5f * width + x, (1.0f - v.Y) * 0.5f * height + y, v.Z * (maxZ - minZ) + minZ);
         }
 
         /// <summary>
@@ -1026,11 +999,9 @@ namespace Dreamcast.Mathematics
         /// <param name="maxZ">The maximum depth of the viewport.</param>
         /// <param name="worldViewProjection">The combined world-view-projection matrix.</param>
         /// <returns>The vector in screen space.</returns>
-        public static Vector3 Project(Vector3 vector, float x, float y, float width, float height, float minZ,
-            float maxZ, Matrix4x4 worldViewProjection)
+        public static Vector3 Project(Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix4x4 worldViewProjection)
         {
-            Vector3 result;
-            Project(ref vector, x, y, width, height, minZ, maxZ, ref worldViewProjection, out result);
+            Project(ref vector, x, y, width, height, minZ, maxZ, ref worldViewProjection, out var result);
             return result;
         }
 
@@ -1046,8 +1017,8 @@ namespace Dreamcast.Mathematics
         /// <param name="maxZ">The maximum depth of the viewport.</param>
         /// <param name="worldViewProjection">The combined world-view-projection matrix.</param>
         /// <param name="result">When the method completes, contains the vector in object space.</param>
-        public static void Unproject(ref Vector3 vector, float x, float y, float width, float height, float minZ,
-            float maxZ, ref Matrix4x4 worldViewProjection, out Vector3 result)
+        public static void Unproject(ref Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, ref Matrix4x4 worldViewProjection,
+            out Vector3 result)
         {
             var v = new Vector3();
             var matrix = new Matrix4x4();
@@ -1072,11 +1043,9 @@ namespace Dreamcast.Mathematics
         /// <param name="maxZ">The maximum depth of the viewport.</param>
         /// <param name="worldViewProjection">The combined world-view-projection matrix.</param>
         /// <returns>The vector in object space.</returns>
-        public static Vector3 Unproject(Vector3 vector, float x, float y, float width, float height, float minZ,
-            float maxZ, Matrix4x4 worldViewProjection)
+        public static Vector3 Unproject(Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix4x4 worldViewProjection)
         {
-            Vector3 result;
-            Unproject(ref vector, x, y, width, height, minZ, maxZ, ref worldViewProjection, out result);
+            Unproject(ref vector, x, y, width, height, minZ, maxZ, ref worldViewProjection, out var result);
             return result;
         }
 
@@ -1111,8 +1080,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public static Vector3 Reflect(Vector3 vector, Vector3 normal)
         {
-            Vector3 result;
-            Reflect(ref vector, ref normal, out result);
+            Reflect(ref vector, ref normal, out var result);
             return result;
         }
 
@@ -1156,8 +1124,7 @@ namespace Dreamcast.Mathematics
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination",
-                    "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
 
             for (var i = 0; i < source.Length; ++i)
             {
@@ -1212,8 +1179,7 @@ namespace Dreamcast.Mathematics
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination",
-                    "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
 
             for (var i = 0; i < source.Length; ++i)
             {
@@ -1247,8 +1213,7 @@ namespace Dreamcast.Mathematics
             var yz = rotation.Y * z;
             var zz = rotation.Z * z;
 
-            result = new Vector3(
-                vector.X * (1.0f - yy - zz) + vector.Y * (xy - wz) + vector.Z * (xz + wy),
+            result = new Vector3(vector.X * (1.0f - yy - zz) + vector.Y * (xy - wz) + vector.Z * (xz + wy),
                 vector.X * (xy + wz) + vector.Y * (1.0f - xx - zz) + vector.Z * (yz - wx),
                 vector.X * (xz - wy) + vector.Y * (yz + wx) + vector.Z * (1.0f - xx - yy));
         }
@@ -1261,8 +1226,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The transformed <see cref="Vector4" />.</returns>
         public static Vector3 Transform(Vector3 vector, Quaternion rotation)
         {
-            Vector3 result;
-            Transform(ref vector, ref rotation, out result);
+            Transform(ref vector, ref rotation, out var result);
             return result;
         }
 
@@ -1290,8 +1254,7 @@ namespace Dreamcast.Mathematics
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination",
-                    "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
 
             var x = rotation.X + rotation.X;
             var y = rotation.Y + rotation.Y;
@@ -1317,10 +1280,8 @@ namespace Dreamcast.Mathematics
             var num9 = 1.0f - xx - yy;
 
             for (var i = 0; i < source.Length; ++i)
-                destination[i] = new Vector3(
-                    source[i].X * num1 + source[i].Y * num2 + source[i].Z * num3,
-                    source[i].X * num4 + source[i].Y * num5 + source[i].Z * num6,
-                    source[i].X * num7 + source[i].Y * num8 + source[i].Z * num9);
+                destination[i] = new Vector3(source[i].X * num1 + source[i].Y * num2 + source[i].Z * num3,
+                    source[i].X * num4 + source[i].Y * num5 + source[i].Z * num6, source[i].X * num7 + source[i].Y * num8 + source[i].Z * num9);
         }
 
 
@@ -1334,8 +1295,7 @@ namespace Dreamcast.Mathematics
         {
             result = new Vector3(vector.X * transform.M11 + vector.Y * transform.M21 + vector.Z * transform.M31,
                 vector.X * transform.M12 + vector.Y * transform.M22 + vector.Z * transform.M32,
-                vector.X * transform.M13 + vector.Y * transform.M23 + vector.Z * transform.M33
-            );
+                vector.X * transform.M13 + vector.Y * transform.M23 + vector.Z * transform.M33);
         }
 
         /// <summary>
@@ -1346,8 +1306,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The transformed <see cref="Vector3" />.</returns>
         public static Vector3 Transform(Vector3 vector, Matrix3x3 transform)
         {
-            Vector3 result;
-            Transform(ref vector, ref transform, out result);
+            Transform(ref vector, ref transform, out var result);
             return result;
         }
 
@@ -1359,8 +1318,7 @@ namespace Dreamcast.Mathematics
         /// <param name="result">When the method completes, contains the transformed <see cref="Vector3" />.</param>
         public static void Transform(ref Vector3 vector, ref Matrix4x4 transform, out Vector3 result)
         {
-            Vector4 intermediate;
-            Transform(ref vector, ref transform, out intermediate);
+            Transform(ref vector, ref transform, out Vector4 intermediate);
             result = (Vector3) intermediate;
         }
 
@@ -1372,8 +1330,7 @@ namespace Dreamcast.Mathematics
         /// <param name="result">When the method completes, contains the transformed <see cref="Vector4" />.</param>
         public static void Transform(ref Vector3 vector, ref Matrix4x4 transform, out Vector4 result)
         {
-            result = new Vector4(
-                vector.X * transform.M11 + vector.Y * transform.M21 + vector.Z * transform.M31 + transform.M41,
+            result = new Vector4(vector.X * transform.M11 + vector.Y * transform.M21 + vector.Z * transform.M31 + transform.M41,
                 vector.X * transform.M12 + vector.Y * transform.M22 + vector.Z * transform.M32 + transform.M42,
                 vector.X * transform.M13 + vector.Y * transform.M23 + vector.Z * transform.M33 + transform.M43,
                 vector.X * transform.M14 + vector.Y * transform.M24 + vector.Z * transform.M34 + transform.M44);
@@ -1387,8 +1344,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The transformed <see cref="Vector4" />.</returns>
         public static Vector4 Transform(Vector3 vector, Matrix4x4 transform)
         {
-            Vector4 result;
-            Transform(ref vector, ref transform, out result);
+            Transform(ref vector, ref transform, out Vector4 result);
             return result;
         }
 
@@ -1413,8 +1369,7 @@ namespace Dreamcast.Mathematics
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination",
-                    "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
 
             for (var i = 0; i < source.Length; ++i) Transform(ref source[i], ref transform, out destination[i]);
         }
@@ -1435,14 +1390,10 @@ namespace Dreamcast.Mathematics
         public static void TransformCoordinate(ref Vector3 coordinate, ref Matrix4x4 transform, out Vector3 result)
         {
             var vector = new Vector4();
-            vector.X = coordinate.X * transform.M11 + coordinate.Y * transform.M21 + coordinate.Z * transform.M31 +
-                       transform.M41;
-            vector.Y = coordinate.X * transform.M12 + coordinate.Y * transform.M22 + coordinate.Z * transform.M32 +
-                       transform.M42;
-            vector.Z = coordinate.X * transform.M13 + coordinate.Y * transform.M23 + coordinate.Z * transform.M33 +
-                       transform.M43;
-            vector.W = 1f / (coordinate.X * transform.M14 + coordinate.Y * transform.M24 +
-                             coordinate.Z * transform.M34 + transform.M44);
+            vector.X = coordinate.X * transform.M11 + coordinate.Y * transform.M21 + coordinate.Z * transform.M31 + transform.M41;
+            vector.Y = coordinate.X * transform.M12 + coordinate.Y * transform.M22 + coordinate.Z * transform.M32 + transform.M42;
+            vector.Z = coordinate.X * transform.M13 + coordinate.Y * transform.M23 + coordinate.Z * transform.M33 + transform.M43;
+            vector.W = 1f / (coordinate.X * transform.M14 + coordinate.Y * transform.M24 + coordinate.Z * transform.M34 + transform.M44);
 
             result = new Vector3(vector.X * vector.W, vector.Y * vector.W, vector.Z * vector.W);
         }
@@ -1462,8 +1413,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public static Vector3 TransformCoordinate(Vector3 coordinate, Matrix4x4 transform)
         {
-            Vector3 result;
-            TransformCoordinate(ref coordinate, ref transform, out result);
+            TransformCoordinate(ref coordinate, ref transform, out var result);
             return result;
         }
 
@@ -1498,8 +1448,7 @@ namespace Dreamcast.Mathematics
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination",
-                    "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
 
             for (var i = 0; i < source.Length; ++i)
                 TransformCoordinate(ref source[i], ref transform, out destination[i]);
@@ -1520,8 +1469,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public static void TransformNormal(ref Vector3 normal, ref Matrix4x4 transform, out Vector3 result)
         {
-            result = new Vector3(
-                normal.X * transform.M11 + normal.Y * transform.M21 + normal.Z * transform.M31,
+            result = new Vector3(normal.X * transform.M11 + normal.Y * transform.M21 + normal.Z * transform.M31,
                 normal.X * transform.M12 + normal.Y * transform.M22 + normal.Z * transform.M32,
                 normal.X * transform.M13 + normal.Y * transform.M23 + normal.Z * transform.M33);
         }
@@ -1541,8 +1489,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public static Vector3 TransformNormal(Vector3 normal, Matrix4x4 transform)
         {
-            Vector3 result;
-            TransformNormal(ref normal, ref transform, out result);
+            TransformNormal(ref normal, ref transform, out var result);
             return result;
         }
 
@@ -1577,8 +1524,7 @@ namespace Dreamcast.Mathematics
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination",
-                    "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
 
             for (var i = 0; i < source.Length; ++i) TransformNormal(ref source[i], ref transform, out destination[i]);
         }
@@ -1745,7 +1691,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(Vector3 left, Vector3 right)
         {
             return left.Equals(ref right);
@@ -1760,7 +1706,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has a different value than <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(Vector3 left, Vector3 right)
         {
             return !left.Equals(ref right);
@@ -1809,8 +1755,7 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString();
 
-            return string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1} Z:{2}",
-                X.ToString(format, CultureInfo.CurrentCulture),
+            return string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1} Z:{2}", X.ToString(format, CultureInfo.CurrentCulture),
                 Y.ToString(format, CultureInfo.CurrentCulture), Z.ToString(format, CultureInfo.CurrentCulture));
         }
 
@@ -1839,8 +1784,8 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString(formatProvider);
 
-            return string.Format(formatProvider, "X:{0} Y:{1} Z:{2}", X.ToString(format, formatProvider),
-                Y.ToString(format, formatProvider), Z.ToString(format, formatProvider));
+            return string.Format(formatProvider, "X:{0} Y:{1} Z:{2}", X.ToString(format, formatProvider), Y.ToString(format, formatProvider),
+                Z.ToString(format, formatProvider));
         }
 
         /// <summary>
@@ -1867,7 +1812,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Vector3" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ref Vector3 other)
         {
             return MathUtil.NearEqual(other.X, X) && MathUtil.NearEqual(other.Y, Y) && MathUtil.NearEqual(other.Z, Z);
@@ -1880,7 +1825,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Vector3" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(Vector3 other)
         {
             return Equals(ref other);

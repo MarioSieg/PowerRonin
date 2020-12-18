@@ -24,7 +24,7 @@ namespace dce {
 #if COM_MSVC
 		fopen_s(&file, path.c_str(), "rb");
 #else
-		file = fopen(_file.data(), "rb");
+		file = fopen(_file.string().data(), "rb");
 #endif
 		[[unlikely]] if (!file) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Binary blob read failed!");

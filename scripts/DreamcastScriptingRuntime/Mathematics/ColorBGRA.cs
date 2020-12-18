@@ -162,8 +162,7 @@ namespace Dreamcast.Mathematics
             if (values == null)
                 throw new ArgumentNullException("values");
             if (values.Length != 4)
-                throw new ArgumentOutOfRangeException("values",
-                    "There must be four and only four input values for ColorBGRA.");
+                throw new ArgumentOutOfRangeException("values", "There must be four and only four input values for ColorBGRA.");
 
             B = ToByte(values[0]);
             G = ToByte(values[1]);
@@ -188,8 +187,7 @@ namespace Dreamcast.Mathematics
             if (values == null)
                 throw new ArgumentNullException("values");
             if (values.Length != 4)
-                throw new ArgumentOutOfRangeException("values",
-                    "There must be four and only four input values for ColorBGRA.");
+                throw new ArgumentOutOfRangeException("values", "There must be four and only four input values for ColorBGRA.");
 
             B = values[0];
             G = values[1];
@@ -242,8 +240,7 @@ namespace Dreamcast.Mathematics
                         A = value;
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException("index",
-                            "Indices for ColorBGRA run from 0 to 3, inclusive.");
+                        throw new ArgumentOutOfRangeException("index", "Indices for ColorBGRA run from 0 to 3, inclusive.");
                 }
             }
         }
@@ -440,8 +437,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A color.</returns>
         public static ColorBGRA FromRgba(int color)
         {
-            return new ColorBGRA((byte) (color & 255), (byte) ((color >> 8) & 255), (byte) ((color >> 16) & 255),
-                (byte) ((color >> 24) & 255));
+            return new ColorBGRA((byte) (color & 255), (byte) ((color >> 8) & 255), (byte) ((color >> 16) & 255), (byte) ((color >> 24) & 255));
         }
 
         /// <summary>
@@ -526,8 +522,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The modulated color.</returns>
         public static ColorBGRA Modulate(ColorBGRA left, ColorBGRA right)
         {
-            return new ColorBGRA((left.R * right.R) >> 8, (left.G * right.G) >> 8, (left.B * right.B) >> 8,
-                (left.A * right.A) >> 8);
+            return new ColorBGRA((left.R * right.R) >> 8, (left.G * right.G) >> 8, (left.B * right.B) >> 8, (left.A * right.A) >> 8);
         }
 
         /// <summary>
@@ -552,8 +547,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled color.</returns>
         public static ColorBGRA Scale(ColorBGRA value, float scale)
         {
-            return new ColorBGRA((byte) (value.R * scale), (byte) (value.G * scale), (byte) (value.B * scale),
-                (byte) (value.A * scale));
+            return new ColorBGRA((byte) (value.R * scale), (byte) (value.G * scale), (byte) (value.B * scale), (byte) (value.A * scale));
         }
 
         /// <summary>
@@ -616,8 +610,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The clamped value.</returns>
         public static ColorBGRA Clamp(ColorBGRA value, ColorBGRA min, ColorBGRA max)
         {
-            ColorBGRA result;
-            Clamp(ref value, ref min, ref max, out result);
+            Clamp(ref value, ref min, ref max, out var result);
             return result;
         }
 
@@ -653,8 +646,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public static ColorBGRA Lerp(ColorBGRA start, ColorBGRA end, float amount)
         {
-            ColorBGRA result;
-            Lerp(ref start, ref end, amount, out result);
+            Lerp(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -680,8 +672,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The cubic interpolation of the two colors.</returns>
         public static ColorBGRA SmoothStep(ColorBGRA start, ColorBGRA end, float amount)
         {
-            ColorBGRA result;
-            SmoothStep(ref start, ref end, amount, out result);
+            SmoothStep(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -710,8 +701,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A color containing the largest components of the source colors.</returns>
         public static ColorBGRA Max(ColorBGRA left, ColorBGRA right)
         {
-            ColorBGRA result;
-            Max(ref left, ref right, out result);
+            Max(ref left, ref right, out var result);
             return result;
         }
 
@@ -740,8 +730,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A color containing the smallest components of the source colors.</returns>
         public static ColorBGRA Min(ColorBGRA left, ColorBGRA right)
         {
-            ColorBGRA result;
-            Min(ref left, ref right, out result);
+            Min(ref left, ref right, out var result);
             return result;
         }
 
@@ -767,11 +756,8 @@ namespace Dreamcast.Mathematics
         /// <returns>The adjusted color.</returns>
         public static ColorBGRA AdjustContrast(ColorBGRA value, float contrast)
         {
-            return new ColorBGRA(
-                ToByte(0.5f + contrast * (value.R / 255.0f - 0.5f)),
-                ToByte(0.5f + contrast * (value.G / 255.0f - 0.5f)),
-                ToByte(0.5f + contrast * (value.B / 255.0f - 0.5f)),
-                value.A);
+            return new ColorBGRA(ToByte(0.5f + contrast * (value.R / 255.0f - 0.5f)), ToByte(0.5f + contrast * (value.G / 255.0f - 0.5f)),
+                ToByte(0.5f + contrast * (value.B / 255.0f - 0.5f)), value.A);
         }
 
         /// <summary>
@@ -800,11 +786,8 @@ namespace Dreamcast.Mathematics
         {
             var grey = value.R / 255.0f * 0.2125f + value.G / 255.0f * 0.7154f + value.B / 255.0f * 0.0721f;
 
-            return new ColorBGRA(
-                ToByte(grey + saturation * (value.R / 255.0f - grey)),
-                ToByte(grey + saturation * (value.G / 255.0f - grey)),
-                ToByte(grey + saturation * (value.B / 255.0f - grey)),
-                value.A);
+            return new ColorBGRA(ToByte(grey + saturation * (value.R / 255.0f - grey)), ToByte(grey + saturation * (value.G / 255.0f - grey)),
+                ToByte(grey + saturation * (value.B / 255.0f - grey)), value.A);
         }
 
         /// <summary>
@@ -828,8 +811,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The premultiplied result.</returns>
         public static ColorBGRA Premultiply(ColorBGRA value)
         {
-            ColorBGRA result;
-            Premultiply(ref value, out result);
+            Premultiply(ref value, out var result);
             return result;
         }
 
@@ -883,8 +865,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled color.</returns>
         public static ColorBGRA operator *(float scale, ColorBGRA value)
         {
-            return new ColorBGRA((byte) (value.R * scale), (byte) (value.G * scale), (byte) (value.B * scale),
-                (byte) (value.A * scale));
+            return new ColorBGRA((byte) (value.R * scale), (byte) (value.G * scale), (byte) (value.B * scale), (byte) (value.A * scale));
         }
 
         /// <summary>
@@ -895,8 +876,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled color.</returns>
         public static ColorBGRA operator *(ColorBGRA value, float scale)
         {
-            return new ColorBGRA((byte) (value.R * scale), (byte) (value.G * scale), (byte) (value.B * scale),
-                (byte) (value.A * scale));
+            return new ColorBGRA((byte) (value.R * scale), (byte) (value.G * scale), (byte) (value.B * scale), (byte) (value.A * scale));
         }
 
         /// <summary>
@@ -907,8 +887,8 @@ namespace Dreamcast.Mathematics
         /// <returns>The modulated color.</returns>
         public static ColorBGRA operator *(ColorBGRA left, ColorBGRA right)
         {
-            return new ColorBGRA((byte) (left.R * right.R / 255.0f), (byte) (left.G * right.G / 255.0f),
-                (byte) (left.B * right.B / 255.0f), (byte) (left.A * right.A / 255.0f));
+            return new ColorBGRA((byte) (left.R * right.R / 255.0f), (byte) (left.G * right.G / 255.0f), (byte) (left.B * right.B / 255.0f),
+                (byte) (left.A * right.A / 255.0f));
         }
 
         /// <summary>
@@ -920,7 +900,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(ColorBGRA left, ColorBGRA right)
         {
             return left.Equals(ref right);
@@ -935,7 +915,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has a different value than <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(ColorBGRA left, ColorBGRA right)
         {
             return !left.Equals(ref right);
@@ -1113,12 +1093,8 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString(formatProvider);
 
-            return string.Format(formatProvider,
-                toStringFormat,
-                A.ToString(format, formatProvider),
-                R.ToString(format, formatProvider),
-                G.ToString(format, formatProvider),
-                B.ToString(format, formatProvider));
+            return string.Format(formatProvider, toStringFormat, A.ToString(format, formatProvider), R.ToString(format, formatProvider),
+                G.ToString(format, formatProvider), B.ToString(format, formatProvider));
         }
 
         /// <summary>
@@ -1146,7 +1122,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="ColorBGRA" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ref ColorBGRA other)
         {
             return R == other.R && G == other.G && B == other.B && A == other.A;
@@ -1159,7 +1135,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="ColorBGRA" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ColorBGRA other)
         {
             return Equals(ref other);

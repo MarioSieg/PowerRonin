@@ -148,8 +148,7 @@ namespace Dreamcast.Mathematics
             if (values == null)
                 throw new ArgumentNullException("values");
             if (values.Length != 4)
-                throw new ArgumentOutOfRangeException("values",
-                    "There must be four and only four input values for Color4.");
+                throw new ArgumentOutOfRangeException("values", "There must be four and only four input values for Color4.");
 
             Red = values[0];
             Green = values[1];
@@ -227,8 +226,7 @@ namespace Dreamcast.Mathematics
                         Alpha = value;
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException("index",
-                            "Indices for Color4 run from 0 to 3, inclusive.");
+                        throw new ArgumentOutOfRangeException("index", "Indices for Color4 run from 0 to 3, inclusive.");
                 }
             }
         }
@@ -332,8 +330,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two colors.</returns>
         public static Color4 Add(Color4 left, Color4 right)
         {
-            return new Color4(left.Red + right.Red, left.Green + right.Green, left.Blue + right.Blue,
-                left.Alpha + right.Alpha);
+            return new Color4(left.Red + right.Red, left.Green + right.Green, left.Blue + right.Blue, left.Alpha + right.Alpha);
         }
 
         /// <summary>
@@ -358,8 +355,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference of the two colors.</returns>
         public static Color4 Subtract(Color4 left, Color4 right)
         {
-            return new Color4(left.Red - right.Red, left.Green - right.Green, left.Blue - right.Blue,
-                left.Alpha - right.Alpha);
+            return new Color4(left.Red - right.Red, left.Green - right.Green, left.Blue - right.Blue, left.Alpha - right.Alpha);
         }
 
         /// <summary>
@@ -384,8 +380,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The modulated color.</returns>
         public static Color4 Modulate(Color4 left, Color4 right)
         {
-            return new Color4(left.Red * right.Red, left.Green * right.Green, left.Blue * right.Blue,
-                left.Alpha * right.Alpha);
+            return new Color4(left.Red * right.Red, left.Green * right.Green, left.Blue * right.Blue, left.Alpha * right.Alpha);
         }
 
         /// <summary>
@@ -473,8 +468,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The clamped value.</returns>
         public static Color4 Clamp(Color4 value, Color4 min, Color4 max)
         {
-            Color4 result;
-            Clamp(ref value, ref min, ref max, out result);
+            Clamp(ref value, ref min, ref max, out var result);
             return result;
         }
 
@@ -510,8 +504,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public static Color4 Lerp(Color4 start, Color4 end, float amount)
         {
-            Color4 result;
-            Lerp(ref start, ref end, amount, out result);
+            Lerp(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -537,8 +530,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The cubic interpolation of the two colors.</returns>
         public static Color4 SmoothStep(Color4 start, Color4 end, float amount)
         {
-            Color4 result;
-            SmoothStep(ref start, ref end, amount, out result);
+            SmoothStep(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -567,8 +559,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A color containing the largest components of the source colors.</returns>
         public static Color4 Max(Color4 left, Color4 right)
         {
-            Color4 result;
-            Max(ref left, ref right, out result);
+            Max(ref left, ref right, out var result);
             return result;
         }
 
@@ -597,8 +588,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A color containing the smallest components of the source colors.</returns>
         public static Color4 Min(Color4 left, Color4 right)
         {
-            Color4 result;
-            Min(ref left, ref right, out result);
+            Min(ref left, ref right, out var result);
             return result;
         }
 
@@ -624,11 +614,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The adjusted color.</returns>
         public static Color4 AdjustContrast(Color4 value, float contrast)
         {
-            return new Color4(
-                0.5f + contrast * (value.Red - 0.5f),
-                0.5f + contrast * (value.Green - 0.5f),
-                0.5f + contrast * (value.Blue - 0.5f),
-                value.Alpha);
+            return new Color4(0.5f + contrast * (value.Red - 0.5f), 0.5f + contrast * (value.Green - 0.5f), 0.5f + contrast * (value.Blue - 0.5f), value.Alpha);
         }
 
         /// <summary>
@@ -657,10 +643,7 @@ namespace Dreamcast.Mathematics
         {
             var grey = value.Red * 0.2125f + value.Green * 0.7154f + value.Blue * 0.0721f;
 
-            return new Color4(
-                grey + saturation * (value.Red - grey),
-                grey + saturation * (value.Green - grey),
-                grey + saturation * (value.Blue - grey),
+            return new Color4(grey + saturation * (value.Red - grey), grey + saturation * (value.Green - grey), grey + saturation * (value.Blue - grey),
                 value.Alpha);
         }
 
@@ -684,8 +667,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The premultiplied result.</returns>
         public static Color4 Premultiply(Color4 value)
         {
-            Color4 result;
-            Premultiply(ref value, out result);
+            Premultiply(ref value, out var result);
             return result;
         }
 
@@ -697,8 +679,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two colors.</returns>
         public static Color4 operator +(Color4 left, Color4 right)
         {
-            return new Color4(left.Red + right.Red, left.Green + right.Green, left.Blue + right.Blue,
-                left.Alpha + right.Alpha);
+            return new Color4(left.Red + right.Red, left.Green + right.Green, left.Blue + right.Blue, left.Alpha + right.Alpha);
         }
 
         /// <summary>
@@ -719,8 +700,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference of the two colors.</returns>
         public static Color4 operator -(Color4 left, Color4 right)
         {
-            return new Color4(left.Red - right.Red, left.Green - right.Green, left.Blue - right.Blue,
-                left.Alpha - right.Alpha);
+            return new Color4(left.Red - right.Red, left.Green - right.Green, left.Blue - right.Blue, left.Alpha - right.Alpha);
         }
 
         /// <summary>
@@ -763,8 +743,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The modulated color.</returns>
         public static Color4 operator *(Color4 left, Color4 right)
         {
-            return new Color4(left.Red * right.Red, left.Green * right.Green, left.Blue * right.Blue,
-                left.Alpha * right.Alpha);
+            return new Color4(left.Red * right.Red, left.Green * right.Green, left.Blue * right.Blue, left.Alpha * right.Alpha);
         }
 
         /// <summary>
@@ -776,7 +755,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(Color4 left, Color4 right)
         {
             return left.Equals(ref right);
@@ -791,7 +770,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has a different value than <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(Color4 left, Color4 right)
         {
             return !left.Equals(ref right);
@@ -939,12 +918,8 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString(formatProvider);
 
-            return string.Format(formatProvider,
-                toStringFormat,
-                Alpha.ToString(format, formatProvider),
-                Red.ToString(format, formatProvider),
-                Green.ToString(format, formatProvider),
-                Blue.ToString(format, formatProvider));
+            return string.Format(formatProvider, toStringFormat, Alpha.ToString(format, formatProvider), Red.ToString(format, formatProvider),
+                Green.ToString(format, formatProvider), Blue.ToString(format, formatProvider));
         }
 
         /// <summary>
@@ -972,7 +947,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Color4" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ref Color4 other)
         {
             return Alpha == other.Alpha && Red == other.Red && Green == other.Green && Blue == other.Blue;
@@ -985,7 +960,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Color4" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(Color4 other)
         {
             return Equals(ref other);

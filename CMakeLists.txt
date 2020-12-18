@@ -7,9 +7,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 project ("DreamcastSDK" CXX C ASM)
 
+message("Com: ${CMAKE_CXX_COMPILER_ID}")
+
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     SET(COVERAGE_COMPILE_FLAGS "-march=native -Ofast")
-    SET(COVERAGE_LINK_FLAGS    "")
+    SET(COVERAGE_LINK_FLAGS    "-flto")
     SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${COVERAGE_COMPILE_FLAGS}")
     SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${COVERAGE_LINK_FLAGS}")
 endif()
@@ -26,7 +28,6 @@ add_library(
     "include/dce/env.hpp" 
     "include/dce/classdb.hpp" 
     "source/classdb.cpp"
-    "include/dce/cmddb.hpp" 
     "include/dce/pixelformat.hpp" 
     "source/pixelformat.cpp" 
     "include/dce/half.hpp" 
@@ -36,13 +37,12 @@ add_library(
     "source/renderer/renderer.hpp" 
     "source/renderer/renderer.cpp" 
     "include/dce/config.hpp" 
-    "source/config.cpp" 
+     
     "include/dce/runtime.hpp" 
     "include/dce/proto.hpp" 
     "source/proto.cpp" 
     "include/dce/core/subsystem.hpp" 
     "source/core/subsystem.cpp" 
-    "source/cmddb.cpp" 
     "source/runtime.cpp" 
     "source/renderer/gui_renderer.hpp" 
     "source/renderer/gui_renderer.cpp" 
@@ -152,8 +152,6 @@ add_library(
     "source/renderer/views.hpp" 
     "source/material_runtime.cpp"
     "source/material.cpp"
-    "source/platform/splash.hpp" 
-    "source/platform/splash.cpp" 
     "source/platform/util.hpp"
     "source/platform/util.cpp" 
     "source/audio/audio.hpp"
@@ -183,7 +181,24 @@ add_library(
     "source/renderer.cpp"
     "source/gui/widgets/scenery_viewer.hpp"
     "source/gui/widgets/scenery_viewer.cpp"
-     "source/cpu_registers.cpp" "source/scripting/mono_headers.hpp" "source/scripting/internal_calls.cpp" "source/scripting/helpers.hpp" "source/scripting/helpers.cpp")
+    "source/cpu_registers.cpp" 
+    "source/scripting/mono_headers.hpp" 
+    "source/scripting/internal_calls.cpp" 
+    "source/scripting/helpers.hpp" 
+    "source/scripting/helpers.cpp" 
+    "source/scripting/dreamcast.dll.hpp" 
+    "source/scripting/assembly.hpp" 
+    "source/scripting/assembly.cpp" 
+    "source/scripting/environment.hpp" 
+    "source/scripting/environment.cpp" 
+    "source/scripting/static_class.hpp"
+    "source/scripting/static_class.cpp" 
+    "source/scripting/static_method.hpp"
+    "source/scripting/static_method.cpp" 
+    "source/scripting/member_method.hpp"
+    "source/scripting/member_method.cpp"
+    "source/scripting/instance_class.hpp"
+    "source/scripting/instance_class.cpp" "source/scripting/native_config.hpp" "source/scripting/cstypes.hpp" "source/scripting/native_config.cpp")
 
 include("extern/CMakeLists.txt")
 

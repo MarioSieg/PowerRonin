@@ -111,9 +111,13 @@ namespace Dreamcast.Core
         Semicolon = 59,
 
         /// <summary>
-        ///     A key.
+        ///     = key.
         /// </summary>
         Equal = 61,
+
+        /// <summary>
+        ///     A key.
+        /// </summary>
         A = 65,
 
         /// <summary>

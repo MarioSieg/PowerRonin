@@ -656,8 +656,7 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString();
 
-            return string.Format(CultureInfo.CurrentCulture, "{0}°",
-                MathUtil.RadiansToDegrees(radians).ToString(format, CultureInfo.CurrentCulture));
+            return string.Format(CultureInfo.CurrentCulture, "{0}°", MathUtil.RadiansToDegrees(radians).ToString(format, CultureInfo.CurrentCulture));
         }
 
         /// <summary>
@@ -685,8 +684,7 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString(formatProvider);
 
-            return string.Format(formatProvider, "{0}°",
-                MathUtil.RadiansToDegrees(radians).ToString(format, CultureInfo.CurrentCulture));
+            return string.Format(formatProvider, "{0}°", MathUtil.RadiansToDegrees(radians).ToString(format, CultureInfo.CurrentCulture));
         }
 
         /// <summary>

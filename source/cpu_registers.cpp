@@ -23,13 +23,15 @@ namespace dce {
 		_out = {0};
 #else
 		switch (_target) {
-		case GprRegisters::RAX:
+		case GprRegisters::RAX: {
 #if COM_GCC | COM_CLANG
 			std::uint64_t x;
 			asm volatile("\t movq %%rax, %0" : "=r"(x));
 			_out.value = x;
+		}
+		break;
 #endif
-		} break;
+		}
 #endif
 	}
 }

@@ -13,9 +13,6 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-using System;
-using System.Diagnostics;
-
 namespace Dreamcast.Core
 {
     /// <summary>
@@ -23,40 +20,33 @@ namespace Dreamcast.Core
     /// </summary>
     public static class Core
     {
-        private static void OnStart()
+        private static void OnPreStartup()
         {
-            var stopwatch = Stopwatch.StartNew();
-            PrintInformation();
-            Protocol.Info($"Scripting backend online! Boot took: {stopwatch.Elapsed.TotalSeconds}s!");
-            Protocol.Separator();
+            CommandDB.RegisterCommonCommands();
+            CommandDB.Execute("info");
+            Configuration.Deserialize();
+            Configuration.Current.Apply();
         }
 
-        private static void OnUpdate()
-        {
-            Input.UpdateMouseCursor();
-        }
-
-        private static void OnExit()
+        private static void OnPostStartup()
         {
         }
 
-        /// <summary>
-        ///     Prints some general system information from System.Environment.
-        /// </summary>
-        public static void PrintInformation()
+        private static void OnPreTick()
         {
-            Protocol.Info("C# CLR v." + Environment.Version);
-            Protocol.Info("Current directory: " + Environment.CurrentDirectory);
-            Protocol.Info("Is 64-bit operating system? " + Environment.Is64BitOperatingSystem);
-            Protocol.Info("Is 64-bit process? " + Environment.Is64BitProcess);
-            Protocol.Info("Machine: " + Environment.MachineName);
-            Protocol.Info("Operating system version: " + Environment.OSVersion);
-            Protocol.Info("Processor count: " + Environment.ProcessorCount);
-            Protocol.Info("System page size: " + Environment.SystemPageSize);
-            Protocol.Info("Tick count: " + Environment.TickCount);
-            Protocol.Info("Working set: " + Environment.WorkingSet);
-            Protocol.Info("User: " + Environment.UserName);
-            Protocol.Info("User domain: " + Environment.UserDomainName);
+            Input.Update();
+        }
+
+        private static void OnPostTick()
+        {
+        }
+
+        private static void OnPreShutdown()
+        {
+        }
+
+        private static void OnPostShutdown()
+        {
         }
     }
 }

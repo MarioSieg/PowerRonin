@@ -15,10 +15,10 @@
 
 #include "scripting.hpp"
 #include "internal_calls.hpp"
-#include "../../include/dce/procinfo.hpp"
+#include "dreamcast.dll.hpp"
 
 namespace dce::scripting {
-	Scripting::Scripting() : ISubsystem("Scripting", EVENTS) { }
+	Scripting::Scripting() : ISubsystem("Scripting", EVENTS), runtime_environment_() { }
 
 	auto Scripting::on_pre_startup(Runtime& _rt) -> bool {
 
@@ -29,89 +29,68 @@ namespace dce::scripting {
 		proto.info("Initializing scripting backend (Mono)...");
 		proto.info("Library dir: {}, config dir: {}", lib_dir, cfg_dir);
 
-		mono_set_dirs(lib_dir.c_str(), cfg_dir.c_str());
-		mono_config_parse(nullptr);
+		this->runtime_environment_.initialize(lib_dir, cfg_dir);
+		this->runtime_environment_.exception_hook = [&_rt](auto* const _ex) {
+			default_exception_handler(_rt.scripting_protocol(), _ex);
+		};
 
-		const auto exe_name = get_executable_name();
-		this->domain_ = mono_jit_init(exe_name.c_str());
-
-		[[unlikely]] if (!this->domain_) {
-			return false;
-		}
-
-		this->engine_runtime_ = mono_domain_assembly_open(this->domain_, "bin/dreamcast.dll");
-		[[unlikely]] if (!this->engine_runtime_) {
-			return false;
-		}
-
-		this->engine_image_ = mono_assembly_get_image(this->engine_runtime_);
-		[[unlikely]] if (!this->engine_image_) {
-			return false;
-		}
-
-		const int argc = 1;
-		char* argv[1] = {const_cast<char*>("Test")};
-
-		[[unlikely]] if (!mono_jit_exec(this->domain_, this->engine_runtime_, argc, argv)) {
-			return false;
-		}
-
-		this->engine_class_ = mono_class_from_name(this->engine_image_, "Dreamcast.Core", "Core");
-		[[unlikely]] if (!this->engine_class_) {
-			return false;
-		}
+		this->core_assembly_.load(std::string(ASSEMBLY_NAME_ID), this->runtime_environment_);
 
 		register_basic_internal_calls(_rt);
 
-		this->engine_on_start_ = mono_class_get_method_from_name(this->engine_class_, "OnStart", 0);
-		[[unlikely]] if (!this->engine_on_start_) {
-			return false;
-		}
+		this->setup_hooks();
 
-		this->engine_on_update_ = mono_class_get_method_from_name(this->engine_class_, "OnUpdate", 0);
-		[[unlikely]] if (!this->engine_on_update_) {
-			return false;
-		}
+		_rt.terminal_hook() = [this](char* const _str) {
+			void* params[] = {mono_string_new(this->runtime_environment_.get_domain(), _str)};
+			this->command_db_.on_command_enter(this->runtime_environment_, params);
+		};
 
-		this->engine_on_exit_ = mono_class_get_method_from_name(this->engine_class_, "OnExit", 0);
-		[[unlikely]] if (!this->engine_on_exit_) {
-			return false;
-		}
-
-		MonoObject* ex = nullptr;
-		auto* ret = mono_runtime_invoke(this->engine_on_start_, nullptr, nullptr, &ex);
-		[[unlikely]] if (ex) {
-			mono_print_unhandled_exception(ex);
-		}
+		this->core_.on_pre_startup(this->runtime_environment_);
 
 		return true;
 	}
 
 	auto Scripting::on_post_startup(Runtime& _rt) -> bool {
+		this->core_.on_post_startup(this->runtime_environment_);
 		return true;
 	}
 
 	auto Scripting::on_pre_tick(Runtime& _rt) -> bool {
-
-		MonoObject* ex = nullptr;
-		auto* ret = mono_runtime_invoke(this->engine_on_update_, nullptr, nullptr, &ex);
-		return !ret && !ex;
+		this->core_.on_pre_tick(this->runtime_environment_);
+		return true;
 	}
 
 	auto Scripting::on_post_tick(Runtime& _rt) -> bool {
+		this->core_.on_post_tick(this->runtime_environment_);
 		return true;
 	}
 
 	auto Scripting::on_pre_shutdown(Runtime& _rt) -> bool {
-		MonoObject* ex = nullptr;
-		auto* ret = mono_runtime_invoke(this->engine_on_exit_, nullptr, nullptr, &ex);
-		[[unlikely]] if (ex) {
-			mono_print_unhandled_exception(ex);
-		}
+		this->core_.on_pre_shutdown(this->runtime_environment_);
 		return true;
 	}
 
 	auto Scripting::on_post_shutdown(Runtime& _rt) -> bool {
+		this->core_.on_post_shutdown(this->runtime_environment_);
+		this->core_assembly_.unload();
+		this->runtime_environment_.shutdown();
 		return true;
+	}
+
+	void Scripting::setup_hooks() {
+		this->core_.klass.load_from_name(this->core_assembly_, ASSEMBLY_NAMESPACE_ID, CORE_CLASS_ID);
+
+		this->core_.on_pre_startup.query_from_class(this->core_.klass, CORE_ON_PRE_STARTUP_ID);
+		this->core_.on_post_startup.query_from_class(this->core_.klass, CORE_ON_POST_STARTUP_ID);
+
+		this->core_.on_pre_tick.query_from_class(this->core_.klass, CORE_ON_PRE_TICK_ID);
+		this->core_.on_post_tick.query_from_class(this->core_.klass, CORE_ON_POST_TICK_ID);
+
+		this->core_.on_pre_shutdown.query_from_class(this->core_.klass, CORE_PRE_SHUTDOWN_ID);
+		this->core_.on_post_shutdown.query_from_class(this->core_.klass, CORE_POST_SHUTDOWN_ID);
+
+		this->command_db_.klass.load_from_name(this->core_assembly_, ASSEMBLY_NAMESPACE_ID, COMMAND_DB_CLASS_ID);
+		this->command_db_.on_command_enter.query_from_class(this->command_db_.klass, COMMAND_DB_CMD_ENTER_ID
+		                                                    , COMMAND_DB_CMD_ENTER_PARAMS);
 	}
 }

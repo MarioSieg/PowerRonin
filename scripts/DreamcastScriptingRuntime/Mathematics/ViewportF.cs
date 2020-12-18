@@ -132,12 +132,8 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public bool Equals(ref ViewportF other)
         {
-            return MathUtil.NearEqual(X, other.X) &&
-                   MathUtil.NearEqual(Y, other.Y) &&
-                   MathUtil.NearEqual(Width, other.Width) &&
-                   MathUtil.NearEqual(Height, other.Height) &&
-                   MathUtil.NearEqual(MinDepth, other.MinDepth) &&
-                   MathUtil.NearEqual(MaxDepth, other.MaxDepth);
+            return MathUtil.NearEqual(X, other.X) && MathUtil.NearEqual(Y, other.Y) && MathUtil.NearEqual(Width, other.Width) &&
+                   MathUtil.NearEqual(Height, other.Height) && MathUtil.NearEqual(MinDepth, other.MinDepth) && MathUtil.NearEqual(MaxDepth, other.MaxDepth);
         }
 
         /// <summary>
@@ -147,7 +143,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="ViewportF" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ViewportF other)
         {
             return Equals(ref other);
@@ -195,7 +191,7 @@ namespace Dreamcast.Mathematics
         /// <param name="left">The left.</param>
         /// <param name="right">The right.</param>
         /// <returns>The result of the operator.</returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(ViewportF left, ViewportF right)
         {
             return left.Equals(ref right);
@@ -207,7 +203,7 @@ namespace Dreamcast.Mathematics
         /// <param name="left">The left.</param>
         /// <param name="right">The right.</param>
         /// <returns>The result of the operator.</returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(ViewportF left, ViewportF right)
         {
             return !left.Equals(ref right);
@@ -219,8 +215,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.CurrentCulture,
-                "{{X:{0} Y:{1} Width:{2} Height:{3} MinDepth:{4} MaxDepth:{5}}}", X, Y, Width, Height, MinDepth,
+            return string.Format(CultureInfo.CurrentCulture, "{{X:{0} Y:{1} Width:{2} Height:{3} MinDepth:{4} MaxDepth:{5}}}", X, Y, Width, Height, MinDepth,
                 MaxDepth);
         }
 
@@ -231,15 +226,13 @@ namespace Dreamcast.Mathematics
         /// <param name="projection">The projection matrix.</param>
         /// <param name="view">The view matrix.</param>
         /// <param name="world">The world matrix.</param>
-        /// <returns>The projected vector./returns>
+        /// <returns>The projected vector.</returns>
         public Vector3 Project(Vector3 source, Matrix4x4 projection, Matrix4x4 view, Matrix4x4 world)
         {
-            Matrix4x4 matrix;
-            Matrix4x4.Multiply(ref world, ref view, out matrix);
+            Matrix4x4.Multiply(ref world, ref view, out var matrix);
             Matrix4x4.Multiply(ref matrix, ref projection, out matrix);
 
-            Vector3 vector;
-            Project(ref source, ref matrix, out vector);
+            Project(ref source, ref matrix, out var vector);
             return vector;
         }
 
@@ -254,7 +247,7 @@ namespace Dreamcast.Mathematics
             Vector3.Transform(ref source, ref matrix, out vector);
             var a = source.X * matrix.M14 + source.Y * matrix.M24 + source.Z * matrix.M34 + matrix.M44;
 
-            if (!MathUtil.IsOne(a)) vector = vector / a;
+            if (!MathUtil.IsOne(a)) vector /= a;
 
             vector.X = (vector.X + 1f) * 0.5f * Width + X;
             vector.Y = (-vector.Y + 1f) * 0.5f * Height + Y;
@@ -271,13 +264,11 @@ namespace Dreamcast.Mathematics
         /// <returns>The unprojected Vector.</returns>
         public Vector3 Unproject(Vector3 source, Matrix4x4 projection, Matrix4x4 view, Matrix4x4 world)
         {
-            Matrix4x4 matrix;
-            Matrix4x4.Multiply(ref world, ref view, out matrix);
+            Matrix4x4.Multiply(ref world, ref view, out var matrix);
             Matrix4x4.Multiply(ref matrix, ref projection, out matrix);
             Matrix4x4.Invert(ref matrix, out matrix);
 
-            Vector3 vector;
-            Unproject(ref source, ref matrix, out vector);
+            Unproject(ref source, ref matrix, out var vector);
             return vector;
         }
 
@@ -296,7 +287,7 @@ namespace Dreamcast.Mathematics
             var a = vector.X * matrix.M14 + vector.Y * matrix.M24 + vector.Z * matrix.M34 + matrix.M44;
             Vector3.Transform(ref vector, ref matrix, out vector);
 
-            if (!MathUtil.IsOne(a)) vector = vector / a;
+            if (!MathUtil.IsOne(a)) vector /= a;
         }
 
         /// <summary>

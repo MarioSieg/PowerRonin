@@ -1,4 +1,0 @@
-ÖÄÜ
-öäü
-
-Überraschung! Neuerdings können wir auch Unicode rendern :)

@@ -68,9 +68,7 @@ namespace Dreamcast.Mathematics
         /// <param name="value">The value that will be assigned to all components.</param>
         public Matrix3x2(float value)
         {
-            M11 = M12 =
-                M21 = M22 =
-                    M31 = M32 = value;
+            M11 = M12 = M21 = M22 = M31 = M32 = value;
         }
 
         /// <summary>
@@ -269,8 +267,7 @@ namespace Dreamcast.Mathematics
                         M32 = value;
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException("index",
-                            "Indices for Matrix3x2 run from 0 to 5, inclusive.");
+                        throw new ArgumentOutOfRangeException("index", "Indices for Matrix3x2 run from 0 to 5, inclusive.");
                 }
             }
         }
@@ -291,11 +288,9 @@ namespace Dreamcast.Mathematics
             get
             {
                 if (row < 0 || row > 2)
-                    throw new ArgumentOutOfRangeException("row",
-                        "Rows and columns for matrices run from 0 to 2, inclusive.");
+                    throw new ArgumentOutOfRangeException("row", "Rows and columns for matrices run from 0 to 2, inclusive.");
                 if (column < 0 || column > 1)
-                    throw new ArgumentOutOfRangeException("column",
-                        "Rows and columns for matrices run from 0 to 1, inclusive.");
+                    throw new ArgumentOutOfRangeException("column", "Rows and columns for matrices run from 0 to 1, inclusive.");
 
                 return this[row * 2 + column];
             }
@@ -303,11 +298,9 @@ namespace Dreamcast.Mathematics
             set
             {
                 if (row < 0 || row > 2)
-                    throw new ArgumentOutOfRangeException("row",
-                        "Rows and columns for matrices run from 0 to 2, inclusive.");
+                    throw new ArgumentOutOfRangeException("row", "Rows and columns for matrices run from 0 to 2, inclusive.");
                 if (column < 0 || column > 1)
-                    throw new ArgumentOutOfRangeException("column",
-                        "Rows and columns for matrices run from 0 to 1, inclusive.");
+                    throw new ArgumentOutOfRangeException("column", "Rows and columns for matrices run from 0 to 1, inclusive.");
 
                 this[row * 2 + column] = value;
             }
@@ -346,8 +339,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two matrices.</returns>
         public static Matrix3x2 Add(Matrix3x2 left, Matrix3x2 right)
         {
-            Matrix3x2 result;
-            Add(ref left, ref right, out result);
+            Add(ref left, ref right, out var result);
             return result;
         }
 
@@ -375,8 +367,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference between the two matrices.</returns>
         public static Matrix3x2 Subtract(Matrix3x2 left, Matrix3x2 right)
         {
-            Matrix3x2 result;
-            Subtract(ref left, ref right, out result);
+            Subtract(ref left, ref right, out var result);
             return result;
         }
 
@@ -404,8 +395,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled matrix.</returns>
         public static Matrix3x2 Multiply(Matrix3x2 left, float right)
         {
-            Matrix3x2 result;
-            Multiply(ref left, right, out result);
+            Multiply(ref left, right, out var result);
             return result;
         }
 
@@ -435,8 +425,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The product of the two matrices.</returns>
         public static Matrix3x2 Multiply(Matrix3x2 left, Matrix3x2 right)
         {
-            Matrix3x2 result;
-            Multiply(ref left, ref right, out result);
+            Multiply(ref left, ref right, out var result);
             return result;
         }
 
@@ -496,8 +485,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The negated matrix.</returns>
         public static Matrix3x2 Negate(Matrix3x2 value)
         {
-            Matrix3x2 result;
-            Negate(ref value, out result);
+            Negate(ref value, out var result);
             return result;
         }
 
@@ -535,8 +523,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public static Matrix3x2 Lerp(Matrix3x2 start, Matrix3x2 end, float amount)
         {
-            Matrix3x2 result;
-            Lerp(ref start, ref end, amount, out result);
+            Lerp(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -562,8 +549,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The cubic interpolation of the two matrices.</returns>
         public static Matrix3x2 SmoothStep(Matrix3x2 start, Matrix3x2 end, float amount)
         {
-            Matrix3x2 result;
-            SmoothStep(ref start, ref end, amount, out result);
+            SmoothStep(ref start, ref end, amount, out var result);
             return result;
         }
 
@@ -584,8 +570,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The created scaling matrix.</returns>
         public static Matrix3x2 Scaling(Vector2 scale)
         {
-            Matrix3x2 result;
-            Scaling(ref scale, out result);
+            Scaling(ref scale, out var result);
             return result;
         }
 
@@ -610,8 +595,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The created scaling matrix.</returns>
         public static Matrix3x2 Scaling(float x, float y)
         {
-            Matrix3x2 result;
-            Scaling(x, y, out result);
+            Scaling(x, y, out var result);
             return result;
         }
 
@@ -633,8 +617,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The created scaling matrix.</returns>
         public static Matrix3x2 Scaling(float scale)
         {
-            Matrix3x2 result;
-            Scaling(scale, out result);
+            Scaling(scale, out var result);
             return result;
         }
 
@@ -715,8 +698,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The created rotation matrix.</returns>
         public static Matrix3x2 Rotation(float angle)
         {
-            Matrix3x2 result;
-            Rotation(angle, out result);
+            Rotation(angle, out var result);
             return result;
         }
 
@@ -728,8 +710,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The created rotation matrix.</returns>
         public static Matrix3x2 Rotation(float angle, Vector2 center)
         {
-            Matrix3x2 result;
-            Rotation(angle, center, out result);
+            Rotation(angle, center, out var result);
             return result;
         }
 
@@ -753,8 +734,7 @@ namespace Dreamcast.Mathematics
         /// <param name="xOffset">X-coordinate offset.</param>
         /// <param name="yOffset">Y-coordinate offset.</param>
         /// <param name="result">When the method completes, contains the created transformation matrix.</param>
-        public static void Transformation(float xScale, float yScale, float angle, float xOffset, float yOffset,
-            out Matrix3x2 result)
+        public static void Transformation(float xScale, float yScale, float angle, float xOffset, float yOffset, out Matrix3x2 result)
         {
             result = Scaling(xScale, yScale) * Rotation(angle) * Translation(xOffset, yOffset);
         }
@@ -770,8 +750,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The created transformation matrix.</returns>
         public static Matrix3x2 Transformation(float xScale, float yScale, float angle, float xOffset, float yOffset)
         {
-            Matrix3x2 result;
-            Transformation(xScale, yScale, angle, xOffset, yOffset, out result);
+            Transformation(xScale, yScale, angle, xOffset, yOffset, out var result);
             return result;
         }
 
@@ -792,8 +771,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The created translation matrix.</returns>
         public static Matrix3x2 Translation(Vector2 value)
         {
-            Matrix3x2 result;
-            Translation(ref value, out result);
+            Translation(ref value, out var result);
             return result;
         }
 
@@ -818,8 +796,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The created translation matrix.</returns>
         public static Matrix3x2 Translation(float x, float y)
         {
-            Matrix3x2 result;
-            Translation(x, y, out result);
+            Translation(x, y, out var result);
             return result;
         }
 
@@ -867,8 +844,7 @@ namespace Dreamcast.Mathematics
         /// <returns>the inverse of the specified matrix.</returns>
         public static Matrix3x2 Invert(Matrix3x2 value)
         {
-            Matrix3x2 result;
-            Invert(ref value, out result);
+            Invert(ref value, out var result);
             return result;
         }
 
@@ -880,8 +856,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The created skew matrix.</returns>
         public static Matrix3x2 Skew(float angleX, float angleY)
         {
-            Matrix3x2 result;
-            Skew(angleX, angleY, out result);
+            Skew(angleX, angleY, out var result);
             return result;
         }
 
@@ -917,13 +892,8 @@ namespace Dreamcast.Mathematics
             var _offsetX = value.M31;
             var _offsetY = value.M32;
 
-            result = new Matrix3x2(
-                value.M22 * invdet,
-                -value.M12 * invdet,
-                -value.M21 * invdet,
-                value.M11 * invdet,
-                (value.M21 * _offsetY - _offsetX * value.M22) * invdet,
-                (_offsetX * value.M12 - value.M11 * _offsetY) * invdet);
+            result = new Matrix3x2(value.M22 * invdet, -value.M12 * invdet, -value.M21 * invdet, value.M11 * invdet,
+                (value.M21 * _offsetY - _offsetX * value.M22) * invdet, (_offsetX * value.M12 - value.M11 * _offsetY) * invdet);
         }
 
         /// <summary>
@@ -934,8 +904,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two matrices.</returns>
         public static Matrix3x2 operator +(Matrix3x2 left, Matrix3x2 right)
         {
-            Matrix3x2 result;
-            Add(ref left, ref right, out result);
+            Add(ref left, ref right, out var result);
             return result;
         }
 
@@ -957,8 +926,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference between the two matrices.</returns>
         public static Matrix3x2 operator -(Matrix3x2 left, Matrix3x2 right)
         {
-            Matrix3x2 result;
-            Subtract(ref left, ref right, out result);
+            Subtract(ref left, ref right, out var result);
             return result;
         }
 
@@ -969,8 +937,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The negated matrix.</returns>
         public static Matrix3x2 operator -(Matrix3x2 value)
         {
-            Matrix3x2 result;
-            Negate(ref value, out result);
+            Negate(ref value, out var result);
             return result;
         }
 
@@ -982,8 +949,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled matrix.</returns>
         public static Matrix3x2 operator *(float left, Matrix3x2 right)
         {
-            Matrix3x2 result;
-            Multiply(ref right, left, out result);
+            Multiply(ref right, left, out var result);
             return result;
         }
 
@@ -995,8 +961,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled matrix.</returns>
         public static Matrix3x2 operator *(Matrix3x2 left, float right)
         {
-            Matrix3x2 result;
-            Multiply(ref left, right, out result);
+            Multiply(ref left, right, out var result);
             return result;
         }
 
@@ -1008,8 +973,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The product of the two matrices.</returns>
         public static Matrix3x2 operator *(Matrix3x2 left, Matrix3x2 right)
         {
-            Matrix3x2 result;
-            Multiply(ref left, ref right, out result);
+            Multiply(ref left, ref right, out var result);
             return result;
         }
 
@@ -1021,8 +985,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled matrix.</returns>
         public static Matrix3x2 operator /(Matrix3x2 left, float right)
         {
-            Matrix3x2 result;
-            Divide(ref left, right, out result);
+            Divide(ref left, right, out var result);
             return result;
         }
 
@@ -1034,8 +997,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The quotient of the two matrices.</returns>
         public static Matrix3x2 operator /(Matrix3x2 left, Matrix3x2 right)
         {
-            Matrix3x2 result;
-            Divide(ref left, ref right, out result);
+            Divide(ref left, ref right, out var result);
             return result;
         }
 
@@ -1048,7 +1010,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(Matrix3x2 left, Matrix3x2 right)
         {
             return left.Equals(ref right);
@@ -1063,7 +1025,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has a different value than <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(Matrix3x2 left, Matrix3x2 right)
         {
             return !left.Equals(ref right);
@@ -1077,8 +1039,7 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.CurrentCulture, "[M11:{0} M12:{1}] [M21:{2} M22:{3}] [M31:{4} M32:{5}]",
-                M11, M12, M21, M22, M31, M32);
+            return string.Format(CultureInfo.CurrentCulture, "[M11:{0} M12:{1}] [M21:{2} M22:{3}] [M31:{4} M32:{5}]", M11, M12, M21, M22, M31, M32);
         }
 
         /// <summary>
@@ -1093,8 +1054,7 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString();
 
-            return string.Format(format, CultureInfo.CurrentCulture,
-                "[M11:{0} M12:{1}] [M21:{2} M22:{3}] [M31:{4} M32:{5}]",
+            return string.Format(format, CultureInfo.CurrentCulture, "[M11:{0} M12:{1}] [M21:{2} M22:{3}] [M31:{4} M32:{5}]",
                 M11.ToString(format, CultureInfo.CurrentCulture), M12.ToString(format, CultureInfo.CurrentCulture),
                 M21.ToString(format, CultureInfo.CurrentCulture), M22.ToString(format, CultureInfo.CurrentCulture),
                 M31.ToString(format, CultureInfo.CurrentCulture), M32.ToString(format, CultureInfo.CurrentCulture));
@@ -1109,10 +1069,9 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public string ToString(IFormatProvider formatProvider)
         {
-            return string.Format(formatProvider, "[M11:{0} M12:{1}] [M21:{2} M22:{3}] [M31:{4} M32:{5}]",
-                M11.ToString(formatProvider), M12.ToString(formatProvider),
-                M21.ToString(formatProvider), M22.ToString(formatProvider),
-                M31.ToString(formatProvider), M32.ToString(formatProvider));
+            return string.Format(formatProvider, "[M11:{0} M12:{1}] [M21:{2} M22:{3}] [M31:{4} M32:{5}]", M11.ToString(formatProvider),
+                M12.ToString(formatProvider), M21.ToString(formatProvider), M22.ToString(formatProvider), M31.ToString(formatProvider),
+                M32.ToString(formatProvider));
         }
 
         /// <summary>
@@ -1128,9 +1087,8 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString(formatProvider);
 
-            return string.Format(format, formatProvider, "[M11:{0} M12:{1}] [M21:{2} M22:{3}] [M31:{4} M32:{5}]",
-                M11.ToString(format, formatProvider), M12.ToString(format, formatProvider),
-                M21.ToString(format, formatProvider), M22.ToString(format, formatProvider),
+            return string.Format(format, formatProvider, "[M11:{0} M12:{1}] [M21:{2} M22:{3}] [M31:{4} M32:{5}]", M11.ToString(format, formatProvider),
+                M12.ToString(format, formatProvider), M21.ToString(format, formatProvider), M22.ToString(format, formatProvider),
                 M31.ToString(format, formatProvider), M32.ToString(format, formatProvider));
         }
 
@@ -1163,12 +1121,8 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public bool Equals(ref Matrix3x2 other)
         {
-            return MathUtil.NearEqual(other.M11, M11) &&
-                   MathUtil.NearEqual(other.M12, M12) &&
-                   MathUtil.NearEqual(other.M21, M21) &&
-                   MathUtil.NearEqual(other.M22, M22) &&
-                   MathUtil.NearEqual(other.M31, M31) &&
-                   MathUtil.NearEqual(other.M32, M32);
+            return MathUtil.NearEqual(other.M11, M11) && MathUtil.NearEqual(other.M12, M12) && MathUtil.NearEqual(other.M21, M21) &&
+                   MathUtil.NearEqual(other.M22, M22) && MathUtil.NearEqual(other.M31, M31) && MathUtil.NearEqual(other.M32, M32);
         }
 
         /// <summary>
@@ -1178,7 +1132,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Matrix3x2" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(Matrix3x2 other)
         {
             return Equals(ref other);

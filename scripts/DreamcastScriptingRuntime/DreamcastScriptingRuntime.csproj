@@ -2,6 +2,8 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <LangVersion>8.0</LangVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{77875C04-CAD1-470F-A923-ECBFC9C40EAE}</ProjectGuid>
@@ -28,7 +30,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\</OutputPath>
+    <OutputPath>..\..\runtime\</OutputPath>
     <DefineConstants>
     </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -36,6 +38,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>..\..\runtime\dreamcast.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
@@ -45,6 +48,8 @@
     <OutputPath>..\..\bin\</OutputPath>
     <Prefer32Bit>false</Prefer32Bit>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <Optimize>false</Optimize>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <PlatformTarget>x64</PlatformTarget>
@@ -55,7 +60,8 @@
     <RegisterForComInterop>false</RegisterForComInterop>
     <DocumentationFile>..\..\bin\dreamcast.xml</DocumentationFile>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
@@ -69,11 +75,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\CopyDir.cs" />
+    <Compile Include="Tools\Builder.cs" />
+    <Compile Include="Core\BuildTarget.cs" />
+    <Compile Include="Core\CalledFromNativeRuntime.cs" />
+    <Compile Include="Core\CallToNativeRuntime.cs" />
+    <Compile Include="Core\Command.cs" />
+    <Compile Include="Core\CommandDB.cs" />
+    <Compile Include="Core\Configuration.cs" />
     <Compile Include="Core\Core.cs" />
     <Compile Include="Core\Entry.cs" />
+    <Compile Include="Core\GraphicsAPI.cs" />
     <Compile Include="Core\Input.cs" />
     <Compile Include="Core\Key.cs" />
+    <Compile Include="Core\LogLevel.cs" />
     <Compile Include="Core\MouseButton.cs" />
+    <Compile Include="Core\MSAAMode.cs" />
+    <Compile Include="Core\NativeConfig.cs" />
+    <Compile Include="Core\NativeRuntime.cs" />
+    <Compile Include="Core\Serializer.cs" />
+    <Compile Include="Core\SystemOverlayTheme.cs" />
     <Compile Include="Mathematics\AngleSingle.cs" />
     <Compile Include="Mathematics\AngleType.cs" />
     <Compile Include="Mathematics\BoundingBox.cs" />
@@ -115,10 +136,31 @@
     <Compile Include="Mathematics\ViewportF.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Protocol.cs" />
+    <Compile Include="YAXLib\Enums.cs" />
+    <Compile Include="YAXLib\EnumWrapper.cs" />
+    <Compile Include="YAXLib\ICustomDeserializer.cs" />
+    <Compile Include="YAXLib\ICustomSerializer.cs" />
+    <Compile Include="YAXLib\KnownTypes.cs" />
+    <Compile Include="YAXLib\MemberWrapper.cs" />
+    <Compile Include="YAXLib\ReflectionBridgeExtensions.cs" />
+    <Compile Include="YAXLib\ReflectionUtils.cs" />
+    <Compile Include="YAXLib\StringUtils.cs" />
+    <Compile Include="YAXLib\TypeWrappersPool.cs" />
+    <Compile Include="YAXLib\UdtWrapper.cs" />
+    <Compile Include="YAXLib\XMLUtils.cs" />
+    <Compile Include="YAXLib\YAXAttributes.cs" />
+    <Compile Include="YAXLib\YAXExceptions.cs" />
+    <Compile Include="YAXLib\YAXParsingErrors.cs" />
+    <Compile Include="YAXLib\YAXSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".editorconfig" />
     <Compile Include="Mathematics\Color.Palette.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="YAXLib\project.json" />
+    <None Include="YAXLib\YAXLib.csproj" />
+    <None Include="YAXLib\YAXLib.NetCore.xproj" />
+    <None Include="YAXLib\YAXLib.project.json" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

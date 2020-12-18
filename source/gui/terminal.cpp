@@ -20,19 +20,13 @@
 #include "gui_headers.hpp"
 #include "window_names.hpp"
 
-#include <algorithm>
-
 using namespace ImGui;
 
+namespace dce {
+	void (*TERMINAL_UPDATE)() = nullptr;
+}
+
 namespace dce::gui {
-	void Terminal::clear_buffer() {
-		this->buffer_.fill(0);
-	}
-
-	auto Terminal::get_buffer() const noexcept -> const std::array<char, BUFFER_SIZE>& {
-		return this->buffer_;
-	}
-
 	void Terminal::update(bool& _show, Runtime& _rt) {
 		SetNextWindowSize({800, 600}, ImGuiCond_FirstUseEver);
 		[[likely]] if (Begin(TERMINAL_NAME, &_show, ImGuiWindowFlags_NoScrollbar)) {
@@ -52,7 +46,7 @@ namespace dce::gui {
 					case LogLevel::WARN: PushStyleColor(ImGuiCol_Text, COLOR_WARN);
 						++this->warning_messages_count_;
 						break;
-					default: case LogLevel::OFF: [[fallthrough]];
+					default: case LogLevel::OFF: ;
 					}
 					Spacing();
 					TextUnformatted(std::get<0>(msg).c_str());
@@ -109,32 +103,6 @@ namespace dce::gui {
 
 			SameLine();
 
-			/* History button. */
-			{
-				const auto& history = _rt.command_db().get_history();
-				PushStyleColor(ImGuiCol_Button, 0x00000000);
-				const bool history_forward = Button(ICON_FA_ARROW_UP);
-				[[unlikely]] if (IsItemHovered()) {
-					BeginTooltip();
-					TextUnformatted("Load previous command");
-					EndTooltip();
-				}
-				[[unlikely]] if (history_forward && !history.empty()) {
-					const auto i = std::clamp<std::size_t>(history.size() - this->history_index_ - 1, 0, history.size() - 1);
-					const auto& prev_command = history[i];
-					prev_command.copy(this->buffer_.data(), BUFFER_SIZE);
-					++this->history_index_;
-					if (this->history_index_ >= history.size()) {
-						this->history_index_ = 0;
-					}
-					SetKeyboardFocusHere(1);
-				}
-
-				PopStyleColor();
-			}
-
-			SameLine();
-
 			/* Show scripting output. */
 			{
 				Checkbox("##out", &this->show_scripting_protocol_);
@@ -151,8 +119,8 @@ namespace dce::gui {
 			{
 				PushItemWidth(GetWindowSize().x);
 				constexpr auto flags = ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CharsNoBlank;
-				const auto get_input_ok = InputText("##in", this->buffer_.data(), sizeof this->buffer_, flags);
-				const auto is_input_valid = *this->buffer_.data() != '\0';
+				const auto get_input_ok = InputText("##in", this->buffer_, sizeof this->buffer_, flags);
+				const auto is_input_valid = *this->buffer_ != '\0';
 
 				[[unlikely]] if (this->scroll_) {
 					SetKeyboardFocusHere(-1);
@@ -160,21 +128,9 @@ namespace dce::gui {
 				}
 
 				[[unlikely]] if (get_input_ok) {
-					if (is_input_valid) {
-						auto dyn_str = std::string(this->buffer_.begin(), this->buffer_.end());
-						switch (auto& proto = _rt.protocol(); _rt.command_db().analyze_and_call(_rt, std::move(dyn_str))) {
-						case CommandExecutionResult::COMMAND_DOES_NOT_EXIST: proto.error("Command does not exist!");
-							break;
-						case CommandExecutionResult::ARGS_SEPARATOR_MISSING: proto.error(
-								"Missing '{}' as separator!", CmdDB::ARGUMENT_SEPARATOR);
-							break;
-						case CommandExecutionResult::NO_ARGS_PROVIDED: proto.error("Missing arguments!");
-							break;
-						case CommandExecutionResult::COMMAND_FUNCTOR_FAILED: proto.error("Command execution failed!");
-							break;
-						case CommandExecutionResult::OK: ;
-						}
-						this->clear_buffer();
+					[[likely]] if (is_input_valid) {
+						_rt.terminal_hook()(this->buffer_);
+						memset(this->buffer_, 0, sizeof this->buffer_);
 						this->scroll_ = true;
 						this->history_index_ = 0;
 						SetScrollHere(1.F);

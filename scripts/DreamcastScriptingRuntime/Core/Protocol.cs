@@ -13,46 +13,8 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-using System.Runtime.CompilerServices;
-
 namespace Dreamcast.Core
 {
-    /// <summary>
-    ///     Contains all log levels.
-    /// </summary>
-    public enum LogLevel : byte
-    {
-        /// <summary>
-        ///     Trace log.
-        /// </summary>
-        Trace = 0,
-
-        /// <summary>
-        ///     Debug log.
-        /// </summary>
-        Debug = 1,
-
-        /// <summary>
-        ///     Info log.
-        /// </summary>
-        Info = 2,
-
-        /// <summary>
-        ///     Warning log.
-        /// </summary>
-        Warn = 3,
-
-        /// <summary>
-        ///     Error log.
-        /// </summary>
-        Error = 4,
-
-        /// <summary>
-        ///     Criticial.
-        /// </summary>
-        Critical = 5
-    }
-
     /// <summary>
     ///     Contains methods to write logs into the protocol,
     ///     which is displayed in the terminal and written into a log file.
@@ -74,8 +36,10 @@ namespace Dreamcast.Core
         /// </summary>
         /// <param name="level">The log level.</param>
         /// <param name="message">The message to log.</param>
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public static extern void Log(LogLevel level, string message);
+        public static void Log(LogLevel level, string message)
+        {
+            NativeRuntime.ProtocolLog(level, message);
+        }
 
         /// <summary>
         ///     Shorthand for Log(LogLevel.Trace, message);
@@ -108,7 +72,7 @@ namespace Dreamcast.Core
         ///     Shorthand for Log(LogLevel.Warn, message);
         /// </summary>
         /// <param name="message">The message to log.</param>
-        public static void Warn(string message)
+        public static void Warn(in string message)
         {
             Log(LogLevel.Warn, message);
             ++WarningMessagesCount;
@@ -144,14 +108,18 @@ namespace Dreamcast.Core
         /// <summary>
         ///     Flushes the protocol into a log file.
         /// </summary>
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public static extern void Flush();
+        public static void Flush()
+        {
+            NativeRuntime.ProtocolFlush();
+        }
 
         /// <summary>
         ///     Sets the formatting pattern of the protocol scripting formatter.
         /// </summary>
-        /// <param name="patter"></param>
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public static extern void SetFormatPattern(string patter);
+        /// <param name="pattern"></param>
+        public static void SetFormatPattern(string pattern)
+        {
+            NativeRuntime.ProtocolSetFormatPattern(pattern);
+        }
     }
 }

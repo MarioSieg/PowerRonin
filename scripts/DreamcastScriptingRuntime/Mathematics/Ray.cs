@@ -64,8 +64,7 @@ namespace Dreamcast.Mathematics
         /// <returns>Whether the two objects intersected.</returns>
         public bool Intersects(ref Ray ray)
         {
-            Vector3 point;
-            return Collision.RayIntersectsRay(ref this, ref ray, out point);
+            return Collision.RayIntersectsRay(ref this, ref ray, out var point);
         }
 
         /// <summary>
@@ -89,8 +88,7 @@ namespace Dreamcast.Mathematics
         /// <returns>Whether the two objects intersected.</returns>
         public bool Intersects(ref Plane plane)
         {
-            float distance;
-            return Collision.RayIntersectsPlane(ref this, ref plane, out distance);
+            return Collision.RayIntersectsPlane(ref this, ref plane, out float distance);
         }
 
         /// <summary>
@@ -130,8 +128,7 @@ namespace Dreamcast.Mathematics
         /// <returns>Whether the two objects intersected.</returns>
         public bool Intersects(ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
         {
-            float distance;
-            return Collision.RayIntersectsTriangle(ref this, ref vertex1, ref vertex2, ref vertex3, out distance);
+            return Collision.RayIntersectsTriangle(ref this, ref vertex1, ref vertex2, ref vertex3, out float distance);
         }
 
         /// <summary>
@@ -173,8 +170,7 @@ namespace Dreamcast.Mathematics
         /// <returns>Whether the two objects intersected.</returns>
         public bool Intersects(ref BoundingBox box)
         {
-            float distance;
-            return Collision.RayIntersectsBox(ref this, ref box, out distance);
+            return Collision.RayIntersectsBox(ref this, ref box, out float distance);
         }
 
         /// <summary>
@@ -222,8 +218,7 @@ namespace Dreamcast.Mathematics
         /// <returns>Whether the two objects intersected.</returns>
         public bool Intersects(ref BoundingSphere sphere)
         {
-            float distance;
-            return Collision.RayIntersectsSphere(ref this, ref sphere, out distance);
+            return Collision.RayIntersectsSphere(ref this, ref sphere, out float distance);
         }
 
         /// <summary>
@@ -277,12 +272,10 @@ namespace Dreamcast.Mathematics
             var nearPoint = new Vector3(x, y, 0);
             var farPoint = new Vector3(x, y, 1);
 
-            nearPoint = Vector3.Unproject(nearPoint, viewport.X, viewport.Y, viewport.Width, viewport.Height,
-                viewport.MinDepth,
-                viewport.MaxDepth, worldViewProjection);
-            farPoint = Vector3.Unproject(farPoint, viewport.X, viewport.Y, viewport.Width, viewport.Height,
-                viewport.MinDepth,
-                viewport.MaxDepth, worldViewProjection);
+            nearPoint = Vector3.Unproject(nearPoint, viewport.X, viewport.Y, viewport.Width, viewport.Height, viewport.MinDepth, viewport.MaxDepth,
+                worldViewProjection);
+            farPoint = Vector3.Unproject(farPoint, viewport.X, viewport.Y, viewport.Width, viewport.Height, viewport.MinDepth, viewport.MaxDepth,
+                worldViewProjection);
 
             var direction = farPoint - nearPoint;
             direction.Normalize();
@@ -299,7 +292,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator ==(Ray left, Ray right)
         {
             return left.Equals(ref right);
@@ -314,7 +307,7 @@ namespace Dreamcast.Mathematics
         ///     <c>true</c> if <paramref name="left" /> has a different value than <paramref name="right" />; otherwise,
         ///     <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public static bool operator !=(Ray left, Ray right)
         {
             return !left.Equals(ref right);
@@ -328,8 +321,7 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.CurrentCulture, "Position:{0} Direction:{1}", Position.ToString(),
-                Direction.ToString());
+            return string.Format(CultureInfo.CurrentCulture, "Position:{0} Direction:{1}", Position.ToString(), Direction.ToString());
         }
 
         /// <summary>
@@ -341,8 +333,7 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public string ToString(string format)
         {
-            return string.Format(CultureInfo.CurrentCulture, "Position:{0} Direction:{1}",
-                Position.ToString(format, CultureInfo.CurrentCulture),
+            return string.Format(CultureInfo.CurrentCulture, "Position:{0} Direction:{1}", Position.ToString(format, CultureInfo.CurrentCulture),
                 Direction.ToString(format, CultureInfo.CurrentCulture));
         }
 
@@ -355,8 +346,7 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public string ToString(IFormatProvider formatProvider)
         {
-            return string.Format(formatProvider, "Position:{0} Direction:{1}", Position.ToString(),
-                Direction.ToString());
+            return string.Format(formatProvider, "Position:{0} Direction:{1}", Position.ToString(), Direction.ToString());
         }
 
         /// <summary>
@@ -369,8 +359,7 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            return string.Format(formatProvider, "Position:{0} Direction:{1}",
-                Position.ToString(format, formatProvider),
+            return string.Format(formatProvider, "Position:{0} Direction:{1}", Position.ToString(format, formatProvider),
                 Direction.ToString(format, formatProvider));
         }
 
@@ -395,7 +384,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Vector4" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ref Ray value)
         {
             return Position == value.Position && Direction == value.Direction;
@@ -408,7 +397,7 @@ namespace Dreamcast.Mathematics
         /// <returns>
         ///     <c>true</c> if the specified <see cref="Vector4" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        [MethodImpl((MethodImplOptions) 0x100)] // MethodImplOptions.AggressiveInlining
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(Ray value)
         {
             return Equals(ref value);
