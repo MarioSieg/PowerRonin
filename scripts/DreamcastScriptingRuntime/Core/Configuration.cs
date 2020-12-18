@@ -21,6 +21,15 @@ using System.IO;
 
 namespace Dreamcast.Core
 {
+    public enum ConfigApplyFlags : byte
+    {
+        None = 0,
+        Display = 1 << 0,
+        Overlay = 1 << 1,
+        Graphics = 1 << 2,
+        All = byte.MaxValue,
+    }
+    
     /// <summary>
     ///     Contains all configuration variables.
     /// </summary>
@@ -101,8 +110,11 @@ namespace Dreamcast.Core
         ///     This might take some time as some settings
         ///     require some internal reloads.
         /// </summary>
-        public void Apply()
+        public void Apply(ConfigApplyFlags flags = ConfigApplyFlags.All)
         {
+            if (flags == ConfigApplyFlags.None)
+                return;
+            
             var nativeConfig = new NativeConfig
             {
                 Display_IsWindowFullscreen = Current.Display.IsWindowFullscreen,
@@ -126,7 +138,7 @@ namespace Dreamcast.Core
                 Graphics_EnableHDR10 = Current.Graphics.EnableHDR10,
                 Graphics_EnableMaxAnisotropy = Current.Graphics.EnableMaxAnisotropy
             };
-            NativeRuntime.CfgSetNative(in nativeConfig);
+            NativeRuntime.CfgSetNative(in nativeConfig, flags);
         }
 
         /// <summary>

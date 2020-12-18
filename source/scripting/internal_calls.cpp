@@ -69,7 +69,7 @@ namespace dce::scripting {
 			RUNTIME->config().display.is_full_screen = _full_screen;
 			})
 
-		REGISTER_CALL("CfgSetNative", [](const NativeConfig& _cfg) noexcept {
+		REGISTER_CALL("CfgSetNative", [](const NativeConfig& _cfg, const NativeConfigApplyFlags _flags) noexcept {
 				map_to_sys_config(RUNTIME->config(), _cfg);
 		})
 

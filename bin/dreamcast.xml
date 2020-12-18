@@ -131,7 +131,7 @@
                 Deserializes all configs from their files.
             </summary>
         </member>
-        <member name="M:Dreamcast.Core.Configuration.Apply">
+        <member name="M:Dreamcast.Core.Configuration.Apply(Dreamcast.Core.ConfigApplyFlags)">
             <summary>
                 Applies all configs.
                 This might take some time as some settings

@@ -50,6 +50,6 @@ namespace Dreamcast.Core
 
         [CallToNativeRuntime]
         [MethodImpl(MethodImplOptions.InternalCall)]
-        internal static extern void CfgSetNative(in NativeConfig cfg);
+        internal static extern void CfgSetNative(in NativeConfig cfg, ConfigApplyFlags flags);
     }
 }
