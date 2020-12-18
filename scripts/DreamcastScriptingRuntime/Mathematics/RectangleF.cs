@@ -396,9 +396,7 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public bool Equals(ref RectangleF other)
         {
-            return MathUtil.NearEqual(other.Left, Left) &&
-                   MathUtil.NearEqual(other.Right, Right) &&
-                   MathUtil.NearEqual(other.Top, Top) &&
+            return MathUtil.NearEqual(other.Left, Left) && MathUtil.NearEqual(other.Right, Right) && MathUtil.NearEqual(other.Top, Top) &&
                    MathUtil.NearEqual(other.Bottom, Bottom);
         }
 

@@ -15,38 +15,12 @@
 
 namespace Dreamcast.Core
 {
-    /// <summary>
-    ///     Engine core class.
-    /// </summary>
-    public static class Core
+    public enum SystemOverlayTheme
     {
-        private static void OnPreStartup()
-        {
-            CommandDB.RegisterCommonCommands();
-            CommandDB.Execute("info");
-            Configuration.Deserialize();
-            Configuration.Current.Apply();
-        }
-
-        private static void OnPostStartup()
-        {
-        }
-
-        private static void OnPreTick()
-        {
-            Input.Update();
-        }
-
-        private static void OnPostTick()
-        {
-        }
-
-        private static void OnPreShutdown()
-        {
-        }
-
-        private static void OnPostShutdown()
-        {
-        }
+        Dark = 0,
+        Light = 1,
+        Cherry = 2,
+        Blue = 3,
+        Green = 4
     }
 }

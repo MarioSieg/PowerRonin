@@ -121,19 +121,10 @@ namespace YAXLib
             // However colon (:) has been removed from the set of allowed characters,
             // because it is reserved for separating namespace prefix and XML-entity names.
             if ( //ch == ':' || 
-                ch == '_' ||
-                IsInRange(ch, 'A', 'Z') || IsInRange(ch, 'a', 'z') ||
-                IsInRange(ch, '\u00C0', '\u00D6') ||
-                IsInRange(ch, '\u00D8', '\u00F6') ||
-                IsInRange(ch, '\u00F8', '\u02FF') ||
-                IsInRange(ch, '\u0370', '\u037D') ||
-                IsInRange(ch, '\u037F', '\u1FFF') ||
-                IsInRange(ch, '\u200C', '\u200D') ||
-                IsInRange(ch, '\u2070', '\u218F') ||
-                IsInRange(ch, '\u2C00', '\u2FEF') ||
-                IsInRange(ch, '\u3001', '\uD7FF') ||
-                IsInRange(ch, '\uF900', '\uFDCF') ||
-                IsInRange(ch, '\uFDF0', '\uFFFD')
+                ch == '_' || IsInRange(ch, 'A', 'Z') || IsInRange(ch, 'a', 'z') || IsInRange(ch, '\u00C0', '\u00D6') || IsInRange(ch, '\u00D8', '\u00F6') ||
+                IsInRange(ch, '\u00F8', '\u02FF') || IsInRange(ch, '\u0370', '\u037D') || IsInRange(ch, '\u037F', '\u1FFF') ||
+                IsInRange(ch, '\u200C', '\u200D') || IsInRange(ch, '\u2070', '\u218F') || IsInRange(ch, '\u2C00', '\u2FEF') ||
+                IsInRange(ch, '\u3001', '\uD7FF') || IsInRange(ch, '\uF900', '\uFDCF') || IsInRange(ch, '\uFDF0', '\uFFFD')
                 //|| IsInRange(ch, '\u10000', '\uEFFFF')
             )
                 return true;
@@ -143,12 +134,8 @@ namespace YAXLib
 
         private static bool IsValidNameChar(char ch)
         {
-            return IsValidNameStartChar(ch) ||
-                   ch == '-' || ch == '.' ||
-                   IsInRange(ch, '0', '9') ||
-                   ch == '\u00B7' ||
-                   IsInRange(ch, '\u0300', '\u036F')
-                   || IsInRange(ch, '\u203F', '\u2040');
+            return IsValidNameStartChar(ch) || ch == '-' || ch == '.' || IsInRange(ch, '0', '9') || ch == '\u00B7' || IsInRange(ch, '\u0300', '\u036F') ||
+                   IsInRange(ch, '\u203F', '\u2040');
         }
 
         private static bool IsInRange(char ch, char lower, char upper)
@@ -166,8 +153,7 @@ namespace YAXLib
         /// <param name="locationString">The location string.</param>
         /// <param name="path">The path to be extracted.</param>
         /// <param name="alias">The alias to be extracted.</param>
-        public static void ExttractPathAndAliasFromLocationString(string locationString, out string path,
-            out string alias)
+        public static void ExttractPathAndAliasFromLocationString(string locationString, out string path, out string alias)
         {
             var poundIndex = locationString.IndexOf('#');
             if (poundIndex >= 0)
@@ -226,10 +212,7 @@ namespace YAXLib
             string preSlash = location.Substring(0, slashIdx);
             string postSlash = location.Substring(slashIdx + 1);
 
-            if (IsLocationAllGeneric(postSlash))
-            {
-                return false;
-            }
+            if (IsLocationAllGeneric(postSlash)) return false;
 
             newLocation = preSlash;
             newElem = postSlash;
@@ -325,21 +308,15 @@ namespace YAXLib
 
             for (var i = 0; i < temp.Length; i++)
                 if (temp[i] == '{')
-                {
                     bracketCount++;
-                }
                 else if (temp[i] == '}')
-                {
                     bracketCount--;
-                }
                 else if (temp[i] == '/')
-                {
                     if (bracketCount == 0)
                     {
                         yield return temp.Substring(lastStart, i - lastStart);
                         lastStart = i + 1;
                     }
-                }
 
             if (lastStart <= temp.Length - 1)
                 yield return temp.Substring(lastStart);

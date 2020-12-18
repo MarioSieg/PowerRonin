@@ -32,8 +32,7 @@ namespace YAXLib
     {
         private static readonly Dictionary<Type, IKnownType> s_dictKnownTypes = new Dictionary<Type, IKnownType>();
 
-        private static readonly Dictionary<string, IKnownType> s_dictDynamicKnownTypes =
-            new Dictionary<string, IKnownType>();
+        private static readonly Dictionary<string, IKnownType> s_dictDynamicKnownTypes = new Dictionary<string, IKnownType>();
 
         static KnownTypes()
         {
@@ -194,11 +193,8 @@ namespace YAXLib
             var width = ReflectionUtils.InvokeGetProperty<int>(obj, "Width");
             var height = ReflectionUtils.InvokeGetProperty<int>(obj, "Height");
 
-            elem.Add(
-                new XElement(this.GetXName("Left", overridingNamespace), left),
-                new XElement(this.GetXName("Top", overridingNamespace), top),
-                new XElement(this.GetXName("Width", overridingNamespace), width),
-                new XElement(this.GetXName("Height", overridingNamespace), height));
+            elem.Add(new XElement(this.GetXName("Left", overridingNamespace), left), new XElement(this.GetXName("Top", overridingNamespace), top),
+                new XElement(this.GetXName("Width", overridingNamespace), width), new XElement(this.GetXName("Height", overridingNamespace), height));
         }
 
         public override object Deserialize(XElement elem, XNamespace overridingNamespace)
@@ -211,11 +207,7 @@ namespace YAXLib
             if (elemHeight == null || elemWidth == null || elemTop == null || elemLeft == null)
                 throw new YAXElementMissingException(elem.Name + ":[Left|Top|Width|Height]", elem);
 
-            return Activator.CreateInstance(Type,
-                int.Parse(elemLeft.Value),
-                int.Parse(elemTop.Value),
-                int.Parse(elemWidth.Value),
-                int.Parse(elemHeight.Value));
+            return Activator.CreateInstance(Type, int.Parse(elemLeft.Value), int.Parse(elemTop.Value), int.Parse(elemWidth.Value), int.Parse(elemHeight.Value));
         }
     }
 
@@ -241,11 +233,8 @@ namespace YAXLib
                 var r = ReflectionUtils.InvokeGetProperty<byte>(obj, "R");
                 var g = ReflectionUtils.InvokeGetProperty<byte>(obj, "G");
                 var b = ReflectionUtils.InvokeGetProperty<byte>(obj, "B");
-                elem.Add(
-                    new XElement(this.GetXName("A", overridingNamespace), a),
-                    new XElement(this.GetXName("R", overridingNamespace), r),
-                    new XElement(this.GetXName("G", overridingNamespace), g),
-                    new XElement(this.GetXName("B", overridingNamespace), b));
+                elem.Add(new XElement(this.GetXName("A", overridingNamespace), a), new XElement(this.GetXName("R", overridingNamespace), r),
+                    new XElement(this.GetXName("G", overridingNamespace), g), new XElement(this.GetXName("B", overridingNamespace), b));
             }
         }
 

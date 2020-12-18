@@ -35,8 +35,7 @@ namespace YAXLib
         ///     Initializes a new instance of the <see cref="YAXException" /> class.
         /// </summary>
         /// <param name="message">The message.</param>
-        public YAXException(string message)
-            : base(message)
+        public YAXException(string message) : base(message)
         {
         }
     }
@@ -52,8 +51,7 @@ namespace YAXLib
         /// <param name="lineInfo">IXmlLineInfo derived object, e.g. XElement, XAttribute containing line info</param>
         public YAXDeserializationException(IXmlLineInfo lineInfo)
         {
-            if (lineInfo != null &&
-                lineInfo.HasLineInfo())
+            if (lineInfo != null && lineInfo.HasLineInfo())
             {
                 HasLineInfo = true;
                 LineNumber = lineInfo.LineNumber;
@@ -132,8 +130,7 @@ namespace YAXLib
         /// <returns>
         ///     The error message that explains the reason for the exception, or an empty string("").
         /// </returns>
-        public override string Message => string.Format(CultureInfo.CurrentCulture,
-            "The location specified cannot be read from or written to: {0}", Location);
+        public override string Message => string.Format(CultureInfo.CurrentCulture, "The location specified cannot be read from or written to: {0}", Location);
 
         #endregion
     }
@@ -173,8 +170,7 @@ namespace YAXLib
         /// <returns>
         ///     The error message that explains the reason for the exception, or an empty string("").
         /// </returns>
-        public override string Message => string.Format(CultureInfo.CurrentCulture,
-            "An attribute with this name already exists: '{0}'.", AttrName);
+        public override string Message => string.Format(CultureInfo.CurrentCulture, "An attribute with this name already exists: '{0}'.", AttrName);
 
         #endregion
     }
@@ -191,8 +187,7 @@ namespace YAXLib
         ///     Initializes a new instance of the <see cref="YAXAttributeMissingException" /> class.
         /// </summary>
         /// <param name="attrName">Name of the attribute.</param>
-        public YAXAttributeMissingException(string attrName) :
-            this(attrName, null)
+        public YAXAttributeMissingException(string attrName) : this(attrName, null)
         {
         }
 
@@ -201,8 +196,7 @@ namespace YAXLib
         /// </summary>
         /// <param name="attrName">Name of the attribute.</param>
         /// <param name="lineInfo">IXmlLineInfo derived object, e.g. XElement, XAttribute containing line info</param>
-        public YAXAttributeMissingException(string attrName, IXmlLineInfo lineInfo) :
-            base(lineInfo)
+        public YAXAttributeMissingException(string attrName, IXmlLineInfo lineInfo) : base(lineInfo)
         {
             AttributeName = attrName;
         }
@@ -243,8 +237,7 @@ namespace YAXLib
         ///     Initializes a new instance of the <see cref="YAXAttributeMissingException" /> class.
         /// </summary>
         /// <param name="elementName">Name of the element.</param>
-        public YAXElementValueMissingException(string elementName) :
-            this(elementName, null)
+        public YAXElementValueMissingException(string elementName) : this(elementName, null)
         {
         }
 
@@ -253,8 +246,7 @@ namespace YAXLib
         /// </summary>
         /// <param name="elementName">Name of the element.</param>
         /// <param name="lineInfo">IXmlLineInfo derived object, e.g. XElement, XAttribute containing line info</param>
-        public YAXElementValueMissingException(string elementName, IXmlLineInfo lineInfo)
-            : base(lineInfo)
+        public YAXElementValueMissingException(string elementName, IXmlLineInfo lineInfo) : base(lineInfo)
         {
             ElementName = elementName;
         }
@@ -276,8 +268,8 @@ namespace YAXLib
         /// <returns>
         ///     The error message that explains the reason for the exception, or an empty string("").
         /// </returns>
-        public override string Message => string.Format(CultureInfo.CurrentCulture,
-            "Element with the given name does not contain text values: '{0}'.{1}", ElementName, LineInfoMessage);
+        public override string Message => string.Format(CultureInfo.CurrentCulture, "Element with the given name does not contain text values: '{0}'.{1}",
+            ElementName, LineInfoMessage);
 
         #endregion
     }
@@ -296,8 +288,7 @@ namespace YAXLib
         ///     Initializes a new instance of the <see cref="YAXAttributeMissingException" /> class.
         /// </summary>
         /// <param name="elementName">Name of the element.</param>
-        public YAXElementValueAlreadyExistsException(string elementName) :
-            this(elementName, null)
+        public YAXElementValueAlreadyExistsException(string elementName) : this(elementName, null)
         {
         }
 
@@ -306,8 +297,7 @@ namespace YAXLib
         /// </summary>
         /// <param name="elementName">Name of the element.</param>
         /// <param name="lineInfo">IXmlLineInfo derived object, e.g. XElement, XAttribute containing line info</param>
-        public YAXElementValueAlreadyExistsException(string elementName, IXmlLineInfo lineInfo) :
-            base(lineInfo)
+        public YAXElementValueAlreadyExistsException(string elementName, IXmlLineInfo lineInfo) : base(lineInfo)
         {
             ElementName = elementName;
         }
@@ -329,8 +319,8 @@ namespace YAXLib
         /// <returns>
         ///     The error message that explains the reason for the exception, or an empty string("").
         /// </returns>
-        public override string Message => string.Format(CultureInfo.CurrentCulture,
-            "Element with the given name already has value: '{0}'.{1}", ElementName, LineInfoMessage);
+        public override string Message => string.Format(CultureInfo.CurrentCulture, "Element with the given name already has value: '{0}'.{1}", ElementName,
+            LineInfoMessage);
 
         #endregion
     }
@@ -348,8 +338,7 @@ namespace YAXLib
         ///     Initializes a new instance of the <see cref="YAXElementMissingException" /> class.
         /// </summary>
         /// <param name="elemName">Name of the element.</param>
-        public YAXElementMissingException(string elemName) :
-            this(elemName, null)
+        public YAXElementMissingException(string elemName) : this(elemName, null)
         {
         }
 
@@ -358,8 +347,7 @@ namespace YAXLib
         /// </summary>
         /// <param name="elemName">Name of the element.</param>
         /// <param name="lineInfo">IXmlLineInfo derived object, e.g. XElement, XAttribute containing line info</param>
-        public YAXElementMissingException(string elemName, IXmlLineInfo lineInfo) :
-            base(lineInfo)
+        public YAXElementMissingException(string elemName, IXmlLineInfo lineInfo) : base(lineInfo)
         {
             ElementName = elemName;
         }
@@ -381,8 +369,8 @@ namespace YAXLib
         /// <returns>
         ///     The error message that explains the reason for the exception, or an empty string("").
         /// </returns>
-        public override string Message => string.Format(CultureInfo.CurrentCulture,
-            "No elements with this name found: '{0}'.{1}", ElementName, LineInfoMessage);
+        public override string Message =>
+            string.Format(CultureInfo.CurrentCulture, "No elements with this name found: '{0}'.{1}", ElementName, LineInfoMessage);
 
         #endregion
     }
@@ -401,8 +389,7 @@ namespace YAXLib
         /// </summary>
         /// <param name="elemName">Name of the element.</param>
         /// <param name="badInput">The value of the input which could not be converted to the type of the property.</param>
-        public YAXBadlyFormedInput(string elemName, string badInput)
-            : this(elemName, badInput, null)
+        public YAXBadlyFormedInput(string elemName, string badInput) : this(elemName, badInput, null)
         {
         }
 
@@ -412,8 +399,7 @@ namespace YAXLib
         /// <param name="elemName">Name of the element.</param>
         /// <param name="badInput">The value of the input which could not be converted to the type of the property.</param>
         /// <param name="lineInfo">IXmlLineInfo derived object, e.g. XElement, XAttribute containing line info</param>
-        public YAXBadlyFormedInput(string elemName, string badInput, IXmlLineInfo lineInfo)
-            : base(lineInfo)
+        public YAXBadlyFormedInput(string elemName, string badInput, IXmlLineInfo lineInfo) : base(lineInfo)
         {
             ElementName = elemName;
             BadInput = badInput;
@@ -443,12 +429,8 @@ namespace YAXLib
         ///     The error message that explains the reason for the exception, or an empty string("").
         /// </returns>
         public override string Message =>
-            string.Format(
-                CultureInfo.CurrentCulture,
-                "The format of the value specified for the property '{0}' is not proper: '{1}'.{2}",
-                ElementName,
-                BadInput,
-                LineInfoMessage);
+            string.Format(CultureInfo.CurrentCulture, "The format of the value specified for the property '{0}' is not proper: '{1}'.{2}", ElementName,
+                BadInput, LineInfoMessage);
 
         #endregion
     }
@@ -466,8 +448,7 @@ namespace YAXLib
         ///     Initializes a new instance of the <see cref="YAXPropertyCannotBeAssignedTo" /> class.
         /// </summary>
         /// <param name="propName">Name of the property.</param>
-        public YAXPropertyCannotBeAssignedTo(string propName) :
-            this(propName, null)
+        public YAXPropertyCannotBeAssignedTo(string propName) : this(propName, null)
         {
         }
 
@@ -476,8 +457,7 @@ namespace YAXLib
         /// </summary>
         /// <param name="propName">Name of the property.</param>
         /// <param name="lineInfo">IXmlLineInfo derived object, e.g. XElement, XAttribute containing line info</param>
-        public YAXPropertyCannotBeAssignedTo(string propName, IXmlLineInfo lineInfo) :
-            base(lineInfo)
+        public YAXPropertyCannotBeAssignedTo(string propName, IXmlLineInfo lineInfo) : base(lineInfo)
         {
             PropertyName = propName;
         }
@@ -499,8 +479,8 @@ namespace YAXLib
         /// <returns>
         ///     The error message that explains the reason for the exception, or an empty string("").
         /// </returns>
-        public override string Message => string.Format(CultureInfo.CurrentCulture,
-            "Could not assign to the property '{0}'.{1}", PropertyName, LineInfoMessage);
+        public override string Message =>
+            string.Format(CultureInfo.CurrentCulture, "Could not assign to the property '{0}'.{1}", PropertyName, LineInfoMessage);
 
         #endregion
     }
@@ -518,8 +498,7 @@ namespace YAXLib
         /// </summary>
         /// <param name="propName">Name of the property.</param>
         /// <param name="obj">The object that could not be added to the collection.</param>
-        public YAXCannotAddObjectToCollection(string propName, object obj) :
-            this(propName, obj, null)
+        public YAXCannotAddObjectToCollection(string propName, object obj) : this(propName, obj, null)
         {
         }
 
@@ -529,8 +508,7 @@ namespace YAXLib
         /// <param name="propName">Name of the property.</param>
         /// <param name="obj">The object that could not be added to the collection.</param>
         /// <param name="lineInfo">IXmlLineInfo derived object, e.g. XElement, XAttribute containing line info</param>
-        public YAXCannotAddObjectToCollection(string propName, object obj, IXmlLineInfo lineInfo) :
-            base(lineInfo)
+        public YAXCannotAddObjectToCollection(string propName, object obj, IXmlLineInfo lineInfo) : base(lineInfo)
         {
             PropertyName = propName;
             ObjectToAdd = obj;
@@ -560,12 +538,7 @@ namespace YAXLib
         ///     The error message that explains the reason for the exception, or an empty string("").
         /// </returns>
         public override string Message =>
-            string.Format(
-                CultureInfo.CurrentCulture,
-                "Could not add object ('{0}') to the collection ('{1}').{2}",
-                ObjectToAdd,
-                PropertyName,
-                LineInfoMessage);
+            string.Format(CultureInfo.CurrentCulture, "Could not add object ('{0}') to the collection ('{1}').{2}", ObjectToAdd, PropertyName, LineInfoMessage);
 
         #endregion
     }
@@ -584,8 +557,7 @@ namespace YAXLib
         /// </summary>
         /// <param name="propName">Name of the property.</param>
         /// <param name="defaultValue">The default value which caused the problem.</param>
-        public YAXDefaultValueCannotBeAssigned(string propName, object defaultValue) :
-            this(propName, defaultValue, null)
+        public YAXDefaultValueCannotBeAssigned(string propName, object defaultValue) : this(propName, defaultValue, null)
         {
         }
 
@@ -595,8 +567,7 @@ namespace YAXLib
         /// <param name="propName">Name of the property.</param>
         /// <param name="defaultValue">The default value which caused the problem.</param>
         /// <param name="lineInfo">IXmlLineInfo derived object, e.g. XElement, XAttribute containing line info</param>
-        public YAXDefaultValueCannotBeAssigned(string propName, object defaultValue, IXmlLineInfo lineInfo) :
-            base(lineInfo)
+        public YAXDefaultValueCannotBeAssigned(string propName, object defaultValue, IXmlLineInfo lineInfo) : base(lineInfo)
         {
             PropertyName = propName;
             TheDefaultValue = defaultValue;
@@ -626,12 +597,8 @@ namespace YAXLib
         ///     The error message that explains the reason for the exception, or an empty string("").
         /// </returns>
         public override string Message =>
-            string.Format(
-                CultureInfo.CurrentCulture,
-                "Could not assign the default value specified ('{0}') for the property '{1}'.{2}",
-                TheDefaultValue,
-                PropertyName,
-                LineInfoMessage);
+            string.Format(CultureInfo.CurrentCulture, "Could not assign the default value specified ('{0}') for the property '{1}'.{2}", TheDefaultValue,
+                PropertyName, LineInfoMessage);
 
         #endregion
     }
@@ -664,12 +631,10 @@ namespace YAXLib
         {
             get
             {
-                string msg = string.Format(CultureInfo.CurrentCulture,
-                    "The input xml file is not properly formatted!{0}", LineInfoMessage);
+                string msg = string.Format(CultureInfo.CurrentCulture, "The input xml file is not properly formatted!{0}", LineInfoMessage);
 
                 if (innerException != null)
-                    msg += string.Format(CultureInfo.CurrentCulture, "\r\nMore Details:\r\n{0}",
-                        innerException.Message);
+                    msg += string.Format(CultureInfo.CurrentCulture, "\r\nMore Details:\r\n{0}", innerException.Message);
 
                 return msg;
             }
@@ -685,8 +650,7 @@ namespace YAXLib
         /// <param name="innerException">The inner exception.</param>
         /// <param name="lineNumber">The line number on which the error occurred</param>
         /// <param name="linePosition">The line position on which the error occurred</param>
-        public YAXBadlyFormedXML(Exception innerException, int lineNumber, int linePosition)
-            : base(lineNumber, linePosition)
+        public YAXBadlyFormedXML(Exception innerException, int lineNumber, int linePosition) : base(lineNumber, linePosition)
         {
             this.innerException = innerException;
         }
@@ -695,8 +659,7 @@ namespace YAXLib
         ///     Initializes a new instance of the <see cref="YAXBadlyFormedXML" /> class.
         /// </summary>
         /// <param name="innerException">The inner exception.</param>
-        public YAXBadlyFormedXML(Exception innerException)
-            : base(null)
+        public YAXBadlyFormedXML(Exception innerException) : base(null)
         {
             this.innerException = innerException;
         }
@@ -704,8 +667,7 @@ namespace YAXLib
         /// <summary>
         ///     Initializes a new instance of the <see cref="YAXBadlyFormedXML" /> class.
         /// </summary>
-        public YAXBadlyFormedXML()
-            : this(null)
+        public YAXBadlyFormedXML() : this(null)
         {
         }
 
@@ -755,11 +717,7 @@ namespace YAXLib
         ///     The error message that explains the reason for the exception, or an empty string("").
         /// </returns>
         public override string Message =>
-            string.Format(
-                CultureInfo.CurrentCulture,
-                "Could not format objects of type '{0}' with the format string '{1}'",
-                ObjectType.Name,
-                Format);
+            string.Format(CultureInfo.CurrentCulture, "Could not format objects of type '{0}' with the format string '{1}'", ObjectType.Name, Format);
 
         #endregion
     }
@@ -846,10 +804,7 @@ namespace YAXLib
         ///     The error message that explains the reason for the exception, or an empty string("").
         /// </returns>
         public override string Message =>
-            string.Format(
-                CultureInfo.CurrentCulture,
-                "Expected an object of type '{0}' but received an object of type '{1}'.",
-                ExpectedType.Name,
+            string.Format(CultureInfo.CurrentCulture, "Expected an object of type '{0}' but received an object of type '{1}'.", ExpectedType.Name,
                 ReceivedType.Name);
 
         #endregion
@@ -857,8 +812,7 @@ namespace YAXLib
 
     public class YAXPolymorphicException : YAXException
     {
-        public YAXPolymorphicException(string message)
-            : base(message)
+        public YAXPolymorphicException(string message) : base(message)
         {
         }
     }

@@ -29,8 +29,7 @@ namespace YAXLib
         /// <summary>
         ///     The list of exception occured during serialization/deserialization.
         /// </summary>
-        private readonly List<KeyValuePair<YAXException, YAXExceptionTypes>> listExceptions =
-            new List<KeyValuePair<YAXException, YAXExceptionTypes>>();
+        private readonly List<KeyValuePair<YAXException, YAXExceptionTypes>> listExceptions = new List<KeyValuePair<YAXException, YAXExceptionTypes>>();
 
         #endregion
 

@@ -268,8 +268,7 @@ namespace Dreamcast.Mathematics
             locPoint.Z = Math.Abs(locPoint.Z);
 
             //Simple axes-aligned BB check
-            if (MathUtil.NearEqual(locPoint.X, Extents.X) && MathUtil.NearEqual(locPoint.Y, Extents.Y) &&
-                MathUtil.NearEqual(locPoint.Z, Extents.Z))
+            if (MathUtil.NearEqual(locPoint.X, Extents.X) && MathUtil.NearEqual(locPoint.Y, Extents.Y) && MathUtil.NearEqual(locPoint.Z, Extents.Z))
                 return ContainmentType.Intersects;
             if (locPoint.X < Extents.X && locPoint.Y < Extents.Y && locPoint.Z < Extents.Z)
                 return ContainmentType.Contains;
@@ -307,9 +306,7 @@ namespace Dreamcast.Mathematics
                 locPoint.Z = Math.Abs(locPoint.Z);
 
                 //Simple axes-aligned BB check
-                if (MathUtil.NearEqual(locPoint.X, Extents.X) &&
-                    MathUtil.NearEqual(locPoint.Y, Extents.Y) &&
-                    MathUtil.NearEqual(locPoint.Z, Extents.Z))
+                if (MathUtil.NearEqual(locPoint.X, Extents.X) && MathUtil.NearEqual(locPoint.Y, Extents.Y) && MathUtil.NearEqual(locPoint.Z, Extents.Z))
                     containsAny = true;
                 if (locPoint.X < Extents.X && locPoint.Y < Extents.Y && locPoint.Z < Extents.Z)
                     containsAny = true;
@@ -366,9 +363,8 @@ namespace Dreamcast.Mathematics
             if (distance > locRadius * locRadius)
                 return ContainmentType.Disjoint;
 
-            if (minusExtens.X + locRadius <= locCenter.X && locCenter.X <= Extents.X - locRadius &&
-                Extents.X - minusExtens.X > locRadius && minusExtens.Y + locRadius <= locCenter.Y &&
-                locCenter.Y <= Extents.Y - locRadius && Extents.Y - minusExtens.Y > locRadius &&
+            if (minusExtens.X + locRadius <= locCenter.X && locCenter.X <= Extents.X - locRadius && Extents.X - minusExtens.X > locRadius &&
+                minusExtens.Y + locRadius <= locCenter.Y && locCenter.Y <= Extents.Y - locRadius && Extents.Y - minusExtens.Y > locRadius &&
                 minusExtens.Z + locRadius <= locCenter.Z && locCenter.Z <= Extents.Z - locRadius &&
                 Extents.Z - minusExtens.Z > locRadius) return ContainmentType.Contains;
 
@@ -425,8 +421,7 @@ namespace Dreamcast.Mathematics
             // Vector separating the centers of Box B and of Box A	
             var vSepWS = obb.Center - Center;
             // Rotated into Box A's coordinates
-            var vSepA = new Vector3(Vector3.Dot(vSepWS, RotA[0]), Vector3.Dot(vSepWS, RotA[1]),
-                Vector3.Dot(vSepWS, RotA[2]));
+            var vSepA = new Vector3(Vector3.Dot(vSepWS, RotA[0]), Vector3.Dot(vSepWS, RotA[1]), Vector3.Dot(vSepWS, RotA[2]));
 
             // Test if any of A's basis vectors separate the box
             for (i = 0; i < 3; i++)
@@ -549,8 +544,7 @@ namespace Dreamcast.Mathematics
             // Vector separating the centers of Box B and of Box A	
             var vSepWS = boxCenter - Center;
             // Rotated into Box A's coordinates
-            var vSepA = new Vector3(Vector3.Dot(vSepWS, RotA[0]), Vector3.Dot(vSepWS, RotA[1]),
-                Vector3.Dot(vSepWS, RotA[2]));
+            var vSepA = new Vector3(Vector3.Dot(vSepWS, RotA[0]), Vector3.Dot(vSepWS, RotA[1]), Vector3.Dot(vSepWS, RotA[2]));
 
             // Test if any of A's basis vectors separate the box
             for (i = 0; i < 3; i++)
@@ -669,8 +663,7 @@ namespace Dreamcast.Mathematics
         ///     matrix of the OrientedBoundingBox.
         /// </param>
         /// <returns></returns>
-        public static Matrix4x4 GetBoxToBoxMatrix(ref OrientedBoundingBox A, ref OrientedBoundingBox B,
-            bool NoMatrixScaleApplied = false)
+        public static Matrix4x4 GetBoxToBoxMatrix(ref OrientedBoundingBox A, ref OrientedBoundingBox B, bool NoMatrixScaleApplied = false)
         {
             Matrix4x4 AtoB_Matrix;
 
@@ -713,8 +706,7 @@ namespace Dreamcast.Mathematics
         ///     Unlike merging axis aligned boxes, The operation is not interchangeable, because it keeps A orientation and merge B
         ///     into it.
         /// </remarks>
-        public static void Merge(ref OrientedBoundingBox A, ref OrientedBoundingBox B,
-            bool NoMatrixScaleApplied = false)
+        public static void Merge(ref OrientedBoundingBox A, ref OrientedBoundingBox B, bool NoMatrixScaleApplied = false)
         {
             var AtoB_Matrix = GetBoxToBoxMatrix(ref A, ref B, NoMatrixScaleApplied);
 
@@ -870,8 +862,7 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString();
 
-            return string.Format(CultureInfo.CurrentCulture, "Center: {0}, Extents: {1}",
-                Center.ToString(format, CultureInfo.CurrentCulture),
+            return string.Format(CultureInfo.CurrentCulture, "Center: {0}, Extents: {1}", Center.ToString(format, CultureInfo.CurrentCulture),
                 Extents.ToString(format, CultureInfo.CurrentCulture));
         }
 

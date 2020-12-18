@@ -250,8 +250,7 @@ namespace YAXLib
         ///     returns the attribute with the given name in the location
         ///     specified by the given location string in the given XML element.
         /// </returns>
-        public static XAttribute CreateAttribute(XElement baseElement, string location, XName attrName,
-            object attrValue, XNamespace documentDefaultNamespace)
+        public static XAttribute CreateAttribute(XElement baseElement, string location, XName attrName, object attrValue, XNamespace documentDefaultNamespace)
         {
             XElement newLoc = FindLocation(baseElement, location);
             if (newLoc == null)
@@ -401,8 +400,7 @@ namespace YAXLib
         public static string DecodeXMLString(string str)
         {
             if (str.IndexOf('&') >= 0)
-                return str.Replace("&lt;", "<").Replace("&gt;", ">").Replace("&quot;", "\"").Replace("&apos;", "'")
-                    .Replace("&amp;", "&");
+                return str.Replace("&lt;", "<").Replace("&gt;", ">").Replace("&quot;", "\"").Replace("&apos;", "'").Replace("&amp;", "&");
             // Make sure that &amp; is the final replace so that sequences such as &amp;gt; do not get corrupted
 
             return str;
@@ -421,8 +419,7 @@ namespace YAXLib
 
         public static string GetRandomPrefix(this XElement self)
         {
-            var q = self.Attributes().Where(xa => xa.Name.Namespace == XNamespace.Xmlns).Select(xa => xa.Name.LocalName)
-                .ToArray();
+            var q = self.Attributes().Where(xa => xa.Name.Namespace == XNamespace.Xmlns).Select(xa => xa.Name.LocalName).ToArray();
             var setPrefixes = new HashSet<string>(q);
 
             string prefix = "p";
@@ -451,8 +448,7 @@ namespace YAXLib
             return Convert.ToString(self ?? string.Empty, CultureInfo.InvariantCulture);
         }
 
-        public static XAttribute AddAttributeNamespaceSafe(this XElement parent, XName attrName, object attrValue,
-            XNamespace documentDefaultNamespace)
+        public static XAttribute AddAttributeNamespaceSafe(this XElement parent, XName attrName, object attrValue, XNamespace documentDefaultNamespace)
         {
             var newAttrName = attrName;
 
@@ -464,16 +460,14 @@ namespace YAXLib
             return newAttr;
         }
 
-        public static XAttribute Attribute_NamespaceSafe(this XElement parent, XName attrName,
-            XNamespace documentDefaultNamespace)
+        public static XAttribute Attribute_NamespaceSafe(this XElement parent, XName attrName, XNamespace documentDefaultNamespace)
         {
             if (attrName.Namespace == documentDefaultNamespace)
                 attrName = attrName.RemoveNamespace();
             return parent.Attribute(attrName);
         }
 
-        public static IEnumerable<XAttribute> Attributes_NamespaceSafe(this XElement parent, XName attrName,
-            XNamespace documentDefaultNamespace)
+        public static IEnumerable<XAttribute> Attributes_NamespaceSafe(this XElement parent, XName attrName, XNamespace documentDefaultNamespace)
         {
             if (attrName.Namespace == documentDefaultNamespace)
                 attrName = attrName.RemoveNamespace();

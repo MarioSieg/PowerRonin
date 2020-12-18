@@ -311,9 +311,7 @@ namespace Dreamcast.Mathematics
         /// <param name="amount">Value between 0 and 1 indicating interpolation amount.</param>
         public static float SmoothStep(float amount)
         {
-            return amount <= 0 ? 0
-                : amount >= 1 ? 1
-                : amount * amount * (3 - 2 * amount);
+            return amount <= 0 ? 0 : amount >= 1 ? 1 : amount * amount * (3 - 2 * amount);
         }
 
         /// <summary>
@@ -325,9 +323,7 @@ namespace Dreamcast.Mathematics
         /// <param name="amount">Value between 0 and 1 indicating interpolation amount.</param>
         public static float SmootherStep(float amount)
         {
-            return amount <= 0 ? 0
-                : amount >= 1 ? 1
-                : amount * amount * amount * (amount * (amount * 6 - 15) + 10);
+            return amount <= 0 ? 0 : amount >= 1 ? 1 : amount * amount * amount * (amount * (amount * 6 - 15) + 10);
         }
 
         /// <summary>
@@ -364,8 +360,7 @@ namespace Dreamcast.Mathematics
         public static int Wrap(int value, int min, int max)
         {
             if (min > max)
-                throw new ArgumentException($"min {min} should be less than or equal to max {max}",
-                    "min");
+                throw new ArgumentException($"min {min} should be less than or equal to max {max}", "min");
 
             // Code from http://stackoverflow.com/a/707426/1356325
             var range_size = max - min + 1;
@@ -393,8 +388,7 @@ namespace Dreamcast.Mathematics
             double valued = value;
 
             if (mind > maxd)
-                throw new ArgumentException($"min {min} should be less than or equal to max {max}",
-                    "min");
+                throw new ArgumentException($"min {min} should be less than or equal to max {max}", "min");
 
             var range_size = maxd - mind;
             return (float) (mind + (valued - mind) - range_size * Math.Floor((valued - mind) / range_size));
@@ -412,8 +406,7 @@ namespace Dreamcast.Mathematics
         /// <param name="sigmaX">Curve sigma X.</param>
         /// <param name="sigmaY">Curve sigma Y.</param>
         /// <returns>The result of Gaussian function.</returns>
-        public static float Gauss(float amplitude, float x, float y, float centerX, float centerY, float sigmaX,
-            float sigmaY)
+        public static float Gauss(float amplitude, float x, float y, float centerX, float centerY, float sigmaX, float sigmaY)
         {
             return (float) Gauss((double) amplitude, x, y, centerX, centerY, sigmaX, sigmaY);
         }
@@ -430,8 +423,7 @@ namespace Dreamcast.Mathematics
         /// <param name="sigmaX">Curve sigma X.</param>
         /// <param name="sigmaY">Curve sigma Y.</param>
         /// <returns>The result of Gaussian function.</returns>
-        public static double Gauss(double amplitude, double x, double y, double centerX, double centerY, double sigmaX,
-            double sigmaY)
+        public static double Gauss(double amplitude, double x, double y, double centerX, double centerY, double sigmaX, double sigmaY)
         {
             var cx = x - centerX;
             var cy = y - centerY;

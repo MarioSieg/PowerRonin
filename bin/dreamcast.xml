@@ -96,6 +96,58 @@
                 Contains all configuration variables.
             </summary>
         </member>
+        <member name="P:Dreamcast.Core.Configuration.Display">
+            <summary>
+                Display config.
+            </summary>
+        </member>
+        <member name="P:Dreamcast.Core.Configuration.Overlay">
+            <summary>
+                System overlay config.
+            </summary>
+        </member>
+        <member name="P:Dreamcast.Core.Configuration.Graphics">
+            <summary>
+                Graphics config.
+            </summary>
+        </member>
+        <member name="P:Dreamcast.Core.Configuration.Current">
+            <summary>
+                Current global system config.
+            </summary>
+        </member>
+        <member name="P:Dreamcast.Core.Configuration.ConfigDirectory">
+            <summary>
+                The name of the directory where configs are saved in.
+            </summary>
+        </member>
+        <member name="M:Dreamcast.Core.Configuration.Serialize">
+            <summary>
+                Serializes all configs into their files.
+            </summary>
+        </member>
+        <member name="M:Dreamcast.Core.Configuration.Deserialize">
+            <summary>
+                Deserializes all configs from their files.
+            </summary>
+        </member>
+        <member name="M:Dreamcast.Core.Configuration.Apply">
+            <summary>
+                Applies all configs.
+                This might take some time as some settings
+                require some internal reloads.
+            </summary>
+        </member>
+        <member name="T:Dreamcast.Core.Configuration.DisplayConfiguration">
+            <summary>
+                Contains display config.
+            </summary>
+        </member>
+        <member name="P:Dreamcast.Core.Configuration.DisplayConfiguration.FilePath">
+            <summary>
+                The config file path.
+            </summary>
+        </member>
         <member name="T:Dreamcast.Core.Core">
             <summary>
                 Engine core class.
@@ -818,10 +870,16 @@
                 Middle mouse button.
             </summary>
         </member>
+        <member name="T:Dreamcast.Core.NativeConfig">
+            <summary>
+                !! Maps to NativeConfig in source/scripting/native_config.hpp !!
+                !! Warning! None of these methods should be changed because are mapped to native functions !!
+            </summary>
+        </member>
         <member name="T:Dreamcast.Core.NativeRuntime">
             <summary>
                 Contains all internal calls.
-                Warning! None of these methods should be renamed because
+                Warning! None of these methods should be changed because
                 they are mapped to native functions.
             </summary>
         </member>
@@ -20336,19 +20394,34 @@
                 This class also supports serializing most of the collection classes such as the Dictionary generic class.
             </summary>
         </member>
+        <member name="F:YAXLib.YAXSerializer.m_defaultExceptionType">
+            <summary>
+                The exception error behaviour enumeration to be used by the YAX library.
+            </summary>
+        </member>
+        <member name="F:YAXLib.YAXSerializer.m_exceptionPolicy">
+            <summary>
+                The handling policy enumeration to be used by the YAX library.
+            </summary>
+        </member>
         <member name="F:YAXLib.YAXSerializer.m_namespaceToPrefix">
             <summary>
                 a map of namespaces to their prefixes (if any) to be added utlimately to the xml result
             </summary>
         </member>
+        <member name="F:YAXLib.YAXSerializer.m_parsingErrors">
+            <summary>
+                The list of all errors that have occured.
+            </summary>
+        </member>
+        <member name="F:YAXLib.YAXSerializer.m_serializationOption">
+            <summary>
+                The serialization option enumeration which can be set during initialization.
+            </summary>
+        </member>
         <member name="F:YAXLib.YAXSerializer.m_baseElement">
             <summary>
                 a reference to the base xml element used during serialization.
-            </summary>
-        </member>
-        <member name="F:YAXLib.YAXSerializer.m_defaultExceptionType">
-            <summary>
-                The exception error behaviour enumeration to be used by the YAX library.
             </summary>
         </member>
         <member name="F:YAXLib.YAXSerializer.m_desObject">
@@ -20374,11 +20447,6 @@
                 Specifies whether an exception is occurred during the deserialization of the current member
             </summary>
         </member>
-        <member name="F:YAXLib.YAXSerializer.m_exceptionPolicy">
-            <summary>
-                The handling policy enumeration to be used by the YAX library.
-            </summary>
-        </member>
         <member name="F:YAXLib.YAXSerializer.m_isSerializing">
             <summary>
                 <c>true</c> if this instance is busy serializing objects, <c>false</c> otherwise.
@@ -20387,16 +20455,6 @@
         <member name="F:YAXLib.YAXSerializer.m_mainDocument">
             <summary>
                 XML document object which will hold the resulting serialization
-            </summary>
-        </member>
-        <member name="F:YAXLib.YAXSerializer.m_parsingErrors">
-            <summary>
-                The list of all errors that have occured.
-            </summary>
-        </member>
-        <member name="F:YAXLib.YAXSerializer.m_serializationOption">
-            <summary>
-                The serialization option enumeration which can be set during initialization.
             </summary>
         </member>
         <member name="F:YAXLib.YAXSerializer.m_serializedStack">

@@ -15,38 +15,12 @@
 
 namespace Dreamcast.Core
 {
-    /// <summary>
-    ///     Engine core class.
-    /// </summary>
-    public static class Core
+    public enum MSAAMode : byte
     {
-        private static void OnPreStartup()
-        {
-            CommandDB.RegisterCommonCommands();
-            CommandDB.Execute("info");
-            Configuration.Deserialize();
-            Configuration.Current.Apply();
-        }
-
-        private static void OnPostStartup()
-        {
-        }
-
-        private static void OnPreTick()
-        {
-            Input.Update();
-        }
-
-        private static void OnPostTick()
-        {
-        }
-
-        private static void OnPreShutdown()
-        {
-        }
-
-        private static void OnPostShutdown()
-        {
-        }
+        Off = 1,
+        X2 = 2,
+        X4 = 4,
+        X8 = 8,
+        X16 = 16
     }
 }

@@ -34,8 +34,7 @@ namespace Dreamcast.Mathematics
         /// <summary>
         ///     The identity <see cref="Matrix5x4" />.
         /// </summary>
-        public static readonly Matrix5x4 Identity = new Matrix5x4
-            {M11 = 1.0f, M22 = 1.0f, M33 = 1.0f, M44 = 1.0f, M54 = 0.0f};
+        public static readonly Matrix5x4 Identity = new Matrix5x4 {M11 = 1.0f, M22 = 1.0f, M33 = 1.0f, M44 = 1.0f, M54 = 0.0f};
 
         /// <summary>
         ///     Value at row 1 column 1 of the Matrix5x4.
@@ -143,11 +142,7 @@ namespace Dreamcast.Mathematics
         /// <param name="value">The value that will be assigned to all components.</param>
         public Matrix5x4(float value)
         {
-            M11 = M12 = M13 = M14 =
-                M21 = M22 = M23 = M24 =
-                    M31 = M32 = M33 = M34 =
-                        M41 = M42 = M43 = M44 =
-                            M51 = M52 = M53 = M54 = value;
+            M11 = M12 = M13 = M14 = M21 = M22 = M23 = M24 = M31 = M32 = M33 = M34 = M41 = M42 = M43 = M44 = M51 = M52 = M53 = M54 = value;
         }
 
         /// <summary>
@@ -173,11 +168,8 @@ namespace Dreamcast.Mathematics
         /// <param name="M52">The value to assign at row 5 column 2 of the Matrix5x4.</param>
         /// <param name="M53">The value to assign at row 5 column 3 of the Matrix5x4.</param>
         /// <param name="M54">The value to assign at row 5 column 4 of the Matrix5x4.</param>
-        public Matrix5x4(float M11, float M12, float M13, float M14,
-            float M21, float M22, float M23, float M24,
-            float M31, float M32, float M33, float M34,
-            float M41, float M42, float M43, float M44,
-            float M51, float M52, float M53, float M54)
+        public Matrix5x4(float M11, float M12, float M13, float M14, float M21, float M22, float M23, float M24, float M31, float M32, float M33, float M34,
+            float M41, float M42, float M43, float M44, float M51, float M52, float M53, float M54)
         {
             this.M11 = M11;
             this.M12 = M12;
@@ -465,8 +457,7 @@ namespace Dreamcast.Mathematics
                         M54 = value;
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException("index",
-                            "Indices for Matrix5x4 run from 0 to 19, inclusive.");
+                        throw new ArgumentOutOfRangeException("index", "Indices for Matrix5x4 run from 0 to 19, inclusive.");
                 }
             }
         }
@@ -1056,16 +1047,11 @@ namespace Dreamcast.Mathematics
         {
             return string.Format(formatProvider,
                 "[M11:{0} M12:{1} M13:{2} M14:{3}] [M21:{4} M22:{5} M3:{6} M24:{7}] [M31:{8} M32:{9} M33:{10} M34:{11}] [M41:{12} M42:{13} M43:{14} M44:{15}] [M51:{16} M52:{17} M53:{18} M54:{19}]",
-                M11.ToString(formatProvider), M12.ToString(formatProvider), M13.ToString(formatProvider),
-                M14.ToString(formatProvider),
-                M21.ToString(formatProvider), M22.ToString(formatProvider), M23.ToString(formatProvider),
-                M24.ToString(formatProvider),
-                M31.ToString(formatProvider), M32.ToString(formatProvider), M33.ToString(formatProvider),
-                M34.ToString(formatProvider),
-                M41.ToString(formatProvider), M42.ToString(formatProvider), M43.ToString(formatProvider),
-                M44.ToString(formatProvider),
-                M51.ToString(formatProvider), M52.ToString(formatProvider), M53.ToString(formatProvider),
-                M54.ToString(formatProvider));
+                M11.ToString(formatProvider), M12.ToString(formatProvider), M13.ToString(formatProvider), M14.ToString(formatProvider),
+                M21.ToString(formatProvider), M22.ToString(formatProvider), M23.ToString(formatProvider), M24.ToString(formatProvider),
+                M31.ToString(formatProvider), M32.ToString(formatProvider), M33.ToString(formatProvider), M34.ToString(formatProvider),
+                M41.ToString(formatProvider), M42.ToString(formatProvider), M43.ToString(formatProvider), M44.ToString(formatProvider),
+                M51.ToString(formatProvider), M52.ToString(formatProvider), M53.ToString(formatProvider), M54.ToString(formatProvider));
         }
 
         /// <summary>
@@ -1083,15 +1069,12 @@ namespace Dreamcast.Mathematics
 
             return string.Format(format, formatProvider,
                 "[M11:{0} M12:{1} M13:{2} M14:{3}] [M21:{4} M22:{5} M3:{6} M24:{7}] [M31:{8} M32:{9} M33:{10} M34:{11}] [M41:{12} M42:{13} M43:{14} M44:{15}] [M51:{16} M52:{17} M53:{18} M54:{19}]",
-                M11.ToString(format, formatProvider), M12.ToString(format, formatProvider),
-                M13.ToString(format, formatProvider), M14.ToString(format, formatProvider),
-                M21.ToString(format, formatProvider), M22.ToString(format, formatProvider),
-                M23.ToString(format, formatProvider), M24.ToString(format, formatProvider),
-                M31.ToString(format, formatProvider), M32.ToString(format, formatProvider),
-                M33.ToString(format, formatProvider), M34.ToString(format, formatProvider),
-                M41.ToString(format, formatProvider), M42.ToString(format, formatProvider),
-                M43.ToString(format, formatProvider), M44.ToString(format, formatProvider),
-                M51.ToString(format, formatProvider), M52.ToString(format, formatProvider),
+                M11.ToString(format, formatProvider), M12.ToString(format, formatProvider), M13.ToString(format, formatProvider),
+                M14.ToString(format, formatProvider), M21.ToString(format, formatProvider), M22.ToString(format, formatProvider),
+                M23.ToString(format, formatProvider), M24.ToString(format, formatProvider), M31.ToString(format, formatProvider),
+                M32.ToString(format, formatProvider), M33.ToString(format, formatProvider), M34.ToString(format, formatProvider),
+                M41.ToString(format, formatProvider), M42.ToString(format, formatProvider), M43.ToString(format, formatProvider),
+                M44.ToString(format, formatProvider), M51.ToString(format, formatProvider), M52.ToString(format, formatProvider),
                 M53.ToString(format, formatProvider), M54.ToString(format, formatProvider));
         }
 
@@ -1138,26 +1121,13 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public bool Equals(ref Matrix5x4 other)
         {
-            return MathUtil.NearEqual(other.M11, M11) &&
-                   MathUtil.NearEqual(other.M12, M12) &&
-                   MathUtil.NearEqual(other.M13, M13) &&
-                   MathUtil.NearEqual(other.M14, M14) &&
-                   MathUtil.NearEqual(other.M21, M21) &&
-                   MathUtil.NearEqual(other.M22, M22) &&
-                   MathUtil.NearEqual(other.M23, M23) &&
-                   MathUtil.NearEqual(other.M24, M24) &&
-                   MathUtil.NearEqual(other.M31, M31) &&
-                   MathUtil.NearEqual(other.M32, M32) &&
-                   MathUtil.NearEqual(other.M33, M33) &&
-                   MathUtil.NearEqual(other.M34, M34) &&
-                   MathUtil.NearEqual(other.M41, M41) &&
-                   MathUtil.NearEqual(other.M42, M42) &&
-                   MathUtil.NearEqual(other.M43, M43) &&
-                   MathUtil.NearEqual(other.M44, M44) &&
-                   MathUtil.NearEqual(other.M51, M51) &&
-                   MathUtil.NearEqual(other.M52, M52) &&
-                   MathUtil.NearEqual(other.M53, M53) &&
-                   MathUtil.NearEqual(other.M54, M54);
+            return MathUtil.NearEqual(other.M11, M11) && MathUtil.NearEqual(other.M12, M12) && MathUtil.NearEqual(other.M13, M13) &&
+                   MathUtil.NearEqual(other.M14, M14) && MathUtil.NearEqual(other.M21, M21) && MathUtil.NearEqual(other.M22, M22) &&
+                   MathUtil.NearEqual(other.M23, M23) && MathUtil.NearEqual(other.M24, M24) && MathUtil.NearEqual(other.M31, M31) &&
+                   MathUtil.NearEqual(other.M32, M32) && MathUtil.NearEqual(other.M33, M33) && MathUtil.NearEqual(other.M34, M34) &&
+                   MathUtil.NearEqual(other.M41, M41) && MathUtil.NearEqual(other.M42, M42) && MathUtil.NearEqual(other.M43, M43) &&
+                   MathUtil.NearEqual(other.M44, M44) && MathUtil.NearEqual(other.M51, M51) && MathUtil.NearEqual(other.M52, M52) &&
+                   MathUtil.NearEqual(other.M53, M53) && MathUtil.NearEqual(other.M54, M54);
         }
 
         /// <summary>

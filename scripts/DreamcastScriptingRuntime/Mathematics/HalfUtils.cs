@@ -142,8 +142,7 @@ namespace Dreamcast.Mathematics
         public static float Unpack(ushort h)
         {
             var conv = new FloatToUint();
-            conv.uintValue = HalfToFloatMantissaTable[HalfToFloatOffsetTable[h >> 10] + ((uint) h & 0x3ff)] +
-                             HalfToFloatExponentTable[h >> 10];
+            conv.uintValue = HalfToFloatMantissaTable[HalfToFloatOffsetTable[h >> 10] + ((uint) h & 0x3ff)] + HalfToFloatExponentTable[h >> 10];
             return conv.floatValue;
         }
 
@@ -157,7 +156,7 @@ namespace Dreamcast.Mathematics
             var conv = new FloatToUint();
             conv.floatValue = f;
             return (ushort) (FloatToHalfBaseTable[(conv.uintValue >> 23) & 0x1ff] + ((conv.uintValue & 0x007fffff) >>
-                FloatToHalfShiftTable[(conv.uintValue >> 23) & 0x1ff]));
+                                                                                     FloatToHalfShiftTable[(conv.uintValue >> 23) & 0x1ff]));
         }
 
         [StructLayout(LayoutKind.Explicit)]

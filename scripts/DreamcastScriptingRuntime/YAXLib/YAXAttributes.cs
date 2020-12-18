@@ -29,8 +29,7 @@ namespace YAXLib
     ///     Creates a comment node per each line of the comment string provided.
     ///     This attribute is applicable to classes, structures, fields, and properties.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Field |
-                    AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Field | AttributeTargets.Property)]
     public class YAXCommentAttribute : YAXBaseAttribute
     {
         #region Constructors
@@ -139,8 +138,7 @@ namespace YAXLib
     ///     Makes an element make use of a specific XML namespace.
     ///     This attribute is applicable to classes, structs, fields, enums and properties
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Field |
-                    AttributeTargets.Property | AttributeTargets.Struct)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Struct)]
     public class YAXNamespaceAttribute : YAXBaseAttribute
     {
         #region Constructors
@@ -344,8 +342,7 @@ namespace YAXLib
     ///     which it will be serialized. This attribute is applicable to fields,
     ///     properties, classes, and structs.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class |
-                    AttributeTargets.Struct)]
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class | AttributeTargets.Struct)]
     public class YAXSerializeAsAttribute : YAXBaseAttribute
     {
         #region Constructors
@@ -406,8 +403,7 @@ namespace YAXLib
     ///     Controls the serialization of collection instances.
     ///     This attribute is applicable to fields and properties, and collection classes.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class |
-                    AttributeTargets.Struct)]
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class | AttributeTargets.Struct)]
     public class YAXCollectionAttribute : YAXBaseAttribute
     {
         #region Constructors
@@ -468,8 +464,7 @@ namespace YAXLib
     ///     This attribute is applicable to fields and properties, and
     ///     classes derived from the <c>Dictionary</c> base class.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class |
-                    AttributeTargets.Struct)]
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class | AttributeTargets.Struct)]
     public class YAXDictionaryAttribute : YAXBaseAttribute
     {
         private YAXNodeTypes _serializeKeyAs = YAXNodeTypes.Element;
@@ -635,8 +630,7 @@ namespace YAXLib
     ///     driven from <c>IEnumerable</c> should not be treated as a collection class/object.
     ///     This attribute is applicable to fields, properties, classes, and structs.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class |
-                    AttributeTargets.Struct)]
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class | AttributeTargets.Struct)]
     public class YAXNotCollectionAttribute : YAXBaseAttribute
     {
     }
@@ -677,8 +671,7 @@ namespace YAXLib
     ///     from the specified type in this attribute, and calls appropriate methods while serializing.
     ///     This attribute is applicable to fields, properties, classes, and structs.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class |
-                    AttributeTargets.Struct)]
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class | AttributeTargets.Struct)]
     public class YAXCustomSerializerAttribute : YAXBaseAttribute
     {
         /// <summary>
@@ -703,8 +696,7 @@ namespace YAXLib
     ///     Add this attribute to any string field that you want their whitespace be preserved during
     ///     deserialization, or add it to the containing class to be applied to all its fields and properties.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class |
-                    AttributeTargets.Struct)]
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class | AttributeTargets.Struct)]
     public class YAXPreserveWhitespaceAttribute : YAXBaseAttribute
     {
     }

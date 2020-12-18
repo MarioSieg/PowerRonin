@@ -19,7 +19,7 @@ namespace Dreamcast.Core
 {
     /// <summary>
     ///     Contains all internal calls.
-    ///     Warning! None of these methods should be renamed because
+    ///     Warning! None of these methods should be changed because
     ///     they are mapped to native functions.
     /// </summary>
     public static class NativeRuntime
@@ -50,6 +50,6 @@ namespace Dreamcast.Core
 
         [CallToNativeRuntime]
         [MethodImpl(MethodImplOptions.InternalCall)]
-        internal static extern void CfgSetWindowFullscreen(bool fullScreen);
+        internal static extern void CfgSetNative(in NativeConfig cfg);
     }
 }

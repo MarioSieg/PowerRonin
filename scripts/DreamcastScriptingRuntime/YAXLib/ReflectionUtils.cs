@@ -37,8 +37,7 @@ namespace YAXLib
         /// </returns>
         public static bool IsBasicType(Type t)
         {
-            if (t == typeof(string) || t.IsPrimitive() || t.IsEnum() || t == typeof(DateTime) || t == typeof(decimal) ||
-                t == typeof(Guid))
+            if (t == typeof(string) || t.IsPrimitive() || t.IsEnum() || t == typeof(DateTime) || t == typeof(decimal) || t == typeof(Guid))
                 return true;
 
             Type nullableValueType;
@@ -119,8 +118,7 @@ namespace YAXLib
             {
                 var backqIndex = name.IndexOf('`');
                 if (backqIndex == 0)
-                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, "Bad type name: {0}",
-                        name));
+                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, "Bad type name: {0}", name));
                 if (backqIndex > 0) name = name.Substring(0, backqIndex);
 
                 name += "Of";
@@ -130,8 +128,7 @@ namespace YAXLib
             else if (type.IsArray)
             {
                 Type t = type.GetElementType();
-                name = string.Format(CultureInfo.InvariantCulture, "Array{0}Of{1}", type.GetArrayRank(),
-                    GetTypeFriendlyName(t));
+                name = string.Format(CultureInfo.InvariantCulture, "Array{0}Of{1}", type.GetArrayRank(), GetTypeFriendlyName(t));
             }
 
             return name;
@@ -185,14 +182,12 @@ namespace YAXLib
             return IsIEnumerable(type, out seqType);
         }
 
-        public static bool IsDerivedFromGenericInterfaceType(Type givenType, Type genericInterfaceType,
-            out Type genericType)
+        public static bool IsDerivedFromGenericInterfaceType(Type givenType, Type genericInterfaceType, out Type genericType)
         {
             genericType = null;
             if ((givenType.IsClass() || givenType.IsValueType()) && !givenType.IsAbstract())
                 foreach (Type interfaceType in givenType.GetInterfaces())
-                    if (interfaceType.IsGenericType() &&
-                        interfaceType.GetGenericTypeDefinition() == genericInterfaceType)
+                    if (interfaceType.IsGenericType() && interfaceType.GetGenericTypeDefinition() == genericInterfaceType)
                     {
                         Type[] genArgs = interfaceType.GetGenericArguments();
                         if (genArgs.Length != 1)
@@ -233,8 +228,7 @@ namespace YAXLib
             }
 
             foreach (Type interfaceType in type.GetInterfaces())
-                if (interfaceType.IsGenericType() &&
-                    interfaceType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+                if (interfaceType.IsGenericType() && interfaceType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
                 {
                     Type[] genArgs = interfaceType.GetGenericArguments();
                     seqType = genArgs[0];
@@ -281,8 +275,7 @@ namespace YAXLib
             if (type.IsInterface() && type.GetGenericTypeDefinition() == typeof(IList<>)) return true;
 
             foreach (Type interfaceType in type.GetInterfaces())
-                if (interfaceType.IsGenericType() &&
-                    interfaceType.GetGenericTypeDefinition() == typeof(IList<>))
+                if (interfaceType.IsGenericType() && interfaceType.GetGenericTypeDefinition() == typeof(IList<>))
                     return true;
 
             return false;
@@ -308,8 +301,7 @@ namespace YAXLib
             }
 
             foreach (Type interfaceType in type.GetInterfaces())
-                if (interfaceType.IsGenericType() &&
-                    interfaceType.GetGenericTypeDefinition() == typeof(ICollection<>))
+                if (interfaceType.IsGenericType() && interfaceType.GetGenericTypeDefinition() == typeof(ICollection<>))
                 {
                     itemType = interfaceType.GetGenericArguments()[0];
                     return true;
@@ -342,8 +334,7 @@ namespace YAXLib
             }
 
             foreach (Type interfaceType in type.GetInterfaces())
-                if (interfaceType.IsGenericType() &&
-                    interfaceType.GetGenericTypeDefinition() == typeof(IDictionary<,>))
+                if (interfaceType.IsGenericType() && interfaceType.GetGenericTypeDefinition() == typeof(IDictionary<,>))
                 {
                     Type[] genArgs = interfaceType.GetGenericArguments();
                     keyType = genArgs[0];
@@ -563,8 +554,7 @@ namespace YAXLib
             // accept ctor of string
             if (IsIFormattable(type) && !HasOneReadWriteProperty(type))
                 if (null != type.GetConstructor(new[] {typeof(string)}))
-                    if (null != type.GetMethod("ToString", new Type[0]) &&
-                        null != type.GetMethod("ToString", new[] {typeof(string)}))
+                    if (null != type.GetMethod("ToString", new Type[0]) && null != type.GetMethod("ToString", new[] {typeof(string)}))
                         return true;
 
             return false;
@@ -738,9 +728,9 @@ namespace YAXLib
         	//TODO: FXCORE: This simplification may not come close enough to the .Net Framework version!
             return moduleName.StartsWith("System.", StringComparison.OrdinalIgnoreCase) || moduleName.StartsWith("mscorlib.", StringComparison.OrdinalIgnoreCase) || moduleName.StartsWith("Microsoft", StringComparison.OrdinalIgnoreCase);
 #else
-            return moduleName.Equals("mscorlib.dll", StringComparison.OrdinalIgnoreCase)
-                   || moduleName.Equals("System.dll", StringComparison.OrdinalIgnoreCase)
-                   || moduleName.Equals("System.Core.dll", StringComparison.OrdinalIgnoreCase);
+            return moduleName.Equals("mscorlib.dll", StringComparison.OrdinalIgnoreCase) ||
+                   moduleName.Equals("System.dll", StringComparison.OrdinalIgnoreCase) ||
+                   moduleName.Equals("System.Core.dll", StringComparison.OrdinalIgnoreCase);
 #endif
         }
 
@@ -751,8 +741,7 @@ namespace YAXLib
 
         public static T InvokeGetProperty<T>(object srcObj, string propertyName)
         {
-            return (T) srcObj.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance)
-                .GetValue(srcObj, null);
+            return (T) srcObj.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance).GetValue(srcObj, null);
             //return (T)srcObj.GetType().InvokeMember(propertyName, BindingFlags.GetProperty | BindingFlags.Public | BindingFlags.Instance, null, srcObj, null);
         }
 

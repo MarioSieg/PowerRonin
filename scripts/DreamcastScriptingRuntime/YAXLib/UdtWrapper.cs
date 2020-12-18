@@ -197,8 +197,7 @@ namespace YAXLib
         ///     <c>true</c> if serialization of null objects is not allowd; otherwise, <c>false</c>.
         /// </returns>
         public bool IsNotAllowdNullObjectSerialization =>
-            (SerializationOption & YAXSerializationOptions.DontSerializeNullObjects) ==
-            YAXSerializationOptions.DontSerializeNullObjects;
+            (SerializationOption & YAXSerializationOptions.DontSerializeNullObjects) == YAXSerializationOptions.DontSerializeNullObjects;
 
         /// <summary>
         ///     Determines whether cycling referrences must be ignored, or an exception needs to be thrown
@@ -211,8 +210,7 @@ namespace YAXLib
         ///     Determines whether properties with no setters should be serialized
         /// </summary>
         public bool DontSerializePropertiesWithNoSetter =>
-            (SerializationOption & YAXSerializationOptions.DontSerializePropertiesWithNoSetter) ==
-            YAXSerializationOptions.DontSerializePropertiesWithNoSetter;
+            (SerializationOption & YAXSerializationOptions.DontSerializePropertiesWithNoSetter) == YAXSerializationOptions.DontSerializePropertiesWithNoSetter;
 
         /// <summary>
         ///     Never add YAXLib metadata attributes (e.g., 'yaxlib:realtype') to the serialized XML (even when they would be
@@ -220,8 +218,7 @@ namespace YAXLib
         ///     Useful when generating XML intended for another system's consumption.
         /// </summary>
         public bool SuppressMetadataAttributes =>
-            (SerializationOption & YAXSerializationOptions.SuppressMetadataAttributes) ==
-            YAXSerializationOptions.SuppressMetadataAttributes;
+            (SerializationOption & YAXSerializationOptions.SuppressMetadataAttributes) == YAXSerializationOptions.SuppressMetadataAttributes;
 
         /// <summary>
         ///     Gets a value indicating whether this instance wraps around a collection type.
@@ -332,9 +329,7 @@ namespace YAXLib
         public void SetYAXSerializerOptions(YAXSerializer caller)
         {
             if (!m_isSerializationOptionSetByAttribute)
-                SerializationOption = caller != null
-                    ? caller.SerializationOption
-                    : YAXSerializationOptions.SerializeNullObjects;
+                SerializationOption = caller != null ? caller.SerializationOption : YAXSerializationOptions.SerializeNullObjects;
         }
 
         /// <summary>
@@ -423,13 +418,10 @@ namespace YAXLib
                 Type serType = (attr as YAXCustomSerializerAttribute).CustomSerializerType;
 
                 Type genTypeArg;
-                var isDesiredInterface =
-                    ReflectionUtils.IsDerivedFromGenericInterfaceType(serType, typeof(ICustomSerializer<>),
-                        out genTypeArg);
+                var isDesiredInterface = ReflectionUtils.IsDerivedFromGenericInterfaceType(serType, typeof(ICustomSerializer<>), out genTypeArg);
 
                 if (!isDesiredInterface)
-                    throw new YAXException(
-                        "The provided custom serialization type is not derived from the proper interface");
+                    throw new YAXException("The provided custom serialization type is not derived from the proper interface");
 
                 if (genTypeArg != UnderlyingType)
                     throw new YAXException("The generic argument of the class and the type of the class do not match");

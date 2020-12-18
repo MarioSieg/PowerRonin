@@ -52,6 +52,10 @@ namespace YAXLib
         /// </summary>
         private readonly UdtWrapper m_memberTypeWrapper;
 
+        private readonly List<YAXCollectionItemTypeAttribute> m_possibleCollectionItemRealTypes = new List<YAXCollectionItemTypeAttribute>();
+
+        private readonly List<YAXTypeAttribute> m_possibleRealTypes = new List<YAXTypeAttribute>();
+
         /// <summary>
         ///     the <c>PropertyInfo</c> instance, if this member corrsponds to a property, <c>null</c> otherwise
         /// </summary>
@@ -86,11 +90,6 @@ namespace YAXLib
         ///     The xml-namespace this member is going to be serialized under.
         /// </summary>
         private XNamespace m_namespace = XNamespace.None;
-
-        private readonly List<YAXCollectionItemTypeAttribute> m_possibleCollectionItemRealTypes =
-            new List<YAXCollectionItemTypeAttribute>();
-
-        private readonly List<YAXTypeAttribute> m_possibleRealTypes = new List<YAXTypeAttribute>();
 
         /// <summary>
         ///     The location of the serialization
@@ -133,8 +132,7 @@ namespace YAXLib
             TreatErrorsAs = callerSerializer != null ? callerSerializer.DefaultExceptionType : YAXExceptionTypes.Error;
 
             // discovver YAXCustomSerializerAttributes earlier, because some other attributes depend on it
-            var attrsToProcessEarlier = new HashSet<Type>
-                {typeof(YAXCustomSerializerAttribute), typeof(YAXCollectionAttribute)};
+            var attrsToProcessEarlier = new HashSet<Type> {typeof(YAXCustomSerializerAttribute), typeof(YAXCollectionAttribute)};
             foreach (var attrType in attrsToProcessEarlier)
             {
 #if FXCORE
@@ -546,8 +544,7 @@ namespace YAXLib
         /// <returns>
         ///     <c>true</c> if this instance of <c>MemberWrapper</c> can be serialized; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsAllowedToBeSerialized(YAXSerializationFields serializationFields,
-            bool dontSerializePropertiesWithNoSetter)
+        public bool IsAllowedToBeSerialized(YAXSerializationFields serializationFields, bool dontSerializePropertiesWithNoSetter)
         {
             if (dontSerializePropertiesWithNoSetter && m_isProperty && !m_propertyInfoInstance.CanWrite)
                 return false;
@@ -557,8 +554,7 @@ namespace YAXLib
             if (serializationFields == YAXSerializationFields.AttributedFieldsOnly)
                 return !IsAttributedAsDontSerialize && IsAttributedAsSerializable;
             if (serializationFields == YAXSerializationFields.PublicPropertiesOnly)
-                return !IsAttributedAsDontSerialize && m_isProperty &&
-                       ReflectionUtils.IsPublicProperty(m_propertyInfoInstance);
+                return !IsAttributedAsDontSerialize && m_isProperty && ReflectionUtils.IsPublicProperty(m_propertyInfoInstance);
             throw new Exception("Unknown serialization field option");
         }
 
@@ -627,9 +623,8 @@ namespace YAXLib
             else if (attr is YAXAttributeForClassAttribute)
             {
                 // it is required that YAXCustomSerializerAttribute is processed earlier
-                if (ReflectionUtils.IsBasicType(MemberType) || CustomSerializerType != null ||
-                    m_collectionAttributeInstance != null && m_collectionAttributeInstance.SerializationType ==
-                    YAXCollectionSerializationTypes.Serially)
+                if (ReflectionUtils.IsBasicType(MemberType) || CustomSerializerType != null || m_collectionAttributeInstance != null &&
+                    m_collectionAttributeInstance.SerializationType == YAXCollectionSerializationTypes.Serially)
                 {
                     IsSerializedAsAttribute = true;
                     SerializationLocation = ".";
@@ -638,9 +633,8 @@ namespace YAXLib
             else if (attr is YAXValueForClassAttribute)
             {
                 // it is required that YAXCustomSerializerAttribute is processed earlier
-                if (ReflectionUtils.IsBasicType(MemberType) || CustomSerializerType != null ||
-                    m_collectionAttributeInstance != null && m_collectionAttributeInstance.SerializationType ==
-                    YAXCollectionSerializationTypes.Serially)
+                if (ReflectionUtils.IsBasicType(MemberType) || CustomSerializerType != null || m_collectionAttributeInstance != null &&
+                    m_collectionAttributeInstance.SerializationType == YAXCollectionSerializationTypes.Serially)
                 {
                     IsSerializedAsValue = true;
                     SerializationLocation = ".";
@@ -649,14 +643,12 @@ namespace YAXLib
             else if (attr is YAXAttributeForAttribute)
             {
                 // it is required that YAXCustomSerializerAttribute is processed earlier
-                if (ReflectionUtils.IsBasicType(MemberType) || CustomSerializerType != null ||
-                    m_collectionAttributeInstance != null && m_collectionAttributeInstance.SerializationType ==
-                    YAXCollectionSerializationTypes.Serially)
+                if (ReflectionUtils.IsBasicType(MemberType) || CustomSerializerType != null || m_collectionAttributeInstance != null &&
+                    m_collectionAttributeInstance.SerializationType == YAXCollectionSerializationTypes.Serially)
                 {
                     IsSerializedAsAttribute = true;
                     string path, alias;
-                    StringUtils.ExttractPathAndAliasFromLocationString((attr as YAXAttributeForAttribute).Parent,
-                        out path, out alias);
+                    StringUtils.ExttractPathAndAliasFromLocationString((attr as YAXAttributeForAttribute).Parent, out path, out alias);
 
                     SerializationLocation = path;
                     if (!string.IsNullOrEmpty(alias))
@@ -668,8 +660,7 @@ namespace YAXLib
                 IsSerializedAsElement = true;
 
                 string path, alias;
-                StringUtils.ExttractPathAndAliasFromLocationString((attr as YAXElementForAttribute).Parent, out path,
-                    out alias);
+                StringUtils.ExttractPathAndAliasFromLocationString((attr as YAXElementForAttribute).Parent, out path, out alias);
 
                 SerializationLocation = path;
                 if (!string.IsNullOrEmpty(alias))
@@ -678,15 +669,13 @@ namespace YAXLib
             else if (attr is YAXValueForAttribute)
             {
                 // it is required that YAXCustomSerializerAttribute is processed earlier
-                if (ReflectionUtils.IsBasicType(MemberType) || CustomSerializerType != null ||
-                    m_collectionAttributeInstance != null && m_collectionAttributeInstance.SerializationType ==
-                    YAXCollectionSerializationTypes.Serially)
+                if (ReflectionUtils.IsBasicType(MemberType) || CustomSerializerType != null || m_collectionAttributeInstance != null &&
+                    m_collectionAttributeInstance.SerializationType == YAXCollectionSerializationTypes.Serially)
                 {
                     IsSerializedAsValue = true;
 
                     string path, alias;
-                    StringUtils.ExttractPathAndAliasFromLocationString((attr as YAXValueForAttribute).Parent, out path,
-                        out alias);
+                    StringUtils.ExttractPathAndAliasFromLocationString((attr as YAXValueForAttribute).Parent, out path, out alias);
 
                     SerializationLocation = path;
                     if (!string.IsNullOrEmpty(alias))
@@ -730,13 +719,10 @@ namespace YAXLib
                 Type serType = (attr as YAXCustomSerializerAttribute).CustomSerializerType;
 
                 Type genTypeArg;
-                var isDesiredInterface =
-                    ReflectionUtils.IsDerivedFromGenericInterfaceType(serType, typeof(ICustomSerializer<>),
-                        out genTypeArg);
+                var isDesiredInterface = ReflectionUtils.IsDerivedFromGenericInterfaceType(serType, typeof(ICustomSerializer<>), out genTypeArg);
 
                 if (!isDesiredInterface)
-                    throw new YAXException(
-                        "The provided custom serialization type is not derived from the proper interface");
+                    throw new YAXException("The provided custom serialization type is not derived from the proper interface");
                 if (genTypeArg != MemberType)
                     throw new YAXException("The generic argument of the class and the member type do not match");
                 CustomSerializerType = serType;
@@ -769,8 +755,8 @@ namespace YAXLib
 
                 if (m_possibleRealTypes.Any(x => x.Type == yaxTypeAttr.Type))
                     throw new YAXPolymorphicException(string.Format(
-                        "The type \"{0}\" for field/property \"{1}\" has already been defined through another attribute.",
-                        yaxTypeAttr.Type.Name, m_memberInfo));
+                        "The type \"{0}\" for field/property \"{1}\" has already been defined through another attribute.", yaxTypeAttr.Type.Name,
+                        m_memberInfo));
 
                 if (alias != null && m_possibleRealTypes.Any(x => alias.Equals(x.Alias, StringComparison.Ordinal)))
                     throw new YAXPolymorphicException(string.Format(
@@ -795,8 +781,7 @@ namespace YAXLib
                         "The collection-item type \"{0}\" for collection \"{1}\" has already been defined through another attribute.",
                         yaxColletionItemTypeAttr.Type.Name, m_memberInfo));
 
-                if (alias != null &&
-                    m_possibleCollectionItemRealTypes.Any(x => alias.Equals(x.Alias, StringComparison.Ordinal)))
+                if (alias != null && m_possibleCollectionItemRealTypes.Any(x => alias.Equals(x.Alias, StringComparison.Ordinal)))
                     throw new YAXPolymorphicException(string.Format(
                         "The alias \"{0}\" given to collection-item type \"{1}\" for field/property \"{2}\" has already been given to another type through another attribute.",
                         alias, yaxColletionItemTypeAttr.Type.Name, m_memberInfo));

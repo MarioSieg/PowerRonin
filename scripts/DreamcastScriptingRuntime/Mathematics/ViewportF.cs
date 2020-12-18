@@ -132,12 +132,8 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public bool Equals(ref ViewportF other)
         {
-            return MathUtil.NearEqual(X, other.X) &&
-                   MathUtil.NearEqual(Y, other.Y) &&
-                   MathUtil.NearEqual(Width, other.Width) &&
-                   MathUtil.NearEqual(Height, other.Height) &&
-                   MathUtil.NearEqual(MinDepth, other.MinDepth) &&
-                   MathUtil.NearEqual(MaxDepth, other.MaxDepth);
+            return MathUtil.NearEqual(X, other.X) && MathUtil.NearEqual(Y, other.Y) && MathUtil.NearEqual(Width, other.Width) &&
+                   MathUtil.NearEqual(Height, other.Height) && MathUtil.NearEqual(MinDepth, other.MinDepth) && MathUtil.NearEqual(MaxDepth, other.MaxDepth);
         }
 
         /// <summary>
@@ -219,8 +215,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.CurrentCulture,
-                "{{X:{0} Y:{1} Width:{2} Height:{3} MinDepth:{4} MaxDepth:{5}}}", X, Y, Width, Height, MinDepth,
+            return string.Format(CultureInfo.CurrentCulture, "{{X:{0} Y:{1} Width:{2} Height:{3} MinDepth:{4} MaxDepth:{5}}}", X, Y, Width, Height, MinDepth,
                 MaxDepth);
         }
 

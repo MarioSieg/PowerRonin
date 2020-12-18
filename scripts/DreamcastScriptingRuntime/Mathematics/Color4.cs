@@ -148,8 +148,7 @@ namespace Dreamcast.Mathematics
             if (values == null)
                 throw new ArgumentNullException("values");
             if (values.Length != 4)
-                throw new ArgumentOutOfRangeException("values",
-                    "There must be four and only four input values for Color4.");
+                throw new ArgumentOutOfRangeException("values", "There must be four and only four input values for Color4.");
 
             Red = values[0];
             Green = values[1];
@@ -227,8 +226,7 @@ namespace Dreamcast.Mathematics
                         Alpha = value;
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException("index",
-                            "Indices for Color4 run from 0 to 3, inclusive.");
+                        throw new ArgumentOutOfRangeException("index", "Indices for Color4 run from 0 to 3, inclusive.");
                 }
             }
         }
@@ -332,8 +330,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two colors.</returns>
         public static Color4 Add(Color4 left, Color4 right)
         {
-            return new Color4(left.Red + right.Red, left.Green + right.Green, left.Blue + right.Blue,
-                left.Alpha + right.Alpha);
+            return new Color4(left.Red + right.Red, left.Green + right.Green, left.Blue + right.Blue, left.Alpha + right.Alpha);
         }
 
         /// <summary>
@@ -358,8 +355,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference of the two colors.</returns>
         public static Color4 Subtract(Color4 left, Color4 right)
         {
-            return new Color4(left.Red - right.Red, left.Green - right.Green, left.Blue - right.Blue,
-                left.Alpha - right.Alpha);
+            return new Color4(left.Red - right.Red, left.Green - right.Green, left.Blue - right.Blue, left.Alpha - right.Alpha);
         }
 
         /// <summary>
@@ -384,8 +380,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The modulated color.</returns>
         public static Color4 Modulate(Color4 left, Color4 right)
         {
-            return new Color4(left.Red * right.Red, left.Green * right.Green, left.Blue * right.Blue,
-                left.Alpha * right.Alpha);
+            return new Color4(left.Red * right.Red, left.Green * right.Green, left.Blue * right.Blue, left.Alpha * right.Alpha);
         }
 
         /// <summary>
@@ -619,11 +614,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The adjusted color.</returns>
         public static Color4 AdjustContrast(Color4 value, float contrast)
         {
-            return new Color4(
-                0.5f + contrast * (value.Red - 0.5f),
-                0.5f + contrast * (value.Green - 0.5f),
-                0.5f + contrast * (value.Blue - 0.5f),
-                value.Alpha);
+            return new Color4(0.5f + contrast * (value.Red - 0.5f), 0.5f + contrast * (value.Green - 0.5f), 0.5f + contrast * (value.Blue - 0.5f), value.Alpha);
         }
 
         /// <summary>
@@ -652,10 +643,7 @@ namespace Dreamcast.Mathematics
         {
             var grey = value.Red * 0.2125f + value.Green * 0.7154f + value.Blue * 0.0721f;
 
-            return new Color4(
-                grey + saturation * (value.Red - grey),
-                grey + saturation * (value.Green - grey),
-                grey + saturation * (value.Blue - grey),
+            return new Color4(grey + saturation * (value.Red - grey), grey + saturation * (value.Green - grey), grey + saturation * (value.Blue - grey),
                 value.Alpha);
         }
 
@@ -691,8 +679,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two colors.</returns>
         public static Color4 operator +(Color4 left, Color4 right)
         {
-            return new Color4(left.Red + right.Red, left.Green + right.Green, left.Blue + right.Blue,
-                left.Alpha + right.Alpha);
+            return new Color4(left.Red + right.Red, left.Green + right.Green, left.Blue + right.Blue, left.Alpha + right.Alpha);
         }
 
         /// <summary>
@@ -713,8 +700,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference of the two colors.</returns>
         public static Color4 operator -(Color4 left, Color4 right)
         {
-            return new Color4(left.Red - right.Red, left.Green - right.Green, left.Blue - right.Blue,
-                left.Alpha - right.Alpha);
+            return new Color4(left.Red - right.Red, left.Green - right.Green, left.Blue - right.Blue, left.Alpha - right.Alpha);
         }
 
         /// <summary>
@@ -757,8 +743,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The modulated color.</returns>
         public static Color4 operator *(Color4 left, Color4 right)
         {
-            return new Color4(left.Red * right.Red, left.Green * right.Green, left.Blue * right.Blue,
-                left.Alpha * right.Alpha);
+            return new Color4(left.Red * right.Red, left.Green * right.Green, left.Blue * right.Blue, left.Alpha * right.Alpha);
         }
 
         /// <summary>
@@ -933,12 +918,8 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString(formatProvider);
 
-            return string.Format(formatProvider,
-                toStringFormat,
-                Alpha.ToString(format, formatProvider),
-                Red.ToString(format, formatProvider),
-                Green.ToString(format, formatProvider),
-                Blue.ToString(format, formatProvider));
+            return string.Format(formatProvider, toStringFormat, Alpha.ToString(format, formatProvider), Red.ToString(format, formatProvider),
+                Green.ToString(format, formatProvider), Blue.ToString(format, formatProvider));
         }
 
         /// <summary>

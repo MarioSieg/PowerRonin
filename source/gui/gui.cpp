@@ -38,7 +38,7 @@ namespace dce::gui {
 		auto& cfg = _rt.config().overlay;
 		style_apply(cfg.theme);
 		style_antialiasing_apply(cfg.enable_anti_aliasing);
-		style_alpha_apply(cfg.transparency);
+		style_alpha_apply(cfg.alpha);
 		style_rounding_apply(cfg.rounding);
 
 		[[unlikely]] if (!this->gui_input_.initialize()) {

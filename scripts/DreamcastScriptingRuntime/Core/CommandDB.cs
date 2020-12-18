@@ -140,8 +140,7 @@ namespace Dreamcast.Core
                     requiresRootPrivileges = false,
                     executor = delegate
                     {
-                        var files = Directory.GetFiles(Directory.GetCurrentDirectory(), "*",
-                            SearchOption.AllDirectories);
+                        var files = Directory.GetFiles(Directory.GetCurrentDirectory(), "*", SearchOption.AllDirectories);
                         foreach (var file in files) Protocol.Info(file);
                     }
                 },
@@ -318,42 +317,45 @@ namespace Dreamcast.Core
                     requiresRootPrivileges = false,
                     executor = delegate
                     {
-                        Protocol.Info(Configuration.FilePath + ":\n" +
-                                      Serializer<Configuration>.SerializeToXml(Configuration.Current));
+                        Protocol.Info(Configuration.DisplayConfiguration.FilePath + ":\n" +
+                                      Serializer<Configuration.DisplayConfiguration>.SerializeToXml(Configuration.Current.Display));
+                        Protocol.Info(Configuration.OverlayConfiguration.FilePath + ":\n" +
+                                      Serializer<Configuration.OverlayConfiguration>.SerializeToXml(Configuration.Current.Overlay));
+                        Protocol.Info(Configuration.GraphicsConfiguration.FilePath + ":\n" +
+                                      Serializer<Configuration.GraphicsConfiguration>.SerializeToXml(Configuration.Current.Graphics));
                     }
                 },
-                new Command()
+                new Command
                 {
                     name = "config_apply",
                     brief = "Applies the whole config to all systems.",
                     parameterCount = 0,
                     requiresRootPrivileges = false,
-                    executor = delegate
-                    {
-                        Configuration.Current.Apply();
-                    }
+                    executor = delegate { Configuration.Current.Apply(); }
                 },
-                new Command()
+                new Command
                 {
                     name = "config_load",
                     brief = "Loads the current config from the config file.",
                     parameterCount = 0,
                     requiresRootPrivileges = false,
-                    executor = delegate
-                    {
-                        Configuration.LoadCurrent();
-                    }
+                    executor = delegate { Configuration.Deserialize(); }
                 },
-                new Command()
+                new Command
                 {
                     name = "config_save",
                     brief = "Saves the current config to the config file.",
                     parameterCount = 0,
                     requiresRootPrivileges = false,
-                    executor = delegate
-                    {
-                        Configuration.SaveCurrent();
-                    }
+                    executor = delegate { Configuration.Serialize(); }
+                },
+                new Command
+                {
+                    name = "config_rem",
+                    brief = "Deletes the config files.",
+                    parameterCount = 0,
+                    requiresRootPrivileges = false,
+                    executor = delegate { Directory.Delete(Configuration.ConfigDirectory, true); }
                 }
             });
         }

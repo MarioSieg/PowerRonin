@@ -185,8 +185,8 @@ namespace Dreamcast.Mathematics
             }
         }
 
-        private static void GetPlanesFromMatrix(ref Matrix4x4 matrix, out Plane near, out Plane far, out Plane left,
-            out Plane right, out Plane top, out Plane bottom)
+        private static void GetPlanesFromMatrix(ref Matrix4x4 matrix, out Plane near, out Plane far, out Plane left, out Plane right, out Plane top,
+            out Plane bottom)
         {
             //http://www.chadvernon.com/blog/resources/directx9/frustum-culling/
 
@@ -236,13 +236,9 @@ namespace Dreamcast.Mathematics
         private static Vector3 Get3PlanesInterPoint(ref Plane p1, ref Plane p2, ref Plane p3)
         {
             //P = -d1 * N2xN3 / N1.N2xN3 - d2 * N3xN1 / N2.N3xN1 - d3 * N1xN2 / N3.N1xN2 
-            var v =
-                -p1.D * Vector3.Cross(p2.Normal, p3.Normal) /
-                Vector3.Dot(p1.Normal, Vector3.Cross(p2.Normal, p3.Normal))
-                - p2.D * Vector3.Cross(p3.Normal, p1.Normal) /
-                Vector3.Dot(p2.Normal, Vector3.Cross(p3.Normal, p1.Normal))
-                - p3.D * Vector3.Cross(p1.Normal, p2.Normal) /
-                Vector3.Dot(p3.Normal, Vector3.Cross(p1.Normal, p2.Normal));
+            var v = -p1.D * Vector3.Cross(p2.Normal, p3.Normal) / Vector3.Dot(p1.Normal, Vector3.Cross(p2.Normal, p3.Normal)) -
+                    p2.D * Vector3.Cross(p3.Normal, p1.Normal) / Vector3.Dot(p2.Normal, Vector3.Cross(p3.Normal, p1.Normal)) -
+                    p3.D * Vector3.Cross(p1.Normal, p2.Normal) / Vector3.Dot(p3.Normal, Vector3.Cross(p1.Normal, p2.Normal));
 
             return v;
         }
@@ -258,8 +254,7 @@ namespace Dreamcast.Mathematics
         /// <param name="zfar">The zfar.</param>
         /// <param name="aspect">The aspect.</param>
         /// <returns>The bounding frustum calculated from perspective camera</returns>
-        public static BoundingFrustum FromCamera(Vector3 cameraPos, Vector3 lookDir, Vector3 upDir, float fov,
-            float znear, float zfar, float aspect)
+        public static BoundingFrustum FromCamera(Vector3 cameraPos, Vector3 lookDir, Vector3 upDir, float fov, float znear, float zfar, float aspect)
         {
             //http://knol.google.com/k/view-frustum
 
@@ -298,8 +293,7 @@ namespace Dreamcast.Mathematics
             result.pTop.Normalize();
             result.pBottom.Normalize();
 
-            result.pMatrix = Matrix4x4.LookAtLH(cameraPos, cameraPos + lookDir * 10, upDir) *
-                             Matrix4x4.PerspectiveFovLH(fov, aspect, znear, zfar);
+            result.pMatrix = Matrix4x4.LookAtLH(cameraPos, cameraPos + lookDir * 10, upDir) * Matrix4x4.PerspectiveFovLH(fov, aspect, znear, zfar);
 
             return result;
         }
@@ -311,8 +305,8 @@ namespace Dreamcast.Mathematics
         /// <returns>The bounding frustum from camera params</returns>
         public static BoundingFrustum FromCamera(FrustumCameraParams cameraParams)
         {
-            return FromCamera(cameraParams.Position, cameraParams.LookAtDir, cameraParams.UpDir, cameraParams.FOV,
-                cameraParams.ZNear, cameraParams.ZFar, cameraParams.AspectRatio);
+            return FromCamera(cameraParams.Position, cameraParams.LookAtDir, cameraParams.UpDir, cameraParams.FOV, cameraParams.ZNear, cameraParams.ZFar,
+                cameraParams.AspectRatio);
         }
 
         /// <summary>
@@ -481,8 +475,7 @@ namespace Dreamcast.Mathematics
             result = Contains(points);
         }
 
-        private void GetBoxToPlanePVertexNVertex(ref BoundingBox box, ref Vector3 planeNormal, out Vector3 p,
-            out Vector3 n)
+        private void GetBoxToPlanePVertexNVertex(ref BoundingBox box, ref Vector3 planeNormal, out Vector3 p, out Vector3 n)
         {
             p = box.Minimum;
             if (planeNormal.X >= 0)
@@ -775,9 +768,7 @@ namespace Dreamcast.Mathematics
                 for (var i = 0; i < 6; i++)
                 {
                     var plane = GetPlane(i);
-                    if (Collision.RayIntersectsPlane(ref ray, ref plane, out float distance) &&
-                        distance < nearstPlaneDistance
-                    ) nearstPlaneDistance = distance;
+                    if (Collision.RayIntersectsPlane(ref ray, ref plane, out float distance) && distance < nearstPlaneDistance) nearstPlaneDistance = distance;
                 }
 
                 inDistance = nearstPlaneDistance;
@@ -839,10 +830,8 @@ namespace Dreamcast.Mathematics
             {
                 var pointDist = Collision.DistancePlanePoint(ref ioFrustrum.pTop, ref points[i]);
                 pointDist = Math.Max(pointDist, Collision.DistancePlanePoint(ref ioFrustrum.pBottom, ref points[i]));
-                pointDist = Math.Max(pointDist,
-                    Collision.DistancePlanePoint(ref ioFrustrum.pLeft, ref points[i]) * horizontalToVerticalMapping);
-                pointDist = Math.Max(pointDist,
-                    Collision.DistancePlanePoint(ref ioFrustrum.pRight, ref points[i]) * horizontalToVerticalMapping);
+                pointDist = Math.Max(pointDist, Collision.DistancePlanePoint(ref ioFrustrum.pLeft, ref points[i]) * horizontalToVerticalMapping);
+                pointDist = Math.Max(pointDist, Collision.DistancePlanePoint(ref ioFrustrum.pRight, ref points[i]) * horizontalToVerticalMapping);
 
                 maxPointDist = Math.Max(maxPointDist, pointDist);
             }

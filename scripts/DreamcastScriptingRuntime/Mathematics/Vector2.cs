@@ -94,8 +94,7 @@ namespace Dreamcast.Mathematics
             if (values == null)
                 throw new ArgumentNullException("values");
             if (values.Length != 2)
-                throw new ArgumentOutOfRangeException("values",
-                    "There must be two and only two input values for Vector2.");
+                throw new ArgumentOutOfRangeException("values", "There must be two and only two input values for Vector2.");
 
             X = values[0];
             Y = values[1];
@@ -145,8 +144,7 @@ namespace Dreamcast.Mathematics
                         Y = value;
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException("index",
-                            "Indices for Vector2 run from 0 to 1, inclusive.");
+                        throw new ArgumentOutOfRangeException("index", "Indices for Vector2 run from 0 to 1, inclusive.");
                 }
             }
         }
@@ -428,8 +426,7 @@ namespace Dreamcast.Mathematics
         /// </param>
         public static void Abs(ref Vector2 value, out Vector2 result)
         {
-            result = new Vector2(value.X > 0.0f ? value.X : -value.X,
-                value.Y > 0.0f ? value.Y : -value.Y);
+            result = new Vector2(value.X > 0.0f ? value.X : -value.X, value.Y > 0.0f ? value.Y : -value.Y);
         }
 
         /// <summary>
@@ -439,9 +436,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector with each component being the absolute value of the input component</returns>
         public static Vector2 Abs(Vector2 value)
         {
-            return new Vector2(
-                value.X > 0.0f ? value.X : -value.X,
-                value.Y > 0.0f ? value.Y : -value.Y);
+            return new Vector2(value.X > 0.0f ? value.X : -value.X, value.Y > 0.0f ? value.Y : -value.Y);
         }
 
         /// <summary>
@@ -460,8 +455,7 @@ namespace Dreamcast.Mathematics
         ///     <paramref name="value3" />).
         /// </param>
         /// <param name="result">When the method completes, contains the 2D Cartesian coordinates of the specified point.</param>
-        public static void Barycentric(ref Vector2 value1, ref Vector2 value2, ref Vector2 value3, float amount1,
-            float amount2, out Vector2 result)
+        public static void Barycentric(ref Vector2 value1, ref Vector2 value2, ref Vector2 value3, float amount1, float amount2, out Vector2 result)
         {
             result = new Vector2(value1.X + amount1 * (value2.X - value1.X) + amount2 * (value3.X - value1.X),
                 value1.Y + amount1 * (value2.Y - value1.Y) + amount2 * (value3.Y - value1.Y));
@@ -725,8 +719,7 @@ namespace Dreamcast.Mathematics
         /// <param name="tangent2">Second source tangent vector.</param>
         /// <param name="amount">Weighting factor.</param>
         /// <param name="result">When the method completes, contains the result of the Hermite spline interpolation.</param>
-        public static void Hermite(ref Vector2 value1, ref Vector2 tangent1, ref Vector2 value2, ref Vector2 tangent2,
-            float amount, out Vector2 result)
+        public static void Hermite(ref Vector2 value1, ref Vector2 tangent1, ref Vector2 value2, ref Vector2 tangent2, float amount, out Vector2 result)
         {
             var squared = amount * amount;
             var cubed = amount * squared;
@@ -763,18 +756,15 @@ namespace Dreamcast.Mathematics
         /// <param name="value4">The fourth position in the interpolation.</param>
         /// <param name="amount">Weighting factor.</param>
         /// <param name="result">When the method completes, contains the result of the Catmull-Rom interpolation.</param>
-        public static void CatmullRom(ref Vector2 value1, ref Vector2 value2, ref Vector2 value3, ref Vector2 value4,
-            float amount, out Vector2 result)
+        public static void CatmullRom(ref Vector2 value1, ref Vector2 value2, ref Vector2 value3, ref Vector2 value4, float amount, out Vector2 result)
         {
             var squared = amount * amount;
             var cubed = amount * squared;
 
-            result.X = 0.5f * (2.0f * value2.X + (-value1.X + value3.X) * amount +
-                               (2.0f * value1.X - 5.0f * value2.X + 4.0f * value3.X - value4.X) * squared +
+            result.X = 0.5f * (2.0f * value2.X + (-value1.X + value3.X) * amount + (2.0f * value1.X - 5.0f * value2.X + 4.0f * value3.X - value4.X) * squared +
                                (-value1.X + 3.0f * value2.X - 3.0f * value3.X + value4.X) * cubed);
 
-            result.Y = 0.5f * (2.0f * value2.Y + (-value1.Y + value3.Y) * amount +
-                               (2.0f * value1.Y - 5.0f * value2.Y + 4.0f * value3.Y - value4.Y) * squared +
+            result.Y = 0.5f * (2.0f * value2.Y + (-value1.Y + value3.Y) * amount + (2.0f * value1.Y - 5.0f * value2.Y + 4.0f * value3.Y - value4.Y) * squared +
                                (-value1.Y + 3.0f * value2.Y - 3.0f * value3.Y + value4.Y) * cubed);
         }
 
@@ -921,8 +911,7 @@ namespace Dreamcast.Mathematics
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination",
-                    "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
 
             for (var i = 0; i < source.Length; ++i)
             {
@@ -977,8 +966,7 @@ namespace Dreamcast.Mathematics
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination",
-                    "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
 
             for (var i = 0; i < source.Length; ++i)
             {
@@ -1008,8 +996,7 @@ namespace Dreamcast.Mathematics
             var yy = rotation.Y * y;
             var zz = rotation.Z * z;
 
-            result = new Vector2(vector.X * (1.0f - yy - zz) + vector.Y * (xy - wz),
-                vector.X * (xy + wz) + vector.Y * (1.0f - xx - zz));
+            result = new Vector2(vector.X * (1.0f - yy - zz) + vector.Y * (xy - wz), vector.X * (xy + wz) + vector.Y * (1.0f - xx - zz));
         }
 
         /// <summary>
@@ -1048,8 +1035,7 @@ namespace Dreamcast.Mathematics
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination",
-                    "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
 
             var x = rotation.X + rotation.X;
             var y = rotation.Y + rotation.Y;
@@ -1066,9 +1052,7 @@ namespace Dreamcast.Mathematics
             var num4 = 1.0f - xx - zz;
 
             for (var i = 0; i < source.Length; ++i)
-                destination[i] = new Vector2(
-                    source[i].X * num1 + source[i].Y * num2,
-                    source[i].X * num3 + source[i].Y * num4);
+                destination[i] = new Vector2(source[i].X * num1 + source[i].Y * num2, source[i].X * num3 + source[i].Y * num4);
         }
 
         /// <summary>
@@ -1079,10 +1063,8 @@ namespace Dreamcast.Mathematics
         /// <param name="result">When the method completes, contains the transformed <see cref="Vector4" />.</param>
         public static void Transform(ref Vector2 vector, ref Matrix4x4 transform, out Vector4 result)
         {
-            result = new Vector4(
-                vector.X * transform.M11 + vector.Y * transform.M21 + transform.M41,
-                vector.X * transform.M12 + vector.Y * transform.M22 + transform.M42,
-                vector.X * transform.M13 + vector.Y * transform.M23 + transform.M43,
+            result = new Vector4(vector.X * transform.M11 + vector.Y * transform.M21 + transform.M41,
+                vector.X * transform.M12 + vector.Y * transform.M22 + transform.M42, vector.X * transform.M13 + vector.Y * transform.M23 + transform.M43,
                 vector.X * transform.M14 + vector.Y * transform.M24 + transform.M44);
         }
 
@@ -1119,8 +1101,7 @@ namespace Dreamcast.Mathematics
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination",
-                    "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
 
             for (var i = 0; i < source.Length; ++i) Transform(ref source[i], ref transform, out destination[i]);
         }
@@ -1199,8 +1180,7 @@ namespace Dreamcast.Mathematics
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination",
-                    "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
 
             for (var i = 0; i < source.Length; ++i)
                 TransformCoordinate(ref source[i], ref transform, out destination[i]);
@@ -1221,9 +1201,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public static void TransformNormal(ref Vector2 normal, ref Matrix4x4 transform, out Vector2 result)
         {
-            result = new Vector2(
-                normal.X * transform.M11 + normal.Y * transform.M21,
-                normal.X * transform.M12 + normal.Y * transform.M22);
+            result = new Vector2(normal.X * transform.M11 + normal.Y * transform.M21, normal.X * transform.M12 + normal.Y * transform.M22);
         }
 
         /// <summary>
@@ -1276,8 +1254,7 @@ namespace Dreamcast.Mathematics
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination",
-                    "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
 
             for (var i = 0; i < source.Length; ++i) TransformNormal(ref source[i], ref transform, out destination[i]);
         }
@@ -1508,8 +1485,8 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString();
 
-            return string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1}",
-                X.ToString(format, CultureInfo.CurrentCulture), Y.ToString(format, CultureInfo.CurrentCulture));
+            return string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1}", X.ToString(format, CultureInfo.CurrentCulture),
+                Y.ToString(format, CultureInfo.CurrentCulture));
         }
 
         /// <summary>
@@ -1537,8 +1514,7 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 ToString(formatProvider);
 
-            return string.Format(formatProvider, "X:{0} Y:{1}", X.ToString(format, formatProvider),
-                Y.ToString(format, formatProvider));
+            return string.Format(formatProvider, "X:{0} Y:{1}", X.ToString(format, formatProvider), Y.ToString(format, formatProvider));
         }
 
         /// <summary>

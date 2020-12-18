@@ -124,8 +124,7 @@ namespace Dreamcast.Mathematics
             if (values == null)
                 throw new ArgumentNullException("values");
             if (values.Length != 4)
-                throw new ArgumentOutOfRangeException("values",
-                    "There must be four and only four input values for Plane.");
+                throw new ArgumentOutOfRangeException("values", "There must be four and only four input values for Plane.");
 
             Normal.X = values[0];
             Normal.Y = values[1];
@@ -452,8 +451,7 @@ namespace Dreamcast.Mathematics
         /// <param name="result">When the method completes, contains the shadow Matrix3x3.</param>
         public static void Shadow(ref Vector4 light, ref Plane plane, out Matrix3x3 result)
         {
-            var dot = plane.Normal.X * light.X + plane.Normal.Y * light.Y + plane.Normal.Z * light.Z +
-                      plane.D * light.W;
+            var dot = plane.Normal.X * light.X + plane.Normal.Y * light.Y + plane.Normal.Z * light.Z + plane.D * light.W;
             var x = -plane.Normal.X;
             var y = -plane.Normal.Y;
             var z = -plane.Normal.Z;
@@ -593,8 +591,7 @@ namespace Dreamcast.Mathematics
         /// <param name="result">When the method completes, contains the normalized plane.</param>
         public static void Normalize(ref Plane plane, out Plane result)
         {
-            var magnitude = 1.0f / (float) Math.Sqrt(plane.Normal.X * plane.Normal.X + plane.Normal.Y * plane.Normal.Y +
-                                                     plane.Normal.Z * plane.Normal.Z);
+            var magnitude = 1.0f / (float) Math.Sqrt(plane.Normal.X * plane.Normal.X + plane.Normal.Y * plane.Normal.Y + plane.Normal.Z * plane.Normal.Z);
 
             result.Normal.X = plane.Normal.X * magnitude;
             result.Normal.Y = plane.Normal.Y * magnitude;
@@ -609,10 +606,8 @@ namespace Dreamcast.Mathematics
         /// <returns>The normalized plane.</returns>
         public static Plane Normalize(Plane plane)
         {
-            var magnitude = 1.0f / (float) Math.Sqrt(plane.Normal.X * plane.Normal.X + plane.Normal.Y * plane.Normal.Y +
-                                                     plane.Normal.Z * plane.Normal.Z);
-            return new Plane(plane.Normal.X * magnitude, plane.Normal.Y * magnitude, plane.Normal.Z * magnitude,
-                plane.D * magnitude);
+            var magnitude = 1.0f / (float) Math.Sqrt(plane.Normal.X * plane.Normal.X + plane.Normal.Y * plane.Normal.Y + plane.Normal.Z * plane.Normal.Z);
+            return new Plane(plane.Normal.X * magnitude, plane.Normal.Y * magnitude, plane.Normal.Z * magnitude, plane.D * magnitude);
         }
 
         /// <summary>
@@ -756,14 +751,10 @@ namespace Dreamcast.Mathematics
             var d = plane.D;
 
             transformation.Invert();
-            result.Normal.X = x * transformation.M11 + y * transformation.M12 + z * transformation.M13 +
-                              d * transformation.M14;
-            result.Normal.Y = x * transformation.M21 + y * transformation.M22 + z * transformation.M23 +
-                              d * transformation.M24;
-            result.Normal.Z = x * transformation.M31 + y * transformation.M32 + z * transformation.M33 +
-                              d * transformation.M34;
-            result.D = x * transformation.M41 + y * transformation.M42 + z * transformation.M43 +
-                       d * transformation.M44;
+            result.Normal.X = x * transformation.M11 + y * transformation.M12 + z * transformation.M13 + d * transformation.M14;
+            result.Normal.Y = x * transformation.M21 + y * transformation.M22 + z * transformation.M23 + d * transformation.M24;
+            result.Normal.Z = x * transformation.M31 + y * transformation.M32 + z * transformation.M33 + d * transformation.M34;
+            result.D = x * transformation.M41 + y * transformation.M42 + z * transformation.M43 + d * transformation.M44;
 
             return result;
         }
@@ -844,8 +835,7 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.CurrentCulture, "A:{0} B:{1} C:{2} D:{3}", Normal.X, Normal.Y, Normal.Z,
-                D);
+            return string.Format(CultureInfo.CurrentCulture, "A:{0} B:{1} C:{2} D:{3}", Normal.X, Normal.Y, Normal.Z, D);
         }
 
         /// <summary>
@@ -857,10 +847,9 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public string ToString(string format)
         {
-            return string.Format(CultureInfo.CurrentCulture, "A:{0} B:{1} C:{2} D:{3}",
-                Normal.X.ToString(format, CultureInfo.CurrentCulture),
-                Normal.Y.ToString(format, CultureInfo.CurrentCulture),
-                Normal.Z.ToString(format, CultureInfo.CurrentCulture), D.ToString(format, CultureInfo.CurrentCulture));
+            return string.Format(CultureInfo.CurrentCulture, "A:{0} B:{1} C:{2} D:{3}", Normal.X.ToString(format, CultureInfo.CurrentCulture),
+                Normal.Y.ToString(format, CultureInfo.CurrentCulture), Normal.Z.ToString(format, CultureInfo.CurrentCulture),
+                D.ToString(format, CultureInfo.CurrentCulture));
         }
 
         /// <summary>
@@ -886,8 +875,7 @@ namespace Dreamcast.Mathematics
         public string ToString(string format, IFormatProvider formatProvider)
         {
             return string.Format(formatProvider, "A:{0} B:{1} C:{2} D:{3}", Normal.X.ToString(format, formatProvider),
-                Normal.Y.ToString(format, formatProvider), Normal.Z.ToString(format, formatProvider),
-                D.ToString(format, formatProvider));
+                Normal.Y.ToString(format, formatProvider), Normal.Z.ToString(format, formatProvider), D.ToString(format, formatProvider));
         }
 
         /// <summary>

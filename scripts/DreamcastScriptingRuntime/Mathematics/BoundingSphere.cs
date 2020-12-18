@@ -208,13 +208,11 @@ namespace Dreamcast.Mathematics
 
             // Check that start is in the correct range
             if (start < 0 || start >= points.Length)
-                throw new ArgumentOutOfRangeException("start", start,
-                    $"Must be in the range [0, {points.Length - 1}]");
+                throw new ArgumentOutOfRangeException("start", start, $"Must be in the range [0, {points.Length - 1}]");
 
             // Check that count is in the correct range
             if (count < 0 || start + count > points.Length)
-                throw new ArgumentOutOfRangeException("count", count,
-                    $"Must be in the range <= {points.Length}");
+                throw new ArgumentOutOfRangeException("count", count, $"Must be in the range <= {points.Length}");
 
             var upperEnd = start + count;
 
@@ -385,8 +383,7 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.CurrentCulture, "Center:{0} Radius:{1}", Center.ToString(),
-                Radius.ToString());
+            return string.Format(CultureInfo.CurrentCulture, "Center:{0} Radius:{1}", Center.ToString(), Radius.ToString());
         }
 
         /// <summary>
@@ -401,8 +398,7 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString();
 
-            return string.Format(CultureInfo.CurrentCulture, "Center:{0} Radius:{1}",
-                Center.ToString(format, CultureInfo.CurrentCulture),
+            return string.Format(CultureInfo.CurrentCulture, "Center:{0} Radius:{1}", Center.ToString(format, CultureInfo.CurrentCulture),
                 Radius.ToString(format, CultureInfo.CurrentCulture));
         }
 
@@ -431,8 +427,7 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString(formatProvider);
 
-            return string.Format(formatProvider, "Center:{0} Radius:{1}", Center.ToString(format, formatProvider),
-                Radius.ToString(format, formatProvider));
+            return string.Format(formatProvider, "Center:{0} Radius:{1}", Center.ToString(format, formatProvider), Radius.ToString(format, formatProvider));
         }
 
         /// <summary>
