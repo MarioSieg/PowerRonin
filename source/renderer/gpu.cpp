@@ -35,44 +35,39 @@ namespace dce::renderer {
 		init.debug = DEBUG_MODE;
 		init.platformData.nwh = platform::NATIVE_WINDOW_HANDLE;
 		init.profile = DEBUG_MODE;
-		
+
 		switch (_config.graphics.msaa_mode) {
-		case MsaaMode::X2:
-			init.resolution.reset |= BGFX_RESET_MSAA_X2;
+		case MsaaMode::X2: init.resolution.reset |= BGFX_RESET_MSAA_X2;
 			break;
-		case MsaaMode::X4:
-			init.resolution.reset |= BGFX_RESET_MSAA_X4;
+		case MsaaMode::X4: init.resolution.reset |= BGFX_RESET_MSAA_X4;
 			break;
-		case MsaaMode::X8:
-			init.resolution.reset |= BGFX_RESET_MSAA_X8;
+		case MsaaMode::X8: init.resolution.reset |= BGFX_RESET_MSAA_X8;
 			break;
-		case MsaaMode::X16:
-			init.resolution.reset |= BGFX_RESET_MSAA_X16;
+		case MsaaMode::X16: init.resolution.reset |= BGFX_RESET_MSAA_X16;
 			break;
-		default:
-		case MsaaMode::OFF:;
+		default: case MsaaMode::OFF: ;
 		}
 
-		[[unlikely]] if(_config.graphics.enable_high_dpi_mode) {
+		[[unlikely]] if (_config.graphics.enable_high_dpi_mode) {
 			init.resolution.reset |= BGFX_RESET_HIDPI;
 		}
 
-		[[likely]] if(_config.graphics.enable_srgb_backbuffer) {
+		[[likely]] if (_config.graphics.enable_srgb_backbuffer) {
 			init.resolution.reset |= BGFX_RESET_SRGB_BACKBUFFER;
 		}
 
-		[[likely]] if(_config.graphics.enable_hdr10) {
+		[[likely]] if (_config.graphics.enable_hdr10) {
 			init.resolution.reset |= BGFX_RESET_HDR10;
 		}
 
-		[[likely]] if(_config.graphics.enable_max_anisotropy) {
+		[[likely]] if (_config.graphics.enable_max_anisotropy) {
 			init.resolution.reset |= BGFX_RESET_MAXANISOTROPY;
 		}
 
-		[[likely]] if(_config.display.vsync) {
+		[[likely]] if (_config.display.vsync) {
 			init.resolution.reset |= BGFX_RESET_VSYNC;
 		}
-		
+
 		init.resolution.width = _config.display.width;
 		init.resolution.height = _config.display.height;
 

@@ -1,3 +1,18 @@
+// *******************************************************************************
+// The content of this file includes portions of the KerboGames Dreamcast Technology
+// released in source code form as part of the SDK package.
+// 
+// Commercial License Usage
+// 
+// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// may use this file in accordance with the end user license agreement provided 
+// with the software or, alternatively, in accordance with the terms contained in a
+// written agreement between you and KerboGames.
+// 
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
+// support@kerbogames.com
+// *******************************************************************************
+
 #pragma once
 
 #include "../../include/dce/config.hpp"
@@ -14,7 +29,7 @@ namespace dce::scripting {
 		CS_ushort Display_WindowHeight;
 		CS_bool Display_VSync;
 		CS_ushort Display_MaxFrameRate;
-		
+
 		CS_byte Overlay_FontSize;
 		CS_byte Overlay_Theme;
 		CS_bool Overlay_EnableFontAntialiasing;
@@ -22,7 +37,7 @@ namespace dce::scripting {
 		CS_float Overlay_Rounding;
 		CS_bool Overlay_ShowTerminal;
 		CS_bool Overlay_ShowStats;
-		
+
 		CS_byte Graphics_MSAAMode;
 		CS_bool Graphics_EnableHighDPIMode;
 		CS_bool Graphics_EnableSRGBBackbuffer;
