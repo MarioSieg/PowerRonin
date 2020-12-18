@@ -20,12 +20,13 @@
 
 namespace dce::scripting {
 	enum class NativeConfigApplyFlags: std::uint8_t {
-		NONE = 0,
-		DISPLAY= 1 << 0,
-		OVERLAY = 1 << 1,
-		GRAPHICS = 1 << 2,
+		NONE = 0
+		, DISPLAY= 1 << 0
+		, OVERLAY = 1 << 1
+		, GRAPHICS = 1 << 2
+		,
 	};
-	
+
 	/// <summary>
 	/// !! Maps to NativeConfig in NativeConfig.cs !!
 	/// </summary>

@@ -30,7 +30,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\</OutputPath>
+    <OutputPath>..\..\runtime\</OutputPath>
     <DefineConstants>
     </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -38,7 +38,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>..\..\bin\dreamcast.xml</DocumentationFile>
+    <DocumentationFile>..\..\runtime\dreamcast.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
@@ -75,6 +75,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\CopyDir.cs" />
+    <Compile Include="Tools\Builder.cs" />
     <Compile Include="Core\BuildTarget.cs" />
     <Compile Include="Core\CalledFromNativeRuntime.cs" />
     <Compile Include="Core\CallToNativeRuntime.cs" />
@@ -160,6 +162,7 @@
     <None Include="YAXLib\YAXLib.NetCore.xproj" />
     <None Include="YAXLib\YAXLib.project.json" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <StartupObject>

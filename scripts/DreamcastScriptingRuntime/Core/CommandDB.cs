@@ -21,6 +21,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using Dreamcast.Mathematics;
+using Dreamcast.Tools;
 
 #nullable enable
 
@@ -356,6 +357,14 @@ namespace Dreamcast.Core
                     parameterCount = 0,
                     requiresRootPrivileges = false,
                     executor = delegate { Directory.Delete(Configuration.ConfigDirectory, true); }
+                },
+                new Command
+                {
+                    name = "deploy_editor",
+                    brief = "Builds the editor into the \"bin\" folder.",
+                    parameterCount = 0,
+                    requiresRootPrivileges = false,
+                    executor = delegate { Builder.BuildEditorStandalone(); }
                 }
             });
         }

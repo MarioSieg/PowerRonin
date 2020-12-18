@@ -34,13 +34,15 @@ extern "C" void _ReadWriteBarrier();
 
 #endif
 
+#define MEM_BARRIER() asm volatile("":::"memory")
+
 namespace dce {
 
 	void read_fence() noexcept {
 #if COM_MSVC
 		_ReadBarrier();
 #else
-		asm volatile("":::"memory");
+		MEM_BARRIER();
 #endif
 	}
 
@@ -48,7 +50,7 @@ namespace dce {
 #if COM_MSVC
 		_WriteBarrier();
 #else
-		asm volatile("":::"memory");
+		MEM_BARRIER();
 #endif
 	}
 
@@ -56,7 +58,7 @@ namespace dce {
 #if COM_MSVC
 		_ReadWriteBarrier();
 #else
-		asm volatile("":::"memory");
+		MEM_BARRIER();
 #endif
 	}
 

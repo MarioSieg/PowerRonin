@@ -3,6 +3,7 @@
 /proto/
 /cache/
 /crashes/
+/config/
 /extern/assimp/out/
 /scripts/DreamcastScriptingRuntime/.vs/
 /scripts/DreamcastScriptingRuntime/bin/

@@ -93,7 +93,7 @@ enum class Compiler {
 #undef COM_GCC
 #define COM_GCC true
 	return Compiler::GCC;
-#elif defined(_MSC_VER)
+#elif defined(_MSC_VER) &&  !defined(__clang__)
 #undef COM_MSVC
 #define COM_MSVC true
 	return Compiler::MSVC;

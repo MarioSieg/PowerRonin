@@ -194,7 +194,6 @@ namespace dce::platform {
 		[[likely]] if (display_settings.is_full_screen || display_settings.is_maximized) {
 			[[likely]] if (display_settings.is_maximized) {
 				glfwMaximizeWindow(this->window_);
-				glfwHideWindow(this->window_);
 			}
 			int w = 0;
 			int h = 0;

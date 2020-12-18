@@ -27,9 +27,9 @@ namespace Dreamcast.Core
         Display = 1 << 0,
         Overlay = 1 << 1,
         Graphics = 1 << 2,
-        All = byte.MaxValue,
+        All = byte.MaxValue
     }
-    
+
     /// <summary>
     ///     Contains all configuration variables.
     /// </summary>
@@ -114,7 +114,7 @@ namespace Dreamcast.Core
         {
             if (flags == ConfigApplyFlags.None)
                 return;
-            
+
             var nativeConfig = new NativeConfig
             {
                 Display_IsWindowFullscreen = Current.Display.IsWindowFullscreen,
@@ -123,7 +123,6 @@ namespace Dreamcast.Core
                 Display_WindowHeight = Current.Display.WindowHeight,
                 Display_VSync = Current.Display.VSync,
                 Display_MaxFrameRate = Current.Display.MaxFrameRate,
-
                 Overlay_FontSize = Current.Overlay.FontSize,
                 Overlay_Theme = (byte) Current.Overlay.Theme,
                 Overlay_EnableFontAntialiasing = Current.Overlay.EnableFontAntialiasing,
@@ -131,7 +130,6 @@ namespace Dreamcast.Core
                 Overlay_Rounding = Current.Overlay.Rounding,
                 Overlay_ShowTerminal = Current.Overlay.ShowTerminal,
                 Overlay_ShowStats = Current.Overlay.ShowStats,
-
                 Graphics_MSAAMode = (byte) Current.Graphics.MSAAMode,
                 Graphics_EnableHighDPIMode = Current.Graphics.EnableHighDPIMode,
                 Graphics_EnableSRGBBackbuffer = Current.Graphics.EnableSRGBBackbuffer,

@@ -38,11 +38,11 @@ namespace dce {
 	};
 
 	enum class MsaaMode: std::uint8_t {
-		OFF = 1,
-		X2 = 2,
-		X4 = 4,
-		X8 = 8,
-		X16 = 16
+		OFF = 1
+		, X2 = 2
+		, X4 = 4
+		, X8 = 8
+		, X16 = 16
 	};
 
 	class Config final {
@@ -80,8 +80,8 @@ namespace dce {
 		} audio;
 
 		struct {
-			std::filesystem::path config_dir = "extern/mono/etc";
-			std::filesystem::path library_dir = "extern/mono/lib";
+			std::filesystem::path config_dir = "runtime/etc";
+			std::filesystem::path library_dir = "runtime/lib";
 		} scripting;
 
 		struct {

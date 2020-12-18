@@ -34,7 +34,14 @@ namespace Dreamcast.Mathematics
         /// <summary>
         ///     The identity <see cref="Matrix5x4" />.
         /// </summary>
-        public static readonly Matrix5x4 Identity = new Matrix5x4 {M11 = 1.0f, M22 = 1.0f, M33 = 1.0f, M44 = 1.0f, M54 = 0.0f};
+        public static readonly Matrix5x4 Identity = new Matrix5x4
+        {
+            M11 = 1.0f,
+            M22 = 1.0f,
+            M33 = 1.0f,
+            M44 = 1.0f,
+            M54 = 0.0f
+        };
 
         /// <summary>
         ///     Value at row 1 column 1 of the Matrix5x4.

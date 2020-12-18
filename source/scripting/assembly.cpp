@@ -19,7 +19,7 @@
 
 namespace dce::scripting {
 	void Assembly::load(std::string&& _name, RuntimeEnvironment& _env, const int _argc, char** const _argv) {
-		_name = "bin/" + _name + ".dll";
+		_name = "runtime/" + _name + ".dll";
 		[[unlikely]] if (!std::filesystem::exists(_name)) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Assembly file does not exist!");
 		}

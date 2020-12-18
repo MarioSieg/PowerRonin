@@ -373,12 +373,7 @@ namespace Dreamcast.Mathematics
 
         private static Vector3[] GetRows(ref Matrix4x4 mat)
         {
-            return new[]
-            {
-                new Vector3(mat.M11, mat.M12, mat.M13),
-                new Vector3(mat.M21, mat.M22, mat.M23),
-                new Vector3(mat.M31, mat.M32, mat.M33)
-            };
+            return new[] {new Vector3(mat.M11, mat.M12, mat.M13), new Vector3(mat.M21, mat.M22, mat.M23), new Vector3(mat.M31, mat.M32, mat.M33)};
         }
 
         /// <summary>

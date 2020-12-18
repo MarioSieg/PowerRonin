@@ -139,7 +139,7 @@ namespace dce {
 		/// 
 		/// </summary>
 		/// <returns>The terminal callback hook.</returns>
-		[[nodiscard]] auto terminal_hook() const& noexcept -> const std::function<void(char*)>&;
+		[[nodiscard]] auto terminal_hook() const & noexcept -> const std::function<void(char*)>&;
 
 		/// <summary>
 		/// 

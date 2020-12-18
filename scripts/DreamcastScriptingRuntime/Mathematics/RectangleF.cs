@@ -67,10 +67,7 @@ namespace Dreamcast.Mathematics
             Empty = new RectangleF();
             Infinite = new RectangleF
             {
-                Left = float.NegativeInfinity,
-                Top = float.NegativeInfinity,
-                Right = float.PositiveInfinity,
-                Bottom = float.PositiveInfinity
+                Left = float.NegativeInfinity, Top = float.NegativeInfinity, Right = float.PositiveInfinity, Bottom = float.PositiveInfinity
             };
         }
 

@@ -90,9 +90,8 @@ namespace YAXLib
         /// <summary>
         ///     Position string for use in error message
         /// </summary>
-        protected string LineInfoMessage => HasLineInfo
-            ? string.Format(CultureInfo.CurrentCulture, " Line {0}, position {1}.", LineNumber, LinePosition)
-            : string.Empty;
+        protected string LineInfoMessage =>
+            HasLineInfo ? string.Format(CultureInfo.CurrentCulture, " Line {0}, position {1}.", LineNumber, LinePosition) : string.Empty;
     }
 
     /// <summary>
@@ -218,8 +217,8 @@ namespace YAXLib
         /// <returns>
         ///     The error message that explains the reason for the exception, or an empty string("").
         /// </returns>
-        public override string Message => string.Format(CultureInfo.CurrentCulture,
-            "No attributes with this name found: '{0}'.{1}", AttributeName, LineInfoMessage);
+        public override string Message =>
+            string.Format(CultureInfo.CurrentCulture, "No attributes with this name found: '{0}'.{1}", AttributeName, LineInfoMessage);
 
         #endregion
     }
@@ -268,8 +267,8 @@ namespace YAXLib
         /// <returns>
         ///     The error message that explains the reason for the exception, or an empty string("").
         /// </returns>
-        public override string Message => string.Format(CultureInfo.CurrentCulture, "Element with the given name does not contain text values: '{0}'.{1}",
-            ElementName, LineInfoMessage);
+        public override string Message =>
+            string.Format(CultureInfo.CurrentCulture, "Element with the given name does not contain text values: '{0}'.{1}", ElementName, LineInfoMessage);
 
         #endregion
     }
@@ -319,8 +318,8 @@ namespace YAXLib
         /// <returns>
         ///     The error message that explains the reason for the exception, or an empty string("").
         /// </returns>
-        public override string Message => string.Format(CultureInfo.CurrentCulture, "Element with the given name already has value: '{0}'.{1}", ElementName,
-            LineInfoMessage);
+        public override string Message =>
+            string.Format(CultureInfo.CurrentCulture, "Element with the given name already has value: '{0}'.{1}", ElementName, LineInfoMessage);
 
         #endregion
     }
@@ -755,8 +754,8 @@ namespace YAXLib
         /// <returns>
         ///     The error message that explains the reason for the exception, or an empty string("").
         /// </returns>
-        public override string Message => string.Format(CultureInfo.CurrentCulture,
-            "Self Referential types ('{0}') cannot be serialized.", SelfReferentialType.FullName);
+        public override string Message =>
+            string.Format(CultureInfo.CurrentCulture, "Self Referential types ('{0}') cannot be serialized.", SelfReferentialType.FullName);
 
         #endregion
     }
