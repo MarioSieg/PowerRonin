@@ -1,0 +1,80 @@
+﻿// *******************************************************************************
+// The content of this file includes portions of the KerboGames Dreamcast Technology
+// released in source code form as part of the SDK package.
+// 
+// Commercial License Usage
+// 
+// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// may use this file in accordance with the end user license agreement provided
+// with the software or, alternatively, in accordance with the terms contained in a
+// written agreement between you and KerboGames.
+// 
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
+// support@kerbogames.com
+// *******************************************************************************
+
+using System;
+
+namespace Dreamcast.Json.Utilities
+{
+    internal readonly struct StringReference
+    {
+        public char this[int i] => Chars[i];
+
+        public char[] Chars { get; }
+
+        public int StartIndex { get; }
+
+        public int Length { get; }
+
+        public StringReference(char[] chars, int startIndex, int length)
+        {
+            Chars = chars;
+            StartIndex = startIndex;
+            Length = length;
+        }
+
+        public override string ToString()
+        {
+            return new(Chars, StartIndex, Length);
+        }
+    }
+
+    internal static class StringReferenceExtensions
+    {
+        public static int IndexOf(this StringReference s, char c, int startIndex, int length)
+        {
+            var index = Array.IndexOf(s.Chars, c, s.StartIndex + startIndex, length);
+            if (index == -1) return -1;
+
+            return index - s.StartIndex;
+        }
+
+        public static bool StartsWith(this StringReference s, string text)
+        {
+            if (text.Length > s.Length) return false;
+
+            var chars = s.Chars;
+
+            for (var i = 0; i < text.Length; i++)
+                if (text[i] != chars[i + s.StartIndex])
+                    return false;
+
+            return true;
+        }
+
+        public static bool EndsWith(this StringReference s, string text)
+        {
+            if (text.Length > s.Length) return false;
+
+            var chars = s.Chars;
+
+            var start = s.StartIndex + s.Length - text.Length;
+            for (var i = 0; i < text.Length; i++)
+                if (text[i] != chars[i + start])
+                    return false;
+
+            return true;
+        }
+    }
+}

@@ -30,7 +30,7 @@ namespace Dreamcast.Mathematics
         ///     Gets the identity matrix.
         /// </summary>
         /// <value>The identity matrix.</value>
-        public static readonly Matrix3x2 Identity = new Matrix3x2(1, 0, 0, 1, 0, 0);
+        public static readonly Matrix3x2 Identity = new(1, 0, 0, 1, 0, 0);
 
         /// <summary>
         ///     Element (1,1)
@@ -121,7 +121,7 @@ namespace Dreamcast.Mathematics
         /// </summary>
         public Vector2 Row1
         {
-            get => new Vector2(M11, M12);
+            get => new(M11, M12);
             set
             {
                 M11 = value.X;
@@ -134,7 +134,7 @@ namespace Dreamcast.Mathematics
         /// </summary>
         public Vector2 Row2
         {
-            get => new Vector2(M21, M22);
+            get => new(M21, M22);
             set
             {
                 M21 = value.X;
@@ -147,7 +147,7 @@ namespace Dreamcast.Mathematics
         /// </summary>
         public Vector2 Row3
         {
-            get => new Vector2(M31, M32);
+            get => new(M31, M32);
             set
             {
                 M31 = value.X;
@@ -160,7 +160,7 @@ namespace Dreamcast.Mathematics
         /// </summary>
         public Vector3 Column1
         {
-            get => new Vector3(M11, M21, M31);
+            get => new(M11, M21, M31);
             set
             {
                 M11 = value.X;
@@ -174,7 +174,7 @@ namespace Dreamcast.Mathematics
         /// </summary>
         public Vector3 Column2
         {
-            get => new Vector3(M12, M22, M32);
+            get => new(M12, M22, M32);
             set
             {
                 M12 = value.X;
@@ -188,7 +188,7 @@ namespace Dreamcast.Mathematics
         /// </summary>
         public Vector2 TranslationVector
         {
-            get => new Vector2(M31, M32);
+            get => new(M31, M32);
             set
             {
                 M31 = value.X;
@@ -201,7 +201,7 @@ namespace Dreamcast.Mathematics
         /// </summary>
         public Vector2 ScaleVector
         {
-            get => new Vector2(M11, M22);
+            get => new(M11, M22);
             set
             {
                 M11 = value.X;
@@ -1161,7 +1161,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static implicit operator Matrix3x2(Matrix4x4 matrix)
         {
-            return new Matrix3x2
+            return new()
             {
                 M11 = matrix.M11,
                 M12 = matrix.M12,

@@ -34,22 +34,22 @@ namespace Dreamcast.Mathematics
         /// <summary>
         ///     The X unit <see cref="Vector3I" /> (1, 0, 0).
         /// </summary>
-        public static readonly Vector3I UnitX = new Vector3I(1, 0, 0);
+        public static readonly Vector3I UnitX = new(1, 0, 0);
 
         /// <summary>
         ///     The Y unit <see cref="Vector3I" /> (0, 1, 0).
         /// </summary>
-        public static readonly Vector3I UnitY = new Vector3I(0, 1, 0);
+        public static readonly Vector3I UnitY = new(0, 1, 0);
 
         /// <summary>
         ///     The Z unit <see cref="Vector3I" /> (0, 0, 1).
         /// </summary>
-        public static readonly Vector3I UnitZ = new Vector3I(0, 0, 1);
+        public static readonly Vector3I UnitZ = new(0, 0, 1);
 
         /// <summary>
         ///     A <see cref="Vector3I" /> with all of its components set to one.
         /// </summary>
-        public static readonly Vector3I One = new Vector3I(1, 1, 1);
+        public static readonly Vector3I One = new(1, 1, 1);
 
         /// <summary>
         ///     The X component of the vector.
@@ -192,7 +192,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two vectors.</returns>
         public static Vector3I Add(Vector3I left, Vector3I right)
         {
-            return new Vector3I(left.X + right.X, left.Y + right.Y, left.Z + right.Z);
+            return new(left.X + right.X, left.Y + right.Y, left.Z + right.Z);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference of the two vectors.</returns>
         public static Vector3I Subtract(Vector3I left, Vector3I right)
         {
-            return new Vector3I(left.X - right.X, left.Y - right.Y, left.Z - right.Z);
+            return new(left.X - right.X, left.Y - right.Y, left.Z - right.Z);
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled vector.</returns>
         public static Vector3I Multiply(Vector3I value, int scale)
         {
-            return new Vector3I(value.X * scale, value.Y * scale, value.Z * scale);
+            return new(value.X * scale, value.Y * scale, value.Z * scale);
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The modulated vector.</returns>
         public static Vector3I Modulate(Vector3I left, Vector3I right)
         {
-            return new Vector3I(left.X * right.X, left.Y * right.Y, left.Z * right.Z);
+            return new(left.X * right.X, left.Y * right.Y, left.Z * right.Z);
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled vector.</returns>
         public static Vector3I Divide(Vector3I value, int scale)
         {
-            return new Vector3I(value.X / scale, value.Y / scale, value.Z / scale);
+            return new(value.X / scale, value.Y / scale, value.Z / scale);
         }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector facing in the opposite direction.</returns>
         public static Vector3I Negate(Vector3I value)
         {
-            return new Vector3I(-value.X, -value.Y, -value.Z);
+            return new(-value.X, -value.Y, -value.Z);
         }
 
         /// <summary>
@@ -404,7 +404,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two vectors.</returns>
         public static Vector3I operator +(Vector3I left, Vector3I right)
         {
-            return new Vector3I(left.X + right.X, left.Y + right.Y, left.Z + right.Z);
+            return new(left.X + right.X, left.Y + right.Y, left.Z + right.Z);
         }
 
         /// <summary>
@@ -425,7 +425,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference of the two vectors.</returns>
         public static Vector3I operator -(Vector3I left, Vector3I right)
         {
-            return new Vector3I(left.X - right.X, left.Y - right.Y, left.Z - right.Z);
+            return new(left.X - right.X, left.Y - right.Y, left.Z - right.Z);
         }
 
         /// <summary>
@@ -435,7 +435,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector facing in the opposite direction.</returns>
         public static Vector3I operator -(Vector3I value)
         {
-            return new Vector3I(-value.X, -value.Y, -value.Z);
+            return new(-value.X, -value.Y, -value.Z);
         }
 
         /// <summary>
@@ -446,7 +446,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled vector.</returns>
         public static Vector3I operator *(int scale, Vector3I value)
         {
-            return new Vector3I(value.X * scale, value.Y * scale, value.Z * scale);
+            return new(value.X * scale, value.Y * scale, value.Z * scale);
         }
 
         /// <summary>
@@ -457,7 +457,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled vector.</returns>
         public static Vector3I operator *(Vector3I value, int scale)
         {
-            return new Vector3I(value.X * scale, value.Y * scale, value.Z * scale);
+            return new(value.X * scale, value.Y * scale, value.Z * scale);
         }
 
         /// <summary>
@@ -468,7 +468,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled vector.</returns>
         public static Vector3I operator /(Vector3I value, int scale)
         {
-            return new Vector3I(value.X / scale, value.Y / scale, value.Z / scale);
+            return new(value.X / scale, value.Y / scale, value.Z / scale);
         }
 
         /// <summary>
@@ -508,7 +508,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Vector2(Vector3I value)
         {
-            return new Vector2(value.X, value.Y);
+            return new(value.X, value.Y);
         }
 
         /// <summary>
@@ -518,7 +518,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Vector3(Vector3I value)
         {
-            return new Vector3(value.X, value.Y, value.Z);
+            return new(value.X, value.Y, value.Z);
         }
 
         /// <summary>
@@ -643,7 +643,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static implicit operator Vector3I(int[] input)
         {
-            return new Vector3I(input);
+            return new(input);
         }
 
         /// <summary>

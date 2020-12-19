@@ -137,7 +137,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The converted value.</returns>
         public static implicit operator Half(float value)
         {
-            return new Half(value);
+            return new(value);
         }
 
         /// <summary>

@@ -34,17 +34,17 @@ namespace Dreamcast.Mathematics
         /// <summary>
         ///     The X unit <see cref="Vector2" /> (1, 0).
         /// </summary>
-        public static readonly Vector2 UnitX = new Vector2(1.0f, 0.0f);
+        public static readonly Vector2 UnitX = new(1.0f, 0.0f);
 
         /// <summary>
         ///     The Y unit <see cref="Vector2" /> (0, 1).
         /// </summary>
-        public static readonly Vector2 UnitY = new Vector2(0.0f, 1.0f);
+        public static readonly Vector2 UnitY = new(0.0f, 1.0f);
 
         /// <summary>
         ///     A <see cref="Vector2" /> with all of its components set to one.
         /// </summary>
-        public static readonly Vector2 One = new Vector2(1.0f, 1.0f);
+        public static readonly Vector2 One = new(1.0f, 1.0f);
 
         /// <summary>
         ///     The X component of the vector.
@@ -217,7 +217,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two vectors.</returns>
         public static Vector2 Add(Vector2 left, Vector2 right)
         {
-            return new Vector2(left.X + right.X, left.Y + right.Y);
+            return new(left.X + right.X, left.Y + right.Y);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The vector with added scalar for each element.</returns>
         public static Vector2 Add(Vector2 left, float right)
         {
-            return new Vector2(left.X + right, left.Y + right);
+            return new(left.X + right, left.Y + right);
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference of the two vectors.</returns>
         public static Vector2 Subtract(Vector2 left, Vector2 right)
         {
-            return new Vector2(left.X - right.X, left.Y - right.Y);
+            return new(left.X - right.X, left.Y - right.Y);
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The vector with subtracted scalar for each element.</returns>
         public static Vector2 Subtract(Vector2 left, float right)
         {
-            return new Vector2(left.X - right, left.Y - right);
+            return new(left.X - right, left.Y - right);
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The vector with subtracted scalar for each element.</returns>
         public static Vector2 Subtract(float left, Vector2 right)
         {
-            return new Vector2(left - right.X, left - right.Y);
+            return new(left - right.X, left - right.Y);
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled vector.</returns>
         public static Vector2 Multiply(Vector2 value, float scale)
         {
-            return new Vector2(value.X * scale, value.Y * scale);
+            return new(value.X * scale, value.Y * scale);
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The multiplied vector.</returns>
         public static Vector2 Multiply(Vector2 left, Vector2 right)
         {
-            return new Vector2(left.X * right.X, left.Y * right.Y);
+            return new(left.X * right.X, left.Y * right.Y);
         }
 
         /// <summary>
@@ -371,7 +371,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled vector.</returns>
         public static Vector2 Divide(Vector2 value, float scale)
         {
-            return new Vector2(value.X / scale, value.Y / scale);
+            return new(value.X / scale, value.Y / scale);
         }
 
         /// <summary>
@@ -393,7 +393,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled vector.</returns>
         public static Vector2 Divide(float scale, Vector2 value)
         {
-            return new Vector2(scale / value.X, scale / value.Y);
+            return new(scale / value.X, scale / value.Y);
         }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector facing in the opposite direction.</returns>
         public static Vector2 Negate(Vector2 value)
         {
-            return new Vector2(-value.X, -value.Y);
+            return new(-value.X, -value.Y);
         }
 
         /// <summary>
@@ -436,7 +436,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector with each component being the absolute value of the input component</returns>
         public static Vector2 Abs(Vector2 value)
         {
-            return new Vector2(value.X > 0.0f ? value.X : -value.X, value.Y > 0.0f ? value.Y : -value.Y);
+            return new(value.X > 0.0f ? value.X : -value.X, value.Y > 0.0f ? value.Y : -value.Y);
         }
 
         /// <summary>
@@ -1267,7 +1267,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two vectors.</returns>
         public static Vector2 operator +(Vector2 left, Vector2 right)
         {
-            return new Vector2(left.X + right.X, left.Y + right.Y);
+            return new(left.X + right.X, left.Y + right.Y);
         }
 
         /// <summary>
@@ -1279,7 +1279,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The multiplication of the two vectors.</returns>
         public static Vector2 operator *(Vector2 left, Vector2 right)
         {
-            return new Vector2(left.X * right.X, left.Y * right.Y);
+            return new(left.X * right.X, left.Y * right.Y);
         }
 
         /// <summary>
@@ -1300,7 +1300,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference of the two vectors.</returns>
         public static Vector2 operator -(Vector2 left, Vector2 right)
         {
-            return new Vector2(left.X - right.X, left.Y - right.Y);
+            return new(left.X - right.X, left.Y - right.Y);
         }
 
         /// <summary>
@@ -1310,7 +1310,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector facing in the opposite direction.</returns>
         public static Vector2 operator -(Vector2 value)
         {
-            return new Vector2(-value.X, -value.Y);
+            return new(-value.X, -value.Y);
         }
 
         /// <summary>
@@ -1321,7 +1321,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled vector.</returns>
         public static Vector2 operator *(float scale, Vector2 value)
         {
-            return new Vector2(value.X * scale, value.Y * scale);
+            return new(value.X * scale, value.Y * scale);
         }
 
         /// <summary>
@@ -1332,7 +1332,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled vector.</returns>
         public static Vector2 operator *(Vector2 value, float scale)
         {
-            return new Vector2(value.X * scale, value.Y * scale);
+            return new(value.X * scale, value.Y * scale);
         }
 
         /// <summary>
@@ -1343,7 +1343,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled vector.</returns>
         public static Vector2 operator /(Vector2 value, float scale)
         {
-            return new Vector2(value.X / scale, value.Y / scale);
+            return new(value.X / scale, value.Y / scale);
         }
 
         /// <summary>
@@ -1354,7 +1354,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled vector.</returns>
         public static Vector2 operator /(float scale, Vector2 value)
         {
-            return new Vector2(scale / value.X, scale / value.Y);
+            return new(scale / value.X, scale / value.Y);
         }
 
         /// <summary>
@@ -1365,7 +1365,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled vector.</returns>
         public static Vector2 operator /(Vector2 value, Vector2 scale)
         {
-            return new Vector2(value.X / scale.X, value.Y / scale.Y);
+            return new(value.X / scale.X, value.Y / scale.Y);
         }
 
         /// <summary>
@@ -1376,7 +1376,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The vector with added scalar for each element.</returns>
         public static Vector2 operator +(Vector2 value, float scalar)
         {
-            return new Vector2(value.X + scalar, value.Y + scalar);
+            return new(value.X + scalar, value.Y + scalar);
         }
 
         /// <summary>
@@ -1387,7 +1387,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The vector with added scalar for each element.</returns>
         public static Vector2 operator +(float scalar, Vector2 value)
         {
-            return new Vector2(scalar + value.X, scalar + value.Y);
+            return new(scalar + value.X, scalar + value.Y);
         }
 
         /// <summary>
@@ -1398,7 +1398,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The vector with subtraced scalar from each element.</returns>
         public static Vector2 operator -(Vector2 value, float scalar)
         {
-            return new Vector2(value.X - scalar, value.Y - scalar);
+            return new(value.X - scalar, value.Y - scalar);
         }
 
         /// <summary>
@@ -1409,7 +1409,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The vector with subtraced scalar from each element.</returns>
         public static Vector2 operator -(float scalar, Vector2 value)
         {
-            return new Vector2(scalar - value.X, scalar - value.Y);
+            return new(scalar - value.X, scalar - value.Y);
         }
 
         /// <summary>
@@ -1449,7 +1449,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Vector3(Vector2 value)
         {
-            return new Vector3(value, 0.0f);
+            return new(value, 0.0f);
         }
 
         /// <summary>
@@ -1459,7 +1459,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Vector4(Vector2 value)
         {
-            return new Vector4(value, 0.0f, 0.0f);
+            return new(value, 0.0f, 0.0f);
         }
 
         /// <summary>

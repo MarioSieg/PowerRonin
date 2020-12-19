@@ -1,0 +1,9 @@
+vertex shader:
+
+.\shaderc.exe -f src/unlit/vertex.shader -o bin/unlit/dx11/vertex.bin --platform windows -p vs_5_0 --varyingdef src/unlit/variables.shader --type vertex
+
+
+
+fragment shader:
+
+.\shaderc.exe -f src/unlit/fragment.shader -o bin/unlit/dx11/fragment.bin --platform windows -p ps_5_0 --varyingdef src/unlit/variables.shader --type fragment

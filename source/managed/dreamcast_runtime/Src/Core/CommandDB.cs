@@ -33,12 +33,12 @@ namespace Dreamcast.Core
         /// <summary>
         ///     All currently registered commands.
         /// </summary>
-        public static List<Command> RegisteredCommands { get; set; } = new List<Command>();
+        public static List<Command> RegisteredCommands { get; set; } = new();
 
         /// <summary>
         ///     The history of commands entered.
         /// </summary>
-        public static List<Tuple<string, double>> CommandHistory { get; } = new List<Tuple<string, double>>();
+        public static List<Tuple<string, double>> CommandHistory { get; } = new();
 
         /// <summary>
         ///     Registers most basic common commands.

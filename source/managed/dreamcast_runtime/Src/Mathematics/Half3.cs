@@ -100,7 +100,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static implicit operator Half3(Vector3 value)
         {
-            return new Half3(value.X, value.Y, value.Z);
+            return new(value.X, value.Y, value.Z);
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static implicit operator Vector3(Half3 value)
         {
-            return new Vector3(value.X, value.Y, value.Z);
+            return new(value.X, value.Y, value.Z);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Half3(Vector2 value)
         {
-            return new Half3(value.X, value.Y, 0.0f);
+            return new(value.X, value.Y, 0.0f);
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Vector2(Half3 value)
         {
-            return new Vector2(value.X, value.Y);
+            return new(value.X, value.Y);
         }
 
         /// <summary>

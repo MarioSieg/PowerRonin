@@ -113,7 +113,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static implicit operator Half4(Vector4 value)
         {
-            return new Half4(value.X, value.Y, value.Z, value.W);
+            return new(value.X, value.Y, value.Z, value.W);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static implicit operator Vector4(Half4 value)
         {
-            return new Vector4(value.X, value.Y, value.Z, value.W);
+            return new(value.X, value.Y, value.Z, value.W);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Half4(Vector3 value)
         {
-            return new Half4(value.X, value.Y, value.Z, 0.0f);
+            return new(value.X, value.Y, value.Z, 0.0f);
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Vector3(Half4 value)
         {
-            return new Vector3(value.X, value.Y, value.Z);
+            return new(value.X, value.Y, value.Z);
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Half4(Vector2 value)
         {
-            return new Half4(value.X, value.Y, 0.0f, 0.0f);
+            return new(value.X, value.Y, 0.0f, 0.0f);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Vector2(Half4 value)
         {
-            return new Vector2(value.X, value.Y);
+            return new(value.X, value.Y);
         }
 
         /// <summary>

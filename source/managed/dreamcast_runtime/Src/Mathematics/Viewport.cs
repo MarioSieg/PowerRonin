@@ -112,7 +112,7 @@ namespace Dreamcast.Mathematics
         /// <value>The bounds.</value>
         public Rectangle Bounds
         {
-            get => new Rectangle(X, Y, Width, Height);
+            get => new(X, Y, Width, Height);
 
             set
             {

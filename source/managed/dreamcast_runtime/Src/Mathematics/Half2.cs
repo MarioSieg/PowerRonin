@@ -97,7 +97,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static implicit operator Half2(Vector2 value)
         {
-            return new Half2(value.X, value.Y);
+            return new(value.X, value.Y);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static implicit operator Vector2(Half2 value)
         {
-            return new Vector2(value.X, value.Y);
+            return new(value.X, value.Y);
         }
 
         /// <summary>

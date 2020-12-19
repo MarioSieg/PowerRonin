@@ -36,22 +36,22 @@ namespace Dreamcast.Core
         /// <summary>
         ///     Display config.
         /// </summary>
-        public DisplayConfiguration Display { get; set; } = new DisplayConfiguration();
+        public DisplayConfiguration Display { get; set; } = new();
 
         /// <summary>
         ///     System overlay config.
         /// </summary>
-        public OverlayConfiguration Overlay { get; set; } = new OverlayConfiguration();
+        public OverlayConfiguration Overlay { get; set; } = new();
 
         /// <summary>
         ///     Graphics config.
         /// </summary>
-        public GraphicsConfiguration Graphics { get; set; } = new GraphicsConfiguration();
+        public GraphicsConfiguration Graphics { get; set; } = new();
 
         /// <summary>
         ///     Current global system config.
         /// </summary>
-        public static Configuration Current { get; set; } = new Configuration();
+        public static Configuration Current { get; set; } = new();
 
         /// <summary>
         ///     The name of the directory where configs are saved in.
@@ -180,7 +180,7 @@ namespace Dreamcast.Core
         {
             public static string FilePath { get; set; } = Path.Combine(ConfigDirectory, "graphics.ini");
 
-            public Dictionary<BuildTarget, GraphicsAPI[]> GraphicBackends { get; set; } = new Dictionary<BuildTarget, GraphicsAPI[]> {{BuildTarget.StandaloneWindows, new[] {GraphicsAPI.Direct3D11, GraphicsAPI.Direct3D12, GraphicsAPI.Vulkan, GraphicsAPI.OpenGL}}, {BuildTarget.StandaloneLinux, new[] {GraphicsAPI.OpenGL, GraphicsAPI.Vulkan}}, {BuildTarget.StandaloneMac, new[] {GraphicsAPI.Metal, GraphicsAPI.OpenGL}}};
+            public Dictionary<BuildTarget, GraphicsAPI[]> GraphicBackends { get; set; } = new() {{BuildTarget.StandaloneWindows, new[] {GraphicsAPI.Direct3D11, GraphicsAPI.Direct3D12, GraphicsAPI.Vulkan, GraphicsAPI.OpenGL}}, {BuildTarget.StandaloneLinux, new[] {GraphicsAPI.OpenGL, GraphicsAPI.Vulkan}}, {BuildTarget.StandaloneMac, new[] {GraphicsAPI.Metal, GraphicsAPI.OpenGL}}};
 
             public MSAAMode MSAAMode { get; set; } = MSAAMode.X16;
 

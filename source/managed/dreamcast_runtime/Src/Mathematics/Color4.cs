@@ -31,12 +31,12 @@ namespace Dreamcast.Mathematics
         /// <summary>
         ///     The Black color (0, 0, 0, 1).
         /// </summary>
-        public static readonly Color4 Black = new Color4(0.0f, 0.0f, 0.0f, 1.0f);
+        public static readonly Color4 Black = new(0.0f, 0.0f, 0.0f, 1.0f);
 
         /// <summary>
         ///     The White color (1, 1, 1, 1).
         /// </summary>
-        public static readonly Color4 White = new Color4(1.0f, 1.0f, 1.0f, 1.0f);
+        public static readonly Color4 White = new(1.0f, 1.0f, 1.0f, 1.0f);
 
         /// <summary>
         ///     The red component of the color.
@@ -287,7 +287,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A three component vector containing the red, green, and blue components of the color.</returns>
         public Vector3 ToVector3()
         {
-            return new Vector3(Red, Green, Blue);
+            return new(Red, Green, Blue);
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A four component vector containing all four color components.</returns>
         public Vector4 ToVector4()
         {
-            return new Vector4(Red, Green, Blue, Alpha);
+            return new(Red, Green, Blue, Alpha);
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two colors.</returns>
         public static Color4 Add(Color4 left, Color4 right)
         {
-            return new Color4(left.Red + right.Red, left.Green + right.Green, left.Blue + right.Blue, left.Alpha + right.Alpha);
+            return new(left.Red + right.Red, left.Green + right.Green, left.Blue + right.Blue, left.Alpha + right.Alpha);
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference of the two colors.</returns>
         public static Color4 Subtract(Color4 left, Color4 right)
         {
-            return new Color4(left.Red - right.Red, left.Green - right.Green, left.Blue - right.Blue, left.Alpha - right.Alpha);
+            return new(left.Red - right.Red, left.Green - right.Green, left.Blue - right.Blue, left.Alpha - right.Alpha);
         }
 
         /// <summary>
@@ -380,7 +380,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The modulated color.</returns>
         public static Color4 Modulate(Color4 left, Color4 right)
         {
-            return new Color4(left.Red * right.Red, left.Green * right.Green, left.Blue * right.Blue, left.Alpha * right.Alpha);
+            return new(left.Red * right.Red, left.Green * right.Green, left.Blue * right.Blue, left.Alpha * right.Alpha);
         }
 
         /// <summary>
@@ -405,7 +405,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled color.</returns>
         public static Color4 Scale(Color4 value, float scale)
         {
-            return new Color4(value.Red * scale, value.Green * scale, value.Blue * scale, value.Alpha * scale);
+            return new(value.Red * scale, value.Green * scale, value.Blue * scale, value.Alpha * scale);
         }
 
         /// <summary>
@@ -428,7 +428,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The negated color.</returns>
         public static Color4 Negate(Color4 value)
         {
-            return new Color4(1.0f - value.Red, 1.0f - value.Green, 1.0f - value.Blue, 1.0f - value.Alpha);
+            return new(1.0f - value.Red, 1.0f - value.Green, 1.0f - value.Blue, 1.0f - value.Alpha);
         }
 
         /// <summary>
@@ -614,7 +614,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The adjusted color.</returns>
         public static Color4 AdjustContrast(Color4 value, float contrast)
         {
-            return new Color4(0.5f + contrast * (value.Red - 0.5f), 0.5f + contrast * (value.Green - 0.5f), 0.5f + contrast * (value.Blue - 0.5f), value.Alpha);
+            return new(0.5f + contrast * (value.Red - 0.5f), 0.5f + contrast * (value.Green - 0.5f), 0.5f + contrast * (value.Blue - 0.5f), value.Alpha);
         }
 
         /// <summary>
@@ -679,7 +679,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two colors.</returns>
         public static Color4 operator +(Color4 left, Color4 right)
         {
-            return new Color4(left.Red + right.Red, left.Green + right.Green, left.Blue + right.Blue, left.Alpha + right.Alpha);
+            return new(left.Red + right.Red, left.Green + right.Green, left.Blue + right.Blue, left.Alpha + right.Alpha);
         }
 
         /// <summary>
@@ -700,7 +700,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference of the two colors.</returns>
         public static Color4 operator -(Color4 left, Color4 right)
         {
-            return new Color4(left.Red - right.Red, left.Green - right.Green, left.Blue - right.Blue, left.Alpha - right.Alpha);
+            return new(left.Red - right.Red, left.Green - right.Green, left.Blue - right.Blue, left.Alpha - right.Alpha);
         }
 
         /// <summary>
@@ -710,7 +710,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A negated color.</returns>
         public static Color4 operator -(Color4 value)
         {
-            return new Color4(-value.Red, -value.Green, -value.Blue, -value.Alpha);
+            return new(-value.Red, -value.Green, -value.Blue, -value.Alpha);
         }
 
         /// <summary>
@@ -721,7 +721,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled color.</returns>
         public static Color4 operator *(float scale, Color4 value)
         {
-            return new Color4(value.Red * scale, value.Green * scale, value.Blue * scale, value.Alpha * scale);
+            return new(value.Red * scale, value.Green * scale, value.Blue * scale, value.Alpha * scale);
         }
 
         /// <summary>
@@ -732,7 +732,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled color.</returns>
         public static Color4 operator *(Color4 value, float scale)
         {
-            return new Color4(value.Red * scale, value.Green * scale, value.Blue * scale, value.Alpha * scale);
+            return new(value.Red * scale, value.Green * scale, value.Blue * scale, value.Alpha * scale);
         }
 
         /// <summary>
@@ -743,7 +743,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The modulated color.</returns>
         public static Color4 operator *(Color4 left, Color4 right)
         {
-            return new Color4(left.Red * right.Red, left.Green * right.Green, left.Blue * right.Blue, left.Alpha * right.Alpha);
+            return new(left.Red * right.Red, left.Green * right.Green, left.Blue * right.Blue, left.Alpha * right.Alpha);
         }
 
         /// <summary>
@@ -783,7 +783,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Color3(Color4 value)
         {
-            return new Color3(value.Red, value.Green, value.Blue);
+            return new(value.Red, value.Green, value.Blue);
         }
 
         /// <summary>
@@ -793,7 +793,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Vector3(Color4 value)
         {
-            return new Vector3(value.Red, value.Green, value.Blue);
+            return new(value.Red, value.Green, value.Blue);
         }
 
         /// <summary>
@@ -803,7 +803,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static implicit operator Vector4(Color4 value)
         {
-            return new Vector4(value.Red, value.Green, value.Blue, value.Alpha);
+            return new(value.Red, value.Green, value.Blue, value.Alpha);
         }
 
         /// <summary>
@@ -813,7 +813,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Color4(Vector3 value)
         {
-            return new Color4(value.X, value.Y, value.Z, 1.0f);
+            return new(value.X, value.Y, value.Z, 1.0f);
         }
 
         /// <summary>
@@ -823,7 +823,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Color4(Vector4 value)
         {
-            return new Color4(value.X, value.Y, value.Z, value.W);
+            return new(value.X, value.Y, value.Z, value.W);
         }
 
         /// <summary>
@@ -833,7 +833,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Color4(ColorBGRA value)
         {
-            return new Color4(value.R, value.G, value.B, value.A);
+            return new(value.R, value.G, value.B, value.A);
         }
 
         /// <summary>
@@ -843,7 +843,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator ColorBGRA(Color4 value)
         {
-            return new ColorBGRA(value.Red, value.Green, value.Blue, value.Alpha);
+            return new(value.Red, value.Green, value.Blue, value.Alpha);
         }
 
         /// <summary>
@@ -867,7 +867,7 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public static explicit operator Color4(int value)
         {
-            return new Color4(value);
+            return new(value);
         }
 
         /// <summary>

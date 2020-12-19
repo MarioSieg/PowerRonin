@@ -509,7 +509,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled plane.</returns>
         public static Plane Multiply(Plane value, float scale)
         {
-            return new Plane(value.Normal.X * scale, value.Normal.Y * scale, value.Normal.Z * scale, value.D * scale);
+            return new(value.Normal.X * scale, value.Normal.Y * scale, value.Normal.Z * scale, value.D * scale);
         }
 
         /// <summary>
@@ -783,7 +783,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled plane.</returns>
         public static Plane operator *(float scale, Plane plane)
         {
-            return new Plane(plane.Normal.X * scale, plane.Normal.Y * scale, plane.Normal.Z * scale, plane.D * scale);
+            return new(plane.Normal.X * scale, plane.Normal.Y * scale, plane.Normal.Z * scale, plane.D * scale);
         }
 
         /// <summary>
@@ -794,7 +794,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled plane.</returns>
         public static Plane operator *(Plane plane, float scale)
         {
-            return new Plane(plane.Normal.X * scale, plane.Normal.Y * scale, plane.Normal.Z * scale, plane.D * scale);
+            return new(plane.Normal.X * scale, plane.Normal.Y * scale, plane.Normal.Z * scale, plane.D * scale);
         }
 
         /// <summary>

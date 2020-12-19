@@ -307,12 +307,12 @@ namespace Dreamcast.Mathematics
         /// <summary>
         ///     Gets a SharpDX.AngleSingle instance that complements this angle (i.e. the two angles add to 90°).
         /// </summary>
-        public AngleSingle Complement => new AngleSingle(MathUtil.PiOverTwo - radians, AngleType.Radian);
+        public AngleSingle Complement => new(MathUtil.PiOverTwo - radians, AngleType.Radian);
 
         /// <summary>
         ///     Gets a SharpDX.AngleSingle instance that supplements this angle (i.e. the two angles add to 180°).
         /// </summary>
-        public AngleSingle Supplement => new AngleSingle(MathUtil.Pi - radians, AngleType.Radian);
+        public AngleSingle Supplement => new(MathUtil.Pi - radians, AngleType.Radian);
 
         /// <summary>
         ///     Wraps the SharpDX.AngleSingle given in the value argument to be in the range [π, -π].
@@ -372,7 +372,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The value of the two objects added together.</returns>
         public static AngleSingle Add(AngleSingle left, AngleSingle right)
         {
-            return new AngleSingle(left.radians + right.radians, AngleType.Radian);
+            return new(left.radians + right.radians, AngleType.Radian);
         }
 
         /// <summary>
@@ -383,7 +383,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The value of the two objects subtracted.</returns>
         public static AngleSingle Subtract(AngleSingle left, AngleSingle right)
         {
-            return new AngleSingle(left.radians - right.radians, AngleType.Radian);
+            return new(left.radians - right.radians, AngleType.Radian);
         }
 
         /// <summary>
@@ -394,7 +394,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The value of the two objects multiplied together.</returns>
         public static AngleSingle Multiply(AngleSingle left, AngleSingle right)
         {
-            return new AngleSingle(left.radians * right.radians, AngleType.Radian);
+            return new(left.radians * right.radians, AngleType.Radian);
         }
 
         /// <summary>
@@ -405,28 +405,28 @@ namespace Dreamcast.Mathematics
         /// <returns>The value of the two objects divided.</returns>
         public static AngleSingle Divide(AngleSingle left, AngleSingle right)
         {
-            return new AngleSingle(left.radians / right.radians, AngleType.Radian);
+            return new(left.radians / right.radians, AngleType.Radian);
         }
 
         /// <summary>
         ///     Gets a new SharpDX.AngleSingle instance that represents the zero angle (i.e. 0°).
         /// </summary>
-        public static AngleSingle ZeroAngle => new AngleSingle(0.0f, AngleType.Radian);
+        public static AngleSingle ZeroAngle => new(0.0f, AngleType.Radian);
 
         /// <summary>
         ///     Gets a new SharpDX.AngleSingle instance that represents the right angle (i.e. 90° or π/2).
         /// </summary>
-        public static AngleSingle RightAngle => new AngleSingle(MathUtil.PiOverTwo, AngleType.Radian);
+        public static AngleSingle RightAngle => new(MathUtil.PiOverTwo, AngleType.Radian);
 
         /// <summary>
         ///     Gets a new SharpDX.AngleSingle instance that represents the straight angle (i.e. 180° or π).
         /// </summary>
-        public static AngleSingle StraightAngle => new AngleSingle(MathUtil.Pi, AngleType.Radian);
+        public static AngleSingle StraightAngle => new(MathUtil.Pi, AngleType.Radian);
 
         /// <summary>
         ///     Gets a new SharpDX.AngleSingle instance that represents the full rotation angle (i.e. 360° or 2π).
         /// </summary>
-        public static AngleSingle FullRotationAngle => new AngleSingle(MathUtil.TwoPi, AngleType.Radian);
+        public static AngleSingle FullRotationAngle => new(MathUtil.TwoPi, AngleType.Radian);
 
         /// <summary>
         ///     Returns a System.Boolean that indicates whether the values of two SharpDX.Angle
@@ -518,7 +518,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The negated value of the value parameter.</returns>
         public static AngleSingle operator -(AngleSingle value)
         {
-            return new AngleSingle(-value.radians, AngleType.Radian);
+            return new(-value.radians, AngleType.Radian);
         }
 
         /// <summary>
@@ -529,7 +529,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The value of the two objects added together.</returns>
         public static AngleSingle operator +(AngleSingle left, AngleSingle right)
         {
-            return new AngleSingle(left.radians + right.radians, AngleType.Radian);
+            return new(left.radians + right.radians, AngleType.Radian);
         }
 
         /// <summary>
@@ -540,7 +540,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The value of the two objects subtracted.</returns>
         public static AngleSingle operator -(AngleSingle left, AngleSingle right)
         {
-            return new AngleSingle(left.radians - right.radians, AngleType.Radian);
+            return new(left.radians - right.radians, AngleType.Radian);
         }
 
         /// <summary>
@@ -551,7 +551,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The value of the two objects multiplied together.</returns>
         public static AngleSingle operator *(AngleSingle left, AngleSingle right)
         {
-            return new AngleSingle(left.radians * right.radians, AngleType.Radian);
+            return new(left.radians * right.radians, AngleType.Radian);
         }
 
         /// <summary>
@@ -562,7 +562,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The value of the two objects divided.</returns>
         public static AngleSingle operator /(AngleSingle left, AngleSingle right)
         {
-            return new AngleSingle(left.radians / right.radians, AngleType.Radian);
+            return new(left.radians / right.radians, AngleType.Radian);
         }
 
         /// <summary>

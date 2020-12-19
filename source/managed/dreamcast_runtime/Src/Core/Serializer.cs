@@ -15,8 +15,8 @@
 
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using Dreamcast.Json;
+using Dreamcast.Json.Converters;
 
 namespace Dreamcast.Core
 {

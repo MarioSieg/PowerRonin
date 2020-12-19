@@ -19,7 +19,7 @@ namespace Dreamcast.Core
 {
     public static class Chrono
     {
-        private static readonly Stopwatch Clock = new Stopwatch();
+        private static readonly Stopwatch Clock = new();
         public static uint Cycles { get; private set; }
 
         public static double DeltaTime { get; private set; }

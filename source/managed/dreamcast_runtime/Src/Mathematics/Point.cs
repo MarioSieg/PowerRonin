@@ -28,7 +28,7 @@ namespace Dreamcast.Mathematics
         /// <summary>
         ///     A point with (0,0) coordinates.
         /// </summary>
-        public static readonly Point Zero = new Point(0, 0);
+        public static readonly Point Zero = new(0, 0);
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="Point" /> struct.
@@ -139,7 +139,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Point(Vector2 value)
         {
-            return new Point((int) value.X, (int) value.Y);
+            return new((int) value.X, (int) value.Y);
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static implicit operator Vector2(Point value)
         {
-            return new Vector2(value.X, value.Y);
+            return new(value.X, value.Y);
         }
     }
 }

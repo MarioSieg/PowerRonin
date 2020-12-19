@@ -38,8 +38,8 @@ namespace Dreamcast.Tools
             try
             {
                 Protocol.Critical("Build started! Output dir: " + outputDir);
-                string buildDirClang = Path.Combine(BuildOutputDir, BuildDirClang);
-                string buildDirMsvc = Path.Combine(BuildOutputDir, BuildDirMsvc);
+                var buildDirClang = Path.Combine(BuildOutputDir, BuildDirClang);
+                var buildDirMsvc = Path.Combine(BuildOutputDir, BuildDirMsvc);
                 if (!Directory.Exists(buildDirClang) && !Directory.Exists(buildDirMsvc))
                 {
                     Protocol.Error("Missing build directories! Requires either Clang or MSVC output directory!");
@@ -48,14 +48,14 @@ namespace Dreamcast.Tools
                     return;
                 }
 
-                string buildDir = Directory.Exists(buildDirClang) ? buildDirClang : buildDirMsvc;
+                var buildDir = Directory.Exists(buildDirClang) ? buildDirClang : buildDirMsvc;
                 if (!Directory.Exists(buildDir))
                 {
                     Protocol.Error("Invalid build dir: " + buildDir);
                     return;
                 }
 
-                string exe = Path.Combine(buildDir, ExeFileName);
+                var exe = Path.Combine(buildDir, ExeFileName);
                 if (!File.Exists(exe))
                 {
                     Protocol.Error("Missing engine executable: " + exe);
@@ -69,7 +69,7 @@ namespace Dreamcast.Tools
 
                 File.Copy(exe, Path.Combine(outputDir, OutputDirMain, ExeFileName));
 
-                foreach (string dir in RequiredDirs)
+                foreach (var dir in RequiredDirs)
                 {
                     if (!Directory.Exists(dir))
                     {
@@ -88,7 +88,7 @@ namespace Dreamcast.Tools
                         return;
                     }
 
-                    foreach (string file in Directory.GetFiles(LinuxOnlyDir, "*.so"))
+                    foreach (var file in Directory.GetFiles(LinuxOnlyDir, "*.so"))
                         File.Copy(file, Path.Combine(outputDir, OutputDirMain, Path.GetFileName(file)));
                 }
                 else
@@ -99,7 +99,7 @@ namespace Dreamcast.Tools
                         return;
                     }
 
-                    foreach (string file in Directory.GetFiles(WindowsOnlyDir, "*.dll"))
+                    foreach (var file in Directory.GetFiles(WindowsOnlyDir, "*.dll"))
                         File.Copy(file, Path.Combine(outputDir, OutputDirMain, Path.GetFileName(file)));
                 }
 

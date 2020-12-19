@@ -34,12 +34,12 @@ namespace Dreamcast.Mathematics
         /// <summary>
         ///     A <see cref="Quaternion" /> with all of its components set to one.
         /// </summary>
-        public static readonly Quaternion One = new Quaternion(1.0f, 1.0f, 1.0f, 1.0f);
+        public static readonly Quaternion One = new(1.0f, 1.0f, 1.0f, 1.0f);
 
         /// <summary>
         ///     The identity <see cref="Quaternion" /> (0, 0, 0, 1).
         /// </summary>
-        public static readonly Quaternion Identity = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+        public static readonly Quaternion Identity = new(0.0f, 0.0f, 0.0f, 1.0f);
 
         /// <summary>
         ///     The X component of the quaternion.

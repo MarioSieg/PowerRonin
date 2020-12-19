@@ -139,7 +139,7 @@ namespace Dreamcast.Mathematics
         /// </value>
         public Vector2 Location
         {
-            get => new Vector2(X, Y);
+            get => new(X, Y);
             set
             {
                 X = value.X;
@@ -153,7 +153,7 @@ namespace Dreamcast.Mathematics
         /// <value>
         ///     The center.
         /// </value>
-        public Vector2 Center => new Vector2(X + Width / 2, Y + Height / 2);
+        public Vector2 Center => new(X + Width / 2, Y + Height / 2);
 
         /// <summary>
         ///     Gets a value that indicates whether the rectangle is empty.
@@ -169,7 +169,7 @@ namespace Dreamcast.Mathematics
         /// <value>The size of the rectangle.</value>
         public Size2F Size
         {
-            get => new Size2F(Width, Height);
+            get => new(Width, Height);
             set
             {
                 Width = value.Width;
@@ -181,25 +181,25 @@ namespace Dreamcast.Mathematics
         ///     Gets the position of the top-left corner of the rectangle.
         /// </summary>
         /// <value>The top-left corner of the rectangle.</value>
-        public Vector2 TopLeft => new Vector2(Left, Top);
+        public Vector2 TopLeft => new(Left, Top);
 
         /// <summary>
         ///     Gets the position of the top-right corner of the rectangle.
         /// </summary>
         /// <value>The top-right corner of the rectangle.</value>
-        public Vector2 TopRight => new Vector2(Right, Top);
+        public Vector2 TopRight => new(Right, Top);
 
         /// <summary>
         ///     Gets the position of the bottom-left corner of the rectangle.
         /// </summary>
         /// <value>The bottom-left corner of the rectangle.</value>
-        public Vector2 BottomLeft => new Vector2(Left, Bottom);
+        public Vector2 BottomLeft => new(Left, Bottom);
 
         /// <summary>
         ///     Gets the position of the bottom-right corner of the rectangle.
         /// </summary>
         /// <value>The bottom-right corner of the rectangle.</value>
-        public Vector2 BottomRight => new Vector2(Right, Bottom);
+        public Vector2 BottomRight => new(Right, Bottom);
 
         /// <summary>Changes the position of the rectangle.</summary>
         /// <param name="amount">The values to adjust the position of the rectangle by.</param>

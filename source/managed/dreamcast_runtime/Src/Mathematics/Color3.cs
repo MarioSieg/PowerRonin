@@ -31,12 +31,12 @@ namespace Dreamcast.Mathematics
         /// <summary>
         ///     The Black color (0, 0, 0).
         /// </summary>
-        public static readonly Color3 Black = new Color3(0.0f, 0.0f, 0.0f);
+        public static readonly Color3 Black = new(0.0f, 0.0f, 0.0f);
 
         /// <summary>
         ///     The White color (1, 1, 1, 1).
         /// </summary>
-        public static readonly Color3 White = new Color3(1.0f, 1.0f, 1.0f);
+        public static readonly Color3 White = new(1.0f, 1.0f, 1.0f);
 
         /// <summary>
         ///     The red component of the color.
@@ -220,7 +220,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A three component vector containing the red, green, and blue components of the color.</returns>
         public Vector3 ToVector3()
         {
-            return new Vector3(Red, Green, Blue);
+            return new(Red, Green, Blue);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two colors.</returns>
         public static Color3 Add(Color3 left, Color3 right)
         {
-            return new Color3(left.Red + right.Red, left.Green + right.Green, left.Blue + right.Blue);
+            return new(left.Red + right.Red, left.Green + right.Green, left.Blue + right.Blue);
         }
 
         /// <summary>
@@ -277,7 +277,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference of the two colors.</returns>
         public static Color3 Subtract(Color3 left, Color3 right)
         {
-            return new Color3(left.Red - right.Red, left.Green - right.Green, left.Blue - right.Blue);
+            return new(left.Red - right.Red, left.Green - right.Green, left.Blue - right.Blue);
         }
 
         /// <summary>
@@ -301,7 +301,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The modulated color.</returns>
         public static Color3 Modulate(Color3 left, Color3 right)
         {
-            return new Color3(left.Red * right.Red, left.Green * right.Green, left.Blue * right.Blue);
+            return new(left.Red * right.Red, left.Green * right.Green, left.Blue * right.Blue);
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled color.</returns>
         public static Color3 Scale(Color3 value, float scale)
         {
-            return new Color3(value.Red * scale, value.Green * scale, value.Blue * scale);
+            return new(value.Red * scale, value.Green * scale, value.Blue * scale);
         }
 
         /// <summary>
@@ -347,7 +347,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The negated color.</returns>
         public static Color3 Negate(Color3 value)
         {
-            return new Color3(1.0f - value.Red, 1.0f - value.Green, 1.0f - value.Blue);
+            return new(1.0f - value.Red, 1.0f - value.Green, 1.0f - value.Blue);
         }
 
         /// <summary>
@@ -525,7 +525,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The adjusted color.</returns>
         public static Color3 AdjustContrast(Color3 value, float contrast)
         {
-            return new Color3(0.5f + contrast * (value.Red - 0.5f), 0.5f + contrast * (value.Green - 0.5f), 0.5f + contrast * (value.Blue - 0.5f));
+            return new(0.5f + contrast * (value.Red - 0.5f), 0.5f + contrast * (value.Green - 0.5f), 0.5f + contrast * (value.Blue - 0.5f));
         }
 
         /// <summary>
@@ -589,7 +589,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two colors.</returns>
         public static Color3 operator +(Color3 left, Color3 right)
         {
-            return new Color3(left.Red + right.Red, left.Green + right.Green, left.Blue + right.Blue);
+            return new(left.Red + right.Red, left.Green + right.Green, left.Blue + right.Blue);
         }
 
         /// <summary>
@@ -610,7 +610,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference of the two colors.</returns>
         public static Color3 operator -(Color3 left, Color3 right)
         {
-            return new Color3(left.Red - right.Red, left.Green - right.Green, left.Blue - right.Blue);
+            return new(left.Red - right.Red, left.Green - right.Green, left.Blue - right.Blue);
         }
 
         /// <summary>
@@ -620,7 +620,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A negated color.</returns>
         public static Color3 operator -(Color3 value)
         {
-            return new Color3(-value.Red, -value.Green, -value.Blue);
+            return new(-value.Red, -value.Green, -value.Blue);
         }
 
         /// <summary>
@@ -631,7 +631,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled color.</returns>
         public static Color3 operator *(float scale, Color3 value)
         {
-            return new Color3(value.Red * scale, value.Green * scale, value.Blue * scale);
+            return new(value.Red * scale, value.Green * scale, value.Blue * scale);
         }
 
         /// <summary>
@@ -642,7 +642,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled color.</returns>
         public static Color3 operator *(Color3 value, float scale)
         {
-            return new Color3(value.Red * scale, value.Green * scale, value.Blue * scale);
+            return new(value.Red * scale, value.Green * scale, value.Blue * scale);
         }
 
         /// <summary>
@@ -653,7 +653,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The modulated color.</returns>
         public static Color3 operator *(Color3 left, Color3 right)
         {
-            return new Color3(left.Red * right.Red, left.Green * right.Green, left.Blue * right.Blue);
+            return new(left.Red * right.Red, left.Green * right.Green, left.Blue * right.Blue);
         }
 
         /// <summary>
@@ -693,7 +693,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Color4(Color3 value)
         {
-            return new Color4(value.Red, value.Green, value.Blue, 1.0f);
+            return new(value.Red, value.Green, value.Blue, 1.0f);
         }
 
         /// <summary>
@@ -703,7 +703,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static implicit operator Vector3(Color3 value)
         {
-            return new Vector3(value.Red, value.Green, value.Blue);
+            return new(value.Red, value.Green, value.Blue);
         }
 
         /// <summary>
@@ -713,7 +713,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static implicit operator Color3(Vector3 value)
         {
-            return new Color3(value.X, value.Y, value.Z);
+            return new(value.X, value.Y, value.Z);
         }
 
         /// <summary>
@@ -723,7 +723,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Color3(int value)
         {
-            return new Color3(value);
+            return new(value);
         }
 
         /// <summary>

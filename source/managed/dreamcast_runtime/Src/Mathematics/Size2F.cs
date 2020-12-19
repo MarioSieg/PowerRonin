@@ -27,7 +27,7 @@ namespace Dreamcast.Mathematics
         /// <summary>
         ///     A zero size with (width, height) = (0,0)
         /// </summary>
-        public static readonly Size2F Zero = new Size2F(0, 0);
+        public static readonly Size2F Zero = new(0, 0);
 
         /// <summary>
         ///     A zero size with (width, height) = (0,0)

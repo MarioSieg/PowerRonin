@@ -279,7 +279,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A three component vector containing the red, green, and blue components of the color.</returns>
         public Vector3 ToVector3()
         {
-            return new Vector3(R / 255.0f, G / 255.0f, B / 255.0f);
+            return new(R / 255.0f, G / 255.0f, B / 255.0f);
         }
 
         /// <summary>
@@ -288,7 +288,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A three component color containing the red, green, and blue components of the color.</returns>
         public Color3 ToColor3()
         {
-            return new Color3(R / 255.0f, G / 255.0f, B / 255.0f);
+            return new(R / 255.0f, G / 255.0f, B / 255.0f);
         }
 
         /// <summary>
@@ -297,7 +297,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A four component vector containing all four color components.</returns>
         public Vector4 ToVector4()
         {
-            return new Vector4(R / 255.0f, G / 255.0f, B / 255.0f, A / 255.0f);
+            return new(R / 255.0f, G / 255.0f, B / 255.0f, A / 255.0f);
         }
 
         /// <summary>
@@ -417,7 +417,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A color.</returns>
         public static ColorBGRA FromBgra(int color)
         {
-            return new ColorBGRA(color);
+            return new(color);
         }
 
         /// <summary>
@@ -427,7 +427,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A color.</returns>
         public static ColorBGRA FromBgra(uint color)
         {
-            return new ColorBGRA(color);
+            return new(color);
         }
 
         /// <summary>
@@ -437,7 +437,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A color.</returns>
         public static ColorBGRA FromRgba(int color)
         {
-            return new ColorBGRA((byte) (color & 255), (byte) ((color >> 8) & 255), (byte) ((color >> 16) & 255), (byte) ((color >> 24) & 255));
+            return new((byte) (color & 255), (byte) ((color >> 8) & 255), (byte) ((color >> 16) & 255), (byte) ((color >> 24) & 255));
         }
 
         /// <summary>
@@ -472,7 +472,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two colors.</returns>
         public static ColorBGRA Add(ColorBGRA left, ColorBGRA right)
         {
-            return new ColorBGRA(left.R + right.R, left.G + right.G, left.B + right.B, left.A + right.A);
+            return new(left.R + right.R, left.G + right.G, left.B + right.B, left.A + right.A);
         }
 
         /// <summary>
@@ -497,7 +497,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference of the two colors.</returns>
         public static ColorBGRA Subtract(ColorBGRA left, ColorBGRA right)
         {
-            return new ColorBGRA(left.R - right.R, left.G - right.G, left.B - right.B, left.A - right.A);
+            return new(left.R - right.R, left.G - right.G, left.B - right.B, left.A - right.A);
         }
 
         /// <summary>
@@ -522,7 +522,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The modulated color.</returns>
         public static ColorBGRA Modulate(ColorBGRA left, ColorBGRA right)
         {
-            return new ColorBGRA((left.R * right.R) >> 8, (left.G * right.G) >> 8, (left.B * right.B) >> 8, (left.A * right.A) >> 8);
+            return new((left.R * right.R) >> 8, (left.G * right.G) >> 8, (left.B * right.B) >> 8, (left.A * right.A) >> 8);
         }
 
         /// <summary>
@@ -547,7 +547,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled color.</returns>
         public static ColorBGRA Scale(ColorBGRA value, float scale)
         {
-            return new ColorBGRA((byte) (value.R * scale), (byte) (value.G * scale), (byte) (value.B * scale), (byte) (value.A * scale));
+            return new((byte) (value.R * scale), (byte) (value.G * scale), (byte) (value.B * scale), (byte) (value.A * scale));
         }
 
         /// <summary>
@@ -570,7 +570,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The negated color.</returns>
         public static ColorBGRA Negate(ColorBGRA value)
         {
-            return new ColorBGRA(255 - value.R, 255 - value.G, 255 - value.B, 255 - value.A);
+            return new(255 - value.R, 255 - value.G, 255 - value.B, 255 - value.A);
         }
 
         /// <summary>
@@ -756,7 +756,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The adjusted color.</returns>
         public static ColorBGRA AdjustContrast(ColorBGRA value, float contrast)
         {
-            return new ColorBGRA(ToByte(0.5f + contrast * (value.R / 255.0f - 0.5f)), ToByte(0.5f + contrast * (value.G / 255.0f - 0.5f)),
+            return new(ToByte(0.5f + contrast * (value.R / 255.0f - 0.5f)), ToByte(0.5f + contrast * (value.G / 255.0f - 0.5f)),
                 ToByte(0.5f + contrast * (value.B / 255.0f - 0.5f)), value.A);
         }
 
@@ -823,7 +823,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two colors.</returns>
         public static ColorBGRA operator +(ColorBGRA left, ColorBGRA right)
         {
-            return new ColorBGRA(left.R + right.R, left.G + right.G, left.B + right.B, left.A + right.A);
+            return new(left.R + right.R, left.G + right.G, left.B + right.B, left.A + right.A);
         }
 
         /// <summary>
@@ -844,7 +844,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference of the two colors.</returns>
         public static ColorBGRA operator -(ColorBGRA left, ColorBGRA right)
         {
-            return new ColorBGRA(left.R - right.R, left.G - right.G, left.B - right.B, left.A - right.A);
+            return new(left.R - right.R, left.G - right.G, left.B - right.B, left.A - right.A);
         }
 
         /// <summary>
@@ -854,7 +854,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A negated color.</returns>
         public static ColorBGRA operator -(ColorBGRA value)
         {
-            return new ColorBGRA(-value.R, -value.G, -value.B, -value.A);
+            return new(-value.R, -value.G, -value.B, -value.A);
         }
 
         /// <summary>
@@ -865,7 +865,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled color.</returns>
         public static ColorBGRA operator *(float scale, ColorBGRA value)
         {
-            return new ColorBGRA((byte) (value.R * scale), (byte) (value.G * scale), (byte) (value.B * scale), (byte) (value.A * scale));
+            return new((byte) (value.R * scale), (byte) (value.G * scale), (byte) (value.B * scale), (byte) (value.A * scale));
         }
 
         /// <summary>
@@ -876,7 +876,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled color.</returns>
         public static ColorBGRA operator *(ColorBGRA value, float scale)
         {
-            return new ColorBGRA((byte) (value.R * scale), (byte) (value.G * scale), (byte) (value.B * scale), (byte) (value.A * scale));
+            return new((byte) (value.R * scale), (byte) (value.G * scale), (byte) (value.B * scale), (byte) (value.A * scale));
         }
 
         /// <summary>
@@ -887,7 +887,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The modulated color.</returns>
         public static ColorBGRA operator *(ColorBGRA left, ColorBGRA right)
         {
-            return new ColorBGRA((byte) (left.R * right.R / 255.0f), (byte) (left.G * right.G / 255.0f), (byte) (left.B * right.B / 255.0f),
+            return new((byte) (left.R * right.R / 255.0f), (byte) (left.G * right.G / 255.0f), (byte) (left.B * right.B / 255.0f),
                 (byte) (left.A * right.A / 255.0f));
         }
 
@@ -928,7 +928,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Color3(ColorBGRA value)
         {
-            return new Color3(value.R, value.G, value.B);
+            return new(value.R, value.G, value.B);
         }
 
         /// <summary>
@@ -938,7 +938,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Vector3(ColorBGRA value)
         {
-            return new Vector3(value.R / 255.0f, value.G / 255.0f, value.B / 255.0f);
+            return new(value.R / 255.0f, value.G / 255.0f, value.B / 255.0f);
         }
 
         /// <summary>
@@ -948,7 +948,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Vector4(ColorBGRA value)
         {
-            return new Vector4(value.R / 255.0f, value.G / 255.0f, value.B / 255.0f, value.A / 255.0f);
+            return new(value.R / 255.0f, value.G / 255.0f, value.B / 255.0f, value.A / 255.0f);
         }
 
         /// <summary>
@@ -958,7 +958,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Color4(ColorBGRA value)
         {
-            return new Color4(value.R / 255.0f, value.G / 255.0f, value.B / 255.0f, value.A / 255.0f);
+            return new(value.R / 255.0f, value.G / 255.0f, value.B / 255.0f, value.A / 255.0f);
         }
 
         /// <summary>
@@ -968,7 +968,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator ColorBGRA(Vector3 value)
         {
-            return new ColorBGRA(value.X / 255.0f, value.Y / 255.0f, value.Z / 255.0f, 1.0f);
+            return new(value.X / 255.0f, value.Y / 255.0f, value.Z / 255.0f, 1.0f);
         }
 
         /// <summary>
@@ -978,7 +978,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator ColorBGRA(Color3 value)
         {
-            return new ColorBGRA(value.Red, value.Green, value.Blue, 1.0f);
+            return new(value.Red, value.Green, value.Blue, 1.0f);
         }
 
         /// <summary>
@@ -988,7 +988,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator ColorBGRA(Vector4 value)
         {
-            return new ColorBGRA(value.X, value.Y, value.Z, value.W);
+            return new(value.X, value.Y, value.Z, value.W);
         }
 
         /// <summary>
@@ -998,7 +998,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator ColorBGRA(Color4 value)
         {
-            return new ColorBGRA(value.Red, value.Green, value.Blue, value.Alpha);
+            return new(value.Red, value.Green, value.Blue, value.Alpha);
         }
 
         /// <summary>
@@ -1008,7 +1008,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static implicit operator ColorBGRA(Color value)
         {
-            return new ColorBGRA(value.R, value.G, value.B, value.A);
+            return new(value.R, value.G, value.B, value.A);
         }
 
         /// <summary>
@@ -1018,7 +1018,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static implicit operator Color(ColorBGRA value)
         {
-            return new Color(value.R, value.G, value.B, value.A);
+            return new(value.R, value.G, value.B, value.A);
         }
 
         /// <summary>
@@ -1042,7 +1042,7 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public static explicit operator ColorBGRA(int value)
         {
-            return new ColorBGRA(value);
+            return new(value);
         }
 
         /// <summary>

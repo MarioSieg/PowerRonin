@@ -1,0 +1,47 @@
+// *******************************************************************************
+// The content of this file includes portions of the KerboGames Dreamcast Technology
+// released in source code form as part of the SDK package.
+// 
+// Commercial License Usage
+// 
+// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// may use this file in accordance with the end user license agreement provided
+// with the software or, alternatively, in accordance with the terms contained in a
+// written agreement between you and KerboGames.
+// 
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
+// support@kerbogames.com
+// *******************************************************************************
+
+using System;
+
+namespace Dreamcast.Json
+{
+    /// <summary>
+    ///     Specifies how to treat the time value when converting between string and <see cref="DateTime" />.
+    /// </summary>
+    public enum DateTimeZoneHandling
+    {
+        /// <summary>
+        ///     Treat as local time. If the <see cref="DateTime" /> object represents a Coordinated Universal Time (UTC), it is
+        ///     converted to the local time.
+        /// </summary>
+        Local = 0,
+
+        /// <summary>
+        ///     Treat as a UTC. If the <see cref="DateTime" /> object represents a local time, it is converted to a UTC.
+        /// </summary>
+        Utc = 1,
+
+        /// <summary>
+        ///     Treat as a local time if a <see cref="DateTime" /> is being converted to a string.
+        ///     If a string is being converted to <see cref="DateTime" />, convert to a local time if a time zone is specified.
+        /// </summary>
+        Unspecified = 2,
+
+        /// <summary>
+        ///     Time zone information should be preserved when converting.
+        /// </summary>
+        RoundtripKind = 3
+    }
+}

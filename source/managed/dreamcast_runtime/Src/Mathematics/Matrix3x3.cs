@@ -34,7 +34,7 @@ namespace Dreamcast.Mathematics
         /// <summary>
         ///     The identity <see cref="Matrix3x3" />.
         /// </summary>
-        public static readonly Matrix3x3 Identity = new Matrix3x3 {M11 = 1.0f, M22 = 1.0f, M33 = 1.0f};
+        public static readonly Matrix3x3 Identity = new() {M11 = 1.0f, M22 = 1.0f, M33 = 1.0f};
 
         /// <summary>
         ///     Value at row 1 column 1 of the Matrix3x3.
@@ -153,7 +153,7 @@ namespace Dreamcast.Mathematics
         /// </summary>
         public Vector3 Row1
         {
-            get => new Vector3(M11, M12, M13);
+            get => new(M11, M12, M13);
             set
             {
                 M11 = value.X;
@@ -167,7 +167,7 @@ namespace Dreamcast.Mathematics
         /// </summary>
         public Vector3 Row2
         {
-            get => new Vector3(M21, M22, M23);
+            get => new(M21, M22, M23);
             set
             {
                 M21 = value.X;
@@ -181,7 +181,7 @@ namespace Dreamcast.Mathematics
         /// </summary>
         public Vector3 Row3
         {
-            get => new Vector3(M31, M32, M33);
+            get => new(M31, M32, M33);
             set
             {
                 M31 = value.X;
@@ -195,7 +195,7 @@ namespace Dreamcast.Mathematics
         /// </summary>
         public Vector3 Column1
         {
-            get => new Vector3(M11, M21, M31);
+            get => new(M11, M21, M31);
             set
             {
                 M11 = value.X;
@@ -209,7 +209,7 @@ namespace Dreamcast.Mathematics
         /// </summary>
         public Vector3 Column2
         {
-            get => new Vector3(M12, M22, M32);
+            get => new(M12, M22, M32);
             set
             {
                 M12 = value.X;
@@ -223,7 +223,7 @@ namespace Dreamcast.Mathematics
         /// </summary>
         public Vector3 Column3
         {
-            get => new Vector3(M13, M23, M33);
+            get => new(M13, M23, M33);
             set
             {
                 M13 = value.X;
@@ -237,7 +237,7 @@ namespace Dreamcast.Mathematics
         /// </summary>
         public Vector3 ScaleVector
         {
-            get => new Vector3(M11, M22, M33);
+            get => new(M11, M22, M33);
             set
             {
                 M11 = value.X;
@@ -2047,7 +2047,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A 4x4 Matrix4x4 with zero translation and M44=1</returns>
         public static explicit operator Matrix4x4(Matrix3x3 Value)
         {
-            return new Matrix4x4(Value.M11, Value.M12, Value.M13, 0, Value.M21, Value.M22, Value.M23, 0, Value.M31, Value.M32, Value.M33, 0, 0, 0, 0, 1);
+            return new(Value.M11, Value.M12, Value.M13, 0, Value.M21, Value.M22, Value.M23, 0, Value.M31, Value.M32, Value.M33, 0, 0, 0, 0, 1);
         }
 
         /// <summary>
@@ -2056,7 +2056,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A 3x3 Matrix4x4</returns>
         public static explicit operator Matrix3x3(Matrix4x4 Value)
         {
-            return new Matrix3x3(Value.M11, Value.M12, Value.M13, Value.M21, Value.M22, Value.M23, Value.M31, Value.M32, Value.M33);
+            return new(Value.M11, Value.M12, Value.M13, Value.M21, Value.M22, Value.M23, Value.M31, Value.M32, Value.M33);
         }
 
         /// <summary>

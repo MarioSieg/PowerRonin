@@ -112,7 +112,7 @@ namespace Dreamcast.Mathematics
         /// <value>The bounds.</value>
         public RectangleF Bounds
         {
-            get => new RectangleF(X, Y, Width, Height);
+            get => new(X, Y, Width, Height);
 
             set
             {
@@ -310,7 +310,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static implicit operator ViewportF(Viewport value)
         {
-            return new ViewportF(value.X, value.Y, value.Width, value.Height, value.MinDepth, value.MaxDepth);
+            return new(value.X, value.Y, value.Width, value.Height, value.MinDepth, value.MaxDepth);
         }
     }
 }

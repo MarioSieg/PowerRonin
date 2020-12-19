@@ -34,27 +34,27 @@ namespace Dreamcast.Mathematics
         /// <summary>
         ///     The X unit <see cref="Vector4I" /> (1, 0, 0, 0).
         /// </summary>
-        public static readonly Vector4I UnitX = new Vector4I(1, 0, 0, 0);
+        public static readonly Vector4I UnitX = new(1, 0, 0, 0);
 
         /// <summary>
         ///     The Y unit <see cref="Vector4I" /> (0, 1, 0, 0).
         /// </summary>
-        public static readonly Vector4I UnitY = new Vector4I(0, 1, 0, 0);
+        public static readonly Vector4I UnitY = new(0, 1, 0, 0);
 
         /// <summary>
         ///     The Z unit <see cref="Vector4I" /> (0, 0, 1, 0).
         /// </summary>
-        public static readonly Vector4I UnitZ = new Vector4I(0, 0, 1, 0);
+        public static readonly Vector4I UnitZ = new(0, 0, 1, 0);
 
         /// <summary>
         ///     The W unit <see cref="Vector4I" /> (0, 0, 0, 1).
         /// </summary>
-        public static readonly Vector4I UnitW = new Vector4I(0, 0, 0, 1);
+        public static readonly Vector4I UnitW = new(0, 0, 0, 1);
 
         /// <summary>
         ///     A <see cref="Vector4I" /> with all of its components set to one.
         /// </summary>
-        public static readonly Vector4I One = new Vector4I(1, 1, 1, 1);
+        public static readonly Vector4I One = new(1, 1, 1, 1);
 
         /// <summary>
         ///     The X component of the vector.
@@ -211,7 +211,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two vectors.</returns>
         public static Vector4I Add(Vector4I left, Vector4I right)
         {
-            return new Vector4I(left.X + right.X, left.Y + right.Y, left.Z + right.Z, left.W + right.W);
+            return new(left.X + right.X, left.Y + right.Y, left.Z + right.Z, left.W + right.W);
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference of the two vectors.</returns>
         public static Vector4I Subtract(Vector4I left, Vector4I right)
         {
-            return new Vector4I(left.X - right.X, left.Y - right.Y, left.Z - right.Z, left.W - right.W);
+            return new(left.X - right.X, left.Y - right.Y, left.Z - right.Z, left.W - right.W);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled vector.</returns>
         public static Vector4I Multiply(Vector4I value, int scale)
         {
-            return new Vector4I(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
+            return new(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
         }
 
         /// <summary>
@@ -277,7 +277,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The modulated vector.</returns>
         public static Vector4I Modulate(Vector4I left, Vector4I right)
         {
-            return new Vector4I(left.X * right.X, left.Y * right.Y, left.Z * right.Z, left.W * right.W);
+            return new(left.X * right.X, left.Y * right.Y, left.Z * right.Z, left.W * right.W);
         }
 
         /// <summary>
@@ -299,7 +299,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled vector.</returns>
         public static Vector4I Divide(Vector4I value, int scale)
         {
-            return new Vector4I(value.X / scale, value.Y / scale, value.Z / scale, value.W / scale);
+            return new(value.X / scale, value.Y / scale, value.Z / scale, value.W / scale);
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector facing in the opposite direction.</returns>
         public static Vector4I Negate(Vector4I value)
         {
-            return new Vector4I(-value.X, -value.Y, -value.Z, -value.W);
+            return new(-value.X, -value.Y, -value.Z, -value.W);
         }
 
         /// <summary>
@@ -429,7 +429,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The sum of the two vectors.</returns>
         public static Vector4I operator +(Vector4I left, Vector4I right)
         {
-            return new Vector4I(left.X + right.X, left.Y + right.Y, left.Z + right.Z, left.W + right.W);
+            return new(left.X + right.X, left.Y + right.Y, left.Z + right.Z, left.W + right.W);
         }
 
         /// <summary>
@@ -450,7 +450,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The difference of the two vectors.</returns>
         public static Vector4I operator -(Vector4I left, Vector4I right)
         {
-            return new Vector4I(left.X - right.X, left.Y - right.Y, left.Z - right.Z, left.W - right.W);
+            return new(left.X - right.X, left.Y - right.Y, left.Z - right.Z, left.W - right.W);
         }
 
         /// <summary>
@@ -460,7 +460,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A vector facing in the opposite direction.</returns>
         public static Vector4I operator -(Vector4I value)
         {
-            return new Vector4I(-value.X, -value.Y, -value.Z, -value.W);
+            return new(-value.X, -value.Y, -value.Z, -value.W);
         }
 
         /// <summary>
@@ -471,7 +471,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled vector.</returns>
         public static Vector4I operator *(int scale, Vector4I value)
         {
-            return new Vector4I(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
+            return new(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
         }
 
         /// <summary>
@@ -482,7 +482,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled vector.</returns>
         public static Vector4I operator *(Vector4I value, int scale)
         {
-            return new Vector4I(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
+            return new(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
         }
 
         /// <summary>
@@ -493,7 +493,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled vector.</returns>
         public static Vector4I operator /(Vector4I value, int scale)
         {
-            return new Vector4I(value.X / scale, value.Y / scale, value.Z / scale, value.W / scale);
+            return new(value.X / scale, value.Y / scale, value.Z / scale, value.W / scale);
         }
 
         /// <summary>
@@ -533,7 +533,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Vector2(Vector4I value)
         {
-            return new Vector2(value.X, value.Y);
+            return new(value.X, value.Y);
         }
 
         /// <summary>
@@ -543,7 +543,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Vector3(Vector4I value)
         {
-            return new Vector3(value.X, value.Y, value.Z);
+            return new(value.X, value.Y, value.Z);
         }
 
         /// <summary>
@@ -553,7 +553,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static explicit operator Vector4(Vector4I value)
         {
-            return new Vector4(value.X, value.Y, value.Z, value.W);
+            return new(value.X, value.Y, value.Z, value.W);
         }
 
         /// <summary>
@@ -679,7 +679,7 @@ namespace Dreamcast.Mathematics
         /// <returns>The result of the conversion.</returns>
         public static implicit operator Vector4I(int[] input)
         {
-            return new Vector4I(input);
+            return new(input);
         }
 
         /// <summary>
