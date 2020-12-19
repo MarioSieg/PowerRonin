@@ -23,8 +23,6 @@ using System.Net.Sockets;
 using Dreamcast.Mathematics;
 using Dreamcast.Tools;
 
-#nullable enable
-
 namespace Dreamcast.Core
 {
     /// <summary>
@@ -299,7 +297,7 @@ namespace Dreamcast.Core
                     requiresRootPrivileges = false,
                     executor = delegate
                     {
-                        string? localIp;
+                        string localIp;
                         using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0))
                         {
                             socket.Connect("8.8.8.8", 65530);

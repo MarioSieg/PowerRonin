@@ -44,8 +44,10 @@ namespace Dreamcast.Core
         public static T DeserializeFromXml(string data)
         {
             var serializer = new YAXSerializer(typeof(T));
-            using var stream = new StringReader(data);
-            return (T) serializer.Deserialize(stream);
+            using (var stream = new StringReader(data))
+            {
+                return (T) serializer.Deserialize(stream);
+            }
         }
 
         /// <summary>

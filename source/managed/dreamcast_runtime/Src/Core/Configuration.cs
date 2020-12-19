@@ -17,8 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-#nullable enable
-
 namespace Dreamcast.Core
 {
     public enum ConfigApplyFlags : byte
