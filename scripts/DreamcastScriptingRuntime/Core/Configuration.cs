@@ -112,9 +112,6 @@ namespace Dreamcast.Core
         /// </summary>
         public void Apply(ConfigApplyFlags flags = ConfigApplyFlags.All)
         {
-            if (flags == ConfigApplyFlags.None)
-                return;
-
             var nativeConfig = new NativeConfig
             {
                 Display_IsWindowFullscreen = Current.Display.IsWindowFullscreen,
