@@ -1,0 +1,34 @@
+﻿// *******************************************************************************
+// The content of this file includes portions of the KerboGames Dreamcast Technology
+// released in source code form as part of the SDK package.
+// 
+// Commercial License Usage
+// 
+// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// may use this file in accordance with the end user license agreement provided
+// with the software or, alternatively, in accordance with the terms contained in a
+// written agreement between you and KerboGames.
+// 
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
+// support@kerbogames.com
+// *******************************************************************************
+
+using System;
+
+namespace FastMath.Core
+{
+    public interface IMemoizedMethod
+    {
+        float MinArgument { get; }
+        float MaxArgument { get; }
+        float Step { get; }
+        float[] Values { get; }
+        bool IsLinearInterpolated { get; }
+        Func<float, float> BaseMethod { get; }
+
+        /// <summary>
+        ///     Caclulate method. Note that argument should be in range from MinArgument to MaxArgument.
+        /// </summary>
+        float Calculate(float argument);
+    }
+}

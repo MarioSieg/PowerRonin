@@ -19,6 +19,7 @@ using System;
 using System.Globalization;
 using System.Reflection;
 using Dreamcast.Json.Utilities;
+
 #if !HAVE_LINQ
 #endif
 

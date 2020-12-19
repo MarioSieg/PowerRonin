@@ -1,0 +1,98 @@
+﻿// *******************************************************************************
+// The content of this file includes portions of the KerboGames Dreamcast Technology
+// released in source code form as part of the SDK package.
+// 
+// Commercial License Usage
+// 
+// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// may use this file in accordance with the end user license agreement provided
+// with the software or, alternatively, in accordance with the terms contained in a
+// written agreement between you and KerboGames.
+// 
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
+// support@kerbogames.com
+// *******************************************************************************
+
+using System;
+
+namespace FluentScheduler
+{
+    /// <summary>
+    ///     Unit of time in months.
+    /// </summary>
+    public sealed class MonthUnit
+    {
+        private readonly int _duration;
+
+        internal MonthUnit(Schedule schedule, int duration)
+        {
+            _duration = duration;
+            Schedule = schedule;
+            Schedule.CalculateNextRun = x => x.Date.AddMonths(_duration);
+        }
+
+        internal Schedule Schedule { get; }
+
+        /// <summary>
+        ///     Runs the job on the given day of the month.
+        /// </summary>
+        /// <param name="day">The day (1 through the number of days in month).</param>
+        public MonthOnDayOfMonthUnit On(int day)
+        {
+            return new(Schedule, _duration, day);
+        }
+
+        /// <summary>
+        ///     Runs the job on the last day of the month.
+        /// </summary>
+        public MonthOnLastDayOfMonthUnit OnTheLastDay()
+        {
+            return new(Schedule, _duration);
+        }
+
+        /// <summary>
+        ///     Runs the job on the given day of week on the first week of the month.
+        /// </summary>
+        /// <param name="day">The day of the week.</param>
+        public MonthOnDayOfWeekUnit OnTheFirst(DayOfWeek day)
+        {
+            return new(Schedule, _duration, Week.First, day);
+        }
+
+        /// <summary>
+        ///     Runs the job on the given day of week on the second week of the month.
+        /// </summary>
+        /// <param name="day">The day of the week.</param>
+        public MonthOnDayOfWeekUnit OnTheSecond(DayOfWeek day)
+        {
+            return new(Schedule, _duration, Week.Second, day);
+        }
+
+        /// <summary>
+        ///     Runs the job on the given day of week on the third week of the month.
+        /// </summary>
+        /// <param name="day">The day of the week.</param>
+        public MonthOnDayOfWeekUnit OnTheThird(DayOfWeek day)
+        {
+            return new(Schedule, _duration, Week.Third, day);
+        }
+
+        /// <summary>
+        ///     Runs the job on the given day of week on the fourth week of the month.
+        /// </summary>
+        /// <param name="day">The day of the week.</param>
+        public MonthOnDayOfWeekUnit OnTheFourth(DayOfWeek day)
+        {
+            return new(Schedule, _duration, Week.Fourth, day);
+        }
+
+        /// <summary>
+        ///     Runs the job on the given day of week on the last week of the month.
+        /// </summary>
+        /// <param name="day">The day of the week.</param>
+        public MonthOnDayOfWeekUnit OnTheLast(DayOfWeek day)
+        {
+            return new(Schedule, _duration, Week.Last, day);
+        }
+    }
+}

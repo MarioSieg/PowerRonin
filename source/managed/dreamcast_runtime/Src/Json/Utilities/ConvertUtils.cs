@@ -23,6 +23,7 @@ using System.Globalization;
 using Dreamcast.Json.Serialization;
 #if !HAVE_GUID_TRY_PARSE
 using System.Text.RegularExpressions;
+
 #endif
 #if !HAVE_LINQ
 

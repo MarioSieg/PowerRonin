@@ -15,6 +15,7 @@
 
 using System;
 using Dreamcast.Json.Utilities;
+
 #if !HAVE_LINQ
 
 #endif

@@ -182,10 +182,7 @@ namespace Dreamcast.Json.Linq
         private bool ReadInto(JContainer c)
         {
             var firstChild = c.First;
-            if (firstChild == null)
-            {
-                return SetEnd(c);
-            }
+            if (firstChild == null) return SetEnd(c);
 
             SetToken(firstChild);
             CurrentToken = firstChild;

@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Reflection;
 #if !HAVE_LINQ
 using Dreamcast.Json.Utilities.LinqBridge;
+
 #else
 using System.Linq;
 #endif

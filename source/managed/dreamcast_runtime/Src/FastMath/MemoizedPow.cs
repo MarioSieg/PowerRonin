@@ -1,0 +1,103 @@
+﻿// *******************************************************************************
+// The content of this file includes portions of the KerboGames Dreamcast Technology
+// released in source code form as part of the SDK package.
+// 
+// Commercial License Usage
+// 
+// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// may use this file in accordance with the end user license agreement provided
+// with the software or, alternatively, in accordance with the terms contained in a
+// written agreement between you and KerboGames.
+// 
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
+// support@kerbogames.com
+// *******************************************************************************
+
+using System;
+using System.Runtime.CompilerServices;
+using FastMath.Core;
+using static System.Math;
+
+namespace FastMath
+{
+    public sealed class MemoizedPow : IMemoizedMethod
+    {
+        private const float MinArgumentValue = 1e-3f;
+
+        private readonly float _argumentMultiplier;
+
+        private MemoizedPow(float minArgument, float maxArgument, float power, int valuesCount)
+        {
+            Power = power;
+            MinArgument = minArgument;
+            MaxArgument = maxArgument;
+            Values = new float[valuesCount];
+            Step = (MaxArgument - MinArgument) / (valuesCount - 1);
+            this.ProduceValuesArray();
+            _argumentMultiplier = 1 / Step;
+        }
+
+        public float Power { get; }
+        public float MinArgument { get; }
+
+        public float MaxArgument { get; }
+
+        public bool IsLinearInterpolated => false;
+
+        public float Step { get; }
+
+        public float[] Values { get; }
+
+        public Func<float, float> BaseMethod => x => (float) Pow(x, Power);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public float Calculate(float argument)
+        {
+            var index = (int) ((argument - MinArgument) * _argumentMultiplier);
+            return Values[index];
+        }
+
+        public static MemoizedPow ConstructByValuesCount(float minArgument, float maxArgument, float power, int valuesCount)
+        {
+            return new(minArgument, maxArgument, power, valuesCount + 1);
+        }
+
+        public static MemoizedPow ConstructByMaxError(float minArgument, float maxArgument, float power, float maxError)
+        {
+            var valuesCount = GetValuesCountByMaxError(minArgument, maxArgument, power, maxError);
+            return new MemoizedPow(minArgument, maxArgument, power, valuesCount + 1);
+        }
+
+        public static MemoizedPow ConstructByStep(float minArgument, float maxArgument, float power, float step)
+        {
+            var valuesCount = (int) Round((maxArgument - minArgument) / step) + 1;
+            if (valuesCount == 1) ++valuesCount;
+            return new MemoizedPow(minArgument, maxArgument, power, valuesCount);
+        }
+
+        private static int GetValuesCountByMaxError(float minArgument, float maxArgument, float power, float maxError)
+        {
+            if (power < 0)
+                if (minArgument < 0 && 0 < maxArgument
+                    || Abs(minArgument) < MinArgumentValue
+                    || Abs(maxArgument) < MinArgumentValue)
+                    throw new ArgumentException("Can't calculate values count: power is less then zero and arguments interval containts zero");
+
+            float step;
+            if (power > 1)
+            {
+                var arg = Max(Abs(minArgument), Abs(maxArgument));
+                step = (float) Abs(Abs(Pow(Pow(arg, power) + maxError, 1 / power)) - arg) * 0.85f;
+            }
+            else
+            {
+                var arg = Min(Abs(minArgument), Abs(maxArgument));
+                var partialResult = Abs(Pow(arg, power) - maxError);
+                if (partialResult < 1e-5f) partialResult += 1e-3f;
+                step = (float) Abs(Pow(partialResult, 1 / power) - arg) * 0.8f;
+            }
+
+            return (int) Round((maxArgument - minArgument) / step) + 1;
+        }
+    }
+}

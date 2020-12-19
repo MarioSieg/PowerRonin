@@ -16,6 +16,7 @@
 using System;
 using System.IO;
 using Dreamcast.Json.Utilities;
+
 #if HAVE_BIG_INTEGER
 using System.Numerics;
 #endif

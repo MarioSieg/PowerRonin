@@ -20,6 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Threading;
 using Dreamcast.Json.Utilities;
+
 #if HAVE_INOTIFY_COLLECTION_CHANGED
 using System.Collections.Specialized;
 #endif

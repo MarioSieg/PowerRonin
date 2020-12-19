@@ -1,0 +1,93 @@
+﻿// *******************************************************************************
+// The content of this file includes portions of the KerboGames Dreamcast Technology
+// released in source code form as part of the SDK package.
+// 
+// Commercial License Usage
+// 
+// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// may use this file in accordance with the end user license agreement provided
+// with the software or, alternatively, in accordance with the terms contained in a
+// written agreement between you and KerboGames.
+// 
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
+// support@kerbogames.com
+// *******************************************************************************
+
+using System;
+using System.Runtime.CompilerServices;
+using FastMath.Core;
+
+namespace FastMath
+{
+    public sealed class MemoizedSin : IUnboundMethod
+    {
+        private readonly float _argumentMultiplier;
+
+        private readonly int _valuesCycleLength;
+
+        private MemoizedSin(int valuesCount)
+        {
+            MinArgument = 0;
+            MaxArgument = (float) (Math.PI * 2);
+            Values = new float[valuesCount];
+            Step = MaxArgument / (valuesCount - 1);
+            this.ProduceValuesArray();
+            _argumentMultiplier = 1 / Step;
+            _valuesCycleLength = Values.Length - 1;
+        }
+
+        public float MinArgument { get; }
+
+        public float MaxArgument { get; }
+
+        public bool IsLinearInterpolated => false;
+
+        public float Step { get; }
+
+        public float[] Values { get; }
+
+        public Func<float, float> BaseMethod => x => (float) Math.Sin(x);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public float Calculate(float argument)
+        {
+            var index = (int) (argument * _argumentMultiplier);
+            return Values[index];
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public float CalculateUnbound(float argument)
+        {
+            var multiplier = 1;
+            if (argument < 0)
+            {
+                argument = -argument;
+                multiplier = -1;
+            }
+
+            var index = (int) (argument * _argumentMultiplier);
+            return multiplier * Values[index % _valuesCycleLength];
+        }
+
+        public static MemoizedSin ConstructByValuesCount(int valuesCount)
+        {
+            return new(valuesCount + 1);
+        }
+
+        public static MemoizedSin ConstructByMaxError(float maxError)
+        {
+            return new(GetValuesCountByMaxError(maxError));
+        }
+
+        public static MemoizedSin ConstructByStep(float step)
+        {
+            var valuesCount = (int) Math.Round(Math.PI * 2 / step) + 1;
+            return new MemoizedSin(valuesCount);
+        }
+
+        private static int GetValuesCountByMaxError(float maxError)
+        {
+            return (int) Math.Round(3 * Math.PI / maxError + 1);
+        }
+    }
+}

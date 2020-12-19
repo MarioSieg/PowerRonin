@@ -109,10 +109,7 @@ namespace Dreamcast.Json.Utilities
 
         public virtual bool Remove(T item)
         {
-            if (_genericCollection != null)
-            {
-                return _genericCollection.Remove(item);
-            }
+            if (_genericCollection != null) return _genericCollection.Remove(item);
 
             var contains = _list!.Contains(item);
 

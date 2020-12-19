@@ -35,6 +35,7 @@ using Dreamcast.Json.Linq;
 using Dreamcast.Json.Utilities;
 #if !HAVE_LINQ
 using Dreamcast.Json.Utilities.LinqBridge;
+
 #else
 using System.Linq;
 #endif

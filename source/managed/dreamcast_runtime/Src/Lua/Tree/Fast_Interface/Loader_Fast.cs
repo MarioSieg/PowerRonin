@@ -1,0 +1,131 @@
+﻿// *******************************************************************************
+// The content of this file includes portions of the KerboGames Dreamcast Technology
+// released in source code form as part of the SDK package.
+// 
+// Commercial License Usage
+// 
+// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// may use this file in accordance with the end user license agreement provided
+// with the software or, alternatively, in accordance with the terms contained in a
+// written agreement between you and KerboGames.
+// 
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
+// support@kerbogames.com
+// *******************************************************************************
+
+using MoonSharp.Interpreter.Debugging;
+using MoonSharp.Interpreter.Diagnostics;
+using MoonSharp.Interpreter.Execution;
+using MoonSharp.Interpreter.Execution.VM;
+using MoonSharp.Interpreter.Tree.Expressions;
+using MoonSharp.Interpreter.Tree.Statements;
+
+namespace MoonSharp.Interpreter.Tree.Fast_Interface
+{
+    internal static class Loader_Fast
+    {
+        internal static DynamicExprExpression LoadDynamicExpr(Script script, SourceCode source)
+        {
+            ScriptLoadingContext lcontext = CreateLoadingContext(script, source);
+
+            try
+            {
+                lcontext.IsDynamicExpression = true;
+                lcontext.Anonymous = true;
+
+                Expression exp;
+                using (script.PerformanceStats.StartStopwatch(PerformanceCounter.AstCreation))
+                {
+                    exp = Expression.Expr(lcontext);
+                }
+
+                return new DynamicExprExpression(exp, lcontext);
+            }
+            catch (SyntaxErrorException ex)
+            {
+                ex.DecorateMessage(script);
+                ex.Rethrow();
+                throw;
+            }
+        }
+
+        private static ScriptLoadingContext CreateLoadingContext(Script script, SourceCode source)
+        {
+            return new(script) {Scope = new BuildTimeScope(), Source = source, Lexer = new Lexer(source.SourceID, source.Code, true)};
+        }
+
+        internal static int LoadChunk(Script script, SourceCode source, ByteCode bytecode)
+        {
+            ScriptLoadingContext lcontext = CreateLoadingContext(script, source);
+            try
+            {
+                Statement stat;
+
+                using (script.PerformanceStats.StartStopwatch(PerformanceCounter.AstCreation))
+                {
+                    stat = new ChunkStatement(lcontext);
+                }
+
+                var beginIp = -1;
+
+                //var srcref = new SourceRef(source.SourceID);
+
+                using (script.PerformanceStats.StartStopwatch(PerformanceCounter.Compilation))
+                using (bytecode.EnterSource(null))
+                {
+                    bytecode.Emit_Nop(string.Format("Begin chunk {0}", source.Name));
+                    beginIp = bytecode.GetJumpPointForLastInstruction();
+                    stat.Compile(bytecode);
+                    bytecode.Emit_Nop(string.Format("End chunk {0}", source.Name));
+                }
+
+                //Debug_DumpByteCode(bytecode, source.SourceID);
+
+                return beginIp;
+            }
+            catch (SyntaxErrorException ex)
+            {
+                ex.DecorateMessage(script);
+                ex.Rethrow();
+                throw;
+            }
+        }
+
+        internal static int LoadFunction(Script script, SourceCode source, ByteCode bytecode, bool usesGlobalEnv)
+        {
+            ScriptLoadingContext lcontext = CreateLoadingContext(script, source);
+
+            try
+            {
+                FunctionDefinitionExpression fnx;
+
+                using (script.PerformanceStats.StartStopwatch(PerformanceCounter.AstCreation))
+                {
+                    fnx = new FunctionDefinitionExpression(lcontext, usesGlobalEnv);
+                }
+
+                var beginIp = -1;
+
+                //var srcref = new SourceRef(source.SourceID);
+
+                using (script.PerformanceStats.StartStopwatch(PerformanceCounter.Compilation))
+                using (bytecode.EnterSource(null))
+                {
+                    bytecode.Emit_Nop(string.Format("Begin function {0}", source.Name));
+                    beginIp = fnx.CompileBody(bytecode, source.Name);
+                    bytecode.Emit_Nop(string.Format("End function {0}", source.Name));
+                }
+
+                //Debug_DumpByteCode(bytecode, source.SourceID);
+
+                return beginIp;
+            }
+            catch (SyntaxErrorException ex)
+            {
+                ex.DecorateMessage(script);
+                ex.Rethrow();
+                throw;
+            }
+        }
+    }
+}

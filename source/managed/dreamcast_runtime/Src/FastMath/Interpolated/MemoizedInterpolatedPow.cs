@@ -1,0 +1,112 @@
+﻿// *******************************************************************************
+// The content of this file includes portions of the KerboGames Dreamcast Technology
+// released in source code form as part of the SDK package.
+// 
+// Commercial License Usage
+// 
+// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// may use this file in accordance with the end user license agreement provided
+// with the software or, alternatively, in accordance with the terms contained in a
+// written agreement between you and KerboGames.
+// 
+// Copyright (c) 2013-2020 KerboGames, MarioSieg.
+// support@kerbogames.com
+// *******************************************************************************
+
+using System;
+using System.Runtime.CompilerServices;
+using FastMath.Core;
+
+namespace FastMath.Interpolated
+{
+    public sealed class MemoizedInterpolatedPow : IMemoizedMethod
+    {
+        private const float MinArgumentValue = 1e-3f;
+
+        private const int AdditionalValueCount = 3;
+
+        private readonly float _argumentMultiplier;
+
+        private MemoizedInterpolatedPow(float minArgument, float maxArgument, float power, int valuesCount)
+        {
+            Power = power;
+            MinArgument = minArgument;
+            MaxArgument = maxArgument;
+            Values = new float[valuesCount];
+            Step = (MaxArgument - MinArgument) / (valuesCount - AdditionalValueCount);
+            this.ProduceValuesArray(AdditionalValueCount);
+            _argumentMultiplier = 1 / Step;
+        }
+
+        public float Power { get; }
+        public float MinArgument { get; }
+
+        public float MaxArgument { get; }
+
+        public bool IsLinearInterpolated => true;
+
+        public float Step { get; }
+
+        public float[] Values { get; }
+
+        public Func<float, float> BaseMethod => x => (float) Math.Pow(x, Power);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public float Calculate(float argument)
+        {
+            var floatIndex = (argument - MinArgument) * _argumentMultiplier;
+            var index = (int) floatIndex;
+            var alpha = floatIndex - index;
+            return (1 - alpha) * Values[index] + alpha * Values[index + 1];
+        }
+
+        public static MemoizedInterpolatedPow ConstructByValuesCount(float minArgument, float maxArgument, float power, int valuesCount)
+        {
+            return new(minArgument, maxArgument, power, valuesCount + AdditionalValueCount);
+        }
+
+        public static MemoizedInterpolatedPow ConstructByStep(float minArgument, float maxArgument, float power, float step)
+        {
+            var valuesCount = (int) Math.Round((maxArgument - minArgument) / step) + AdditionalValueCount;
+            return new MemoizedInterpolatedPow(minArgument, maxArgument, power, valuesCount);
+        }
+
+        public static MemoizedInterpolatedPow ConstructByMaxError(float minArgument, float maxArgument, float power, float maxError)
+        {
+            var step = GetStepByMaxError(minArgument, maxArgument, power, maxError);
+            var valuesCount = (int) ((maxArgument - minArgument) / step) + AdditionalValueCount + 1;
+            if (valuesCount == AdditionalValueCount) ++valuesCount;
+            return new MemoizedInterpolatedPow(minArgument, maxArgument, power, valuesCount);
+        }
+
+        private static float GetStepByMaxError(float minArgument, float maxArgument, float power, float maxError)
+        {
+            float CalculateStep(float argument)
+            {
+                var methodDerivative2 = (power - 1) * power * Math.Pow(argument, power - 2);
+                return (float) Math.Pow(Math.Abs(8 * maxError / methodDerivative2), 0.5) * 0.8f;
+            }
+
+            if (Math.Abs(power - 1) < MinArgumentValue) return 1;
+            if (power < 0)
+                if (minArgument < 0 && 0 < maxArgument
+                    || Math.Abs(minArgument) < MinArgumentValue
+                    || Math.Abs(maxArgument) < MinArgumentValue)
+                    throw new ArgumentException("Can't calculate values count: power is less then zero and arguments interval containts zero");
+
+            float step;
+            if (power >= 2)
+            {
+                var arg = Math.Max(Math.Abs(minArgument), Math.Abs(maxArgument));
+                step = CalculateStep(arg);
+            }
+            else
+            {
+                var arg = Math.Min(Math.Abs(minArgument), Math.Abs(maxArgument));
+                step = CalculateStep(arg);
+            }
+
+            return step;
+        }
+    }
+}

@@ -15,6 +15,7 @@
 
 using System.Collections.Generic;
 using Dreamcast.Json.Serialization;
+
 #if !HAVE_LINQ
 #endif
 #if HAVE_CONCURRENT_DICTIONARY

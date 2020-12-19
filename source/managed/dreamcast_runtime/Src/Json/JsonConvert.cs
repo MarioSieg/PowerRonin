@@ -20,6 +20,7 @@ using System.IO;
 using System.Text;
 using Dreamcast.Json.Linq;
 using Dreamcast.Json.Utilities;
+
 #if HAVE_BIG_INTEGER
 using System.Numerics;
 #endif

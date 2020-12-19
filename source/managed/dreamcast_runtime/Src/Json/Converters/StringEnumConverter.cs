@@ -17,6 +17,7 @@ using System;
 using System.Globalization;
 using Dreamcast.Json.Serialization;
 using Dreamcast.Json.Utilities;
+
 #if !HAVE_LINQ
 
 #else

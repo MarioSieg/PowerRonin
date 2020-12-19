@@ -18,6 +18,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using Dreamcast.Json.Utilities;
+
 #if !HAVE_LINQ
 
 #endif

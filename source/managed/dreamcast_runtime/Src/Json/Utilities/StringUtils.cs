@@ -21,6 +21,7 @@ using System.IO;
 using System.Text;
 #if !HAVE_LINQ
 using Dreamcast.Json.Utilities.LinqBridge;
+
 #else
 using System.Linq;
 #endif
