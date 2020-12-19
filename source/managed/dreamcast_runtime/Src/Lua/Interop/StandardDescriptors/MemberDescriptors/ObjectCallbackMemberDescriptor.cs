@@ -14,10 +14,10 @@
 // *******************************************************************************
 
 using System;
-using MoonSharp.Interpreter.Interop.BasicDescriptors;
-using MoonSharp.Interpreter.Interop.Converters;
+using Dreamcast.Lua.Interpreter.Interop.BasicDescriptors;
+using Dreamcast.Lua.Interpreter.Interop.Converters;
 
-namespace MoonSharp.Interpreter.Interop
+namespace Dreamcast.Lua.Interpreter.Interop
 {
     /// <summary>
     ///     Member descriptor which allows to define new members which behave similarly to class instance members

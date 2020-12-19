@@ -13,7 +13,7 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     A Delegate type which can wrap a script function

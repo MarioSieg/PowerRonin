@@ -13,7 +13,7 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-namespace MoonSharp.Interpreter.Interop
+namespace Dreamcast.Lua.Interpreter.Interop
 {
     /// <summary>
     ///     Helps identifying a reflection special name

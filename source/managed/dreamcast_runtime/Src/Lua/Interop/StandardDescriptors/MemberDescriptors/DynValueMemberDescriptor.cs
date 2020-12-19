@@ -13,9 +13,9 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-using MoonSharp.Interpreter.Interop.BasicDescriptors;
+using Dreamcast.Lua.Interpreter.Interop.BasicDescriptors;
 
-namespace MoonSharp.Interpreter.Interop
+namespace Dreamcast.Lua.Interpreter.Interop
 {
     /// <summary>
     ///     Class providing a simple descriptor for constant DynValues in userdata

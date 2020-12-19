@@ -15,18 +15,18 @@
 
 using System;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     Marks a type of automatic registration as userdata (which happens only if UserData.RegisterAssembly is called).
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false)]
-    public sealed class MoonSharpUserDataAttribute : Attribute
+    public sealed class Dreamcast.LuaUserDataAttribute : Attribute
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="MoonSharpUserDataAttribute" /> class.
+        ///     Initializes a new instance of the <see cref="Dreamcast.LuaUserDataAttribute" /> class.
         /// </summary>
-        public MoonSharpUserDataAttribute()
+        public Dreamcast.LuaUserDataAttribute()
         {
             AccessMode = InteropAccessMode.Default;
         }

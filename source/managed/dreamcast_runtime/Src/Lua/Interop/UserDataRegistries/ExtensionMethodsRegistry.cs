@@ -18,11 +18,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using MoonSharp.Interpreter.Compatibility;
-using MoonSharp.Interpreter.DataStructs;
-using MoonSharp.Interpreter.Interop.BasicDescriptors;
+using Dreamcast.Lua.Interpreter.Compatibility;
+using Dreamcast.Lua.Interpreter.DataStructs;
+using Dreamcast.Lua.Interpreter.Interop.BasicDescriptors;
 
-namespace MoonSharp.Interpreter.Interop.UserDataRegistries
+namespace Dreamcast.Lua.Interpreter.Interop.UserDataRegistries
 {
     /// <summary>
     ///     Registry of all extension methods. Use UserData statics to access these.

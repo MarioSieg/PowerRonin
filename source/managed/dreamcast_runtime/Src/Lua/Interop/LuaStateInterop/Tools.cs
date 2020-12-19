@@ -23,7 +23,7 @@ using System.Text.RegularExpressions;
 
 #endregion
 
-namespace MoonSharp.Interpreter.Interop.LuaStateInterop
+namespace Dreamcast.Lua.Interpreter.Interop.LuaStateInterop
 {
     internal static class Tools
     {

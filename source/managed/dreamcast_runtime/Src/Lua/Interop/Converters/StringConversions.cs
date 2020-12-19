@@ -16,7 +16,7 @@
 using System;
 using System.Text;
 
-namespace MoonSharp.Interpreter.Interop.Converters
+namespace Dreamcast.Lua.Interpreter.Interop.Converters
 {
     internal static class StringConversions
     {

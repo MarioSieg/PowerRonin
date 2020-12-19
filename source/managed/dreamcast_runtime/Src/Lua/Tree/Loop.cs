@@ -14,10 +14,10 @@
 // *******************************************************************************
 
 using System.Collections.Generic;
-using MoonSharp.Interpreter.Execution;
-using MoonSharp.Interpreter.Execution.VM;
+using Dreamcast.Lua.Interpreter.Execution;
+using Dreamcast.Lua.Interpreter.Execution.VM;
 
-namespace MoonSharp.Interpreter.Tree
+namespace Dreamcast.Lua.Interpreter.Tree
 {
     internal class Loop : ILoop
     {

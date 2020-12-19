@@ -14,10 +14,10 @@
 // *******************************************************************************
 
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
-    ///     Enumeration of possible data types in MoonSharp
+    ///     Enumeration of possible data types in Dreamcast.Lua
     /// </summary>
     public enum DataType
     {

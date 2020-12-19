@@ -13,7 +13,7 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-namespace MoonSharp.Interpreter.Interop
+namespace Dreamcast.Lua.Interpreter.Interop
 {
     /// <summary>
     ///     Internal type used by <see cref="AnonWrapper{T}" /> for registration

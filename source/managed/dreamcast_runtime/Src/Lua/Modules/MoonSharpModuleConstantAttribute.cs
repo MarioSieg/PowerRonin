@@ -15,14 +15,14 @@
 
 using System;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     In a module type, mark fields with this attribute to have them exposed as a module constant.
-    ///     See <see cref="MoonSharpModuleAttribute" /> for more information about modules.
+    ///     See <see cref="Dreamcast.LuaModuleAttribute" /> for more information about modules.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field)]
-    public sealed class MoonSharpModuleConstantAttribute : Attribute
+    public sealed class Dreamcast.LuaModuleConstantAttribute : Attribute
     {
         /// <summary>
         ///     Gets or sets the name of the constant - if different from the name of the field itself

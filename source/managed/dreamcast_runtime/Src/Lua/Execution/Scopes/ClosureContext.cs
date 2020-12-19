@@ -16,7 +16,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MoonSharp.Interpreter.Execution
+namespace Dreamcast.Lua.Interpreter.Execution
 {
     /// <summary>
     ///     The scope of a closure (container of upvalues)

@@ -17,15 +17,15 @@
 
 using System.Collections.Generic;
 
-namespace MoonSharp.Interpreter.CoreLib
+namespace Dreamcast.Lua.Interpreter.CoreLib
 {
     /// <summary>
     ///     Class implementing error handling Lua functions (pcall and xpcall)
     /// </summary>
-    [MoonSharpModule]
+    [Dreamcast.LuaModule]
     public class ErrorHandlingModule
     {
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue pcall(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return SetErrorHandlerStrategy("pcall", executionContext, args, null);
@@ -108,7 +108,7 @@ namespace MoonSharp.Interpreter.CoreLib
         }
 
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue xpcall(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             List<DynValue> a = new();

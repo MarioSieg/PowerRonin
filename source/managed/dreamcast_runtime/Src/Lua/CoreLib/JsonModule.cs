@@ -13,14 +13,14 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-using MoonSharp.Interpreter.Serialization.Json;
+using Dreamcast.Lua.Interpreter.Serialization.Json;
 
-namespace MoonSharp.Interpreter.CoreLib
+namespace Dreamcast.Lua.Interpreter.CoreLib
 {
-    [MoonSharpModule(Namespace = "json")]
+    [Dreamcast.LuaModule(Namespace = "json")]
     public class JsonModule
     {
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue parse(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             try
@@ -35,7 +35,7 @@ namespace MoonSharp.Interpreter.CoreLib
             }
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue serialize(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             try
@@ -50,14 +50,14 @@ namespace MoonSharp.Interpreter.CoreLib
             }
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue isnull(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue vs = args[0];
             return DynValue.NewBoolean(JsonNull.IsJsonNull(vs) || vs.IsNil());
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue @null(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return JsonNull.Create();

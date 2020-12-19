@@ -15,9 +15,9 @@
 
 #if !(PCL || ENABLE_DOTNET || NETFX_CORE)
 using System;
-using MoonSharp.Interpreter.Loaders;
+using Dreamcast.Lua.Interpreter.Loaders;
 
-namespace MoonSharp.Interpreter.REPL
+namespace Dreamcast.Lua.Interpreter.REPL
 {
     /// <summary>
     ///     A script loader loading scripts directly from the file system (does not go through platform object)

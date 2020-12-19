@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace MoonSharp.Interpreter.IO
+namespace Dreamcast.Lua.Interpreter.IO
 {
     /// <summary>
     ///     "Optimized" BinaryReader which shares strings and use a dumb compression for integers

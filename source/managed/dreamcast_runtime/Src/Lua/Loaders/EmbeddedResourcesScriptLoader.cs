@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace MoonSharp.Interpreter.Loaders
+namespace Dreamcast.Lua.Interpreter.Loaders
 {
     /// <summary>
     ///     A script loader loading scripts from an assembly resources

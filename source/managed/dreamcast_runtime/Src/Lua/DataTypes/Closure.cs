@@ -14,9 +14,9 @@
 // *******************************************************************************
 
 using System.Collections.Generic;
-using MoonSharp.Interpreter.Execution;
+using Dreamcast.Lua.Interpreter.Execution;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     A class representing a script function

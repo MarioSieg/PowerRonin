@@ -13,11 +13,11 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-using MoonSharp.Interpreter.Debugging;
-using MoonSharp.Interpreter.Execution;
-using MoonSharp.Interpreter.Execution.VM;
+using Dreamcast.Lua.Interpreter.Debugging;
+using Dreamcast.Lua.Interpreter.Execution;
+using Dreamcast.Lua.Interpreter.Execution.VM;
 
-namespace MoonSharp.Interpreter.Tree.Statements
+namespace Dreamcast.Lua.Interpreter.Tree.Statements
 {
     internal class ScopeBlockStatement : Statement
     {

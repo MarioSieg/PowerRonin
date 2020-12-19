@@ -13,14 +13,14 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-using MoonSharp.Interpreter.Debugging;
-using MoonSharp.Interpreter.Diagnostics;
-using MoonSharp.Interpreter.Execution;
-using MoonSharp.Interpreter.Execution.VM;
-using MoonSharp.Interpreter.Tree.Expressions;
-using MoonSharp.Interpreter.Tree.Statements;
+using Dreamcast.Lua.Interpreter.Debugging;
+using Dreamcast.Lua.Interpreter.Diagnostics;
+using Dreamcast.Lua.Interpreter.Execution;
+using Dreamcast.Lua.Interpreter.Execution.VM;
+using Dreamcast.Lua.Interpreter.Tree.Expressions;
+using Dreamcast.Lua.Interpreter.Tree.Statements;
 
-namespace MoonSharp.Interpreter.Tree.Fast_Interface
+namespace Dreamcast.Lua.Interpreter.Tree.Fast_Interface
 {
     internal static class Loader_Fast
     {

@@ -20,11 +20,11 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using MoonSharp.Interpreter.Compatibility;
-using MoonSharp.Interpreter.Diagnostics;
-using MoonSharp.Interpreter.Interop.BasicDescriptors;
+using Dreamcast.Lua.Interpreter.Compatibility;
+using Dreamcast.Lua.Interpreter.Diagnostics;
+using Dreamcast.Lua.Interpreter.Interop.BasicDescriptors;
 
-namespace MoonSharp.Interpreter.Interop
+namespace Dreamcast.Lua.Interpreter.Interop
 {
     /// <summary>
     ///     Class providing easier marshalling of CLR functions

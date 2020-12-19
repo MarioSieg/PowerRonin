@@ -13,10 +13,10 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
-    ///     A base class for many MoonSharp objects.
+    ///     A base class for many Dreamcast.Lua objects.
     ///     Helds a ReferenceID property which gets a different value for every object instance, for debugging
     ///     purposes. Note that the ID is not assigned in a thread safe manner for speed reason, so the IDs
     ///     are guaranteed to be unique only if everything is running on one thread at a time.

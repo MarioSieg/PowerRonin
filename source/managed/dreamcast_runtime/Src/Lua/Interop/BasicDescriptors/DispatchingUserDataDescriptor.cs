@@ -16,10 +16,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MoonSharp.Interpreter.Compatibility;
-using MoonSharp.Interpreter.Interop.Converters;
+using Dreamcast.Lua.Interpreter.Compatibility;
+using Dreamcast.Lua.Interpreter.Interop.Converters;
 
-namespace MoonSharp.Interpreter.Interop.BasicDescriptors
+namespace Dreamcast.Lua.Interpreter.Interop.BasicDescriptors
 {
     /// <summary>
     ///     An abstract user data descriptor which accepts members described by <see cref="IMemberDescriptor" /> objects and
@@ -205,7 +205,7 @@ namespace MoonSharp.Interpreter.Interop.BasicDescriptors
         ///     Gets a "meta" operation on this userdata. If a descriptor does not support this functionality,
         ///     it should return "null" (not a nil).
         ///     See <see cref="IUserDataDescriptor.MetaIndex" /> for further details.
-        ///     If a method exists marked with <see cref="MoonSharpUserDataMetamethodAttribute" /> for the specific
+        ///     If a method exists marked with <see cref="Dreamcast.LuaUserDataMetamethodAttribute" /> for the specific
         ///     metamethod requested, that method is returned.
         ///     If the above fails, the following dispatching occur:
         ///     __add, __sub, __mul, __div, __mod and __unm are dispatched to C# operator overloads (if they exist)

@@ -18,9 +18,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using MoonSharp.Interpreter.Compatibility;
+using Dreamcast.Lua.Interpreter.Compatibility;
 
-namespace MoonSharp.Interpreter.Interop
+namespace Dreamcast.Lua.Interpreter.Interop
 {
     /// <summary>
     ///     Helper extension methods used to simplify some parts of userdata descriptor implementations
@@ -29,7 +29,7 @@ namespace MoonSharp.Interpreter.Interop
     {
         /// <summary>
         ///     Determines whether a
-        ///     <see cref="MoonSharpVisibleAttribute" /> or a <see cref="MoonSharpHiddenAttribute" />  is changing visibility of a
+        ///     <see cref="Dreamcast.LuaVisibleAttribute" /> or a <see cref="Dreamcast.LuaHiddenAttribute" />  is changing visibility of a
         ///     member
         ///     to scripts.
         /// </summary>
@@ -40,7 +40,7 @@ namespace MoonSharp.Interpreter.Interop
         ///     <c>if no attribute was found</c>
         /// </returns>
         /// <exception cref="System.InvalidOperationException">
-        ///     If both MoonSharpHiddenAttribute and MoonSharpVisibleAttribute are
+        ///     If both Dreamcast.LuaHiddenAttribute and Dreamcast.LuaVisibleAttribute are
         ///     specified and they convey different messages.
         /// </exception>
         public static bool? GetVisibilityFromAttributes(this MemberInfo mi)
@@ -48,11 +48,11 @@ namespace MoonSharp.Interpreter.Interop
             if (mi == null)
                 return false;
 
-            MoonSharpVisibleAttribute va = mi.GetCustomAttributes(true).OfType<MoonSharpVisibleAttribute>().SingleOrDefault();
-            MoonSharpHiddenAttribute ha = mi.GetCustomAttributes(true).OfType<MoonSharpHiddenAttribute>().SingleOrDefault();
+            Dreamcast.LuaVisibleAttribute va = mi.GetCustomAttributes(true).OfType<Dreamcast.LuaVisibleAttribute>().SingleOrDefault();
+            Dreamcast.LuaHiddenAttribute ha = mi.GetCustomAttributes(true).OfType<Dreamcast.LuaHiddenAttribute>().SingleOrDefault();
 
             if (va != null && ha != null && va.Visible)
-                throw new InvalidOperationException(string.Format("A member ('{0}') can't have discording MoonSharpHiddenAttribute and MoonSharpVisibleAttribute.", mi.Name));
+                throw new InvalidOperationException(string.Format("A member ('{0}') can't have discording Dreamcast.LuaHiddenAttribute and Dreamcast.LuaVisibleAttribute.", mi.Name));
             if (ha != null)
                 return false;
             if (va != null)
@@ -160,14 +160,14 @@ namespace MoonSharp.Interpreter.Interop
 
         /// <summary>
         ///     Gets the list of metamethod names from attributes - in practice the list of metamethods declared through
-        ///     <see cref="MoonSharpUserDataMetamethodAttribute" /> .
+        ///     <see cref="Dreamcast.LuaUserDataMetamethodAttribute" /> .
         /// </summary>
         /// <param name="mi">The mi.</param>
         /// <returns></returns>
         public static List<string> GetMetaNamesFromAttributes(this MethodInfo mi)
         {
-            return mi.GetCustomAttributes(typeof(MoonSharpUserDataMetamethodAttribute), true)
-                .OfType<MoonSharpUserDataMetamethodAttribute>()
+            return mi.GetCustomAttributes(typeof(Dreamcast.LuaUserDataMetamethodAttribute), true)
+                .OfType<Dreamcast.LuaUserDataMetamethodAttribute>()
                 .Select(a => a.Name)
                 .ToList();
         }

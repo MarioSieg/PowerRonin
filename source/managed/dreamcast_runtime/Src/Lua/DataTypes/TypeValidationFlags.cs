@@ -15,7 +15,7 @@
 
 using System;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     Flags to alter the way the DynValue.CheckType and other related functions operate on data types for

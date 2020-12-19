@@ -13,7 +13,7 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-namespace MoonSharp.Interpreter.Interop.BasicDescriptors
+namespace Dreamcast.Lua.Interpreter.Interop.BasicDescriptors
 {
     /// <summary>
     ///     Interface for descriptors of any kind which support optimizations of their implementation according to

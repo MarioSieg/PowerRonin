@@ -16,7 +16,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     Extension methods used in the whole project.

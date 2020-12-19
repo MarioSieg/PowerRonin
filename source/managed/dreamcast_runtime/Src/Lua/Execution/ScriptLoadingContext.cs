@@ -13,10 +13,10 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-using MoonSharp.Interpreter.Debugging;
-using MoonSharp.Interpreter.Tree;
+using Dreamcast.Lua.Interpreter.Debugging;
+using Dreamcast.Lua.Interpreter.Tree;
 
-namespace MoonSharp.Interpreter.Execution
+namespace Dreamcast.Lua.Interpreter.Execution
 {
     internal class ScriptLoadingContext
     {

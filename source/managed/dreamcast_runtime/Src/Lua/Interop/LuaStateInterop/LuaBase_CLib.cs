@@ -17,7 +17,7 @@
 
 using lua_Integer = System.Int32;
 
-namespace MoonSharp.Interpreter.Interop.LuaStateInterop
+namespace Dreamcast.Lua.Interpreter.Interop.LuaStateInterop
 {
     public partial class LuaBase
     {

@@ -18,12 +18,12 @@ using System.Collections;
 using System.Reflection;
 using System.Text;
 
-namespace MoonSharp.Interpreter.Interop.Converters
+namespace Dreamcast.Lua.Interpreter.Interop.Converters
 {
     internal static class ClrToScriptConversions
     {
         /// <summary>
-        ///     Tries to convert a CLR object to a MoonSharp value, using "trivial" logic.
+        ///     Tries to convert a CLR object to a Dreamcast.Lua value, using "trivial" logic.
         ///     Skips on custom conversions, etc.
         ///     Does NOT throw on failure.
         /// </summary>
@@ -54,7 +54,7 @@ namespace MoonSharp.Interpreter.Interop.Converters
 
 
         /// <summary>
-        ///     Tries to convert a CLR object to a MoonSharp value, using "simple" logic.
+        ///     Tries to convert a CLR object to a Dreamcast.Lua value, using "simple" logic.
         ///     Does NOT throw on failure.
         /// </summary>
         internal static DynValue TryObjectToSimpleDynValue(Script script, object obj)
@@ -114,7 +114,7 @@ namespace MoonSharp.Interpreter.Interop.Converters
 
 
         /// <summary>
-        ///     Tries to convert a CLR object to a MoonSharp value, using more in-depth analysis
+        ///     Tries to convert a CLR object to a Dreamcast.Lua value, using more in-depth analysis
         /// </summary>
         internal static DynValue ObjectToDynValue(Script script, object obj)
         {

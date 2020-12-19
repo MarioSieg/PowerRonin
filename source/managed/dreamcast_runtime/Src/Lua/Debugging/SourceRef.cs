@@ -15,7 +15,7 @@
 
 using System;
 
-namespace MoonSharp.Interpreter.Debugging
+namespace Dreamcast.Lua.Interpreter.Debugging
 {
     /// <summary>
     ///     Class representing a reference to source code interval

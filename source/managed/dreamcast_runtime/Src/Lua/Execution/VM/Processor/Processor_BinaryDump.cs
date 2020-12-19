@@ -18,10 +18,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using MoonSharp.Interpreter.Debugging;
-using MoonSharp.Interpreter.IO;
+using Dreamcast.Lua.Interpreter.Debugging;
+using Dreamcast.Lua.Interpreter.IO;
 
-namespace MoonSharp.Interpreter.Execution.VM
+namespace Dreamcast.Lua.Interpreter.Execution.VM
 {
     internal sealed partial class Processor
     {
@@ -111,7 +111,7 @@ namespace MoonSharp.Interpreter.Execution.VM
                 var headerMark = br.ReadUInt64();
 
                 if (headerMark != DUMP_CHUNK_MAGIC)
-                    throw new ArgumentException("Not a MoonSharp chunk");
+                    throw new ArgumentException("Not a Dreamcast.Lua chunk");
 
                 var version = br.ReadInt32();
 

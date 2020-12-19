@@ -13,9 +13,9 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-using MoonSharp.Interpreter.Execution.VM;
+using Dreamcast.Lua.Interpreter.Execution.VM;
 
-namespace MoonSharp.Interpreter.Tree
+namespace Dreamcast.Lua.Interpreter.Tree
 {
     internal interface IVariable
     {

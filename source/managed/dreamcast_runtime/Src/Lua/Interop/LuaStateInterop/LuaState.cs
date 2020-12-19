@@ -17,7 +17,7 @@
 
 using System.Collections.Generic;
 
-namespace MoonSharp.Interpreter.Interop.LuaStateInterop
+namespace Dreamcast.Lua.Interpreter.Interop.LuaStateInterop
 {
     /// <summary>
     /// </summary>

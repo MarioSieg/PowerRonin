@@ -15,10 +15,10 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using MoonSharp.Interpreter.Execution.Scopes;
-using MoonSharp.Interpreter.Tree.Statements;
+using Dreamcast.Lua.Interpreter.Execution.Scopes;
+using Dreamcast.Lua.Interpreter.Tree.Statements;
 
-namespace MoonSharp.Interpreter.Execution
+namespace Dreamcast.Lua.Interpreter.Execution
 {
     internal class BuildTimeScope
     {

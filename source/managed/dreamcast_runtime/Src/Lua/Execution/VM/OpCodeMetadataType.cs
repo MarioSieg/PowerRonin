@@ -13,7 +13,7 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-namespace MoonSharp.Interpreter.Execution.VM
+namespace Dreamcast.Lua.Interpreter.Execution.VM
 {
     public enum OpCodeMetadataType
     {

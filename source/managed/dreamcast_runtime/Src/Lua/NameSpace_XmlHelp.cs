@@ -13,10 +13,10 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
-    ///     Namespace containing all the most commonly used classes for MoonSharp operation.
+    ///     Namespace containing all the most commonly used classes for Dreamcast.Lua operation.
     ///     When in doubt, refer to <see cref="Script" /> and <see cref="DynValue" /> classes as starting points.
     /// </summary>
     internal static class NamespaceDoc
@@ -24,10 +24,10 @@ namespace MoonSharp.Interpreter
     }
 }
 
-namespace MoonSharp.Interpreter.CoreLib
+namespace Dreamcast.Lua.Interpreter.CoreLib
 {
     /// <summary>
-    ///     Namespace containing the implementation of the Lua standard library, as MoonSharp modules.
+    ///     Namespace containing the implementation of the Lua standard library, as Dreamcast.Lua modules.
     ///     There's seldom the need to access these classes directly.
     /// </summary>
     internal static class NamespaceDoc
@@ -35,7 +35,7 @@ namespace MoonSharp.Interpreter.CoreLib
     }
 }
 
-namespace MoonSharp.Interpreter.CoreLib.IO
+namespace Dreamcast.Lua.Interpreter.CoreLib.IO
 {
     /// <summary>
     ///     Namespace containing userdata classes for the 'io' module
@@ -45,7 +45,7 @@ namespace MoonSharp.Interpreter.CoreLib.IO
     }
 }
 
-namespace MoonSharp.Interpreter.Debugging
+namespace Dreamcast.Lua.Interpreter.Debugging
 {
     /// <summary>
     ///     Namespace containing classes used to support debuggers
@@ -55,7 +55,7 @@ namespace MoonSharp.Interpreter.Debugging
     }
 }
 
-namespace MoonSharp.Interpreter.Diagnostics
+namespace Dreamcast.Lua.Interpreter.Diagnostics
 {
     /// <summary>
     ///     Namespace containing classes used to support self diagnostics (e.g. performance counters)
@@ -65,7 +65,7 @@ namespace MoonSharp.Interpreter.Diagnostics
     }
 }
 
-namespace MoonSharp.Interpreter.Interop
+namespace Dreamcast.Lua.Interpreter.Interop
 {
     /// <summary>
     ///     Namespace containing classes used to customize and support advanced interoperations between
@@ -76,7 +76,7 @@ namespace MoonSharp.Interpreter.Interop
     }
 }
 
-namespace MoonSharp.Interpreter.Interop.LuaStateInterop
+namespace Dreamcast.Lua.Interpreter.Interop.LuaStateInterop
 {
     /// <summary>
     ///     Namespace containing classes used to provide a minimal support for porting code based on the classic
@@ -88,7 +88,7 @@ namespace MoonSharp.Interpreter.Interop.LuaStateInterop
 }
 
 
-namespace MoonSharp.Interpreter.Loaders
+namespace Dreamcast.Lua.Interpreter.Loaders
 {
     /// <summary>
     ///     Namespace containing classes used to customized how scripts are loaded from external files.
@@ -99,7 +99,7 @@ namespace MoonSharp.Interpreter.Loaders
 }
 
 
-namespace MoonSharp.Interpreter.Platforms
+namespace Dreamcast.Lua.Interpreter.Platforms
 {
     /// <summary>
     ///     Namespace containing classes used to customize how the interfacing with the operative system happens
@@ -111,7 +111,7 @@ namespace MoonSharp.Interpreter.Platforms
     }
 }
 
-namespace MoonSharp.Interpreter.REPL
+namespace Dreamcast.Lua.Interpreter.REPL
 {
     /// <summary>
     ///     Contains classes useful to implement REPL interpreters.

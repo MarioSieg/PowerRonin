@@ -13,9 +13,9 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-using MoonSharp.Interpreter.Tree.Expressions;
+using Dreamcast.Lua.Interpreter.Tree.Expressions;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     Represents a dynamic expression in the script

@@ -16,10 +16,10 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using MoonSharp.Interpreter.Interop;
-using MoonSharp.Interpreter.Loaders;
+using Dreamcast.Lua.Interpreter.Interop;
+using Dreamcast.Lua.Interpreter.Loaders;
 
-namespace MoonSharp.Interpreter.Platforms
+namespace Dreamcast.Lua.Interpreter.Platforms
 {
     /// <summary>
     ///     A static class offering properties for autodetection of system/platform details

@@ -13,10 +13,10 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-using MoonSharp.Interpreter.DataStructs;
-using MoonSharp.Interpreter.Execution.VM;
+using Dreamcast.Lua.Interpreter.DataStructs;
+using Dreamcast.Lua.Interpreter.Execution.VM;
 
-namespace MoonSharp.Interpreter.Execution
+namespace Dreamcast.Lua.Interpreter.Execution
 {
     internal interface ILoop
     {

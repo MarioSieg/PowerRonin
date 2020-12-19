@@ -17,7 +17,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace MoonSharp.Interpreter.DataStructs
+namespace Dreamcast.Lua.Interpreter.DataStructs
 {
     /// <summary>
     ///     Provides facility to create a "sliced" view over an existing IList<typeparamref name="T" />

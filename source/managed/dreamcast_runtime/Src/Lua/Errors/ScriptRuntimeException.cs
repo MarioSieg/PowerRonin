@@ -14,10 +14,10 @@
 // *******************************************************************************
 
 using System;
-using MoonSharp.Interpreter.Interop;
-using MoonSharp.Interpreter.Interop.BasicDescriptors;
+using Dreamcast.Lua.Interpreter.Interop;
+using Dreamcast.Lua.Interpreter.Interop.BasicDescriptors;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     Exception for all runtime errors. In addition to constructors, it offers a lot of static methods
@@ -417,7 +417,7 @@ namespace MoonSharp.Interpreter
         /// </returns>
         public static ScriptRuntimeException UserDataArgumentTypeMismatch(DataType t, Type clrType)
         {
-            return new("cannot find a conversion from a MoonSharp {0} to a clr {1}", t.ToString().ToLowerInvariant(), clrType.FullName);
+            return new("cannot find a conversion from a Dreamcast.Lua {0} to a clr {1}", t.ToString().ToLowerInvariant(), clrType.FullName);
         }
 
         /// <summary>

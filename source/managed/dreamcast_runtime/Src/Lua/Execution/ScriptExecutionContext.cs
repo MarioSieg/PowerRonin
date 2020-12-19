@@ -14,11 +14,11 @@
 // *******************************************************************************
 
 using System;
-using MoonSharp.Interpreter.Debugging;
-using MoonSharp.Interpreter.Execution.VM;
-using MoonSharp.Interpreter.Interop.LuaStateInterop;
+using Dreamcast.Lua.Interpreter.Debugging;
+using Dreamcast.Lua.Interpreter.Execution.VM;
+using Dreamcast.Lua.Interpreter.Interop.LuaStateInterop;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     Class giving access to details of the environment where the script is executing

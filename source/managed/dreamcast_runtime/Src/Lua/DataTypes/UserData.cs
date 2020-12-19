@@ -17,14 +17,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using MoonSharp.Interpreter.Interop;
-using MoonSharp.Interpreter.Interop.BasicDescriptors;
-using MoonSharp.Interpreter.Interop.RegistrationPolicies;
-using MoonSharp.Interpreter.Interop.StandardDescriptors;
-using MoonSharp.Interpreter.Interop.UserDataRegistries;
-using MoonSharp.Interpreter.Serialization.Json;
+using Dreamcast.Lua.Interpreter.Interop;
+using Dreamcast.Lua.Interpreter.Interop.BasicDescriptors;
+using Dreamcast.Lua.Interpreter.Interop.RegistrationPolicies;
+using Dreamcast.Lua.Interpreter.Interop.StandardDescriptors;
+using Dreamcast.Lua.Interpreter.Interop.UserDataRegistries;
+using Dreamcast.Lua.Interpreter.Serialization.Json;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     Class exposing C# objects as Lua userdata.
@@ -170,7 +170,7 @@ namespace MoonSharp.Interpreter
 
 
         /// <summary>
-        ///     Registers all types marked with a MoonSharpUserDataAttribute that ar contained in an assembly.
+        ///     Registers all types marked with a Dreamcast.LuaUserDataAttribute that ar contained in an assembly.
         /// </summary>
         /// <param name="asm">The assembly.</param>
         /// <param name="includeExtensionTypes">if set to <c>true</c> extension types are registered to the appropriate registry.</param>

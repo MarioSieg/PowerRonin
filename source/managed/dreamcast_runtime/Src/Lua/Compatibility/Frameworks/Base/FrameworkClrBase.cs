@@ -18,7 +18,7 @@
 using System;
 using System.Reflection;
 
-namespace MoonSharp.Interpreter.Compatibility.Frameworks
+namespace Dreamcast.Lua.Interpreter.Compatibility.Frameworks
 {
     internal abstract class FrameworkClrBase : FrameworkReflectionBase
     {

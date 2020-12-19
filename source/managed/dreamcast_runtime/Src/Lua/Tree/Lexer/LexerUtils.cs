@@ -16,9 +16,9 @@
 using System;
 using System.Globalization;
 using System.Text;
-using MoonSharp.Interpreter.Compatibility;
+using Dreamcast.Lua.Interpreter.Compatibility;
 
-namespace MoonSharp.Interpreter.Tree
+namespace Dreamcast.Lua.Interpreter.Tree
 {
     internal static class LexerUtils
     {

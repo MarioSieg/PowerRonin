@@ -16,9 +16,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using MoonSharp.Interpreter.Compatibility;
+using Dreamcast.Lua.Interpreter.Compatibility;
 
-namespace MoonSharp.Interpreter.Interop.Converters
+namespace Dreamcast.Lua.Interpreter.Interop.Converters
 {
     internal static class TableConversions
     {

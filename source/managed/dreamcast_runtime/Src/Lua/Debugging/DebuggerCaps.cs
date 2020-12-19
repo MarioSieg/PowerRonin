@@ -15,7 +15,7 @@
 
 using System;
 
-namespace MoonSharp.Interpreter.Debugging
+namespace Dreamcast.Lua.Interpreter.Debugging
 {
     /// <summary>
     ///     Enumeration of capabilities for a debugger

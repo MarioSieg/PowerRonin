@@ -13,7 +13,7 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-namespace MoonSharp.Interpreter.Debugging
+namespace Dreamcast.Lua.Interpreter.Debugging
 {
     /// <summary>
     ///     A watch item for the debugger to consume.

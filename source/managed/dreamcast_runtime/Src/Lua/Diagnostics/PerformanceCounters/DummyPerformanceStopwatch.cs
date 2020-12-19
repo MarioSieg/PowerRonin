@@ -15,7 +15,7 @@
 
 using System;
 
-namespace MoonSharp.Interpreter.Diagnostics.PerformanceCounters
+namespace Dreamcast.Lua.Interpreter.Diagnostics.PerformanceCounters
 {
     internal class DummyPerformanceStopwatch : IPerformanceStopwatch, IDisposable
     {

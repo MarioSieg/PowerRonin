@@ -14,10 +14,10 @@
 // *******************************************************************************
 
 using System.Collections.Generic;
-using MoonSharp.Interpreter.Execution;
-using MoonSharp.Interpreter.Tree.Expressions;
+using Dreamcast.Lua.Interpreter.Execution;
+using Dreamcast.Lua.Interpreter.Tree.Expressions;
 
-namespace MoonSharp.Interpreter.Tree
+namespace Dreamcast.Lua.Interpreter.Tree
 {
     internal abstract class Expression : NodeBase
     {

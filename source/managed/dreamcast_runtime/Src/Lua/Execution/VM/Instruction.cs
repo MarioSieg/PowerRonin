@@ -17,9 +17,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using MoonSharp.Interpreter.Debugging;
+using Dreamcast.Lua.Interpreter.Debugging;
 
-namespace MoonSharp.Interpreter.Execution.VM
+namespace Dreamcast.Lua.Interpreter.Execution.VM
 {
     internal class Instruction
     {

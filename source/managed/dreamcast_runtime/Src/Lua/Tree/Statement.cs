@@ -13,11 +13,11 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-using MoonSharp.Interpreter.Execution;
-using MoonSharp.Interpreter.Tree.Expressions;
-using MoonSharp.Interpreter.Tree.Statements;
+using Dreamcast.Lua.Interpreter.Execution;
+using Dreamcast.Lua.Interpreter.Tree.Expressions;
+using Dreamcast.Lua.Interpreter.Tree.Statements;
 
-namespace MoonSharp.Interpreter.Tree
+namespace Dreamcast.Lua.Interpreter.Tree
 {
     internal abstract class Statement : NodeBase
     {

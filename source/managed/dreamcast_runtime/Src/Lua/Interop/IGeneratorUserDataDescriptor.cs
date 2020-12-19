@@ -15,7 +15,7 @@
 
 using System;
 
-namespace MoonSharp.Interpreter.Interop
+namespace Dreamcast.Lua.Interpreter.Interop
 {
     /// <summary>
     ///     An interface for type descriptors having the ability to generate other descriptors on the fly.

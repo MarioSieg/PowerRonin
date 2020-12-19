@@ -16,10 +16,10 @@
 using System;
 using System.Collections;
 using System.Reflection;
-using MoonSharp.Interpreter.Compatibility;
-using MoonSharp.Interpreter.Interop.Converters;
+using Dreamcast.Lua.Interpreter.Compatibility;
+using Dreamcast.Lua.Interpreter.Interop.Converters;
 
-namespace MoonSharp.Interpreter.Serialization
+namespace Dreamcast.Lua.Interpreter.Serialization
 {
     public static class ObjectValueConverter
     {

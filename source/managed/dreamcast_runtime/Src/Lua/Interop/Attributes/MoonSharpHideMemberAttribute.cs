@@ -15,19 +15,19 @@
 
 using System;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     Lists a userdata member not to be exposed to scripts referencing it by name.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = true)]
-    public sealed class MoonSharpHideMemberAttribute : Attribute
+    public sealed class Dreamcast.LuaHideMemberAttribute : Attribute
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="MoonSharpHideMemberAttribute" /> class.
+        ///     Initializes a new instance of the <see cref="Dreamcast.LuaHideMemberAttribute" /> class.
         /// </summary>
         /// <param name="memberName">Name of the member to hide.</param>
-        public MoonSharpHideMemberAttribute(string memberName)
+        public Dreamcast.LuaHideMemberAttribute(string memberName)
         {
             MemberName = memberName;
         }

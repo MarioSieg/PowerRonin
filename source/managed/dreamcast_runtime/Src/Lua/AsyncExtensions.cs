@@ -21,9 +21,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using MoonSharp.Interpreter.REPL;
+using Dreamcast.Lua.Interpreter.REPL;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
 	/// <summary>
 	/// This class contains extension methods providing async wrappers of many methods.
@@ -87,7 +87,7 @@ namespace MoonSharp.Interpreter
 		}
 
 		/// <summary>
-		/// Asynchronously loads and executes a string containing a Lua/MoonSharp script.
+		/// Asynchronously loads and executes a string containing a Lua/Dreamcast.Lua script.
 		/// 
 		/// This method is supported only on .NET 4.x and .NET 4.x PCL targets.
 		/// </summary>
@@ -105,7 +105,7 @@ namespace MoonSharp.Interpreter
 
 
 		/// <summary>
-		/// Asynchronously loads and executes a stream containing a Lua/MoonSharp script.
+		/// Asynchronously loads and executes a stream containing a Lua/Dreamcast.Lua script.
 		/// 
 		/// This method is supported only on .NET 4.x and .NET 4.x PCL targets.
 		/// </summary>
@@ -123,7 +123,7 @@ namespace MoonSharp.Interpreter
 
 
 		/// <summary>
-		/// Asynchronously loads and executes a file containing a Lua/MoonSharp script.
+		/// Asynchronously loads and executes a file containing a Lua/Dreamcast.Lua script.
 		/// 
 		/// This method is supported only on .NET 4.x and .NET 4.x PCL targets.
 		/// </summary>
@@ -140,7 +140,7 @@ namespace MoonSharp.Interpreter
 		}
 
 		/// <summary>
-		/// Asynchronously loads a string containing a Lua/MoonSharp function.
+		/// Asynchronously loads a string containing a Lua/Dreamcast.Lua function.
 		/// 
 		/// This method is supported only on .NET 4.x and .NET 4.x PCL targets.
 		/// </summary>
@@ -159,7 +159,7 @@ namespace MoonSharp.Interpreter
 
 
 		/// <summary>
-		/// Asynchronously loads a string containing a Lua/MoonSharp script.
+		/// Asynchronously loads a string containing a Lua/Dreamcast.Lua script.
 		/// 
 		/// This method is supported only on .NET 4.x and .NET 4.x PCL targets.
 		/// </summary>
@@ -178,7 +178,7 @@ namespace MoonSharp.Interpreter
 
 
 		/// <summary>
-		/// Asynchronously loads a Lua/MoonSharp script from a System.IO.Stream. NOTE: This will *NOT* close the stream!
+		/// Asynchronously loads a Lua/Dreamcast.Lua script from a System.IO.Stream. NOTE: This will *NOT* close the stream!
 		/// 
 		/// This method is supported only on .NET 4.x and .NET 4.x PCL targets.
 		/// </summary>
@@ -216,7 +216,7 @@ namespace MoonSharp.Interpreter
 
 
 		/// <summary>
-		/// Asynchronously loads a string containing a Lua/MoonSharp script.
+		/// Asynchronously loads a string containing a Lua/Dreamcast.Lua script.
 		/// This method is supported only on .NET 4.x and .NET 4.x PCL targets.
 		/// </summary>
 		/// <param name="script">The script.</param>
@@ -238,7 +238,7 @@ namespace MoonSharp.Interpreter
 		/// This method is supported only on .NET 4.x and .NET 4.x PCL targets.
 		/// </summary>
 		/// <param name="script">The script.</param>
-		/// <param name="function">The Lua/MoonSharp function to be called</param>
+		/// <param name="function">The Lua/Dreamcast.Lua function to be called</param>
 		/// <returns>
 		/// The return value(s) of the function call.
 		/// </returns>
@@ -254,7 +254,7 @@ namespace MoonSharp.Interpreter
 		/// This method is supported only on .NET 4.x and .NET 4.x PCL targets.
 		/// </summary>
 		/// <param name="script">The script.</param>
-		/// <param name="function">The Lua/MoonSharp function to be called</param>
+		/// <param name="function">The Lua/Dreamcast.Lua function to be called</param>
 		/// <param name="args">The arguments to pass to the function.</param>
 		/// <returns>
 		/// The return value(s) of the function call.
@@ -272,7 +272,7 @@ namespace MoonSharp.Interpreter
 		/// This method is supported only on .NET 4.x and .NET 4.x PCL targets.
 		/// </summary>
 		/// <param name="script">The script.</param>
-		/// <param name="function">The Lua/MoonSharp function to be called</param>
+		/// <param name="function">The Lua/Dreamcast.Lua function to be called</param>
 		/// <param name="args">The arguments to pass to the function.</param>
 		/// <returns>
 		/// The return value(s) of the function call.
@@ -290,7 +290,7 @@ namespace MoonSharp.Interpreter
 		/// This method is supported only on .NET 4.x and .NET 4.x PCL targets.
 		/// </summary>
 		/// <param name="script">The script.</param>
-		/// <param name="function">The Lua/MoonSharp function to be called</param>
+		/// <param name="function">The Lua/Dreamcast.Lua function to be called</param>
 		/// <returns></returns>
 		/// <exception cref="System.ArgumentException">Thrown if function is not of DataType.Function</exception>
 		public static Task<DynValue> CallAsync(this Script script, object function)
@@ -305,7 +305,7 @@ namespace MoonSharp.Interpreter
 		/// This method is supported only on .NET 4.x and .NET 4.x PCL targets.
 		/// </summary>
 		/// <param name="script">The script.</param>
-		/// <param name="function">The Lua/MoonSharp function to be called</param>
+		/// <param name="function">The Lua/Dreamcast.Lua function to be called</param>
 		/// <param name="args">The arguments to pass to the function.</param>
 		/// <returns></returns>
 		/// <exception cref="System.ArgumentException">Thrown if function is not of DataType.Function</exception>

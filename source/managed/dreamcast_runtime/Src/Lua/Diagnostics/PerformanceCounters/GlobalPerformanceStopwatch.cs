@@ -16,7 +16,7 @@
 using System;
 using System.Diagnostics;
 
-namespace MoonSharp.Interpreter.Diagnostics.PerformanceCounters
+namespace Dreamcast.Lua.Interpreter.Diagnostics.PerformanceCounters
 {
     /// <summary>
     ///     This class is not *really* IDisposable.. it's just use to have a RAII like pattern.

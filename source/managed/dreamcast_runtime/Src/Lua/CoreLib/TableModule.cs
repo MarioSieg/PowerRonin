@@ -19,15 +19,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MoonSharp.Interpreter.CoreLib
+namespace Dreamcast.Lua.Interpreter.CoreLib
 {
     /// <summary>
     ///     Class implementing table Lua functions
     /// </summary>
-    [MoonSharpModule(Namespace = "table")]
+    [Dreamcast.LuaModule(Namespace = "table")]
     public class TableModule
     {
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue unpack(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue s = args.AsType(0, "unpack", DataType.Table);
@@ -48,7 +48,7 @@ namespace MoonSharp.Interpreter.CoreLib
             return DynValue.NewTuple(v);
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue pack(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             Table t = new(executionContext.GetScript());
@@ -62,7 +62,7 @@ namespace MoonSharp.Interpreter.CoreLib
             return v;
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue sort(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue vlist = args.AsType(0, "sort", DataType.Table);
@@ -135,7 +135,7 @@ namespace MoonSharp.Interpreter.CoreLib
             return 0;
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue insert(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue vlist = args.AsType(0, "table.insert", DataType.Table);
@@ -170,7 +170,7 @@ namespace MoonSharp.Interpreter.CoreLib
         }
 
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue remove(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue vlist = args.AsType(0, "table.remove", DataType.Table);
@@ -204,7 +204,7 @@ namespace MoonSharp.Interpreter.CoreLib
         //Given a list where all elements are strings or numbers, returns the string list[i]..sep..list[i+1] (...) sep..list[j]. 
         //The default value for sep is the empty string, the default for i is 1, and the default for j is #list. If i is greater 
         //than j, returns the empty string. 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue concat(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue vlist = args.AsType(0, "concat", DataType.Table);
@@ -270,16 +270,16 @@ namespace MoonSharp.Interpreter.CoreLib
     ///     Class exposing table.unpack and table.pack in the global namespace (to work around the most common Lua 5.1
     ///     compatibility issue).
     /// </summary>
-    [MoonSharpModule]
+    [Dreamcast.LuaModule]
     public class TableModule_Globals
     {
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue unpack(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return TableModule.unpack(executionContext, args);
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue pack(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return TableModule.pack(executionContext, args);

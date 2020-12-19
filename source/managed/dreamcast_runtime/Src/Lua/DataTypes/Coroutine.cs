@@ -17,10 +17,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using MoonSharp.Interpreter.Debugging;
-using MoonSharp.Interpreter.Execution.VM;
+using Dreamcast.Lua.Interpreter.Debugging;
+using Dreamcast.Lua.Interpreter.Execution.VM;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     A class representing a script coroutine
@@ -170,7 +170,7 @@ namespace MoonSharp.Interpreter
         }
 
         /// <summary>
-        ///     The purpose of this method is to convert a MoonSharp/Lua coroutine to a Unity3D coroutine.
+        ///     The purpose of this method is to convert a Dreamcast.Lua/Lua coroutine to a Unity3D coroutine.
         ///     This loops over the coroutine, discarding returned values, and returning null for each invocation.
         ///     This means however that the coroutine will be invoked each frame.
         ///     Only non-CLR coroutines can be resumed with this method. Use an overload of the Resume method accepting a

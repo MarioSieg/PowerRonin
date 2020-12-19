@@ -13,9 +13,9 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-using MoonSharp.Interpreter.DataStructs;
+using Dreamcast.Lua.Interpreter.DataStructs;
 
-namespace MoonSharp.Interpreter.Execution.VM
+namespace Dreamcast.Lua.Interpreter.Execution.VM
 {
     internal sealed class ExecutionState
     {

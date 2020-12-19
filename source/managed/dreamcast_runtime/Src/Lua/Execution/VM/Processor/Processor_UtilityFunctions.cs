@@ -15,7 +15,7 @@
 
 using System.Collections.Generic;
 
-namespace MoonSharp.Interpreter.Execution.VM
+namespace Dreamcast.Lua.Interpreter.Execution.VM
 {
     internal sealed partial class Processor
     {

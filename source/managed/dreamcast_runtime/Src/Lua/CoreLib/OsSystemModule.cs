@@ -17,16 +17,16 @@
 
 using System;
 
-namespace MoonSharp.Interpreter.CoreLib
+namespace Dreamcast.Lua.Interpreter.CoreLib
 {
     /// <summary>
     ///     Class implementing system related Lua functions from the 'os' module.
     ///     Proper support requires a compatible IPlatformAccessor
     /// </summary>
-    [MoonSharpModule(Namespace = "os")]
+    [Dreamcast.LuaModule(Namespace = "os")]
     public class OsSystemModule
     {
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue execute(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v = args.AsType(0, "execute", DataType.String, true);
@@ -49,7 +49,7 @@ namespace MoonSharp.Interpreter.CoreLib
             }
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue exit(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v_exitCode = args.AsType(0, "exit", DataType.Number, true);
@@ -63,7 +63,7 @@ namespace MoonSharp.Interpreter.CoreLib
             throw new InvalidOperationException("Unreachable code.. reached.");
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue getenv(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue varName = args.AsType(0, "getenv", DataType.String);
@@ -75,7 +75,7 @@ namespace MoonSharp.Interpreter.CoreLib
             return DynValue.NewString(val);
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue remove(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             string fileName = args.AsType(0, "remove", DataType.String).String;
@@ -99,7 +99,7 @@ namespace MoonSharp.Interpreter.CoreLib
             }
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue rename(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             string fileNameOld = args.AsType(0, "rename", DataType.String).String;
@@ -121,13 +121,13 @@ namespace MoonSharp.Interpreter.CoreLib
             }
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue setlocale(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return DynValue.NewString("n/a");
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue tmpname(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return DynValue.NewString(Script.GlobalOptions.Platform.IO_OS_GetTempFilename());

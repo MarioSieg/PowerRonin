@@ -16,7 +16,7 @@
 #pragma warning disable 1591
 
 
-namespace MoonSharp.Interpreter.CoreLib.StringLib
+namespace Dreamcast.Lua.Interpreter.CoreLib.StringLib
 {
     internal class StringRange
     {

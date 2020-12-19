@@ -13,12 +13,12 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
-    ///     Enumerations of the possible strategies to marshal CLR objects to MoonSharp userdata and functions
+    ///     Enumerations of the possible strategies to marshal CLR objects to Dreamcast.Lua userdata and functions
     ///     when using automatic descriptors.
-    ///     Note that these are "hints" and MoonSharp is free to ignore the access mode specified (if different from
+    ///     Note that these are "hints" and Dreamcast.Lua is free to ignore the access mode specified (if different from
     ///     HideMembers) and downgrade the access mode to "Reflection".
     ///     This particularly happens when running on AOT platforms like iOS.
     ///     See also : <see cref="CallbackFunction" /> and <see cref="UserData" /> .
@@ -61,7 +61,7 @@ namespace MoonSharp.Interpreter
         /// <summary>
         ///     No reflection is allowed, nor code generation. This is used as a safeguard when registering types which should not
         ///     use a standard reflection based descriptor - for example for types implementing
-        ///     <see cref="MoonSharp.Interpreter.Interop.IUserDataType" />
+        ///     <see cref="Dreamcast.Lua.Interpreter.Interop.IUserDataType" />
         /// </summary>
         NoReflectionAllowed,
 

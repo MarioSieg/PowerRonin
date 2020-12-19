@@ -16,11 +16,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using MoonSharp.Interpreter.DataStructs;
-using MoonSharp.Interpreter.Debugging;
-using MoonSharp.Interpreter.Diagnostics;
+using Dreamcast.Lua.Interpreter.DataStructs;
+using Dreamcast.Lua.Interpreter.Debugging;
+using Dreamcast.Lua.Interpreter.Diagnostics;
 
-namespace MoonSharp.Interpreter.Execution.VM
+namespace Dreamcast.Lua.Interpreter.Execution.VM
 {
     internal sealed partial class Processor
     {
@@ -154,7 +154,7 @@ namespace MoonSharp.Interpreter.Execution.VM
 
             if (m_OwningThreadID >= 0 && m_OwningThreadID != threadID && m_Script.Options.CheckThreadAccess)
             {
-                string msg = string.Format("Cannot enter the same MoonSharp processor from two different threads : {0} and {1}", m_OwningThreadID, threadID);
+                string msg = string.Format("Cannot enter the same Dreamcast.Lua processor from two different threads : {0} and {1}", m_OwningThreadID, threadID);
                 throw new InvalidOperationException(msg);
             }
 

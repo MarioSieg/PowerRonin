@@ -13,10 +13,10 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
-    ///     Constants of well known "symbols" in the MoonSharp grammar
+    ///     Constants of well known "symbols" in the Dreamcast.Lua grammar
     /// </summary>
     public static class WellKnownSymbols
     {

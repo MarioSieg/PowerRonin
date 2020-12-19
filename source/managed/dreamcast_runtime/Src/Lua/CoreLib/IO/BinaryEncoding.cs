@@ -15,7 +15,7 @@
 
 using System.Text;
 
-namespace MoonSharp.Interpreter.CoreLib.IO
+namespace Dreamcast.Lua.Interpreter.CoreLib.IO
 {
     internal class BinaryEncoding : Encoding
     {

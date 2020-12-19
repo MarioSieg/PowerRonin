@@ -16,7 +16,7 @@
 using System;
 using System.IO;
 
-namespace MoonSharp.Interpreter.IO
+namespace Dreamcast.Lua.Interpreter.IO
 {
     /// <summary>
     ///     An adapter over Stream which bypasses the Dispose and Close methods.

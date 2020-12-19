@@ -15,7 +15,7 @@
 
 using System;
 
-namespace MoonSharp.Interpreter.Execution.VM
+namespace Dreamcast.Lua.Interpreter.Execution.VM
 {
     [Flags]
     internal enum CallStackItemFlags

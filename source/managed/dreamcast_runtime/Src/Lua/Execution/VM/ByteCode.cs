@@ -20,9 +20,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using MoonSharp.Interpreter.Debugging;
+using Dreamcast.Lua.Interpreter.Debugging;
 
-namespace MoonSharp.Interpreter.Execution.VM
+namespace Dreamcast.Lua.Interpreter.Execution.VM
 {
     internal class ByteCode : RefIdObject
     {

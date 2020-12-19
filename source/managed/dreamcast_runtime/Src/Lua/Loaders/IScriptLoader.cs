@@ -15,7 +15,7 @@
 
 using System;
 
-namespace MoonSharp.Interpreter.Loaders
+namespace Dreamcast.Lua.Interpreter.Loaders
 {
     /// <summary>
     ///     Class dictating how requests to read scripts from files are handled.

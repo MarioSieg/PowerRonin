@@ -13,10 +13,10 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-using MoonSharp.Interpreter.Interop;
-using MoonSharp.Interpreter.Platforms;
+using Dreamcast.Lua.Interpreter.Interop;
+using Dreamcast.Lua.Interpreter.Platforms;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     Class containing script global options, that is options which cannot be customized per-script.

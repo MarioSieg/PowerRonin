@@ -17,14 +17,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using MoonSharp.Interpreter.Compatibility;
-using MoonSharp.Interpreter.Interop.Converters;
+using Dreamcast.Lua.Interpreter.Compatibility;
+using Dreamcast.Lua.Interpreter.Interop.Converters;
 
-namespace MoonSharp.Interpreter.Interop
+namespace Dreamcast.Lua.Interpreter.Interop
 {
     /// <summary>
     ///     Utility class which may be used to set properties on an object of type T, from values contained in a Lua table.
-    ///     Properties must be decorated with the <see cref="MoonSharpPropertyAttribute" />.
+    ///     Properties must be decorated with the <see cref="Dreamcast.LuaPropertyAttribute" />.
     ///     This is a generic version of <see cref="PropertyTableAssigner" />.
     /// </summary>
     /// <typeparam name="T">The type of the object.</typeparam>
@@ -113,7 +113,7 @@ namespace MoonSharp.Interpreter.Interop
 
     /// <summary>
     ///     Utility class which may be used to set properties on an object from values contained in a Lua table.
-    ///     Properties must be decorated with the <see cref="MoonSharpPropertyAttribute" />.
+    ///     Properties must be decorated with the <see cref="Dreamcast.LuaPropertyAttribute" />.
     ///     See <see cref="PropertyTableAssigner{T}" /> for a generic compile time type-safe version.
     /// </summary>
     public class PropertyTableAssigner : IPropertyTableAssigner
@@ -143,12 +143,12 @@ namespace MoonSharp.Interpreter.Interop
             foreach (string property in expectedMissingProperties) m_PropertyMap.Add(property, null);
 
             foreach (PropertyInfo pi in Framework.Do.GetProperties(m_Type))
-            foreach (MoonSharpPropertyAttribute attr in pi.GetCustomAttributes(true).OfType<MoonSharpPropertyAttribute>())
+            foreach (Dreamcast.LuaPropertyAttribute attr in pi.GetCustomAttributes(true).OfType<Dreamcast.LuaPropertyAttribute>())
             {
                 string name = attr.Name ?? pi.Name;
 
                 if (m_PropertyMap.ContainsKey(name))
-                    throw new ArgumentException(string.Format("Type {0} has two definitions for MoonSharp property {1}", m_Type.FullName, name));
+                    throw new ArgumentException(string.Format("Type {0} has two definitions for Dreamcast.Lua property {1}", m_Type.FullName, name));
                 m_PropertyMap.Add(name, pi);
             }
         }

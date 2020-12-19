@@ -13,7 +13,7 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-namespace MoonSharp.Interpreter.Platforms
+namespace Dreamcast.Lua.Interpreter.Platforms
 {
     /// <summary>
     ///     Enumeration of standard file handles

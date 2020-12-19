@@ -16,11 +16,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MoonSharp.Interpreter.DataStructs;
-using MoonSharp.Interpreter.Debugging;
-using MoonSharp.Interpreter.Interop;
+using Dreamcast.Lua.Interpreter.DataStructs;
+using Dreamcast.Lua.Interpreter.Debugging;
+using Dreamcast.Lua.Interpreter.Interop;
 
-namespace MoonSharp.Interpreter.Execution.VM
+namespace Dreamcast.Lua.Interpreter.Execution.VM
 {
     internal sealed partial class Processor
     {
@@ -474,7 +474,7 @@ namespace MoonSharp.Interpreter.Execution.VM
             DynValue s = v.Tuple.Length >= 2 ? v.Tuple[1] : DynValue.Nil;
             DynValue var = v.Tuple.Length >= 3 ? v.Tuple[2] : DynValue.Nil;
 
-            // MoonSharp additions - given f, s, var
+            // Dreamcast.Lua additions - given f, s, var
             // 1) if f is not a function and has a __iterator metamethod, call __iterator to get the triplet
             // 2) if f is a table with no __call metamethod, use a default table iterator
 

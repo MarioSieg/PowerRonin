@@ -13,9 +13,9 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-using MoonSharp.Interpreter.Tree.Statements;
+using Dreamcast.Lua.Interpreter.Tree.Statements;
 
-namespace MoonSharp.Interpreter.Execution.Scopes
+namespace Dreamcast.Lua.Interpreter.Execution.Scopes
 {
     internal class BuildTimeScopeFrame
     {

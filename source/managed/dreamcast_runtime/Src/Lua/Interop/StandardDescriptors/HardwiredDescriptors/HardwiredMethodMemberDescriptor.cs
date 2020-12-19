@@ -14,9 +14,9 @@
 // *******************************************************************************
 
 using System.Collections.Generic;
-using MoonSharp.Interpreter.Interop.BasicDescriptors;
+using Dreamcast.Lua.Interpreter.Interop.BasicDescriptors;
 
-namespace MoonSharp.Interpreter.Interop.StandardDescriptors.HardwiredDescriptors
+namespace Dreamcast.Lua.Interpreter.Interop.StandardDescriptors.HardwiredDescriptors
 {
     public abstract class HardwiredMethodMemberDescriptor : FunctionMemberDescriptorBase
     {

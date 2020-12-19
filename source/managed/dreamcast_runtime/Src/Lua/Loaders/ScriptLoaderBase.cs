@@ -16,7 +16,7 @@
 using System;
 using System.Linq;
 
-namespace MoonSharp.Interpreter.Loaders
+namespace Dreamcast.Lua.Interpreter.Loaders
 {
     /// <summary>
     ///     A base implementation of IScriptLoader, offering resolution of module names.

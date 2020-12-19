@@ -17,18 +17,18 @@
 
 using System;
 using System.Text;
-using MoonSharp.Interpreter.Debugging;
-using MoonSharp.Interpreter.REPL;
+using Dreamcast.Lua.Interpreter.Debugging;
+using Dreamcast.Lua.Interpreter.REPL;
 
-namespace MoonSharp.Interpreter.CoreLib
+namespace Dreamcast.Lua.Interpreter.CoreLib
 {
     /// <summary>
     ///     Class implementing debug Lua functions. Support for the debug module is partial.
     /// </summary>
-    [MoonSharpModule(Namespace = "debug")]
+    [Dreamcast.LuaModule(Namespace = "debug")]
     public class DebugModule
     {
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue debug(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             Script script = executionContext.GetScript();
@@ -60,7 +60,7 @@ namespace MoonSharp.Interpreter.CoreLib
             }
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue getuservalue(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v = args[0];
@@ -71,7 +71,7 @@ namespace MoonSharp.Interpreter.CoreLib
             return v.UserData.UserValue ?? DynValue.Nil;
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue setuservalue(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v = args.AsType(0, "setuservalue", DataType.UserData);
@@ -80,13 +80,13 @@ namespace MoonSharp.Interpreter.CoreLib
             return v.UserData.UserValue = t;
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue getregistry(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return DynValue.NewTable(executionContext.GetScript().Registry);
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue getmetatable(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v = args[0];
@@ -99,7 +99,7 @@ namespace MoonSharp.Interpreter.CoreLib
             return DynValue.Nil;
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue setmetatable(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v = args[0];
@@ -117,7 +117,7 @@ namespace MoonSharp.Interpreter.CoreLib
             return v;
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue getupvalue(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             var index = (int) args.AsType(1, "getupvalue", DataType.Number).Number - 1;
@@ -138,7 +138,7 @@ namespace MoonSharp.Interpreter.CoreLib
         }
 
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue upvalueid(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             var index = (int) args.AsType(1, "getupvalue", DataType.Number).Number - 1;
@@ -157,7 +157,7 @@ namespace MoonSharp.Interpreter.CoreLib
         }
 
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue setupvalue(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             var index = (int) args.AsType(1, "setupvalue", DataType.Number).Number - 1;
@@ -178,7 +178,7 @@ namespace MoonSharp.Interpreter.CoreLib
         }
 
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue upvaluejoin(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue f1 = args.AsType(0, "upvaluejoin", DataType.Function);
@@ -201,7 +201,7 @@ namespace MoonSharp.Interpreter.CoreLib
         }
 
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue traceback(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             StringBuilder sb = new();
@@ -253,7 +253,7 @@ namespace MoonSharp.Interpreter.CoreLib
             return DynValue.NewString(sb);
         }
 
-        //[MoonSharpModuleMethod]
+        //[Dreamcast.LuaModuleMethod]
         //public static DynValue getlocal(ScriptExecutionContext executionContext, CallbackArguments args)
         //{
         //	Coroutine c;
@@ -302,7 +302,7 @@ namespace MoonSharp.Interpreter.CoreLib
         //}
 
 
-        //[MoonSharpMethod]
+        //[Dreamcast.LuaMethod]
         //public static DynValue getinfo(ScriptExecutionContext executionContext, CallbackArguments args)
         //{
         //	Coroutine cor = executionContext.GetCallingCoroutine();

@@ -14,9 +14,9 @@
 // *******************************************************************************
 
 using System;
-using MoonSharp.Interpreter.Debugging;
+using Dreamcast.Lua.Interpreter.Debugging;
 
-namespace MoonSharp.Interpreter.Tree
+namespace Dreamcast.Lua.Interpreter.Tree
 {
     internal class Token
     {

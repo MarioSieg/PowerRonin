@@ -13,7 +13,7 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-namespace MoonSharp.Interpreter.Serialization.Json
+namespace Dreamcast.Lua.Interpreter.Serialization.Json
 {
     /// <summary>
     ///     UserData representing a null value in a table converted from Json
@@ -25,7 +25,7 @@ namespace MoonSharp.Interpreter.Serialization.Json
             return true;
         }
 
-        [MoonSharpHidden]
+        [Dreamcast.LuaHidden]
         public static bool IsJsonNull(DynValue v)
         {
             return v.Type == DataType.UserData &&
@@ -33,7 +33,7 @@ namespace MoonSharp.Interpreter.Serialization.Json
                    v.UserData.Descriptor.Type == typeof(JsonNull);
         }
 
-        [MoonSharpHidden]
+        [Dreamcast.LuaHidden]
         public static DynValue Create()
         {
             return UserData.CreateStatic<JsonNull>();

@@ -15,7 +15,7 @@
 
 using System;
 
-namespace MoonSharp.Interpreter.Interop.RegistrationPolicies
+namespace Dreamcast.Lua.Interpreter.Interop.RegistrationPolicies
 {
     /// <summary>
     ///     Similar to <see cref="DefaultRegistrationPolicy" />, but with automatic type registration is disabled.

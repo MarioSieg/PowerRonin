@@ -16,11 +16,11 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using MoonSharp.Interpreter.Compatibility;
-using MoonSharp.Interpreter.CoreLib;
-using MoonSharp.Interpreter.Platforms;
+using Dreamcast.Lua.Interpreter.Compatibility;
+using Dreamcast.Lua.Interpreter.CoreLib;
+using Dreamcast.Lua.Interpreter.Platforms;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     Class managing modules (mostly as extension methods)
@@ -71,7 +71,7 @@ namespace MoonSharp.Interpreter
             Table m = moonsharp_table.Table;
 
             table.Set("_G", DynValue.NewTable(table));
-            table.Set("_VERSION", DynValue.NewString(string.Format("MoonSharp {0}", Script.VERSION)));
+            table.Set("_VERSION", DynValue.NewString(string.Format("Dreamcast.Lua {0}", Script.VERSION)));
             table.Set("_MOONSHARP", moonsharp_table);
 
             m.Set("version", DynValue.NewString(Script.VERSION));
@@ -100,9 +100,9 @@ namespace MoonSharp.Interpreter
             Table table = CreateModuleNamespace(gtable, t);
 
             foreach (MethodInfo mi in Framework.Do.GetMethods(t).Where(__mi => __mi.IsStatic))
-                if (mi.GetCustomAttributes(typeof(MoonSharpModuleMethodAttribute), false).ToArray().Length > 0)
+                if (mi.GetCustomAttributes(typeof(Dreamcast.LuaModuleMethodAttribute), false).ToArray().Length > 0)
                 {
-                    MoonSharpModuleMethodAttribute attr = (MoonSharpModuleMethodAttribute) mi.GetCustomAttributes(typeof(MoonSharpModuleMethodAttribute), false).First();
+                    Dreamcast.LuaModuleMethodAttribute attr = (Dreamcast.LuaModuleMethodAttribute) mi.GetCustomAttributes(typeof(Dreamcast.LuaModuleMethodAttribute), false).First();
 
                     if (!CallbackFunction.CheckCallbackSignature(mi, true))
                         throw new ArgumentException(string.Format("Method {0} does not have the right signature.", mi.Name));
@@ -121,23 +121,23 @@ namespace MoonSharp.Interpreter
 
                     table.Set(name, DynValue.NewCallback(func, name));
                 }
-                else if (mi.Name == "MoonSharpInit")
+                else if (mi.Name == "Dreamcast.LuaInit")
                 {
                     object[] args = new object[2] {gtable, table};
                     mi.Invoke(null, args);
                 }
 
-            foreach (FieldInfo fi in Framework.Do.GetFields(t).Where(_mi => _mi.IsStatic && _mi.GetCustomAttributes(typeof(MoonSharpModuleMethodAttribute), false).ToArray().Length > 0))
+            foreach (FieldInfo fi in Framework.Do.GetFields(t).Where(_mi => _mi.IsStatic && _mi.GetCustomAttributes(typeof(Dreamcast.LuaModuleMethodAttribute), false).ToArray().Length > 0))
             {
-                MoonSharpModuleMethodAttribute attr = (MoonSharpModuleMethodAttribute) fi.GetCustomAttributes(typeof(MoonSharpModuleMethodAttribute), false).First();
+                Dreamcast.LuaModuleMethodAttribute attr = (Dreamcast.LuaModuleMethodAttribute) fi.GetCustomAttributes(typeof(Dreamcast.LuaModuleMethodAttribute), false).First();
                 string name = !string.IsNullOrEmpty(attr.Name) ? attr.Name : fi.Name;
 
                 RegisterScriptField(fi, null, table, t, name);
             }
 
-            foreach (FieldInfo fi in Framework.Do.GetFields(t).Where(_mi => _mi.IsStatic && _mi.GetCustomAttributes(typeof(MoonSharpModuleConstantAttribute), false).ToArray().Length > 0))
+            foreach (FieldInfo fi in Framework.Do.GetFields(t).Where(_mi => _mi.IsStatic && _mi.GetCustomAttributes(typeof(Dreamcast.LuaModuleConstantAttribute), false).ToArray().Length > 0))
             {
-                MoonSharpModuleConstantAttribute attr = (MoonSharpModuleConstantAttribute) fi.GetCustomAttributes(typeof(MoonSharpModuleConstantAttribute), false).First();
+                Dreamcast.LuaModuleConstantAttribute attr = (Dreamcast.LuaModuleConstantAttribute) fi.GetCustomAttributes(typeof(Dreamcast.LuaModuleConstantAttribute), false).First();
                 string name = !string.IsNullOrEmpty(attr.Name) ? attr.Name : fi.Name;
 
                 RegisterScriptFieldAsConst(fi, null, table, t, name);
@@ -178,7 +178,7 @@ namespace MoonSharp.Interpreter
 
         private static Table CreateModuleNamespace(Table gtable, Type t)
         {
-            MoonSharpModuleAttribute attr = (MoonSharpModuleAttribute) Framework.Do.GetCustomAttributes(t, typeof(MoonSharpModuleAttribute), false).First();
+            Dreamcast.LuaModuleAttribute attr = (Dreamcast.LuaModuleAttribute) Framework.Do.GetCustomAttributes(t, typeof(Dreamcast.LuaModuleAttribute), false).First();
 
             if (string.IsNullOrEmpty(attr.Namespace))
             {

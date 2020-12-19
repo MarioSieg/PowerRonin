@@ -18,7 +18,7 @@
 using System;
 using System.Linq;
 
-namespace MoonSharp.Interpreter.Compatibility.Frameworks
+namespace Dreamcast.Lua.Interpreter.Compatibility.Frameworks
 {
     internal class FrameworkCurrent : FrameworkClrBase
     {

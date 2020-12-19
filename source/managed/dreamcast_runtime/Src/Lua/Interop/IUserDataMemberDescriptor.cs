@@ -15,7 +15,7 @@
 
 using System;
 
-namespace MoonSharp.Interpreter.Interop
+namespace Dreamcast.Lua.Interpreter.Interop
 {
     /// <summary>
     ///     Interface used by standard descriptors to access members of a given type from scripts.

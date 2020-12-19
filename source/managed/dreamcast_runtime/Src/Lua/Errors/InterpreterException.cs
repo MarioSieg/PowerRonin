@@ -15,12 +15,12 @@
 
 using System;
 using System.Collections.Generic;
-using MoonSharp.Interpreter.Debugging;
+using Dreamcast.Lua.Interpreter.Debugging;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
-    ///     Base type of all exceptions thrown in MoonSharp
+    ///     Base type of all exceptions thrown in Dreamcast.Lua
     /// </summary>
 #if !(PCL || ((!UNITY_EDITOR) && (ENABLE_DOTNET)) || NETFX_CORE)
     [Serializable]

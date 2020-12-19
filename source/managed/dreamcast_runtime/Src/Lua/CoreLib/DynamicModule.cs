@@ -16,20 +16,20 @@
 #pragma warning disable 1591
 
 
-namespace MoonSharp.Interpreter.CoreLib
+namespace Dreamcast.Lua.Interpreter.CoreLib
 {
     /// <summary>
-    ///     Class implementing dynamic expression evaluations at runtime (a MoonSharp addition).
+    ///     Class implementing dynamic expression evaluations at runtime (a Dreamcast.Lua addition).
     /// </summary>
-    [MoonSharpModule(Namespace = "dynamic")]
+    [Dreamcast.LuaModule(Namespace = "dynamic")]
     public class DynamicModule
     {
-        public static void MoonSharpInit(Table globalTable, Table stringTable)
+        public static void Dreamcast.LuaInit(Table globalTable, Table stringTable)
         {
             UserData.RegisterType<DynamicExprWrapper>(InteropAccessMode.HideMembers);
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue eval(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             try
@@ -52,7 +52,7 @@ namespace MoonSharp.Interpreter.CoreLib
             }
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue prepare(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             try

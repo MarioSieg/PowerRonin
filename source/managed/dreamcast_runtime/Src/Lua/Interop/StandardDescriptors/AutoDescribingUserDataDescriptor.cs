@@ -14,10 +14,10 @@
 // *******************************************************************************
 
 using System;
-using MoonSharp.Interpreter.Compatibility;
-using MoonSharp.Interpreter.Interop;
+using Dreamcast.Lua.Interpreter.Compatibility;
+using Dreamcast.Lua.Interpreter.Interop;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     Descriptor which acts as a non-containing adapter from IUserDataType to IUserDataDescriptor

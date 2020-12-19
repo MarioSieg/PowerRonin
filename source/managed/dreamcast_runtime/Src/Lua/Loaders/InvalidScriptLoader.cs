@@ -15,7 +15,7 @@
 
 using System;
 
-namespace MoonSharp.Interpreter.Loaders
+namespace Dreamcast.Lua.Interpreter.Loaders
 {
     /// <summary>
     ///     A script loader used for platforms we cannot initialize in any better way..

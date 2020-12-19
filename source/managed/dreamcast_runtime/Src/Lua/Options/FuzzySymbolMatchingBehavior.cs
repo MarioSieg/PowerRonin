@@ -15,7 +15,7 @@
 
 using System;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     A flag that controls if/how symbols (method, property, userdata) are fuzzily matched when they do not exist. Flags

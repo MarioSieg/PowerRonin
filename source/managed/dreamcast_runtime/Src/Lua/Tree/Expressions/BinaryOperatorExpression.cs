@@ -14,10 +14,10 @@
 // *******************************************************************************
 
 using System;
-using MoonSharp.Interpreter.Execution;
-using MoonSharp.Interpreter.Execution.VM;
+using Dreamcast.Lua.Interpreter.Execution;
+using Dreamcast.Lua.Interpreter.Execution.VM;
 
-namespace MoonSharp.Interpreter.Tree.Expressions
+namespace Dreamcast.Lua.Interpreter.Tree.Expressions
 {
     /// <summary>
     /// </summary>

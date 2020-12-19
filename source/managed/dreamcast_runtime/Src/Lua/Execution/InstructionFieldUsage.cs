@@ -14,9 +14,9 @@
 // *******************************************************************************
 
 using System;
-using MoonSharp.Interpreter.Execution.VM;
+using Dreamcast.Lua.Interpreter.Execution.VM;
 
-namespace MoonSharp.Interpreter.Execution
+namespace Dreamcast.Lua.Interpreter.Execution
 {
     [Flags]
     internal enum InstructionFieldUsage

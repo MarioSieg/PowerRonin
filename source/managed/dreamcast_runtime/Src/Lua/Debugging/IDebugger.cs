@@ -15,7 +15,7 @@
 
 using System.Collections.Generic;
 
-namespace MoonSharp.Interpreter.Debugging
+namespace Dreamcast.Lua.Interpreter.Debugging
 {
     /// <summary>
     ///     Interface for debuggers to implement, in order to provide debugging facilities to Scripts.

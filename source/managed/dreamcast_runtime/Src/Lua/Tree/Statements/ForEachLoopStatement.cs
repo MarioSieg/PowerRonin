@@ -15,12 +15,12 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using MoonSharp.Interpreter.Debugging;
-using MoonSharp.Interpreter.Execution;
-using MoonSharp.Interpreter.Execution.VM;
-using MoonSharp.Interpreter.Tree.Expressions;
+using Dreamcast.Lua.Interpreter.Debugging;
+using Dreamcast.Lua.Interpreter.Execution;
+using Dreamcast.Lua.Interpreter.Execution.VM;
+using Dreamcast.Lua.Interpreter.Tree.Expressions;
 
-namespace MoonSharp.Interpreter.Tree.Statements
+namespace Dreamcast.Lua.Interpreter.Tree.Statements
 {
     internal class ForEachLoopStatement : Statement
     {

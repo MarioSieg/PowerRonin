@@ -19,12 +19,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MoonSharp.Interpreter.CoreLib
+namespace Dreamcast.Lua.Interpreter.CoreLib
 {
     /// <summary>
     ///     Class implementing time related Lua functions from the 'os' module.
     /// </summary>
-    [MoonSharpModule(Namespace = "os")]
+    [Dreamcast.LuaModule(Namespace = "os")]
     public class OsTimeModule
     {
         private static readonly DateTime Time0 = DateTime.UtcNow;
@@ -46,13 +46,13 @@ namespace MoonSharp.Interpreter.CoreLib
             return Epoch + ts;
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue clock(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return GetUnixTime(DateTime.UtcNow, Time0);
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue difftime(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue t2 = args.AsType(0, "difftime", DataType.Number);
@@ -64,7 +64,7 @@ namespace MoonSharp.Interpreter.CoreLib
             return DynValue.NewNumber(t2.Number - t1.Number);
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue time(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             var date = DateTime.UtcNow;
@@ -112,7 +112,7 @@ namespace MoonSharp.Interpreter.CoreLib
             return null;
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue date(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             var reference = DateTime.UtcNow;

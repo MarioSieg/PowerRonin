@@ -14,9 +14,9 @@
 // *******************************************************************************
 
 using System.Text;
-using MoonSharp.Interpreter.Tree;
+using Dreamcast.Lua.Interpreter.Tree;
 
-namespace MoonSharp.Interpreter.Serialization.Json
+namespace Dreamcast.Lua.Interpreter.Serialization.Json
 {
     /// <summary>
     ///     Class performing conversions between Tables and Json.

@@ -15,26 +15,26 @@
 
 using System;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     Marks a property as a configruation property
     /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
-    public sealed class MoonSharpPropertyAttribute : Attribute
+    public sealed class Dreamcast.LuaPropertyAttribute : Attribute
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="MoonSharpPropertyAttribute" /> class.
+        ///     Initializes a new instance of the <see cref="Dreamcast.LuaPropertyAttribute" /> class.
         /// </summary>
-        public MoonSharpPropertyAttribute()
+        public Dreamcast.LuaPropertyAttribute()
         {
         }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="MoonSharpPropertyAttribute" /> class.
+        ///     Initializes a new instance of the <see cref="Dreamcast.LuaPropertyAttribute" /> class.
         /// </summary>
         /// <param name="name">The name for this property</param>
-        public MoonSharpPropertyAttribute(string name)
+        public Dreamcast.LuaPropertyAttribute(string name)
         {
             Name = name;
         }

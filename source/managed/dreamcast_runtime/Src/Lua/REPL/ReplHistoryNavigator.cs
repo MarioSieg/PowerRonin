@@ -13,7 +13,7 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-namespace MoonSharp.Interpreter.REPL
+namespace Dreamcast.Lua.Interpreter.REPL
 {
     /// <summary>
     ///     An implementation of <see cref="ReplInterpreter" /> which supports a very basic history of recent input lines.

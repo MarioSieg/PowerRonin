@@ -15,9 +15,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using MoonSharp.Interpreter.DataStructs;
+using Dreamcast.Lua.Interpreter.DataStructs;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     A class representing a Lua table.
@@ -61,7 +61,7 @@ namespace MoonSharp.Interpreter
         /// <summary>
         ///     Gets or sets the
         ///     <see cref="System.Object" /> with the specified key(s).
-        ///     This will marshall CLR and MoonSharp objects in the best possible way.
+        ///     This will marshall CLR and Dreamcast.Lua objects in the best possible way.
         ///     Multiple keys can be used to access subtables.
         /// </summary>
         /// <value>
@@ -76,7 +76,7 @@ namespace MoonSharp.Interpreter
 
         /// <summary>
         ///     Gets or sets the <see cref="System.Object" /> with the specified key(s).
-        ///     This will marshall CLR and MoonSharp objects in the best possible way.
+        ///     This will marshall CLR and Dreamcast.Lua objects in the best possible way.
         /// </summary>
         /// <value>
         ///     The <see cref="System.Object" />.
@@ -469,7 +469,7 @@ namespace MoonSharp.Interpreter
         /// <summary>
         ///     Gets the value associated with the specified keys (expressed as an
         ///     array of <see cref="System.Object" />).
-        ///     This will marshall CLR and MoonSharp objects in the best possible way.
+        ///     This will marshall CLR and Dreamcast.Lua objects in the best possible way.
         ///     Multiple keys can be used to access subtables.
         /// </summary>
         /// <param name="keys">The keys to access the table and subtables</param>
@@ -550,7 +550,7 @@ namespace MoonSharp.Interpreter
         /// <summary>
         ///     Gets the value associated with the specified keys (expressed as an
         ///     array of <see cref="System.Object" />).
-        ///     This will marshall CLR and MoonSharp objects in the best possible way.
+        ///     This will marshall CLR and Dreamcast.Lua objects in the best possible way.
         ///     Multiple keys can be used to access subtables.
         /// </summary>
         /// <param name="keys">The keys to access the table and subtables</param>

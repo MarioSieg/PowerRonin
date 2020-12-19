@@ -24,7 +24,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace MoonSharp.Interpreter.Compatibility.Frameworks
+namespace Dreamcast.Lua.Interpreter.Compatibility.Frameworks
 {
     internal abstract class FrameworkReflectionBase : FrameworkBase
     {

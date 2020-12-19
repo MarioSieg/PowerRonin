@@ -17,10 +17,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using MoonSharp.Interpreter.Compatibility;
-using MoonSharp.Interpreter.Interop.BasicDescriptors;
+using Dreamcast.Lua.Interpreter.Compatibility;
+using Dreamcast.Lua.Interpreter.Interop.BasicDescriptors;
 
-namespace MoonSharp.Interpreter.Interop
+namespace Dreamcast.Lua.Interpreter.Interop
 {
     /// <summary>
     ///     Standard descriptor for userdata types.
@@ -83,8 +83,8 @@ namespace MoonSharp.Interpreter.Interop
         private void FillMemberList()
         {
             HashSet<string> membersToIgnore = new(
-                Framework.Do.GetCustomAttributes(Type, typeof(MoonSharpHideMemberAttribute), true)
-                    .OfType<MoonSharpHideMemberAttribute>()
+                Framework.Do.GetCustomAttributes(Type, typeof(Dreamcast.LuaHideMemberAttribute), true)
+                    .OfType<Dreamcast.LuaHideMemberAttribute>()
                     .Select(a => a.MemberName)
             );
 
@@ -166,7 +166,7 @@ namespace MoonSharp.Interpreter.Interop
                     continue;
 
                 if (!Framework.Do.IsGenericTypeDefinition(nestedType))
-                    if (Framework.Do.IsNestedPublic(nestedType) || Framework.Do.GetCustomAttributes(nestedType, typeof(MoonSharpUserDataAttribute), true).Length > 0)
+                    if (Framework.Do.IsNestedPublic(nestedType) || Framework.Do.GetCustomAttributes(nestedType, typeof(Dreamcast.LuaUserDataAttribute), true).Length > 0)
                     {
                         var descr = UserData.RegisterType(nestedType, AccessMode);
 

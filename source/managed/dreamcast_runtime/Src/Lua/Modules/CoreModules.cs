@@ -15,7 +15,7 @@
 
 using System;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     Enumeration (combinable as flags) of all the standard library modules
@@ -105,12 +105,12 @@ namespace MoonSharp.Interpreter
         Debug = 0x4000,
 
         /// <summary>
-        ///     The "dynamic" package (introduced by MoonSharp).
+        ///     The "dynamic" package (introduced by Dreamcast.Lua).
         /// </summary>
         Dynamic = 0x8000,
 
         /// <summary>
-        ///     The "json" package (introduced by MoonSharp).
+        ///     The "json" package (introduced by Dreamcast.Lua).
         /// </summary>
         Json = 0x10000,
 

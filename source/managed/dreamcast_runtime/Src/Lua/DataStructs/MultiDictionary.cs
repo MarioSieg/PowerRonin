@@ -15,7 +15,7 @@
 
 using System.Collections.Generic;
 
-namespace MoonSharp.Interpreter.DataStructs
+namespace Dreamcast.Lua.Interpreter.DataStructs
 {
     /// <summary>
     ///     A Dictionary where multiple values can be associated to the same key

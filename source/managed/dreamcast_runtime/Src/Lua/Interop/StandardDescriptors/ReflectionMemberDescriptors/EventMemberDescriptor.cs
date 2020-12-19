@@ -17,12 +17,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using MoonSharp.Interpreter.Compatibility;
-using MoonSharp.Interpreter.DataStructs;
-using MoonSharp.Interpreter.Interop.BasicDescriptors;
-using MoonSharp.Interpreter.Interop.StandardDescriptors;
+using Dreamcast.Lua.Interpreter.Compatibility;
+using Dreamcast.Lua.Interpreter.DataStructs;
+using Dreamcast.Lua.Interpreter.Interop.BasicDescriptors;
+using Dreamcast.Lua.Interpreter.Interop.StandardDescriptors;
 
-namespace MoonSharp.Interpreter.Interop
+namespace Dreamcast.Lua.Interpreter.Interop
 {
     /// <summary>
     ///     Class providing easier marshalling of CLR events. Handling is limited to a narrow range of handler signatures,

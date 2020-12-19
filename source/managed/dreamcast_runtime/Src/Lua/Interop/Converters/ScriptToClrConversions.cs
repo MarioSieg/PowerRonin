@@ -14,9 +14,9 @@
 // *******************************************************************************
 
 using System;
-using MoonSharp.Interpreter.Compatibility;
+using Dreamcast.Lua.Interpreter.Compatibility;
 
-namespace MoonSharp.Interpreter.Interop.Converters
+namespace Dreamcast.Lua.Interpreter.Interop.Converters
 {
     internal static class ScriptToClrConversions
     {

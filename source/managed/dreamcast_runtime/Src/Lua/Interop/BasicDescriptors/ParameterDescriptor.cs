@@ -16,9 +16,9 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using MoonSharp.Interpreter.Compatibility;
+using Dreamcast.Lua.Interpreter.Compatibility;
 
-namespace MoonSharp.Interpreter.Interop.BasicDescriptors
+namespace Dreamcast.Lua.Interpreter.Interop.BasicDescriptors
 {
     /// <summary>
     ///     Descriptor of parameters used in <see cref="IOverloadableMemberDescriptor" /> implementations.

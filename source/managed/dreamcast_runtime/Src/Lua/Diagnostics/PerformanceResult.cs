@@ -15,7 +15,7 @@
 
 using System;
 
-namespace MoonSharp.Interpreter.Diagnostics
+namespace Dreamcast.Lua.Interpreter.Diagnostics
 {
     /// <summary>
     ///     The result of a performance counter

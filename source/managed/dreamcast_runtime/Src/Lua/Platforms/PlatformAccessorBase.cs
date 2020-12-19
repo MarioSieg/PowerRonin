@@ -17,7 +17,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace MoonSharp.Interpreter.Platforms
+namespace Dreamcast.Lua.Interpreter.Platforms
 {
     /// <summary>
     ///     An abstract class which offers basic services on top of IPlatformAccessor to provide easier implementation of

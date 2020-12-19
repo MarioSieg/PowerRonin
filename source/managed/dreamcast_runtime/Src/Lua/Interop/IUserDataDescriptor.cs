@@ -15,10 +15,10 @@
 
 using System;
 
-namespace MoonSharp.Interpreter.Interop
+namespace Dreamcast.Lua.Interpreter.Interop
 {
     /// <summary>
-    ///     Interface used by MoonSharp to access objects of a given type from scripts.
+    ///     Interface used by Dreamcast.Lua to access objects of a given type from scripts.
     /// </summary>
     public interface IUserDataDescriptor
     {

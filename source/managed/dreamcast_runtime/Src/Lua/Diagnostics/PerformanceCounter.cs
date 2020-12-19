@@ -13,7 +13,7 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-namespace MoonSharp.Interpreter.Diagnostics
+namespace Dreamcast.Lua.Interpreter.Diagnostics
 {
     /// <summary>
     ///     Enumeration of the possible performance counters

@@ -19,7 +19,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace MoonSharp.Interpreter.DataStructs
+namespace Dreamcast.Lua.Interpreter.DataStructs
 {
     /// <summary>
     ///     A preallocated, non-resizable, stack

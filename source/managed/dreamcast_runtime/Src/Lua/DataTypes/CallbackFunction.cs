@@ -16,9 +16,9 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using MoonSharp.Interpreter.Interop;
+using Dreamcast.Lua.Interpreter.Interop;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     This class wraps a CLR function

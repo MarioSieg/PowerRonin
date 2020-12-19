@@ -20,11 +20,11 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using MoonSharp.Interpreter.Compatibility;
-using MoonSharp.Interpreter.Interop.BasicDescriptors;
-using MoonSharp.Interpreter.Interop.RegistrationPolicies;
+using Dreamcast.Lua.Interpreter.Compatibility;
+using Dreamcast.Lua.Interpreter.Interop.BasicDescriptors;
+using Dreamcast.Lua.Interpreter.Interop.RegistrationPolicies;
 
-namespace MoonSharp.Interpreter.Interop.UserDataRegistries
+namespace Dreamcast.Lua.Interpreter.Interop.UserDataRegistries
 {
     /// <summary>
     ///     Registry of all type descriptors. Use UserData statics to access these.
@@ -96,7 +96,7 @@ namespace MoonSharp.Interpreter.Interop.UserDataRegistries
         internal static IRegistrationPolicy RegistrationPolicy { get; set; }
 
         /// <summary>
-        ///     Registers all types marked with a MoonSharpUserDataAttribute that ar contained in an assembly.
+        ///     Registers all types marked with a Dreamcast.LuaUserDataAttribute that ar contained in an assembly.
         /// </summary>
         /// <param name="asm">The assembly.</param>
         /// <param name="includeExtensionTypes">if set to <c>true</c> extension types are registered to the appropriate registry.</param>
@@ -123,13 +123,13 @@ namespace MoonSharp.Interpreter.Interop.UserDataRegistries
 
 
             var userDataTypes = from t in asm.SafeGetTypes()
-                let attributes = Framework.Do.GetCustomAttributes(t, typeof(MoonSharpUserDataAttribute), true)
+                let attributes = Framework.Do.GetCustomAttributes(t, typeof(Dreamcast.LuaUserDataAttribute), true)
                 where attributes != null && attributes.Length > 0
                 select new {Attributes = attributes, DataType = t};
 
             foreach (var userDataType in userDataTypes)
                 UserData.RegisterType(userDataType.DataType, userDataType.Attributes
-                    .OfType<MoonSharpUserDataAttribute>()
+                    .OfType<Dreamcast.LuaUserDataAttribute>()
                     .First()
                     .AccessMode);
         }
@@ -269,7 +269,7 @@ namespace MoonSharp.Interpreter.Interop.UserDataRegistries
         {
             if (accessMode == InteropAccessMode.Default)
             {
-                MoonSharpUserDataAttribute attr = Framework.Do.GetCustomAttributes(type, true).OfType<MoonSharpUserDataAttribute>()
+                Dreamcast.LuaUserDataAttribute attr = Framework.Do.GetCustomAttributes(type, true).OfType<Dreamcast.LuaUserDataAttribute>()
                     .SingleOrDefault();
 
                 if (attr != null)

@@ -15,7 +15,7 @@
 
 using System.Collections.Generic;
 
-namespace MoonSharp.Interpreter.Execution
+namespace Dreamcast.Lua.Interpreter.Execution
 {
     internal class RuntimeScopeFrame
     {

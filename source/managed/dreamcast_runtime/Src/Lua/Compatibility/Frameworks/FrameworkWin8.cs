@@ -20,7 +20,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace MoonSharp.Interpreter.Compatibility.Frameworks
+namespace Dreamcast.Lua.Interpreter.Compatibility.Frameworks
 {
 	class FrameworkCurrent : FrameworkReflectionBase
 	{

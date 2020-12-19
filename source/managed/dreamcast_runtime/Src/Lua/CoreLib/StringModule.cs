@@ -18,19 +18,19 @@
 using System;
 using System.IO;
 using System.Text;
-using MoonSharp.Interpreter.CoreLib.StringLib;
+using Dreamcast.Lua.Interpreter.CoreLib.StringLib;
 
-namespace MoonSharp.Interpreter.CoreLib
+namespace Dreamcast.Lua.Interpreter.CoreLib
 {
     /// <summary>
     ///     Class implementing string Lua functions
     /// </summary>
-    [MoonSharpModule(Namespace = "string")]
+    [Dreamcast.LuaModule(Namespace = "string")]
     public class StringModule
     {
-        public const string BASE64_DUMP_HEADER = "MoonSharp_dump_b64::";
+        public const string BASE64_DUMP_HEADER = "Dreamcast.Lua_dump_b64::";
 
-        public static void MoonSharpInit(Table globalTable, Table stringTable)
+        public static void Dreamcast.LuaInit(Table globalTable, Table stringTable)
         {
             Table stringMetatable = new(globalTable.OwnerScript);
             stringMetatable.Set("__index", DynValue.NewTable(stringTable));
@@ -38,7 +38,7 @@ namespace MoonSharp.Interpreter.CoreLib
         }
 
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue dump(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue fn = args.AsType(0, "dump", DataType.Function);
@@ -63,7 +63,7 @@ namespace MoonSharp.Interpreter.CoreLib
         }
 
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue @char(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             StringBuilder sb = new(args.Count);
@@ -94,7 +94,7 @@ namespace MoonSharp.Interpreter.CoreLib
         }
 
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue @byte(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue vs = args.AsType(0, "byte", DataType.String);
@@ -105,7 +105,7 @@ namespace MoonSharp.Interpreter.CoreLib
                 i => Unicode2Ascii(i));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue unicode(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue vs = args.AsType(0, "unicode", DataType.String);
@@ -153,7 +153,7 @@ namespace MoonSharp.Interpreter.CoreLib
             return s.Length - i;
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue len(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue vs = args.AsType(0, "len", DataType.String);
@@ -161,26 +161,26 @@ namespace MoonSharp.Interpreter.CoreLib
         }
 
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue match(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return executionContext.EmulateClassicCall(args, "match", KopiLua_StringLib.str_match);
         }
 
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue gmatch(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return executionContext.EmulateClassicCall(args, "gmatch", KopiLua_StringLib.str_gmatch);
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue gsub(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return executionContext.EmulateClassicCall(args, "gsub", KopiLua_StringLib.str_gsub);
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue find(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return executionContext.EmulateClassicCall(args, "find",
@@ -188,21 +188,21 @@ namespace MoonSharp.Interpreter.CoreLib
         }
 
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue lower(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue arg_s = args.AsType(0, "lower", DataType.String);
             return DynValue.NewString(arg_s.String.ToLower());
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue upper(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue arg_s = args.AsType(0, "upper", DataType.String);
             return DynValue.NewString(arg_s.String.ToUpper());
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue rep(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue arg_s = args.AsType(0, "rep", DataType.String);
@@ -227,14 +227,14 @@ namespace MoonSharp.Interpreter.CoreLib
             return DynValue.NewString(result.ToString());
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue format(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return executionContext.EmulateClassicCall(args, "format", KopiLua_StringLib.str_format);
         }
 
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue reverse(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue arg_s = args.AsType(0, "reverse", DataType.String);
@@ -247,7 +247,7 @@ namespace MoonSharp.Interpreter.CoreLib
             return DynValue.NewString(new string(elements));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue sub(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue arg_s = args.AsType(0, "sub", DataType.String);
@@ -260,7 +260,7 @@ namespace MoonSharp.Interpreter.CoreLib
             return DynValue.NewString(s);
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue startsWith(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue arg_s1 = args.AsType(0, "startsWith", DataType.String, true);
@@ -272,7 +272,7 @@ namespace MoonSharp.Interpreter.CoreLib
             return DynValue.NewBoolean(arg_s1.String.StartsWith(arg_s2.String));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue endsWith(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue arg_s1 = args.AsType(0, "endsWith", DataType.String, true);
@@ -284,7 +284,7 @@ namespace MoonSharp.Interpreter.CoreLib
             return DynValue.NewBoolean(arg_s1.String.EndsWith(arg_s2.String));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue contains(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue arg_s1 = args.AsType(0, "contains", DataType.String, true);

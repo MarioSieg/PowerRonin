@@ -15,7 +15,7 @@
 
 using System;
 
-namespace MoonSharp.Interpreter.Interop.RegistrationPolicies
+namespace Dreamcast.Lua.Interpreter.Interop.RegistrationPolicies
 {
     /// <summary>
     ///     Interface for managing how to handle

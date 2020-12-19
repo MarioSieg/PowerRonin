@@ -16,7 +16,7 @@
 using System.IO;
 using System.Text;
 
-namespace MoonSharp.Interpreter.Platforms
+namespace Dreamcast.Lua.Interpreter.Platforms
 {
     /// <summary>
     ///     Interface to abstract all accesses made to the underlying platform (OS, framework) by the scripting engine.

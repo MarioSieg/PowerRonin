@@ -15,7 +15,7 @@
 
 using System.Text;
 
-namespace MoonSharp.Interpreter.Tree
+namespace Dreamcast.Lua.Interpreter.Tree
 {
     internal class Lexer
     {

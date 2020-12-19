@@ -17,15 +17,15 @@
 
 using System.Collections.Generic;
 
-namespace MoonSharp.Interpreter.CoreLib
+namespace Dreamcast.Lua.Interpreter.CoreLib
 {
     /// <summary>
     ///     Class implementing coroutine Lua functions
     /// </summary>
-    [MoonSharpModule(Namespace = "coroutine")]
+    [Dreamcast.LuaModule(Namespace = "coroutine")]
     public class CoroutineModule
     {
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue create(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             if (args[0].Type != DataType.Function && args[0].Type != DataType.ClrFunction)
@@ -34,7 +34,7 @@ namespace MoonSharp.Interpreter.CoreLib
             return executionContext.GetScript().CreateCoroutine(args[0]);
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue wrap(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             if (args[0].Type != DataType.Function && args[0].Type != DataType.ClrFunction)
@@ -52,7 +52,7 @@ namespace MoonSharp.Interpreter.CoreLib
             return handle.Coroutine.Resume(args.GetArray());
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue resume(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue handle = args.AsType(0, "resume", DataType.Thread);
@@ -87,21 +87,21 @@ namespace MoonSharp.Interpreter.CoreLib
             }
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue yield(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return DynValue.NewYieldReq(args.GetArray());
         }
 
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue running(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             Coroutine C = executionContext.GetCallingCoroutine();
             return DynValue.NewTuple(DynValue.NewCoroutine(C), DynValue.NewBoolean(C.State == CoroutineState.Main));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue status(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue handle = args.AsType(0, "status", DataType.Thread);

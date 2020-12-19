@@ -15,7 +15,7 @@
 
 using System;
 
-namespace MoonSharp.Interpreter.Interop.BasicDescriptors
+namespace Dreamcast.Lua.Interpreter.Interop.BasicDescriptors
 {
     /// <summary>
     ///     Permissions for members access

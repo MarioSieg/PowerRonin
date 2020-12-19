@@ -13,7 +13,7 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-namespace MoonSharp.Interpreter.CodeAnalysis
+namespace Dreamcast.Lua.Interpreter.CodeAnalysis
 {
     internal class AstNode
     {

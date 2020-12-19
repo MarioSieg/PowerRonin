@@ -18,7 +18,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace MoonSharp.Interpreter.Platforms
+namespace Dreamcast.Lua.Interpreter.Platforms
 {
     /// <summary>
     ///     A class implementing all the bits needed to have a minimal support of a platform.

@@ -13,9 +13,9 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-using MoonSharp.Interpreter.Compatibility.Frameworks;
+using Dreamcast.Lua.Interpreter.Compatibility.Frameworks;
 
-namespace MoonSharp.Interpreter.Compatibility
+namespace Dreamcast.Lua.Interpreter.Compatibility
 {
     public static class Framework
     {

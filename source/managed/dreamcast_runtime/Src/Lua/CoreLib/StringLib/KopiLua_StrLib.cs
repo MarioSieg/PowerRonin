@@ -62,13 +62,13 @@
 // THE SOFTWARE.
 
 
-using MoonSharp.Interpreter.Interop.LuaStateInterop;
+using Dreamcast.Lua.Interpreter.Interop.LuaStateInterop;
 using lua_Integer = System.Int32;
 using LUA_INTFRM_T = System.Int64;
 using ptrdiff_t = System.Int32;
 using UNSIGNED_LUA_INTFRM_T = System.UInt64;
 
-namespace MoonSharp.Interpreter.CoreLib.StringLib
+namespace Dreamcast.Lua.Interpreter.CoreLib.StringLib
 {
     internal class KopiLua_StringLib : LuaBase
     {

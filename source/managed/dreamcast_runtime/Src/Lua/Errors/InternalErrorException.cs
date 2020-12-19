@@ -15,7 +15,7 @@
 
 using System;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     Exception thrown when an inconsistent state is reached in the interpreter

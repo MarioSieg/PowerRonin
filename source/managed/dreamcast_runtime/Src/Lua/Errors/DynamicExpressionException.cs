@@ -15,7 +15,7 @@
 
 using System;
 
-namespace MoonSharp.Interpreter
+namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
     ///     Exception thrown when a dynamic expression is invalid

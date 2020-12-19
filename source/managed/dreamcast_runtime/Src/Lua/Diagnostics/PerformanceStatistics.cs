@@ -15,9 +15,9 @@
 
 using System;
 using System.Text;
-using MoonSharp.Interpreter.Diagnostics.PerformanceCounters;
+using Dreamcast.Lua.Interpreter.Diagnostics.PerformanceCounters;
 
-namespace MoonSharp.Interpreter.Diagnostics
+namespace Dreamcast.Lua.Interpreter.Diagnostics
 {
     /// <summary>
     ///     A single object of this type exists for every script and gives access to performance statistics.

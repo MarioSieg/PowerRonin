@@ -15,10 +15,10 @@
 
 using System;
 
-namespace MoonSharp.Interpreter.Interop.RegistrationPolicies
+namespace Dreamcast.Lua.Interpreter.Interop.RegistrationPolicies
 {
     /// <summary>
-    ///     The default registration policy used by MoonSharp unless explicitely replaced.
+    ///     The default registration policy used by Dreamcast.Lua unless explicitely replaced.
     ///     Deregistrations are allowed, but registration of a new descriptor are not allowed
     ///     if a descriptor is already registered for that type.
     ///     Automatic type registration is disabled.

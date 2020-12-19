@@ -16,20 +16,20 @@
 #pragma warning disable 1591
 
 using System;
-using MoonSharp.Interpreter.Interop;
+using Dreamcast.Lua.Interpreter.Interop;
 
-namespace MoonSharp.Interpreter.CoreLib
+namespace Dreamcast.Lua.Interpreter.CoreLib
 {
     /// <summary>
     ///     Class implementing math Lua functions
     /// </summary>
-    [MoonSharpModule(Namespace = "math")]
+    [Dreamcast.LuaModule(Namespace = "math")]
     public class MathModule
     {
-        [MoonSharpModuleConstant]
+        [Dreamcast.LuaModuleConstant]
         public const double pi = Math.PI;
 
-        [MoonSharpModuleConstant]
+        [Dreamcast.LuaModuleConstant]
         public const double huge = double.MaxValue;
 
         private static Random GetRandom(Script s)
@@ -45,7 +45,7 @@ namespace MoonSharp.Interpreter.CoreLib
         }
 
 
-        public static void MoonSharpInit(Table globalTable, Table ioTable)
+        public static void Dreamcast.LuaInit(Table globalTable, Table ioTable)
         {
             SetRandom(globalTable.OwnerScript, new Random());
         }
@@ -92,79 +92,79 @@ namespace MoonSharp.Interpreter.CoreLib
         }
 
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue abs(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec1(args, "abs", d => Math.Abs(d));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue acos(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec1(args, "acos", d => Math.Acos(d));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue asin(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec1(args, "asin", d => Math.Asin(d));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue atan(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec1(args, "atan", d => Math.Atan(d));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue atan2(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec2(args, "atan2", (d1, d2) => Math.Atan2(d1, d2));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue ceil(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec1(args, "ceil", d => Math.Ceiling(d));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue cos(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec1(args, "cos", d => Math.Cos(d));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue cosh(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec1(args, "cosh", d => Math.Cosh(d));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue deg(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec1(args, "deg", d => d * 180.0 / Math.PI);
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue exp(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec1(args, "exp", d => Math.Exp(d));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue floor(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec1(args, "floor", d => Math.Floor(d));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue fmod(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec2(args, "fmod", (d1, d2) => Math.IEEERemainder(d1, d2));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue frexp(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             // http://stackoverflow.com/questions/389993/extracting-mantissa-and-exponent-from-double-in-c-sharp
@@ -217,31 +217,31 @@ namespace MoonSharp.Interpreter.CoreLib
             return DynValue.NewTuple(DynValue.NewNumber(m), DynValue.NewNumber(e));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue ldexp(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec2(args, "ldexp", (d1, d2) => d1 * Math.Pow(2, d2));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue log(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec2n(args, "log", Math.E, (d1, d2) => Math.Log(d1, d2));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue max(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return execaccum(args, "max", (d1, d2) => Math.Max(d1, d2));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue min(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return execaccum(args, "min", (d1, d2) => Math.Min(d1, d2));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue modf(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue arg = args.AsType(0, "modf", DataType.Number);
@@ -249,19 +249,19 @@ namespace MoonSharp.Interpreter.CoreLib
         }
 
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue pow(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec2(args, "pow", (d1, d2) => Math.Pow(d1, d2));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue rad(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec1(args, "rad", d => d * Math.PI / 180.0);
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue random(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue m = args.AsType(0, "random", DataType.Number, true);
@@ -287,7 +287,7 @@ namespace MoonSharp.Interpreter.CoreLib
             return DynValue.NewNumber(d);
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue randomseed(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue arg = args.AsType(0, "randomseed", DataType.Number);
@@ -296,31 +296,31 @@ namespace MoonSharp.Interpreter.CoreLib
             return DynValue.Nil;
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue sin(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec1(args, "sin", d => Math.Sin(d));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue sinh(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec1(args, "sinh", d => Math.Sinh(d));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue sqrt(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec1(args, "sqrt", d => Math.Sqrt(d));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue tan(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec1(args, "tan", d => Math.Tan(d));
         }
 
-        [MoonSharpModuleMethod]
+        [Dreamcast.LuaModuleMethod]
         public static DynValue tanh(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return exec1(args, "tanh", d => Math.Tanh(d));

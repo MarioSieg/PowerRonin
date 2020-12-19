@@ -14,9 +14,9 @@
 // *******************************************************************************
 
 using System;
-using MoonSharp.Interpreter.Interop.RegistrationPolicies;
+using Dreamcast.Lua.Interpreter.Interop.RegistrationPolicies;
 
-namespace MoonSharp.Interpreter.Interop
+namespace Dreamcast.Lua.Interpreter.Interop
 {
     /// <summary>
     ///     Collection of the standard policies to handle UserData type registrations.
@@ -26,7 +26,7 @@ namespace MoonSharp.Interpreter.Interop
     public static class InteropRegistrationPolicy
     {
         /// <summary>
-        ///     The default registration policy used by MoonSharp unless explicitely replaced.
+        ///     The default registration policy used by Dreamcast.Lua unless explicitely replaced.
         ///     Deregistrations are allowed, but registration of a new descriptor are not allowed
         ///     if a descriptor is already registered for that type.
         ///     Types must be explicitly registered.
@@ -34,7 +34,7 @@ namespace MoonSharp.Interpreter.Interop
         public static IRegistrationPolicy Default => new DefaultRegistrationPolicy();
 
         /// <summary>
-        ///     The default registration policy used by MoonSharp unless explicitely replaced.
+        ///     The default registration policy used by Dreamcast.Lua unless explicitely replaced.
         ///     Deregistrations are allowed, but registration of a new descriptor are not allowed
         ///     if a descriptor is already registered for that type.
         ///     Types must be explicitly registered.

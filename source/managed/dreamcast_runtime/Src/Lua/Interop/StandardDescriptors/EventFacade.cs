@@ -15,7 +15,7 @@
 
 using System;
 
-namespace MoonSharp.Interpreter.Interop.StandardDescriptors
+namespace Dreamcast.Lua.Interpreter.Interop.StandardDescriptors
 {
     internal class EventFacade : IUserDataType
     {

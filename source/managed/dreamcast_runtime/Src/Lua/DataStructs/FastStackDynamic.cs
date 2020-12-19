@@ -15,7 +15,7 @@
 
 using System.Collections.Generic;
 
-namespace MoonSharp.Interpreter.DataStructs
+namespace Dreamcast.Lua.Interpreter.DataStructs
 {
 #if USE_DYNAMIC_STACKS
 	internal class FastStack<T> : FastStackDynamic<T>

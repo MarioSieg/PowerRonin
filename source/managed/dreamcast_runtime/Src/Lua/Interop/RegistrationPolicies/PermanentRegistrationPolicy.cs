@@ -15,7 +15,7 @@
 
 using System;
 
-namespace MoonSharp.Interpreter.Interop.RegistrationPolicies
+namespace Dreamcast.Lua.Interpreter.Interop.RegistrationPolicies
 {
     /// <summary>
     ///     A registration policy which makes registration permanent and not deletable.

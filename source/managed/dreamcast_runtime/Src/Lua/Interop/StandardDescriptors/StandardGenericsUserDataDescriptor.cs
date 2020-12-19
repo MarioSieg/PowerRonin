@@ -14,9 +14,9 @@
 // *******************************************************************************
 
 using System;
-using MoonSharp.Interpreter.Compatibility;
+using Dreamcast.Lua.Interpreter.Compatibility;
 
-namespace MoonSharp.Interpreter.Interop
+namespace Dreamcast.Lua.Interpreter.Interop
 {
     /// <summary>
     ///     Standard user data descriptor used to instantiate generics.
