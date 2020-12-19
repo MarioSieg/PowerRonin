@@ -32,12 +32,9 @@ namespace dce::core {
 		Runtime* runtime = nullptr;
 	};
 
-	Kernel::Kernel(const int _in_argc, const char* const * const _in_argv, const char* const * const _in_envp)
-		: argc(_in_argc), argv(_in_argv), envp(_in_envp), core_(std::make_unique<Core>()) { }
+	Kernel::Kernel(const int _in_argc, const char* const * const _in_argv, const char* const * const _in_envp) : argc(_in_argc), argv(_in_argv), envp(_in_envp), core_(std::make_unique<Core>()) { }
 
-	auto Kernel::create(const int _in_argc
-	                    , const char* const* const _in_argv
-	                    , const char* const* const _in_envp) -> std::unique_ptr<Kernel> {
+	auto Kernel::create(const int _in_argc, const char* const* const _in_argv, const char* const* const _in_envp) -> std::unique_ptr<Kernel> {
 		struct Factory final : Kernel {
 			explicit Factory(const int _a, const char* const* const _b, const char* const* const _c) : Kernel(_a, _b, _c) { }
 		};
@@ -94,8 +91,7 @@ namespace dce::core {
 				on_pre_startup(*this->core_->runtime)) {
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Bad \"on_pre_startup\" call!");
 			}
-			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(
-				std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
+			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
 			proto.info("OK! \"on_pre_startup\" invoked! {}s elapsed!", std::get<1>(*sys)->pre_startup_time_ = dur);
 		}
 
@@ -107,8 +103,7 @@ namespace dce::core {
 			std::chrono::high_resolution_clock::now() - state_clock).count()) / 1000000.0;
 		proto.critical("State online! Required {}s!", dur);
 		this->core_->kernel_state = KernelState::ONLINE;
-		const auto duration = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik)
-			.count();
+		const auto duration = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik).count();
 
 		/* Invoke "on_post_startup()" on all subsystems, which have this event registered. */
 		for (auto sys = this->core_->subsystems.rbegin(); sys != this->core_->subsystems.rend(); std::advance(sys, 1)) {
@@ -119,18 +114,12 @@ namespace dce::core {
 				on_post_startup(*this->core_->runtime)) {
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Bad \"on_post_startup\" call!");
 			}
-			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(
-				std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
+			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
 			proto.info("OK! \"on_post_startup\" invoked! {}s elapsed!", std::get<1>(*sys)->post_startup_time_ = dur);
 		}
 
 		proto.separator();
-
 		proto.info("OK! System online! Boot took {}s!", static_cast<double>(duration) / 1000000.0);
-
-		[[unlikely]] if (this->hook_startup != nullptr && !this->hook_startup()) {
-			throw MAKE_FATAL_ENGINE_EXCEPTION("\"hook_startup\" returned false!");
-		}
 
 		return duration;
 	}
@@ -155,8 +144,7 @@ namespace dce::core {
 			/* Invoke "on_pre_tick()" on all subsystems, which have this event registered. */
 			for (auto sys = this->core_->subsystems.begin(); sys != this->core_->subsystems.end(); std::advance(sys, 1)) {
 				const auto tik2 = std::chrono::high_resolution_clock::now();
-				[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::PRE_TICK && !std::get<1>(*sys)->on_pre_tick(
-					*this->core_->runtime)) {
+				[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::PRE_TICK && !std::get<1>(*sys)->on_pre_tick(*this->core_->runtime)) {
 					return false;
 				}
 				const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(
@@ -167,18 +155,11 @@ namespace dce::core {
 			/* Invoke "on_post_tick()" on all subsystems, which have this event registered. */
 			for (auto sys = this->core_->subsystems.rbegin(); sys != this->core_->subsystems.rend(); std::advance(sys, 1)) {
 				const auto tik2 = std::chrono::high_resolution_clock::now();
-				[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::POST_TICK && !std::get<1>(*sys)->
-					on_post_tick(*this->core_->runtime)) {
+				[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::POST_TICK && !std::get<1>(*sys)->on_post_tick(*this->core_->runtime)) {
 					return false;
 				}
-				const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(
-					std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
+				const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
 				std::get<1>(*sys)->post_tick_time_ = dur;
-			}
-
-			/* Update hook. */
-			[[unlikely]] if (this->hook_tick != nullptr && !this->hook_tick(cycles)) {
-				return false;
 			}
 
 			return true;
@@ -212,12 +193,10 @@ namespace dce::core {
 			const auto tik2 = std::chrono::high_resolution_clock::now();
 			const auto& name = std::get<1>(*sys)->name;
 			proto.critical(R"(Invoking kernel event "on_pre_shutdown" on subsystem interface "{}"...)", name);
-			[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::PRE_SHUTDOWN && !std::get<1>(*sys)->
-				on_pre_shutdown(*this->core_->runtime)) {
+			[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::PRE_SHUTDOWN && !std::get<1>(*sys)->on_pre_shutdown(*this->core_->runtime)) {
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Bad \"on_pre_shutdown\" call!");
 			}
-			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(
-				std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
+			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
 			std::get<1>(*sys)->pre_shutdown_time_ = dur;
 		}
 
@@ -226,12 +205,10 @@ namespace dce::core {
 			const auto tik2 = std::chrono::high_resolution_clock::now();
 			const auto& name = std::get<1>(*sys)->name;
 			proto.critical(R"(Invoking kernel event "on_post_shutdown" on subsystem interface "{}"...)", name);
-			[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::POST_SHUTDOWN && !std::get<1>(*sys)->
-				on_post_shutdown(*this->core_->runtime)) {
+			[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::POST_SHUTDOWN && !std::get<1>(*sys)->on_post_shutdown(*this->core_->runtime)) {
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Bad \"on_post_shutdown\" call!");
 			}
-			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(
-				std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
+			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
 			std::get<1>(*sys)->post_shutdown_time_ = dur;
 		}
 
@@ -243,9 +220,6 @@ namespace dce::core {
 		const auto tok = std::chrono::high_resolution_clock::now();
 		const auto duration = std::chrono::duration_cast<std::chrono::microseconds>(tok - tik).count();
 
-		[[unlikely]] if (this->hook_shutdown != nullptr && !this->hook_shutdown()) {
-			throw MAKE_FATAL_ENGINE_EXCEPTION("\"hook_shutdown\" returned false!");
-		}
 		return duration;
 	}
 

@@ -34,75 +34,139 @@ namespace dce {
 
 		template <typename... T> concept Subsystem = std::is_base_of<ISubsystem, T...>::value;
 
-		/* Represents an engine kernel, containing all subsystems  */
+		/// <summary>
+		/// Represents an engine kernel, containing all subsystems.
+		/// </summary>
 		class Kernel {
 		public:
 			[[nodiscard]] static auto create(const int _in_argc
 			                                 , const char* const* const _in_argv
 			                                 , const char* const* const _in_envp) -> std::unique_ptr<Kernel>;
 
-			/* Argument count */
+			/// <summary>
+			/// Argument count.
+			/// </summary>
 			const int argc;
 
-			/* Argument vector */
+			/// <summary>
+			/// Argument vector.
+			/// </summary>
 			const char* const* const argv;
 
-			/* Environment vector pointer */
+			/// <summary>
+			/// Environment pointer.
+			/// </summary>
 			const char* const* const envp;
 
-			/* Callback hooks */
-			auto (*hook_startup)() -> bool = nullptr;
-			auto (*hook_tick)(std::uint_fast32_t _cycle) -> bool = nullptr;
-			auto (*hook_shutdown)() -> bool = nullptr;
-
-			/* Delete copy and move constructor and assignment operators */
+			/// <summary>
+			/// Delete copy and move constructor and assignment operators.
+			/// </summary>
+			/// <param name=""></param>
 			Kernel(const Kernel&) = delete;
+
+			/// <summary>
+			/// Delete copy and move constructor and assignment operators.
+			/// </summary>
+			/// <param name=""></param>
+			/// <returns></returns>
 			Kernel(Kernel&&) = delete;
+
+			/// <summary>
+			/// Delete copy and move constructor and assignment operators.
+			/// </summary>
 			auto operator=(const Kernel&) -> Kernel& = delete;
+
+			/// <summary>
+			/// Delete copy and move constructor and assignment operators.
+			/// </summary>
+			/// <returns></returns>
 			auto operator=(Kernel&&) -> Kernel& = delete;
 
-			/* Destructor */
+			/// <summary>
+			/// Dctor.
+			/// </summary>
 			~Kernel();
 
-			/* Startup runtime */
-			auto startup() const -> std::uint64_t;
+			/// <summary>
+			/// Startup engine.
+			/// </summary>
+			[[nodiscard]] auto startup() const -> std::uint64_t;
 
-			/* Execute runtime */
-			auto execute() -> std::tuple<std::uint_fast32_t, std::uint8_t, std::uint64_t>;
+			/// <summary>
+			/// Enter simulation loop.
+			/// </summary>
+			[[nodiscard]] auto execute() -> std::tuple<std::uint_fast32_t, std::uint8_t, std::uint64_t>;
 
-			/* Shutdown runtime */
-			auto shutdown() const -> std::uint64_t;
+			/// <summary>
+			/// Shutdown engine.
+			/// </summary>
+			[[nodiscard]] auto shutdown() const -> std::uint64_t;
 
-			/* Installs a new subsystem to the kernel and initializes all hooks */
+			/// <summary>
+			/// Installs a new subsystem to the kernel and initializes all hooks
+			/// </summary>
+			/// <param name="_subsystem"></param>
 			void install_subsystem(std::unique_ptr<ISubsystem>&& _subsystem) const;
 
-			/* Returns installed subsystems */
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <returns>Returns all installed subsystems.</returns>
 			[[nodiscard]] auto installed_subsystems() const noexcept -> const std::vector<std::tuple<
 				std::uint_fast16_t, std::unique_ptr<ISubsystem>>>&;
 
-			/* Returns the current simulation state. */
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <returns>Returns the current runtime instance.</returns>
 			[[nodiscard]] auto get_runtime() const noexcept -> Runtime*;
 
-			/* Allocates and installs the subsystem T. */
-			template <typename T, typename... Q> requires Subsystem<T> auto create_install_subsystem(Q&&... /*args*/) -> Kernel&;
+			/// <summary>
+			/// Allocates and installs the subsystem T.
+			/// </summary>
+			/// <typeparam name="T"></typeparam>
+			/// <typeparam name="...Q"></typeparam>
+			/// <param name="_args"></param>
+			/// <returns></returns>
+			template <typename T, typename... Q> requires Subsystem<T>
+			auto create_install_subsystem(Q&&..._args) -> Kernel&;
 
-			/* Uninstalls a subsystem and removes all hooks */
-			[[nodiscard]] auto uninstall_subsystem(std::uint_fast16_t _id) const -> bool;
+			/// <summary>
+			/// Uninstalls a subsystem and removes all hooks
+			/// </summary>
+			/// <param name="_id"></param>
+			/// <returns></returns>
+			[[nodiscard]]
+			auto uninstall_subsystem(std::uint_fast16_t _id) const -> bool;
 
-			/* Returns true if the subsystem is installed, else false */
-			[[nodiscard]] auto lookup_subsystem(std::uint_fast16_t _id) const -> bool;
+			/// <summary>
+			/// Returns true if the subsystem is installed, else false
+			/// </summary>
+			/// <param name="_id"></param>
+			/// <returns></returns>
+			[[nodiscard]]
+			auto lookup_subsystem(std::uint_fast16_t _id) const -> bool;
 
-			/* Install some subsystem via a hook. */
+			/// <summary>
+			/// Install some subsystem via a hook.
+			/// </summary>
+			/// <param name="_hook"></param>
+			/// <returns></returns>
+			[[nodiscard]]
 			auto install_subsystems(auto (*const _hook)(Kernel&) -> bool) -> std::size_t;
 
-			/* Uninstalls all subsystems */
+
+			/// <summary>
+			/// Uninstalls all subsystems
+			/// </summary>
 			void uninstall_all() const;
 
 		private:
-			/* Create a new kernel instance */
+			/// <summary>
+			/// Create a new kernel instance.
+			/// </summary>
 			explicit Kernel(int _in_argc, const char* const* _in_argv, const char* const* _in_envp);
 
-			/* Core pimpl (pointer to implementation) */
 			struct Core;
 			const std::unique_ptr<Core> core_;
 		};

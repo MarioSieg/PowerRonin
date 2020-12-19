@@ -193,7 +193,7 @@
                 Contains methods for input fetching.
             </summary>
         </member>
-        <member name="P:Dreamcast.Core.Input.CursorPosition">
+        <member name="P:Dreamcast.Core.Input.MousePosition">
             <summary>
                 The mouse cursor position.
             </summary>

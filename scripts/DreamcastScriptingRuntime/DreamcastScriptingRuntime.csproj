@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Chrono.cs" />
     <Compile Include="Core\CopyDir.cs" />
     <Compile Include="Tools\Builder.cs" />
     <Compile Include="Core\BuildTarget.cs" />
