@@ -35,6 +35,7 @@ namespace Dreamcast.Core
         private static void OnPreTick()
         {
             Input.Update();
+            Chrono.Update();
         }
 
         private static void OnPostTick()

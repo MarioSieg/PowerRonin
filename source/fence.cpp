@@ -41,7 +41,8 @@ namespace dce {
 #if COM_MSVC
 		_ReadBarrier();
 #else
-		MEM_BARRIER();
+		MEM_BARRIER()
+		;
 #endif
 	}
 
@@ -49,7 +50,8 @@ namespace dce {
 #if COM_MSVC
 		_WriteBarrier();
 #else
-		MEM_BARRIER();
+		MEM_BARRIER()
+		;
 #endif
 	}
 
@@ -57,7 +59,8 @@ namespace dce {
 #if COM_MSVC
 		_ReadWriteBarrier();
 #else
-		MEM_BARRIER();
+		MEM_BARRIER()
+		;
 #endif
 	}
 

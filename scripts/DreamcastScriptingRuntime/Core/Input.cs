@@ -23,12 +23,12 @@ namespace Dreamcast.Core
     /// </summary>
     public static class Input
     {
-        private static Vector2 CursorPos = Vector2.Zero;
+        private static Vector2 _mousePos = Vector2.Zero;
 
         /// <summary>
         ///     The mouse cursor position.
         /// </summary>
-        public static Vector2 CursorPosition => CursorPos;
+        public static Vector2 MousePosition => _mousePos;
 
         /// <summary>
         /// </summary>
@@ -52,8 +52,8 @@ namespace Dreamcast.Core
         internal static void Update()
         {
             NativeRuntime.InputGetCursorPosition(out var x, out var y);
-            CursorPos.X = x;
-            CursorPos.Y = y;
+            _mousePos.X = x;
+            _mousePos.Y = y;
         }
     }
 }
