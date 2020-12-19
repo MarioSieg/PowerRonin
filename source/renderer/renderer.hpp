@@ -21,9 +21,6 @@
 #include "shader_bucket.hpp"
 #include "gpu.hpp"
 
-// UGLYY AAAA
-extern const float *VIEW, *PROJ;
-
 namespace dce {
 	class MeshRenderer;
 	class Transform;

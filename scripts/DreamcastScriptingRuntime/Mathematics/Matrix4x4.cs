@@ -270,8 +270,22 @@ namespace Dreamcast.Mathematics
         /// <param name="M42">The value to assign at row 4 column 2 of the matrix.</param>
         /// <param name="M43">The value to assign at row 4 column 3 of the matrix.</param>
         /// <param name="M44">The value to assign at row 4 column 4 of the matrix.</param>
-        public Matrix4x4(float M11, float M12, float M13, float M14, float M21, float M22, float M23, float M24, float M31, float M32, float M33, float M34,
-            float M41, float M42, float M43, float M44)
+        public Matrix4x4(float M11,
+            float M12,
+            float M13,
+            float M14,
+            float M21,
+            float M22,
+            float M23,
+            float M24,
+            float M31,
+            float M32,
+            float M33,
+            float M34,
+            float M41,
+            float M42,
+            float M43,
+            float M44)
         {
             this.M11 = M11;
             this.M12 = M12;
@@ -1980,7 +1994,10 @@ namespace Dreamcast.Mathematics
         /// <param name="cameraUpVector">The up vector of the camera.</param>
         /// <param name="cameraForwardVector">The forward vector of the camera.</param>
         /// <param name="result">When the method completes, contains the created billboard matrix.</param>
-        public static void BillboardLH(ref Vector3 objectPosition, ref Vector3 cameraPosition, ref Vector3 cameraUpVector, ref Vector3 cameraForwardVector,
+        public static void BillboardLH(ref Vector3 objectPosition,
+            ref Vector3 cameraPosition,
+            ref Vector3 cameraUpVector,
+            ref Vector3 cameraForwardVector,
             out Matrix4x4 result)
         {
             var difference = cameraPosition - objectPosition;
@@ -2035,7 +2052,10 @@ namespace Dreamcast.Mathematics
         /// <param name="cameraUpVector">The up vector of the camera.</param>
         /// <param name="cameraForwardVector">The forward vector of the camera.</param>
         /// <param name="result">When the method completes, contains the created billboard matrix.</param>
-        public static void BillboardRH(ref Vector3 objectPosition, ref Vector3 cameraPosition, ref Vector3 cameraUpVector, ref Vector3 cameraForwardVector,
+        public static void BillboardRH(ref Vector3 objectPosition,
+            ref Vector3 cameraPosition,
+            ref Vector3 cameraUpVector,
+            ref Vector3 cameraForwardVector,
             out Matrix4x4 result)
         {
             var difference = objectPosition - cameraPosition;
@@ -2929,7 +2949,10 @@ namespace Dreamcast.Mathematics
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <param name="result">When the method completes, contains the created affine transformation matrix.</param>
-        public static void AffineTransformation(float scaling, ref Vector3 rotationCenter, ref Quaternion rotation, ref Vector3 translation,
+        public static void AffineTransformation(float scaling,
+            ref Vector3 rotationCenter,
+            ref Quaternion rotation,
+            ref Vector3 translation,
             out Matrix4x4 result)
         {
             result = Scaling(scaling) * Translation(-rotationCenter) * RotationQuaternion(rotation) * Translation(rotationCenter) * Translation(translation);
@@ -3012,8 +3035,13 @@ namespace Dreamcast.Mathematics
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <param name="result">When the method completes, contains the created transformation matrix.</param>
-        public static void Transformation(ref Vector3 scalingCenter, ref Quaternion scalingRotation, ref Vector3 scaling, ref Vector3 rotationCenter,
-            ref Quaternion rotation, ref Vector3 translation, out Matrix4x4 result)
+        public static void Transformation(ref Vector3 scalingCenter,
+            ref Quaternion scalingRotation,
+            ref Vector3 scaling,
+            ref Vector3 rotationCenter,
+            ref Quaternion rotation,
+            ref Vector3 translation,
+            out Matrix4x4 result)
         {
             var sr = RotationQuaternion(scalingRotation);
 
@@ -3031,7 +3059,11 @@ namespace Dreamcast.Mathematics
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <returns>The created transformation matrix.</returns>
-        public static Matrix4x4 Transformation(Vector3 scalingCenter, Quaternion scalingRotation, Vector3 scaling, Vector3 rotationCenter, Quaternion rotation,
+        public static Matrix4x4 Transformation(Vector3 scalingCenter,
+            Quaternion scalingRotation,
+            Vector3 scaling,
+            Vector3 rotationCenter,
+            Quaternion rotation,
             Vector3 translation)
         {
             Transformation(ref scalingCenter, ref scalingRotation, ref scaling, ref rotationCenter, ref rotation, ref translation, out var result);
@@ -3048,8 +3080,13 @@ namespace Dreamcast.Mathematics
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <param name="result">When the method completes, contains the created transformation matrix.</param>
-        public static void Transformation2D(ref Vector2 scalingCenter, float scalingRotation, ref Vector2 scaling, ref Vector2 rotationCenter, float rotation,
-            ref Vector2 translation, out Matrix4x4 result)
+        public static void Transformation2D(ref Vector2 scalingCenter,
+            float scalingRotation,
+            ref Vector2 scaling,
+            ref Vector2 rotationCenter,
+            float rotation,
+            ref Vector2 translation,
+            out Matrix4x4 result)
         {
             result = Translation((Vector3) (-scalingCenter)) * RotationZ(-scalingRotation) * Scaling((Vector3) scaling) * RotationZ(scalingRotation) *
                      Translation((Vector3) scalingCenter) * Translation((Vector3) (-rotationCenter)) * RotationZ(rotation) *
@@ -3069,7 +3106,11 @@ namespace Dreamcast.Mathematics
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <returns>The created transformation matrix.</returns>
-        public static Matrix4x4 Transformation2D(Vector2 scalingCenter, float scalingRotation, Vector2 scaling, Vector2 rotationCenter, float rotation,
+        public static Matrix4x4 Transformation2D(Vector2 scalingCenter,
+            float scalingRotation,
+            Vector2 scaling,
+            Vector2 rotationCenter,
+            float rotation,
             Vector2 translation)
         {
             Transformation2D(ref scalingCenter, scalingRotation, ref scaling, ref rotationCenter, rotation, ref translation, out var result);

@@ -44,7 +44,7 @@ namespace dce::gui::widgets {
 				Text("Delta clock: %f", _chrono.delta_time);
 				Text("Monotonic clock: %f", _chrono.time);
 				Text("Submit clocks: CPU %.3f, GPU %.3f, Max GPU latency: %" PRIu32, _chrono.submit_cpu, _chrono.submit_gpu
-				     , _chrono.max_latency);
+				     , _chrono.max_gpu_latency);
 			}
 			const auto pie_size = ImVec2{250, 250};
 			char total_buf[64];

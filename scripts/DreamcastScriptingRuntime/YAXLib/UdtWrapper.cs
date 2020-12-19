@@ -196,8 +196,7 @@ namespace YAXLib
         /// <returns>
         ///     <c>true</c> if serialization of null objects is not allowd; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsNotAllowdNullObjectSerialization =>
-            (SerializationOption & YAXSerializationOptions.DontSerializeNullObjects) == YAXSerializationOptions.DontSerializeNullObjects;
+        public bool IsNotAllowdNullObjectSerialization => (SerializationOption & YAXSerializationOptions.DontSerializeNullObjects) == YAXSerializationOptions.DontSerializeNullObjects;
 
         /// <summary>
         ///     Determines whether cycling referrences must be ignored, or an exception needs to be thrown
@@ -209,16 +208,14 @@ namespace YAXLib
         /// <summary>
         ///     Determines whether properties with no setters should be serialized
         /// </summary>
-        public bool DontSerializePropertiesWithNoSetter =>
-            (SerializationOption & YAXSerializationOptions.DontSerializePropertiesWithNoSetter) == YAXSerializationOptions.DontSerializePropertiesWithNoSetter;
+        public bool DontSerializePropertiesWithNoSetter => (SerializationOption & YAXSerializationOptions.DontSerializePropertiesWithNoSetter) == YAXSerializationOptions.DontSerializePropertiesWithNoSetter;
 
         /// <summary>
         ///     Never add YAXLib metadata attributes (e.g., 'yaxlib:realtype') to the serialized XML (even when they would be
         ///     required for deserialization.)
         ///     Useful when generating XML intended for another system's consumption.
         /// </summary>
-        public bool SuppressMetadataAttributes =>
-            (SerializationOption & YAXSerializationOptions.SuppressMetadataAttributes) == YAXSerializationOptions.SuppressMetadataAttributes;
+        public bool SuppressMetadataAttributes => (SerializationOption & YAXSerializationOptions.SuppressMetadataAttributes) == YAXSerializationOptions.SuppressMetadataAttributes;
 
         /// <summary>
         ///     Gets a value indicating whether this instance wraps around a collection type.

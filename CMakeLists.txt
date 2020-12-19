@@ -198,7 +198,7 @@ add_library(
     "source/scripting/member_method.hpp"
     "source/scripting/member_method.cpp"
     "source/scripting/instance_class.hpp"
-    "source/scripting/instance_class.cpp" "source/scripting/native_config.hpp" "source/scripting/cstypes.hpp" "source/scripting/native_config.cpp")
+    "source/scripting/instance_class.cpp" "source/scripting/native_config.hpp" "source/scripting/cstypes.hpp" "source/scripting/native_config.cpp" )
 
 include("extern/CMakeLists.txt")
 

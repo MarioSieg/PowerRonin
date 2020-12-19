@@ -1053,8 +1053,12 @@ namespace YAXLib
         ///     an instance of <c>XElement</c> which contains the dictionary object
         ///     serialized properly
         /// </returns>
-        private XElement MakeDictionaryElement(XElement insertionLocation, XName elementName, object elementValue, YAXDictionaryAttribute dicAttrInst,
-            YAXCollectionAttribute collectionAttrInst, bool dontSerializeNull)
+        private XElement MakeDictionaryElement(XElement insertionLocation,
+            XName elementName,
+            object elementValue,
+            YAXDictionaryAttribute dicAttrInst,
+            YAXCollectionAttribute collectionAttrInst,
+            bool dontSerializeNull)
         {
             if (elementValue == null) return new XElement(elementName);
 
@@ -1260,7 +1264,10 @@ namespace YAXLib
         /// <returns>
         ///     an instance of <c>XElement</c> which will contain the serailized collection
         /// </returns>
-        private XElement MakeCollectionElement(XElement insertionLocation, XName elementName, object elementValue, YAXCollectionAttribute collectionAttrInst,
+        private XElement MakeCollectionElement(XElement insertionLocation,
+            XName elementName,
+            object elementValue,
+            YAXCollectionAttribute collectionAttrInst,
             string format)
         {
             if (elementValue == null)
@@ -2225,7 +2232,10 @@ namespace YAXLib
             return result;
         }
 
-        private object DeserializeTaggedDictionaryValue(XElement xelemValue, XName alias, Type type, YAXCollectionAttribute colAttributeInstance,
+        private object DeserializeTaggedDictionaryValue(XElement xelemValue,
+            XName alias,
+            Type type,
+            YAXCollectionAttribute colAttributeInstance,
             YAXDictionaryAttribute dicAttrInstance)
         {
             // otherwise the "else if(member.IsTreatedAsCollection)" block solves the problem

@@ -59,9 +59,11 @@ namespace Dreamcast.Mathematics
         /// <summary>
         ///     The internal representation of the angle.
         /// </summary>
-        [FieldOffset(0)] private float radians;
+        [FieldOffset(0)]
+        private float radians;
 
-        [FieldOffset(0)] private readonly int radiansInt;
+        [FieldOffset(0)]
+        private readonly int radiansInt;
 
         /// <summary>
         ///     Initializes a new instance of the SharpDX.AngleSingle structure with the

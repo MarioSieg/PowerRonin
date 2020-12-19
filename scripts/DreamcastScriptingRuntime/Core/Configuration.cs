@@ -182,12 +182,7 @@ namespace Dreamcast.Core
         {
             public static string FilePath { get; set; } = Path.Combine(ConfigDirectory, "graphics.ini");
 
-            public Dictionary<BuildTarget, GraphicsAPI[]> GraphicBackends { get; set; } = new Dictionary<BuildTarget, GraphicsAPI[]>
-            {
-                {BuildTarget.StandaloneWindows, new[] {GraphicsAPI.Direct3D11, GraphicsAPI.Direct3D12, GraphicsAPI.Vulkan, GraphicsAPI.OpenGL}},
-                {BuildTarget.StandaloneLinux, new[] {GraphicsAPI.OpenGL, GraphicsAPI.Vulkan}},
-                {BuildTarget.StandaloneMac, new[] {GraphicsAPI.Metal, GraphicsAPI.OpenGL}}
-            };
+            public Dictionary<BuildTarget, GraphicsAPI[]> GraphicBackends { get; set; } = new Dictionary<BuildTarget, GraphicsAPI[]> {{BuildTarget.StandaloneWindows, new[] {GraphicsAPI.Direct3D11, GraphicsAPI.Direct3D12, GraphicsAPI.Vulkan, GraphicsAPI.OpenGL}}, {BuildTarget.StandaloneLinux, new[] {GraphicsAPI.OpenGL, GraphicsAPI.Vulkan}}, {BuildTarget.StandaloneMac, new[] {GraphicsAPI.Metal, GraphicsAPI.OpenGL}}};
 
             public MSAAMode MSAAMode { get; set; } = MSAAMode.X16;
 

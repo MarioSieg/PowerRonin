@@ -162,8 +162,11 @@ namespace Dreamcast.Mathematics
         [StructLayout(LayoutKind.Explicit)]
         private struct FloatToUint
         {
-            [FieldOffset(0)] public uint uintValue;
-            [FieldOffset(0)] public float floatValue;
+            [FieldOffset(0)]
+            public uint uintValue;
+
+            [FieldOffset(0)]
+            public float floatValue;
         }
     }
 }

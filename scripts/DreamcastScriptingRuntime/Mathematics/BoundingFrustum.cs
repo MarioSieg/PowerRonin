@@ -185,7 +185,12 @@ namespace Dreamcast.Mathematics
             }
         }
 
-        private static void GetPlanesFromMatrix(ref Matrix4x4 matrix, out Plane near, out Plane far, out Plane left, out Plane right, out Plane top,
+        private static void GetPlanesFromMatrix(ref Matrix4x4 matrix,
+            out Plane near,
+            out Plane far,
+            out Plane left,
+            out Plane right,
+            out Plane top,
             out Plane bottom)
         {
             //http://www.chadvernon.com/blog/resources/directx9/frustum-culling/

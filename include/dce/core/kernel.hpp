@@ -61,14 +61,11 @@ namespace dce {
 			/// <summary>
 			/// Delete copy and move constructor and assignment operators.
 			/// </summary>
-			/// <param name=""></param>
 			Kernel(const Kernel&) = delete;
 
 			/// <summary>
 			/// Delete copy and move constructor and assignment operators.
 			/// </summary>
-			/// <param name=""></param>
-			/// <returns></returns>
 			Kernel(Kernel&&) = delete;
 
 			/// <summary>
@@ -128,32 +125,28 @@ namespace dce {
 			/// <typeparam name="...Q"></typeparam>
 			/// <param name="_args"></param>
 			/// <returns></returns>
-			template <typename T, typename... Q> requires Subsystem<T>
-			auto create_install_subsystem(Q&&..._args) -> Kernel&;
+			template <typename T, typename... Q> requires Subsystem<T> auto create_install_subsystem(Q&&..._args) -> Kernel&;
 
 			/// <summary>
 			/// Uninstalls a subsystem and removes all hooks
 			/// </summary>
 			/// <param name="_id"></param>
 			/// <returns></returns>
-			[[nodiscard]]
-			auto uninstall_subsystem(std::uint_fast16_t _id) const -> bool;
+			[[nodiscard]] auto uninstall_subsystem(std::uint_fast16_t _id) const -> bool;
 
 			/// <summary>
 			/// Returns true if the subsystem is installed, else false
 			/// </summary>
 			/// <param name="_id"></param>
 			/// <returns></returns>
-			[[nodiscard]]
-			auto lookup_subsystem(std::uint_fast16_t _id) const -> bool;
+			[[nodiscard]] auto lookup_subsystem(std::uint_fast16_t _id) const -> bool;
 
 			/// <summary>
 			/// Install some subsystem via a hook.
 			/// </summary>
 			/// <param name="_hook"></param>
 			/// <returns></returns>
-			[[nodiscard]]
-			auto install_subsystems(auto (*const _hook)(Kernel&) -> bool) -> std::size_t;
+			[[nodiscard]] auto install_subsystems(auto (*const _hook)(Kernel&) -> bool) -> std::size_t;
 
 
 			/// <summary>
@@ -172,7 +165,9 @@ namespace dce {
 		};
 
 		template <typename T, typename... Q> requires Subsystem<T> auto Kernel::create_install_subsystem(Q&&... _args) -> Kernel& {
-			this->install_subsystem(std::move(std::make_unique<T>(_args...)));
+			auto x = std::make_unique<T>(_args...);
+			x->kernel_ = this;
+			this->install_subsystem(std::move(x));
 			return *this;
 		}
 	} // namespace core // namespace core

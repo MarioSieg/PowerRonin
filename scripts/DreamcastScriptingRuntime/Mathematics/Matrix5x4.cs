@@ -175,8 +175,26 @@ namespace Dreamcast.Mathematics
         /// <param name="M52">The value to assign at row 5 column 2 of the Matrix5x4.</param>
         /// <param name="M53">The value to assign at row 5 column 3 of the Matrix5x4.</param>
         /// <param name="M54">The value to assign at row 5 column 4 of the Matrix5x4.</param>
-        public Matrix5x4(float M11, float M12, float M13, float M14, float M21, float M22, float M23, float M24, float M31, float M32, float M33, float M34,
-            float M41, float M42, float M43, float M44, float M51, float M52, float M53, float M54)
+        public Matrix5x4(float M11,
+            float M12,
+            float M13,
+            float M14,
+            float M21,
+            float M22,
+            float M23,
+            float M24,
+            float M31,
+            float M32,
+            float M33,
+            float M34,
+            float M41,
+            float M42,
+            float M43,
+            float M44,
+            float M51,
+            float M52,
+            float M53,
+            float M54)
         {
             this.M11 = M11;
             this.M12 = M12;

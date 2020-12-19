@@ -84,6 +84,8 @@ namespace dce {
 
 
 		protected:
+			Kernel* kernel_ = nullptr;
+
 			[[nodiscard]] virtual auto on_pre_startup([[maybe_unused]] Runtime&) -> bool;
 
 			[[nodiscard]] virtual auto on_post_startup([[maybe_unused]] Runtime&) -> bool;

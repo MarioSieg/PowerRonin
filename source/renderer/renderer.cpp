@@ -14,18 +14,15 @@
 // *******************************************************************************
 
 #include "renderer.hpp"
-
 #include "clocks.hpp"
 #include "stats.hpp"
-
+#include "../sysclock.hpp"
 #include "../platform/platform.hpp"
 #include "../../include/dce/mathlib.hpp"
 #include "../../include/dce/transform.hpp"
 #include "../../include/dce/mesh_renderer.hpp"
 #include "../../include/dce/variant_visit_overloader.hpp"
 #include "../../include/dce/sun.hpp"
-
-const float *VIEW, *PROJ;
 
 namespace dce::renderer {
 	Renderer::Renderer() : ISubsystem("Renderer", EVENTS), shader_bucket_(this->gpu_) { }
@@ -49,6 +46,8 @@ namespace dce::renderer {
 				return false;
 			}
 		}
+
+		this->tick_prev_ = get_high_precision_counter();
 
 		return true;
 	}

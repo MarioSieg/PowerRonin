@@ -89,16 +89,23 @@ namespace dce::renderer {
 	}
 
 	void render_stats(const Runtime& _runtime) {
-		/*const auto& chrono = _runtime.chrono();
-		
-		const auto x = static_cast<unsigned int>(_runtime.render_data().scenery_viewport_position.x);
-		const auto y = static_cast<unsigned int>(_runtime.render_data().scenery_viewport_position.y);
-		const auto w = static_cast<unsigned int>(_runtime.render_data().scenery_viewport_size.x);
-		const auto h = static_cast<unsigned int>(_runtime.render_data().scenery_viewport_size.y);
-		
+		const auto& chrono = _runtime.chrono();
+
+		const auto viewport_pos_x = static_cast<std::uint16_t>(_runtime.render_data().scenery_viewport_position.x);
+		const auto viewport_pos_y = static_cast<std::uint16_t>(_runtime.render_data().scenery_viewport_position.y);
+		const auto viewport_width = static_cast<std::uint32_t>(_runtime.render_data().scenery_viewport_size.x);
+		const auto viewport_height = static_cast<std::uint32_t>(_runtime.render_data().scenery_viewport_size.y);
+		const auto screen_width = bgfx::getStats()->width;
+		const auto screen_height = bgfx::getStats()->height;
+
+		const auto pos_x = math::map_range<std::uint16_t>(viewport_pos_x, 0, screen_width, 0, 500);
+		std::uint16_t pos_y = math::map_range<std::uint16_t>(viewport_pos_y, 0, screen_height, 0, 128) + 4;
+
 		bgfx::dbgTextClear();
-		bgfx::dbgTextPrintf(100, 5, 0xF, "VP x: %u y: %u w: %u h: %u", x, y, w, h);
-		bgfx::dbgTextPrintf(100, 6, 0xF, "Tick: %u", chrono.cycles);*/
+		bgfx::dbgTextPrintf(pos_x, pos_y, 0xF, "View x: %u y: %u w: %u h: %u", viewport_pos_x, viewport_pos_y, viewport_width
+		                    , viewport_height);
+		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "Tick: %u, T: %.3f, FT: %.3f ms, FPS: %.2f", chrono.cycles, chrono.time
+		                    , chrono.frame_time, chrono.fps);
 
 	}
 }

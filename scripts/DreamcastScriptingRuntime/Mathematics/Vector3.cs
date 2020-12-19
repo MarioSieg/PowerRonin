@@ -978,7 +978,14 @@ namespace Dreamcast.Mathematics
         /// <param name="maxZ">The maximum depth of the viewport.</param>
         /// <param name="worldViewProjection">The combined world-view-projection matrix.</param>
         /// <param name="result">When the method completes, contains the vector in screen space.</param>
-        public static void Project(ref Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, ref Matrix4x4 worldViewProjection,
+        public static void Project(ref Vector3 vector,
+            float x,
+            float y,
+            float width,
+            float height,
+            float minZ,
+            float maxZ,
+            ref Matrix4x4 worldViewProjection,
             out Vector3 result)
         {
             var v = new Vector3();
@@ -1017,7 +1024,14 @@ namespace Dreamcast.Mathematics
         /// <param name="maxZ">The maximum depth of the viewport.</param>
         /// <param name="worldViewProjection">The combined world-view-projection matrix.</param>
         /// <param name="result">When the method completes, contains the vector in object space.</param>
-        public static void Unproject(ref Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, ref Matrix4x4 worldViewProjection,
+        public static void Unproject(ref Vector3 vector,
+            float x,
+            float y,
+            float width,
+            float height,
+            float minZ,
+            float maxZ,
+            ref Matrix4x4 worldViewProjection,
             out Vector3 result)
         {
             var v = new Vector3();

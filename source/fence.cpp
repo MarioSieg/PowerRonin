@@ -32,7 +32,7 @@ extern "C" void _ReadWriteBarrier();
 #include <winnt.h>
 #endif
 #else
-#define MEM_BARRIER() asm volatile("":::"memory")
+#define MEM_BARRIER() asm volatile("":::"memory");
 #endif
 
 namespace dce {
@@ -42,7 +42,6 @@ namespace dce {
 		_ReadBarrier();
 #else
 		MEM_BARRIER()
-		;
 #endif
 	}
 
@@ -51,7 +50,6 @@ namespace dce {
 		_WriteBarrier();
 #else
 		MEM_BARRIER()
-		;
 #endif
 	}
 
@@ -60,7 +58,6 @@ namespace dce {
 		_ReadWriteBarrier();
 #else
 		MEM_BARRIER()
-		;
 #endif
 	}
 
