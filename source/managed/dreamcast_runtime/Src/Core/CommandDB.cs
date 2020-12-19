@@ -317,11 +317,11 @@ namespace Dreamcast.Core
                     executor = delegate
                     {
                         Protocol.Info(Configuration.DisplayConfiguration.FilePath + ":\n" +
-                                      Serializer<Configuration.DisplayConfiguration>.SerializeToXml(Configuration.Current.Display));
+                                      Serializer<Configuration.DisplayConfiguration>.SerializeToJsonString(Configuration.Current.Display));
                         Protocol.Info(Configuration.OverlayConfiguration.FilePath + ":\n" +
-                                      Serializer<Configuration.OverlayConfiguration>.SerializeToXml(Configuration.Current.Overlay));
+                                      Serializer<Configuration.OverlayConfiguration>.SerializeToJsonString(Configuration.Current.Overlay));
                         Protocol.Info(Configuration.GraphicsConfiguration.FilePath + ":\n" +
-                                      Serializer<Configuration.GraphicsConfiguration>.SerializeToXml(Configuration.Current.Graphics));
+                                      Serializer<Configuration.GraphicsConfiguration>.SerializeToJsonString(Configuration.Current.Graphics));
                     }
                 },
                 new Command

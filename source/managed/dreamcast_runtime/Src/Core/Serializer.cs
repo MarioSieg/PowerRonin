@@ -15,7 +15,8 @@
 
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using YAXLib;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Dreamcast.Core
 {
@@ -30,10 +31,9 @@ namespace Dreamcast.Core
         /// </summary>
         /// <param name="instance">The instance to serialize.</param>
         /// <returns></returns>
-        public static string SerializeToXml(in T instance)
+        public static string SerializeToJsonString(in T instance)
         {
-            var serializer = new YAXSerializer(typeof(T));
-            return serializer.Serialize(instance);
+            return JsonConvert.SerializeObject(instance, Formatting.Indented, new StringEnumConverter());
         }
 
         /// <summary>
@@ -41,13 +41,9 @@ namespace Dreamcast.Core
         /// </summary>
         /// <param name="data">The XML string.</param>
         /// <returns>The deserialized object.</returns>
-        public static T DeserializeFromXml(string data)
+        public static T DeserializeFromJsonString(string data)
         {
-            var serializer = new YAXSerializer(typeof(T));
-            using (var stream = new StringReader(data))
-            {
-                return (T) serializer.Deserialize(stream);
-            }
+            return (T) JsonConvert.DeserializeObject(data);
         }
 
         /// <summary>
@@ -55,10 +51,9 @@ namespace Dreamcast.Core
         /// </summary>
         /// <param name="instance">The instance to serialize.</param>
         /// <param name="path">The file to serialize into.</param>
-        public static void SerializeToXmlFile(in T instance, string path)
+        public static void SerializeToJsonFile(in T instance, string path)
         {
-            var serializer = new YAXSerializer(typeof(T));
-            serializer.SerializeToFile(instance, path);
+            File.WriteAllText(path, JsonConvert.SerializeObject(instance, Formatting.Indented, new StringEnumConverter()));
         }
 
         /// <summary>
@@ -66,10 +61,9 @@ namespace Dreamcast.Core
         /// </summary>
         /// <param name="path">The file to serialize from.</param>
         /// <returns>The deserialized object.</returns>
-        public static T DeserializeFromXmlFile(string path)
+        public static T DeserializeFromJsonFile(string path)
         {
-            var serializer = new YAXSerializer(typeof(T));
-            return (T) serializer.DeserializeFromFile(path);
+            return (T) JsonConvert.DeserializeObject(File.ReadAllText(path));
         }
 
         /// <summary>

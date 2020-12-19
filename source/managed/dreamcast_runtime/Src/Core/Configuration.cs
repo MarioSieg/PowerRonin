@@ -67,9 +67,9 @@ namespace Dreamcast.Core
             {
                 if (!Directory.Exists(ConfigDirectory))
                     Directory.CreateDirectory(ConfigDirectory);
-                Serializer<DisplayConfiguration>.SerializeToXmlFile(Current.Display, DisplayConfiguration.FilePath);
-                Serializer<OverlayConfiguration>.SerializeToXmlFile(Current.Overlay, OverlayConfiguration.FilePath);
-                Serializer<GraphicsConfiguration>.SerializeToXmlFile(Current.Graphics, GraphicsConfiguration.FilePath);
+                Serializer<DisplayConfiguration>.SerializeToJsonFile(Current.Display, DisplayConfiguration.FilePath);
+                Serializer<OverlayConfiguration>.SerializeToJsonFile(Current.Overlay, OverlayConfiguration.FilePath);
+                Serializer<GraphicsConfiguration>.SerializeToJsonFile(Current.Graphics, GraphicsConfiguration.FilePath);
             }
             catch (Exception e)
             {
@@ -90,9 +90,9 @@ namespace Dreamcast.Core
 
             try
             {
-                Current.Display = Serializer<DisplayConfiguration>.DeserializeFromXmlFile(DisplayConfiguration.FilePath);
-                Current.Overlay = Serializer<OverlayConfiguration>.DeserializeFromXmlFile(OverlayConfiguration.FilePath);
-                Current.Graphics = Serializer<GraphicsConfiguration>.DeserializeFromXmlFile(GraphicsConfiguration.FilePath);
+                Current.Display = Serializer<DisplayConfiguration>.DeserializeFromJsonFile(DisplayConfiguration.FilePath);
+                Current.Overlay = Serializer<OverlayConfiguration>.DeserializeFromJsonFile(OverlayConfiguration.FilePath);
+                Current.Graphics = Serializer<GraphicsConfiguration>.DeserializeFromJsonFile(GraphicsConfiguration.FilePath);
                 Protocol.Info("Deserialized all configs!");
             }
             catch (Exception)
