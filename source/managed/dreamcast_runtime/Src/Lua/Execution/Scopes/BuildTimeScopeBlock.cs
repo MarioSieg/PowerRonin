@@ -104,10 +104,7 @@ namespace Dreamcast.Lua.Interpreter.Execution.Scopes
             if (m_LocalLabels == null)
                 m_LocalLabels = new Dictionary<string, LabelStatement>();
 
-            if (m_LocalLabels.ContainsKey(label.Label))
-            {
-                throw new SyntaxErrorException(label.NameToken, "label '{0}' already defined on line {1}", label.Label, m_LocalLabels[label.Label].SourceRef.FromLine);
-            }
+            if (m_LocalLabels.ContainsKey(label.Label)) throw new SyntaxErrorException(label.NameToken, "label '{0}' already defined on line {1}", label.Label, m_LocalLabels[label.Label].SourceRef.FromLine);
 
             m_LocalLabels.Add(label.Label, label);
             label.SetDefinedVars(m_DefinedNames.Count, m_LastDefinedName);

@@ -23,10 +23,10 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
     /// <summary>
     ///     Class implementing loading Lua functions like 'require', 'load', etc.
     /// </summary>
-    [Dreamcast.LuaModule]
+    [LuaModule]
     public class LoadModule
     {
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public const string require = @"
 function(modulename)
 	if (package == nil) then package = { }; end
@@ -51,7 +51,7 @@ function(modulename)
 	return res;
 end";
 
-        public static void Dreamcast.LuaInit(Table globalTable, Table ioTable)
+        public static void LuaInit(Table globalTable, Table ioTable)
         {
             DynValue package = globalTable.Get("package");
 
@@ -89,7 +89,7 @@ end";
         // or to "=(load)" otherwise.
         // 
         // The string mode is ignored, and assumed to be "t"; 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue load(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return load_impl(executionContext, args, null);
@@ -99,7 +99,7 @@ end";
         // ----------------------------------------------------------------
         // Same as load, except that "env" defaults to the current environment of the function
         // calling load, instead of the actual global environment.
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue loadsafe(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return load_impl(executionContext, args, GetSafeDefaultEnv(executionContext));
@@ -148,7 +148,7 @@ end";
         // ----------------------------------------------------------------
         // Similar to load, but gets the chunk from file filename or from the standard input, 
         // if no file name is given. INCOMPAT: stdin not supported, mode ignored
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue loadfile(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return loadfile_impl(executionContext, args, null);
@@ -158,7 +158,7 @@ end";
         // ----------------------------------------------------------------
         // Same as loadfile, except that "env" defaults to the current environment of the function
         // calling load, instead of the actual global environment.
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue loadfilesafe(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return loadfile_impl(executionContext, args, GetSafeDefaultEnv(executionContext));
@@ -199,7 +199,7 @@ end";
         //Opens the named file and executes its contents as a Lua chunk. When called without arguments, 
         //dofile executes the contents of the standard input (stdin). Returns all values returned by the chunk. 
         //In case of errors, dofile propagates the error to its caller (that is, dofile does not run in protected mode). 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue dofile(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             try
@@ -238,7 +238,7 @@ end";
         //
         //If there is any error loading or running the module, or if it cannot find any loader for the module, then require 
         //signals an error. 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue __require_clr_impl(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             Script S = executionContext.GetScript();

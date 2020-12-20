@@ -25,16 +25,16 @@ namespace Dreamcast.Lua.Interpreter.Tree.Expressions
     internal class FunctionDefinitionExpression : Expression, IClosureBuilder
     {
         private readonly SourceRef m_Begin;
-        private SourceRef m_End;
         private readonly List<SymbolRef> m_Closure = new();
-        private Instruction m_ClosureInstruction;
         private readonly SymbolRef m_Env;
-        private bool m_HasVarArgs;
         private readonly SymbolRef[] m_ParamNames;
         private readonly RuntimeScopeFrame m_StackFrame;
         private readonly Statement m_Statement;
 
         private readonly bool m_UsesGlobalEnv;
+        private Instruction m_ClosureInstruction;
+        private SourceRef m_End;
+        private bool m_HasVarArgs;
 
 
         public FunctionDefinitionExpression(ScriptLoadingContext lcontext, bool usesGlobalEnv)

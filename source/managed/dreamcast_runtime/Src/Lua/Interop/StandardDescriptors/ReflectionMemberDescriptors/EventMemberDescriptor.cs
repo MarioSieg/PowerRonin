@@ -37,12 +37,12 @@ namespace Dreamcast.Lua.Interpreter.Interop
         public const int MAX_ARGS_IN_DELEGATE = 16;
 
         private readonly MethodInfo m_Add;
-        private readonly MethodInfo m_Remove;
         private readonly MultiDictionary<object, Closure> m_Callbacks = new(new ReferenceEqualityComparer());
         private readonly Dictionary<object, Delegate> m_Delegates = new(new ReferenceEqualityComparer());
 
 
         private readonly object m_Lock = new();
+        private readonly MethodInfo m_Remove;
 
 
         /// <summary>

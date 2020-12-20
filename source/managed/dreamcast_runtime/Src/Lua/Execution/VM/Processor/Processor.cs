@@ -24,22 +24,22 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
 {
     internal sealed partial class Processor
     {
-        private bool m_CanYield = true;
         private readonly List<Processor> m_CoroutinesStack;
         private readonly DebugContext m_Debug;
-        private int m_ExecutionNesting;
         private readonly FastStack<CallStackItem> m_ExecutionStack = new(131072);
 
         private readonly Table m_GlobalTable;
-
-
-        private int m_OwningThreadID = -1;
         private readonly Processor m_Parent;
         private readonly ByteCode m_RootChunk;
-        private int m_SavedInstructionPtr = -1;
         private readonly Script m_Script;
 
         private readonly FastStack<DynValue> m_ValueStack = new(131072);
+        private bool m_CanYield = true;
+        private int m_ExecutionNesting;
+
+
+        private int m_OwningThreadID = -1;
+        private int m_SavedInstructionPtr = -1;
 
         public Processor(Script script, Table globalContext, ByteCode byteCode)
         {

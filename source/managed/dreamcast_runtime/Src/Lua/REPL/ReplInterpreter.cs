@@ -22,8 +22,8 @@ namespace Dreamcast.Lua.Interpreter.REPL
     /// </summary>
     public class ReplInterpreter
     {
-        private string m_CurrentCommand = string.Empty;
         private readonly Script m_Script;
+        private string m_CurrentCommand = string.Empty;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ReplInterpreter" /> class.

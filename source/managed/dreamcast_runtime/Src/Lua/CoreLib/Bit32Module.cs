@@ -22,7 +22,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
     /// <summary>
     ///     Class implementing bit32 Lua functions
     /// </summary>
-    [Dreamcast.LuaModule(Namespace = "bit32")]
+    [LuaModule(Namespace = "bit32")]
     public class Bit32Module
     {
         private static readonly uint[] MASKS = {0x1, 0x3, 0x7, 0xF, 0x1F, 0x3F, 0x7F, 0xFF, 0x1FF, 0x3FF, 0x7FF, 0xFFF, 0x1FFF, 0x3FFF, 0x7FFF, 0xFFFF, 0x1FFFF, 0x3FFFF, 0x7FFFF, 0xFFFFF, 0x1FFFFF, 0x3FFFFF, 0x7FFFFF, 0xFFFFFF, 0x1FFFFFF, 0x3FFFFFF, 0x7FFFFFF, 0xFFFFFFF, 0x1FFFFFFF, 0x3FFFFFFF, 0x7FFFFFFF, 0xFFFFFFFF};
@@ -65,7 +65,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         }
 
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue extract(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v_v = args.AsType(0, "extract", DataType.Number);
@@ -84,7 +84,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         }
 
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue replace(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v_v = args.AsType(0, "replace", DataType.Number);
@@ -122,7 +122,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         }
 
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue arshift(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v_v = args.AsType(0, "arshift", DataType.Number);
@@ -141,7 +141,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         }
 
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue rshift(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v_v = args.AsType(0, "rshift", DataType.Number);
@@ -160,7 +160,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         }
 
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue lshift(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v_v = args.AsType(0, "lshift", DataType.Number);
@@ -178,25 +178,25 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             return DynValue.NewNumber(v);
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue band(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return DynValue.NewNumber(Bitwise("band", args, (x, y) => x & y));
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue btest(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return DynValue.NewBoolean(0 != Bitwise("btest", args, (x, y) => x & y));
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue bor(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return DynValue.NewNumber(Bitwise("bor", args, (x, y) => x | y));
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue bnot(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v_v = args.AsType(0, "bnot", DataType.Number);
@@ -204,13 +204,13 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             return DynValue.NewNumber(~v);
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue bxor(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return DynValue.NewNumber(Bitwise("bxor", args, (x, y) => x ^ y));
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue lrotate(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v_v = args.AsType(0, "lrotate", DataType.Number);
@@ -228,7 +228,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             return DynValue.NewNumber(v);
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue rrotate(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v_v = args.AsType(0, "rrotate", DataType.Number);

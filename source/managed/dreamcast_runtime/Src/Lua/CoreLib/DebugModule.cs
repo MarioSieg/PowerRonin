@@ -25,10 +25,10 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
     /// <summary>
     ///     Class implementing debug Lua functions. Support for the debug module is partial.
     /// </summary>
-    [Dreamcast.LuaModule(Namespace = "debug")]
+    [LuaModule(Namespace = "debug")]
     public class DebugModule
     {
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue debug(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             Script script = executionContext.GetScript();
@@ -60,7 +60,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             }
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue getuservalue(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v = args[0];
@@ -71,7 +71,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             return v.UserData.UserValue ?? DynValue.Nil;
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue setuservalue(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v = args.AsType(0, "setuservalue", DataType.UserData);
@@ -80,13 +80,13 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             return v.UserData.UserValue = t;
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue getregistry(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return DynValue.NewTable(executionContext.GetScript().Registry);
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue getmetatable(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v = args[0];
@@ -99,7 +99,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             return DynValue.Nil;
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue setmetatable(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v = args[0];
@@ -117,7 +117,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             return v;
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue getupvalue(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             var index = (int) args.AsType(1, "getupvalue", DataType.Number).Number - 1;
@@ -138,7 +138,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         }
 
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue upvalueid(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             var index = (int) args.AsType(1, "getupvalue", DataType.Number).Number - 1;
@@ -157,7 +157,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         }
 
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue setupvalue(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             var index = (int) args.AsType(1, "setupvalue", DataType.Number).Number - 1;
@@ -178,7 +178,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         }
 
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue upvaluejoin(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue f1 = args.AsType(0, "upvaluejoin", DataType.Function);
@@ -201,7 +201,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         }
 
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue traceback(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             StringBuilder sb = new();
@@ -253,7 +253,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             return DynValue.NewString(sb);
         }
 
-        //[Dreamcast.LuaModuleMethod]
+        //[LuaModuleMethod]
         //public static DynValue getlocal(ScriptExecutionContext executionContext, CallbackArguments args)
         //{
         //	Coroutine c;

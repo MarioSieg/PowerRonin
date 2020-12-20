@@ -26,11 +26,11 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
 {
     internal class ByteCode : RefIdObject
     {
+        private readonly List<SourceRef> m_SourceRefStack = new();
         public List<Instruction> Code = new();
 
         internal LoopTracker LoopTracker = new();
         private SourceRef m_CurrentSourceRef;
-        private readonly List<SourceRef> m_SourceRefStack = new();
 
         public ByteCode(Script script)
         {

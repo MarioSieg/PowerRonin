@@ -90,7 +90,7 @@ namespace Dreamcast.Lua.Interpreter.Debugging
                 if (i == sourceCodeRef.FromLine)
                 {
                     var from = AdjustStrIndex(Lines[i], sourceCodeRef.FromChar);
-                    sb.Append(Lines[i].Substring(@from));
+                    sb.Append(Lines[i].Substring(from));
                 }
                 else if (i == sourceCodeRef.ToLine)
                 {

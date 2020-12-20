@@ -23,9 +23,9 @@ namespace Dreamcast.Lua.Interpreter.Tree.Statements
     {
         private readonly Statement m_Block;
         private readonly Expression m_Condition;
+        private readonly SourceRef m_End;
         private readonly RuntimeScopeBlock m_StackFrame;
         private readonly SourceRef m_Start;
-        private readonly SourceRef m_End;
 
         public WhileStatement(ScriptLoadingContext lcontext)
             : base(lcontext)

@@ -21,13 +21,13 @@ namespace Dreamcast.Lua.Interpreter.Tree
     {
         private readonly bool m_AutoSkipComments;
         private readonly string m_Code;
+        private readonly int m_SourceId;
         private int m_Col;
         private Token m_Current;
         private int m_Cursor;
         private int m_Line = 1;
         private int m_PrevColTo = 1;
         private int m_PrevLineTo;
-        private readonly int m_SourceId;
 
         public Lexer(int sourceID, string scriptContent, bool autoSkipComments)
         {
@@ -257,10 +257,7 @@ namespace Dreamcast.Lua.Interpreter.Tree
                         return CreateNameToken(name, fromLine, fromCol);
                     }
 
-                    if (LexerUtils.CharIsDigit(c))
-                    {
-                        return ReadNumberToken(fromLine, fromCol, false);
-                    }
+                    if (LexerUtils.CharIsDigit(c)) return ReadNumberToken(fromLine, fromCol, false);
                 }
 
                     throw new SyntaxErrorException(CreateToken(TokenType.Invalid, fromLine, fromCol), "unexpected symbol near '{0}'", CursorChar());

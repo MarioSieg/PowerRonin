@@ -15,7 +15,7 @@
 
 namespace Dreamcast.Core
 {
-    public enum MSAAMode : byte
+    public enum MsaaMode : byte
     {
         Off = 1,
         X2 = 2,

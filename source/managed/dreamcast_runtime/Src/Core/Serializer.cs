@@ -13,6 +13,7 @@
 // support@kerbogames.com
 // *******************************************************************************
 
+using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Dreamcast.Json;
@@ -24,7 +25,7 @@ namespace Dreamcast.Core
     ///     Contains helpers for de/serialization.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public static class Serializer<T>
+    public static class Serializer<T> where T : new()
     {
         /// <summary>
         ///     Serializes T into a XML string.
@@ -43,7 +44,7 @@ namespace Dreamcast.Core
         /// <returns>The deserialized object.</returns>
         public static T DeserializeFromJsonString(string data)
         {
-            return (T) JsonConvert.DeserializeObject(data);
+            return (T) (JsonConvert.DeserializeObject(data) ?? new T());
         }
 
         /// <summary>
@@ -63,7 +64,7 @@ namespace Dreamcast.Core
         /// <returns>The deserialized object.</returns>
         public static T DeserializeFromJsonFile(string path)
         {
-            return (T) JsonConvert.DeserializeObject(File.ReadAllText(path));
+            return (T) (JsonConvert.DeserializeObject(File.ReadAllText(path)) ?? new T());
         }
 
         /// <summary>
@@ -73,12 +74,11 @@ namespace Dreamcast.Core
         /// <param name="path">The file to serialize into.</param>
         public static void SerializeToBinaryFile(in T instance, string path)
         {
+            if (instance == null) throw new ArgumentNullException(nameof(instance));
             var formatter = new BinaryFormatter();
-            using (var stream = new FileStream(path, FileMode.OpenOrCreate))
-            {
-                formatter.Serialize(stream, instance);
-                stream.Flush(true);
-            }
+            using var stream = new FileStream(path, FileMode.OpenOrCreate);
+            formatter.Serialize(stream, instance);
+            stream.Flush(true);
         }
 
         /// <summary>
@@ -88,13 +88,9 @@ namespace Dreamcast.Core
         /// <returns>The deserialized object.</returns>
         public static T DeserializeFromBinaryFile(string path)
         {
-            object result;
             var formatter = new BinaryFormatter();
-            using (var stream = new FileStream(path, FileMode.Open))
-            {
-                result = formatter.Deserialize(stream);
-            }
-
+            using var stream = new FileStream(path, FileMode.Open);
+            object result = formatter.Deserialize(stream);
             return (T) result;
         }
     }

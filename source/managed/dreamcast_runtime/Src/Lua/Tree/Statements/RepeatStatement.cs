@@ -24,8 +24,8 @@ namespace Dreamcast.Lua.Interpreter.Tree.Statements
         private readonly Statement m_Block;
         private readonly Expression m_Condition;
         private readonly SourceRef m_Repeat;
-        private readonly SourceRef m_Until;
         private readonly RuntimeScopeBlock m_StackFrame;
+        private readonly SourceRef m_Until;
 
         public RepeatStatement(ScriptLoadingContext lcontext)
             : base(lcontext)

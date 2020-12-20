@@ -13,7 +13,6 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-
 namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>

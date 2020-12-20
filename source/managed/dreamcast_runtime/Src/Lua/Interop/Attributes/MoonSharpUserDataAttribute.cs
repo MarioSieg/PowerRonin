@@ -21,12 +21,12 @@ namespace Dreamcast.Lua.Interpreter
     ///     Marks a type of automatic registration as userdata (which happens only if UserData.RegisterAssembly is called).
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false)]
-    public sealed class Dreamcast.LuaUserDataAttribute : Attribute
+    public sealed class LuaUserDataAttribute : Attribute
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Dreamcast.LuaUserDataAttribute" /> class.
+        ///     Initializes a new instance of the <see cref="LuaUserDataAttribute" /> class.
         /// </summary>
-        public Dreamcast.LuaUserDataAttribute()
+        public LuaUserDataAttribute()
         {
             AccessMode = InteropAccessMode.Default;
         }

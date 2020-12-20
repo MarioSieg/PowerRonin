@@ -22,19 +22,19 @@ namespace Dreamcast.Lua.Interpreter.Interop
     /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Property | AttributeTargets.Field
                     | AttributeTargets.Constructor | AttributeTargets.Event)]
-    public sealed class Dreamcast.LuaVisibleAttribute : Attribute
+    public sealed class LuaVisibleAttribute : Attribute
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Dreamcast.LuaVisibleAttribute" /> class.
+        ///     Initializes a new instance of the <see cref="LuaVisibleAttribute" /> class.
         /// </summary>
         /// <param name="visible">if set to true the member will be exposed to scripts, if false the member will be hidden.</param>
-        public Dreamcast.LuaVisibleAttribute(bool visible)
+        public LuaVisibleAttribute(bool visible)
         {
             Visible = visible;
         }
 
         /// <summary>
-        ///     Gets a value indicating whether this <see cref="Dreamcast.LuaVisibleAttribute" /> is set to "visible".
+        ///     Gets a value indicating whether this <see cref="LuaVisibleAttribute" /> is set to "visible".
         /// </summary>
         public bool Visible { get; }
     }

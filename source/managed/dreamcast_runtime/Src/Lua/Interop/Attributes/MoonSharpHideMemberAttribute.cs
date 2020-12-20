@@ -21,13 +21,13 @@ namespace Dreamcast.Lua.Interpreter
     ///     Lists a userdata member not to be exposed to scripts referencing it by name.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = true)]
-    public sealed class Dreamcast.LuaHideMemberAttribute : Attribute
+    public sealed class LuaHideMemberAttribute : Attribute
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Dreamcast.LuaHideMemberAttribute" /> class.
+        ///     Initializes a new instance of the <see cref="LuaHideMemberAttribute" /> class.
         /// </summary>
         /// <param name="memberName">Name of the member to hide.</param>
-        public Dreamcast.LuaHideMemberAttribute(string memberName)
+        public LuaHideMemberAttribute(string memberName)
         {
             MemberName = memberName;
         }

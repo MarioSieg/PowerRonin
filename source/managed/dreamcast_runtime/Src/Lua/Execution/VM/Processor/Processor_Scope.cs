@@ -26,7 +26,7 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
 
             var array = m_ExecutionStack.Peek().LocalScope;
 
-            if (to >= 0 && from >= 0 && to >= from) Array.Clear(array, @from, to - @from + 1);
+            if (to >= 0 && from >= 0 && to >= from) Array.Clear(array, from, to - from + 1);
         }
 
 

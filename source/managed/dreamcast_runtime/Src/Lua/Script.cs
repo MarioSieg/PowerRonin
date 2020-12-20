@@ -30,7 +30,8 @@ using Dreamcast.Lua.Interpreter.Tree.Fast_Interface;
 namespace Dreamcast.Lua.Interpreter
 {
     /// <summary>
-    ///     This class implements a Dreamcast.Lua scripting session. Multiple Script objects can coexist in the same program but
+    ///     This class implements a Dreamcast.Lua scripting session. Multiple Script objects can coexist in the same program
+    ///     but
     ///     cannot share
     ///     data among themselves unless some mechanism is put in place.
     /// </summary>
@@ -47,11 +48,11 @@ namespace Dreamcast.Lua.Interpreter
         public const string LUA_VERSION = "5.2";
 
         private readonly ByteCode m_ByteCode;
-        private IDebugger m_Debugger;
 
         private readonly Processor m_MainProcessor;
         private readonly List<SourceCode> m_Sources = new();
         private readonly Table[] m_TypeMetatables = new Table[(int) LuaTypeExtensions.MaxMetaTypes];
+        private IDebugger m_Debugger;
 
         /// <summary>
         ///     Initializes the <see cref="Script" /> class.
@@ -456,7 +457,7 @@ namespace Dreamcast.Lua.Interpreter
             }
             else
             {
-                var syms = new[] {new() {i_Env = null, i_Index = 0, i_Name = WellKnownSymbols.ENV, i_Type = SymbolRefType.DefaultEnv}};
+                var syms = new SymbolRef[] {new() {i_Env = null, i_Index = 0, i_Name = WellKnownSymbols.ENV, i_Type = SymbolRefType.DefaultEnv}};
 
                 var vals = new[] {DynValue.NewTable(envTable)};
 

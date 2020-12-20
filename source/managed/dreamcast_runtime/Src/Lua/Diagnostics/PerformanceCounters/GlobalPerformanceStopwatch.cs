@@ -24,8 +24,8 @@ namespace Dreamcast.Lua.Interpreter.Diagnostics.PerformanceCounters
     /// </summary>
     internal class GlobalPerformanceStopwatch : IPerformanceStopwatch
     {
-        private int m_Count;
         private readonly PerformanceCounter m_Counter;
+        private int m_Count;
         private long m_Elapsed;
 
         public GlobalPerformanceStopwatch(PerformanceCounter perfcounter)

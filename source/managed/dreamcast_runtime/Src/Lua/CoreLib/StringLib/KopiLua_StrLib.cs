@@ -536,10 +536,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib.StringLib
             while (l1 > 0 && (init = memchr(s1, s2[0], l1)) != null)
             {
                 init = init.next(); /* 1st char is already checked */
-                if (memcmp(init, s2 + 1, l2) == 0)
-                {
-                    return init - 1;
-                }
+                if (memcmp(init, s2 + 1, l2) == 0) return init - 1;
 
                 /* correct `l1' and `s1' to try again */
                 l1 -= (uint) (init - s1);

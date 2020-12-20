@@ -30,12 +30,12 @@ namespace Dreamcast.Lua.Interpreter.Interop
     public class OverloadedMethodMemberDescriptor : IOptimizableDescriptor, IMemberDescriptor, IWireableDescriptor
     {
         private const int CACHE_SIZE = 5;
+
+        private readonly List<IOverloadableMemberDescriptor> m_Overloads = new();
         private OverloadCacheItem[] m_Cache = new OverloadCacheItem[CACHE_SIZE];
         private int m_CacheHits;
         private int m_ExtensionMethodVersion;
         private List<IOverloadableMemberDescriptor> m_ExtOverloads = new();
-
-        private readonly List<IOverloadableMemberDescriptor> m_Overloads = new();
         private bool m_Unsorted = true;
 
 

@@ -24,10 +24,10 @@ namespace Dreamcast.Lua.Interpreter.Diagnostics.PerformanceCounters
     /// </summary>
     internal class PerformanceStopwatch : IDisposable, IPerformanceStopwatch
     {
-        private int m_Count;
         private readonly PerformanceCounter m_Counter;
-        private int m_Reentrant;
         private readonly Stopwatch m_Stopwatch = new();
+        private int m_Count;
+        private int m_Reentrant;
 
         public PerformanceStopwatch(PerformanceCounter perfcounter)
         {

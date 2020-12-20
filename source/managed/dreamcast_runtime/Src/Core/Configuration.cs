@@ -182,7 +182,7 @@ namespace Dreamcast.Core
 
             public Dictionary<BuildTarget, GraphicsAPI[]> GraphicBackends { get; set; } = new() {{BuildTarget.StandaloneWindows, new[] {GraphicsAPI.Direct3D11, GraphicsAPI.Direct3D12, GraphicsAPI.Vulkan, GraphicsAPI.OpenGL}}, {BuildTarget.StandaloneLinux, new[] {GraphicsAPI.OpenGL, GraphicsAPI.Vulkan}}, {BuildTarget.StandaloneMac, new[] {GraphicsAPI.Metal, GraphicsAPI.OpenGL}}};
 
-            public MSAAMode MSAAMode { get; set; } = MSAAMode.X16;
+            public MsaaMode MSAAMode { get; set; } = MsaaMode.X16;
 
             public bool EnableHighDPIMode { get; set; } = false;
 

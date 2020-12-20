@@ -84,10 +84,7 @@ namespace Dreamcast.Lua.Interpreter.Interop.LuaStateInterop
         {
             if (retvals == 0) return DynValue.Nil;
 
-            if (retvals == 1)
-            {
-                return Top();
-            }
+            if (retvals == 1) return Top();
 
             DynValue[] rets = GetTopArray(retvals);
             return DynValue.NewTupleNested(rets);

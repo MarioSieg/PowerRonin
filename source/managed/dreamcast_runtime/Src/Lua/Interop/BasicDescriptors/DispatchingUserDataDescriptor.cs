@@ -49,9 +49,10 @@ namespace Dreamcast.Lua.Interpreter.Interop.BasicDescriptors
         /// </summary>
         protected const string SPECIALNAME_CAST_IMPLICIT = "op_Implicit";
 
-        private int m_ExtMethodsVersion;
         private readonly Dictionary<string, IMemberDescriptor> m_Members = new();
         private readonly Dictionary<string, IMemberDescriptor> m_MetaMembers = new();
+
+        private int m_ExtMethodsVersion;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="StandardUserDataDescriptor" /> class.

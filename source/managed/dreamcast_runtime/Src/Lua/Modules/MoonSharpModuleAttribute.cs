@@ -30,7 +30,7 @@ namespace Dreamcast.Lua.Interpreter
     ///     See <see cref="UserData" /> for easier object marshalling.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-    public sealed class Dreamcast.LuaModuleAttribute : Attribute
+    public sealed class LuaModuleAttribute : Attribute
     {
         /// <summary>
         ///     Gets or sets the namespace, that is the name of the table which will contain the defined functions.

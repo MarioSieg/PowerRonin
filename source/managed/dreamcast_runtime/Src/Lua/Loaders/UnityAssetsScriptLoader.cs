@@ -151,10 +151,7 @@ namespace Dreamcast.Lua.Interpreter.Loaders
         {
             file = GetFileName(file);
 
-            if (m_Resources.ContainsKey(file))
-            {
-                return m_Resources[file];
-            }
+            if (m_Resources.ContainsKey(file)) return m_Resources[file];
 
             var error = string.Format(
                 @"Cannot load script '{0}'. By default, scripts should be .txt files placed under a Assets/Resources/{1} directory.

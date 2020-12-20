@@ -22,10 +22,10 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
     /// <summary>
     ///     Class implementing coroutine Lua functions
     /// </summary>
-    [Dreamcast.LuaModule(Namespace = "coroutine")]
+    [LuaModule(Namespace = "coroutine")]
     public class CoroutineModule
     {
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue create(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             if (args[0].Type != DataType.Function && args[0].Type != DataType.ClrFunction)
@@ -34,7 +34,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             return executionContext.GetScript().CreateCoroutine(args[0]);
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue wrap(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             if (args[0].Type != DataType.Function && args[0].Type != DataType.ClrFunction)
@@ -52,7 +52,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             return handle.Coroutine.Resume(args.GetArray());
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue resume(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue handle = args.AsType(0, "resume", DataType.Thread);
@@ -87,21 +87,21 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             }
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue yield(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return DynValue.NewYieldReq(args.GetArray());
         }
 
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue running(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             Coroutine C = executionContext.GetCallingCoroutine();
             return DynValue.NewTuple(DynValue.NewCoroutine(C), DynValue.NewBoolean(C.State == CoroutineState.Main));
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue status(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue handle = args.AsType(0, "status", DataType.Thread);

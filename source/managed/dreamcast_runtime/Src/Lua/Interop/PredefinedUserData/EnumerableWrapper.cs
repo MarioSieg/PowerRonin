@@ -24,9 +24,9 @@ namespace Dreamcast.Lua.Interpreter.Interop
     internal class EnumerableWrapper : IUserDataType
     {
         private readonly IEnumerator m_Enumerator;
+        private readonly Script m_Script;
         private bool m_HasTurnOnce;
         private DynValue m_Prev = DynValue.Nil;
-        private readonly Script m_Script;
 
         private EnumerableWrapper(Script script, IEnumerator enumerator)
         {

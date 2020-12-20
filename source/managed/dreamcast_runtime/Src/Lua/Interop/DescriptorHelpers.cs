@@ -29,7 +29,7 @@ namespace Dreamcast.Lua.Interpreter.Interop
     {
         /// <summary>
         ///     Determines whether a
-        ///     <see cref="Dreamcast.LuaVisibleAttribute" /> or a <see cref="Dreamcast.LuaHiddenAttribute" />  is changing visibility of a
+        ///     <see cref="LuaVisibleAttribute" /> or a <see cref="LuaHiddenAttribute" />  is changing visibility of a
         ///     member
         ///     to scripts.
         /// </summary>
@@ -48,16 +48,14 @@ namespace Dreamcast.Lua.Interpreter.Interop
             if (mi == null)
                 return false;
 
-            Dreamcast.LuaVisibleAttribute va = mi.GetCustomAttributes(true).OfType<Dreamcast.LuaVisibleAttribute>().SingleOrDefault();
-            Dreamcast.LuaHiddenAttribute ha = mi.GetCustomAttributes(true).OfType<Dreamcast.LuaHiddenAttribute>().SingleOrDefault();
+            LuaVisibleAttribute va = mi.GetCustomAttributes(true).OfType<LuaVisibleAttribute>().SingleOrDefault();
+            LuaHiddenAttribute ha = mi.GetCustomAttributes(true).OfType<LuaHiddenAttribute>().SingleOrDefault();
 
             if (va != null && ha != null && va.Visible)
-                throw new InvalidOperationException(string.Format("A member ('{0}') can't have discording Dreamcast.LuaHiddenAttribute and Dreamcast.LuaVisibleAttribute.", mi.Name));
+                throw new InvalidOperationException($"A member ('{mi.Name}') can't have discording Dreamcast.LuaHiddenAttribute and Dreamcast.LuaVisibleAttribute.");
             if (ha != null)
                 return false;
-            if (va != null)
-                return va.Visible;
-            return null;
+            return va?.Visible;
         }
 
         public static bool IsDelegateType(this Type t)
@@ -166,8 +164,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
         /// <returns></returns>
         public static List<string> GetMetaNamesFromAttributes(this MethodInfo mi)
         {
-            return mi.GetCustomAttributes(typeof(Dreamcast.LuaUserDataMetamethodAttribute), true)
-                .OfType<Dreamcast.LuaUserDataMetamethodAttribute>()
+            return mi.GetCustomAttributes(typeof(LuaUserDataMetamethodAttribute), true)
+                .OfType<LuaUserDataMetamethodAttribute>()
                 .Select(a => a.Name)
                 .ToList();
         }

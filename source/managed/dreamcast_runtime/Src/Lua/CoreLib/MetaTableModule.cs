@@ -21,7 +21,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
     /// <summary>
     ///     Class implementing metatable related Lua functions (xxxmetatable and rawxxx).
     /// </summary>
-    [Dreamcast.LuaModule]
+    [LuaModule]
     public class MetaTableModule
     {
         // setmetatable (table, metatable)
@@ -30,7 +30,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         // types from Lua, only from C.) If metatable is nil, removes the metatable of the given table. 
         // If the original metatable has a "__metatable" field, raises an error ("cannot change a protected metatable").
         // This function returns table. 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue setmetatable(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue table = args.AsType(0, "setmetatable", DataType.Table);
@@ -48,7 +48,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         // -------------------------------------------------------------------------------------------------------------------
         // If object does not have a metatable, returns nil. Otherwise, if the object's metatable 
         // has a "__metatable" field, returns the associated value. Otherwise, returns the metatable of the given object. 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue getmetatable(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue obj = args[0];
@@ -69,7 +69,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         // rawget (table, index)
         // -------------------------------------------------------------------------------------------------------------------
         // Gets the real value of table[index], without invoking any metamethod. table must be a table; index may be any value.
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue rawget(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue table = args.AsType(0, "rawget", DataType.Table);
@@ -83,7 +83,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         // Sets the real value of table[index] to value, without invoking any metamethod. table must be a table, 
         // index any value different from nil and NaN, and value any Lua value.
         // This function returns table. 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue rawset(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue table = args.AsType(0, "rawset", DataType.Table);
@@ -97,7 +97,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         // rawequal (v1, v2)
         // -------------------------------------------------------------------------------------------------------------------
         // Checks whether v1 is equal to v2, without invoking any metamethod. Returns a boolean. 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue rawequal(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v1 = args[0];
@@ -109,7 +109,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         //rawlen (v)
         // -------------------------------------------------------------------------------------------------------------------
         //Returns the length of the object v, which must be a table or a string, without invoking any metamethod. Returns an integer number.	
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue rawlen(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             if (args[0].Type != DataType.String && args[0].Type != DataType.Table) throw ScriptRuntimeException.BadArgument(0, "rawlen", "table or string", args[0].Type.ToErrorTypeString(), false);

@@ -123,13 +123,13 @@ namespace Dreamcast.Lua.Interpreter.Interop.UserDataRegistries
 
 
             var userDataTypes = from t in asm.SafeGetTypes()
-                let attributes = Framework.Do.GetCustomAttributes(t, typeof(Dreamcast.LuaUserDataAttribute), true)
+                let attributes = Framework.Do.GetCustomAttributes(t, typeof(LuaUserDataAttribute), true)
                 where attributes != null && attributes.Length > 0
                 select new {Attributes = attributes, DataType = t};
 
             foreach (var userDataType in userDataTypes)
                 UserData.RegisterType(userDataType.DataType, userDataType.Attributes
-                    .OfType<Dreamcast.LuaUserDataAttribute>()
+                    .OfType<LuaUserDataAttribute>()
                     .First()
                     .AccessMode);
         }
@@ -269,7 +269,7 @@ namespace Dreamcast.Lua.Interpreter.Interop.UserDataRegistries
         {
             if (accessMode == InteropAccessMode.Default)
             {
-                Dreamcast.LuaUserDataAttribute attr = Framework.Do.GetCustomAttributes(type, true).OfType<Dreamcast.LuaUserDataAttribute>()
+                LuaUserDataAttribute attr = Framework.Do.GetCustomAttributes(type, true).OfType<LuaUserDataAttribute>()
                     .SingleOrDefault();
 
                 if (attr != null)

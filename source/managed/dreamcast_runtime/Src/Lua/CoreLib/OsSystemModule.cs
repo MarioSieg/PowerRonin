@@ -23,10 +23,10 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
     ///     Class implementing system related Lua functions from the 'os' module.
     ///     Proper support requires a compatible IPlatformAccessor
     /// </summary>
-    [Dreamcast.LuaModule(Namespace = "os")]
+    [LuaModule(Namespace = "os")]
     public class OsSystemModule
     {
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue execute(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v = args.AsType(0, "execute", DataType.String, true);
@@ -49,7 +49,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             }
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue exit(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue v_exitCode = args.AsType(0, "exit", DataType.Number, true);
@@ -63,7 +63,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             throw new InvalidOperationException("Unreachable code.. reached.");
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue getenv(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue varName = args.AsType(0, "getenv", DataType.String);
@@ -75,7 +75,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             return DynValue.NewString(val);
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue remove(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             string fileName = args.AsType(0, "remove", DataType.String).String;
@@ -99,7 +99,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             }
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue rename(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             string fileNameOld = args.AsType(0, "rename", DataType.String).String;
@@ -121,13 +121,13 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             }
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue setlocale(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return DynValue.NewString("n/a");
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue tmpname(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return DynValue.NewString(Script.GlobalOptions.Platform.IO_OS_GetTempFilename());

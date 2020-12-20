@@ -20,8 +20,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.Scopes
     internal class BuildTimeScopeFrame
     {
         private readonly RuntimeScopeFrame m_ScopeFrame = new();
-        private BuildTimeScopeBlock m_ScopeTreeHead;
         private readonly BuildTimeScopeBlock m_ScopeTreeRoot;
+        private BuildTimeScopeBlock m_ScopeTreeHead;
 
         internal BuildTimeScopeFrame(bool hasVarArgs)
         {

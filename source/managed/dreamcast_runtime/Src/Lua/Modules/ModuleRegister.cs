@@ -100,9 +100,9 @@ namespace Dreamcast.Lua.Interpreter
             Table table = CreateModuleNamespace(gtable, t);
 
             foreach (MethodInfo mi in Framework.Do.GetMethods(t).Where(__mi => __mi.IsStatic))
-                if (mi.GetCustomAttributes(typeof(Dreamcast.LuaModuleMethodAttribute), false).ToArray().Length > 0)
+                if (mi.GetCustomAttributes(typeof(LuaModuleMethodAttribute), false).ToArray().Length > 0)
                 {
-                    Dreamcast.LuaModuleMethodAttribute attr = (Dreamcast.LuaModuleMethodAttribute) mi.GetCustomAttributes(typeof(Dreamcast.LuaModuleMethodAttribute), false).First();
+                    LuaModuleMethodAttribute attr = (LuaModuleMethodAttribute) mi.GetCustomAttributes(typeof(LuaModuleMethodAttribute), false).First();
 
                     if (!CallbackFunction.CheckCallbackSignature(mi, true))
                         throw new ArgumentException(string.Format("Method {0} does not have the right signature.", mi.Name));
@@ -127,17 +127,17 @@ namespace Dreamcast.Lua.Interpreter
                     mi.Invoke(null, args);
                 }
 
-            foreach (FieldInfo fi in Framework.Do.GetFields(t).Where(_mi => _mi.IsStatic && _mi.GetCustomAttributes(typeof(Dreamcast.LuaModuleMethodAttribute), false).ToArray().Length > 0))
+            foreach (FieldInfo fi in Framework.Do.GetFields(t).Where(_mi => _mi.IsStatic && _mi.GetCustomAttributes(typeof(LuaModuleMethodAttribute), false).ToArray().Length > 0))
             {
-                Dreamcast.LuaModuleMethodAttribute attr = (Dreamcast.LuaModuleMethodAttribute) fi.GetCustomAttributes(typeof(Dreamcast.LuaModuleMethodAttribute), false).First();
+                LuaModuleMethodAttribute attr = (LuaModuleMethodAttribute) fi.GetCustomAttributes(typeof(LuaModuleMethodAttribute), false).First();
                 string name = !string.IsNullOrEmpty(attr.Name) ? attr.Name : fi.Name;
 
                 RegisterScriptField(fi, null, table, t, name);
             }
 
-            foreach (FieldInfo fi in Framework.Do.GetFields(t).Where(_mi => _mi.IsStatic && _mi.GetCustomAttributes(typeof(Dreamcast.LuaModuleConstantAttribute), false).ToArray().Length > 0))
+            foreach (FieldInfo fi in Framework.Do.GetFields(t).Where(_mi => _mi.IsStatic && _mi.GetCustomAttributes(typeof(LuaModuleConstantAttribute), false).ToArray().Length > 0))
             {
-                Dreamcast.LuaModuleConstantAttribute attr = (Dreamcast.LuaModuleConstantAttribute) fi.GetCustomAttributes(typeof(Dreamcast.LuaModuleConstantAttribute), false).First();
+                LuaModuleConstantAttribute attr = (LuaModuleConstantAttribute) fi.GetCustomAttributes(typeof(LuaModuleConstantAttribute), false).First();
                 string name = !string.IsNullOrEmpty(attr.Name) ? attr.Name : fi.Name;
 
                 RegisterScriptFieldAsConst(fi, null, table, t, name);
@@ -178,12 +178,9 @@ namespace Dreamcast.Lua.Interpreter
 
         private static Table CreateModuleNamespace(Table gtable, Type t)
         {
-            Dreamcast.LuaModuleAttribute attr = (Dreamcast.LuaModuleAttribute) Framework.Do.GetCustomAttributes(t, typeof(Dreamcast.LuaModuleAttribute), false).First();
+            LuaModuleAttribute attr = (LuaModuleAttribute) Framework.Do.GetCustomAttributes(t, typeof(LuaModuleAttribute), false).First();
 
-            if (string.IsNullOrEmpty(attr.Namespace))
-            {
-                return gtable;
-            }
+            if (string.IsNullOrEmpty(attr.Namespace)) return gtable;
 
             Table table = null;
 

@@ -82,8 +82,9 @@
     <Compile Include="Src\Core\Input.cs" />
     <Compile Include="Src\Core\Key.cs" />
     <Compile Include="Src\Core\LogLevel.cs" />
+    <Compile Include="Src\Core\Lua.cs" />
     <Compile Include="Src\Core\MouseButton.cs" />
-    <Compile Include="Src\Core\MSAAMode.cs" />
+    <Compile Include="Src\Core\MsaaMode.cs" />
     <Compile Include="Src\Core\NativeConfig.cs" />
     <Compile Include="Src\Core\NativeRuntime.cs" />
     <Compile Include="Src\Core\Protocol.cs" />

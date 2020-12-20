@@ -27,8 +27,8 @@ namespace Dreamcast.Lua.Interpreter.Tree.Statements
         private readonly Statement m_Block;
         private readonly IVariable[] m_NameExps;
         private readonly SymbolRef[] m_Names;
-        private readonly SourceRef m_RefFor;
         private readonly SourceRef m_RefEnd;
+        private readonly SourceRef m_RefFor;
         private readonly Expression m_RValues;
         private readonly RuntimeScopeBlock m_StackFrame;
 

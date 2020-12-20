@@ -143,7 +143,7 @@ namespace Dreamcast.Lua.Interpreter.Interop
             foreach (string property in expectedMissingProperties) m_PropertyMap.Add(property, null);
 
             foreach (PropertyInfo pi in Framework.Do.GetProperties(m_Type))
-            foreach (Dreamcast.LuaPropertyAttribute attr in pi.GetCustomAttributes(true).OfType<Dreamcast.LuaPropertyAttribute>())
+            foreach (LuaPropertyAttribute attr in pi.GetCustomAttributes(true).OfType<LuaPropertyAttribute>())
             {
                 string name = attr.Name ?? pi.Name;
 

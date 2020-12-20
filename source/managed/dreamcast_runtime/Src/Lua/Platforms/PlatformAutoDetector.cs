@@ -148,10 +148,7 @@ namespace Dreamcast.Lua.Interpreter.Platforms
         {
             AutoDetectPlatformFlags();
 
-            if (IsRunningOnUnity)
-            {
-                return new UnityAssetsScriptLoader();
-            }
+            if (IsRunningOnUnity) return new UnityAssetsScriptLoader();
 #if (DOTNET_CORE)
 				return new FileSystemScriptLoader();
 #elif (PCL || ENABLE_DOTNET || NETFX_CORE)

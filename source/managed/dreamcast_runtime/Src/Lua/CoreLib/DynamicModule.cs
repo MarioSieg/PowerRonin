@@ -21,15 +21,15 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
     /// <summary>
     ///     Class implementing dynamic expression evaluations at runtime (a Dreamcast.Lua addition).
     /// </summary>
-    [Dreamcast.LuaModule(Namespace = "dynamic")]
+    [LuaModule(Namespace = "dynamic")]
     public class DynamicModule
     {
-        public static void Dreamcast.LuaInit(Table globalTable, Table stringTable)
+        public static void LuaInit(Table globalTable, Table stringTable)
         {
             UserData.RegisterType<DynamicExprWrapper>(InteropAccessMode.HideMembers);
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue eval(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             try
@@ -52,7 +52,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             }
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue prepare(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             try

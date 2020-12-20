@@ -17,10 +17,10 @@ using Dreamcast.Lua.Interpreter.Serialization.Json;
 
 namespace Dreamcast.Lua.Interpreter.CoreLib
 {
-    [Dreamcast.LuaModule(Namespace = "json")]
+    [LuaModule(Namespace = "json")]
     public class JsonModule
     {
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue parse(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             try
@@ -35,7 +35,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             }
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue serialize(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             try
@@ -50,14 +50,14 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             }
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue isnull(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue vs = args[0];
             return DynValue.NewBoolean(JsonNull.IsJsonNull(vs) || vs.IsNil());
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue @null(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return JsonNull.Create();

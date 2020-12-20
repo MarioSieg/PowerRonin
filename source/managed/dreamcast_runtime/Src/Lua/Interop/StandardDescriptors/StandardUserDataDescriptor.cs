@@ -83,8 +83,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
         private void FillMemberList()
         {
             HashSet<string> membersToIgnore = new(
-                Framework.Do.GetCustomAttributes(Type, typeof(Dreamcast.LuaHideMemberAttribute), true)
-                    .OfType<Dreamcast.LuaHideMemberAttribute>()
+                Framework.Do.GetCustomAttributes(Type, typeof(LuaHideMemberAttribute), true)
+                    .OfType<LuaHideMemberAttribute>()
                     .Select(a => a.MemberName)
             );
 
@@ -166,7 +166,7 @@ namespace Dreamcast.Lua.Interpreter.Interop
                     continue;
 
                 if (!Framework.Do.IsGenericTypeDefinition(nestedType))
-                    if (Framework.Do.IsNestedPublic(nestedType) || Framework.Do.GetCustomAttributes(nestedType, typeof(Dreamcast.LuaUserDataAttribute), true).Length > 0)
+                    if (Framework.Do.IsNestedPublic(nestedType) || Framework.Do.GetCustomAttributes(nestedType, typeof(LuaUserDataAttribute), true).Length > 0)
                     {
                         var descr = UserData.RegisterType(nestedType, AccessMode);
 

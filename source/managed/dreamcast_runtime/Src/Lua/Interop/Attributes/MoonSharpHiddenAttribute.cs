@@ -23,7 +23,7 @@ namespace Dreamcast.Lua.Interpreter
     /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Property | AttributeTargets.Field
                     | AttributeTargets.Constructor | AttributeTargets.Event)]
-    public sealed class Dreamcast.LuaHiddenAttribute : Attribute
+    public sealed class LuaHiddenAttribute : Attribute
     {
     }
 }

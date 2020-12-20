@@ -22,15 +22,15 @@ namespace Dreamcast.Lua.Interpreter.Tree.Statements
 {
     internal class ForLoopStatement : Statement
     {
+        private readonly Expression m_End;
         private readonly Statement m_InnerBlock;
+        private readonly SourceRef m_RefEnd;
 
         private readonly SourceRef m_RefFor;
-        private readonly SourceRef m_RefEnd;
 
         //for' NAME '=' exp ',' exp (',' exp)? 'do' block 'end'
         private readonly RuntimeScopeBlock m_StackFrame;
         private readonly Expression m_Start;
-        private readonly Expression m_End;
         private readonly Expression m_Step;
         private readonly SymbolRef m_VarName;
 

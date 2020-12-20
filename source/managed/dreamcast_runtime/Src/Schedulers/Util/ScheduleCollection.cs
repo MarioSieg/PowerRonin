@@ -61,10 +61,7 @@ namespace FluentScheduler
             lock (_lock)
             {
                 var schedule = Get(name);
-                if (schedule == null)
-                {
-                    return false;
-                }
+                if (schedule == null) return false;
 
                 _schedules.Remove(schedule);
                 return true;

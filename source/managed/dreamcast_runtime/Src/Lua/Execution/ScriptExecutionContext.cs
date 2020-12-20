@@ -186,10 +186,7 @@ namespace Dreamcast.Lua.Interpreter
                     {
                         var tail = ret.TailCallData;
 
-                        if (tail.Continuation != null || tail.ErrorHandler != null)
-                        {
-                            throw new ScriptRuntimeException("the function passed cannot be called directly. wrap in a script function instead.");
-                        }
+                        if (tail.Continuation != null || tail.ErrorHandler != null) throw new ScriptRuntimeException("the function passed cannot be called directly. wrap in a script function instead.");
 
                         args = tail.Args;
                         func = tail.Function;

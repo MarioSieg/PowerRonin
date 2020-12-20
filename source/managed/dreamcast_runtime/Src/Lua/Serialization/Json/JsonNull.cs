@@ -25,7 +25,7 @@ namespace Dreamcast.Lua.Interpreter.Serialization.Json
             return true;
         }
 
-        [Dreamcast.LuaHidden]
+        [LuaHidden]
         public static bool IsJsonNull(DynValue v)
         {
             return v.Type == DataType.UserData &&
@@ -33,7 +33,7 @@ namespace Dreamcast.Lua.Interpreter.Serialization.Json
                    v.UserData.Descriptor.Type == typeof(JsonNull);
         }
 
-        [Dreamcast.LuaHidden]
+        [LuaHidden]
         public static DynValue Create()
         {
             return UserData.CreateStatic<JsonNull>();

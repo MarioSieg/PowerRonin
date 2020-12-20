@@ -24,10 +24,10 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
     /// <summary>
     ///     Class implementing table Lua functions
     /// </summary>
-    [Dreamcast.LuaModule(Namespace = "table")]
+    [LuaModule(Namespace = "table")]
     public class TableModule
     {
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue unpack(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue s = args.AsType(0, "unpack", DataType.Table);
@@ -48,7 +48,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             return DynValue.NewTuple(v);
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue pack(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             Table t = new(executionContext.GetScript());
@@ -62,7 +62,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             return v;
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue sort(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue vlist = args.AsType(0, "sort", DataType.Table);
@@ -135,7 +135,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             return 0;
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue insert(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue vlist = args.AsType(0, "table.insert", DataType.Table);
@@ -170,7 +170,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         }
 
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue remove(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue vlist = args.AsType(0, "table.remove", DataType.Table);
@@ -204,7 +204,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         //Given a list where all elements are strings or numbers, returns the string list[i]..sep..list[i+1] (...) sep..list[j]. 
         //The default value for sep is the empty string, the default for i is 1, and the default for j is #list. If i is greater 
         //than j, returns the empty string. 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue concat(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue vlist = args.AsType(0, "concat", DataType.Table);
@@ -270,16 +270,16 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
     ///     Class exposing table.unpack and table.pack in the global namespace (to work around the most common Lua 5.1
     ///     compatibility issue).
     /// </summary>
-    [Dreamcast.LuaModule]
+    [LuaModule]
     public class TableModule_Globals
     {
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue unpack(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return TableModule.unpack(executionContext, args);
         }
 
-        [Dreamcast.LuaModuleMethod]
+        [LuaModuleMethod]
         public static DynValue pack(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             return TableModule.pack(executionContext, args);
