@@ -75,15 +75,25 @@ namespace dce::renderer {
 
 	void render_stats(const Runtime& _runtime) {
 		const auto& chrono = _runtime.chrono();
+		const auto& stats = *bgfx::getStats();
+		const auto& view = _runtime.render_data().view_matrix;
+		const auto& proj = _runtime.render_data().projection_matrix;
+		
 		const auto viewport_pos_x = static_cast<std::uint16_t>(_runtime.render_data().scenery_viewport_position.x);
 		const auto viewport_pos_y = static_cast<std::uint16_t>(_runtime.render_data().scenery_viewport_position.y);
 		const auto viewport_width = static_cast<std::uint32_t>(_runtime.render_data().scenery_viewport_size.x);
 		const auto viewport_height = static_cast<std::uint32_t>(_runtime.render_data().scenery_viewport_size.y);
+		const auto forward = normalize(Vector3<>(view[2]));
+		const auto left = Vector3<>(-view[1][1], -view[2][1], -view[3][1]);
+		const auto fov = math::degrees(atan(1.f / proj[1][1]) * 2.f);
 		const std::uint16_t pos_x = viewport_pos_x / 8 + 4;
 		std::uint16_t pos_y = viewport_pos_y / 16 + 4;
 		bgfx::dbgTextClear();
-		bgfx::dbgTextPrintf(pos_x, pos_y, 0xF, "View x: %u y: %u w: %u h: %u", viewport_pos_x, viewport_pos_y, viewport_width, viewport_height);
-		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "Tick: %u, T: %.3f, FT: %.3f ms, FPS: %.2f", chrono.cycles, chrono.time, chrono.frame_time, chrono.fps);
+		bgfx::dbgTextPrintf(pos_x, pos_y, 0xF, "%s, DrawCalls: %u", bgfx::getRendererName(bgfx::getRendererType()), stats.numDraw);
+		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "View x: %u y: %u w: %u h: %u", viewport_pos_x, viewport_pos_y, viewport_width, viewport_height);
+		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "Tick: %u, Time: %.2f", chrono.cycles, chrono.time);
+		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "FrameTime: %.2fms, DeltaTime: %f, FPS: %.2f", chrono.frame_time, chrono.delta_time, chrono.fps);
+		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "Forward: %.2f %.2f %.2f, Left: %.2f %.2f %.2f, FOV: %.1f", forward.x, forward.y, forward.z, left.x, left.y, left.z, fov);
 
 	}
 }

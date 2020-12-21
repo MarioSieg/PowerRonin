@@ -3,7 +3,6 @@
 #include <cstdint>
 #include <chrono>
 #include <array>
-#include <vector>
 
 namespace dce {
 	/// <summary>
@@ -111,10 +110,5 @@ namespace dce {
 		/// Sample read needle.
 		/// </summary>
 		std::size_t needle = 0;
-
-		/// <summary>
-		/// Kernel subsystem timings.
-		/// </summary>
-		std::vector<SubsystemTimeInfo> subsystem_timings = {};
 	};
 }
