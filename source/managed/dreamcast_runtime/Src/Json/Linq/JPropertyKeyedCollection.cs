@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
@@ -69,7 +54,8 @@ namespace Dreamcast.Json.Linq
 
         protected void ChangeItemKey(JToken item, string newKey)
         {
-            if (!ContainsItem(item)) throw new ArgumentException("The specified item does not exist in this KeyedCollection.");
+            if (!ContainsItem(item))
+                throw new ArgumentException("The specified item does not exist in this KeyedCollection.");
 
             var keyForItem = GetKeyForItem(item);
             if (!Comparer.Equals(keyForItem, newKey))
@@ -161,8 +147,7 @@ namespace Dreamcast.Json.Linq
         }
 
         public bool TryGetValue(string key,
-            [NotNullWhen(true)]
-            out JToken? value)
+            [NotNullWhen(true)] out JToken? value)
         {
             if (_dictionary == null)
             {

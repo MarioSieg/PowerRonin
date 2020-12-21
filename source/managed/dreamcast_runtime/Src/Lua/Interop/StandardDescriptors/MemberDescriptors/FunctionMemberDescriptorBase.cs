@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -75,13 +60,15 @@ namespace Dreamcast.Lua.Interpreter.Interop
         /// <param name="context">The context.</param>
         /// <param name="args">The arguments.</param>
         /// <returns></returns>
-        public abstract DynValue Execute(Script script, object obj, ScriptExecutionContext context, CallbackArguments args);
+        public abstract DynValue Execute(Script script, object obj, ScriptExecutionContext context,
+            CallbackArguments args);
 
 
         /// <summary>
         ///     Gets the types of access supported by this member
         /// </summary>
-        public MemberDescriptorAccess MemberAccess => MemberDescriptorAccess.CanRead | MemberDescriptorAccess.CanExecute;
+        public MemberDescriptorAccess MemberAccess =>
+            MemberDescriptorAccess.CanRead | MemberDescriptorAccess.CanExecute;
 
         /// <summary>
         ///     Gets the value of this member as a <see cref="DynValue" /> to be exposed to scripts.
@@ -117,7 +104,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
         /// <param name="isStatic">if set to <c>true</c> [is static].</param>
         /// <param name="parameters">The parameters.</param>
         /// <param name="isExtensionMethod">if set to <c>true</c> [is extension method].</param>
-        protected void Initialize(string funcName, bool isStatic, ParameterDescriptor[] parameters, bool isExtensionMethod)
+        protected void Initialize(string funcName, bool isStatic, ParameterDescriptor[] parameters,
+            bool isExtensionMethod)
         {
             Name = funcName;
             IsStatic = isStatic;

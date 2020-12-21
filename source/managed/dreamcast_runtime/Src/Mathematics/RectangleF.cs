@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -65,7 +50,11 @@ namespace Dreamcast.Mathematics
         static RectangleF()
         {
             Empty = new RectangleF();
-            Infinite = new RectangleF {Left = float.NegativeInfinity, Top = float.NegativeInfinity, Right = float.PositiveInfinity, Bottom = float.PositiveInfinity};
+            Infinite = new RectangleF
+            {
+                Left = float.NegativeInfinity, Top = float.NegativeInfinity, Right = float.PositiveInfinity,
+                Bottom = float.PositiveInfinity
+            };
         }
 
         /// <summary>
@@ -390,7 +379,8 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public bool Equals(ref RectangleF other)
         {
-            return MathUtil.NearEqual(other.Left, Left) && MathUtil.NearEqual(other.Right, Right) && MathUtil.NearEqual(other.Top, Top) &&
+            return MathUtil.NearEqual(other.Left, Left) && MathUtil.NearEqual(other.Right, Right) &&
+                   MathUtil.NearEqual(other.Top, Top) &&
                    MathUtil.NearEqual(other.Bottom, Bottom);
         }
 

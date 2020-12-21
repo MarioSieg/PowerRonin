@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 using System;
 using Dreamcast.Json.Utilities;
 
@@ -464,7 +449,8 @@ namespace Dreamcast.Json.Linq
 
         #endregion
 
-        internal override void WriteToken(JsonReader reader, bool writeChildren, bool writeDateConstructorAsDate, bool writeComments)
+        internal override void WriteToken(JsonReader reader, bool writeChildren, bool writeDateConstructorAsDate,
+            bool writeComments)
         {
             // cloning the token rather than reading then writing it doesn't lose some type information, e.g. Guid, byte[], etc
             if (reader is JTokenReader tokenReader && writeChildren && writeDateConstructorAsDate && writeComments)

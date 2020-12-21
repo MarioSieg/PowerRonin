@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.Reflection;
 using Dreamcast.Json.Utilities;
@@ -50,7 +35,9 @@ namespace Dreamcast.Json.Serialization
             }
             catch (Exception ex)
             {
-                throw new JsonSerializationException("Error setting value to '{0}' on '{1}'.".FormatWith(CultureInfo.InvariantCulture, _memberInfo.Name, target.GetType()), ex);
+                throw new JsonSerializationException(
+                    "Error setting value to '{0}' on '{1}'.".FormatWith(CultureInfo.InvariantCulture, _memberInfo.Name,
+                        target.GetType()), ex);
             }
         }
 
@@ -64,13 +51,18 @@ namespace Dreamcast.Json.Serialization
             try
             {
                 // https://github.com/dotnet/corefx/issues/26053
-                if (_memberInfo is PropertyInfo propertyInfo && propertyInfo.PropertyType.IsByRef) throw new InvalidOperationException("Could not create getter for {0}. ByRef return values are not supported.".FormatWith(CultureInfo.InvariantCulture, propertyInfo));
+                if (_memberInfo is PropertyInfo propertyInfo && propertyInfo.PropertyType.IsByRef)
+                    throw new InvalidOperationException(
+                        "Could not create getter for {0}. ByRef return values are not supported.".FormatWith(
+                            CultureInfo.InvariantCulture, propertyInfo));
 
                 return ReflectionUtils.GetMemberValue(_memberInfo, target);
             }
             catch (Exception ex)
             {
-                throw new JsonSerializationException("Error getting value from '{0}' on '{1}'.".FormatWith(CultureInfo.InvariantCulture, _memberInfo.Name, target.GetType()), ex);
+                throw new JsonSerializationException(
+                    "Error getting value from '{0}' on '{1}'.".FormatWith(CultureInfo.InvariantCulture,
+                        _memberInfo.Name, target.GetType()), ex);
             }
         }
     }

@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Globalization;
 using Dreamcast.Json.Bson;
 using Dreamcast.Json.Utilities;
@@ -25,7 +10,8 @@ namespace Dreamcast.Json.Converters
     /// <summary>
     ///     Converts a <see cref="BsonObjectId" /> to and from JSON and BSON.
     /// </summary>
-    [Obsolete("BSON reading and writing has been moved to its own package. See https://www.nuget.org/packages/Dreamcast.Json.Bson for more details.")]
+    [Obsolete(
+        "BSON reading and writing has been moved to its own package. See https://www.nuget.org/packages/Dreamcast.Json.Bson for more details.")]
     public class BsonObjectIdConverter : JsonConverter
     {
         /// <summary>
@@ -52,9 +38,12 @@ namespace Dreamcast.Json.Converters
         /// <param name="existingValue">The existing value of object being read.</param>
         /// <param name="serializer">The calling serializer.</param>
         /// <returns>The object value.</returns>
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+            JsonSerializer serializer)
         {
-            if (reader.TokenType != JsonToken.Bytes) throw new JsonSerializationException("Expected Bytes but got {0}.".FormatWith(CultureInfo.InvariantCulture, reader.TokenType));
+            if (reader.TokenType != JsonToken.Bytes)
+                throw new JsonSerializationException(
+                    "Expected Bytes but got {0}.".FormatWith(CultureInfo.InvariantCulture, reader.TokenType));
 
             var value = (byte[]) reader.Value;
 

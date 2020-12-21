@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #pragma once
 
 #include <cstdint>
@@ -26,14 +11,14 @@ namespace dce {
 		// Bitmask to subscribe to subsystem events
 		struct ServiceEvents {
 			enum Enum : std::uint8_t {
-				NONE = 0
-				, PRE_STARTUP = 1 << 0
-				, POST_STARTUP = 1 << 1
-				, PRE_TICK = 1 << 2
-				, POST_TICK = 1 << 3
-				, PRE_SHUTDOWN = 1 << 4
-				, POST_SHUTDOWN = 1 << 5
-				, ALL = std::numeric_limits<std::uint8_t>::max()
+				NONE = 0,
+				PRE_STARTUP = 1 << 0,
+				POST_STARTUP = 1 << 1,
+				PRE_TICK = 1 << 2,
+				POST_TICK = 1 << 3,
+				PRE_SHUTDOWN = 1 << 4,
+				POST_SHUTDOWN = 1 << 5,
+				ALL = std::numeric_limits<std::uint8_t>::max()
 			};
 		};
 

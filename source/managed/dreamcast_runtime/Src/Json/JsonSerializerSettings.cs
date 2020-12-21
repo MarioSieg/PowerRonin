@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -46,7 +31,10 @@ namespace Dreamcast.Json
         internal const FloatParseHandling DefaultFloatParseHandling = FloatParseHandling.Double;
         internal const FloatFormatHandling DefaultFloatFormatHandling = FloatFormatHandling.String;
         internal const StringEscapeHandling DefaultStringEscapeHandling = StringEscapeHandling.Default;
-        internal const TypeNameAssemblyFormatHandling DefaultTypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple;
+
+        internal const TypeNameAssemblyFormatHandling DefaultTypeNameAssemblyFormatHandling =
+            TypeNameAssemblyFormatHandling.Simple;
+
         internal const bool DefaultCheckAdditionalContent = false;
         internal const string DefaultDateFormatString = @"yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK";
         internal static readonly StreamingContext DefaultContext;
@@ -244,7 +232,8 @@ namespace Dreamcast.Json
         ///     Gets or sets the <see cref="IReferenceResolver" /> used by the serializer when resolving references.
         /// </summary>
         /// <value>The reference resolver.</value>
-        [Obsolete("ReferenceResolver property is obsolete. Use the ReferenceResolverProvider property to set the IReferenceResolver: settings.ReferenceResolverProvider = () => resolver")]
+        [Obsolete(
+            "ReferenceResolver property is obsolete. Use the ReferenceResolverProvider property to set the IReferenceResolver: settings.ReferenceResolverProvider = () => resolver")]
         public IReferenceResolver? ReferenceResolver
         {
             get => ReferenceResolverProvider?.Invoke();
@@ -282,7 +271,8 @@ namespace Dreamcast.Json
 
                 if (SerializationBinder is SerializationBinderAdapter adapter) return adapter.SerializationBinder;
 
-                throw new InvalidOperationException("Cannot get SerializationBinder because an ISerializationBinder was previously set.");
+                throw new InvalidOperationException(
+                    "Cannot get SerializationBinder because an ISerializationBinder was previously set.");
             }
             set => SerializationBinder = value == null ? null : new SerializationBinderAdapter(value);
         }

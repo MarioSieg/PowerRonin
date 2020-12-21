@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -28,7 +13,8 @@ namespace Dreamcast.Json.Bson
     /// <summary>
     ///     Represents a reader that provides fast, non-cached, forward-only access to serialized BSON data.
     /// </summary>
-    [Obsolete("BSON reading and writing has been moved to its own package. See https://www.nuget.org/packages/Dreamcast.Json.Bson for more details.")]
+    [Obsolete(
+        "BSON reading and writing has been moved to its own package. See https://www.nuget.org/packages/Dreamcast.Json.Bson for more details.")]
     public class BsonReader : JsonReader
     {
         private const int MaxCharBytesSize = 128;
@@ -163,7 +149,8 @@ namespace Dreamcast.Json.Bson
                         success = ReadCodeWScope();
                         break;
                     default:
-                        throw JsonReaderException.Create(this, "Unexpected state: {0}".FormatWith(CultureInfo.InvariantCulture, _bsonReaderState));
+                        throw JsonReaderException.Create(this,
+                            "Unexpected state: {0}".FormatWith(CultureInfo.InvariantCulture, _bsonReaderState));
                 }
 
                 if (!success)
@@ -233,7 +220,8 @@ namespace Dreamcast.Json.Bson
                     }
                 case BsonReaderState.CodeWScopeScopeObject:
                     var result = ReadNormal();
-                    if (result && TokenType == JsonToken.EndObject) _bsonReaderState = BsonReaderState.CodeWScopeScopeEnd;
+                    if (result && TokenType == JsonToken.EndObject)
+                        _bsonReaderState = BsonReaderState.CodeWScopeScopeEnd;
 
                     return result;
                 case BsonReaderState.CodeWScopeScopeEnd:
@@ -269,7 +257,8 @@ namespace Dreamcast.Json.Bson
                         return true;
                     }
 
-                    throw JsonReaderException.Create(this, "Unexpected state when reading BSON reference: " + _bsonReaderState);
+                    throw JsonReaderException.Create(this,
+                        "Unexpected state when reading BSON reference: " + _bsonReaderState);
                 }
                 case State.PostValue:
                 {
@@ -287,10 +276,12 @@ namespace Dreamcast.Json.Bson
                         return true;
                     }
 
-                    throw JsonReaderException.Create(this, "Unexpected state when reading BSON reference: " + _bsonReaderState);
+                    throw JsonReaderException.Create(this,
+                        "Unexpected state when reading BSON reference: " + _bsonReaderState);
                 }
                 default:
-                    throw JsonReaderException.Create(this, "Unexpected state when reading BSON reference: " + CurrentState);
+                    throw JsonReaderException.Create(this,
+                        "Unexpected state when reading BSON reference: " + CurrentState);
             }
         }
 
@@ -344,7 +335,8 @@ namespace Dreamcast.Json.Bson
                     }
                     else if (context.Position == lengthMinusEnd)
                     {
-                        if (ReadByte() != 0) throw JsonReaderException.Create(this, "Unexpected end of object byte value.");
+                        if (ReadByte() != 0)
+                            throw JsonReaderException.Create(this, "Unexpected end of object byte value.");
 
                         PopContext();
                         if (_currentContext != null) MovePosition(context.Length);

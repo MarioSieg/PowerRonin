@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-#pragma warning disable 1591
+﻿#pragma warning disable 1591
 
 using System;
 using Dreamcast.Lua.Interpreter.Interop;
@@ -26,11 +11,9 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
     [LuaModule(Namespace = "math")]
     public class MathModule
     {
-        [LuaModuleConstant]
-        public const double pi = Math.PI;
+        [LuaModuleConstant] public const double pi = Math.PI;
 
-        [LuaModuleConstant]
-        public const double huge = double.MaxValue;
+        [LuaModuleConstant] public const double huge = double.MaxValue;
 
         private static Random GetRandom(Script s)
         {
@@ -64,7 +47,8 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             return DynValue.NewNumber(func(arg.Number, arg2.Number));
         }
 
-        private static DynValue exec2n(CallbackArguments args, string funcName, double defVal, Func<double, double, double> func)
+        private static DynValue exec2n(CallbackArguments args, string funcName, double defVal,
+            Func<double, double, double> func)
         {
             DynValue arg = args.AsType(0, funcName, DataType.Number);
             DynValue arg2 = args.AsType(1, funcName, DataType.Number, true);
@@ -76,7 +60,8 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         {
             var accum = double.NaN;
 
-            if (args.Count == 0) throw new ScriptRuntimeException("bad argument #1 to '{0}' (number expected, got no value)", funcName);
+            if (args.Count == 0)
+                throw new ScriptRuntimeException("bad argument #1 to '{0}' (number expected, got no value)", funcName);
 
             for (var i = 0; i < args.Count; i++)
             {
@@ -245,7 +230,8 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         public static DynValue modf(ScriptExecutionContext executionContext, CallbackArguments args)
         {
             DynValue arg = args.AsType(0, "modf", DataType.Number);
-            return DynValue.NewTuple(DynValue.NewNumber(Math.Floor(arg.Number)), DynValue.NewNumber(arg.Number - Math.Floor(arg.Number)));
+            return DynValue.NewTuple(DynValue.NewNumber(Math.Floor(arg.Number)),
+                DynValue.NewNumber(arg.Number - Math.Floor(arg.Number)));
         }
 
 

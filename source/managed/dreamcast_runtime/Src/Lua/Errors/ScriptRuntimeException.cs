@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using Dreamcast.Lua.Interpreter.Interop;
 using Dreamcast.Lua.Interpreter.Interop.BasicDescriptors;
 
@@ -78,9 +63,11 @@ namespace Dreamcast.Lua.Interpreter
         public static ScriptRuntimeException ArithmeticOnNonNumber(DynValue l, DynValue r = null)
         {
             if (l.Type != DataType.Number && l.Type != DataType.String)
-                return new ScriptRuntimeException("attempt to perform arithmetic on a {0} value", l.Type.ToLuaTypeString());
+                return new ScriptRuntimeException("attempt to perform arithmetic on a {0} value",
+                    l.Type.ToLuaTypeString());
             if (r != null && r.Type != DataType.Number && r.Type != DataType.String)
-                return new ScriptRuntimeException("attempt to perform arithmetic on a {0} value", r.Type.ToLuaTypeString());
+                return new ScriptRuntimeException("attempt to perform arithmetic on a {0} value",
+                    r.Type.ToLuaTypeString());
             if (l.Type == DataType.String || r != null && r.Type == DataType.String)
                 return new ScriptRuntimeException("attempt to perform arithmetic on a string value");
             throw new InternalErrorException("ArithmeticOnNonNumber - both are numbers");
@@ -125,7 +112,8 @@ namespace Dreamcast.Lua.Interpreter
         {
             if (l.Type.ToLuaTypeString() == r.Type.ToLuaTypeString())
                 return new ScriptRuntimeException("attempt to compare two {0} values", l.Type.ToLuaTypeString());
-            return new ScriptRuntimeException("attempt to compare {0} with {1}", l.Type.ToLuaTypeString(), r.Type.ToLuaTypeString());
+            return new ScriptRuntimeException("attempt to compare {0} with {1}", l.Type.ToLuaTypeString(),
+                r.Type.ToLuaTypeString());
         }
 
         /// <summary>
@@ -153,7 +141,8 @@ namespace Dreamcast.Lua.Interpreter
         /// <returns>
         ///     The exception to be raised.
         /// </returns>
-        public static ScriptRuntimeException BadArgumentUserData(int argNum, string funcName, Type expected, object got, bool allowNil)
+        public static ScriptRuntimeException BadArgumentUserData(int argNum, string funcName, Type expected, object got,
+            bool allowNil)
         {
             return new("bad argument #{0} to '{1}' (userdata<{2}>{3} expected, got {4})",
                 argNum + 1,
@@ -176,7 +165,8 @@ namespace Dreamcast.Lua.Interpreter
         /// <returns>
         ///     The exception to be raised.
         /// </returns>
-        public static ScriptRuntimeException BadArgument(int argNum, string funcName, DataType expected, DataType got, bool allowNil)
+        public static ScriptRuntimeException BadArgument(int argNum, string funcName, DataType expected, DataType got,
+            bool allowNil)
         {
             return BadArgument(argNum, funcName, expected.ToErrorTypeString(), got.ToErrorTypeString(), allowNil);
         }
@@ -193,7 +183,8 @@ namespace Dreamcast.Lua.Interpreter
         /// <returns>
         ///     The exception to be raised.
         /// </returns>
-        public static ScriptRuntimeException BadArgument(int argNum, string funcName, string expected, string got, bool allowNil)
+        public static ScriptRuntimeException BadArgument(int argNum, string funcName, string expected, string got,
+            bool allowNil)
         {
             return new("bad argument #{0} to '{1}' ({2}{3} expected, got {4})",
                 argNum + 1, funcName, allowNil ? "nil or " : "", expected, got);
@@ -417,7 +408,8 @@ namespace Dreamcast.Lua.Interpreter
         /// </returns>
         public static ScriptRuntimeException UserDataArgumentTypeMismatch(DataType t, Type clrType)
         {
-            return new("cannot find a conversion from a Dreamcast.Lua {0} to a clr {1}", t.ToString().ToLowerInvariant(), clrType.FullName);
+            return new("cannot find a conversion from a Dreamcast.Lua {0} to a clr {1}",
+                t.ToString().ToLowerInvariant(), clrType.FullName);
         }
 
         /// <summary>
@@ -507,7 +499,8 @@ namespace Dreamcast.Lua.Interpreter
         /// <param name="typeDescr">The type descriptor.</param>
         /// <param name="desc">The member descriptor.</param>
         /// <returns></returns>
-        public static ScriptRuntimeException AccessInstanceMemberOnStatics(IUserDataDescriptor typeDescr, IMemberDescriptor desc)
+        public static ScriptRuntimeException AccessInstanceMemberOnStatics(IUserDataDescriptor typeDescr,
+            IMemberDescriptor desc)
         {
             return new("attempt to access instance member {0}.{1} from a static userdata", typeDescr.Name, desc.Name);
         }

@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -173,10 +158,13 @@ namespace Dreamcast.Lua.Interpreter.Interop.UserDataRegistries
         /// <param name="accessMode">The access mode.</param>
         /// <param name="friendlyName">Name of the friendly.</param>
         /// <returns></returns>
-        internal static IUserDataDescriptor RegisterProxyType_Impl(IProxyFactory proxyFactory, InteropAccessMode accessMode, string friendlyName)
+        internal static IUserDataDescriptor RegisterProxyType_Impl(IProxyFactory proxyFactory,
+            InteropAccessMode accessMode, string friendlyName)
         {
-            IUserDataDescriptor proxyDescriptor = RegisterType_Impl(proxyFactory.ProxyType, accessMode, friendlyName, null);
-            return RegisterType_Impl(proxyFactory.TargetType, accessMode, friendlyName, new ProxyUserDataDescriptor(proxyFactory, proxyDescriptor, friendlyName));
+            IUserDataDescriptor proxyDescriptor =
+                RegisterType_Impl(proxyFactory.ProxyType, accessMode, friendlyName, null);
+            return RegisterType_Impl(proxyFactory.TargetType, accessMode, friendlyName,
+                new ProxyUserDataDescriptor(proxyFactory, proxyDescriptor, friendlyName));
         }
 
 
@@ -188,7 +176,8 @@ namespace Dreamcast.Lua.Interpreter.Interop.UserDataRegistries
         /// <param name="friendlyName">Friendly name of the descriptor.</param>
         /// <param name="descriptor">The descriptor, or null to use a default one.</param>
         /// <returns></returns>
-        internal static IUserDataDescriptor RegisterType_Impl(Type type, InteropAccessMode accessMode, string friendlyName, IUserDataDescriptor descriptor)
+        internal static IUserDataDescriptor RegisterType_Impl(Type type, InteropAccessMode accessMode,
+            string friendlyName, IUserDataDescriptor descriptor)
         {
             accessMode = ResolveDefaultAccessModeForType(accessMode, type);
 
@@ -239,7 +228,8 @@ namespace Dreamcast.Lua.Interpreter.Interop.UserDataRegistries
             }
         }
 
-        private static IUserDataDescriptor PerformRegistration(Type type, IUserDataDescriptor newDescriptor, IUserDataDescriptor oldDescriptor)
+        private static IUserDataDescriptor PerformRegistration(Type type, IUserDataDescriptor newDescriptor,
+            IUserDataDescriptor oldDescriptor)
         {
             IUserDataDescriptor result = RegistrationPolicy.HandleRegistration(newDescriptor, oldDescriptor);
 
@@ -346,17 +336,20 @@ namespace Dreamcast.Lua.Interpreter.Interop.UserDataRegistries
                         if (s_TypeRegistry.TryGetValue(interfaceType, out interfaceDescriptor))
                         {
                             if (interfaceDescriptor is IGeneratorUserDataDescriptor)
-                                interfaceDescriptor = ((IGeneratorUserDataDescriptor) interfaceDescriptor).Generate(type);
+                                interfaceDescriptor =
+                                    ((IGeneratorUserDataDescriptor) interfaceDescriptor).Generate(type);
 
                             if (interfaceDescriptor != null)
                                 descriptors.Add(interfaceDescriptor);
                         }
                         else if (Framework.Do.IsGenericType(interfaceType))
                         {
-                            if (s_TypeRegistry.TryGetValue(interfaceType.GetGenericTypeDefinition(), out interfaceDescriptor))
+                            if (s_TypeRegistry.TryGetValue(interfaceType.GetGenericTypeDefinition(),
+                                out interfaceDescriptor))
                             {
                                 if (interfaceDescriptor is IGeneratorUserDataDescriptor)
-                                    interfaceDescriptor = ((IGeneratorUserDataDescriptor) interfaceDescriptor).Generate(type);
+                                    interfaceDescriptor =
+                                        ((IGeneratorUserDataDescriptor) interfaceDescriptor).Generate(type);
 
                                 if (interfaceDescriptor != null)
                                     descriptors.Add(interfaceDescriptor);

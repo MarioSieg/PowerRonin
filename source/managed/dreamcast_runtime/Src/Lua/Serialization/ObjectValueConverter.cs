@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Reflection;
 using Dreamcast.Lua.Interpreter.Compatibility;
@@ -52,7 +37,8 @@ namespace Dreamcast.Lua.Interpreter.Serialization
                 {
                     var getter = Framework.Do.GetGetMethod(pi);
                     var isStatic = getter.IsStatic;
-                    var obj = getter.Invoke(isStatic ? null : o, null); // convoluted workaround for --full-aot Mono execution
+                    var obj = getter.Invoke(isStatic ? null : o,
+                        null); // convoluted workaround for --full-aot Mono execution
 
                     t.Set(pi.Name, SerializeObjectToDynValue(script, obj, valueForNulls));
                 }

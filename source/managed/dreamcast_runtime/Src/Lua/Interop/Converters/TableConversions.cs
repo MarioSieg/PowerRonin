@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Dreamcast.Lua.Interpreter.Compatibility;
@@ -120,7 +105,8 @@ namespace Dreamcast.Lua.Interpreter.Interop.Converters
                     return ConvertTableToListOfGenericType(t, Framework.Do.GetGenericArguments(t)[0], table);
                 if (generic == typeof(Dictionary<,>)
                     || generic == typeof(IDictionary<,>))
-                    return ConvertTableToDictionaryOfGenericType(t, Framework.Do.GetGenericArguments(t)[0], Framework.Do.GetGenericArguments(t)[1], table);
+                    return ConvertTableToDictionaryOfGenericType(t, Framework.Do.GetGenericArguments(t)[0],
+                        Framework.Do.GetGenericArguments(t)[1], table);
             }
 
             if (t.IsArray && t.GetArrayRank() == 1)
@@ -133,7 +119,8 @@ namespace Dreamcast.Lua.Interpreter.Interop.Converters
         /// <summary>
         ///     Converts a table to a <see cref="Dictionary{TKey,TValue}" />
         /// </summary>
-        internal static object ConvertTableToDictionaryOfGenericType(Type dictionaryType, Type keyType, Type valueType, Table table)
+        internal static object ConvertTableToDictionaryOfGenericType(Type dictionaryType, Type keyType, Type valueType,
+            Table table)
         {
             if (dictionaryType.GetGenericTypeDefinition() != typeof(Dictionary<,>))
             {
@@ -220,7 +207,8 @@ namespace Dreamcast.Lua.Interpreter.Interop.Converters
         /// <summary>
         ///     Converts a table to a Dictionary, known in advance
         /// </summary>
-        internal static Dictionary<TK, TV> TableToDictionary<TK, TV>(Table table, Func<DynValue, TK> keyconverter, Func<DynValue, TV> valconverter)
+        internal static Dictionary<TK, TV> TableToDictionary<TK, TV>(Table table, Func<DynValue, TK> keyconverter,
+            Func<DynValue, TV> valconverter)
         {
             Dictionary<TK, TV> dict = new();
 

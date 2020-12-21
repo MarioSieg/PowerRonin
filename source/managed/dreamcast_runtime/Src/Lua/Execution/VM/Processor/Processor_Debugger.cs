@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dreamcast.Lua.Interpreter.Debugging;
@@ -96,10 +81,12 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
                     if (m_ExecutionStack.Count >= m_Debug.ExStackDepthAtStep) return;
                     break;
                 case DebuggerAction.ActionType.StepIn:
-                    if (m_ExecutionStack.Count >= m_Debug.ExStackDepthAtStep && (instr.SourceCodeRef == null || instr.SourceCodeRef == m_Debug.LastHlRef)) return;
+                    if (m_ExecutionStack.Count >= m_Debug.ExStackDepthAtStep &&
+                        (instr.SourceCodeRef == null || instr.SourceCodeRef == m_Debug.LastHlRef)) return;
                     break;
                 case DebuggerAction.ActionType.StepOver:
-                    if (instr.SourceCodeRef == null || instr.SourceCodeRef == m_Debug.LastHlRef || m_ExecutionStack.Count > m_Debug.ExStackDepthAtStep) return;
+                    if (instr.SourceCodeRef == null || instr.SourceCodeRef == m_Debug.LastHlRef ||
+                        m_ExecutionStack.Count > m_Debug.ExStackDepthAtStep) return;
                     break;
             }
 
@@ -282,7 +269,12 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
         {
             List<Processor> coroutinesStack = m_Parent != null ? m_Parent.m_CoroutinesStack : m_CoroutinesStack;
 
-            return coroutinesStack.Select(c => new WatchItem {Address = c.AssociatedCoroutine.ReferenceID, Name = "coroutine #" + c.AssociatedCoroutine.ReferenceID}).ToList();
+            return coroutinesStack.Select(c => new WatchItem
+                {
+                    Address = c.AssociatedCoroutine.ReferenceID,
+                    Name = "coroutine #" + c.AssociatedCoroutine.ReferenceID
+                })
+                .ToList();
         }
 
         private List<WatchItem> Debugger_RefreshVStack()
@@ -294,7 +286,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
             return lwi;
         }
 
-        private List<WatchItem> Debugger_RefreshWatches(ScriptExecutionContext context, List<DynamicExpression> watchList)
+        private List<WatchItem> Debugger_RefreshWatches(ScriptExecutionContext context,
+            List<DynamicExpression> watchList)
         {
             return watchList.Select(w => Debugger_RefreshWatch(context, w)).ToList();
         }
@@ -309,7 +302,11 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
                 var len = Math.Min(top.Debug_Symbols.Length, top.LocalScope.Length);
 
                 for (var i = 0; i < len; i++)
-                    locals.Add(new WatchItem {IsError = false, LValue = top.Debug_Symbols[i], Value = top.LocalScope[i], Name = top.Debug_Symbols[i].i_Name});
+                    locals.Add(new WatchItem
+                    {
+                        IsError = false, LValue = top.Debug_Symbols[i], Value = top.LocalScope[i],
+                        Name = top.Debug_Symbols[i].i_Name
+                    });
             }
 
             return locals;
@@ -322,11 +319,13 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
                 SymbolRef L = dynExpr.FindSymbol(context);
                 DynValue v = dynExpr.Evaluate(context);
 
-                return new WatchItem {IsError = dynExpr.IsConstant(), LValue = L, Value = v, Name = dynExpr.ExpressionCode};
+                return new WatchItem
+                    {IsError = dynExpr.IsConstant(), LValue = L, Value = v, Name = dynExpr.ExpressionCode};
             }
             catch (Exception ex)
             {
-                return new WatchItem {IsError = true, Value = DynValue.NewString(ex.Message), Name = dynExpr.ExpressionCode};
+                return new WatchItem
+                    {IsError = true, Value = DynValue.NewString(ex.Message), Name = dynExpr.ExpressionCode};
             }
         }
 

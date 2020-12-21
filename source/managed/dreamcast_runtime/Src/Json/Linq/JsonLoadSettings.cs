@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 
 namespace Dreamcast.Json.Linq
 {
@@ -46,7 +31,8 @@ namespace Dreamcast.Json.Linq
             get => _commentHandling;
             set
             {
-                if (value < CommentHandling.Ignore || value > CommentHandling.Load) throw new ArgumentOutOfRangeException(nameof(value));
+                if (value < CommentHandling.Ignore || value > CommentHandling.Load)
+                    throw new ArgumentOutOfRangeException(nameof(value));
 
                 _commentHandling = value;
             }
@@ -62,7 +48,8 @@ namespace Dreamcast.Json.Linq
             get => _lineInfoHandling;
             set
             {
-                if (value < LineInfoHandling.Ignore || value > LineInfoHandling.Load) throw new ArgumentOutOfRangeException(nameof(value));
+                if (value < LineInfoHandling.Ignore || value > LineInfoHandling.Load)
+                    throw new ArgumentOutOfRangeException(nameof(value));
 
                 _lineInfoHandling = value;
             }
@@ -78,7 +65,8 @@ namespace Dreamcast.Json.Linq
             get => _duplicatePropertyNameHandling;
             set
             {
-                if (value < DuplicatePropertyNameHandling.Replace || value > DuplicatePropertyNameHandling.Error) throw new ArgumentOutOfRangeException(nameof(value));
+                if (value < DuplicatePropertyNameHandling.Replace || value > DuplicatePropertyNameHandling.Error)
+                    throw new ArgumentOutOfRangeException(nameof(value));
 
                 _duplicatePropertyNameHandling = value;
             }

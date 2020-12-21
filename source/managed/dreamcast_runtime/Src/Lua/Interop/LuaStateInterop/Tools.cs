@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-#region Usings
+﻿#region Usings
 
 using System;
 using System.Globalization;
@@ -672,7 +657,9 @@ namespace Dreamcast.Lua.Interpreter.Interop.LuaStateInterop
             object Value)
         {
             string w = string.Empty;
-            string lengthFormat = "{0" + (FieldLength != int.MinValue ? "," + (Left2Right ? "-" : string.Empty) + FieldLength : string.Empty) + "}";
+            string lengthFormat = "{0" + (FieldLength != int.MinValue
+                ? "," + (Left2Right ? "-" : string.Empty) + FieldLength
+                : string.Empty) + "}";
 
             if (IsNumericType(Value))
             {
@@ -709,8 +696,11 @@ namespace Dreamcast.Lua.Interpreter.Interop.LuaStateInterop
             object Value)
         {
             string w = string.Empty;
-            string lengthFormat = "{0" + (FieldLength != int.MinValue ? "," + (Left2Right ? "-" : string.Empty) + FieldLength : string.Empty) + "}";
-            string numberFormat = "{0:" + NativeFormat + (FieldPrecision != int.MinValue ? FieldPrecision.ToString() : string.Empty) + "}";
+            string lengthFormat = "{0" + (FieldLength != int.MinValue
+                ? "," + (Left2Right ? "-" : string.Empty) + FieldLength
+                : string.Empty) + "}";
+            string numberFormat = "{0:" + NativeFormat +
+                                  (FieldPrecision != int.MinValue ? FieldPrecision.ToString() : string.Empty) + "}";
 
             if (IsNumericType(Value))
             {
@@ -749,8 +739,11 @@ namespace Dreamcast.Lua.Interpreter.Interop.LuaStateInterop
             object Value)
         {
             string w = string.Empty;
-            string lengthFormat = "{0" + (FieldLength != int.MinValue ? "," + (Left2Right ? "-" : string.Empty) + FieldLength : string.Empty) + "}";
-            string numberFormat = "{0:" + NativeFormat + (FieldPrecision != int.MinValue ? FieldPrecision.ToString() : "0") + "}";
+            string lengthFormat = "{0" + (FieldLength != int.MinValue
+                ? "," + (Left2Right ? "-" : string.Empty) + FieldLength
+                : string.Empty) + "}";
+            string numberFormat = "{0:" + NativeFormat +
+                                  (FieldPrecision != int.MinValue ? FieldPrecision.ToString() : "0") + "}";
 
             if (IsNumericType(Value))
             {

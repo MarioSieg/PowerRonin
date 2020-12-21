@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #if HAVE_BIG_INTEGER
 using System.Numerics;
 #endif
@@ -122,7 +107,8 @@ namespace Dreamcast.Json.Utilities
             return v?.GetType();
         }
 
-        public static string GetTypeName(Type t, TypeNameAssemblyFormatHandling assemblyFormat, ISerializationBinder? binder)
+        public static string GetTypeName(Type t, TypeNameAssemblyFormatHandling assemblyFormat,
+            ISerializationBinder? binder)
         {
             var fullyQualifiedTypeName = GetFullyQualifiedTypeName(t, binder);
 
@@ -261,13 +247,15 @@ namespace Dreamcast.Json.Utilities
 
         public static bool ImplementsGenericDefinition(Type type,
             Type genericInterfaceDefinition,
-            [NotNullWhen(true)]
-            out Type? implementingType)
+            [NotNullWhen(true)] out Type? implementingType)
         {
             ValidationUtils.ArgumentNotNull(type, nameof(type));
             ValidationUtils.ArgumentNotNull(genericInterfaceDefinition, nameof(genericInterfaceDefinition));
 
-            if (!genericInterfaceDefinition.IsInterface() || !genericInterfaceDefinition.IsGenericTypeDefinition()) throw new ArgumentNullException("'{0}' is not a generic interface definition.".FormatWith(CultureInfo.InvariantCulture, genericInterfaceDefinition));
+            if (!genericInterfaceDefinition.IsInterface() || !genericInterfaceDefinition.IsGenericTypeDefinition())
+                throw new ArgumentNullException(
+                    "'{0}' is not a generic interface definition.".FormatWith(CultureInfo.InvariantCulture,
+                        genericInterfaceDefinition));
 
             if (type.IsInterface())
                 if (type.IsGenericType())
@@ -307,12 +295,16 @@ namespace Dreamcast.Json.Utilities
             ValidationUtils.ArgumentNotNull(type, nameof(type));
             ValidationUtils.ArgumentNotNull(genericClassDefinition, nameof(genericClassDefinition));
 
-            if (!genericClassDefinition.IsClass() || !genericClassDefinition.IsGenericTypeDefinition()) throw new ArgumentNullException("'{0}' is not a generic class definition.".FormatWith(CultureInfo.InvariantCulture, genericClassDefinition));
+            if (!genericClassDefinition.IsClass() || !genericClassDefinition.IsGenericTypeDefinition())
+                throw new ArgumentNullException(
+                    "'{0}' is not a generic class definition.".FormatWith(CultureInfo.InvariantCulture,
+                        genericClassDefinition));
 
             return InheritsGenericDefinitionInternal(type, genericClassDefinition, out implementingType);
         }
 
-        private static bool InheritsGenericDefinitionInternal(Type currentType, Type genericClassDefinition, out Type? implementingType)
+        private static bool InheritsGenericDefinitionInternal(Type currentType, Type genericClassDefinition,
+            out Type? implementingType)
         {
             do
             {
@@ -341,7 +333,8 @@ namespace Dreamcast.Json.Utilities
             if (type.IsArray) return type.GetElementType();
             if (ImplementsGenericDefinition(type, typeof(IEnumerable<>), out var genericListType))
             {
-                if (genericListType!.IsGenericTypeDefinition()) throw new Exception("Type {0} is not a collection.".FormatWith(CultureInfo.InvariantCulture, type));
+                if (genericListType!.IsGenericTypeDefinition())
+                    throw new Exception("Type {0} is not a collection.".FormatWith(CultureInfo.InvariantCulture, type));
 
                 return genericListType!.GetGenericArguments()[0];
             }
@@ -357,7 +350,9 @@ namespace Dreamcast.Json.Utilities
 
             if (ImplementsGenericDefinition(dictionaryType, typeof(IDictionary<,>), out var genericDictionaryType))
             {
-                if (genericDictionaryType!.IsGenericTypeDefinition()) throw new Exception("Type {0} is not a dictionary.".FormatWith(CultureInfo.InvariantCulture, dictionaryType));
+                if (genericDictionaryType!.IsGenericTypeDefinition())
+                    throw new Exception(
+                        "Type {0} is not a dictionary.".FormatWith(CultureInfo.InvariantCulture, dictionaryType));
 
                 var dictionaryGenericArguments = genericDictionaryType!.GetGenericArguments();
 
@@ -373,7 +368,8 @@ namespace Dreamcast.Json.Utilities
                 return;
             }
 
-            throw new Exception("Type {0} is not a dictionary.".FormatWith(CultureInfo.InvariantCulture, dictionaryType));
+            throw new Exception(
+                "Type {0} is not a dictionary.".FormatWith(CultureInfo.InvariantCulture, dictionaryType));
         }
 
         /// <summary>
@@ -396,7 +392,8 @@ namespace Dreamcast.Json.Utilities
                 case MemberTypes.Method:
                     return ((MethodInfo) member).ReturnType;
                 default:
-                    throw new ArgumentException("MemberInfo must be of type FieldInfo, PropertyInfo, EventInfo or MethodInfo", nameof(member));
+                    throw new ArgumentException(
+                        "MemberInfo must be of type FieldInfo, PropertyInfo, EventInfo or MethodInfo", nameof(member));
             }
         }
 
@@ -407,7 +404,8 @@ namespace Dreamcast.Json.Utilities
             // IsByRefLike flag on type is not available in netstandard2.0
             var attributes = GetAttributes(type, null, false);
             for (var i = 0; i < attributes.Length; i++)
-                if (string.Equals(attributes[i].GetType().FullName, "System.Runtime.CompilerServices.IsByRefLikeAttribute", StringComparison.Ordinal))
+                if (string.Equals(attributes[i].GetType().FullName,
+                    "System.Runtime.CompilerServices.IsByRefLikeAttribute", StringComparison.Ordinal))
                     return true;
 
             return false;
@@ -449,10 +447,14 @@ namespace Dreamcast.Json.Utilities
                     }
                     catch (TargetParameterCountException e)
                     {
-                        throw new ArgumentException("MemberInfo '{0}' has index parameters".FormatWith(CultureInfo.InvariantCulture, member.Name), e);
+                        throw new ArgumentException(
+                            "MemberInfo '{0}' has index parameters".FormatWith(CultureInfo.InvariantCulture,
+                                member.Name), e);
                     }
                 default:
-                    throw new ArgumentException("MemberInfo '{0}' is not of type FieldInfo or PropertyInfo".FormatWith(CultureInfo.InvariantCulture, member.Name), nameof(member));
+                    throw new ArgumentException(
+                        "MemberInfo '{0}' is not of type FieldInfo or PropertyInfo".FormatWith(
+                            CultureInfo.InvariantCulture, member.Name), nameof(member));
             }
         }
 
@@ -476,7 +478,9 @@ namespace Dreamcast.Json.Utilities
                     ((PropertyInfo) member).SetValue(target, value, null);
                     break;
                 default:
-                    throw new ArgumentException("MemberInfo '{0}' must be of type FieldInfo or PropertyInfo".FormatWith(CultureInfo.InvariantCulture, member.Name), nameof(member));
+                    throw new ArgumentException(
+                        "MemberInfo '{0}' must be of type FieldInfo or PropertyInfo".FormatWith(
+                            CultureInfo.InvariantCulture, member.Name), nameof(member));
             }
         }
 
@@ -644,7 +648,9 @@ namespace Dreamcast.Json.Utilities
             switch (provider)
             {
                 case Type t:
-                    var array = attributeType != null ? t.GetCustomAttributes(attributeType, inherit) : t.GetCustomAttributes(inherit);
+                    var array = attributeType != null
+                        ? t.GetCustomAttributes(attributeType, inherit)
+                        : t.GetCustomAttributes(inherit);
                     var attributes = array.Cast<Attribute>().ToArray();
 
 #if (NET20 || NET35)
@@ -657,19 +663,29 @@ namespace Dreamcast.Json.Utilities
 
                     return attributes;
                 case Assembly a:
-                    return attributeType != null ? Attribute.GetCustomAttributes(a, attributeType) : Attribute.GetCustomAttributes(a);
+                    return attributeType != null
+                        ? Attribute.GetCustomAttributes(a, attributeType)
+                        : Attribute.GetCustomAttributes(a);
                 case MemberInfo mi:
-                    return attributeType != null ? Attribute.GetCustomAttributes(mi, attributeType, inherit) : Attribute.GetCustomAttributes(mi, inherit);
+                    return attributeType != null
+                        ? Attribute.GetCustomAttributes(mi, attributeType, inherit)
+                        : Attribute.GetCustomAttributes(mi, inherit);
 #if !PORTABLE40
                 case Module m:
-                    return attributeType != null ? Attribute.GetCustomAttributes(m, attributeType, inherit) : Attribute.GetCustomAttributes(m, inherit);
+                    return attributeType != null
+                        ? Attribute.GetCustomAttributes(m, attributeType, inherit)
+                        : Attribute.GetCustomAttributes(m, inherit);
 #endif
                 case ParameterInfo p:
-                    return attributeType != null ? Attribute.GetCustomAttributes(p, attributeType, inherit) : Attribute.GetCustomAttributes(p, inherit);
+                    return attributeType != null
+                        ? Attribute.GetCustomAttributes(p, attributeType, inherit)
+                        : Attribute.GetCustomAttributes(p, inherit);
                 default:
 #if !PORTABLE40
                     var customAttributeProvider = (ICustomAttributeProvider) attributeProvider;
-                    var result = attributeType != null ? customAttributeProvider.GetCustomAttributes(attributeType, inherit) : customAttributeProvider.GetCustomAttributes(inherit);
+                    var result = attributeType != null
+                        ? customAttributeProvider.GetCustomAttributes(attributeType, inherit)
+                        : customAttributeProvider.GetCustomAttributes(inherit);
 
                     return (Attribute[]) result;
 #else
@@ -715,7 +731,8 @@ namespace Dreamcast.Json.Utilities
             if (assemblyDelimiterIndex != null)
             {
                 typeName = fullyQualifiedTypeName.Trim(0, assemblyDelimiterIndex.GetValueOrDefault());
-                assemblyName = fullyQualifiedTypeName.Trim(assemblyDelimiterIndex.GetValueOrDefault() + 1, fullyQualifiedTypeName.Length - assemblyDelimiterIndex.GetValueOrDefault() - 1);
+                assemblyName = fullyQualifiedTypeName.Trim(assemblyDelimiterIndex.GetValueOrDefault() + 1,
+                    fullyQualifiedTypeName.Length - assemblyDelimiterIndex.GetValueOrDefault() - 1);
             }
             else
             {
@@ -753,7 +770,8 @@ namespace Dreamcast.Json.Utilities
 
         public static MemberInfo GetMemberInfoFromType(Type targetType, MemberInfo memberInfo)
         {
-            const BindingFlags bindingAttr = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+            const BindingFlags bindingAttr = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public |
+                                             BindingFlags.NonPublic;
 
             switch (memberInfo.MemberType())
             {
@@ -762,9 +780,11 @@ namespace Dreamcast.Json.Utilities
 
                     var types = propertyInfo.GetIndexParameters().Select(p => p.ParameterType).ToArray();
 
-                    return targetType.GetProperty(propertyInfo.Name, bindingAttr, null, propertyInfo.PropertyType, types, null);
+                    return targetType.GetProperty(propertyInfo.Name, bindingAttr, null, propertyInfo.PropertyType,
+                        types, null);
                 default:
-                    return targetType.GetMember(memberInfo.Name, memberInfo.MemberType(), bindingAttr).SingleOrDefault();
+                    return targetType.GetMember(memberInfo.Name, memberInfo.MemberType(), bindingAttr)
+                        .SingleOrDefault();
             }
         }
 
@@ -783,7 +803,8 @@ namespace Dreamcast.Json.Utilities
         }
 
 #if !PORTABLE
-        private static void GetChildPrivateFields(IList<MemberInfo> initialFields, Type targetType, BindingFlags bindingAttr)
+        private static void GetChildPrivateFields(IList<MemberInfo> initialFields, Type targetType,
+            BindingFlags bindingAttr)
         {
             // fix weirdness with private FieldInfos only being returned for the current Type
             // find base type fields and add them to result
@@ -838,7 +859,8 @@ namespace Dreamcast.Json.Utilities
                 : bindingAttr;
         }
 
-        private static void GetChildPrivateProperties(IList<PropertyInfo> initialProperties, Type targetType, BindingFlags bindingAttr)
+        private static void GetChildPrivateProperties(IList<PropertyInfo> initialProperties, Type targetType,
+            BindingFlags bindingAttr)
         {
             // fix weirdness with private PropertyInfos only being returned for the current Type
             // find base type properties and add them to result
@@ -875,18 +897,22 @@ namespace Dreamcast.Json.Utilities
                         else
                         {
                             var index = initialProperties.IndexOf(p => p.Name == subTypeProperty.Name
-                                                                       && p.DeclaringType == subTypeProperty.DeclaringType);
+                                                                       && p.DeclaringType ==
+                                                                       subTypeProperty.DeclaringType);
 
                             if (index == -1) initialProperties.Add(subTypeProperty);
                         }
                     }
                     else
                     {
-                        var subTypePropertyDeclaringType = subTypeProperty.GetBaseDefinition()?.DeclaringType ?? subTypeProperty.DeclaringType;
+                        var subTypePropertyDeclaringType = subTypeProperty.GetBaseDefinition()?.DeclaringType ??
+                                                           subTypeProperty.DeclaringType;
 
                         var index = initialProperties.IndexOf(p => p.Name == subTypeProperty.Name
                                                                    && p.IsVirtual()
-                                                                   && (p.GetBaseDefinition()?.DeclaringType ?? p.DeclaringType).IsAssignableFrom(subTypePropertyDeclaringType));
+                                                                   && (p.GetBaseDefinition()?.DeclaringType ??
+                                                                       p.DeclaringType)
+                                                                   .IsAssignableFrom(subTypePropertyDeclaringType));
 
                         // don't add a virtual property that has an override
                         if (index == -1) initialProperties.Add(subTypeProperty);
@@ -896,7 +922,8 @@ namespace Dreamcast.Json.Utilities
 
         public static bool IsMethodOverridden(Type currentType, Type methodDeclaringType, string method)
         {
-            var isMethodOverriden = currentType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+            var isMethodOverriden = currentType
+                .GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
                 .Any(info =>
                     info.Name == method &&
                     // check that the method overrides the original on DynamicObjectProxy

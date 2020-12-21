@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-#if HAVE_CAS
+﻿#if HAVE_CAS
 using System.Security.Permissions;
 #endif
 using System;
@@ -49,7 +34,9 @@ namespace Dreamcast.Json.Serialization
             new(GetCreator);
 
 #if !(NET20 || DOTNET)
-        private static readonly ThreadSafeStore<Type, Type?> AssociatedMetadataTypesCache = new(GetAssociateMetadataTypeFromAttribute);
+        private static readonly ThreadSafeStore<Type, Type?> AssociatedMetadataTypesCache =
+            new(GetAssociateMetadataTypeFromAttribute);
+
         private static ReflectionObject? _metadataTypeAttributeReflectionObject;
 #endif
 
@@ -123,7 +110,8 @@ namespace Dreamcast.Json.Serialization
 
                     while (result == null && currentType != null)
                     {
-                        PropertyInfo baseProperty = (PropertyInfo)ReflectionUtils.GetMemberInfoFromType(currentType, propertyInfo);
+                        PropertyInfo baseProperty =
+ (PropertyInfo)ReflectionUtils.GetMemberInfoFromType(currentType, propertyInfo);
                         if (baseProperty != null && baseProperty.IsVirtual())
                         {
                             result = CachedAttributeGetter<DataMemberAttribute>.GetAttribute(baseProperty);
@@ -138,7 +126,8 @@ namespace Dreamcast.Json.Serialization
         }
 #endif
 
-        public static MemberSerialization GetObjectMemberSerialization(Type objectType, bool ignoreSerializableAttribute)
+        public static MemberSerialization GetObjectMemberSerialization(Type objectType,
+            bool ignoreSerializableAttribute)
         {
             var objectAttribute = GetCachedAttribute<JsonObjectAttribute>(objectType);
             if (objectAttribute != null) return objectAttribute.MemberSerialization;
@@ -201,7 +190,9 @@ namespace Dreamcast.Json.Serialization
             {
                 if (containerAttribute.NamingStrategyType == null) return null;
 
-                containerAttribute.NamingStrategyInstance = CreateNamingStrategyInstance(containerAttribute.NamingStrategyType, containerAttribute.NamingStrategyParameters);
+                containerAttribute.NamingStrategyInstance =
+                    CreateNamingStrategyInstance(containerAttribute.NamingStrategyType,
+                        containerAttribute.NamingStrategyParameters);
             }
 
             return containerAttribute.NamingStrategyInstance;
@@ -221,7 +212,8 @@ namespace Dreamcast.Json.Serialization
                     {
                         var paramTypes = parameters.Select(param =>
                         {
-                            if (param == null) throw new InvalidOperationException("Cannot pass a null parameter to the constructor.");
+                            if (param == null)
+                                throw new InvalidOperationException("Cannot pass a null parameter to the constructor.");
 
                             return param.GetType();
                         }).ToArray();
@@ -229,14 +221,20 @@ namespace Dreamcast.Json.Serialization
 
                         if (parameterizedConstructorInfo != null)
                         {
-                            var parameterizedConstructor = ReflectionDelegateFactory.CreateParameterizedConstructor(parameterizedConstructorInfo);
+                            var parameterizedConstructor =
+                                ReflectionDelegateFactory.CreateParameterizedConstructor(parameterizedConstructorInfo);
                             return parameterizedConstructor(parameters);
                         }
 
-                        throw new JsonException("No matching parameterized constructor found for '{0}'.".FormatWith(CultureInfo.InvariantCulture, type));
+                        throw new JsonException(
+                            "No matching parameterized constructor found for '{0}'.".FormatWith(
+                                CultureInfo.InvariantCulture, type));
                     }
 
-                    if (defaultConstructor == null) throw new JsonException("No parameterless constructor defined for '{0}'.".FormatWith(CultureInfo.InvariantCulture, type));
+                    if (defaultConstructor == null)
+                        throw new JsonException(
+                            "No parameterless constructor defined for '{0}'.".FormatWith(CultureInfo.InvariantCulture,
+                                type));
 
                     return defaultConstructor();
                 }
@@ -263,11 +261,14 @@ namespace Dreamcast.Json.Serialization
 
                 // only test on attribute type name
                 // attribute assembly could change because of type forwarding, etc
-                if (string.Equals(attributeType.FullName, "System.ComponentModel.DataAnnotations.MetadataTypeAttribute", StringComparison.Ordinal))
+                if (string.Equals(attributeType.FullName, "System.ComponentModel.DataAnnotations.MetadataTypeAttribute",
+                    StringComparison.Ordinal))
                 {
                     const string metadataClassTypeName = "MetadataClassType";
 
-                    if (_metadataTypeAttributeReflectionObject == null) _metadataTypeAttributeReflectionObject = ReflectionObject.Create(attributeType, metadataClassTypeName);
+                    if (_metadataTypeAttributeReflectionObject == null)
+                        _metadataTypeAttributeReflectionObject =
+                            ReflectionObject.Create(attributeType, metadataClassTypeName);
 
                     return (Type?) _metadataTypeAttributeReflectionObject.GetValue(attribute, metadataClassTypeName);
                 }

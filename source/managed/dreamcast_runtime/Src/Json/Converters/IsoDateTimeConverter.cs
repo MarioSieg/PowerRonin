@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Globalization;
 using Dreamcast.Json.Utilities;
 
@@ -86,7 +71,9 @@ namespace Dreamcast.Json.Converters
 #endif
             else
             {
-                throw new JsonSerializationException("Unexpected value when converting date. Expected DateTime or DateTimeOffset, got {0}.".FormatWith(CultureInfo.InvariantCulture, ReflectionUtils.GetObjectType(value)!));
+                throw new JsonSerializationException(
+                    "Unexpected value when converting date. Expected DateTime or DateTimeOffset, got {0}.".FormatWith(
+                        CultureInfo.InvariantCulture, ReflectionUtils.GetObjectType(value)!));
             }
 
             writer.WriteValue(text);
@@ -100,12 +87,15 @@ namespace Dreamcast.Json.Converters
         /// <param name="existingValue">The existing value of object being read.</param>
         /// <param name="serializer">The calling serializer.</param>
         /// <returns>The object value.</returns>
-        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue,
+            JsonSerializer serializer)
         {
             var nullable = ReflectionUtils.IsNullableType(objectType);
             if (reader.TokenType == JsonToken.Null)
             {
-                if (!nullable) throw JsonSerializationException.Create(reader, "Cannot convert null value to {0}.".FormatWith(CultureInfo.InvariantCulture, objectType));
+                if (!nullable)
+                    throw JsonSerializationException.Create(reader,
+                        "Cannot convert null value to {0}.".FormatWith(CultureInfo.InvariantCulture, objectType));
 
                 return null;
             }
@@ -134,7 +124,10 @@ namespace Dreamcast.Json.Converters
                 return reader.Value;
             }
 
-            if (reader.TokenType != JsonToken.String) throw JsonSerializationException.Create(reader, "Unexpected token parsing date. Expected String, got {0}.".FormatWith(CultureInfo.InvariantCulture, reader.TokenType));
+            if (reader.TokenType != JsonToken.String)
+                throw JsonSerializationException.Create(reader,
+                    "Unexpected token parsing date. Expected String, got {0}.".FormatWith(CultureInfo.InvariantCulture,
+                        reader.TokenType));
 
             var dateText = reader.Value?.ToString();
 

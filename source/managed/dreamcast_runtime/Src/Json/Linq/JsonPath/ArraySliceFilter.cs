@@ -1,19 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Dreamcast.Json.Utilities;
@@ -26,7 +10,8 @@ namespace Dreamcast.Json.Linq.JsonPath
         public int? End { get; set; }
         public int? Step { get; set; }
 
-        public override IEnumerable<JToken> ExecuteFilter(JToken root, IEnumerable<JToken> current, bool errorWhenNoMatch)
+        public override IEnumerable<JToken> ExecuteFilter(JToken root, IEnumerable<JToken> current,
+            bool errorWhenNoMatch)
         {
             if (Step == 0) throw new JsonException("Step cannot be zero.");
 
@@ -59,14 +44,18 @@ namespace Dreamcast.Json.Linq.JsonPath
                     else
                     {
                         if (errorWhenNoMatch)
-                            throw new JsonException("Array slice of {0} to {1} returned no results.".FormatWith(CultureInfo.InvariantCulture,
+                            throw new JsonException("Array slice of {0} to {1} returned no results.".FormatWith(
+                                CultureInfo.InvariantCulture,
                                 Start != null ? Start.GetValueOrDefault().ToString(CultureInfo.InvariantCulture) : "*",
                                 End != null ? End.GetValueOrDefault().ToString(CultureInfo.InvariantCulture) : "*"));
                     }
                 }
                 else
                 {
-                    if (errorWhenNoMatch) throw new JsonException("Array slice is not valid on {0}.".FormatWith(CultureInfo.InvariantCulture, t.GetType().Name));
+                    if (errorWhenNoMatch)
+                        throw new JsonException(
+                            "Array slice is not valid on {0}.".FormatWith(CultureInfo.InvariantCulture,
+                                t.GetType().Name));
                 }
         }
 

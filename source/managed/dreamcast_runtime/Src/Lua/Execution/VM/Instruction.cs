@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -46,7 +31,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
             if (usage != 0)
                 append += GenSpaces();
 
-            if (OpCode == OpCode.Meta || (usage & (int) InstructionFieldUsage.NumValAsCodeAddress) == (int) InstructionFieldUsage.NumValAsCodeAddress)
+            if (OpCode == OpCode.Meta || (usage & (int) InstructionFieldUsage.NumValAsCodeAddress) ==
+                (int) InstructionFieldUsage.NumValAsCodeAddress)
                 append += " " + NumVal.ToString("X8");
             else if ((usage & (int) InstructionFieldUsage.NumVal) != 0)
                 append += " " + NumVal;
@@ -88,7 +74,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
 
             var usage = (int) OpCode.GetFieldUsage();
 
-            if ((usage & (int) InstructionFieldUsage.NumValAsCodeAddress) == (int) InstructionFieldUsage.NumValAsCodeAddress)
+            if ((usage & (int) InstructionFieldUsage.NumValAsCodeAddress) ==
+                (int) InstructionFieldUsage.NumValAsCodeAddress)
                 wr.Write(NumVal - baseAddress);
             else if ((usage & (int) InstructionFieldUsage.NumVal) != 0)
                 wr.Write(NumVal);
@@ -127,7 +114,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
             return deserializedSymbols[id];
         }
 
-        internal static Instruction ReadBinary(SourceRef chunkRef, BinaryReader rd, int baseAddress, Table envTable, SymbolRef[] deserializedSymbols)
+        internal static Instruction ReadBinary(SourceRef chunkRef, BinaryReader rd, int baseAddress, Table envTable,
+            SymbolRef[] deserializedSymbols)
         {
             Instruction that = new(chunkRef);
 
@@ -135,7 +123,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
 
             var usage = (int) that.OpCode.GetFieldUsage();
 
-            if ((usage & (int) InstructionFieldUsage.NumValAsCodeAddress) == (int) InstructionFieldUsage.NumValAsCodeAddress)
+            if ((usage & (int) InstructionFieldUsage.NumValAsCodeAddress) ==
+                (int) InstructionFieldUsage.NumValAsCodeAddress)
                 that.NumVal = rd.ReadInt32() + baseAddress;
             else if ((usage & (int) InstructionFieldUsage.NumVal) != 0)
                 that.NumVal = rd.ReadInt32();

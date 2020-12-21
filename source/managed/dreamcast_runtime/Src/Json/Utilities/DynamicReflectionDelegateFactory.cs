@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-#if HAVE_REFLECTION_EMIT
+﻿#if HAVE_REFLECTION_EMIT
 using System;
 using System.Collections.Generic;
 #if !HAVE_LINQ
@@ -41,7 +26,8 @@ namespace Dreamcast.Json.Utilities
 
         public override ObjectConstructor<object> CreateParameterizedConstructor(MethodBase method)
         {
-            DynamicMethod dynamicMethod = CreateDynamicMethod(method.ToString(), typeof(object), new[] { typeof(object[]) }, method.DeclaringType);
+            DynamicMethod dynamicMethod =
+ CreateDynamicMethod(method.ToString(), typeof(object), new[] { typeof(object[]) }, method.DeclaringType);
             ILGenerator generator = dynamicMethod.GetILGenerator();
 
             GenerateCreateMethodCallIL(method, generator, 0);
@@ -51,7 +37,8 @@ namespace Dreamcast.Json.Utilities
 
         public override MethodCall<T, object?> CreateMethodCall<T>(MethodBase method)
         {
-            DynamicMethod dynamicMethod = CreateDynamicMethod(method.ToString(), typeof(object), new[] { typeof(object), typeof(object[]) }, method.DeclaringType);
+            DynamicMethod dynamicMethod =
+ CreateDynamicMethod(method.ToString(), typeof(object), new[] { typeof(object), typeof(object[]) }, method.DeclaringType);
             ILGenerator generator = dynamicMethod.GetILGenerator();
 
             GenerateCreateMethodCallIL(method, generator, 1);
@@ -234,7 +221,8 @@ namespace Dreamcast.Json.Utilities
 
         public override Dreamcast.Json.Serialization.Func<T> CreateDefaultConstructor<T>(Type type)
         {
-            DynamicMethod dynamicMethod = CreateDynamicMethod("Create" + type.FullName, typeof(T), ReflectionUtils.EmptyTypes, type);
+            DynamicMethod dynamicMethod =
+ CreateDynamicMethod("Create" + type.FullName, typeof(T), ReflectionUtils.EmptyTypes, type);
             dynamicMethod.InitLocals = true;
             ILGenerator generator = dynamicMethod.GetILGenerator();
 
@@ -274,7 +262,8 @@ namespace Dreamcast.Json.Utilities
 
         public override Dreamcast.Json.Serialization.Func<T, object?> CreateGet<T>(PropertyInfo propertyInfo)
         {
-            DynamicMethod dynamicMethod = CreateDynamicMethod("Get" + propertyInfo.Name, typeof(object), new[] { typeof(T) }, propertyInfo.DeclaringType);
+            DynamicMethod dynamicMethod =
+ CreateDynamicMethod("Get" + propertyInfo.Name, typeof(object), new[] { typeof(T) }, propertyInfo.DeclaringType);
             ILGenerator generator = dynamicMethod.GetILGenerator();
 
             GenerateCreateGetPropertyIL(propertyInfo, generator);
@@ -309,7 +298,8 @@ namespace Dreamcast.Json.Utilities
                 return getter;
             }
 
-            DynamicMethod dynamicMethod = CreateDynamicMethod("Get" + fieldInfo.Name, typeof(T), new[] { typeof(object) }, fieldInfo.DeclaringType);
+            DynamicMethod dynamicMethod =
+ CreateDynamicMethod("Get" + fieldInfo.Name, typeof(T), new[] { typeof(object) }, fieldInfo.DeclaringType);
             ILGenerator generator = dynamicMethod.GetILGenerator();
 
             GenerateCreateGetFieldIL(fieldInfo, generator);
@@ -335,7 +325,8 @@ namespace Dreamcast.Json.Utilities
 
         public override Action<T, object?> CreateSet<T>(FieldInfo fieldInfo)
         {
-            DynamicMethod dynamicMethod = CreateDynamicMethod("Set" + fieldInfo.Name, null, new[] { typeof(T), typeof(object) }, fieldInfo.DeclaringType);
+            DynamicMethod dynamicMethod =
+ CreateDynamicMethod("Set" + fieldInfo.Name, null, new[] { typeof(T), typeof(object) }, fieldInfo.DeclaringType);
             ILGenerator generator = dynamicMethod.GetILGenerator();
 
             GenerateCreateSetFieldIL(fieldInfo, generator);
@@ -367,7 +358,8 @@ namespace Dreamcast.Json.Utilities
 
         public override Action<T, object?> CreateSet<T>(PropertyInfo propertyInfo)
         {
-            DynamicMethod dynamicMethod = CreateDynamicMethod("Set" + propertyInfo.Name, null, new[] { typeof(T), typeof(object) }, propertyInfo.DeclaringType);
+            DynamicMethod dynamicMethod =
+ CreateDynamicMethod("Set" + propertyInfo.Name, null, new[] { typeof(T), typeof(object) }, propertyInfo.DeclaringType);
             ILGenerator generator = dynamicMethod.GetILGenerator();
 
             GenerateCreateSetPropertyIL(propertyInfo, generator);

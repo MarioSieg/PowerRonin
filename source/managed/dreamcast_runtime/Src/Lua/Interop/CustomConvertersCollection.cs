@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Dreamcast.Lua.Interpreter.Interop
@@ -25,7 +10,9 @@ namespace Dreamcast.Lua.Interpreter.Interop
     public class CustomConvertersCollection
     {
         private readonly Dictionary<Type, Func<Script, object, DynValue>> m_Clr2Script = new();
-        private readonly Dictionary<Type, Func<DynValue, object>>[] m_Script2Clr = new Dictionary<Type, Func<DynValue, object>>[(int) LuaTypeExtensions.MaxConvertibleTypes + 1];
+
+        private readonly Dictionary<Type, Func<DynValue, object>>[] m_Script2Clr =
+            new Dictionary<Type, Func<DynValue, object>>[(int) LuaTypeExtensions.MaxConvertibleTypes + 1];
 
 
         internal CustomConvertersCollection()
@@ -93,7 +80,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
         /// <param name="scriptDataType">The script data type</param>
         /// <param name="clrDataType">The CLR data type.</param>
         /// <param name="converter">The converter, or null.</param>
-        public void SetScriptToClrCustomConversion(DataType scriptDataType, Type clrDataType, Func<DynValue, object> converter = null)
+        public void SetScriptToClrCustomConversion(DataType scriptDataType, Type clrDataType,
+            Func<DynValue, object> converter = null)
         {
             if ((int) scriptDataType > m_Script2Clr.Length)
                 throw new ArgumentException("scriptDataType");

@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -89,7 +74,10 @@ namespace Dreamcast.Json.Linq
             {
                 ValidationUtils.ArgumentNotNull(key, nameof(key));
 
-                if (!(key is int)) throw new ArgumentException("Accessed JArray values with invalid key value: {0}. Int32 array index expected.".FormatWith(CultureInfo.InvariantCulture, MiscellaneousUtils.ToString(key)));
+                if (!(key is int))
+                    throw new ArgumentException(
+                        "Accessed JArray values with invalid key value: {0}. Int32 array index expected.".FormatWith(
+                            CultureInfo.InvariantCulture, MiscellaneousUtils.ToString(key)));
 
                 return GetItem((int) key);
             }
@@ -97,7 +85,10 @@ namespace Dreamcast.Json.Linq
             {
                 ValidationUtils.ArgumentNotNull(key, nameof(key));
 
-                if (!(key is int)) throw new ArgumentException("Set JArray values with invalid key value: {0}. Int32 array index expected.".FormatWith(CultureInfo.InvariantCulture, MiscellaneousUtils.ToString(key)));
+                if (!(key is int))
+                    throw new ArgumentException(
+                        "Set JArray values with invalid key value: {0}. Int32 array index expected.".FormatWith(
+                            CultureInfo.InvariantCulture, MiscellaneousUtils.ToString(key)));
 
                 SetItem((int) key, value);
             }
@@ -150,7 +141,10 @@ namespace Dreamcast.Json.Linq
 
             reader.MoveToContent();
 
-            if (reader.TokenType != JsonToken.StartArray) throw JsonReaderException.Create(reader, "Error reading JArray from JsonReader. Current JsonReader item is not an array: {0}".FormatWith(CultureInfo.InvariantCulture, reader.TokenType));
+            if (reader.TokenType != JsonToken.StartArray)
+                throw JsonReaderException.Create(reader,
+                    "Error reading JArray from JsonReader. Current JsonReader item is not an array: {0}".FormatWith(
+                        CultureInfo.InvariantCulture, reader.TokenType));
 
             var a = new JArray();
             a.SetLineInfo(reader as IJsonLineInfo, settings);
@@ -222,7 +216,10 @@ namespace Dreamcast.Json.Linq
         {
             var token = FromObjectInternal(o, jsonSerializer);
 
-            if (token.Type != JTokenType.Array) throw new ArgumentException("Object serialized to {0}. JArray instance expected.".FormatWith(CultureInfo.InvariantCulture, token.Type));
+            if (token.Type != JTokenType.Array)
+                throw new ArgumentException(
+                    "Object serialized to {0}. JArray instance expected.".FormatWith(CultureInfo.InvariantCulture,
+                        token.Type));
 
             return (JArray) token;
         }

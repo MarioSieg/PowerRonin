@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #pragma once
 
 #include "texture.hpp"
@@ -25,9 +10,11 @@ namespace dce {
 	class ResourceManager;
 
 	struct MaterialMeta final : ISerializable {
-		[[nodiscard]] inline virtual void serialize(JsonStream&) const override { }
+		[[nodiscard]] inline void serialize(JsonStream&) const override {
+		}
 
-		[[nodiscard]] inline virtual void deserialize(const JsonStream&) override { }
+		[[nodiscard]] inline void deserialize(const JsonStream&) override {
+		}
 	};
 
 	/// <summary>
@@ -75,12 +62,12 @@ namespace dce {
 		/// <summary>
 		/// NO-OP
 		/// </summary>
-		virtual void upload() override;
+		void upload() override;
 
 		/// <summary>
 		/// NO-OP
 		/// </summary>
-		virtual void offload() override;
+		void offload() override;
 
 		/// <summary>
 		/// Material properties.
@@ -94,6 +81,7 @@ namespace dce {
 	/// </summary>
 	class MaterialImporteur final : public ResourceImporteur<MaterialImporteur, Material> {
 	public:
-		auto load(std::filesystem::path&& _path, const MaterialMeta* const _meta = nullptr) const -> std::shared_ptr<Material>;
+		auto load(std::filesystem::path&& _path,
+		          const MaterialMeta* const _meta = nullptr) const -> std::shared_ptr<Material>;
 	};
 }

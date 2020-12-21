@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-#define EMIT_DEBUG_OPS
+﻿#define EMIT_DEBUG_OPS
 
 using System;
 using System.Collections.Generic;
@@ -111,12 +96,14 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
 
         public void Emit_Call(int argCount, string debugName)
         {
-            AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = OpCode.Call, NumVal = argCount, Name = debugName});
+            AppendInstruction(new Instruction(m_CurrentSourceRef)
+                {OpCode = OpCode.Call, NumVal = argCount, Name = debugName});
         }
 
         public void Emit_ThisCall(int argCount, string debugName)
         {
-            AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = OpCode.ThisCall, NumVal = argCount, Name = debugName});
+            AppendInstruction(new Instruction(m_CurrentSourceRef)
+                {OpCode = OpCode.ThisCall, NumVal = argCount, Name = debugName});
         }
 
         public Instruction Emit_Literal(DynValue value)
@@ -126,7 +113,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
 
         public Instruction Emit_Jump(OpCode jumpOpCode, int idx, int optPar = 0)
         {
-            return AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = jumpOpCode, NumVal = idx, NumVal2 = optPar});
+            return AppendInstruction(new Instruction(m_CurrentSourceRef)
+                {OpCode = jumpOpCode, NumVal = idx, NumVal2 = optPar});
         }
 
         public Instruction Emit_MkTuple(int cnt)
@@ -151,32 +139,38 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
         [Conditional("EMIT_DEBUG_OPS")]
         public void Emit_Debug(string str)
         {
-            AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = OpCode.Debug, Name = str.Substring(0, Math.Min(32, str.Length))});
+            AppendInstruction(new Instruction(m_CurrentSourceRef)
+                {OpCode = OpCode.Debug, Name = str.Substring(0, Math.Min(32, str.Length))});
         }
 
         public Instruction Emit_Enter(RuntimeScopeBlock runtimeScopeBlock)
         {
-            return AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = OpCode.Clean, NumVal = runtimeScopeBlock.From, NumVal2 = runtimeScopeBlock.ToInclusive});
+            return AppendInstruction(new Instruction(m_CurrentSourceRef)
+                {OpCode = OpCode.Clean, NumVal = runtimeScopeBlock.From, NumVal2 = runtimeScopeBlock.ToInclusive});
         }
 
         public Instruction Emit_Leave(RuntimeScopeBlock runtimeScopeBlock)
         {
-            return AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = OpCode.Clean, NumVal = runtimeScopeBlock.From, NumVal2 = runtimeScopeBlock.To});
+            return AppendInstruction(new Instruction(m_CurrentSourceRef)
+                {OpCode = OpCode.Clean, NumVal = runtimeScopeBlock.From, NumVal2 = runtimeScopeBlock.To});
         }
 
         public Instruction Emit_Exit(RuntimeScopeBlock runtimeScopeBlock)
         {
-            return AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = OpCode.Clean, NumVal = runtimeScopeBlock.From, NumVal2 = runtimeScopeBlock.ToInclusive});
+            return AppendInstruction(new Instruction(m_CurrentSourceRef)
+                {OpCode = OpCode.Clean, NumVal = runtimeScopeBlock.From, NumVal2 = runtimeScopeBlock.ToInclusive});
         }
 
         public Instruction Emit_Clean(RuntimeScopeBlock runtimeScopeBlock)
         {
-            return AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = OpCode.Clean, NumVal = runtimeScopeBlock.To + 1, NumVal2 = runtimeScopeBlock.ToInclusive});
+            return AppendInstruction(new Instruction(m_CurrentSourceRef)
+                {OpCode = OpCode.Clean, NumVal = runtimeScopeBlock.To + 1, NumVal2 = runtimeScopeBlock.ToInclusive});
         }
 
         public Instruction Emit_Closure(SymbolRef[] symbols, int jmpnum)
         {
-            return AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = OpCode.Closure, SymbolList = symbols, NumVal = jmpnum});
+            return AppendInstruction(new Instruction(m_CurrentSourceRef)
+                {OpCode = OpCode.Closure, SymbolList = symbols, NumVal = jmpnum});
         }
 
         public Instruction Emit_Args(params SymbolRef[] symbols)
@@ -201,7 +195,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
 
         public Instruction Emit_NewTable(bool shared)
         {
-            return AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = OpCode.NewTable, NumVal = shared ? 1 : 0});
+            return AppendInstruction(new Instruction(m_CurrentSourceRef)
+                {OpCode = OpCode.NewTable, NumVal = shared ? 1 : 0});
         }
 
         public Instruction Emit_IterPrep()
@@ -211,7 +206,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
 
         public Instruction Emit_ExpTuple(int stackOffset)
         {
-            return AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = OpCode.ExpTuple, NumVal = stackOffset});
+            return AppendInstruction(new Instruction(m_CurrentSourceRef)
+                {OpCode = OpCode.ExpTuple, NumVal = stackOffset});
         }
 
         public Instruction Emit_IterUpd()
@@ -221,13 +217,18 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
 
         public Instruction Emit_Meta(string funcName, OpCodeMetadataType metaType, DynValue value = null)
         {
-            return AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = OpCode.Meta, Name = funcName, NumVal2 = (int) metaType, Value = value});
+            return AppendInstruction(new Instruction(m_CurrentSourceRef)
+                {OpCode = OpCode.Meta, Name = funcName, NumVal2 = (int) metaType, Value = value});
         }
 
 
         public Instruction Emit_BeginFn(RuntimeScopeFrame stackFrame)
         {
-            return AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = OpCode.BeginFn, SymbolList = stackFrame.DebugSymbols.ToArray(), NumVal = stackFrame.Count, NumVal2 = stackFrame.ToFirstBlock});
+            return AppendInstruction(new Instruction(m_CurrentSourceRef)
+            {
+                OpCode = OpCode.BeginFn, SymbolList = stackFrame.DebugSymbols.ToArray(), NumVal = stackFrame.Count,
+                NumVal2 = stackFrame.ToFirstBlock
+            });
         }
 
         public Instruction Emit_Scalar()
@@ -241,7 +242,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
             {
                 case SymbolRefType.Global:
                     Emit_Load(sym.i_Env);
-                    AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = OpCode.Index, Value = DynValue.NewString(sym.i_Name)});
+                    AppendInstruction(new Instruction(m_CurrentSourceRef)
+                        {OpCode = OpCode.Index, Value = DynValue.NewString(sym.i_Name)});
                     return 2;
                 case SymbolRefType.Local:
                     AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = OpCode.Local, Symbol = sym});
@@ -270,10 +272,12 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
                     });
                     return 2;
                 case SymbolRefType.Local:
-                    AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = OpCode.StoreLcl, Symbol = sym, NumVal = stackofs, NumVal2 = tupleidx});
+                    AppendInstruction(new Instruction(m_CurrentSourceRef)
+                        {OpCode = OpCode.StoreLcl, Symbol = sym, NumVal = stackofs, NumVal2 = tupleidx});
                     return 1;
                 case SymbolRefType.Upvalue:
-                    AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = OpCode.StoreUpv, Symbol = sym, NumVal = stackofs, NumVal2 = tupleidx});
+                    AppendInstruction(new Instruction(m_CurrentSourceRef)
+                        {OpCode = OpCode.StoreUpv, Symbol = sym, NumVal = stackofs, NumVal2 = tupleidx});
                     return 1;
                 default:
                     throw new InternalErrorException("Unexpected symbol type : {0}", sym);
@@ -287,7 +291,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
 
         public Instruction Emit_TblInitI(bool lastpos)
         {
-            return AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = OpCode.TblInitI, NumVal = lastpos ? 1 : 0});
+            return AppendInstruction(new Instruction(m_CurrentSourceRef)
+                {OpCode = OpCode.TblInitI, NumVal = lastpos ? 1 : 0});
         }
 
         public Instruction Emit_Index(DynValue index = null, bool isNameIndex = false, bool isExpList = false)
@@ -300,14 +305,16 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
             return AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = o, Value = index});
         }
 
-        public Instruction Emit_IndexSet(int stackofs, int tupleidx, DynValue index = null, bool isNameIndex = false, bool isExpList = false)
+        public Instruction Emit_IndexSet(int stackofs, int tupleidx, DynValue index = null, bool isNameIndex = false,
+            bool isExpList = false)
         {
             OpCode o;
             if (isNameIndex) o = OpCode.IndexSetN;
             else if (isExpList) o = OpCode.IndexSetL;
             else o = OpCode.IndexSet;
 
-            return AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = o, NumVal = stackofs, NumVal2 = tupleidx, Value = index});
+            return AppendInstruction(new Instruction(m_CurrentSourceRef)
+                {OpCode = o, NumVal = stackofs, NumVal2 = tupleidx, Value = index});
         }
 
         public Instruction Emit_Copy(int numval)
@@ -317,7 +324,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
 
         public Instruction Emit_Swap(int p1, int p2)
         {
-            return AppendInstruction(new Instruction(m_CurrentSourceRef) {OpCode = OpCode.Swap, NumVal = p1, NumVal2 = p2});
+            return AppendInstruction(new Instruction(m_CurrentSourceRef)
+                {OpCode = OpCode.Swap, NumVal = p1, NumVal2 = p2});
         }
 
 

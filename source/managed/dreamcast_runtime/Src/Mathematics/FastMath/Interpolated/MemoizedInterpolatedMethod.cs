@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
 using Dreamcast.Math.Fast.Core;
 
@@ -23,7 +8,8 @@ namespace Dreamcast.Math.Fast.Interpolated
     {
         private readonly float _argumentMultiplier;
 
-        private MemoizedInterpolatedMethod(Func<float, float> baseMethod, float minArgument, float maxArgument, int valuesCount)
+        private MemoizedInterpolatedMethod(Func<float, float> baseMethod, float minArgument, float maxArgument,
+            int valuesCount)
         {
             BaseMethod = baseMethod;
             MinArgument = minArgument;
@@ -55,12 +41,14 @@ namespace Dreamcast.Math.Fast.Interpolated
             return (1 - alpha) * Values[index] + alpha * Values[index + 1];
         }
 
-        public static MemoizedInterpolatedMethod ConstructByValuesCount(Func<float, float> baseMethod, float minArgument, float maxArgument, int valuesCount)
+        public static MemoizedInterpolatedMethod ConstructByValuesCount(Func<float, float> baseMethod,
+            float minArgument, float maxArgument, int valuesCount)
         {
             return new(baseMethod, minArgument, maxArgument, valuesCount + 2);
         }
 
-        public static MemoizedInterpolatedMethod ConstructByStep(Func<float, float> baseMethod, float minArgument, float maxArgument, float step)
+        public static MemoizedInterpolatedMethod ConstructByStep(Func<float, float> baseMethod, float minArgument,
+            float maxArgument, float step)
         {
             var valuesCount = (int) System.Math.Round((maxArgument - minArgument) / step) + 2;
             if (valuesCount == 2) valuesCount = 3;

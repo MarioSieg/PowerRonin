@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -32,7 +17,11 @@ namespace Dreamcast.Json
 
     internal struct JsonPosition
     {
-        private static readonly char[] SpecialCharacters = {'.', ' ', '\'', '/', '"', '[', ']', '(', ')', '\t', '\n', '\r', '\f', '\b', '\\', '\u0085', '\u2028', '\u2029'};
+        private static readonly char[] SpecialCharacters =
+        {
+            '.', ' ', '\'', '/', '"', '[', ']', '(', ')', '\t', '\n', '\r', '\f', '\b', '\\', '\u0085', '\u2028',
+            '\u2029'
+        };
 
         internal JsonContainerType Type;
         internal int Position;
@@ -73,7 +62,8 @@ namespace Dreamcast.Json
 
                         if (writer == null) writer = new StringWriter(sb);
 
-                        JavaScriptUtils.WriteEscapedJavaScriptString(writer, propertyName, '\'', false, JavaScriptUtils.SingleQuoteCharEscapeFlags, StringEscapeHandling.Default, null, ref buffer);
+                        JavaScriptUtils.WriteEscapedJavaScriptString(writer, propertyName, '\'', false,
+                            JavaScriptUtils.SingleQuoteCharEscapeFlags, StringEscapeHandling.Default, null, ref buffer);
 
                         sb.Append(@"']");
                     }
@@ -132,7 +122,9 @@ namespace Dreamcast.Json
 
             message += "Path '{0}'".FormatWith(CultureInfo.InvariantCulture, path);
 
-            if (lineInfo != null && lineInfo.HasLineInfo()) message += ", line {0}, position {1}".FormatWith(CultureInfo.InvariantCulture, lineInfo.LineNumber, lineInfo.LinePosition);
+            if (lineInfo != null && lineInfo.HasLineInfo())
+                message += ", line {0}, position {1}".FormatWith(CultureInfo.InvariantCulture, lineInfo.LineNumber,
+                    lineInfo.LinePosition);
 
             message += ".";
 

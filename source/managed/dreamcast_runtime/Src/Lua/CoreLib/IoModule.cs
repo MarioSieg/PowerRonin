@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-#pragma warning disable 1591
+﻿#pragma warning disable 1591
 
 using System;
 using System.Collections.Generic;
@@ -96,7 +81,8 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         }
 
 
-        private static void SetDefaultFile(ScriptExecutionContext executionContext, StandardFileType file, FileUserDataBase fileHandle)
+        private static void SetDefaultFile(ScriptExecutionContext executionContext, StandardFileType file,
+            FileUserDataBase fileHandle)
         {
             SetDefaultFile(executionContext.GetScript(), file, fileHandle);
         }
@@ -119,14 +105,16 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         [LuaModuleMethod]
         public static DynValue close(ScriptExecutionContext executionContext, CallbackArguments args)
         {
-            FileUserDataBase outp = args.AsUserData<FileUserDataBase>(0, "close", true) ?? GetDefaultFile(executionContext, StandardFileType.StdOut);
+            FileUserDataBase outp = args.AsUserData<FileUserDataBase>(0, "close", true) ??
+                                    GetDefaultFile(executionContext, StandardFileType.StdOut);
             return outp.close(executionContext, args);
         }
 
         [LuaModuleMethod]
         public static DynValue flush(ScriptExecutionContext executionContext, CallbackArguments args)
         {
-            FileUserDataBase outp = args.AsUserData<FileUserDataBase>(0, "close", true) ?? GetDefaultFile(executionContext, StandardFileType.StdOut);
+            FileUserDataBase outp = args.AsUserData<FileUserDataBase>(0, "close", true) ??
+                                    GetDefaultFile(executionContext, StandardFileType.StdOut);
             outp.flush();
             return DynValue.True;
         }
@@ -144,7 +132,8 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             return HandleDefaultStreamSetter(executionContext, args, StandardFileType.StdOut);
         }
 
-        private static DynValue HandleDefaultStreamSetter(ScriptExecutionContext executionContext, CallbackArguments args, StandardFileType defaultFiles)
+        private static DynValue HandleDefaultStreamSetter(ScriptExecutionContext executionContext,
+            CallbackArguments args, StandardFileType defaultFiles)
         {
             if (args.Count == 0 || args[0].IsNil())
             {
@@ -157,7 +146,8 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             if (args[0].Type == DataType.String || args[0].Type == DataType.Number)
             {
                 string fileName = args[0].CastToString();
-                inp = Open(executionContext, fileName, GetUTF8Encoding(), defaultFiles == StandardFileType.StdIn ? "r" : "w");
+                inp = Open(executionContext, fileName, GetUTF8Encoding(),
+                    defaultFiles == StandardFileType.StdIn ? "r" : "w");
             }
             else
             {
@@ -183,7 +173,8 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             {
                 List<DynValue> readLines = new();
 
-                using (var stream = Script.GlobalOptions.Platform.IO_OpenFile(executionContext.GetScript(), filename, null, "r"))
+                using (var stream =
+                    Script.GlobalOptions.Platform.IO_OpenFile(executionContext.GetScript(), filename, null, "r"))
                 {
                     using (var reader = new StreamReader(stream))
                     {
@@ -247,7 +238,8 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
                 else
                 {
                     if (isBinary)
-                        throw new ScriptRuntimeException("Can't specify encodings other than nil or 'binary' for binary streams.");
+                        throw new ScriptRuntimeException(
+                            "Can't specify encodings other than nil or 'binary' for binary streams.");
 
                     e = Encoding.GetEncoding(encoding);
                 }
@@ -305,7 +297,8 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
             return UserData.Create(file);
         }
 
-        private static FileUserDataBase Open(ScriptExecutionContext executionContext, string filename, Encoding encoding, string mode)
+        private static FileUserDataBase Open(ScriptExecutionContext executionContext, string filename,
+            Encoding encoding, string mode)
         {
             return new FileUserData(executionContext.GetScript(), filename, encoding, mode);
         }

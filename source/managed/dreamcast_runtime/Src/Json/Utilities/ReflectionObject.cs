@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
@@ -92,7 +77,10 @@ namespace Dreamcast.Json.Utilities
             foreach (var memberName in memberNames)
             {
                 var members = t.GetMember(memberName, BindingFlags.Instance | BindingFlags.Public);
-                if (members.Length != 1) throw new ArgumentException("Expected a single member with the name '{0}'.".FormatWith(CultureInfo.InvariantCulture, memberName));
+                if (members.Length != 1)
+                    throw new ArgumentException(
+                        "Expected a single member with the name '{0}'.".FormatWith(CultureInfo.InvariantCulture,
+                            memberName));
 
                 var member = members.Single();
 
@@ -102,9 +90,11 @@ namespace Dreamcast.Json.Utilities
                 {
                     case MemberTypes.Field:
                     case MemberTypes.Property:
-                        if (ReflectionUtils.CanReadMemberValue(member, false)) reflectionMember.Getter = delegateFactory.CreateGet<object>(member);
+                        if (ReflectionUtils.CanReadMemberValue(member, false))
+                            reflectionMember.Getter = delegateFactory.CreateGet<object>(member);
 
-                        if (ReflectionUtils.CanSetMemberValue(member, false, false)) reflectionMember.Setter = delegateFactory.CreateSet<object>(member);
+                        if (ReflectionUtils.CanSetMemberValue(member, false, false))
+                            reflectionMember.Setter = delegateFactory.CreateSet<object>(member);
                         break;
                     case MemberTypes.Method:
                         var method = (MethodInfo) member;
@@ -125,7 +115,9 @@ namespace Dreamcast.Json.Utilities
 
                         break;
                     default:
-                        throw new ArgumentException("Unexpected member type '{0}' for member '{1}'.".FormatWith(CultureInfo.InvariantCulture, member.MemberType(), member.Name));
+                        throw new ArgumentException(
+                            "Unexpected member type '{0}' for member '{1}'.".FormatWith(CultureInfo.InvariantCulture,
+                                member.MemberType(), member.Name));
                 }
 
                 reflectionMember.MemberType = ReflectionUtils.GetMemberUnderlyingType(member);

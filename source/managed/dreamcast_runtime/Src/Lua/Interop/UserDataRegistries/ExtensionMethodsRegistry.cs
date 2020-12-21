@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -106,7 +91,8 @@ namespace Dreamcast.Lua.Interpreter.Interop.UserDataRegistries
         /// <param name="name">The name.</param>
         /// <param name="extendedType">The extended type.</param>
         /// <returns></returns>
-        public static List<IOverloadableMemberDescriptor> GetExtensionMethodsByNameAndType(string name, Type extendedType)
+        public static List<IOverloadableMemberDescriptor> GetExtensionMethodsByNameAndType(string name,
+            Type extendedType)
         {
             List<UnresolvedGenericMethod> unresolvedGenerics = null;
 
@@ -141,11 +127,13 @@ namespace Dreamcast.Lua.Interpreter.Interop.UserDataRegistries
             }
 
             return s_Registry.Find(name)
-                .Where(d => d.ExtensionMethodType != null && Framework.Do.IsAssignableFrom(d.ExtensionMethodType, extendedType))
+                .Where(d => d.ExtensionMethodType != null &&
+                            Framework.Do.IsAssignableFrom(d.ExtensionMethodType, extendedType))
                 .ToList();
         }
 
-        private static MethodInfo InstantiateMethodInfo(MethodInfo mi, Type extensionType, Type genericType, Type extendedType)
+        private static MethodInfo InstantiateMethodInfo(MethodInfo mi, Type extensionType, Type genericType,
+            Type extendedType)
         {
             Type[] defs = mi.GetGenericArguments();
             Type[] tdefs = Framework.Do.GetGenericArguments(genericType);

@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #pragma once
 
 #include "audio_clip.hpp"
@@ -76,7 +61,7 @@ namespace dce {
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		auto get_loop_count() const noexcept -> std::uint32_t;
+		[[nodiscard]] auto get_loop_count() const noexcept -> std::uint32_t;
 
 		/// <summary>
 		/// Sets the audio source volume (0.0-1.0).
@@ -89,7 +74,7 @@ namespace dce {
 		/// 
 		/// </summary>
 		/// <returns>The audio source volume.</returns>
-		auto get_volume() const noexcept -> float;
+		[[nodiscard]] auto get_volume() const noexcept -> float;
 
 	private:
 		void* channel_ = nullptr;

@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-#if HAVE_FSHARP_TYPES
+﻿#if HAVE_FSHARP_TYPES
 using Dreamcast.Json.Linq;
 using System;
 using System.Collections;
@@ -71,7 +56,8 @@ namespace Dreamcast.Json.Converters
         private const string FieldsPropertyName = "Fields";
 
         private static readonly ThreadSafeStore<Type, Union> UnionCache = new ThreadSafeStore<Type, Union>(CreateUnion);
-        private static readonly ThreadSafeStore<Type, Type> UnionTypeLookupCache = new ThreadSafeStore<Type, Type>(CreateUnionTypeLookup);
+        private static readonly ThreadSafeStore<Type, Type> UnionTypeLookupCache =
+ new ThreadSafeStore<Type, Type>(CreateUnionTypeLookup);
 
         private static Type CreateUnionTypeLookup(Type t)
         {
@@ -89,7 +75,8 @@ namespace Dreamcast.Json.Converters
 
         private static Union CreateUnion(Type t)
         {
-            Union u = new Union((FSharpDreamcast.Json.Serialization.Function)FSharpUtils.Instance.PreComputeUnionTagReader(null, t, null), new List<UnionCase>());
+            Union u =
+ new Union((FSharpDreamcast.Json.Serialization.Function)FSharpUtils.Instance.PreComputeUnionTagReader(null, t, null), new List<UnionCase>());
 
             object[] cases = (object[])FSharpUtils.Instance.GetUnionCases(null, t, null)!;
 

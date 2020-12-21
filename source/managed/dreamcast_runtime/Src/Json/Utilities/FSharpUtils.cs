@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-#if HAVE_FSHARP_TYPES
+﻿#if HAVE_FSHARP_TYPES
 using System.Threading;
 using System;
 using System.Collections.Generic;
@@ -52,24 +37,34 @@ namespace Dreamcast.Json.Utilities
 
             Type fsharpType = fsharpCoreAssembly.GetType("Microsoft.FSharp.Reflection.FSharpType");
 
-            MethodInfo isUnionMethodInfo = GetMethodWithNonPublicFallback(fsharpType, "IsUnion", BindingFlags.Public | BindingFlags.Static);
+            MethodInfo isUnionMethodInfo =
+ GetMethodWithNonPublicFallback(fsharpType, "IsUnion", BindingFlags.Public | BindingFlags.Static);
             IsUnion = JsonTypeReflector.ReflectionDelegateFactory.CreateMethodCall<object?>(isUnionMethodInfo)!;
 
-            MethodInfo getUnionCasesMethodInfo = GetMethodWithNonPublicFallback(fsharpType, "GetUnionCases", BindingFlags.Public | BindingFlags.Static);
-            GetUnionCases = JsonTypeReflector.ReflectionDelegateFactory.CreateMethodCall<object?>(getUnionCasesMethodInfo)!;
+            MethodInfo getUnionCasesMethodInfo =
+ GetMethodWithNonPublicFallback(fsharpType, "GetUnionCases", BindingFlags.Public | BindingFlags.Static);
+            GetUnionCases =
+ JsonTypeReflector.ReflectionDelegateFactory.CreateMethodCall<object?>(getUnionCasesMethodInfo)!;
 
             Type fsharpValue = fsharpCoreAssembly.GetType("Microsoft.FSharp.Reflection.FSharpValue");
 
-            PreComputeUnionTagReader = CreateFSharpDreamcast.Json.Serialization.FuncCall(fsharpValue, "PreComputeUnionTagReader");
-            PreComputeUnionReader = CreateFSharpDreamcast.Json.Serialization.FuncCall(fsharpValue, "PreComputeUnionReader");
-            PreComputeUnionConstructor = CreateFSharpDreamcast.Json.Serialization.FuncCall(fsharpValue, "PreComputeUnionConstructor");
+            PreComputeUnionTagReader =
+ CreateFSharpDreamcast.Json.Serialization.FuncCall(fsharpValue, "PreComputeUnionTagReader");
+            PreComputeUnionReader =
+ CreateFSharpDreamcast.Json.Serialization.FuncCall(fsharpValue, "PreComputeUnionReader");
+            PreComputeUnionConstructor =
+ CreateFSharpDreamcast.Json.Serialization.FuncCall(fsharpValue, "PreComputeUnionConstructor");
 
             Type unionCaseInfo = fsharpCoreAssembly.GetType("Microsoft.FSharp.Reflection.UnionCaseInfo");
 
-            GetUnionCaseInfoName = JsonTypeReflector.ReflectionDelegateFactory.CreateGet<object>(unionCaseInfo.GetProperty("Name")!)!;
-            GetUnionCaseInfoTag = JsonTypeReflector.ReflectionDelegateFactory.CreateGet<object>(unionCaseInfo.GetProperty("Tag")!)!;
-            GetUnionCaseInfoDeclaringType = JsonTypeReflector.ReflectionDelegateFactory.CreateGet<object>(unionCaseInfo.GetProperty("DeclaringType")!)!;
-            GetUnionCaseInfoFields = JsonTypeReflector.ReflectionDelegateFactory.CreateMethodCall<object>(unionCaseInfo.GetMethod("GetFields"));
+            GetUnionCaseInfoName =
+ JsonTypeReflector.ReflectionDelegateFactory.CreateGet<object>(unionCaseInfo.GetProperty("Name")!)!;
+            GetUnionCaseInfoTag =
+ JsonTypeReflector.ReflectionDelegateFactory.CreateGet<object>(unionCaseInfo.GetProperty("Tag")!)!;
+            GetUnionCaseInfoDeclaringType =
+ JsonTypeReflector.ReflectionDelegateFactory.CreateGet<object>(unionCaseInfo.GetProperty("DeclaringType")!)!;
+            GetUnionCaseInfoFields =
+ JsonTypeReflector.ReflectionDelegateFactory.CreateMethodCall<object>(unionCaseInfo.GetMethod("GetFields"));
 
             Type listModule = fsharpCoreAssembly.GetType("Microsoft.FSharp.Collections.ListModule");
             _ofSeq = listModule.GetMethod("OfSeq");
@@ -139,17 +134,22 @@ namespace Dreamcast.Json.Utilities
 
         private static MethodCall<object?, object> CreateFSharpDreamcast.Json.Serialization.FuncCall(Type type, string methodName)
         {
-            MethodInfo innerMethodInfo = GetMethodWithNonPublicFallback(type, methodName, BindingFlags.Public | BindingFlags.Static);
-            MethodInfo invokeDreamcast.Json.Serialization.Func = innerMethodInfo.ReturnType.GetMethod("Invoke", BindingFlags.Public | BindingFlags.Instance);
+            MethodInfo innerMethodInfo =
+ GetMethodWithNonPublicFallback(type, methodName, BindingFlags.Public | BindingFlags.Static);
+            MethodInfo invokeDreamcast.Json.Serialization.Func =
+ innerMethodInfo.ReturnType.GetMethod("Invoke", BindingFlags.Public | BindingFlags.Instance);
 
-            MethodCall<object?, object?> call = JsonTypeReflector.ReflectionDelegateFactory.CreateMethodCall<object?>(innerMethodInfo);
-            MethodCall<object?, object> invoke = JsonTypeReflector.ReflectionDelegateFactory.CreateMethodCall<object?>(invokeDreamcast.Json.Serialization.Func)!;
+            MethodCall<object?, object?> call =
+ JsonTypeReflector.ReflectionDelegateFactory.CreateMethodCall<object?>(innerMethodInfo);
+            MethodCall<object?, object> invoke =
+ JsonTypeReflector.ReflectionDelegateFactory.CreateMethodCall<object?>(invokeDreamcast.Json.Serialization.Func)!;
 
             MethodCall<object?, object> createDreamcast.Json.Serialization.Function = (target, args) =>
             {
                 object? result = call(target, args);
 
-                FSharpDreamcast.Json.Serialization.Function f = new FSharpDreamcast.Json.Serialization.Function(result, invoke);
+                FSharpDreamcast.Json.Serialization.Function f =
+ new FSharpDreamcast.Json.Serialization.Function(result, invoke);
                 return f;
             };
 
@@ -176,13 +176,15 @@ namespace Dreamcast.Json.Utilities
         {
             Type genericMapType = _mapType.MakeGenericType(typeof(TKey), typeof(TValue));
             ConstructorInfo ctor = genericMapType.GetConstructor(new[] { typeof(IEnumerable<Tuple<TKey, TValue>>) });
-            ObjectConstructor<object> ctorDelegate = JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(ctor);
+            ObjectConstructor<object> ctorDelegate =
+ JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(ctor);
 
             ObjectConstructor<object> creator = args =>
             {
                 // convert dictionary KeyValuePairs to Tuples
                 IEnumerable<KeyValuePair<TKey, TValue>> values = (IEnumerable<KeyValuePair<TKey, TValue>>)args[0]!;
-                IEnumerable<Tuple<TKey, TValue>> tupleValues = values.Select(kv => new Tuple<TKey, TValue>(kv.Key, kv.Value));
+                IEnumerable<Tuple<TKey, TValue>> tupleValues =
+ values.Select(kv => new Tuple<TKey, TValue>(kv.Key, kv.Value));
 
                 return ctorDelegate(tupleValues);
             };

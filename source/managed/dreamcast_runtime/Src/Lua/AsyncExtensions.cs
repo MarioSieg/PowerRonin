@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-#if HASDYNAMIC
+﻿#if HASDYNAMIC
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -98,7 +83,8 @@ namespace Dreamcast.Lua.Interpreter
 		/// <returns>
 		/// A DynValue containing the result of the processing of the loaded chunk.
 		/// </returns>
-		public static Task<DynValue> DoStringAsync(this Script script, string code, Table globalContext = null, string codeFriendlyName = null)
+		public static Task<DynValue> DoStringAsync(this Script script, string code, Table globalContext =
+ null, string codeFriendlyName = null)
 		{
 			return ExecAsync(() => script.DoString(code, globalContext, codeFriendlyName));
 		}
@@ -116,7 +102,8 @@ namespace Dreamcast.Lua.Interpreter
 		/// <returns>
 		/// A DynValue containing the result of the processing of the loaded chunk.
 		/// </returns>
-		public static Task<DynValue> DoStreamAsync(this Script script, Stream stream, Table globalContext = null, string codeFriendlyName = null)
+		public static Task<DynValue> DoStreamAsync(this Script script, Stream stream, Table globalContext =
+ null, string codeFriendlyName = null)
 		{
 			return ExecAsync(() => script.DoStream(stream, globalContext, codeFriendlyName));
 		}
@@ -134,7 +121,8 @@ namespace Dreamcast.Lua.Interpreter
 		/// <returns>
 		/// A DynValue containing the result of the processing of the loaded chunk.
 		/// </returns>
-		public static Task<DynValue> DoFileAsync(this Script script, string filename, Table globalContext = null, string codeFriendlyName = null)
+		public static Task<DynValue> DoFileAsync(this Script script, string filename, Table globalContext =
+ null, string codeFriendlyName = null)
 		{
 			return ExecAsync(() => script.DoFile(filename, globalContext, codeFriendlyName));
 		}
@@ -151,7 +139,8 @@ namespace Dreamcast.Lua.Interpreter
 		/// <returns>
 		/// A DynValue containing a function which will execute the loaded code.
 		/// </returns>
-		public static Task<DynValue> LoadFunctionAsync(this Script script, string code, Table globalTable = null, string funcFriendlyName = null)
+		public static Task<DynValue> LoadFunctionAsync(this Script script, string code, Table globalTable =
+ null, string funcFriendlyName = null)
 		{
 			return ExecAsync(() => script.LoadFunction(code, globalTable, funcFriendlyName));
 		}
@@ -170,7 +159,8 @@ namespace Dreamcast.Lua.Interpreter
 		/// <returns>
 		/// A DynValue containing a function which will execute the loaded code.
 		/// </returns>
-		public static Task<DynValue> LoadStringAsync(this Script script, string code, Table globalTable = null, string codeFriendlyName = null)
+		public static Task<DynValue> LoadStringAsync(this Script script, string code, Table globalTable =
+ null, string codeFriendlyName = null)
 		{
 			return ExecAsync(() => script.LoadString(code, globalTable, codeFriendlyName));
 		}
@@ -189,7 +179,8 @@ namespace Dreamcast.Lua.Interpreter
 		/// <returns>
 		/// A DynValue containing a function which will execute the loaded code.
 		/// </returns>
-		public static Task<DynValue> LoadStreamAsync(this Script script, Stream stream, Table globalTable = null, string codeFriendlyName = null)
+		public static Task<DynValue> LoadStreamAsync(this Script script, Stream stream, Table globalTable =
+ null, string codeFriendlyName = null)
 		{
 			return ExecAsync(() => script.LoadStream(stream, globalTable, codeFriendlyName));
 		}
@@ -226,7 +217,8 @@ namespace Dreamcast.Lua.Interpreter
 		/// <returns>
 		/// A DynValue containing a function which will execute the loaded code.
 		/// </returns>
-		public static Task<DynValue> LoadFileAsync(this Script script, string filename, Table globalContext = null, string friendlyFilename = null)
+		public static Task<DynValue> LoadFileAsync(this Script script, string filename, Table globalContext =
+ null, string friendlyFilename = null)
 		{
 			return ExecAsync(() => script.LoadFile(filename, globalContext, friendlyFilename));
 		}

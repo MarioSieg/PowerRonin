@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -191,7 +176,9 @@ namespace Dreamcast.Lua.Interpreter.Interop
 
             if (pars.Length > MAX_ARGS_IN_DELEGATE)
             {
-                if (throwException) throw new ArgumentException(string.Format("Event handler cannot have more than {0} parameters", MAX_ARGS_IN_DELEGATE));
+                if (throwException)
+                    throw new ArgumentException(string.Format("Event handler cannot have more than {0} parameters",
+                        MAX_ARGS_IN_DELEGATE));
                 return false;
             }
 
@@ -215,7 +202,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
         {
             lock (m_Lock)
             {
-                Closure closure = args.AsType(0, string.Format("userdata<{0}>.{1}.add", EventInfo.DeclaringType, EventInfo.Name),
+                Closure closure = args.AsType(0,
+                    string.Format("userdata<{0}>.{1}.add", EventInfo.DeclaringType, EventInfo.Name),
                     DataType.Function).Function;
 
                 if (m_Callbacks.Add(o, closure))
@@ -229,7 +217,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
         {
             lock (m_Lock)
             {
-                Closure closure = args.AsType(0, string.Format("userdata<{0}>.{1}.remove", EventInfo.DeclaringType, EventInfo.Name),
+                Closure closure = args.AsType(0,
+                    string.Format("userdata<{0}>.{1}.remove", EventInfo.DeclaringType, EventInfo.Name),
                     DataType.Function).Function;
 
                 if (m_Callbacks.RemoveValue(o, closure))
@@ -285,25 +274,35 @@ namespace Dreamcast.Lua.Interpreter.Interop
                 case 6:
                     return (EventWrapper06) ((o1, o2, o3, o4, o5, o6) => DispatchEvent(sender, o1, o2, o3, o4, o5, o6));
                 case 7:
-                    return (EventWrapper07) ((o1, o2, o3, o4, o5, o6, o7) => DispatchEvent(sender, o1, o2, o3, o4, o5, o6, o7));
+                    return (EventWrapper07) ((o1, o2, o3, o4, o5, o6, o7) =>
+                        DispatchEvent(sender, o1, o2, o3, o4, o5, o6, o7));
                 case 8:
-                    return (EventWrapper08) ((o1, o2, o3, o4, o5, o6, o7, o8) => DispatchEvent(sender, o1, o2, o3, o4, o5, o6, o7, o8));
+                    return (EventWrapper08) ((o1, o2, o3, o4, o5, o6, o7, o8) =>
+                        DispatchEvent(sender, o1, o2, o3, o4, o5, o6, o7, o8));
                 case 9:
-                    return (EventWrapper09) ((o1, o2, o3, o4, o5, o6, o7, o8, o9) => DispatchEvent(sender, o1, o2, o3, o4, o5, o6, o7, o8, o9));
+                    return (EventWrapper09) ((o1, o2, o3, o4, o5, o6, o7, o8, o9) =>
+                        DispatchEvent(sender, o1, o2, o3, o4, o5, o6, o7, o8, o9));
                 case 10:
-                    return (EventWrapper10) ((o1, o2, o3, o4, o5, o6, o7, o8, o9, o10) => DispatchEvent(sender, o1, o2, o3, o4, o5, o6, o7, o8, o9, o10));
+                    return (EventWrapper10) ((o1, o2, o3, o4, o5, o6, o7, o8, o9, o10) =>
+                        DispatchEvent(sender, o1, o2, o3, o4, o5, o6, o7, o8, o9, o10));
                 case 11:
-                    return (EventWrapper11) ((o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11) => DispatchEvent(sender, o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11));
+                    return (EventWrapper11) ((o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11) =>
+                        DispatchEvent(sender, o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11));
                 case 12:
-                    return (EventWrapper12) ((o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12) => DispatchEvent(sender, o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12));
+                    return (EventWrapper12) ((o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12) =>
+                        DispatchEvent(sender, o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12));
                 case 13:
-                    return (EventWrapper13) ((o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13) => DispatchEvent(sender, o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13));
+                    return (EventWrapper13) ((o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13) =>
+                        DispatchEvent(sender, o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13));
                 case 14:
-                    return (EventWrapper14) ((o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13, o14) => DispatchEvent(sender, o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13, o14));
+                    return (EventWrapper14) ((o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13, o14) =>
+                        DispatchEvent(sender, o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13, o14));
                 case 15:
-                    return (EventWrapper15) ((o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13, o14, o15) => DispatchEvent(sender, o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13, o14, o15));
+                    return (EventWrapper15) ((o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13, o14, o15) =>
+                        DispatchEvent(sender, o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13, o14, o15));
                 case 16:
-                    return (EventWrapper16) ((o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13, o14, o15, o16) => DispatchEvent(sender, o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13, o14, o15, o16));
+                    return (EventWrapper16) ((o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13, o14, o15, o16) =>
+                        DispatchEvent(sender, o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13, o14, o15, o16));
                 default:
                     throw new InternalErrorException("too many args in delegate type");
             }
@@ -333,7 +332,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
                 closures = m_Callbacks.Find(sender).ToArray();
             }
 
-            foreach (Closure c in closures) c.Call(o01, o02, o03, o04, o05, o06, o07, o08, o09, o10, o11, o12, o13, o14, o15, o16);
+            foreach (Closure c in closures)
+                c.Call(o01, o02, o03, o04, o05, o06, o07, o08, o09, o10, o11, o12, o13, o14, o15, o16);
         }
 
         private delegate void EventWrapper00();
@@ -350,24 +350,35 @@ namespace Dreamcast.Lua.Interpreter.Interop
 
         private delegate void EventWrapper06(object o1, object o2, object o3, object o4, object o5, object o6);
 
-        private delegate void EventWrapper07(object o1, object o2, object o3, object o4, object o5, object o6, object o7);
+        private delegate void EventWrapper07(object o1, object o2, object o3, object o4, object o5, object o6,
+            object o7);
 
-        private delegate void EventWrapper08(object o1, object o2, object o3, object o4, object o5, object o6, object o7, object o8);
+        private delegate void EventWrapper08(object o1, object o2, object o3, object o4, object o5, object o6,
+            object o7, object o8);
 
-        private delegate void EventWrapper09(object o1, object o2, object o3, object o4, object o5, object o6, object o7, object o8, object o9);
+        private delegate void EventWrapper09(object o1, object o2, object o3, object o4, object o5, object o6,
+            object o7, object o8, object o9);
 
-        private delegate void EventWrapper10(object o1, object o2, object o3, object o4, object o5, object o6, object o7, object o8, object o9, object o10);
+        private delegate void EventWrapper10(object o1, object o2, object o3, object o4, object o5, object o6,
+            object o7, object o8, object o9, object o10);
 
-        private delegate void EventWrapper11(object o1, object o2, object o3, object o4, object o5, object o6, object o7, object o8, object o9, object o10, object o11);
+        private delegate void EventWrapper11(object o1, object o2, object o3, object o4, object o5, object o6,
+            object o7, object o8, object o9, object o10, object o11);
 
-        private delegate void EventWrapper12(object o1, object o2, object o3, object o4, object o5, object o6, object o7, object o8, object o9, object o10, object o11, object o12);
+        private delegate void EventWrapper12(object o1, object o2, object o3, object o4, object o5, object o6,
+            object o7, object o8, object o9, object o10, object o11, object o12);
 
-        private delegate void EventWrapper13(object o1, object o2, object o3, object o4, object o5, object o6, object o7, object o8, object o9, object o10, object o11, object o12, object o13);
+        private delegate void EventWrapper13(object o1, object o2, object o3, object o4, object o5, object o6,
+            object o7, object o8, object o9, object o10, object o11, object o12, object o13);
 
-        private delegate void EventWrapper14(object o1, object o2, object o3, object o4, object o5, object o6, object o7, object o8, object o9, object o10, object o11, object o12, object o13, object o14);
+        private delegate void EventWrapper14(object o1, object o2, object o3, object o4, object o5, object o6,
+            object o7, object o8, object o9, object o10, object o11, object o12, object o13, object o14);
 
-        private delegate void EventWrapper15(object o1, object o2, object o3, object o4, object o5, object o6, object o7, object o8, object o9, object o10, object o11, object o12, object o13, object o14, object o15);
+        private delegate void EventWrapper15(object o1, object o2, object o3, object o4, object o5, object o6,
+            object o7, object o8, object o9, object o10, object o11, object o12, object o13, object o14, object o15);
 
-        private delegate void EventWrapper16(object o1, object o2, object o3, object o4, object o5, object o6, object o7, object o8, object o9, object o10, object o11, object o12, object o13, object o14, object o15, object o16);
+        private delegate void EventWrapper16(object o1, object o2, object o3, object o4, object o5, object o6,
+            object o7, object o8, object o9, object o10, object o11, object o12, object o13, object o14, object o15,
+            object o16);
     }
 }

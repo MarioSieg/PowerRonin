@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #if HAVE_DYNAMIC
 using System.ComponentModel;
 using System.Dynamic;
@@ -65,11 +50,15 @@ namespace Dreamcast.Json.Serialization
                 {
                     var arrayContract = (JsonArrayContract) contract;
 
-                    PopulateList(arrayContract.ShouldCreateWrapper ? arrayContract.CreateWrapper(target) : (IList) target, reader, arrayContract, null, null);
+                    PopulateList(
+                        arrayContract.ShouldCreateWrapper ? arrayContract.CreateWrapper(target) : (IList) target,
+                        reader, arrayContract, null, null);
                 }
                 else
                 {
-                    throw JsonSerializationException.Create(reader, "Cannot populate JSON array onto type '{0}'.".FormatWith(CultureInfo.InvariantCulture, objectType));
+                    throw JsonSerializationException.Create(reader,
+                        "Cannot populate JSON array onto type '{0}'.".FormatWith(CultureInfo.InvariantCulture,
+                            objectType));
                 }
             }
             else if (reader.TokenType == JsonToken.StartObject)
@@ -79,7 +68,8 @@ namespace Dreamcast.Json.Serialization
                 string? id = null;
                 if (Serializer.MetadataPropertyHandling != MetadataPropertyHandling.Ignore
                     && reader.TokenType == JsonToken.PropertyName
-                    && string.Equals(reader.Value!.ToString(), JsonTypeReflector.IdPropertyName, StringComparison.Ordinal))
+                    && string.Equals(reader.Value!.ToString(), JsonTypeReflector.IdPropertyName,
+                        StringComparison.Ordinal))
                 {
                     reader.ReadAndAssert();
                     id = reader.Value?.ToString();
@@ -89,7 +79,10 @@ namespace Dreamcast.Json.Serialization
                 if (contract.ContractType == JsonContractType.Dictionary)
                 {
                     var dictionaryContract = (JsonDictionaryContract) contract;
-                    PopulateDictionary(dictionaryContract.ShouldCreateWrapper ? dictionaryContract.CreateWrapper(target) : (IDictionary) target, reader, dictionaryContract, null, id);
+                    PopulateDictionary(
+                        dictionaryContract.ShouldCreateWrapper
+                            ? dictionaryContract.CreateWrapper(target)
+                            : (IDictionary) target, reader, dictionaryContract, null, id);
                 }
                 else if (contract.ContractType == JsonContractType.Object)
                 {
@@ -97,12 +90,16 @@ namespace Dreamcast.Json.Serialization
                 }
                 else
                 {
-                    throw JsonSerializationException.Create(reader, "Cannot populate JSON object onto type '{0}'.".FormatWith(CultureInfo.InvariantCulture, objectType));
+                    throw JsonSerializationException.Create(reader,
+                        "Cannot populate JSON object onto type '{0}'.".FormatWith(CultureInfo.InvariantCulture,
+                            objectType));
                 }
             }
             else
             {
-                throw JsonSerializationException.Create(reader, "Unexpected initial token '{0}' when populating object. Expected JSON object or array.".FormatWith(CultureInfo.InvariantCulture, reader.TokenType));
+                throw JsonSerializationException.Create(reader,
+                    "Unexpected initial token '{0}' when populating object. Expected JSON object or array.".FormatWith(
+                        CultureInfo.InvariantCulture, reader.TokenType));
             }
         }
 
@@ -130,7 +127,10 @@ namespace Dreamcast.Json.Serialization
 
                 if (reader.TokenType == JsonToken.None && !reader.ReadForType(contract, converter != null))
                 {
-                    if (contract != null && !contract.IsNullable) throw JsonSerializationException.Create(reader, "No JSON content found and type '{0}' is not nullable.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
+                    if (contract != null && !contract.IsNullable)
+                        throw JsonSerializationException.Create(reader,
+                            "No JSON content found and type '{0}' is not nullable.".FormatWith(
+                                CultureInfo.InvariantCulture, contract.UnderlyingType));
 
                     return null;
                 }
@@ -145,7 +145,8 @@ namespace Dreamcast.Json.Serialization
                 if (checkAdditionalContent)
                     while (reader.Read())
                         if (reader.TokenType != JsonToken.Comment)
-                            throw JsonSerializationException.Create(reader, "Additional text found in JSON string after finishing deserializing object.");
+                            throw JsonSerializationException.Create(reader,
+                                "Additional text found in JSON string after finishing deserializing object.");
 
                 return deserializedValue;
             }
@@ -230,9 +231,12 @@ namespace Dreamcast.Json.Serialization
             }
         }
 
-        private object? CreateValueInternal(JsonReader reader, Type? objectType, JsonContract? contract, JsonProperty? member, JsonContainerContract? containerContract, JsonProperty? containerMember, object? existingValue)
+        private object? CreateValueInternal(JsonReader reader, Type? objectType, JsonContract? contract,
+            JsonProperty? member, JsonContainerContract? containerContract, JsonProperty? containerMember,
+            object? existingValue)
         {
-            if (contract != null && contract.ContractType == JsonContractType.Linq) return CreateJToken(reader, contract);
+            if (contract != null && contract.ContractType == JsonContractType.Linq)
+                return CreateJToken(reader, contract);
 
             do
             {
@@ -241,7 +245,8 @@ namespace Dreamcast.Json.Serialization
                     // populate a typed object or generic dictionary/array
                     // depending upon whether an objectType was supplied
                     case JsonToken.StartObject:
-                        return CreateObject(reader, objectType, contract, member, containerContract, containerMember, existingValue);
+                        return CreateObject(reader, objectType, contract, member, containerContract, containerMember,
+                            existingValue);
                     case JsonToken.StartArray:
                         return CreateList(reader, objectType, contract, member, existingValue, null);
                     case JsonToken.Integer:
@@ -280,7 +285,8 @@ namespace Dreamcast.Json.Serialization
                         // ignore
                         break;
                     default:
-                        throw JsonSerializationException.Create(reader, "Unexpected token while deserializing object: " + reader.TokenType);
+                        throw JsonSerializationException.Create(reader,
+                            "Unexpected token while deserializing object: " + reader.TokenType);
                 }
             } while (reader.Read());
 
@@ -289,7 +295,8 @@ namespace Dreamcast.Json.Serialization
 
         private static bool CoerceEmptyStringToNull(Type? objectType, JsonContract? contract, string s)
         {
-            return StringUtils.IsNullOrEmpty(s) && objectType != null && objectType != typeof(string) && objectType != typeof(object) && contract != null && contract.IsNullable;
+            return StringUtils.IsNullOrEmpty(s) && objectType != null && objectType != typeof(string) &&
+                   objectType != typeof(object) && contract != null && contract.IsNullable;
         }
 
         internal string GetExpectedDescription(JsonContract contract)
@@ -316,7 +323,8 @@ namespace Dreamcast.Json.Serialization
             }
         }
 
-        private JsonConverter? GetConverter(JsonContract? contract, JsonConverter? memberConverter, JsonContainerContract? containerContract, JsonProperty? containerProperty)
+        private JsonConverter? GetConverter(JsonContract? contract, JsonConverter? memberConverter,
+            JsonContainerContract? containerContract, JsonProperty? containerProperty)
         {
             JsonConverter? converter = null;
             if (memberConverter != null)
@@ -348,7 +356,8 @@ namespace Dreamcast.Json.Serialization
             return converter;
         }
 
-        private object? CreateObject(JsonReader reader, Type? objectType, JsonContract? contract, JsonProperty? member, JsonContainerContract? containerContract, JsonProperty? containerMember, object? existingValue)
+        private object? CreateObject(JsonReader reader, Type? objectType, JsonContract? contract, JsonProperty? member,
+            JsonContainerContract? containerContract, JsonProperty? containerMember, object? existingValue)
         {
             string? id;
             var resolvedObjectType = objectType;
@@ -378,12 +387,14 @@ namespace Dreamcast.Json.Serialization
                     reader = tokenReader;
                 }
 
-                if (ReadMetadataPropertiesToken(tokenReader, ref resolvedObjectType, ref contract, member, containerContract, containerMember, existingValue, out var newValue, out id)) return newValue;
+                if (ReadMetadataPropertiesToken(tokenReader, ref resolvedObjectType, ref contract, member,
+                    containerContract, containerMember, existingValue, out var newValue, out id)) return newValue;
             }
             else
             {
                 reader.ReadAndAssert();
-                if (ReadMetadataProperties(reader, ref resolvedObjectType, ref contract, member, containerContract, containerMember, existingValue, out var newValue, out id)) return newValue;
+                if (ReadMetadataProperties(reader, ref resolvedObjectType, ref contract, member, containerContract,
+                    containerMember, existingValue, out var newValue, out id)) return newValue;
             }
 
             if (HasNoDefinedType(contract)) return CreateJObject(reader);
@@ -399,10 +410,12 @@ namespace Dreamcast.Json.Serialization
                     var objectContract = (JsonObjectContract) contract;
                     object targetObject;
                     // check that if type name handling is being used that the existing value is compatible with the specified type
-                    if (existingValue != null && (resolvedObjectType == objectType || resolvedObjectType.IsAssignableFrom(existingValue.GetType())))
+                    if (existingValue != null && (resolvedObjectType == objectType ||
+                                                  resolvedObjectType.IsAssignableFrom(existingValue.GetType())))
                         targetObject = existingValue;
                     else
-                        targetObject = CreateNewObject(reader, objectContract, member, containerMember, id, out createdFromNonDefaultCreator);
+                        targetObject = CreateNewObject(reader, objectContract, member, containerMember, id,
+                            out createdFromNonDefaultCreator);
 
                     // don't populate if read from non-default creator because the object has already been read
                     if (createdFromNonDefaultCreator) return targetObject;
@@ -415,15 +428,19 @@ namespace Dreamcast.Json.Serialization
                     // if the content is inside $value then read past it
                     if (Serializer.MetadataPropertyHandling != MetadataPropertyHandling.Ignore
                         && reader.TokenType == JsonToken.PropertyName
-                        && string.Equals(reader.Value!.ToString(), JsonTypeReflector.ValuePropertyName, StringComparison.Ordinal))
+                        && string.Equals(reader.Value!.ToString(), JsonTypeReflector.ValuePropertyName,
+                            StringComparison.Ordinal))
                     {
                         reader.ReadAndAssert();
 
                         // the token should not be an object because the $type value could have been included in the object
                         // without needing the $value property
-                        if (reader.TokenType == JsonToken.StartObject) throw JsonSerializationException.Create(reader, "Unexpected token when deserializing primitive value: " + reader.TokenType);
+                        if (reader.TokenType == JsonToken.StartObject)
+                            throw JsonSerializationException.Create(reader,
+                                "Unexpected token when deserializing primitive value: " + reader.TokenType);
 
-                        var value = CreateValueInternal(reader, resolvedObjectType, primitiveContract, member, null, null, existingValue);
+                        var value = CreateValueInternal(reader, resolvedObjectType, primitiveContract, member, null,
+                            null, existingValue);
 
                         reader.ReadAndAssert();
                         return value;
@@ -438,35 +455,53 @@ namespace Dreamcast.Json.Serialization
 
                     if (existingValue == null)
                     {
-                        var dictionary = CreateNewDictionary(reader, dictionaryContract, out var createdFromNonDefaultCreator);
+                        var dictionary = CreateNewDictionary(reader, dictionaryContract,
+                            out var createdFromNonDefaultCreator);
 
                         if (createdFromNonDefaultCreator)
                         {
-                            if (id != null) throw JsonSerializationException.Create(reader, "Cannot preserve reference to readonly dictionary, or dictionary created from a non-default constructor: {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
+                            if (id != null)
+                                throw JsonSerializationException.Create(reader,
+                                    "Cannot preserve reference to readonly dictionary, or dictionary created from a non-default constructor: {0}."
+                                        .FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
 
-                            if (contract.OnSerializingCallbacks.Count > 0) throw JsonSerializationException.Create(reader, "Cannot call OnSerializing on readonly dictionary, or dictionary created from a non-default constructor: {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
+                            if (contract.OnSerializingCallbacks.Count > 0)
+                                throw JsonSerializationException.Create(reader,
+                                    "Cannot call OnSerializing on readonly dictionary, or dictionary created from a non-default constructor: {0}."
+                                        .FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
 
-                            if (contract.OnErrorCallbacks.Count > 0) throw JsonSerializationException.Create(reader, "Cannot call OnError on readonly list, or dictionary created from a non-default constructor: {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
+                            if (contract.OnErrorCallbacks.Count > 0)
+                                throw JsonSerializationException.Create(reader,
+                                    "Cannot call OnError on readonly list, or dictionary created from a non-default constructor: {0}."
+                                        .FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
 
-                            if (!dictionaryContract.HasParameterizedCreatorInternal) throw JsonSerializationException.Create(reader, "Cannot deserialize readonly or fixed size dictionary: {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
+                            if (!dictionaryContract.HasParameterizedCreatorInternal)
+                                throw JsonSerializationException.Create(reader,
+                                    "Cannot deserialize readonly or fixed size dictionary: {0}.".FormatWith(
+                                        CultureInfo.InvariantCulture, contract.UnderlyingType));
                         }
 
                         PopulateDictionary(dictionary, reader, dictionaryContract, member, id);
 
                         if (createdFromNonDefaultCreator)
                         {
-                            var creator = (dictionaryContract.OverrideCreator ?? dictionaryContract.ParameterizedCreator)!;
+                            var creator =
+                                (dictionaryContract.OverrideCreator ?? dictionaryContract.ParameterizedCreator)!;
 
                             return creator(dictionary);
                         }
 
-                        if (dictionary is IWrappedDictionary wrappedDictionary) return wrappedDictionary.UnderlyingDictionary;
+                        if (dictionary is IWrappedDictionary wrappedDictionary)
+                            return wrappedDictionary.UnderlyingDictionary;
 
                         targetDictionary = dictionary;
                     }
                     else
                     {
-                        targetDictionary = PopulateDictionary(dictionaryContract.ShouldCreateWrapper || !(existingValue is IDictionary) ? dictionaryContract.CreateWrapper(existingValue) : (IDictionary) existingValue, reader, dictionaryContract, member, id);
+                        targetDictionary = PopulateDictionary(
+                            dictionaryContract.ShouldCreateWrapper || !(existingValue is IDictionary)
+                                ? dictionaryContract.CreateWrapper(existingValue)
+                                : (IDictionary) existingValue, reader, dictionaryContract, member, id);
                     }
 
                     return targetDictionary;
@@ -483,14 +518,20 @@ namespace Dreamcast.Json.Serialization
 #endif
             }
 
-            var message = @"Cannot deserialize the current JSON object (e.g. {{""name"":""value""}}) into type '{0}' because the type requires a {1} to deserialize correctly." + Environment.NewLine +
-                          @"To fix this error either change the JSON to a {1} or change the deserialized type so that it is a normal .NET type (e.g. not a primitive type like integer, not a collection type like an array or List<T>) that can be deserialized from a JSON object. JsonObjectAttribute can also be added to the type to force it to deserialize from a JSON object." + Environment.NewLine;
-            message = message.FormatWith(CultureInfo.InvariantCulture, resolvedObjectType, GetExpectedDescription(contract));
+            var message =
+                @"Cannot deserialize the current JSON object (e.g. {{""name"":""value""}}) into type '{0}' because the type requires a {1} to deserialize correctly." +
+                Environment.NewLine +
+                @"To fix this error either change the JSON to a {1} or change the deserialized type so that it is a normal .NET type (e.g. not a primitive type like integer, not a collection type like an array or List<T>) that can be deserialized from a JSON object. JsonObjectAttribute can also be added to the type to force it to deserialize from a JSON object." +
+                Environment.NewLine;
+            message = message.FormatWith(CultureInfo.InvariantCulture, resolvedObjectType,
+                GetExpectedDescription(contract));
 
             throw JsonSerializationException.Create(reader, message);
         }
 
-        private bool ReadMetadataPropertiesToken(JTokenReader reader, ref Type? objectType, ref JsonContract? contract, JsonProperty? member, JsonContainerContract? containerContract, JsonProperty? containerMember, object? existingValue, out object? newValue, out string? id)
+        private bool ReadMetadataPropertiesToken(JTokenReader reader, ref Type? objectType, ref JsonContract? contract,
+            JsonProperty? member, JsonContainerContract? containerContract, JsonProperty? containerMember,
+            object? existingValue, out object? newValue, out string? id)
         {
             id = null;
             newValue = null;
@@ -503,18 +544,28 @@ namespace Dreamcast.Json.Serialization
                 if (refProperty != null)
                 {
                     var refToken = refProperty.Value;
-                    if (refToken.Type != JTokenType.String && refToken.Type != JTokenType.Null) throw JsonSerializationException.Create(refToken, refToken.Path, "JSON reference {0} property must have a string or null value.".FormatWith(CultureInfo.InvariantCulture, JsonTypeReflector.RefPropertyName), null);
+                    if (refToken.Type != JTokenType.String && refToken.Type != JTokenType.Null)
+                        throw JsonSerializationException.Create(refToken, refToken.Path,
+                            "JSON reference {0} property must have a string or null value.".FormatWith(
+                                CultureInfo.InvariantCulture, JsonTypeReflector.RefPropertyName), null);
 
                     var reference = (string?) refProperty;
 
                     if (reference != null)
                     {
                         var additionalContent = refProperty.Next ?? refProperty.Previous;
-                        if (additionalContent != null) throw JsonSerializationException.Create(additionalContent, additionalContent.Path, "Additional content found in JSON reference object. A JSON reference object should only have a {0} property.".FormatWith(CultureInfo.InvariantCulture, JsonTypeReflector.RefPropertyName), null);
+                        if (additionalContent != null)
+                            throw JsonSerializationException.Create(additionalContent, additionalContent.Path,
+                                "Additional content found in JSON reference object. A JSON reference object should only have a {0} property."
+                                    .FormatWith(CultureInfo.InvariantCulture, JsonTypeReflector.RefPropertyName), null);
 
                         newValue = Serializer.GetReferenceResolver().ResolveReference(this, reference);
 
-                        if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info) TraceWriter.Trace(TraceLevel.Info, JsonPosition.FormatMessage(reader, reader.Path, "Resolved object reference '{0}' to {1}.".FormatWith(CultureInfo.InvariantCulture, reference, newValue.GetType())), null);
+                        if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info)
+                            TraceWriter.Trace(TraceLevel.Info,
+                                JsonPosition.FormatMessage(reader, reader.Path,
+                                    "Resolved object reference '{0}' to {1}.".FormatWith(CultureInfo.InvariantCulture,
+                                        reference, newValue.GetType())), null);
 
                         reader.Skip();
                         return true;
@@ -527,7 +578,8 @@ namespace Dreamcast.Json.Serialization
                     var qualifiedTypeName = (string?) typeToken;
                     var typeTokenReader = typeToken.CreateReader();
                     typeTokenReader.ReadAndAssert();
-                    ResolveTypeName(typeTokenReader, ref objectType, ref contract, member, containerContract, containerMember, qualifiedTypeName!);
+                    ResolveTypeName(typeTokenReader, ref objectType, ref contract, member, containerContract,
+                        containerMember, qualifiedTypeName!);
 
                     var valueToken = current[JsonTypeReflector.ValuePropertyName];
                     if (valueToken != null)
@@ -561,7 +613,9 @@ namespace Dreamcast.Json.Serialization
             return false;
         }
 
-        private bool ReadMetadataProperties(JsonReader reader, ref Type? objectType, ref JsonContract? contract, JsonProperty? member, JsonContainerContract? containerContract, JsonProperty? containerMember, object? existingValue, out object? newValue, out string? id)
+        private bool ReadMetadataProperties(JsonReader reader, ref Type? objectType, ref JsonContract? contract,
+            JsonProperty? member, JsonContainerContract? containerContract, JsonProperty? containerMember,
+            object? existingValue, out object? newValue, out string? id)
         {
             id = null;
             newValue = null;
@@ -583,7 +637,10 @@ namespace Dreamcast.Json.Serialization
                         if (string.Equals(propertyName, JsonTypeReflector.RefPropertyName, StringComparison.Ordinal))
                         {
                             reader.ReadAndAssert();
-                            if (reader.TokenType != JsonToken.String && reader.TokenType != JsonToken.Null) throw JsonSerializationException.Create(reader, "JSON reference {0} property must have a string or null value.".FormatWith(CultureInfo.InvariantCulture, JsonTypeReflector.RefPropertyName));
+                            if (reader.TokenType != JsonToken.String && reader.TokenType != JsonToken.Null)
+                                throw JsonSerializationException.Create(reader,
+                                    "JSON reference {0} property must have a string or null value.".FormatWith(
+                                        CultureInfo.InvariantCulture, JsonTypeReflector.RefPropertyName));
 
                             var reference = reader.Value?.ToString();
 
@@ -591,29 +648,40 @@ namespace Dreamcast.Json.Serialization
 
                             if (reference != null)
                             {
-                                if (reader.TokenType == JsonToken.PropertyName) throw JsonSerializationException.Create(reader, "Additional content found in JSON reference object. A JSON reference object should only have a {0} property.".FormatWith(CultureInfo.InvariantCulture, JsonTypeReflector.RefPropertyName));
+                                if (reader.TokenType == JsonToken.PropertyName)
+                                    throw JsonSerializationException.Create(reader,
+                                        "Additional content found in JSON reference object. A JSON reference object should only have a {0} property."
+                                            .FormatWith(CultureInfo.InvariantCulture,
+                                                JsonTypeReflector.RefPropertyName));
 
                                 newValue = Serializer.GetReferenceResolver().ResolveReference(this, reference);
 
-                                if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info) TraceWriter.Trace(TraceLevel.Info, JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path, "Resolved object reference '{0}' to {1}.".FormatWith(CultureInfo.InvariantCulture, reference, newValue!.GetType())), null);
+                                if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info)
+                                    TraceWriter.Trace(TraceLevel.Info,
+                                        JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
+                                            "Resolved object reference '{0}' to {1}.".FormatWith(
+                                                CultureInfo.InvariantCulture, reference, newValue!.GetType())), null);
 
                                 return true;
                             }
 
                             metadataProperty = true;
                         }
-                        else if (string.Equals(propertyName, JsonTypeReflector.TypePropertyName, StringComparison.Ordinal))
+                        else if (string.Equals(propertyName, JsonTypeReflector.TypePropertyName,
+                            StringComparison.Ordinal))
                         {
                             reader.ReadAndAssert();
                             var qualifiedTypeName = reader.Value!.ToString();
 
-                            ResolveTypeName(reader, ref objectType, ref contract, member, containerContract, containerMember, qualifiedTypeName);
+                            ResolveTypeName(reader, ref objectType, ref contract, member, containerContract,
+                                containerMember, qualifiedTypeName);
 
                             reader.ReadAndAssert();
 
                             metadataProperty = true;
                         }
-                        else if (string.Equals(propertyName, JsonTypeReflector.IdPropertyName, StringComparison.Ordinal))
+                        else if (string.Equals(propertyName, JsonTypeReflector.IdPropertyName,
+                            StringComparison.Ordinal))
                         {
                             reader.ReadAndAssert();
 
@@ -622,7 +690,8 @@ namespace Dreamcast.Json.Serialization
                             reader.ReadAndAssert();
                             metadataProperty = true;
                         }
-                        else if (string.Equals(propertyName, JsonTypeReflector.ArrayValuesPropertyName, StringComparison.Ordinal))
+                        else if (string.Equals(propertyName, JsonTypeReflector.ArrayValuesPropertyName,
+                            StringComparison.Ordinal))
                         {
                             reader.ReadAndAssert();
                             var list = CreateList(reader, objectType, contract, member, existingValue, id);
@@ -641,7 +710,9 @@ namespace Dreamcast.Json.Serialization
             return false;
         }
 
-        private void ResolveTypeName(JsonReader reader, ref Type? objectType, ref JsonContract? contract, JsonProperty? member, JsonContainerContract? containerContract, JsonProperty? containerMember, string qualifiedTypeName)
+        private void ResolveTypeName(JsonReader reader, ref Type? objectType, ref JsonContract? contract,
+            JsonProperty? member, JsonContainerContract? containerContract, JsonProperty? containerMember,
+            string qualifiedTypeName)
         {
             var resolvedTypeNameHandling =
                 member?.TypeNameHandling
@@ -660,19 +731,31 @@ namespace Dreamcast.Json.Serialization
                 }
                 catch (Exception ex)
                 {
-                    throw JsonSerializationException.Create(reader, "Error resolving type specified in JSON '{0}'.".FormatWith(CultureInfo.InvariantCulture, qualifiedTypeName), ex);
+                    throw JsonSerializationException.Create(reader,
+                        "Error resolving type specified in JSON '{0}'.".FormatWith(CultureInfo.InvariantCulture,
+                            qualifiedTypeName), ex);
                 }
 
-                if (specifiedType == null) throw JsonSerializationException.Create(reader, "Type specified in JSON '{0}' was not resolved.".FormatWith(CultureInfo.InvariantCulture, qualifiedTypeName));
+                if (specifiedType == null)
+                    throw JsonSerializationException.Create(reader,
+                        "Type specified in JSON '{0}' was not resolved.".FormatWith(CultureInfo.InvariantCulture,
+                            qualifiedTypeName));
 
-                if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose) TraceWriter.Trace(TraceLevel.Verbose, JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path, "Resolved type '{0}' to {1}.".FormatWith(CultureInfo.InvariantCulture, qualifiedTypeName, specifiedType)), null);
+                if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose)
+                    TraceWriter.Trace(TraceLevel.Verbose,
+                        JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
+                            "Resolved type '{0}' to {1}.".FormatWith(CultureInfo.InvariantCulture, qualifiedTypeName,
+                                specifiedType)), null);
 
                 if (objectType != null
 #if HAVE_DYNAMIC
                     && objectType != typeof(IDynamicMetaObjectProvider)
 #endif
                     && !objectType.IsAssignableFrom(specifiedType))
-                    throw JsonSerializationException.Create(reader, "Type specified in JSON '{0}' is not compatible with '{1}'.".FormatWith(CultureInfo.InvariantCulture, specifiedType.AssemblyQualifiedName, objectType.AssemblyQualifiedName));
+                    throw JsonSerializationException.Create(reader,
+                        "Type specified in JSON '{0}' is not compatible with '{1}'.".FormatWith(
+                            CultureInfo.InvariantCulture, specifiedType.AssemblyQualifiedName,
+                            objectType.AssemblyQualifiedName));
 
                 objectType = specifiedType;
                 contract = GetContract(specifiedType);
@@ -681,13 +764,20 @@ namespace Dreamcast.Json.Serialization
 
         private JsonArrayContract EnsureArrayContract(JsonReader reader, Type objectType, JsonContract contract)
         {
-            if (contract == null) throw JsonSerializationException.Create(reader, "Could not resolve type '{0}' to a JsonContract.".FormatWith(CultureInfo.InvariantCulture, objectType));
+            if (contract == null)
+                throw JsonSerializationException.Create(reader,
+                    "Could not resolve type '{0}' to a JsonContract.".FormatWith(CultureInfo.InvariantCulture,
+                        objectType));
 
             if (!(contract is JsonArrayContract arrayContract))
             {
-                var message = @"Cannot deserialize the current JSON array (e.g. [1,2,3]) into type '{0}' because the type requires a {1} to deserialize correctly." + Environment.NewLine +
-                              @"To fix this error either change the JSON to a {1} or change the deserialized type to an array or a type that implements a collection interface (e.g. ICollection, IList) like List<T> that can be deserialized from a JSON array. JsonArrayAttribute can also be added to the type to force it to deserialize from a JSON array." + Environment.NewLine;
-                message = message.FormatWith(CultureInfo.InvariantCulture, objectType, GetExpectedDescription(contract));
+                var message =
+                    @"Cannot deserialize the current JSON array (e.g. [1,2,3]) into type '{0}' because the type requires a {1} to deserialize correctly." +
+                    Environment.NewLine +
+                    @"To fix this error either change the JSON to a {1} or change the deserialized type to an array or a type that implements a collection interface (e.g. ICollection, IList) like List<T> that can be deserialized from a JSON array. JsonArrayAttribute can also be added to the type to force it to deserialize from a JSON array." +
+                    Environment.NewLine;
+                message = message.FormatWith(CultureInfo.InvariantCulture, objectType,
+                    GetExpectedDescription(contract));
 
                 throw JsonSerializationException.Create(reader, message);
             }
@@ -695,7 +785,8 @@ namespace Dreamcast.Json.Serialization
             return arrayContract;
         }
 
-        private object? CreateList(JsonReader reader, Type? objectType, JsonContract? contract, JsonProperty? member, object? existingValue, string? id)
+        private object? CreateList(JsonReader reader, Type? objectType, JsonContract? contract, JsonProperty? member,
+            object? existingValue, string? id)
         {
             object? value;
 
@@ -712,13 +803,25 @@ namespace Dreamcast.Json.Serialization
 
                 if (createdFromNonDefaultCreator)
                 {
-                    if (id != null) throw JsonSerializationException.Create(reader, "Cannot preserve reference to array or readonly list, or list created from a non-default constructor: {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
+                    if (id != null)
+                        throw JsonSerializationException.Create(reader,
+                            "Cannot preserve reference to array or readonly list, or list created from a non-default constructor: {0}."
+                                .FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
 
-                    if (contract.OnSerializingCallbacks.Count > 0) throw JsonSerializationException.Create(reader, "Cannot call OnSerializing on an array or readonly list, or list created from a non-default constructor: {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
+                    if (contract.OnSerializingCallbacks.Count > 0)
+                        throw JsonSerializationException.Create(reader,
+                            "Cannot call OnSerializing on an array or readonly list, or list created from a non-default constructor: {0}."
+                                .FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
 
-                    if (contract.OnErrorCallbacks.Count > 0) throw JsonSerializationException.Create(reader, "Cannot call OnError on an array or readonly list, or list created from a non-default constructor: {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
+                    if (contract.OnErrorCallbacks.Count > 0)
+                        throw JsonSerializationException.Create(reader,
+                            "Cannot call OnError on an array or readonly list, or list created from a non-default constructor: {0}."
+                                .FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
 
-                    if (!arrayContract.HasParameterizedCreatorInternal && !arrayContract.IsArray) throw JsonSerializationException.Create(reader, "Cannot deserialize readonly or fixed size list: {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
+                    if (!arrayContract.HasParameterizedCreatorInternal && !arrayContract.IsArray)
+                        throw JsonSerializationException.Create(reader,
+                            "Cannot deserialize readonly or fixed size list: {0}.".FormatWith(
+                                CultureInfo.InvariantCulture, contract.UnderlyingType));
                 }
 
                 if (!arrayContract.IsMultidimensionalArray)
@@ -730,7 +833,8 @@ namespace Dreamcast.Json.Serialization
                 {
                     if (arrayContract.IsMultidimensionalArray)
                     {
-                        list = CollectionUtils.ToMultidimensionalArray(list, arrayContract.CollectionItemType!, contract.CreatedType.GetArrayRank());
+                        list = CollectionUtils.ToMultidimensionalArray(list, arrayContract.CollectionItemType!,
+                            contract.CreatedType.GetArrayRank());
                     }
                     else if (arrayContract.IsArray)
                     {
@@ -754,9 +858,15 @@ namespace Dreamcast.Json.Serialization
             }
             else
             {
-                if (!arrayContract.CanDeserialize) throw JsonSerializationException.Create(reader, "Cannot populate list type {0}.".FormatWith(CultureInfo.InvariantCulture, contract.CreatedType));
+                if (!arrayContract.CanDeserialize)
+                    throw JsonSerializationException.Create(reader,
+                        "Cannot populate list type {0}.".FormatWith(CultureInfo.InvariantCulture,
+                            contract.CreatedType));
 
-                value = PopulateList(arrayContract.ShouldCreateWrapper || !(existingValue is IList list) ? arrayContract.CreateWrapper(existingValue) : list, reader, arrayContract, member, id);
+                value = PopulateList(
+                    arrayContract.ShouldCreateWrapper || !(existingValue is IList list)
+                        ? arrayContract.CreateWrapper(existingValue)
+                        : list, reader, arrayContract, member, id);
             }
 
             return value;
@@ -764,10 +874,12 @@ namespace Dreamcast.Json.Serialization
 
         private bool HasNoDefinedType(JsonContract? contract)
         {
-            return contract == null || contract.UnderlyingType == typeof(object) || contract.ContractType == JsonContractType.Linq;
+            return contract == null || contract.UnderlyingType == typeof(object) ||
+                   contract.ContractType == JsonContractType.Linq;
         }
 
-        private object? EnsureType(JsonReader reader, object? value, CultureInfo culture, JsonContract? contract, Type? targetType)
+        private object? EnsureType(JsonReader reader, object? value, CultureInfo culture, JsonContract? contract,
+            Type? targetType)
         {
             if (targetType == null) return value;
 
@@ -788,13 +900,17 @@ namespace Dreamcast.Json.Serialization
 
                         if (contract.IsEnum)
                         {
-                            if (value is string s) return EnumUtils.ParseEnum(contract.NonNullableUnderlyingType, null, s, false);
-                            if (ConvertUtils.IsInteger(primitiveContract.TypeCode)) return Enum.ToObject(contract.NonNullableUnderlyingType, value);
+                            if (value is string s)
+                                return EnumUtils.ParseEnum(contract.NonNullableUnderlyingType, null, s, false);
+                            if (ConvertUtils.IsInteger(primitiveContract.TypeCode))
+                                return Enum.ToObject(contract.NonNullableUnderlyingType, value);
                         }
                         else if (contract.NonNullableUnderlyingType == typeof(DateTime))
                         {
                             // use DateTimeUtils because Convert.ChangeType does not set DateTime.Kind correctly
-                            if (value is string s && DateTimeUtils.TryParseDateTime(s, reader.DateTimeZoneHandling, reader.DateFormatString, reader.Culture, out var dt)) return DateTimeUtils.EnsureDateTime(dt, reader.DateTimeZoneHandling);
+                            if (value is string s && DateTimeUtils.TryParseDateTime(s, reader.DateTimeZoneHandling,
+                                reader.DateFormatString, reader.Culture, out var dt))
+                                return DateTimeUtils.EnsureDateTime(dt, reader.DateTimeZoneHandling);
                         }
 
 #if HAVE_BIG_INTEGER
@@ -812,14 +928,17 @@ namespace Dreamcast.Json.Serialization
                 }
                 catch (Exception ex)
                 {
-                    throw JsonSerializationException.Create(reader, "Error converting value {0} to type '{1}'.".FormatWith(CultureInfo.InvariantCulture, MiscellaneousUtils.ToString(value), targetType), ex);
+                    throw JsonSerializationException.Create(reader,
+                        "Error converting value {0} to type '{1}'.".FormatWith(CultureInfo.InvariantCulture,
+                            MiscellaneousUtils.ToString(value), targetType), ex);
                 }
             }
 
             return value;
         }
 
-        private bool SetPropertyValue(JsonProperty property, JsonConverter? propertyConverter, JsonContainerContract? containerContract, JsonProperty? containerProperty, JsonReader reader, object target)
+        private bool SetPropertyValue(JsonProperty property, JsonConverter? propertyConverter,
+            JsonContainerContract? containerContract, JsonProperty? containerProperty, JsonReader reader, object target)
         {
             var skipSettingProperty = CalculatePropertyDetails(
                 property,
@@ -853,7 +972,8 @@ namespace Dreamcast.Json.Serialization
             }
             else
             {
-                value = CreateValueInternal(reader, property.PropertyType, propertyContract, property, containerContract, containerProperty, useExistingValue ? currentValue : null);
+                value = CreateValueInternal(reader, property.PropertyType, propertyContract, property,
+                    containerContract, containerProperty, useExistingValue ? currentValue : null);
             }
 
             // always set the value if useExistingValue is false,
@@ -866,7 +986,12 @@ namespace Dreamcast.Json.Serialization
 
                 if (property.SetIsSpecified != null)
                 {
-                    if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose) TraceWriter.Trace(TraceLevel.Verbose, JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path, "IsSpecified for property '{0}' on {1} set to true.".FormatWith(CultureInfo.InvariantCulture, property.PropertyName, property.DeclaringType)), null);
+                    if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose)
+                        TraceWriter.Trace(TraceLevel.Verbose,
+                            JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
+                                "IsSpecified for property '{0}' on {1} set to true.".FormatWith(
+                                    CultureInfo.InvariantCulture, property.PropertyName, property.DeclaringType)),
+                            null);
 
                     property.SetIsSpecified(target, true);
                 }
@@ -907,7 +1032,8 @@ namespace Dreamcast.Json.Serialization
                 property.ObjectCreationHandling.GetValueOrDefault(Serializer._objectCreationHandling);
 
             if (objectCreationHandling != ObjectCreationHandling.Replace
-                && (tokenType == JsonToken.StartArray || tokenType == JsonToken.StartObject || propertyConverter != null)
+                && (tokenType == JsonToken.StartArray || tokenType == JsonToken.StartObject ||
+                    propertyConverter != null)
                 && property.Readable)
             {
                 currentValue = property.ValueProvider!.GetValue(target);
@@ -917,27 +1043,36 @@ namespace Dreamcast.Json.Serialization
                 {
                     propertyContract = GetContract(currentValue.GetType());
 
-                    useExistingValue = !propertyContract.IsReadOnlyOrFixedSize && !propertyContract.UnderlyingType.IsValueType();
+                    useExistingValue = !propertyContract.IsReadOnlyOrFixedSize &&
+                                       !propertyContract.UnderlyingType.IsValueType();
                 }
             }
 
             if (!property.Writable && !useExistingValue)
             {
-                if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info) TraceWriter.Trace(TraceLevel.Info, JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path, "Unable to deserialize value to non-writable property '{0}' on {1}.".FormatWith(CultureInfo.InvariantCulture, property.PropertyName, property.DeclaringType)), null);
+                if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info)
+                    TraceWriter.Trace(TraceLevel.Info,
+                        JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
+                            "Unable to deserialize value to non-writable property '{0}' on {1}.".FormatWith(
+                                CultureInfo.InvariantCulture, property.PropertyName, property.DeclaringType)), null);
 
                 return true;
             }
 
             // test tokenType here because null might not be convertible to some types, e.g. ignoring null when applied to DateTime
-            if (tokenType == JsonToken.Null && ResolvedNullValueHandling(containerContract as JsonObjectContract, property) == NullValueHandling.Ignore)
+            if (tokenType == JsonToken.Null &&
+                ResolvedNullValueHandling(containerContract as JsonObjectContract, property) ==
+                NullValueHandling.Ignore)
             {
                 ignoredValue = true;
                 return true;
             }
 
             // test tokenType here because default value might not be convertible to actual type, e.g. default of "" for DateTime
-            if (HasFlag(property.DefaultValueHandling.GetValueOrDefault(Serializer._defaultValueHandling), DefaultValueHandling.Ignore)
-                && !HasFlag(property.DefaultValueHandling.GetValueOrDefault(Serializer._defaultValueHandling), DefaultValueHandling.Populate)
+            if (HasFlag(property.DefaultValueHandling.GetValueOrDefault(Serializer._defaultValueHandling),
+                    DefaultValueHandling.Ignore)
+                && !HasFlag(property.DefaultValueHandling.GetValueOrDefault(Serializer._defaultValueHandling),
+                    DefaultValueHandling.Populate)
                 && JsonTokenUtils.IsPrimitiveToken(tokenType)
                 && MiscellaneousUtils.ValueEquals(reader.Value, property.GetResolvedDefaultValue()))
             {
@@ -953,7 +1088,9 @@ namespace Dreamcast.Json.Serialization
             {
                 propertyContract = GetContract(currentValue.GetType());
 
-                if (propertyContract != property.PropertyContract) propertyConverter = GetConverter(propertyContract, property.Converter, containerContract, containerProperty);
+                if (propertyContract != property.PropertyContract)
+                    propertyConverter = GetConverter(propertyContract, property.Converter, containerContract,
+                        containerProperty);
             }
 
             return false;
@@ -963,13 +1100,18 @@ namespace Dreamcast.Json.Serialization
         {
             try
             {
-                if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose) TraceWriter.Trace(TraceLevel.Verbose, JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path, "Read object reference Id '{0}' for {1}.".FormatWith(CultureInfo.InvariantCulture, id, value.GetType())), null);
+                if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose)
+                    TraceWriter.Trace(TraceLevel.Verbose,
+                        JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
+                            "Read object reference Id '{0}' for {1}.".FormatWith(CultureInfo.InvariantCulture, id,
+                                value.GetType())), null);
 
                 Serializer.GetReferenceResolver().AddReference(this, id, value);
             }
             catch (Exception ex)
             {
-                throw JsonSerializationException.Create(reader, "Error reading object reference '{0}'.".FormatWith(CultureInfo.InvariantCulture, id), ex);
+                throw JsonSerializationException.Create(reader,
+                    "Error reading object reference '{0}'.".FormatWith(CultureInfo.InvariantCulture, id), ex);
             }
         }
 
@@ -980,10 +1122,13 @@ namespace Dreamcast.Json.Serialization
 
         private bool ShouldSetPropertyValue(JsonProperty property, JsonObjectContract? contract, object? value)
         {
-            if (value == null && ResolvedNullValueHandling(contract, property) == NullValueHandling.Ignore) return false;
+            if (value == null && ResolvedNullValueHandling(contract, property) == NullValueHandling.Ignore)
+                return false;
 
-            if (HasFlag(property.DefaultValueHandling.GetValueOrDefault(Serializer._defaultValueHandling), DefaultValueHandling.Ignore)
-                && !HasFlag(property.DefaultValueHandling.GetValueOrDefault(Serializer._defaultValueHandling), DefaultValueHandling.Populate)
+            if (HasFlag(property.DefaultValueHandling.GetValueOrDefault(Serializer._defaultValueHandling),
+                    DefaultValueHandling.Ignore)
+                && !HasFlag(property.DefaultValueHandling.GetValueOrDefault(Serializer._defaultValueHandling),
+                    DefaultValueHandling.Populate)
                 && MiscellaneousUtils.ValueEquals(value, property.GetResolvedDefaultValue()))
                 return false;
 
@@ -992,10 +1137,14 @@ namespace Dreamcast.Json.Serialization
             return true;
         }
 
-        private IList CreateNewList(JsonReader reader, JsonArrayContract contract, out bool createdFromNonDefaultCreator)
+        private IList CreateNewList(JsonReader reader, JsonArrayContract contract,
+            out bool createdFromNonDefaultCreator)
         {
             // some types like non-generic IEnumerable can be serialized but not deserialized
-            if (!contract.CanDeserialize) throw JsonSerializationException.Create(reader, "Cannot create and populate list type {0}.".FormatWith(CultureInfo.InvariantCulture, contract.CreatedType));
+            if (!contract.CanDeserialize)
+                throw JsonSerializationException.Create(reader,
+                    "Cannot create and populate list type {0}.".FormatWith(CultureInfo.InvariantCulture,
+                        contract.CreatedType));
 
             if (contract.OverrideCreator != null)
             {
@@ -1023,7 +1172,9 @@ namespace Dreamcast.Json.Serialization
                 return list;
             }
 
-            if (contract.DefaultCreator != null && (!contract.DefaultCreatorNonPublic || Serializer._constructorHandling == ConstructorHandling.AllowNonPublicDefaultConstructor))
+            if (contract.DefaultCreator != null && (!contract.DefaultCreatorNonPublic ||
+                                                    Serializer._constructorHandling == ConstructorHandling
+                                                        .AllowNonPublicDefaultConstructor))
             {
                 var list = contract.DefaultCreator();
 
@@ -1039,12 +1190,18 @@ namespace Dreamcast.Json.Serialization
                 return contract.CreateTemporaryCollection();
             }
 
-            if (!contract.IsInstantiable) throw JsonSerializationException.Create(reader, "Could not create an instance of type {0}. Type is an interface or abstract class and cannot be instantiated.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
+            if (!contract.IsInstantiable)
+                throw JsonSerializationException.Create(reader,
+                    "Could not create an instance of type {0}. Type is an interface or abstract class and cannot be instantiated."
+                        .FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
 
-            throw JsonSerializationException.Create(reader, "Unable to find a constructor to use for type {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
+            throw JsonSerializationException.Create(reader,
+                "Unable to find a constructor to use for type {0}.".FormatWith(CultureInfo.InvariantCulture,
+                    contract.UnderlyingType));
         }
 
-        private IDictionary CreateNewDictionary(JsonReader reader, JsonDictionaryContract contract, out bool createdFromNonDefaultCreator)
+        private IDictionary CreateNewDictionary(JsonReader reader, JsonDictionaryContract contract,
+            out bool createdFromNonDefaultCreator)
         {
             if (contract.OverrideCreator != null)
             {
@@ -1064,7 +1221,9 @@ namespace Dreamcast.Json.Serialization
                 return contract.CreateTemporaryDictionary();
             }
 
-            if (contract.DefaultCreator != null && (!contract.DefaultCreatorNonPublic || Serializer._constructorHandling == ConstructorHandling.AllowNonPublicDefaultConstructor))
+            if (contract.DefaultCreator != null && (!contract.DefaultCreatorNonPublic ||
+                                                    Serializer._constructorHandling == ConstructorHandling
+                                                        .AllowNonPublicDefaultConstructor))
             {
                 var dictionary = contract.DefaultCreator();
 
@@ -1080,28 +1239,44 @@ namespace Dreamcast.Json.Serialization
                 return contract.CreateTemporaryDictionary();
             }
 
-            if (!contract.IsInstantiable) throw JsonSerializationException.Create(reader, "Could not create an instance of type {0}. Type is an interface or abstract class and cannot be instantiated.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
+            if (!contract.IsInstantiable)
+                throw JsonSerializationException.Create(reader,
+                    "Could not create an instance of type {0}. Type is an interface or abstract class and cannot be instantiated."
+                        .FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
 
-            throw JsonSerializationException.Create(reader, "Unable to find a default constructor to use for type {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
+            throw JsonSerializationException.Create(reader,
+                "Unable to find a default constructor to use for type {0}.".FormatWith(CultureInfo.InvariantCulture,
+                    contract.UnderlyingType));
         }
 
         private void OnDeserializing(JsonReader reader, JsonContract contract, object value)
         {
-            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info) TraceWriter.Trace(TraceLevel.Info, JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path, "Started deserializing {0}".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType)), null);
+            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info)
+                TraceWriter.Trace(TraceLevel.Info,
+                    JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
+                        "Started deserializing {0}".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType)),
+                    null);
 
             contract.InvokeOnDeserializing(value, Serializer._context);
         }
 
         private void OnDeserialized(JsonReader reader, JsonContract contract, object value)
         {
-            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info) TraceWriter.Trace(TraceLevel.Info, JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path, "Finished deserializing {0}".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType)), null);
+            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info)
+                TraceWriter.Trace(TraceLevel.Info,
+                    JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
+                        "Finished deserializing {0}".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType)),
+                    null);
 
             contract.InvokeOnDeserialized(value, Serializer._context);
         }
 
-        private object PopulateDictionary(IDictionary dictionary, JsonReader reader, JsonDictionaryContract contract, JsonProperty? containerProperty, string? id)
+        private object PopulateDictionary(IDictionary dictionary, JsonReader reader, JsonDictionaryContract contract,
+            JsonProperty? containerProperty, string? id)
         {
-            var underlyingDictionary = dictionary is IWrappedDictionary wrappedDictionary ? wrappedDictionary.UnderlyingDictionary : dictionary;
+            var underlyingDictionary = dictionary is IWrappedDictionary wrappedDictionary
+                ? wrappedDictionary.UnderlyingDictionary
+                : dictionary;
 
             if (id != null) AddReference(reader, id, underlyingDictionary);
 
@@ -1113,8 +1288,11 @@ namespace Dreamcast.Json.Serialization
 
             if (contract.ItemContract == null) contract.ItemContract = GetContractSafe(contract.DictionaryValueType);
 
-            var dictionaryValueConverter = contract.ItemConverter ?? GetConverter(contract.ItemContract, null, contract, containerProperty);
-            var keyTypeCode = contract.KeyContract is JsonPrimitiveContract keyContract ? keyContract.TypeCode : PrimitiveTypeCode.Empty;
+            var dictionaryValueConverter = contract.ItemConverter ??
+                                           GetConverter(contract.ItemContract, null, contract, containerProperty);
+            var keyTypeCode = contract.KeyContract is JsonPrimitiveContract keyContract
+                ? keyContract.TypeCode
+                : PrimitiveTypeCode.Empty;
 
             var finished = false;
             do
@@ -1135,44 +1313,57 @@ namespace Dreamcast.Json.Serialization
                                     case PrimitiveTypeCode.DateTime:
                                     case PrimitiveTypeCode.DateTimeNullable:
                                     {
-                                        keyValue = DateTimeUtils.TryParseDateTime(keyValue.ToString(), reader.DateTimeZoneHandling, reader.DateFormatString, reader.Culture, out var dt)
+                                        keyValue = DateTimeUtils.TryParseDateTime(keyValue.ToString(),
+                                            reader.DateTimeZoneHandling, reader.DateFormatString, reader.Culture,
+                                            out var dt)
                                             ? dt
-                                            : EnsureType(reader, keyValue, CultureInfo.InvariantCulture, contract.KeyContract!, contract.DictionaryKeyType)!;
+                                            : EnsureType(reader, keyValue, CultureInfo.InvariantCulture,
+                                                contract.KeyContract!, contract.DictionaryKeyType)!;
                                         break;
                                     }
 #if HAVE_DATE_TIME_OFFSET
                                     case PrimitiveTypeCode.DateTimeOffset:
                                     case PrimitiveTypeCode.DateTimeOffsetNullable:
                                     {
-                                        keyValue = DateTimeUtils.TryParseDateTimeOffset(keyValue.ToString(), reader.DateFormatString, reader.Culture, out DateTimeOffset dt)
+                                        keyValue =
+ DateTimeUtils.TryParseDateTimeOffset(keyValue.ToString(), reader.DateFormatString, reader.Culture, out DateTimeOffset dt)
                                             ? dt
                                             : EnsureType(reader, keyValue, CultureInfo.InvariantCulture, contract.KeyContract!, contract.DictionaryKeyType)!;
                                         break;
                                     }
 #endif
                                     default:
-                                        keyValue = EnsureType(reader, keyValue, CultureInfo.InvariantCulture, contract.KeyContract!, contract.DictionaryKeyType)!;
+                                        keyValue = EnsureType(reader, keyValue, CultureInfo.InvariantCulture,
+                                            contract.KeyContract!, contract.DictionaryKeyType)!;
                                         break;
                                 }
                             }
                             catch (Exception ex)
                             {
-                                throw JsonSerializationException.Create(reader, "Could not convert string '{0}' to dictionary key type '{1}'. Create a TypeConverter to convert from the string to the key type object.".FormatWith(CultureInfo.InvariantCulture, reader.Value, contract.DictionaryKeyType), ex);
+                                throw JsonSerializationException.Create(reader,
+                                    "Could not convert string '{0}' to dictionary key type '{1}'. Create a TypeConverter to convert from the string to the key type object."
+                                        .FormatWith(CultureInfo.InvariantCulture, reader.Value,
+                                            contract.DictionaryKeyType), ex);
                             }
 
-                            if (!reader.ReadForType(contract.ItemContract, dictionaryValueConverter != null)) throw JsonSerializationException.Create(reader, "Unexpected end when deserializing object.");
+                            if (!reader.ReadForType(contract.ItemContract, dictionaryValueConverter != null))
+                                throw JsonSerializationException.Create(reader,
+                                    "Unexpected end when deserializing object.");
 
                             object? itemValue;
                             if (dictionaryValueConverter != null && dictionaryValueConverter.CanRead)
-                                itemValue = DeserializeConvertable(dictionaryValueConverter, reader, contract.DictionaryValueType!, null);
+                                itemValue = DeserializeConvertable(dictionaryValueConverter, reader,
+                                    contract.DictionaryValueType!, null);
                             else
-                                itemValue = CreateValueInternal(reader, contract.DictionaryValueType, contract.ItemContract, null, contract, containerProperty, null);
+                                itemValue = CreateValueInternal(reader, contract.DictionaryValueType,
+                                    contract.ItemContract, null, contract, containerProperty, null);
 
                             dictionary[keyValue] = itemValue;
                         }
                         catch (Exception ex)
                         {
-                            if (IsErrorHandled(underlyingDictionary, contract, keyValue, reader as IJsonLineInfo, reader.Path, ex))
+                            if (IsErrorHandled(underlyingDictionary, contract, keyValue, reader as IJsonLineInfo,
+                                reader.Path, ex))
                                 HandleError(reader, true, initialDepth);
                             else
                                 throw;
@@ -1185,17 +1376,21 @@ namespace Dreamcast.Json.Serialization
                         finished = true;
                         break;
                     default:
-                        throw JsonSerializationException.Create(reader, "Unexpected token when deserializing object: " + reader.TokenType);
+                        throw JsonSerializationException.Create(reader,
+                            "Unexpected token when deserializing object: " + reader.TokenType);
                 }
             } while (!finished && reader.Read());
 
-            if (!finished) ThrowUnexpectedEndException(reader, contract, underlyingDictionary, "Unexpected end when deserializing object.");
+            if (!finished)
+                ThrowUnexpectedEndException(reader, contract, underlyingDictionary,
+                    "Unexpected end when deserializing object.");
 
             OnDeserialized(reader, contract, underlyingDictionary);
             return underlyingDictionary;
         }
 
-        private object PopulateMultidimensionalArray(IList list, JsonReader reader, JsonArrayContract contract, JsonProperty? containerProperty, string? id)
+        private object PopulateMultidimensionalArray(IList list, JsonReader reader, JsonArrayContract contract,
+            JsonProperty? containerProperty, string? id)
         {
             var rank = contract.UnderlyingType.GetArrayRank();
 
@@ -1234,9 +1429,11 @@ namespace Dreamcast.Json.Serialization
                                     object? value;
 
                                     if (collectionItemConverter != null && collectionItemConverter.CanRead)
-                                        value = DeserializeConvertable(collectionItemConverter, reader, contract.CollectionItemType!, null);
+                                        value = DeserializeConvertable(collectionItemConverter, reader,
+                                            contract.CollectionItemType!, null);
                                     else
-                                        value = CreateValueInternal(reader, contract.CollectionItemType, collectionItemContract, null, contract, containerProperty, null);
+                                        value = CreateValueInternal(reader, contract.CollectionItemType,
+                                            collectionItemContract, null, contract, containerProperty, null);
 
                                     currentList.Add(value);
                                     break;
@@ -1248,14 +1445,16 @@ namespace Dreamcast.Json.Serialization
                     {
                         var errorPosition = reader.GetPosition(initialDepth);
 
-                        if (IsErrorHandled(list, contract, errorPosition.Position, reader as IJsonLineInfo, reader.Path, ex))
+                        if (IsErrorHandled(list, contract, errorPosition.Position, reader as IJsonLineInfo, reader.Path,
+                            ex))
                         {
                             HandleError(reader, true, initialDepth + 1);
 
                             if (previousErrorIndex != null && previousErrorIndex == errorPosition.Position)
                                 // reader index has not moved since previous error handling
                                 // break out of reading array to prevent infinite loop
-                                throw JsonSerializationException.Create(reader, "Infinite loop detected from error handling.", ex);
+                                throw JsonSerializationException.Create(reader,
+                                    "Infinite loop detected from error handling.", ex);
                             previousErrorIndex = errorPosition.Position;
                         }
                         else
@@ -1286,20 +1485,23 @@ namespace Dreamcast.Json.Serialization
                             case JsonToken.Comment:
                                 break;
                             default:
-                                throw JsonSerializationException.Create(reader, "Unexpected token when deserializing multidimensional array: " + reader.TokenType);
+                                throw JsonSerializationException.Create(reader,
+                                    "Unexpected token when deserializing multidimensional array: " + reader.TokenType);
                         }
                     else
                         break;
                 }
             } while (!finished);
 
-            if (!finished) ThrowUnexpectedEndException(reader, contract, list, "Unexpected end when deserializing array.");
+            if (!finished)
+                ThrowUnexpectedEndException(reader, contract, list, "Unexpected end when deserializing array.");
 
             OnDeserialized(reader, contract, list);
             return list;
         }
 
-        private void ThrowUnexpectedEndException(JsonReader reader, JsonContract contract, object? currentObject, string message)
+        private void ThrowUnexpectedEndException(JsonReader reader, JsonContract contract, object? currentObject,
+            string message)
         {
             try
             {
@@ -1314,10 +1516,13 @@ namespace Dreamcast.Json.Serialization
             }
         }
 
-        private object PopulateList(IList list, JsonReader reader, JsonArrayContract contract, JsonProperty? containerProperty, string? id)
+        private object PopulateList(IList list, JsonReader reader, JsonArrayContract contract,
+            JsonProperty? containerProperty, string? id)
         {
 #pragma warning disable CS8600, CS8602, CS8603, CS8604
-            var underlyingList = list is IWrappedCollection wrappedCollection ? wrappedCollection.UnderlyingCollection : list;
+            var underlyingList = list is IWrappedCollection wrappedCollection
+                ? wrappedCollection.UnderlyingCollection
+                : list;
 
             if (id != null) AddReference(reader, id, underlyingList);
 
@@ -1355,9 +1560,11 @@ namespace Dreamcast.Json.Serialization
                                 object? value;
 
                                 if (collectionItemConverter != null && collectionItemConverter.CanRead)
-                                    value = DeserializeConvertable(collectionItemConverter, reader, contract.CollectionItemType, null);
+                                    value = DeserializeConvertable(collectionItemConverter, reader,
+                                        contract.CollectionItemType, null);
                                 else
-                                    value = CreateValueInternal(reader, contract.CollectionItemType, contract.ItemContract, null, contract, containerProperty, null);
+                                    value = CreateValueInternal(reader, contract.CollectionItemType,
+                                        contract.ItemContract, null, contract, containerProperty, null);
 
                                 list.Add(value);
                                 break;
@@ -1369,14 +1576,16 @@ namespace Dreamcast.Json.Serialization
                 {
                     var errorPosition = reader.GetPosition(initialDepth);
 
-                    if (IsErrorHandled(underlyingList, contract, errorPosition.Position, reader as IJsonLineInfo, reader.Path, ex))
+                    if (IsErrorHandled(underlyingList, contract, errorPosition.Position, reader as IJsonLineInfo,
+                        reader.Path, ex))
                     {
                         HandleError(reader, true, initialDepth + 1);
 
                         if (previousErrorIndex != null && previousErrorIndex == errorPosition.Position)
                             // reader index has not moved since previous error handling
                             // break out of reading array to prevent infinite loop
-                            throw JsonSerializationException.Create(reader, "Infinite loop detected from error handling.", ex);
+                            throw JsonSerializationException.Create(reader,
+                                "Infinite loop detected from error handling.", ex);
                         previousErrorIndex = errorPosition.Position;
                     }
                     else
@@ -1386,7 +1595,9 @@ namespace Dreamcast.Json.Serialization
                 }
             } while (!finished);
 
-            if (!finished) ThrowUnexpectedEndException(reader, contract, underlyingList, "Unexpected end when deserializing array.");
+            if (!finished)
+                ThrowUnexpectedEndException(reader, contract, underlyingList,
+                    "Unexpected end when deserializing array.");
 
             OnDeserialized(reader, contract, underlyingList);
             return underlyingList;
@@ -1400,7 +1611,8 @@ namespace Dreamcast.Json.Serialization
 
             if (!JsonTypeReflector.FullyTrusted)
             {
-                string message = @"Type '{0}' implements ISerializable but cannot be deserialized using the ISerializable interface because the current application is not fully trusted and ISerializable can expose secure data." + Environment.NewLine +
+                string message =
+ @"Type '{0}' implements ISerializable but cannot be deserialized using the ISerializable interface because the current application is not fully trusted and ISerializable can expose secure data." + Environment.NewLine +
                                  @"To fix this error either change the environment to be fully trusted, change the application to not deserialize the type, add JsonObjectAttribute to the type or change the JsonSerializer setting ContractResolver to use a new DefaultContractResolver with IgnoreSerializableInterface set to true." + Environment.NewLine;
                 message = message.FormatWith(CultureInfo.InvariantCulture, objectType);
 
@@ -1412,7 +1624,8 @@ namespace Dreamcast.Json.Serialization
                 TraceWriter.Trace(TraceLevel.Info, JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path, "Deserializing {0} using ISerializable constructor.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType)), null);
             }
 
-            SerializationInfo serializationInfo = new SerializationInfo(contract.UnderlyingType, new JsonFormatterConverter(this, contract, member));
+            SerializationInfo serializationInfo =
+ new SerializationInfo(contract.UnderlyingType, new JsonFormatterConverter(this, contract, member));
 
             bool finished = false;
             do
@@ -1542,7 +1755,8 @@ namespace Dreamcast.Json.Serialization
                                     property.PropertyContract = GetContractSafe(property.PropertyType);
                                 }
 
-                                JsonConverter? propertyConverter = GetConverter(property.PropertyContract, property.Converter, null, null);
+                                JsonConverter? propertyConverter =
+ GetConverter(property.PropertyContract, property.Converter, null, null);
 
                                 if (!SetPropertyValue(property, propertyConverter, null, member, reader, newObject))
                                 {
@@ -1551,10 +1765,12 @@ namespace Dreamcast.Json.Serialization
                             }
                             else
                             {
-                                Type t = (JsonTokenUtils.IsPrimitiveToken(reader.TokenType)) ? reader.ValueType! : typeof(IDynamicMetaObjectProvider);
+                                Type t =
+ (JsonTokenUtils.IsPrimitiveToken(reader.TokenType)) ? reader.ValueType! : typeof(IDynamicMetaObjectProvider);
 
                                 JsonContract? dynamicMemberContract = GetContractSafe(t);
-                                JsonConverter? dynamicMemberConverter = GetConverter(dynamicMemberContract, null, null, member);
+                                JsonConverter? dynamicMemberConverter =
+ GetConverter(dynamicMemberContract, null, null, member);
 
                                 object? value;
                                 if (dynamicMemberConverter != null && dynamicMemberConverter.CanRead)
@@ -1563,7 +1779,8 @@ namespace Dreamcast.Json.Serialization
                                 }
                                 else
                                 {
-                                    value = CreateValueInternal(reader, t, dynamicMemberContract, null, null, member, null);
+                                    value =
+ CreateValueInternal(reader, t, dynamicMemberContract, null, null, member, null);
                                 }
 
                                 contract.TrySetMember(newObject, memberName, value);
@@ -1615,12 +1832,14 @@ namespace Dreamcast.Json.Serialization
             }
         }
 
-        private object CreateObjectUsingCreatorWithParameters(JsonReader reader, JsonObjectContract contract, JsonProperty? containerProperty, ObjectConstructor<object> creator, string? id)
+        private object CreateObjectUsingCreatorWithParameters(JsonReader reader, JsonObjectContract contract,
+            JsonProperty? containerProperty, ObjectConstructor<object> creator, string? id)
         {
             ValidationUtils.ArgumentNotNull(creator, nameof(creator));
 
             // only need to keep a track of properties' presence if they are required or a value should be defaulted if missing
-            var trackPresence = contract.HasRequiredOrDefaultValueProperties || HasFlag(Serializer._defaultValueHandling, DefaultValueHandling.Populate);
+            var trackPresence = contract.HasRequiredOrDefaultValueProperties ||
+                                HasFlag(Serializer._defaultValueHandling, DefaultValueHandling.Populate);
 
             var objectType = contract.UnderlyingType;
 
@@ -1631,7 +1850,10 @@ namespace Dreamcast.Json.Serialization
                         .ToArray()
 #endif
                 );
-                TraceWriter.Trace(TraceLevel.Info, JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path, "Deserializing {0} using creator with parameters: {1}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType, parameters)), null);
+                TraceWriter.Trace(TraceLevel.Info,
+                    JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
+                        "Deserializing {0} using creator with parameters: {1}.".FormatWith(CultureInfo.InvariantCulture,
+                            contract.UnderlyingType, parameters)), null);
             }
 
             var propertyContexts = ResolvePropertyAndCreatorValues(contract, containerProperty, reader, objectType);
@@ -1639,7 +1861,8 @@ namespace Dreamcast.Json.Serialization
                 foreach (var property in contract.Properties)
                     if (!property.Ignored)
                         if (propertyContexts.All(p => p.Property != property))
-                            propertyContexts.Add(new CreatorPropertyContext(property.PropertyName!) {Property = property, Presence = PropertyPresence.None});
+                            propertyContexts.Add(new CreatorPropertyContext(property.PropertyName!)
+                                {Property = property, Presence = PropertyPresence.None});
 
             var creatorParameterValues = new object?[contract.CreatorParameters.Count];
 
@@ -1654,7 +1877,8 @@ namespace Dreamcast.Json.Serialization
                         if (v == null)
                             propertyPresence = PropertyPresence.Null;
                         else if (v is string s)
-                            propertyPresence = CoerceEmptyStringToNull(context.Property.PropertyType, context.Property.PropertyContract, s)
+                            propertyPresence = CoerceEmptyStringToNull(context.Property.PropertyType,
+                                context.Property.PropertyContract, s)
                                 ? PropertyPresence.Null
                                 : PropertyPresence.Value;
                         else
@@ -1664,7 +1888,10 @@ namespace Dreamcast.Json.Serialization
                     }
 
                 var constructorProperty = context.ConstructorProperty;
-                if (constructorProperty == null && context.Property != null) constructorProperty = contract.CreatorParameters.ForgivingCaseSensitiveFind(p => p.PropertyName!, context.Property.UnderlyingName!);
+                if (constructorProperty == null && context.Property != null)
+                    constructorProperty =
+                        contract.CreatorParameters.ForgivingCaseSensitiveFind(p => p.PropertyName!,
+                            context.Property.UnderlyingName!);
 
                 if (constructorProperty != null && !constructorProperty.Ignored)
                 {
@@ -1673,9 +1900,13 @@ namespace Dreamcast.Json.Serialization
                     if (trackPresence)
                         if (context.Presence == PropertyPresence.None || context.Presence == PropertyPresence.Null)
                         {
-                            if (constructorProperty.PropertyContract == null) constructorProperty.PropertyContract = GetContractSafe(constructorProperty.PropertyType);
+                            if (constructorProperty.PropertyContract == null)
+                                constructorProperty.PropertyContract =
+                                    GetContractSafe(constructorProperty.PropertyType);
 
-                            if (HasFlag(constructorProperty.DefaultValueHandling.GetValueOrDefault(Serializer._defaultValueHandling), DefaultValueHandling.Populate))
+                            if (HasFlag(
+                                constructorProperty.DefaultValueHandling.GetValueOrDefault(Serializer
+                                    ._defaultValueHandling), DefaultValueHandling.Populate))
                                 context.Value = EnsureType(
                                     reader,
                                     constructorProperty.GetResolvedDefaultValue(),
@@ -1728,14 +1959,19 @@ namespace Dreamcast.Json.Serialization
                             var createdObjectCollection = property.ValueProvider!.GetValue(createdObject);
                             if (createdObjectCollection != null)
                             {
-                                propertyArrayContract = (JsonArrayContract) GetContract(createdObjectCollection.GetType());
+                                propertyArrayContract =
+                                    (JsonArrayContract) GetContract(createdObjectCollection.GetType());
 
-                                var createdObjectCollectionWrapper = propertyArrayContract.ShouldCreateWrapper ? propertyArrayContract.CreateWrapper(createdObjectCollection) : (IList) createdObjectCollection;
+                                var createdObjectCollectionWrapper = propertyArrayContract.ShouldCreateWrapper
+                                    ? propertyArrayContract.CreateWrapper(createdObjectCollection)
+                                    : (IList) createdObjectCollection;
 
                                 // Don't attempt to populate array/read-only list
                                 if (!createdObjectCollectionWrapper.IsFixedSize)
                                 {
-                                    var newValues = propertyArrayContract.ShouldCreateWrapper ? propertyArrayContract.CreateWrapper(value) : (IList) value;
+                                    var newValues = propertyArrayContract.ShouldCreateWrapper
+                                        ? propertyArrayContract.CreateWrapper(value)
+                                        : (IList) value;
 
                                     foreach (var newValue in newValues) createdObjectCollectionWrapper.Add(newValue);
                                 }
@@ -1751,8 +1987,12 @@ namespace Dreamcast.Json.Serialization
                             var createdObjectDictionary = property.ValueProvider!.GetValue(createdObject);
                             if (createdObjectDictionary != null)
                             {
-                                var targetDictionary = dictionaryContract.ShouldCreateWrapper ? dictionaryContract.CreateWrapper(createdObjectDictionary) : (IDictionary) createdObjectDictionary;
-                                var newValues = dictionaryContract.ShouldCreateWrapper ? dictionaryContract.CreateWrapper(value) : (IDictionary) value;
+                                var targetDictionary = dictionaryContract.ShouldCreateWrapper
+                                    ? dictionaryContract.CreateWrapper(createdObjectDictionary)
+                                    : (IDictionary) createdObjectDictionary;
+                                var newValues = dictionaryContract.ShouldCreateWrapper
+                                    ? dictionaryContract.CreateWrapper(value)
+                                    : (IDictionary) value;
 
                                 // Manual use of IDictionaryEnumerator instead of foreach to avoid DictionaryEntry box allocations.
                                 var e = newValues.GetEnumerator();
@@ -1800,18 +2040,28 @@ namespace Dreamcast.Json.Serialization
             return createdObject;
         }
 
-        private object? DeserializeConvertable(JsonConverter converter, JsonReader reader, Type objectType, object? existingValue)
+        private object? DeserializeConvertable(JsonConverter converter, JsonReader reader, Type objectType,
+            object? existingValue)
         {
-            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info) TraceWriter.Trace(TraceLevel.Info, JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path, "Started deserializing {0} with converter {1}.".FormatWith(CultureInfo.InvariantCulture, objectType, converter.GetType())), null);
+            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info)
+                TraceWriter.Trace(TraceLevel.Info,
+                    JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
+                        "Started deserializing {0} with converter {1}.".FormatWith(CultureInfo.InvariantCulture,
+                            objectType, converter.GetType())), null);
 
             var value = converter.ReadJson(reader, objectType, existingValue, GetInternalSerializer());
 
-            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info) TraceWriter.Trace(TraceLevel.Info, JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path, "Finished deserializing {0} with converter {1}.".FormatWith(CultureInfo.InvariantCulture, objectType, converter.GetType())), null);
+            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info)
+                TraceWriter.Trace(TraceLevel.Info,
+                    JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
+                        "Finished deserializing {0} with converter {1}.".FormatWith(CultureInfo.InvariantCulture,
+                            objectType, converter.GetType())), null);
 
             return value;
         }
 
-        private List<CreatorPropertyContext> ResolvePropertyAndCreatorValues(JsonObjectContract contract, JsonProperty? containerProperty, JsonReader reader, Type objectType)
+        private List<CreatorPropertyContext> ResolvePropertyAndCreatorValues(JsonObjectContract contract,
+            JsonProperty? containerProperty, JsonReader reader, Type objectType)
         {
             var propertyValues = new List<CreatorPropertyContext>();
             var exit = false;
@@ -1822,7 +2072,11 @@ namespace Dreamcast.Json.Serialization
                     case JsonToken.PropertyName:
                         var memberName = reader.Value!.ToString();
 
-                        var creatorPropertyContext = new CreatorPropertyContext(memberName) {ConstructorProperty = contract.CreatorParameters.GetClosestMatchProperty(memberName), Property = contract.Properties.GetClosestMatchProperty(memberName)};
+                        var creatorPropertyContext = new CreatorPropertyContext(memberName)
+                        {
+                            ConstructorProperty = contract.CreatorParameters.GetClosestMatchProperty(memberName),
+                            Property = contract.Properties.GetClosestMatchProperty(memberName)
+                        };
                         propertyValues.Add(creatorPropertyContext);
 
                         var property = creatorPropertyContext.ConstructorProperty ?? creatorPropertyContext.Property;
@@ -1830,27 +2084,45 @@ namespace Dreamcast.Json.Serialization
                         {
                             if (!property.Ignored)
                             {
-                                if (property.PropertyContract == null) property.PropertyContract = GetContractSafe(property.PropertyType);
+                                if (property.PropertyContract == null)
+                                    property.PropertyContract = GetContractSafe(property.PropertyType);
 
-                                var propertyConverter = GetConverter(property.PropertyContract, property.Converter, contract, containerProperty);
+                                var propertyConverter = GetConverter(property.PropertyContract, property.Converter,
+                                    contract, containerProperty);
 
-                                if (!reader.ReadForType(property.PropertyContract, propertyConverter != null)) throw JsonSerializationException.Create(reader, "Unexpected end when setting {0}'s value.".FormatWith(CultureInfo.InvariantCulture, memberName));
+                                if (!reader.ReadForType(property.PropertyContract, propertyConverter != null))
+                                    throw JsonSerializationException.Create(reader,
+                                        "Unexpected end when setting {0}'s value.".FormatWith(
+                                            CultureInfo.InvariantCulture, memberName));
 
                                 if (propertyConverter != null && propertyConverter.CanRead)
-                                    creatorPropertyContext.Value = DeserializeConvertable(propertyConverter, reader, property.PropertyType!, null);
+                                    creatorPropertyContext.Value = DeserializeConvertable(propertyConverter, reader,
+                                        property.PropertyType!, null);
                                 else
-                                    creatorPropertyContext.Value = CreateValueInternal(reader, property.PropertyType, property.PropertyContract, property, contract, containerProperty, null);
+                                    creatorPropertyContext.Value = CreateValueInternal(reader, property.PropertyType,
+                                        property.PropertyContract, property, contract, containerProperty, null);
 
                                 continue;
                             }
                         }
                         else
                         {
-                            if (!reader.Read()) throw JsonSerializationException.Create(reader, "Unexpected end when setting {0}'s value.".FormatWith(CultureInfo.InvariantCulture, memberName));
+                            if (!reader.Read())
+                                throw JsonSerializationException.Create(reader,
+                                    "Unexpected end when setting {0}'s value.".FormatWith(CultureInfo.InvariantCulture,
+                                        memberName));
 
-                            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose) TraceWriter.Trace(TraceLevel.Verbose, JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path, "Could not find member '{0}' on {1}.".FormatWith(CultureInfo.InvariantCulture, memberName, contract.UnderlyingType)), null);
+                            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose)
+                                TraceWriter.Trace(TraceLevel.Verbose,
+                                    JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
+                                        "Could not find member '{0}' on {1}.".FormatWith(CultureInfo.InvariantCulture,
+                                            memberName, contract.UnderlyingType)), null);
 
-                            if ((contract.MissingMemberHandling ?? Serializer._missingMemberHandling) == MissingMemberHandling.Error) throw JsonSerializationException.Create(reader, "Could not find member '{0}' on object of type '{1}'".FormatWith(CultureInfo.InvariantCulture, memberName, objectType.Name));
+                            if ((contract.MissingMemberHandling ?? Serializer._missingMemberHandling) ==
+                                MissingMemberHandling.Error)
+                                throw JsonSerializationException.Create(reader,
+                                    "Could not find member '{0}' on object of type '{1}'".FormatWith(
+                                        CultureInfo.InvariantCulture, memberName, objectType.Name));
                         }
 
                         if (contract.ExtensionDataSetter != null)
@@ -1864,7 +2136,8 @@ namespace Dreamcast.Json.Serialization
                         exit = true;
                         break;
                     default:
-                        throw JsonSerializationException.Create(reader, "Unexpected token when deserializing object: " + reader.TokenType);
+                        throw JsonSerializationException.Create(reader,
+                            "Unexpected token when deserializing object: " + reader.TokenType);
                 }
             } while (!exit && reader.Read());
 
@@ -1873,7 +2146,9 @@ namespace Dreamcast.Json.Serialization
             return propertyValues;
         }
 
-        public object CreateNewObject(JsonReader reader, JsonObjectContract objectContract, JsonProperty? containerMember, JsonProperty? containerProperty, string? id, out bool createdFromNonDefaultCreator)
+        public object CreateNewObject(JsonReader reader, JsonObjectContract objectContract,
+            JsonProperty? containerMember, JsonProperty? containerProperty, string? id,
+            out bool createdFromNonDefaultCreator)
         {
             object? newObject = null;
 
@@ -1882,13 +2157,16 @@ namespace Dreamcast.Json.Serialization
                 if (objectContract.CreatorParameters.Count > 0)
                 {
                     createdFromNonDefaultCreator = true;
-                    return CreateObjectUsingCreatorWithParameters(reader, objectContract, containerMember, objectContract.OverrideCreator, id);
+                    return CreateObjectUsingCreatorWithParameters(reader, objectContract, containerMember,
+                        objectContract.OverrideCreator, id);
                 }
 
                 newObject = objectContract.OverrideCreator(CollectionUtils.ArrayEmpty<object>());
             }
             else if (objectContract.DefaultCreator != null &&
-                     (!objectContract.DefaultCreatorNonPublic || Serializer._constructorHandling == ConstructorHandling.AllowNonPublicDefaultConstructor || objectContract.ParameterizedCreator == null))
+                     (!objectContract.DefaultCreatorNonPublic ||
+                      Serializer._constructorHandling == ConstructorHandling.AllowNonPublicDefaultConstructor ||
+                      objectContract.ParameterizedCreator == null))
             {
                 // use the default constructor if it is...
                 // public
@@ -1899,26 +2177,34 @@ namespace Dreamcast.Json.Serialization
             else if (objectContract.ParameterizedCreator != null)
             {
                 createdFromNonDefaultCreator = true;
-                return CreateObjectUsingCreatorWithParameters(reader, objectContract, containerMember, objectContract.ParameterizedCreator, id);
+                return CreateObjectUsingCreatorWithParameters(reader, objectContract, containerMember,
+                    objectContract.ParameterizedCreator, id);
             }
 
             if (newObject == null)
             {
-                if (!objectContract.IsInstantiable) throw JsonSerializationException.Create(reader, "Could not create an instance of type {0}. Type is an interface or abstract class and cannot be instantiated.".FormatWith(CultureInfo.InvariantCulture, objectContract.UnderlyingType));
+                if (!objectContract.IsInstantiable)
+                    throw JsonSerializationException.Create(reader,
+                        "Could not create an instance of type {0}. Type is an interface or abstract class and cannot be instantiated."
+                            .FormatWith(CultureInfo.InvariantCulture, objectContract.UnderlyingType));
 
-                throw JsonSerializationException.Create(reader, "Unable to find a constructor to use for type {0}. A class should either have a default constructor, one constructor with arguments or a constructor marked with the JsonConstructor attribute.".FormatWith(CultureInfo.InvariantCulture, objectContract.UnderlyingType));
+                throw JsonSerializationException.Create(reader,
+                    "Unable to find a constructor to use for type {0}. A class should either have a default constructor, one constructor with arguments or a constructor marked with the JsonConstructor attribute."
+                        .FormatWith(CultureInfo.InvariantCulture, objectContract.UnderlyingType));
             }
 
             createdFromNonDefaultCreator = false;
             return newObject;
         }
 
-        private object PopulateObject(object newObject, JsonReader reader, JsonObjectContract contract, JsonProperty? member, string? id)
+        private object PopulateObject(object newObject, JsonReader reader, JsonObjectContract contract,
+            JsonProperty? member, string? id)
         {
             OnDeserializing(reader, contract, newObject);
 
             // only need to keep a track of properties' presence if they are required or a value should be defaulted if missing
-            var propertiesPresence = contract.HasRequiredOrDefaultValueProperties || HasFlag(Serializer._defaultValueHandling, DefaultValueHandling.Populate)
+            var propertiesPresence = contract.HasRequiredOrDefaultValueProperties ||
+                                     HasFlag(Serializer._defaultValueHandling, DefaultValueHandling.Populate)
                 ? contract.Properties.ToDictionary(m => m, m => PropertyPresence.None)
                 : null;
 
@@ -1945,9 +2231,18 @@ namespace Dreamcast.Json.Serialization
 
                             if (property == null)
                             {
-                                if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose) TraceWriter.Trace(TraceLevel.Verbose, JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path, "Could not find member '{0}' on {1}".FormatWith(CultureInfo.InvariantCulture, propertyName, contract.UnderlyingType)), null);
+                                if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose)
+                                    TraceWriter.Trace(TraceLevel.Verbose,
+                                        JsonPosition.FormatMessage(reader as IJsonLineInfo, reader.Path,
+                                            "Could not find member '{0}' on {1}".FormatWith(
+                                                CultureInfo.InvariantCulture, propertyName, contract.UnderlyingType)),
+                                        null);
 
-                                if ((contract.MissingMemberHandling ?? Serializer._missingMemberHandling) == MissingMemberHandling.Error) throw JsonSerializationException.Create(reader, "Could not find member '{0}' on object of type '{1}'".FormatWith(CultureInfo.InvariantCulture, propertyName, contract.UnderlyingType.Name));
+                                if ((contract.MissingMemberHandling ?? Serializer._missingMemberHandling) ==
+                                    MissingMemberHandling.Error)
+                                    throw JsonSerializationException.Create(reader,
+                                        "Could not find member '{0}' on object of type '{1}'".FormatWith(
+                                            CultureInfo.InvariantCulture, propertyName, contract.UnderlyingType.Name));
 
                                 if (!reader.Read()) break;
 
@@ -1964,21 +2259,28 @@ namespace Dreamcast.Json.Serialization
                             }
                             else
                             {
-                                if (property.PropertyContract == null) property.PropertyContract = GetContractSafe(property.PropertyType);
+                                if (property.PropertyContract == null)
+                                    property.PropertyContract = GetContractSafe(property.PropertyType);
 
-                                var propertyConverter = GetConverter(property.PropertyContract, property.Converter, contract, member);
+                                var propertyConverter = GetConverter(property.PropertyContract, property.Converter,
+                                    contract, member);
 
-                                if (!reader.ReadForType(property.PropertyContract, propertyConverter != null)) throw JsonSerializationException.Create(reader, "Unexpected end when setting {0}'s value.".FormatWith(CultureInfo.InvariantCulture, propertyName));
+                                if (!reader.ReadForType(property.PropertyContract, propertyConverter != null))
+                                    throw JsonSerializationException.Create(reader,
+                                        "Unexpected end when setting {0}'s value.".FormatWith(
+                                            CultureInfo.InvariantCulture, propertyName));
 
                                 SetPropertyPresence(reader, property, propertiesPresence);
 
                                 // set extension data if property is ignored or readonly
-                                if (!SetPropertyValue(property, propertyConverter, contract, member, reader, newObject)) SetExtensionData(contract, member, reader, propertyName, newObject);
+                                if (!SetPropertyValue(property, propertyConverter, contract, member, reader, newObject))
+                                    SetExtensionData(contract, member, reader, propertyName, newObject);
                             }
                         }
                         catch (Exception ex)
                         {
-                            if (IsErrorHandled(newObject, contract, propertyName, reader as IJsonLineInfo, reader.Path, ex))
+                            if (IsErrorHandled(newObject, contract, propertyName, reader as IJsonLineInfo, reader.Path,
+                                ex))
                                 HandleError(reader, true, initialDepth);
                             else
                                 throw;
@@ -1993,11 +2295,13 @@ namespace Dreamcast.Json.Serialization
                         // ignore
                         break;
                     default:
-                        throw JsonSerializationException.Create(reader, "Unexpected token when deserializing object: " + reader.TokenType);
+                        throw JsonSerializationException.Create(reader,
+                            "Unexpected token when deserializing object: " + reader.TokenType);
                 }
             } while (!finished && reader.Read());
 
-            if (!finished) ThrowUnexpectedEndException(reader, contract, newObject, "Unexpected end when deserializing object.");
+            if (!finished)
+                ThrowUnexpectedEndException(reader, contract, newObject, "Unexpected end when deserializing object.");
 
             if (propertiesPresence != null)
                 foreach (var propertyPresence in propertiesPresence)
@@ -2018,7 +2322,12 @@ namespace Dreamcast.Json.Serialization
 
             var shouldDeserialize = property.ShouldDeserialize(target);
 
-            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose) TraceWriter.Trace(TraceLevel.Verbose, JsonPosition.FormatMessage(null, reader.Path, "ShouldDeserialize result for property '{0}' on {1}: {2}".FormatWith(CultureInfo.InvariantCulture, property.PropertyName, property.DeclaringType, shouldDeserialize)), null);
+            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose)
+                TraceWriter.Trace(TraceLevel.Verbose,
+                    JsonPosition.FormatMessage(null, reader.Path,
+                        "ShouldDeserialize result for property '{0}' on {1}: {2}".FormatWith(
+                            CultureInfo.InvariantCulture, property.PropertyName, property.DeclaringType,
+                            shouldDeserialize)), null);
 
             return shouldDeserialize;
         }
@@ -2039,7 +2348,8 @@ namespace Dreamcast.Json.Serialization
             return false;
         }
 
-        private void SetExtensionData(JsonObjectContract contract, JsonProperty? member, JsonReader reader, string memberName, object o)
+        private void SetExtensionData(JsonObjectContract contract, JsonProperty? member, JsonReader reader,
+            string memberName, object o)
         {
             if (contract.ExtensionDataSetter != null)
                 try
@@ -2050,7 +2360,9 @@ namespace Dreamcast.Json.Serialization
                 }
                 catch (Exception ex)
                 {
-                    throw JsonSerializationException.Create(reader, "Error setting value in extension data for type '{0}'.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType), ex);
+                    throw JsonSerializationException.Create(reader,
+                        "Error setting value in extension data for type '{0}'.".FormatWith(CultureInfo.InvariantCulture,
+                            contract.UnderlyingType), ex);
                 }
             else
                 reader.Skip();
@@ -2066,42 +2378,63 @@ namespace Dreamcast.Json.Serialization
             return value;
         }
 
-        private void EndProcessProperty(object newObject, JsonReader reader, JsonObjectContract contract, int initialDepth, JsonProperty property, PropertyPresence presence, bool setDefaultValue)
+        private void EndProcessProperty(object newObject, JsonReader reader, JsonObjectContract contract,
+            int initialDepth, JsonProperty property, PropertyPresence presence, bool setDefaultValue)
         {
             if (presence == PropertyPresence.None || presence == PropertyPresence.Null)
                 try
                 {
-                    var resolvedRequired = property.Ignored ? Required.Default : property._required ?? contract.ItemRequired ?? Required.Default;
+                    var resolvedRequired = property.Ignored
+                        ? Required.Default
+                        : property._required ?? contract.ItemRequired ?? Required.Default;
 
                     switch (presence)
                     {
                         case PropertyPresence.None:
-                            if (resolvedRequired == Required.AllowNull || resolvedRequired == Required.Always) throw JsonSerializationException.Create(reader, "Required property '{0}' not found in JSON.".FormatWith(CultureInfo.InvariantCulture, property.PropertyName));
+                            if (resolvedRequired == Required.AllowNull || resolvedRequired == Required.Always)
+                                throw JsonSerializationException.Create(reader,
+                                    "Required property '{0}' not found in JSON.".FormatWith(
+                                        CultureInfo.InvariantCulture, property.PropertyName));
 
                             if (setDefaultValue && !property.Ignored)
                             {
-                                if (property.PropertyContract == null) property.PropertyContract = GetContractSafe(property.PropertyType);
+                                if (property.PropertyContract == null)
+                                    property.PropertyContract = GetContractSafe(property.PropertyType);
 
-                                if (HasFlag(property.DefaultValueHandling.GetValueOrDefault(Serializer._defaultValueHandling), DefaultValueHandling.Populate) && property.Writable) property.ValueProvider!.SetValue(newObject, EnsureType(reader, property.GetResolvedDefaultValue(), CultureInfo.InvariantCulture, property.PropertyContract!, property.PropertyType));
+                                if (HasFlag(
+                                    property.DefaultValueHandling.GetValueOrDefault(Serializer._defaultValueHandling),
+                                    DefaultValueHandling.Populate) && property.Writable)
+                                    property.ValueProvider!.SetValue(newObject,
+                                        EnsureType(reader, property.GetResolvedDefaultValue(),
+                                            CultureInfo.InvariantCulture, property.PropertyContract!,
+                                            property.PropertyType));
                             }
 
                             break;
                         case PropertyPresence.Null:
-                            if (resolvedRequired == Required.Always) throw JsonSerializationException.Create(reader, "Required property '{0}' expects a value but got null.".FormatWith(CultureInfo.InvariantCulture, property.PropertyName));
-                            if (resolvedRequired == Required.DisallowNull) throw JsonSerializationException.Create(reader, "Required property '{0}' expects a non-null value.".FormatWith(CultureInfo.InvariantCulture, property.PropertyName));
+                            if (resolvedRequired == Required.Always)
+                                throw JsonSerializationException.Create(reader,
+                                    "Required property '{0}' expects a value but got null.".FormatWith(
+                                        CultureInfo.InvariantCulture, property.PropertyName));
+                            if (resolvedRequired == Required.DisallowNull)
+                                throw JsonSerializationException.Create(reader,
+                                    "Required property '{0}' expects a non-null value.".FormatWith(
+                                        CultureInfo.InvariantCulture, property.PropertyName));
                             break;
                     }
                 }
                 catch (Exception ex)
                 {
-                    if (IsErrorHandled(newObject, contract, property.PropertyName, reader as IJsonLineInfo, reader.Path, ex))
+                    if (IsErrorHandled(newObject, contract, property.PropertyName, reader as IJsonLineInfo, reader.Path,
+                        ex))
                         HandleError(reader, true, initialDepth);
                     else
                         throw;
                 }
         }
 
-        private void SetPropertyPresence(JsonReader reader, JsonProperty property, Dictionary<JsonProperty, PropertyPresence>? requiredProperties)
+        private void SetPropertyPresence(JsonReader reader, JsonProperty property,
+            Dictionary<JsonProperty, PropertyPresence>? requiredProperties)
         {
             if (property != null && requiredProperties != null)
             {
@@ -2109,7 +2442,8 @@ namespace Dreamcast.Json.Serialization
                 switch (reader.TokenType)
                 {
                     case JsonToken.String:
-                        propertyPresence = CoerceEmptyStringToNull(property.PropertyType, property.PropertyContract, (string) reader.Value!)
+                        propertyPresence = CoerceEmptyStringToNull(property.PropertyType, property.PropertyContract,
+                            (string) reader.Value!)
                             ? PropertyPresence.Null
                             : PropertyPresence.Value;
                         break;

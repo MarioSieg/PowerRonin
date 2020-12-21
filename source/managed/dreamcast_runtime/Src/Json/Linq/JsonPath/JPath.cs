@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -68,7 +53,9 @@ namespace Dreamcast.Json.Linq.JsonPath
 
                 EatWhitespace();
 
-                if (_currentIndex < _expression.Length) throw new JsonException("Unexpected character while parsing path: " + _expression[lastCharacterIndex]);
+                if (_currentIndex < _expression.Length)
+                    throw new JsonException("Unexpected character while parsing path: " +
+                                            _expression[lastCharacterIndex]);
             }
         }
 
@@ -89,7 +76,8 @@ namespace Dreamcast.Json.Linq.JsonPath
                     case '(':
                         if (_currentIndex > currentPartStartIndex)
                         {
-                            var member = _expression.Substring(currentPartStartIndex, _currentIndex - currentPartStartIndex);
+                            var member = _expression.Substring(currentPartStartIndex,
+                                _currentIndex - currentPartStartIndex);
                             if (member == "*") member = null;
 
                             filters.Add(CreatePathFilter(member, scan));
@@ -114,7 +102,8 @@ namespace Dreamcast.Json.Linq.JsonPath
                     case '.':
                         if (_currentIndex > currentPartStartIndex)
                         {
-                            var member = _expression.Substring(currentPartStartIndex, _currentIndex - currentPartStartIndex);
+                            var member = _expression.Substring(currentPartStartIndex,
+                                _currentIndex - currentPartStartIndex);
                             if (member == "*") member = null;
 
                             filters.Add(CreatePathFilter(member, scan));
@@ -133,13 +122,15 @@ namespace Dreamcast.Json.Linq.JsonPath
                         followingDot = true;
                         break;
                     default:
-                        if (query && (currentChar == '=' || currentChar == '<' || currentChar == '!' || currentChar == '>' || currentChar == '|' || currentChar == '&'))
+                        if (query && (currentChar == '=' || currentChar == '<' || currentChar == '!' ||
+                                      currentChar == '>' || currentChar == '|' || currentChar == '&'))
                         {
                             ended = true;
                         }
                         else
                         {
-                            if (followingIndexer) throw new JsonException("Unexpected character following indexer: " + currentChar);
+                            if (followingIndexer)
+                                throw new JsonException("Unexpected character following indexer: " + currentChar);
 
                             _currentIndex++;
                         }
@@ -152,7 +143,8 @@ namespace Dreamcast.Json.Linq.JsonPath
 
             if (_currentIndex > currentPartStartIndex)
             {
-                var member = _expression.Substring(currentPartStartIndex, _currentIndex - currentPartStartIndex).TrimEnd();
+                var member = _expression.Substring(currentPartStartIndex, _currentIndex - currentPartStartIndex)
+                    .TrimEnd();
                 if (member == "*") member = null;
                 filters.Add(CreatePathFilter(member, scan));
             }
@@ -274,7 +266,8 @@ namespace Dreamcast.Json.Linq.JsonPath
                     EnsureLength("Path ended with open indexer.");
                     EatWhitespace();
 
-                    if (_expression[_currentIndex] != indexerCloseChar) throw new JsonException("Unexpected character while parsing path indexer: " + currentCharacter);
+                    if (_expression[_currentIndex] != indexerCloseChar)
+                        throw new JsonException("Unexpected character while parsing path indexer: " + currentCharacter);
 
                     return new ArrayIndexFilter();
                 }
@@ -310,7 +303,8 @@ namespace Dreamcast.Json.Linq.JsonPath
                 }
                 else
                 {
-                    if (end != null) throw new JsonException("Unexpected character while parsing path indexer: " + currentCharacter);
+                    if (end != null)
+                        throw new JsonException("Unexpected character while parsing path indexer: " + currentCharacter);
 
                     _currentIndex++;
                 }
@@ -334,7 +328,9 @@ namespace Dreamcast.Json.Linq.JsonPath
             _currentIndex++;
             EnsureLength("Path ended with open indexer.");
 
-            if (_expression[_currentIndex] != '(') throw new JsonException("Unexpected character while parsing path indexer: " + _expression[_currentIndex]);
+            if (_expression[_currentIndex] != '(')
+                throw new JsonException(
+                    "Unexpected character while parsing path indexer: " + _expression[_currentIndex]);
 
             _currentIndex++;
 
@@ -344,7 +340,9 @@ namespace Dreamcast.Json.Linq.JsonPath
             EnsureLength("Path ended with open indexer.");
             EatWhitespace();
 
-            if (_expression[_currentIndex] != indexerCloseChar) throw new JsonException("Unexpected character while parsing path indexer: " + _expression[_currentIndex]);
+            if (_expression[_currentIndex] != indexerCloseChar)
+                throw new JsonException(
+                    "Unexpected character while parsing path indexer: " + _expression[_currentIndex]);
 
             if (!scan)
                 return new QueryFilter(expression);
@@ -503,13 +501,15 @@ namespace Dreamcast.Json.Linq.JsonPath
 
                         if (numberText.IndexOfAny(FloatCharacters) != -1)
                         {
-                            var result = double.TryParse(numberText, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var d);
+                            var result = double.TryParse(numberText, NumberStyles.Float | NumberStyles.AllowThousands,
+                                CultureInfo.InvariantCulture, out var d);
                             value = d;
                             return result;
                         }
                         else
                         {
-                            var result = long.TryParse(numberText, NumberStyles.Integer, CultureInfo.InvariantCulture, out var l);
+                            var result = long.TryParse(numberText, NumberStyles.Integer, CultureInfo.InvariantCulture,
+                                out var l);
                             value = l;
                             return result;
                         }
@@ -721,7 +721,8 @@ namespace Dreamcast.Json.Linq.JsonPath
                 }
                 else
                 {
-                    throw new JsonException("Unexpected character while parsing path indexer: " + _expression[_currentIndex]);
+                    throw new JsonException("Unexpected character while parsing path indexer: " +
+                                            _expression[_currentIndex]);
                 }
             }
 
@@ -738,7 +739,8 @@ namespace Dreamcast.Json.Linq.JsonPath
             return Evaluate(Filters, root, t, errorWhenNoMatch);
         }
 
-        internal static IEnumerable<JToken> Evaluate(List<PathFilter> filters, JToken root, JToken t, bool errorWhenNoMatch)
+        internal static IEnumerable<JToken> Evaluate(List<PathFilter> filters, JToken root, JToken t,
+            bool errorWhenNoMatch)
         {
             IEnumerable<JToken> current = new[] {t};
             foreach (var filter in filters) current = filter.ExecuteFilter(root, current, errorWhenNoMatch);

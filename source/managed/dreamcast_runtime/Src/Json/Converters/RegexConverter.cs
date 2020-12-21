@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Dreamcast.Json.Bson;
@@ -105,7 +90,8 @@ namespace Dreamcast.Json.Converters
         /// <param name="existingValue">The existing value of object being read.</param>
         /// <param name="serializer">The calling serializer.</param>
         /// <returns>The object value.</returns>
-        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue,
+            JsonSerializer serializer)
         {
             switch (reader.TokenType)
             {
@@ -153,7 +139,8 @@ namespace Dreamcast.Json.Converters
                     case JsonToken.PropertyName:
                         var propertyName = reader.Value!.ToString();
 
-                        if (!reader.Read()) throw JsonSerializationException.Create(reader, "Unexpected end when reading Regex.");
+                        if (!reader.Read())
+                            throw JsonSerializationException.Create(reader, "Unexpected end when reading Regex.");
 
                         if (string.Equals(propertyName, PatternName, StringComparison.OrdinalIgnoreCase))
                             pattern = (string?) reader.Value;
@@ -165,7 +152,9 @@ namespace Dreamcast.Json.Converters
                     case JsonToken.Comment:
                         break;
                     case JsonToken.EndObject:
-                        if (pattern == null) throw JsonSerializationException.Create(reader, "Error deserializing Regex. No pattern found.");
+                        if (pattern == null)
+                            throw JsonSerializationException.Create(reader,
+                                "Error deserializing Regex. No pattern found.");
 
                         return new Regex(pattern, options ?? RegexOptions.None);
                 }

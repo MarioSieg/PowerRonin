@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -68,7 +53,8 @@ namespace Dreamcast.Lua.Interpreter.Platforms
         /// </exception>
         public override Stream IO_OpenFile(Script script, string filename, Encoding encoding, string mode)
         {
-            throw new NotImplementedException("The current platform accessor does not support 'io' and 'os' operations. Provide your own implementation of platform to work around this limitation, if needed.");
+            throw new NotImplementedException(
+                "The current platform accessor does not support 'io' and 'os' operations. Provide your own implementation of platform to work around this limitation, if needed.");
         }
 
         /// <summary>
@@ -84,7 +70,8 @@ namespace Dreamcast.Lua.Interpreter.Platforms
         /// </exception>
         public override Stream IO_GetStandardStream(StandardFileType type)
         {
-            throw new NotImplementedException("The current platform accessor does not support 'io' and 'os' operations. Provide your own implementation of platform to work around this limitation, if needed.");
+            throw new NotImplementedException(
+                "The current platform accessor does not support 'io' and 'os' operations. Provide your own implementation of platform to work around this limitation, if needed.");
         }
 
         /// <summary>
@@ -99,7 +86,8 @@ namespace Dreamcast.Lua.Interpreter.Platforms
         /// </exception>
         public override string IO_OS_GetTempFilename()
         {
-            throw new NotImplementedException("The current platform accessor does not support 'io' and 'os' operations. Provide your own implementation of platform to work around this limitation, if needed.");
+            throw new NotImplementedException(
+                "The current platform accessor does not support 'io' and 'os' operations. Provide your own implementation of platform to work around this limitation, if needed.");
         }
 
         /// <summary>
@@ -114,7 +102,8 @@ namespace Dreamcast.Lua.Interpreter.Platforms
         /// </exception>
         public override void OS_ExitFast(int exitCode)
         {
-            throw new NotImplementedException("The current platform accessor does not support 'io' and 'os' operations. Provide your own implementation of platform to work around this limitation, if needed.");
+            throw new NotImplementedException(
+                "The current platform accessor does not support 'io' and 'os' operations. Provide your own implementation of platform to work around this limitation, if needed.");
         }
 
         /// <summary>
@@ -132,7 +121,8 @@ namespace Dreamcast.Lua.Interpreter.Platforms
         /// </exception>
         public override bool OS_FileExists(string file)
         {
-            throw new NotImplementedException("The current platform accessor does not support 'io' and 'os' operations. Provide your own implementation of platform to work around this limitation, if needed.");
+            throw new NotImplementedException(
+                "The current platform accessor does not support 'io' and 'os' operations. Provide your own implementation of platform to work around this limitation, if needed.");
         }
 
         /// <summary>
@@ -147,7 +137,8 @@ namespace Dreamcast.Lua.Interpreter.Platforms
         /// </exception>
         public override void OS_FileDelete(string file)
         {
-            throw new NotImplementedException("The current platform accessor does not support 'io' and 'os' operations. Provide your own implementation of platform to work around this limitation, if needed.");
+            throw new NotImplementedException(
+                "The current platform accessor does not support 'io' and 'os' operations. Provide your own implementation of platform to work around this limitation, if needed.");
         }
 
         /// <summary>
@@ -163,7 +154,8 @@ namespace Dreamcast.Lua.Interpreter.Platforms
         /// </exception>
         public override void OS_FileMove(string src, string dst)
         {
-            throw new NotImplementedException("The current platform accessor does not support 'io' and 'os' operations. Provide your own implementation of platform to work around this limitation, if needed.");
+            throw new NotImplementedException(
+                "The current platform accessor does not support 'io' and 'os' operations. Provide your own implementation of platform to work around this limitation, if needed.");
         }
 
         /// <summary>
@@ -179,7 +171,8 @@ namespace Dreamcast.Lua.Interpreter.Platforms
         /// </exception>
         public override int OS_Execute(string cmdline)
         {
-            throw new NotImplementedException("The current platform accessor does not support 'io' and 'os' operations. Provide your own implementation of platform to work around this limitation, if needed.");
+            throw new NotImplementedException(
+                "The current platform accessor does not support 'io' and 'os' operations. Provide your own implementation of platform to work around this limitation, if needed.");
         }
 
         /// <summary>

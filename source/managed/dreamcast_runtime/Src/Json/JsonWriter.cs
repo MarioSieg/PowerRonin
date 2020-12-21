@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #if HAVE_BIG_INTEGER
 using System.Numerics;
 #endif
@@ -56,14 +41,54 @@ namespace Dreamcast.Json
         {
             //                                      Start                    PropertyName            ObjectStart         Object            ArrayStart              Array                   ConstructorStart        Constructor             Closed       Error
             //
-            /* None                        */new[] {State.Error, State.Error, State.Error, State.Error, State.Error, State.Error, State.Error, State.Error, State.Error, State.Error},
-            /* StartObject                 */new[] {State.ObjectStart, State.ObjectStart, State.Error, State.Error, State.ObjectStart, State.ObjectStart, State.ObjectStart, State.ObjectStart, State.Error, State.Error},
-            /* StartArray                  */new[] {State.ArrayStart, State.ArrayStart, State.Error, State.Error, State.ArrayStart, State.ArrayStart, State.ArrayStart, State.ArrayStart, State.Error, State.Error},
-            /* StartConstructor            */new[] {State.ConstructorStart, State.ConstructorStart, State.Error, State.Error, State.ConstructorStart, State.ConstructorStart, State.ConstructorStart, State.ConstructorStart, State.Error, State.Error},
-            /* Property                    */new[] {State.Property, State.Error, State.Property, State.Property, State.Error, State.Error, State.Error, State.Error, State.Error, State.Error},
-            /* Comment                     */new[] {State.Start, State.Property, State.ObjectStart, State.Object, State.ArrayStart, State.Array, State.Constructor, State.Constructor, State.Error, State.Error},
-            /* Raw                         */new[] {State.Start, State.Property, State.ObjectStart, State.Object, State.ArrayStart, State.Array, State.Constructor, State.Constructor, State.Error, State.Error},
-            /* Value (this will be copied) */new[] {State.Start, State.Object, State.Error, State.Error, State.Array, State.Array, State.Constructor, State.Constructor, State.Error, State.Error}
+            /* None                        */
+            new[]
+            {
+                State.Error, State.Error, State.Error, State.Error, State.Error, State.Error, State.Error, State.Error,
+                State.Error, State.Error
+            },
+            /* StartObject                 */
+            new[]
+            {
+                State.ObjectStart, State.ObjectStart, State.Error, State.Error, State.ObjectStart, State.ObjectStart,
+                State.ObjectStart, State.ObjectStart, State.Error, State.Error
+            },
+            /* StartArray                  */
+            new[]
+            {
+                State.ArrayStart, State.ArrayStart, State.Error, State.Error, State.ArrayStart, State.ArrayStart,
+                State.ArrayStart, State.ArrayStart, State.Error, State.Error
+            },
+            /* StartConstructor            */
+            new[]
+            {
+                State.ConstructorStart, State.ConstructorStart, State.Error, State.Error, State.ConstructorStart,
+                State.ConstructorStart, State.ConstructorStart, State.ConstructorStart, State.Error, State.Error
+            },
+            /* Property                    */
+            new[]
+            {
+                State.Property, State.Error, State.Property, State.Property, State.Error, State.Error, State.Error,
+                State.Error, State.Error, State.Error
+            },
+            /* Comment                     */
+            new[]
+            {
+                State.Start, State.Property, State.ObjectStart, State.Object, State.ArrayStart, State.Array,
+                State.Constructor, State.Constructor, State.Error, State.Error
+            },
+            /* Raw                         */
+            new[]
+            {
+                State.Start, State.Property, State.ObjectStart, State.Object, State.ArrayStart, State.Array,
+                State.Constructor, State.Constructor, State.Error, State.Error
+            },
+            /* Value (this will be copied) */
+            new[]
+            {
+                State.Start, State.Object, State.Error, State.Error, State.Array, State.Array, State.Constructor,
+                State.Constructor, State.Error, State.Error
+            }
         };
 
         internal static State[][] BuildStateArray()
@@ -217,7 +242,8 @@ namespace Dreamcast.Json
             get => _formatting;
             set
             {
-                if (value < Formatting.None || value > Formatting.Indented) throw new ArgumentOutOfRangeException(nameof(value));
+                if (value < Formatting.None || value > Formatting.Indented)
+                    throw new ArgumentOutOfRangeException(nameof(value));
 
                 _formatting = value;
             }
@@ -231,7 +257,8 @@ namespace Dreamcast.Json
             get => _dateFormatHandling;
             set
             {
-                if (value < DateFormatHandling.IsoDateFormat || value > DateFormatHandling.MicrosoftDateFormat) throw new ArgumentOutOfRangeException(nameof(value));
+                if (value < DateFormatHandling.IsoDateFormat || value > DateFormatHandling.MicrosoftDateFormat)
+                    throw new ArgumentOutOfRangeException(nameof(value));
 
                 _dateFormatHandling = value;
             }
@@ -245,7 +272,8 @@ namespace Dreamcast.Json
             get => _dateTimeZoneHandling;
             set
             {
-                if (value < DateTimeZoneHandling.Local || value > DateTimeZoneHandling.RoundtripKind) throw new ArgumentOutOfRangeException(nameof(value));
+                if (value < DateTimeZoneHandling.Local || value > DateTimeZoneHandling.RoundtripKind)
+                    throw new ArgumentOutOfRangeException(nameof(value));
 
                 _dateTimeZoneHandling = value;
             }
@@ -259,7 +287,8 @@ namespace Dreamcast.Json
             get => _stringEscapeHandling;
             set
             {
-                if (value < StringEscapeHandling.Default || value > StringEscapeHandling.EscapeHtml) throw new ArgumentOutOfRangeException(nameof(value));
+                if (value < StringEscapeHandling.Default || value > StringEscapeHandling.EscapeHtml)
+                    throw new ArgumentOutOfRangeException(nameof(value));
 
                 _stringEscapeHandling = value;
                 OnStringEscapeHandlingChanged();
@@ -281,7 +310,8 @@ namespace Dreamcast.Json
             get => _floatFormatHandling;
             set
             {
-                if (value < FloatFormatHandling.String || value > FloatFormatHandling.DefaultValue) throw new ArgumentOutOfRangeException(nameof(value));
+                if (value < FloatFormatHandling.String || value > FloatFormatHandling.DefaultValue)
+                    throw new ArgumentOutOfRangeException(nameof(value));
 
                 _floatFormatHandling = value;
             }
@@ -572,7 +602,8 @@ namespace Dreamcast.Json
                         WriteValue((byte[]) value!);
                     break;
                 default:
-                    throw MiscellaneousUtils.CreateArgumentOutOfRangeException(nameof(token), token, "Unexpected token type.");
+                    throw MiscellaneousUtils.CreateArgumentOutOfRangeException(nameof(token), token,
+                        "Unexpected token type.");
             }
         }
 
@@ -585,20 +616,23 @@ namespace Dreamcast.Json
             WriteToken(token, null);
         }
 
-        internal virtual void WriteToken(JsonReader reader, bool writeChildren, bool writeDateConstructorAsDate, bool writeComments)
+        internal virtual void WriteToken(JsonReader reader, bool writeChildren, bool writeDateConstructorAsDate,
+            bool writeComments)
         {
             var initialDepth = CalculateWriteTokenInitialDepth(reader);
 
             do
             {
                 // write a JValue date when the constructor is for a date
-                if (writeDateConstructorAsDate && reader.TokenType == JsonToken.StartConstructor && string.Equals(reader.Value?.ToString(), "Date", StringComparison.Ordinal))
+                if (writeDateConstructorAsDate && reader.TokenType == JsonToken.StartConstructor &&
+                    string.Equals(reader.Value?.ToString(), "Date", StringComparison.Ordinal))
                 {
                     WriteConstructorDate(reader);
                 }
                 else
                 {
-                    if (writeComments || reader.TokenType != JsonToken.Comment) WriteToken(reader.TokenType, reader.Value);
+                    if (writeComments || reader.TokenType != JsonToken.Comment)
+                        WriteToken(reader.TokenType, reader.Value);
                 }
             } while (
                 // stop if we have reached the end of the token being read
@@ -606,7 +640,8 @@ namespace Dreamcast.Json
                 && writeChildren
                 && reader.Read());
 
-            if (IsWriteTokenIncomplete(reader, writeChildren, initialDepth)) throw JsonWriterException.Create(this, "Unexpected end when reading token.", null);
+            if (IsWriteTokenIncomplete(reader, writeChildren, initialDepth))
+                throw JsonWriterException.Create(this, "Unexpected end when reading token.", null);
         }
 
         private bool IsWriteTokenIncomplete(JsonReader reader, bool writeChildren, int initialDepth)
@@ -634,7 +669,8 @@ namespace Dreamcast.Json
 
         private void WriteConstructorDate(JsonReader reader)
         {
-            if (!JavaScriptUtils.TryGetDateFromConstructorJson(reader, out var dateTime, out var errorMessage)) throw JsonWriterException.Create(this, errorMessage, null);
+            if (!JavaScriptUtils.TryGetDateFromConstructorJson(reader, out var dateTime, out var errorMessage))
+                throw JsonWriterException.Create(this, errorMessage, null);
 
             WriteValue(dateTime);
         }
@@ -782,16 +818,21 @@ namespace Dreamcast.Json
             // gets new state based on the current state and what is being written
             var newState = StateArray[(int) tokenBeingWritten][(int) _currentState];
 
-            if (newState == State.Error) throw JsonWriterException.Create(this, "Token {0} in state {1} would result in an invalid JSON object.".FormatWith(CultureInfo.InvariantCulture, tokenBeingWritten.ToString(), _currentState.ToString()), null);
+            if (newState == State.Error)
+                throw JsonWriterException.Create(this,
+                    "Token {0} in state {1} would result in an invalid JSON object.".FormatWith(
+                        CultureInfo.InvariantCulture, tokenBeingWritten.ToString(), _currentState.ToString()), null);
 
-            if ((_currentState == State.Object || _currentState == State.Array || _currentState == State.Constructor) && tokenBeingWritten != JsonToken.Comment) WriteValueDelimiter();
+            if ((_currentState == State.Object || _currentState == State.Array || _currentState == State.Constructor) &&
+                tokenBeingWritten != JsonToken.Comment) WriteValueDelimiter();
 
             if (_formatting == Formatting.Indented)
             {
                 if (_currentState == State.Property) WriteIndentSpace();
 
                 // don't indent a property when it is the first token to be written (i.e. at the start)
-                if (_currentState == State.Array || _currentState == State.ArrayStart || _currentState == State.Constructor || _currentState == State.ConstructorStart
+                if (_currentState == State.Array || _currentState == State.ArrayStart ||
+                    _currentState == State.Constructor || _currentState == State.ConstructorStart
                     || tokenBeingWritten == JsonToken.PropertyName && _currentState != State.Start)
                     WriteIndent();
             }
@@ -1506,15 +1547,19 @@ namespace Dreamcast.Json
             TypeInformation typeInformation = ConvertUtils.GetTypeInformation(convertible);
 
             // if convertible has an underlying typecode of Object then attempt to convert it to a string
-            typeCode = typeInformation.TypeCode == PrimitiveTypeCode.Object ? PrimitiveTypeCode.String : typeInformation.TypeCode;
-            Type resolvedType = typeInformation.TypeCode == PrimitiveTypeCode.Object ? typeof(string) : typeInformation.Type;
+            typeCode =
+ typeInformation.TypeCode == PrimitiveTypeCode.Object ? PrimitiveTypeCode.String : typeInformation.TypeCode;
+            Type resolvedType =
+ typeInformation.TypeCode == PrimitiveTypeCode.Object ? typeof(string) : typeInformation.Type;
             value = convertible.ToType(resolvedType, CultureInfo.InvariantCulture);
         }
 #endif
 
         private static JsonWriterException CreateUnsupportedTypeException(JsonWriter writer, object value)
         {
-            return JsonWriterException.Create(writer, "Unsupported type: {0}. Use the JsonSerializer class to get the object's JSON representation.".FormatWith(CultureInfo.InvariantCulture, value.GetType()), null);
+            return JsonWriterException.Create(writer,
+                "Unsupported type: {0}. Use the JsonSerializer class to get the object's JSON representation."
+                    .FormatWith(CultureInfo.InvariantCulture, value.GetType()), null);
         }
 
         /// <summary>
@@ -1536,7 +1581,9 @@ namespace Dreamcast.Json
                     InternalWriteStart(token, JsonContainerType.Constructor);
                     break;
                 case JsonToken.PropertyName:
-                    if (!(value is string s)) throw new ArgumentException("A name is required when setting property name state.", nameof(value));
+                    if (!(value is string s))
+                        throw new ArgumentException("A name is required when setting property name state.",
+                            nameof(value));
 
                     InternalWritePropertyName(s);
                     break;

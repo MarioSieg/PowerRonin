@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -53,7 +38,8 @@ namespace Dreamcast.Json.Serialization
             Type? keyType;
             Type? valueType;
 
-            if (ReflectionUtils.ImplementsGenericDefinition(underlyingType, typeof(IDictionary<,>), out _genericCollectionDefinitionType))
+            if (ReflectionUtils.ImplementsGenericDefinition(underlyingType, typeof(IDictionary<,>),
+                out _genericCollectionDefinitionType))
             {
                 keyType = _genericCollectionDefinitionType.GetGenericArguments()[0];
                 valueType = _genericCollectionDefinitionType.GetGenericArguments()[1];
@@ -68,11 +54,13 @@ namespace Dreamcast.Json.Serialization
                     // wrap to use generic setter
                     // https://github.com/JamesNK/Dreamcast.Json/issues/1582
                     var typeDefinition = underlyingType.GetGenericTypeDefinition();
-                    if (typeDefinition.FullName == JsonTypeReflector.ConcurrentDictionaryTypeName) ShouldCreateWrapper = true;
+                    if (typeDefinition.FullName == JsonTypeReflector.ConcurrentDictionaryTypeName)
+                        ShouldCreateWrapper = true;
                 }
 
 #if HAVE_READ_ONLY_COLLECTIONS
-                IsReadOnlyOrFixedSize = ReflectionUtils.InheritsGenericDefinition(underlyingType, typeof(ReadOnlyDictionary<,>));
+                IsReadOnlyOrFixedSize =
+ ReflectionUtils.InheritsGenericDefinition(underlyingType, typeof(ReadOnlyDictionary<,>));
 #endif
             }
 #if HAVE_READ_ONLY_COLLECTIONS
@@ -170,7 +158,10 @@ namespace Dreamcast.Json.Serialization
         {
             get
             {
-                if (_parameterizedCreator == null && _parameterizedConstructor != null) _parameterizedCreator = JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(_parameterizedConstructor);
+                if (_parameterizedCreator == null && _parameterizedConstructor != null)
+                    _parameterizedCreator =
+                        JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(
+                            _parameterizedConstructor);
 
                 return _parameterizedCreator;
             }
@@ -189,16 +180,21 @@ namespace Dreamcast.Json.Serialization
         /// <value><c>true</c> if the creator has a parameter with the dictionary values; otherwise, <c>false</c>.</value>
         public bool HasParameterizedCreator { get; set; }
 
-        internal bool HasParameterizedCreatorInternal => HasParameterizedCreator || _parameterizedCreator != null || _parameterizedConstructor != null;
+        internal bool HasParameterizedCreatorInternal => HasParameterizedCreator || _parameterizedCreator != null ||
+                                                         _parameterizedConstructor != null;
 
         internal IWrappedDictionary CreateWrapper(object dictionary)
         {
             if (_genericWrapperCreator == null)
             {
-                _genericWrapperType = typeof(DictionaryWrapper<,>).MakeGenericType(DictionaryKeyType, DictionaryValueType);
+                _genericWrapperType =
+                    typeof(DictionaryWrapper<,>).MakeGenericType(DictionaryKeyType, DictionaryValueType);
 
-                var genericWrapperConstructor = _genericWrapperType.GetConstructor(new[] {_genericCollectionDefinitionType!});
-                _genericWrapperCreator = JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(genericWrapperConstructor);
+                var genericWrapperConstructor =
+                    _genericWrapperType.GetConstructor(new[] {_genericCollectionDefinitionType!});
+                _genericWrapperCreator =
+                    JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(
+                        genericWrapperConstructor);
             }
 
             return (IWrappedDictionary) _genericWrapperCreator(dictionary);
@@ -208,9 +204,12 @@ namespace Dreamcast.Json.Serialization
         {
             if (_genericTemporaryDictionaryCreator == null)
             {
-                var temporaryDictionaryType = typeof(Dictionary<,>).MakeGenericType(DictionaryKeyType ?? typeof(object), DictionaryValueType ?? typeof(object));
+                var temporaryDictionaryType = typeof(Dictionary<,>).MakeGenericType(DictionaryKeyType ?? typeof(object),
+                    DictionaryValueType ?? typeof(object));
 
-                _genericTemporaryDictionaryCreator = JsonTypeReflector.ReflectionDelegateFactory.CreateDefaultConstructor<object>(temporaryDictionaryType);
+                _genericTemporaryDictionaryCreator =
+                    JsonTypeReflector.ReflectionDelegateFactory.CreateDefaultConstructor<object>(
+                        temporaryDictionaryType);
             }
 
             return (IDictionary) _genericTemporaryDictionaryCreator();

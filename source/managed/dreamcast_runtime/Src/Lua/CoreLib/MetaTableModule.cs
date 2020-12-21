@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-#pragma warning disable 1591
+﻿#pragma warning disable 1591
 
 
 namespace Dreamcast.Lua.Interpreter.CoreLib
@@ -112,7 +97,9 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
         [LuaModuleMethod]
         public static DynValue rawlen(ScriptExecutionContext executionContext, CallbackArguments args)
         {
-            if (args[0].Type != DataType.String && args[0].Type != DataType.Table) throw ScriptRuntimeException.BadArgument(0, "rawlen", "table or string", args[0].Type.ToErrorTypeString(), false);
+            if (args[0].Type != DataType.String && args[0].Type != DataType.Table)
+                throw ScriptRuntimeException.BadArgument(0, "rawlen", "table or string",
+                    args[0].Type.ToErrorTypeString(), false);
 
             return args[0].GetLength();
         }

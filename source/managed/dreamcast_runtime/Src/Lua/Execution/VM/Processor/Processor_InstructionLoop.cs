@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dreamcast.Lua.Interpreter.DataStructs;
@@ -124,7 +109,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
                             break;
                         case OpCode.Call:
                         case OpCode.ThisCall:
-                            instructionPtr = Internal_ExecCall(i.NumVal, instructionPtr, null, null, i.OpCode == OpCode.ThisCall, i.Name);
+                            instructionPtr = Internal_ExecCall(i.NumVal, instructionPtr, null, null,
+                                i.OpCode == OpCode.ThisCall, i.Name);
                             if (instructionPtr == YIELD_SPECIAL_TRAP) goto yield_to_calling_coroutine;
                             break;
                         case OpCode.Scalar:
@@ -242,7 +228,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
                         case OpCode.Invalid:
                             throw new NotImplementedException(string.Format("Invalid opcode : {0}", i.Name));
                         default:
-                            throw new NotImplementedException(string.Format("Execution for {0} not implented yet!", i.OpCode));
+                            throw new NotImplementedException(string.Format("Execution for {0} not implented yet!",
+                                i.OpCode));
                     }
                 }
 
@@ -276,7 +263,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
                     var c = m_ExecutionStack.Peek(i);
 
                     if (c.ErrorHandlerBeforeUnwind != null)
-                        ex.DecoratedMessage = PerformMessageDecorationBeforeUnwind(c.ErrorHandlerBeforeUnwind, ex.DecoratedMessage, GetCurrentSourceRef(instructionPtr));
+                        ex.DecoratedMessage = PerformMessageDecorationBeforeUnwind(c.ErrorHandlerBeforeUnwind,
+                            ex.DecoratedMessage, GetCurrentSourceRef(instructionPtr));
                 }
 
 
@@ -296,7 +284,9 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
 
                         var cbargs = new[] {DynValue.NewString(ex.DecoratedMessage)};
 
-                        DynValue handled = csi.ErrorHandler.Invoke(new ScriptExecutionContext(this, csi.ErrorHandler, GetCurrentSourceRef(instructionPtr)), cbargs);
+                        DynValue handled = csi.ErrorHandler.Invoke(
+                            new ScriptExecutionContext(this, csi.ErrorHandler, GetCurrentSourceRef(instructionPtr)),
+                            cbargs);
 
                         m_ValueStack.Push(handled);
 
@@ -319,7 +309,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
         }
 
 
-        internal string PerformMessageDecorationBeforeUnwind(DynValue messageHandler, string decoratedMessage, SourceRef sourceRef)
+        internal string PerformMessageDecorationBeforeUnwind(DynValue messageHandler, string decoratedMessage,
+            SourceRef sourceRef)
         {
             try
             {
@@ -635,7 +626,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
 
                     for (var ii = 0; ii < len; ii++, i++) varargs[ii] = argsList[i].ToScalar().CloneAsWritable();
 
-                    AssignLocal(I.SymbolList[I.SymbolList.Length - 1], DynValue.NewTuple(Internal_AdjustTuple(varargs)));
+                    AssignLocal(I.SymbolList[I.SymbolList.Length - 1],
+                        DynValue.NewTuple(Internal_AdjustTuple(varargs)));
                 }
                 else
                 {
@@ -670,7 +662,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
 
                         // if the current stack item has no "odd" things pending and neither has the new coming one..
                         if (csi.ClrFunction == null && csi.Continuation == null && csi.ErrorHandler == null
-                            && csi.ErrorHandlerBeforeUnwind == null && continuation == null && unwindHandler == null && handler == null)
+                            && csi.ErrorHandlerBeforeUnwind == null && continuation == null && unwindHandler == null &&
+                            handler == null)
                         {
                             instructionPtr = PerformTCO(instructionPtr, argsCount);
                             flags |= CallStackItemFlags.TailCall;
@@ -719,7 +712,9 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
                     BasePointer = m_ValueStack.Count,
                     ReturnAddress = instructionPtr,
                     Debug_EntryPoint = fn.Function.EntryPointByteCodeLocation,
-                    CallingSourceRef = GetCurrentSourceRef(instructionPtr - 1), // See right above in GetCurrentSourceRef(instructionPtr - 1)
+                    CallingSourceRef =
+                        GetCurrentSourceRef(instructionPtr -
+                                            1), // See right above in GetCurrentSourceRef(instructionPtr - 1)
                     ClosureScope = fn.Function.ClosureContext,
                     ErrorHandler = handler,
                     Continuation = continuation,
@@ -800,7 +795,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
             }
 
             if (csi.Continuation != null)
-                m_ValueStack.Push(csi.Continuation.Invoke(new ScriptExecutionContext(this, csi.Continuation, i.SourceCodeRef),
+                m_ValueStack.Push(csi.Continuation.Invoke(
+                    new ScriptExecutionContext(this, csi.Continuation, i.SourceCodeRef),
                     new DynValue[1] {m_ValueStack.Pop()}));
 
             return retpoint;
@@ -822,7 +818,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
                 for (var ii = 0; ii < tcd.Args.Length; ii++)
                     m_ValueStack.Push(tcd.Args[ii]);
 
-                return Internal_ExecCall(tcd.Args.Length, instructionPtr, tcd.ErrorHandler, tcd.Continuation, false, null, tcd.ErrorHandlerBeforeUnwind);
+                return Internal_ExecCall(tcd.Args.Length, instructionPtr, tcd.ErrorHandler, tcd.Continuation, false,
+                    null, tcd.ErrorHandlerBeforeUnwind);
             }
 
             if (tail.Type == DataType.YieldRequest)
@@ -1015,7 +1012,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
             // then if types are different, ret false
             if (r.Type != l.Type)
             {
-                if (l.Type == DataType.Nil && r.Type == DataType.Void || l.Type == DataType.Void && r.Type == DataType.Nil)
+                if (l.Type == DataType.Nil && r.Type == DataType.Void ||
+                    l.Type == DataType.Void && r.Type == DataType.Nil)
                     m_ValueStack.Push(DynValue.True);
                 else
                     m_ValueStack.Push(DynValue.False);
@@ -1193,7 +1191,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
 
                     if (h == null || h.IsNil())
                     {
-                        if (isMultiIndex) throw new ScriptRuntimeException("cannot multi-index a table. userdata expected");
+                        if (isMultiIndex)
+                            throw new ScriptRuntimeException("cannot multi-index a table. userdata expected");
 
                         obj.Table.Set(idx, value);
                         return instructionPtr;
@@ -1203,7 +1202,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
                 {
                     UserData ud = obj.UserData;
 
-                    if (!ud.Descriptor.SetIndex(GetScript(), ud.Object, originalIdx, value, isNameIndex)) throw ScriptRuntimeException.UserDataMissingField(ud.Descriptor.Name, idx.String);
+                    if (!ud.Descriptor.SetIndex(GetScript(), ud.Object, originalIdx, value, isNameIndex))
+                        throw ScriptRuntimeException.UserDataMissingField(ud.Descriptor.Name, idx.String);
 
                     return instructionPtr;
                 }
@@ -1217,7 +1217,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
 
                 if (h.Type == DataType.Function || h.Type == DataType.ClrFunction)
                 {
-                    if (isMultiIndex) throw new ScriptRuntimeException("cannot multi-index through metamethods. userdata expected");
+                    if (isMultiIndex)
+                        throw new ScriptRuntimeException("cannot multi-index through metamethods. userdata expected");
                     m_ValueStack.Pop(); // burn extra value ?
 
                     m_ValueStack.Push(h);
@@ -1271,7 +1272,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
 
                     if (h == null || h.IsNil())
                     {
-                        if (isMultiIndex) throw new ScriptRuntimeException("cannot multi-index a table. userdata expected");
+                        if (isMultiIndex)
+                            throw new ScriptRuntimeException("cannot multi-index a table. userdata expected");
 
                         m_ValueStack.Push(DynValue.Nil);
                         return instructionPtr;
@@ -1298,7 +1300,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
 
                 if (h.Type == DataType.Function || h.Type == DataType.ClrFunction)
                 {
-                    if (isMultiIndex) throw new ScriptRuntimeException("cannot multi-index through metamethods. userdata expected");
+                    if (isMultiIndex)
+                        throw new ScriptRuntimeException("cannot multi-index through metamethods. userdata expected");
                     m_ValueStack.Push(h);
                     m_ValueStack.Push(obj);
                     m_ValueStack.Push(idx);

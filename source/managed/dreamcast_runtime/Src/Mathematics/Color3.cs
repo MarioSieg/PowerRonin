@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -117,7 +102,8 @@ namespace Dreamcast.Mathematics
             if (values == null)
                 throw new ArgumentNullException("values");
             if (values.Length != 3)
-                throw new ArgumentOutOfRangeException("values", "There must be three and only three input values for Color3.");
+                throw new ArgumentOutOfRangeException("values",
+                    "There must be three and only three input values for Color3.");
 
             Red = values[0];
             Green = values[1];
@@ -165,7 +151,8 @@ namespace Dreamcast.Mathematics
                         Blue = value;
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException("index", "Indices for Color3 run from 0 to 2, inclusive.");
+                        throw new ArgumentOutOfRangeException("index",
+                            "Indices for Color3 run from 0 to 2, inclusive.");
                 }
             }
         }
@@ -525,7 +512,8 @@ namespace Dreamcast.Mathematics
         /// <returns>The adjusted color.</returns>
         public static Color3 AdjustContrast(Color3 value, float contrast)
         {
-            return new(0.5f + contrast * (value.Red - 0.5f), 0.5f + contrast * (value.Green - 0.5f), 0.5f + contrast * (value.Blue - 0.5f));
+            return new(0.5f + contrast * (value.Red - 0.5f), 0.5f + contrast * (value.Green - 0.5f),
+                0.5f + contrast * (value.Blue - 0.5f));
         }
 
         /// <summary>
@@ -553,7 +541,8 @@ namespace Dreamcast.Mathematics
         {
             var grey = value.Red * 0.2125f + value.Green * 0.7154f + value.Blue * 0.0721f;
 
-            return new Color3(grey + saturation * (value.Red - grey), grey + saturation * (value.Green - grey), grey + saturation * (value.Blue - grey));
+            return new Color3(grey + saturation * (value.Red - grey), grey + saturation * (value.Green - grey),
+                grey + saturation * (value.Blue - grey));
         }
 
         /// <summary>
@@ -774,7 +763,8 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString(formatProvider);
 
-            return string.Format(formatProvider, toStringFormat, Red.ToString(format, formatProvider), Green.ToString(format, formatProvider),
+            return string.Format(formatProvider, toStringFormat, Red.ToString(format, formatProvider),
+                Green.ToString(format, formatProvider),
                 Blue.ToString(format, formatProvider));
         }
 

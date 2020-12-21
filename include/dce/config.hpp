@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #pragma once
 
 #include "serial.hpp"
@@ -20,29 +5,28 @@
 
 namespace dce {
 	enum class SystemTheme {
-		DARK = 0
-		, LIGHT = 1
-		, CHERRY = 2
-		, BLUE = 3
-		, GREEN = 4
-		,
+		DARK = 0,
+		LIGHT = 1,
+		CHERRY = 2,
+		BLUE = 3,
+		GREEN = 4,
 	};
 
 	enum class GraphicsBackend {
-		AUTO
-		, DIRECT_3D11
-		, DIRECT_3D12
-		, METAL
-		, OPEN_GL
-		, VULKAN
+		AUTO,
+		DIRECT_3D11,
+		DIRECT_3D12,
+		METAL,
+		OPEN_GL,
+		VULKAN
 	};
 
 	enum class MsaaMode: std::uint8_t {
-		OFF = 1
-		, X2 = 2
-		, X4 = 4
-		, X8 = 8
-		, X16 = 16
+		OFF = 1,
+		X2 = 2,
+		X4 = 4,
+		X8 = 8,
+		X16 = 16
 	};
 
 	class Config final {

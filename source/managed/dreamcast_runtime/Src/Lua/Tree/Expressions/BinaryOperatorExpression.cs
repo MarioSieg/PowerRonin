@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using Dreamcast.Lua.Interpreter.Execution;
 using Dreamcast.Lua.Interpreter.Execution.VM;
 
@@ -27,7 +12,10 @@ namespace Dreamcast.Lua.Interpreter.Tree.Expressions
         private const Operator MUL_DIV_MOD = Operator.Mul | Operator.Div | Operator.Mod;
         private const Operator ADD_SUB = Operator.Add | Operator.Sub;
         private const Operator STRCAT = Operator.StrConcat;
-        private const Operator COMPARES = Operator.Less | Operator.Greater | Operator.GreaterOrEqual | Operator.LessOrEqual | Operator.Equal | Operator.NotEqual;
+
+        private const Operator COMPARES = Operator.Less | Operator.Greater | Operator.GreaterOrEqual |
+                                          Operator.LessOrEqual | Operator.Equal | Operator.NotEqual;
+
         private const Operator LOGIC_AND = Operator.And;
         private const Operator LOGIC_OR = Operator.Or;
 
@@ -133,7 +121,8 @@ namespace Dreamcast.Lua.Interpreter.Tree.Expressions
             return nodes.Expr;
         }
 
-        private static Node PrioritizeLeftAssociative(Node nodes, ScriptLoadingContext lcontext, Operator operatorsToFind)
+        private static Node PrioritizeLeftAssociative(Node nodes, ScriptLoadingContext lcontext,
+            Operator operatorsToFind)
         {
             for (Node N = nodes; N != null; N = N.Next)
             {
@@ -159,7 +148,8 @@ namespace Dreamcast.Lua.Interpreter.Tree.Expressions
             return nodes;
         }
 
-        private static Node PrioritizeRightAssociative(Node nodes, ScriptLoadingContext lcontext, Operator operatorsToFind)
+        private static Node PrioritizeRightAssociative(Node nodes, ScriptLoadingContext lcontext,
+            Operator operatorsToFind)
         {
             Node last;
             for (last = nodes; last.Next != null; last = last.Next)

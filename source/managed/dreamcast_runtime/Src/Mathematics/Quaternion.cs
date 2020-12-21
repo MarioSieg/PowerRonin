@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -144,7 +129,8 @@ namespace Dreamcast.Mathematics
             if (values == null)
                 throw new ArgumentNullException("values");
             if (values.Length != 4)
-                throw new ArgumentOutOfRangeException("values", "There must be four and only four input values for Quaternion.");
+                throw new ArgumentOutOfRangeException("values",
+                    "There must be four and only four input values for Quaternion.");
 
             X = values[0];
             Y = values[1];
@@ -243,7 +229,8 @@ namespace Dreamcast.Mathematics
                         W = value;
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException("index", "Indices for Quaternion run from 0 to 3, inclusive.");
+                        throw new ArgumentOutOfRangeException("index",
+                            "Indices for Quaternion run from 0 to 3, inclusive.");
                 }
             }
         }
@@ -485,7 +472,8 @@ namespace Dreamcast.Mathematics
         ///     When the method completes, contains a new <see cref="Quaternion" /> containing the 4D Cartesian
         ///     coordinates of the specified point.
         /// </param>
-        public static void Barycentric(ref Quaternion value1, ref Quaternion value2, ref Quaternion value3, float amount1, float amount2, out Quaternion result)
+        public static void Barycentric(ref Quaternion value1, ref Quaternion value2, ref Quaternion value3,
+            float amount1, float amount2, out Quaternion result)
         {
             Slerp(ref value1, ref value2, amount1 + amount2, out var start);
             Slerp(ref value1, ref value3, amount1 + amount2, out var end);
@@ -508,7 +496,8 @@ namespace Dreamcast.Mathematics
         ///     <paramref name="value3" />).
         /// </param>
         /// <returns>A new <see cref="Quaternion" /> containing the 4D Cartesian coordinates of the specified point.</returns>
-        public static Quaternion Barycentric(Quaternion value1, Quaternion value2, Quaternion value3, float amount1, float amount2)
+        public static Quaternion Barycentric(Quaternion value1, Quaternion value2, Quaternion value3, float amount1,
+            float amount2)
         {
             Barycentric(ref value1, ref value2, ref value3, amount1, amount2, out var result);
             return result;
@@ -990,7 +979,8 @@ namespace Dreamcast.Mathematics
             ref Vector3 cameraForwardVector,
             out Quaternion result)
         {
-            Matrix3x3.BillboardLH(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector, out var matrix);
+            Matrix3x3.BillboardLH(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector,
+                out var matrix);
             RotationMatrix(ref matrix, out result);
         }
 
@@ -1002,9 +992,11 @@ namespace Dreamcast.Mathematics
         /// <param name="cameraUpVector">The up vector of the camera.</param>
         /// <param name="cameraForwardVector">The forward vector of the camera.</param>
         /// <returns>The created billboard quaternion.</returns>
-        public static Quaternion BillboardLH(Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector, Vector3 cameraForwardVector)
+        public static Quaternion BillboardLH(Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector,
+            Vector3 cameraForwardVector)
         {
-            BillboardLH(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector, out var result);
+            BillboardLH(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector,
+                out var result);
             return result;
         }
 
@@ -1022,7 +1014,8 @@ namespace Dreamcast.Mathematics
             ref Vector3 cameraForwardVector,
             out Quaternion result)
         {
-            Matrix3x3.BillboardRH(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector, out var matrix);
+            Matrix3x3.BillboardRH(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector,
+                out var matrix);
             RotationMatrix(ref matrix, out result);
         }
 
@@ -1034,9 +1027,11 @@ namespace Dreamcast.Mathematics
         /// <param name="cameraUpVector">The up vector of the camera.</param>
         /// <param name="cameraForwardVector">The forward vector of the camera.</param>
         /// <returns>The created billboard quaternion.</returns>
-        public static Quaternion BillboardRH(Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector, Vector3 cameraForwardVector)
+        public static Quaternion BillboardRH(Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector,
+            Vector3 cameraForwardVector)
         {
-            BillboardRH(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector, out var result);
+            BillboardRH(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector,
+                out var result);
             return result;
         }
 
@@ -1166,7 +1161,8 @@ namespace Dreamcast.Mathematics
         /// <param name="value4">Fourth source quaternion.</param>
         /// <param name="amount">Value between 0 and 1 indicating the weight of interpolation.</param>
         /// <returns>The spherical quadrangle interpolation of the quaternions.</returns>
-        public static Quaternion Squad(Quaternion value1, Quaternion value2, Quaternion value3, Quaternion value4, float amount)
+        public static Quaternion Squad(Quaternion value1, Quaternion value2, Quaternion value3, Quaternion value4,
+            float amount)
         {
             Squad(ref value1, ref value2, ref value3, ref value4, amount, out var result);
             return result;
@@ -1180,7 +1176,8 @@ namespace Dreamcast.Mathematics
         /// <param name="value3">Third source quaternion.</param>
         /// <param name="value4">Fourth source quaternion.</param>
         /// <returns>An array of three quaternions that represent control points for spherical quadrangle interpolation.</returns>
-        public static Quaternion[] SquadSetup(Quaternion value1, Quaternion value2, Quaternion value3, Quaternion value4)
+        public static Quaternion[] SquadSetup(Quaternion value1, Quaternion value2, Quaternion value3,
+            Quaternion value4)
         {
             var q0 = (value1 + value2).LengthSquared() < (value1 - value2).LengthSquared() ? -value1 : value1;
             var q2 = (value2 + value3).LengthSquared() < (value2 - value3).LengthSquared() ? -value3 : value3;
@@ -1322,8 +1319,10 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString();
 
-            return string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1} Z:{2} W:{3}", X.ToString(format, CultureInfo.CurrentCulture),
-                Y.ToString(format, CultureInfo.CurrentCulture), Z.ToString(format, CultureInfo.CurrentCulture), W.ToString(format, CultureInfo.CurrentCulture));
+            return string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1} Z:{2} W:{3}",
+                X.ToString(format, CultureInfo.CurrentCulture),
+                Y.ToString(format, CultureInfo.CurrentCulture), Z.ToString(format, CultureInfo.CurrentCulture),
+                W.ToString(format, CultureInfo.CurrentCulture));
         }
 
         /// <summary>
@@ -1351,7 +1350,8 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString(formatProvider);
 
-            return string.Format(formatProvider, "X:{0} Y:{1} Z:{2} W:{3}", X.ToString(format, formatProvider), Y.ToString(format, formatProvider),
+            return string.Format(formatProvider, "X:{0} Y:{1} Z:{2} W:{3}", X.ToString(format, formatProvider),
+                Y.ToString(format, formatProvider),
                 Z.ToString(format, formatProvider), W.ToString(format, formatProvider));
         }
 
@@ -1383,7 +1383,8 @@ namespace Dreamcast.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)] // MethodImplOptions.AggressiveInlining
         public bool Equals(ref Quaternion other)
         {
-            return MathUtil.NearEqual(other.X, X) && MathUtil.NearEqual(other.Y, Y) && MathUtil.NearEqual(other.Z, Z) && MathUtil.NearEqual(other.W, W);
+            return MathUtil.NearEqual(other.X, X) && MathUtil.NearEqual(other.Y, Y) && MathUtil.NearEqual(other.Z, Z) &&
+                   MathUtil.NearEqual(other.W, W);
         }
 
         /// <summary>

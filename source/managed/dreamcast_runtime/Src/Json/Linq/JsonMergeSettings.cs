@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 using System;
 
 namespace Dreamcast.Json.Linq
@@ -43,7 +28,8 @@ namespace Dreamcast.Json.Linq
             get => _mergeArrayHandling;
             set
             {
-                if (value < MergeArrayHandling.Concat || value > MergeArrayHandling.Merge) throw new ArgumentOutOfRangeException(nameof(value));
+                if (value < MergeArrayHandling.Concat || value > MergeArrayHandling.Merge)
+                    throw new ArgumentOutOfRangeException(nameof(value));
 
                 _mergeArrayHandling = value;
             }
@@ -58,7 +44,8 @@ namespace Dreamcast.Json.Linq
             get => _mergeNullValueHandling;
             set
             {
-                if (value < MergeNullValueHandling.Ignore || value > MergeNullValueHandling.Merge) throw new ArgumentOutOfRangeException(nameof(value));
+                if (value < MergeNullValueHandling.Ignore || value > MergeNullValueHandling.Merge)
+                    throw new ArgumentOutOfRangeException(nameof(value));
 
                 _mergeNullValueHandling = value;
             }
@@ -75,7 +62,8 @@ namespace Dreamcast.Json.Linq
             get => _propertyNameComparison;
             set
             {
-                if (value < StringComparison.CurrentCulture || value > StringComparison.OrdinalIgnoreCase) throw new ArgumentOutOfRangeException(nameof(value));
+                if (value < StringComparison.CurrentCulture || value > StringComparison.OrdinalIgnoreCase)
+                    throw new ArgumentOutOfRangeException(nameof(value));
 
                 _propertyNameComparison = value;
             }

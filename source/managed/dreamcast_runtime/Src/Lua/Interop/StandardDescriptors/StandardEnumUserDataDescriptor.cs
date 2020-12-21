@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Linq;
 using Dreamcast.Lua.Interpreter.Compatibility;
 using Dreamcast.Lua.Interpreter.Interop.BasicDescriptors;
@@ -48,7 +33,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
                 throw new ArgumentException("enumType must be an enum!");
 
             UnderlyingType = underlyingType ?? Enum.GetUnderlyingType(enumType);
-            IsUnsigned = UnderlyingType == typeof(byte) || UnderlyingType == typeof(ushort) || UnderlyingType == typeof(uint) || UnderlyingType == typeof(ulong);
+            IsUnsigned = UnderlyingType == typeof(byte) || UnderlyingType == typeof(ushort) ||
+                         UnderlyingType == typeof(uint) || UnderlyingType == typeof(ulong);
 
             names = names ?? Enum.GetNames(Type);
             values = values ?? Enum.GetValues(Type).OfType<object>().ToArray();
@@ -127,7 +113,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
                 return (long) dv.Number;
 
             if (dv.Type != DataType.UserData || dv.UserData.Descriptor != this || dv.UserData.Object == null)
-                throw new ScriptRuntimeException("Enum userdata or number expected, or enum is not of the correct type.");
+                throw new ScriptRuntimeException(
+                    "Enum userdata or number expected, or enum is not of the correct type.");
 
             return m_EnumToLong(dv.UserData.Object);
         }
@@ -143,7 +130,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
                 return (ulong) dv.Number;
 
             if (dv.Type != DataType.UserData || dv.UserData.Descriptor != this || dv.UserData.Object == null)
-                throw new ScriptRuntimeException("Enum userdata or number expected, or enum is not of the correct type.");
+                throw new ScriptRuntimeException(
+                    "Enum userdata or number expected, or enum is not of the correct type.");
 
             return m_EnumToULong(dv.UserData.Object);
         }
@@ -234,7 +222,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
             }
         }
 
-        private DynValue PerformBinaryOperationS(string funcName, ScriptExecutionContext ctx, CallbackArguments args, Func<long, long, DynValue> operation)
+        private DynValue PerformBinaryOperationS(string funcName, ScriptExecutionContext ctx, CallbackArguments args,
+            Func<long, long, DynValue> operation)
         {
             if (args.Count != 2)
                 throw new ScriptRuntimeException("Enum.{0} expects two arguments", funcName);
@@ -244,7 +233,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
             return operation(v1, v2);
         }
 
-        private DynValue PerformBinaryOperationU(string funcName, ScriptExecutionContext ctx, CallbackArguments args, Func<ulong, ulong, DynValue> operation)
+        private DynValue PerformBinaryOperationU(string funcName, ScriptExecutionContext ctx, CallbackArguments args,
+            Func<ulong, ulong, DynValue> operation)
         {
             if (args.Count != 2)
                 throw new ScriptRuntimeException("Enum.{0} expects two arguments", funcName);
@@ -254,17 +244,20 @@ namespace Dreamcast.Lua.Interpreter.Interop
             return operation(v1, v2);
         }
 
-        private DynValue PerformBinaryOperationS(string funcName, ScriptExecutionContext ctx, CallbackArguments args, Func<long, long, long> operation)
+        private DynValue PerformBinaryOperationS(string funcName, ScriptExecutionContext ctx, CallbackArguments args,
+            Func<long, long, long> operation)
         {
             return PerformBinaryOperationS(funcName, ctx, args, (v1, v2) => CreateValueSigned(operation(v1, v2)));
         }
 
-        private DynValue PerformBinaryOperationU(string funcName, ScriptExecutionContext ctx, CallbackArguments args, Func<ulong, ulong, ulong> operation)
+        private DynValue PerformBinaryOperationU(string funcName, ScriptExecutionContext ctx, CallbackArguments args,
+            Func<ulong, ulong, ulong> operation)
         {
             return PerformBinaryOperationU(funcName, ctx, args, (v1, v2) => CreateValueUnsigned(operation(v1, v2)));
         }
 
-        private DynValue PerformUnaryOperationS(string funcName, ScriptExecutionContext ctx, CallbackArguments args, Func<long, long> operation)
+        private DynValue PerformUnaryOperationS(string funcName, ScriptExecutionContext ctx, CallbackArguments args,
+            Func<long, long> operation)
         {
             if (args.Count != 1)
                 throw new ScriptRuntimeException("Enum.{0} expects one argument.", funcName);
@@ -274,7 +267,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
             return CreateValueSigned(r);
         }
 
-        private DynValue PerformUnaryOperationU(string funcName, ScriptExecutionContext ctx, CallbackArguments args, Func<ulong, ulong> operation)
+        private DynValue PerformUnaryOperationU(string funcName, ScriptExecutionContext ctx, CallbackArguments args,
+            Func<ulong, ulong> operation)
         {
             if (args.Count != 1)
                 throw new ScriptRuntimeException("Enum.{0} expects one argument.", funcName);

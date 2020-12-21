@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -103,7 +88,8 @@ namespace Dreamcast.Mathematics
         /// <param name="M31">The value to assign at row 3 column 1 of the Matrix3x3.</param>
         /// <param name="M32">The value to assign at row 3 column 2 of the Matrix3x3.</param>
         /// <param name="M33">The value to assign at row 3 column 3 of the Matrix3x3.</param>
-        public Matrix3x3(float M11, float M12, float M13, float M21, float M22, float M23, float M31, float M32, float M33)
+        public Matrix3x3(float M11, float M12, float M13, float M21, float M22, float M23, float M31, float M32,
+            float M33)
         {
             this.M11 = M11;
             this.M12 = M12;
@@ -133,7 +119,8 @@ namespace Dreamcast.Mathematics
             if (values == null)
                 throw new ArgumentNullException("values");
             if (values.Length != 9)
-                throw new ArgumentOutOfRangeException("values", "There must be sixteen and only sixteen input values for Matrix3x3.");
+                throw new ArgumentOutOfRangeException("values",
+                    "There must be sixteen and only sixteen input values for Matrix3x3.");
 
             M11 = values[0];
             M12 = values[1];
@@ -316,7 +303,8 @@ namespace Dreamcast.Mathematics
                         M33 = value;
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException("index", "Indices for Matrix3x3 run from 0 to 8, inclusive.");
+                        throw new ArgumentOutOfRangeException("index",
+                            "Indices for Matrix3x3 run from 0 to 8, inclusive.");
                 }
             }
         }
@@ -337,9 +325,11 @@ namespace Dreamcast.Mathematics
             get
             {
                 if (row < 0 || row > 2)
-                    throw new ArgumentOutOfRangeException("row", "Rows and columns for matrices run from 0 to 2, inclusive.");
+                    throw new ArgumentOutOfRangeException("row",
+                        "Rows and columns for matrices run from 0 to 2, inclusive.");
                 if (column < 0 || column > 2)
-                    throw new ArgumentOutOfRangeException("column", "Rows and columns for matrices run from 0 to 2, inclusive.");
+                    throw new ArgumentOutOfRangeException("column",
+                        "Rows and columns for matrices run from 0 to 2, inclusive.");
 
                 return this[row * 3 + column];
             }
@@ -347,9 +337,11 @@ namespace Dreamcast.Mathematics
             set
             {
                 if (row < 0 || row > 2)
-                    throw new ArgumentOutOfRangeException("row", "Rows and columns for matrices run from 0 to 2, inclusive.");
+                    throw new ArgumentOutOfRangeException("row",
+                        "Rows and columns for matrices run from 0 to 2, inclusive.");
                 if (column < 0 || column > 2)
-                    throw new ArgumentOutOfRangeException("column", "Rows and columns for matrices run from 0 to 2, inclusive.");
+                    throw new ArgumentOutOfRangeException("column",
+                        "Rows and columns for matrices run from 0 to 2, inclusive.");
 
                 this[row * 3 + column] = value;
             }
@@ -361,7 +353,8 @@ namespace Dreamcast.Mathematics
         /// <returns>The determinant of the Matrix3x3.</returns>
         public float Determinant()
         {
-            return M11 * M22 * M33 + M12 * M23 * M31 + M13 * M21 * M32 - M13 * M22 * M31 - M12 * M21 * M33 - M11 * M23 * M32;
+            return M11 * M22 * M33 + M12 * M23 * M31 + M13 * M21 * M32 - M13 * M22 * M31 - M12 * M21 * M33 -
+                   M11 * M23 * M32;
         }
 
         /// <summary>
@@ -566,13 +559,17 @@ namespace Dreamcast.Mathematics
         public void ExchangeRows(int firstRow, int secondRow)
         {
             if (firstRow < 0)
-                throw new ArgumentOutOfRangeException("firstRow", "The parameter firstRow must be greater than or equal to zero.");
+                throw new ArgumentOutOfRangeException("firstRow",
+                    "The parameter firstRow must be greater than or equal to zero.");
             if (firstRow > 2)
-                throw new ArgumentOutOfRangeException("firstRow", "The parameter firstRow must be less than or equal to two.");
+                throw new ArgumentOutOfRangeException("firstRow",
+                    "The parameter firstRow must be less than or equal to two.");
             if (secondRow < 0)
-                throw new ArgumentOutOfRangeException("secondRow", "The parameter secondRow must be greater than or equal to zero.");
+                throw new ArgumentOutOfRangeException("secondRow",
+                    "The parameter secondRow must be greater than or equal to zero.");
             if (secondRow > 2)
-                throw new ArgumentOutOfRangeException("secondRow", "The parameter secondRow must be less than or equal to two.");
+                throw new ArgumentOutOfRangeException("secondRow",
+                    "The parameter secondRow must be less than or equal to two.");
 
             if (firstRow == secondRow)
                 return;
@@ -598,13 +595,17 @@ namespace Dreamcast.Mathematics
         public void ExchangeColumns(int firstColumn, int secondColumn)
         {
             if (firstColumn < 0)
-                throw new ArgumentOutOfRangeException("firstColumn", "The parameter firstColumn must be greater than or equal to zero.");
+                throw new ArgumentOutOfRangeException("firstColumn",
+                    "The parameter firstColumn must be greater than or equal to zero.");
             if (firstColumn > 2)
-                throw new ArgumentOutOfRangeException("firstColumn", "The parameter firstColumn must be less than or equal to two.");
+                throw new ArgumentOutOfRangeException("firstColumn",
+                    "The parameter firstColumn must be less than or equal to two.");
             if (secondColumn < 0)
-                throw new ArgumentOutOfRangeException("secondColumn", "The parameter secondColumn must be greater than or equal to zero.");
+                throw new ArgumentOutOfRangeException("secondColumn",
+                    "The parameter secondColumn must be greater than or equal to zero.");
             if (secondColumn > 2)
-                throw new ArgumentOutOfRangeException("secondColumn", "The parameter secondColumn must be less than or equal to two.");
+                throw new ArgumentOutOfRangeException("secondColumn",
+                    "The parameter secondColumn must be less than or equal to two.");
 
             if (firstColumn == secondColumn)
                 return;
@@ -1479,9 +1480,11 @@ namespace Dreamcast.Mathematics
         /// <param name="cameraUpVector">The up vector of the camera.</param>
         /// <param name="cameraForwardVector">The forward vector of the camera.</param>
         /// <returns>The created billboard Matrix3x3.</returns>
-        public static Matrix3x3 BillboardLH(Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector, Vector3 cameraForwardVector)
+        public static Matrix3x3 BillboardLH(Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector,
+            Vector3 cameraForwardVector)
         {
-            BillboardLH(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector, out var result);
+            BillboardLH(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector,
+                out var result);
             return result;
         }
 
@@ -1530,9 +1533,11 @@ namespace Dreamcast.Mathematics
         /// <param name="cameraUpVector">The up vector of the camera.</param>
         /// <param name="cameraForwardVector">The forward vector of the camera.</param>
         /// <returns>The created billboard Matrix3x3.</returns>
-        public static Matrix3x3 BillboardRH(Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector, Vector3 cameraForwardVector)
+        public static Matrix3x3 BillboardRH(Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector,
+            Vector3 cameraForwardVector)
         {
-            BillboardRH(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector, out var result);
+            BillboardRH(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector,
+                out var result);
             return result;
         }
 
@@ -2047,7 +2052,8 @@ namespace Dreamcast.Mathematics
         /// <returns>A 4x4 Matrix4x4 with zero translation and M44=1</returns>
         public static explicit operator Matrix4x4(Matrix3x3 Value)
         {
-            return new(Value.M11, Value.M12, Value.M13, 0, Value.M21, Value.M22, Value.M23, 0, Value.M31, Value.M32, Value.M33, 0, 0, 0, 0, 1);
+            return new(Value.M11, Value.M12, Value.M13, 0, Value.M21, Value.M22, Value.M23, 0, Value.M31, Value.M32,
+                Value.M33, 0, 0, 0, 0, 1);
         }
 
         /// <summary>
@@ -2056,7 +2062,8 @@ namespace Dreamcast.Mathematics
         /// <returns>A 3x3 Matrix4x4</returns>
         public static explicit operator Matrix3x3(Matrix4x4 Value)
         {
-            return new(Value.M11, Value.M12, Value.M13, Value.M21, Value.M22, Value.M23, Value.M31, Value.M32, Value.M33);
+            return new(Value.M11, Value.M12, Value.M13, Value.M21, Value.M22, Value.M23, Value.M31, Value.M32,
+                Value.M33);
         }
 
         /// <summary>
@@ -2067,7 +2074,8 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.CurrentCulture, "[M11:{0} M12:{1} M13:{2}] [M21:{3} M22:{4} M23:{5}] [M31:{6} M32:{7} M33:{8}]", M11, M12, M13,
+            return string.Format(CultureInfo.CurrentCulture,
+                "[M11:{0} M12:{1} M13:{2}] [M21:{3} M22:{4} M23:{5}] [M31:{6} M32:{7} M33:{8}]", M11, M12, M13,
                 M21, M22, M23, M31, M32, M33);
         }
 
@@ -2083,7 +2091,8 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString();
 
-            return string.Format(format, CultureInfo.CurrentCulture, "[M11:{0} M12:{1} M13:{2}] [M21:{3} M22:{4} M23:{5}] [M31:{6} M32:{7} M33:{8}]",
+            return string.Format(format, CultureInfo.CurrentCulture,
+                "[M11:{0} M12:{1} M13:{2}] [M21:{3} M22:{4} M23:{5}] [M31:{6} M32:{7} M33:{8}]",
                 M11.ToString(format, CultureInfo.CurrentCulture), M12.ToString(format, CultureInfo.CurrentCulture),
                 M13.ToString(format, CultureInfo.CurrentCulture), M21.ToString(format, CultureInfo.CurrentCulture),
                 M22.ToString(format, CultureInfo.CurrentCulture), M23.ToString(format, CultureInfo.CurrentCulture),
@@ -2100,9 +2109,13 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public string ToString(IFormatProvider formatProvider)
         {
-            return string.Format(formatProvider, "[M11:{0} M12:{1} M13:{2}] [M21:{3} M22:{4} M23:{5}] [M31:{6} M32:{7} M33:{8}]", M11.ToString(formatProvider),
-                M12.ToString(formatProvider), M13.ToString(formatProvider), M21.ToString(formatProvider), M22.ToString(formatProvider),
-                M23.ToString(formatProvider), M31.ToString(formatProvider), M32.ToString(formatProvider), M33.ToString(formatProvider));
+            return string.Format(formatProvider,
+                "[M11:{0} M12:{1} M13:{2}] [M21:{3} M22:{4} M23:{5}] [M31:{6} M32:{7} M33:{8}]",
+                M11.ToString(formatProvider),
+                M12.ToString(formatProvider), M13.ToString(formatProvider), M21.ToString(formatProvider),
+                M22.ToString(formatProvider),
+                M23.ToString(formatProvider), M31.ToString(formatProvider), M32.ToString(formatProvider),
+                M33.ToString(formatProvider));
         }
 
         /// <summary>
@@ -2118,10 +2131,14 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString(formatProvider);
 
-            return string.Format(format, formatProvider, "[M11:{0} M12:{1} M13:{2}] [M21:{3} M22:{4} M23:{5}] [M31:{6} M32:{7} M33:{8}]",
-                M11.ToString(format, formatProvider), M12.ToString(format, formatProvider), M13.ToString(format, formatProvider),
-                M21.ToString(format, formatProvider), M22.ToString(format, formatProvider), M23.ToString(format, formatProvider),
-                M31.ToString(format, formatProvider), M32.ToString(format, formatProvider), M33.ToString(format, formatProvider));
+            return string.Format(format, formatProvider,
+                "[M11:{0} M12:{1} M13:{2}] [M21:{3} M22:{4} M23:{5}] [M31:{6} M32:{7} M33:{8}]",
+                M11.ToString(format, formatProvider), M12.ToString(format, formatProvider),
+                M13.ToString(format, formatProvider),
+                M21.ToString(format, formatProvider), M22.ToString(format, formatProvider),
+                M23.ToString(format, formatProvider),
+                M31.ToString(format, formatProvider), M32.ToString(format, formatProvider),
+                M33.ToString(format, formatProvider));
         }
 
         /// <summary>
@@ -2156,9 +2173,12 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public bool Equals(ref Matrix3x3 other)
         {
-            return MathUtil.NearEqual(other.M11, M11) && MathUtil.NearEqual(other.M12, M12) && MathUtil.NearEqual(other.M13, M13) &&
-                   MathUtil.NearEqual(other.M21, M21) && MathUtil.NearEqual(other.M22, M22) && MathUtil.NearEqual(other.M23, M23) &&
-                   MathUtil.NearEqual(other.M31, M31) && MathUtil.NearEqual(other.M32, M32) && MathUtil.NearEqual(other.M33, M33);
+            return MathUtil.NearEqual(other.M11, M11) && MathUtil.NearEqual(other.M12, M12) &&
+                   MathUtil.NearEqual(other.M13, M13) &&
+                   MathUtil.NearEqual(other.M21, M21) && MathUtil.NearEqual(other.M22, M22) &&
+                   MathUtil.NearEqual(other.M23, M23) &&
+                   MathUtil.NearEqual(other.M31, M31) && MathUtil.NearEqual(other.M32, M32) &&
+                   MathUtil.NearEqual(other.M33, M33);
         }
 
         /// <summary>
@@ -2179,9 +2199,12 @@ namespace Dreamcast.Mathematics
         /// </summary>
         public static bool Equals(ref Matrix3x3 a, ref Matrix3x3 b)
         {
-            return MathUtil.NearEqual(a.M11, b.M11) && MathUtil.NearEqual(a.M12, b.M12) && MathUtil.NearEqual(a.M13, b.M13) &&
-                   MathUtil.NearEqual(a.M21, b.M21) && MathUtil.NearEqual(a.M22, b.M22) && MathUtil.NearEqual(a.M23, b.M23) &&
-                   MathUtil.NearEqual(a.M31, b.M31) && MathUtil.NearEqual(a.M32, b.M32) && MathUtil.NearEqual(a.M33, b.M33);
+            return MathUtil.NearEqual(a.M11, b.M11) && MathUtil.NearEqual(a.M12, b.M12) &&
+                   MathUtil.NearEqual(a.M13, b.M13) &&
+                   MathUtil.NearEqual(a.M21, b.M21) && MathUtil.NearEqual(a.M22, b.M22) &&
+                   MathUtil.NearEqual(a.M23, b.M23) &&
+                   MathUtil.NearEqual(a.M31, b.M31) && MathUtil.NearEqual(a.M32, b.M32) &&
+                   MathUtil.NearEqual(a.M33, b.M33);
         }
 
         /// <summary>

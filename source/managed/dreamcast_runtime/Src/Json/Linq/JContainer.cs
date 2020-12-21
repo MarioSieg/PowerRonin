@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -295,8 +280,7 @@ namespace Dreamcast.Json.Linq
             }
         }
 
-        internal bool IsMultiContent([NotNullWhen(true)]
-            object? content)
+        internal bool IsMultiContent([NotNullWhen(true)] object? content)
         {
             return content is IEnumerable && !(content is string) && !(content is JToken) && !(content is byte[]);
         }
@@ -322,7 +306,8 @@ namespace Dreamcast.Json.Linq
         {
             var children = ChildrenTokens;
 
-            if (index > children.Count) throw new ArgumentOutOfRangeException(nameof(index), "Index must be within the bounds of the List.");
+            if (index > children.Count)
+                throw new ArgumentOutOfRangeException(nameof(index), "Index must be within the bounds of the List.");
 
             CheckReentrancy();
 
@@ -363,7 +348,8 @@ namespace Dreamcast.Json.Linq
             var children = ChildrenTokens;
 
             if (index < 0) throw new ArgumentOutOfRangeException(nameof(index), "Index is less than 0.");
-            if (index >= children.Count) throw new ArgumentOutOfRangeException(nameof(index), "Index is equal to or greater than Count.");
+            if (index >= children.Count)
+                throw new ArgumentOutOfRangeException(nameof(index), "Index is equal to or greater than Count.");
 
             CheckReentrancy();
 
@@ -419,7 +405,8 @@ namespace Dreamcast.Json.Linq
             var children = ChildrenTokens;
 
             if (index < 0) throw new ArgumentOutOfRangeException(nameof(index), "Index is less than 0.");
-            if (index >= children.Count) throw new ArgumentOutOfRangeException(nameof(index), "Index is equal to or greater than Count.");
+            if (index >= children.Count)
+                throw new ArgumentOutOfRangeException(nameof(index), "Index is equal to or greater than Count.");
 
             var existing = children[index];
 
@@ -508,8 +495,11 @@ namespace Dreamcast.Json.Linq
         {
             if (array == null) throw new ArgumentNullException(nameof(array));
             if (arrayIndex < 0) throw new ArgumentOutOfRangeException(nameof(arrayIndex), "arrayIndex is less than 0.");
-            if (arrayIndex >= array.Length && arrayIndex != 0) throw new ArgumentException("arrayIndex is equal to or greater than the length of array.");
-            if (Count > array.Length - arrayIndex) throw new ArgumentException("The number of elements in the source JObject is greater than the available space from arrayIndex to the end of the destination array.");
+            if (arrayIndex >= array.Length && arrayIndex != 0)
+                throw new ArgumentException("arrayIndex is equal to or greater than the length of array.");
+            if (Count > array.Length - arrayIndex)
+                throw new ArgumentException(
+                    "The number of elements in the source JObject is greater than the available space from arrayIndex to the end of the destination array.");
 
             var index = 0;
             foreach (var token in ChildrenTokens)
@@ -537,7 +527,9 @@ namespace Dreamcast.Json.Linq
         {
             ValidationUtils.ArgumentNotNull(o, nameof(o));
 
-            if (o.Type == JTokenType.Property) throw new ArgumentException("Can not add {0} to {1}.".FormatWith(CultureInfo.InvariantCulture, o.GetType(), GetType()));
+            if (o.Type == JTokenType.Property)
+                throw new ArgumentException(
+                    "Can not add {0} to {1}.".FormatWith(CultureInfo.InvariantCulture, o.GetType(), GetType()));
         }
 
         /// <summary>
@@ -643,13 +635,18 @@ namespace Dreamcast.Json.Linq
         {
             var startDepth = reader.Depth;
 
-            if (!reader.Read()) throw JsonReaderException.Create(reader, "Error reading {0} from JsonReader.".FormatWith(CultureInfo.InvariantCulture, GetType().Name));
+            if (!reader.Read())
+                throw JsonReaderException.Create(reader,
+                    "Error reading {0} from JsonReader.".FormatWith(CultureInfo.InvariantCulture, GetType().Name));
 
             ReadContentFrom(reader, options);
 
             var endDepth = reader.Depth;
 
-            if (endDepth > startDepth) throw JsonReaderException.Create(reader, "Unexpected end of content while loading {0}.".FormatWith(CultureInfo.InvariantCulture, GetType().Name));
+            if (endDepth > startDepth)
+                throw JsonReaderException.Create(reader,
+                    "Unexpected end of content while loading {0}.".FormatWith(CultureInfo.InvariantCulture,
+                        GetType().Name));
         }
 
         internal void ReadContentFrom(JsonReader r, JsonLoadSettings? settings)
@@ -746,14 +743,18 @@ namespace Dreamcast.Json.Linq
                             r.Skip();
                         break;
                     default:
-                        throw new InvalidOperationException("The JsonReader should not be on a token of type {0}.".FormatWith(CultureInfo.InvariantCulture, r.TokenType));
+                        throw new InvalidOperationException(
+                            "The JsonReader should not be on a token of type {0}.".FormatWith(
+                                CultureInfo.InvariantCulture, r.TokenType));
                 }
             } while (r.Read());
         }
 
-        private static JProperty? ReadProperty(JsonReader r, JsonLoadSettings? settings, IJsonLineInfo? lineInfo, JContainer parent)
+        private static JProperty? ReadProperty(JsonReader r, JsonLoadSettings? settings, IJsonLineInfo? lineInfo,
+            JContainer parent)
         {
-            var duplicatePropertyNameHandling = settings?.DuplicatePropertyNameHandling ?? DuplicatePropertyNameHandling.Replace;
+            var duplicatePropertyNameHandling =
+                settings?.DuplicatePropertyNameHandling ?? DuplicatePropertyNameHandling.Replace;
 
             var parentObject = (JObject) parent;
             var propertyName = r.Value!.ToString();
@@ -762,7 +763,10 @@ namespace Dreamcast.Json.Linq
             {
                 if (duplicatePropertyNameHandling == DuplicatePropertyNameHandling.Ignore)
                     return null;
-                if (duplicatePropertyNameHandling == DuplicatePropertyNameHandling.Error) throw JsonReaderException.Create(r, "Property with the name '{0}' already exists in the current JSON object.".FormatWith(CultureInfo.InvariantCulture, propertyName));
+                if (duplicatePropertyNameHandling == DuplicatePropertyNameHandling.Error)
+                    throw JsonReaderException.Create(r,
+                        "Property with the name '{0}' already exists in the current JSON object.".FormatWith(
+                            CultureInfo.InvariantCulture, propertyName));
             }
 
             var property = new JProperty(propertyName);
@@ -1071,7 +1075,8 @@ namespace Dreamcast.Json.Linq
 
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(settings), "Unexpected merge array handling when merging JSON.");
+                    throw new ArgumentOutOfRangeException(nameof(settings),
+                        "Unexpected merge array handling when merging JSON.");
             }
         }
     }

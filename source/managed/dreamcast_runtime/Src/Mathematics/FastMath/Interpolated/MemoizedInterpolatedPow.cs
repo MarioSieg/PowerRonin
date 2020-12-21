@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
 using Dreamcast.Math.Fast.Core;
 
@@ -60,18 +45,21 @@ namespace Dreamcast.Math.Fast.Interpolated
             return (1 - alpha) * Values[index] + alpha * Values[index + 1];
         }
 
-        public static MemoizedInterpolatedPow ConstructByValuesCount(float minArgument, float maxArgument, float power, int valuesCount)
+        public static MemoizedInterpolatedPow ConstructByValuesCount(float minArgument, float maxArgument, float power,
+            int valuesCount)
         {
             return new(minArgument, maxArgument, power, valuesCount + AdditionalValueCount);
         }
 
-        public static MemoizedInterpolatedPow ConstructByStep(float minArgument, float maxArgument, float power, float step)
+        public static MemoizedInterpolatedPow ConstructByStep(float minArgument, float maxArgument, float power,
+            float step)
         {
             var valuesCount = (int) System.Math.Round((maxArgument - minArgument) / step) + AdditionalValueCount;
             return new MemoizedInterpolatedPow(minArgument, maxArgument, power, valuesCount);
         }
 
-        public static MemoizedInterpolatedPow ConstructByMaxError(float minArgument, float maxArgument, float power, float maxError)
+        public static MemoizedInterpolatedPow ConstructByMaxError(float minArgument, float maxArgument, float power,
+            float maxError)
         {
             var step = GetStepByMaxError(minArgument, maxArgument, power, maxError);
             var valuesCount = (int) ((maxArgument - minArgument) / step) + AdditionalValueCount + 1;
@@ -92,7 +80,8 @@ namespace Dreamcast.Math.Fast.Interpolated
                 if (minArgument < 0 && 0 < maxArgument
                     || System.Math.Abs(minArgument) < MinArgumentValue
                     || System.Math.Abs(maxArgument) < MinArgumentValue)
-                    throw new ArgumentException("Can't calculate values count: power is less then zero and arguments interval containts zero");
+                    throw new ArgumentException(
+                        "Can't calculate values count: power is less then zero and arguments interval containts zero");
 
             float step;
             if (power >= 2)

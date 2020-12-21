@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 using Dreamcast.Lua.Interpreter.Compatibility;
@@ -102,15 +87,20 @@ namespace Dreamcast.Lua.Interpreter
             foreach (MethodInfo mi in Framework.Do.GetMethods(t).Where(__mi => __mi.IsStatic))
                 if (mi.GetCustomAttributes(typeof(LuaModuleMethodAttribute), false).ToArray().Length > 0)
                 {
-                    LuaModuleMethodAttribute attr = (LuaModuleMethodAttribute) mi.GetCustomAttributes(typeof(LuaModuleMethodAttribute), false).First();
+                    LuaModuleMethodAttribute attr =
+                        (LuaModuleMethodAttribute) mi.GetCustomAttributes(typeof(LuaModuleMethodAttribute), false)
+                            .First();
 
                     if (!CallbackFunction.CheckCallbackSignature(mi, true))
-                        throw new ArgumentException(string.Format("Method {0} does not have the right signature.", mi.Name));
+                        throw new ArgumentException(string.Format("Method {0} does not have the right signature.",
+                            mi.Name));
 
 #if NETFX_CORE
-					Delegate deleg = mi.CreateDelegate(typeof(Func<ScriptExecutionContext, CallbackArguments, DynValue>));
+					Delegate deleg =
+ mi.CreateDelegate(typeof(Func<ScriptExecutionContext, CallbackArguments, DynValue>));
 #else
-                    Delegate deleg = Delegate.CreateDelegate(typeof(Func<ScriptExecutionContext, CallbackArguments, DynValue>), mi);
+                    Delegate deleg =
+                        Delegate.CreateDelegate(typeof(Func<ScriptExecutionContext, CallbackArguments, DynValue>), mi);
 #endif
 
                     Func<ScriptExecutionContext, CallbackArguments, DynValue> func =
@@ -127,17 +117,23 @@ namespace Dreamcast.Lua.Interpreter
                     mi.Invoke(null, args);
                 }
 
-            foreach (FieldInfo fi in Framework.Do.GetFields(t).Where(_mi => _mi.IsStatic && _mi.GetCustomAttributes(typeof(LuaModuleMethodAttribute), false).ToArray().Length > 0))
+            foreach (FieldInfo fi in Framework.Do.GetFields(t).Where(_mi =>
+                _mi.IsStatic && _mi.GetCustomAttributes(typeof(LuaModuleMethodAttribute), false).ToArray().Length > 0))
             {
-                LuaModuleMethodAttribute attr = (LuaModuleMethodAttribute) fi.GetCustomAttributes(typeof(LuaModuleMethodAttribute), false).First();
+                LuaModuleMethodAttribute attr =
+                    (LuaModuleMethodAttribute) fi.GetCustomAttributes(typeof(LuaModuleMethodAttribute), false).First();
                 string name = !string.IsNullOrEmpty(attr.Name) ? attr.Name : fi.Name;
 
                 RegisterScriptField(fi, null, table, t, name);
             }
 
-            foreach (FieldInfo fi in Framework.Do.GetFields(t).Where(_mi => _mi.IsStatic && _mi.GetCustomAttributes(typeof(LuaModuleConstantAttribute), false).ToArray().Length > 0))
+            foreach (FieldInfo fi in Framework.Do.GetFields(t).Where(_mi =>
+                _mi.IsStatic && _mi.GetCustomAttributes(typeof(LuaModuleConstantAttribute), false).ToArray().Length >
+                0))
             {
-                LuaModuleConstantAttribute attr = (LuaModuleConstantAttribute) fi.GetCustomAttributes(typeof(LuaModuleConstantAttribute), false).First();
+                LuaModuleConstantAttribute attr =
+                    (LuaModuleConstantAttribute) fi.GetCustomAttributes(typeof(LuaModuleConstantAttribute), false)
+                        .First();
                 string name = !string.IsNullOrEmpty(attr.Name) ? attr.Name : fi.Name;
 
                 RegisterScriptFieldAsConst(fi, null, table, t, name);
@@ -160,13 +156,16 @@ namespace Dreamcast.Lua.Interpreter
             }
             else
             {
-                throw new ArgumentException(string.Format("Field {0} does not have the right type - it must be string or double.", name));
+                throw new ArgumentException(
+                    string.Format("Field {0} does not have the right type - it must be string or double.", name));
             }
         }
 
         private static void RegisterScriptField(FieldInfo fi, object o, Table table, Type t, string name)
         {
-            if (fi.FieldType != typeof(string)) throw new ArgumentException(string.Format("Field {0} does not have the right type - it must be string.", name));
+            if (fi.FieldType != typeof(string))
+                throw new ArgumentException(string.Format("Field {0} does not have the right type - it must be string.",
+                    name));
 
             string val = fi.GetValue(o) as string;
 
@@ -178,7 +177,8 @@ namespace Dreamcast.Lua.Interpreter
 
         private static Table CreateModuleNamespace(Table gtable, Type t)
         {
-            LuaModuleAttribute attr = (LuaModuleAttribute) Framework.Do.GetCustomAttributes(t, typeof(LuaModuleAttribute), false).First();
+            LuaModuleAttribute attr =
+                (LuaModuleAttribute) Framework.Do.GetCustomAttributes(t, typeof(LuaModuleAttribute), false).First();
 
             if (string.IsNullOrEmpty(attr.Namespace)) return gtable;
 
@@ -199,12 +199,14 @@ namespace Dreamcast.Lua.Interpreter
 
             DynValue package = gtable.RawGet("package");
 
-            if (package == null || package.Type != DataType.Table) gtable.Set("package", package = DynValue.NewTable(gtable.OwnerScript));
+            if (package == null || package.Type != DataType.Table)
+                gtable.Set("package", package = DynValue.NewTable(gtable.OwnerScript));
 
 
             DynValue loaded = package.Table.RawGet("loaded");
 
-            if (loaded == null || loaded.Type != DataType.Table) package.Table.Set("loaded", loaded = DynValue.NewTable(gtable.OwnerScript));
+            if (loaded == null || loaded.Type != DataType.Table)
+                package.Table.Set("loaded", loaded = DynValue.NewTable(gtable.OwnerScript));
 
             loaded.Table.Set(attr.Namespace, DynValue.NewTable(table));
 

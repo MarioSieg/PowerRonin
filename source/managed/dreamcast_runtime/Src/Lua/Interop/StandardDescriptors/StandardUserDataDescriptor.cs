@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -37,7 +22,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
             : base(type, friendlyName)
         {
             if (accessMode == InteropAccessMode.NoReflectionAllowed)
-                throw new ArgumentException("Can't create a StandardUserDataDescriptor under a NoReflectionAllowed access mode");
+                throw new ArgumentException(
+                    "Can't create a StandardUserDataDescriptor under a NoReflectionAllowed access mode");
 
             if (Script.GlobalOptions.Platform.IsRunningOnAOT())
                 accessMode = InteropAccessMode.Reflection;
@@ -58,7 +44,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
 
         public void PrepareForWiring(Table t)
         {
-            if (AccessMode == InteropAccessMode.HideMembers || Framework.Do.GetAssembly(Type) == Framework.Do.GetAssembly(GetType()))
+            if (AccessMode == InteropAccessMode.HideMembers ||
+                Framework.Do.GetAssembly(Type) == Framework.Do.GetAssembly(GetType()))
             {
                 t.Set("skip", DynValue.NewBoolean(true));
             }
@@ -124,7 +111,9 @@ namespace Dreamcast.Lua.Interpreter.Interop
 
                     // transform explicit/implicit conversions to a friendlier name.
                     string name = mi.Name;
-                    if (mi.IsSpecialName && (mi.Name == SPECIALNAME_CAST_EXPLICIT || mi.Name == SPECIALNAME_CAST_IMPLICIT)) name = mi.ReturnType.GetConversionMethodName();
+                    if (mi.IsSpecialName &&
+                        (mi.Name == SPECIALNAME_CAST_EXPLICIT || mi.Name == SPECIALNAME_CAST_IMPLICIT))
+                        name = mi.ReturnType.GetConversionMethodName();
 
                     AddMember(name, md);
 
@@ -166,7 +155,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
                     continue;
 
                 if (!Framework.Do.IsGenericTypeDefinition(nestedType))
-                    if (Framework.Do.IsNestedPublic(nestedType) || Framework.Do.GetCustomAttributes(nestedType, typeof(LuaUserDataAttribute), true).Length > 0)
+                    if (Framework.Do.IsNestedPublic(nestedType) || Framework.Do
+                        .GetCustomAttributes(nestedType, typeof(LuaUserDataAttribute), true).Length > 0)
                     {
                         var descr = UserData.RegisterType(nestedType, AccessMode);
 
@@ -189,8 +179,10 @@ namespace Dreamcast.Lua.Interpreter.Interop
 
                     set_pars[rank] = new ParameterDescriptor("value", Type.GetElementType());
 
-                    AddMember(SPECIALNAME_INDEXER_SET, new ArrayMemberDescriptor(SPECIALNAME_INDEXER_SET, true, set_pars));
-                    AddMember(SPECIALNAME_INDEXER_GET, new ArrayMemberDescriptor(SPECIALNAME_INDEXER_GET, false, get_pars));
+                    AddMember(SPECIALNAME_INDEXER_SET,
+                        new ArrayMemberDescriptor(SPECIALNAME_INDEXER_SET, true, set_pars));
+                    AddMember(SPECIALNAME_INDEXER_GET,
+                        new ArrayMemberDescriptor(SPECIALNAME_INDEXER_GET, false, get_pars));
                 }
                 else if (Type == typeof(Array))
                 {

@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-#pragma warning disable 1591
+﻿#pragma warning disable 1591
 
 using System;
 using System.Collections.Generic;
@@ -232,7 +217,8 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
                     return DynValue.Nil;
 
                 double d;
-                if (double.TryParse(e.String, NumberStyles.Any, CultureInfo.InvariantCulture, out d)) return DynValue.NewNumber(d);
+                if (double.TryParse(e.String, NumberStyles.Any, CultureInfo.InvariantCulture, out d))
+                    return DynValue.NewNumber(d);
                 return DynValue.Nil;
             }
 
@@ -255,7 +241,8 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
                 foreach (var digit in ee.String.Trim())
                 {
                     var value = digit - 48;
-                    if (value < 0 || value >= bb) throw new ScriptRuntimeException("bad argument #1 to 'tonumber' (invalid character)");
+                    if (value < 0 || value >= bb)
+                        throw new ScriptRuntimeException("bad argument #1 to 'tonumber' (invalid character)");
 
                     uiv = (uint) (uiv * bb) + (uint) value;
                 }

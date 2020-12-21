@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Dreamcast.Json.Linq;
 using Dreamcast.Json.Utilities;
@@ -31,7 +16,8 @@ namespace Dreamcast.Json.Schema
     ///         <see href="https://www.newtonsoft.com/jsonschema">https://www.newtonsoft.com/jsonschema</see> for more details.
     ///     </note>
     /// </summary>
-    [Obsolete("JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
+    [Obsolete(
+        "JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
     public static class Extensions
     {
         /// <summary>
@@ -48,7 +34,8 @@ namespace Dreamcast.Json.Schema
         /// <returns>
         ///     <c>true</c> if the specified <see cref="JToken" /> is valid; otherwise, <c>false</c>.
         /// </returns>
-        [Obsolete("JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
+        [Obsolete(
+            "JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
         public static bool IsValid(this JToken source, JsonSchema schema)
         {
             var valid = true;
@@ -71,7 +58,8 @@ namespace Dreamcast.Json.Schema
         /// <returns>
         ///     <c>true</c> if the specified <see cref="JToken" /> is valid; otherwise, <c>false</c>.
         /// </returns>
-        [Obsolete("JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
+        [Obsolete(
+            "JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
         public static bool IsValid(this JToken source, JsonSchema schema, out IList<string> errorMessages)
         {
             IList<string> errors = new List<string>();
@@ -93,7 +81,8 @@ namespace Dreamcast.Json.Schema
         /// </summary>
         /// <param name="source">The source <see cref="JToken" /> to test.</param>
         /// <param name="schema">The schema to test with.</param>
-        [Obsolete("JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
+        [Obsolete(
+            "JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
         public static void Validate(this JToken source, JsonSchema schema)
         {
             source.Validate(schema, null);
@@ -111,8 +100,10 @@ namespace Dreamcast.Json.Schema
         /// <param name="source">The source <see cref="JToken" /> to test.</param>
         /// <param name="schema">The schema to test with.</param>
         /// <param name="validationEventHandler">The validation event handler.</param>
-        [Obsolete("JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
-        public static void Validate(this JToken source, JsonSchema schema, ValidationEventHandler validationEventHandler)
+        [Obsolete(
+            "JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
+        public static void Validate(this JToken source, JsonSchema schema,
+            ValidationEventHandler validationEventHandler)
         {
             ValidationUtils.ArgumentNotNull(source, nameof(source));
             ValidationUtils.ArgumentNotNull(schema, nameof(schema));

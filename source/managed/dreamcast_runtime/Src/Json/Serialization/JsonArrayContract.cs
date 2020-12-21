@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -65,7 +50,10 @@ namespace Dreamcast.Json.Serialization
         {
             get
             {
-                if (_parameterizedCreator == null && _parameterizedConstructor != null) _parameterizedCreator = JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(_parameterizedConstructor);
+                if (_parameterizedCreator == null && _parameterizedConstructor != null)
+                    _parameterizedCreator =
+                        JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(
+                            _parameterizedConstructor);
 
                 return _parameterizedCreator;
             }
@@ -93,7 +81,8 @@ namespace Dreamcast.Json.Serialization
         /// <value><c>true</c> if the creator has a parameter with the collection values; otherwise, <c>false</c>.</value>
         public bool HasParameterizedCreator { get; set; }
 
-        internal bool HasParameterizedCreatorInternal => HasParameterizedCreator || _parameterizedCreator != null || _parameterizedConstructor != null;
+        internal bool HasParameterizedCreatorInternal => HasParameterizedCreator || _parameterizedCreator != null ||
+                                                         _parameterizedConstructor != null;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="JsonArrayContract" /> class.
@@ -106,7 +95,8 @@ namespace Dreamcast.Json.Serialization
 
             // netcoreapp3.0 uses EmptyPartition for empty enumerable. Treat as an empty array.
             IsArray = CreatedType.IsArray ||
-                      NonNullableUnderlyingType.IsGenericType() && NonNullableUnderlyingType.GetGenericTypeDefinition().FullName == "System.Linq.EmptyPartition`1";
+                      NonNullableUnderlyingType.IsGenericType() &&
+                      NonNullableUnderlyingType.GetGenericTypeDefinition().FullName == "System.Linq.EmptyPartition`1";
 
             bool canDeserialize;
 
@@ -122,19 +112,25 @@ namespace Dreamcast.Json.Serialization
             }
             else if (typeof(IList).IsAssignableFrom(NonNullableUnderlyingType))
             {
-                if (ReflectionUtils.ImplementsGenericDefinition(NonNullableUnderlyingType, typeof(ICollection<>), out _genericCollectionDefinitionType))
+                if (ReflectionUtils.ImplementsGenericDefinition(NonNullableUnderlyingType, typeof(ICollection<>),
+                    out _genericCollectionDefinitionType))
                     CollectionItemType = _genericCollectionDefinitionType.GetGenericArguments()[0];
                 else
                     CollectionItemType = ReflectionUtils.GetCollectionItemType(NonNullableUnderlyingType);
 
                 if (NonNullableUnderlyingType == typeof(IList)) CreatedType = typeof(List<object>);
 
-                if (CollectionItemType != null) _parameterizedConstructor = CollectionUtils.ResolveEnumerableCollectionConstructor(NonNullableUnderlyingType, CollectionItemType);
+                if (CollectionItemType != null)
+                    _parameterizedConstructor =
+                        CollectionUtils.ResolveEnumerableCollectionConstructor(NonNullableUnderlyingType,
+                            CollectionItemType);
 
-                IsReadOnlyOrFixedSize = ReflectionUtils.InheritsGenericDefinition(NonNullableUnderlyingType, typeof(ReadOnlyCollection<>));
+                IsReadOnlyOrFixedSize =
+                    ReflectionUtils.InheritsGenericDefinition(NonNullableUnderlyingType, typeof(ReadOnlyCollection<>));
                 canDeserialize = true;
             }
-            else if (ReflectionUtils.ImplementsGenericDefinition(NonNullableUnderlyingType, typeof(ICollection<>), out _genericCollectionDefinitionType))
+            else if (ReflectionUtils.ImplementsGenericDefinition(NonNullableUnderlyingType, typeof(ICollection<>),
+                out _genericCollectionDefinitionType))
             {
                 CollectionItemType = _genericCollectionDefinitionType.GetGenericArguments()[0];
 
@@ -149,7 +145,9 @@ namespace Dreamcast.Json.Serialization
                 }
 #endif
 
-                _parameterizedConstructor = CollectionUtils.ResolveEnumerableCollectionConstructor(NonNullableUnderlyingType, CollectionItemType);
+                _parameterizedConstructor =
+                    CollectionUtils.ResolveEnumerableCollectionConstructor(NonNullableUnderlyingType,
+                        CollectionItemType);
                 canDeserialize = true;
                 ShouldCreateWrapper = true;
             }
@@ -165,7 +163,8 @@ namespace Dreamcast.Json.Serialization
                 }
 
                 _genericCollectionDefinitionType = typeof(List<>).MakeGenericType(CollectionItemType);
-                _parameterizedConstructor = CollectionUtils.ResolveEnumerableCollectionConstructor(CreatedType, CollectionItemType);
+                _parameterizedConstructor =
+ CollectionUtils.ResolveEnumerableCollectionConstructor(CreatedType, CollectionItemType);
 
 #if HAVE_FSHARP_TYPES
                 StoreFSharpListCreatorIfNecessary(NonNullableUnderlyingType);
@@ -175,19 +174,24 @@ namespace Dreamcast.Json.Serialization
                 canDeserialize = HasParameterizedCreatorInternal;
             }
 #endif
-            else if (ReflectionUtils.ImplementsGenericDefinition(NonNullableUnderlyingType, typeof(IEnumerable<>), out tempCollectionType))
+            else if (ReflectionUtils.ImplementsGenericDefinition(NonNullableUnderlyingType, typeof(IEnumerable<>),
+                out tempCollectionType))
             {
                 CollectionItemType = tempCollectionType.GetGenericArguments()[0];
 
-                if (ReflectionUtils.IsGenericDefinition(UnderlyingType, typeof(IEnumerable<>))) CreatedType = typeof(List<>).MakeGenericType(CollectionItemType);
+                if (ReflectionUtils.IsGenericDefinition(UnderlyingType, typeof(IEnumerable<>)))
+                    CreatedType = typeof(List<>).MakeGenericType(CollectionItemType);
 
-                _parameterizedConstructor = CollectionUtils.ResolveEnumerableCollectionConstructor(NonNullableUnderlyingType, CollectionItemType);
+                _parameterizedConstructor =
+                    CollectionUtils.ResolveEnumerableCollectionConstructor(NonNullableUnderlyingType,
+                        CollectionItemType);
 
 #if HAVE_FSHARP_TYPES
                 StoreFSharpListCreatorIfNecessary(NonNullableUnderlyingType);
 #endif
 
-                if (NonNullableUnderlyingType.IsGenericType() && NonNullableUnderlyingType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+                if (NonNullableUnderlyingType.IsGenericType() &&
+                    NonNullableUnderlyingType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
                 {
                     _genericCollectionDefinitionType = tempCollectionType;
 
@@ -257,7 +261,9 @@ namespace Dreamcast.Json.Serialization
                     constructorArgument = _genericCollectionDefinitionType;
 
                 var genericWrapperConstructor = _genericWrapperType.GetConstructor(new[] {constructorArgument});
-                _genericWrapperCreator = JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(genericWrapperConstructor);
+                _genericWrapperCreator =
+                    JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(
+                        genericWrapperConstructor);
             }
 
             return (IWrappedCollection) _genericWrapperCreator(list);
@@ -273,7 +279,8 @@ namespace Dreamcast.Json.Serialization
                     : CollectionItemType;
 
                 var temporaryListType = typeof(List<>).MakeGenericType(collectionItemType);
-                _genericTemporaryCollectionCreator = JsonTypeReflector.ReflectionDelegateFactory.CreateDefaultConstructor<object>(temporaryListType);
+                _genericTemporaryCollectionCreator =
+                    JsonTypeReflector.ReflectionDelegateFactory.CreateDefaultConstructor<object>(temporaryListType);
             }
 
             return (IList) _genericTemporaryCollectionCreator();

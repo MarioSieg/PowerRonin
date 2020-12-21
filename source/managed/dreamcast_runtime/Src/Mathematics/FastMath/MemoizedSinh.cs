@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 using System;
 using System.Runtime.CompilerServices;
 using Dreamcast.Math.Fast.Core;
@@ -73,7 +58,8 @@ namespace Dreamcast.Math.Fast
         private static int GetValuesCountByMaxError(float minArgument, float maxArgument, float maxError)
         {
             var argument = System.Math.Max(System.Math.Abs(minArgument), System.Math.Abs(maxArgument));
-            var step = (float) System.Math.Abs(System.Math.Log(1 - maxError * System.Math.Pow(System.Math.E, -argument), System.Math.E));
+            var step = (float) System.Math.Abs(System.Math.Log(1 - maxError * System.Math.Pow(System.Math.E, -argument),
+                System.Math.E));
             return (int) System.Math.Round((maxArgument - minArgument) / step) + 2;
         }
     }

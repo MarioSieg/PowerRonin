@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -268,7 +253,8 @@ namespace Dreamcast.Lua.Interpreter
             m_Sources.Add(source);
 
             bool hasUpvalues;
-            var address = m_MainProcessor.Undump(codeStream, m_Sources.Count - 1, globalTable ?? Globals, out hasUpvalues);
+            var address =
+                m_MainProcessor.Undump(codeStream, m_Sources.Count - 1, globalTable ?? Globals, out hasUpvalues);
 
             SignalSourceCodeChange(source);
             SignalByteCodeChange();
@@ -306,7 +292,8 @@ namespace Dreamcast.Lua.Interpreter
                 throw new ArgumentException("function arg has upvalues other than _ENV");
 
             UndisposableStream outStream = new(stream);
-            m_MainProcessor.Dump(outStream, function.Function.EntryPointByteCodeLocation, upvaluesType == Closure.UpvaluesType.Environment);
+            m_MainProcessor.Dump(outStream, function.Function.EntryPointByteCodeLocation,
+                upvaluesType == Closure.UpvaluesType.Environment);
         }
 
 
@@ -349,7 +336,8 @@ namespace Dreamcast.Lua.Interpreter
 
             if (code == null)
                 throw new InvalidCastException("Unexpected null from IScriptLoader.LoadFile");
-            throw new InvalidCastException(string.Format("Unsupported return type from IScriptLoader.LoadFile : {0}", code.GetType()));
+            throw new InvalidCastException(string.Format("Unsupported return type from IScriptLoader.LoadFile : {0}",
+                code.GetType()));
         }
 
 
@@ -457,7 +445,10 @@ namespace Dreamcast.Lua.Interpreter
             }
             else
             {
-                var syms = new SymbolRef[] {new() {i_Env = null, i_Index = 0, i_Name = WellKnownSymbols.ENV, i_Type = SymbolRefType.DefaultEnv}};
+                var syms = new SymbolRef[]
+                {
+                    new() {i_Env = null, i_Index = 0, i_Name = WellKnownSymbols.ENV, i_Type = SymbolRefType.DefaultEnv}
+                };
 
                 var vals = new[] {DynValue.NewTable(envTable)};
 
@@ -515,7 +506,8 @@ namespace Dreamcast.Lua.Interpreter
             }
             else if (function.Type == DataType.ClrFunction)
             {
-                return function.Callback.ClrCallback(CreateDynamicExecutionContext(function.Callback), new CallbackArguments(args, false));
+                return function.Callback.ClrCallback(CreateDynamicExecutionContext(function.Callback),
+                    new CallbackArguments(args, false));
             }
 
             return m_MainProcessor.Call(function, args);
@@ -731,7 +723,8 @@ namespace Dreamcast.Lua.Interpreter
             subproduct = subproduct != null ? subproduct + " " : "";
 
             StringBuilder sb = new();
-            sb.AppendLine(string.Format("Dreamcast.Lua {0}{1} [{2}]", subproduct, VERSION, GlobalOptions.Platform.GetPlatformName()));
+            sb.AppendLine(string.Format("Dreamcast.Lua {0}{1} [{2}]", subproduct, VERSION,
+                GlobalOptions.Platform.GetPlatformName()));
             sb.AppendLine("Copyright (C) 2014-2016 Marco Mastropaolo");
             sb.AppendLine("http://www.moonsharp.org");
             return sb.ToString();

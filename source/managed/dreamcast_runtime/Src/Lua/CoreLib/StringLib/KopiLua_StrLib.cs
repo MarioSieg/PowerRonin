@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-#pragma warning disable 1591
+﻿#pragma warning disable 1591
 
 //
 // This part taken from KopiLua - https://github.com/NLua/KopiLua
@@ -703,7 +688,8 @@ namespace Dreamcast.Lua.Interpreter.CoreLib.StringLib
             string p = PatchPattern(ArgAsType(L, 2, DataType.String).String);
 
 
-            C.AdditionalData = new GMatchAuxData {S = new CharPtr(s), P = new CharPtr(p), LS = (uint) s.Length, POS = 0};
+            C.AdditionalData = new GMatchAuxData
+                {S = new CharPtr(s), P = new CharPtr(p), LS = (uint) s.Length, POS = 0};
 
             L.Push(DynValue.NewCallback(C));
 

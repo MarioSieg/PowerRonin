@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Dreamcast.Lua.Interpreter.Tree.Statements;
 
@@ -90,7 +75,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.Scopes
             if (firstVal < 0)
                 ScopeBlock.From = buildTimeScopeFrame.GetPosForNextVar();
 
-            foreach (var child in ChildNodes) ScopeBlock.ToInclusive = Math.Max(ScopeBlock.ToInclusive, child.ResolveLRefs(buildTimeScopeFrame));
+            foreach (var child in ChildNodes)
+                ScopeBlock.ToInclusive = Math.Max(ScopeBlock.ToInclusive, child.ResolveLRefs(buildTimeScopeFrame));
 
             if (m_LocalLabels != null)
                 foreach (var label in m_LocalLabels.Values)
@@ -104,7 +90,9 @@ namespace Dreamcast.Lua.Interpreter.Execution.Scopes
             if (m_LocalLabels == null)
                 m_LocalLabels = new Dictionary<string, LabelStatement>();
 
-            if (m_LocalLabels.ContainsKey(label.Label)) throw new SyntaxErrorException(label.NameToken, "label '{0}' already defined on line {1}", label.Label, m_LocalLabels[label.Label].SourceRef.FromLine);
+            if (m_LocalLabels.ContainsKey(label.Label))
+                throw new SyntaxErrorException(label.NameToken, "label '{0}' already defined on line {1}", label.Label,
+                    m_LocalLabels[label.Label].SourceRef.FromLine);
 
             m_LocalLabels.Add(label.Label, label);
             label.SetDefinedVars(m_DefinedNames.Count, m_LastDefinedName);
@@ -141,7 +129,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.Scopes
                 else
                 {
                     if (Parent == null)
-                        throw new SyntaxErrorException(gotostat.GotoToken, "no visible label '{0}' for <goto> at line {1}", gotostat.Label,
+                        throw new SyntaxErrorException(gotostat.GotoToken,
+                            "no visible label '{0}' for <goto> at line {1}", gotostat.Label,
                             gotostat.GotoToken.FromLine);
 
                     Parent.RegisterGoto(gotostat);

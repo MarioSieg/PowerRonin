@@ -56,7 +56,7 @@ namespace Dreamcast.Core
         /// <summary>
         ///     The name of the directory where configs are saved in.
         /// </summary>
-        public static string ConfigDirectory => "config";
+        public const string ConfigDirectory = "config";
 
         /// <summary>
         ///     Serializes all configs into their files.

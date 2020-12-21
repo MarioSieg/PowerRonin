@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace Dreamcast.Mathematics
 {
@@ -142,7 +127,8 @@ namespace Dreamcast.Mathematics
         public static float Unpack(ushort h)
         {
             var conv = new FloatToUint();
-            conv.uintValue = HalfToFloatMantissaTable[HalfToFloatOffsetTable[h >> 10] + ((uint) h & 0x3ff)] + HalfToFloatExponentTable[h >> 10];
+            conv.uintValue = HalfToFloatMantissaTable[HalfToFloatOffsetTable[h >> 10] + ((uint) h & 0x3ff)] +
+                             HalfToFloatExponentTable[h >> 10];
             return conv.floatValue;
         }
 
@@ -156,17 +142,15 @@ namespace Dreamcast.Mathematics
             var conv = new FloatToUint();
             conv.floatValue = f;
             return (ushort) (FloatToHalfBaseTable[(conv.uintValue >> 23) & 0x1ff] + ((conv.uintValue & 0x007fffff) >>
-                                                                                     FloatToHalfShiftTable[(conv.uintValue >> 23) & 0x1ff]));
+                FloatToHalfShiftTable[(conv.uintValue >> 23) & 0x1ff]));
         }
 
         [StructLayout(LayoutKind.Explicit)]
         private struct FloatToUint
         {
-            [FieldOffset(0)]
-            public uint uintValue;
+            [FieldOffset(0)] public uint uintValue;
 
-            [FieldOffset(0)]
-            public float floatValue;
+            [FieldOffset(0)] public float floatValue;
         }
     }
 }

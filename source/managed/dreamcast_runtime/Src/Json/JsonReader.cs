@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -156,7 +141,8 @@ namespace Dreamcast.Json
             get => _dateTimeZoneHandling;
             set
             {
-                if (value < DateTimeZoneHandling.Local || value > DateTimeZoneHandling.RoundtripKind) throw new ArgumentOutOfRangeException(nameof(value));
+                if (value < DateTimeZoneHandling.Local || value > DateTimeZoneHandling.RoundtripKind)
+                    throw new ArgumentOutOfRangeException(nameof(value));
 
                 _dateTimeZoneHandling = value;
             }
@@ -192,7 +178,8 @@ namespace Dreamcast.Json
             get => _floatParseHandling;
             set
             {
-                if (value < FloatParseHandling.Double || value > FloatParseHandling.Decimal) throw new ArgumentOutOfRangeException(nameof(value));
+                if (value < FloatParseHandling.Double || value > FloatParseHandling.Decimal)
+                    throw new ArgumentOutOfRangeException(nameof(value));
 
                 _floatParseHandling = value;
             }
@@ -315,7 +302,9 @@ namespace Dreamcast.Json
                 if (_maxDepth != null && Depth + 1 > _maxDepth && !_hasExceededMaxDepth)
                 {
                     _hasExceededMaxDepth = true;
-                    throw JsonReaderException.Create(this, "The reader's MaxDepth of {0} has been exceeded.".FormatWith(CultureInfo.InvariantCulture, _maxDepth));
+                    throw JsonReaderException.Create(this,
+                        "The reader's MaxDepth of {0} has been exceeded.".FormatWith(CultureInfo.InvariantCulture,
+                            _maxDepth));
                 }
             }
         }
@@ -388,7 +377,8 @@ namespace Dreamcast.Json
                     catch (Exception ex)
                     {
                         // handle error for large integer overflow exceptions
-                        throw JsonReaderException.Create(this, "Could not convert to integer: {0}.".FormatWith(CultureInfo.InvariantCulture, v), ex);
+                        throw JsonReaderException.Create(this,
+                            "Could not convert to integer: {0}.".FormatWith(CultureInfo.InvariantCulture, v), ex);
                     }
                 }
 
@@ -399,7 +389,8 @@ namespace Dreamcast.Json
                     return ReadInt32String(s);
             }
 
-            throw JsonReaderException.Create(this, "Error reading integer. Unexpected token: {0}.".FormatWith(CultureInfo.InvariantCulture, t));
+            throw JsonReaderException.Create(this,
+                "Error reading integer. Unexpected token: {0}.".FormatWith(CultureInfo.InvariantCulture, t));
         }
 
         internal int? ReadInt32String(string? s)
@@ -417,7 +408,8 @@ namespace Dreamcast.Json
             }
 
             SetToken(JsonToken.String, s, false);
-            throw JsonReaderException.Create(this, "Could not convert string to integer: {0}.".FormatWith(CultureInfo.InvariantCulture, s));
+            throw JsonReaderException.Create(this,
+                "Could not convert string to integer: {0}.".FormatWith(CultureInfo.InvariantCulture, s));
         }
 
         /// <summary>
@@ -454,7 +446,8 @@ namespace Dreamcast.Json
                 }
             }
 
-            throw JsonReaderException.Create(this, "Error reading string. Unexpected token: {0}.".FormatWith(CultureInfo.InvariantCulture, t));
+            throw JsonReaderException.Create(this,
+                "Error reading string. Unexpected token: {0}.".FormatWith(CultureInfo.InvariantCulture, t));
         }
 
         /// <summary>
@@ -477,7 +470,10 @@ namespace Dreamcast.Json
                     var data = ReadAsBytes();
                     ReaderReadAndAssert();
 
-                    if (TokenType != JsonToken.EndObject) throw JsonReaderException.Create(this, "Error reading bytes. Unexpected token: {0}.".FormatWith(CultureInfo.InvariantCulture, TokenType));
+                    if (TokenType != JsonToken.EndObject)
+                        throw JsonReaderException.Create(this,
+                            "Error reading bytes. Unexpected token: {0}.".FormatWith(CultureInfo.InvariantCulture,
+                                TokenType));
 
                     SetToken(JsonToken.Bytes, data, false);
                     return data;
@@ -517,7 +513,8 @@ namespace Dreamcast.Json
                     return ReadArrayIntoByteArray();
             }
 
-            throw JsonReaderException.Create(this, "Error reading bytes. Unexpected token: {0}.".FormatWith(CultureInfo.InvariantCulture, t));
+            throw JsonReaderException.Create(this,
+                "Error reading bytes. Unexpected token: {0}.".FormatWith(CultureInfo.InvariantCulture, t));
         }
 
         internal byte[] ReadArrayIntoByteArray()
@@ -551,7 +548,9 @@ namespace Dreamcast.Json
                 case JsonToken.Comment:
                     return false;
                 default:
-                    throw JsonReaderException.Create(this, "Unexpected token when reading bytes: {0}.".FormatWith(CultureInfo.InvariantCulture, TokenType));
+                    throw JsonReaderException.Create(this,
+                        "Unexpected token when reading bytes: {0}.".FormatWith(CultureInfo.InvariantCulture,
+                            TokenType));
             }
         }
 
@@ -595,7 +594,8 @@ namespace Dreamcast.Json
                     return ReadDoubleString((string?) Value);
             }
 
-            throw JsonReaderException.Create(this, "Error reading double. Unexpected token: {0}.".FormatWith(CultureInfo.InvariantCulture, t));
+            throw JsonReaderException.Create(this,
+                "Error reading double. Unexpected token: {0}.".FormatWith(CultureInfo.InvariantCulture, t));
         }
 
         internal double? ReadDoubleString(string? s)
@@ -613,7 +613,8 @@ namespace Dreamcast.Json
             }
 
             SetToken(JsonToken.String, s, false);
-            throw JsonReaderException.Create(this, "Could not convert string to double: {0}.".FormatWith(CultureInfo.InvariantCulture, s));
+            throw JsonReaderException.Create(this,
+                "Could not convert string to double: {0}.".FormatWith(CultureInfo.InvariantCulture, s));
         }
 
         /// <summary>
@@ -655,7 +656,8 @@ namespace Dreamcast.Json
                     return (bool) Value!;
             }
 
-            throw JsonReaderException.Create(this, "Error reading boolean. Unexpected token: {0}.".FormatWith(CultureInfo.InvariantCulture, t));
+            throw JsonReaderException.Create(this,
+                "Error reading boolean. Unexpected token: {0}.".FormatWith(CultureInfo.InvariantCulture, t));
         }
 
         internal bool? ReadBooleanString(string? s)
@@ -673,7 +675,8 @@ namespace Dreamcast.Json
             }
 
             SetToken(JsonToken.String, s, false);
-            throw JsonReaderException.Create(this, "Could not convert string to boolean: {0}.".FormatWith(CultureInfo.InvariantCulture, s));
+            throw JsonReaderException.Create(this,
+                "Could not convert string to boolean: {0}.".FormatWith(CultureInfo.InvariantCulture, s));
         }
 
         /// <summary>
@@ -714,7 +717,8 @@ namespace Dreamcast.Json
                     catch (Exception ex)
                     {
                         // handle error for large integer overflow exceptions
-                        throw JsonReaderException.Create(this, "Could not convert to decimal: {0}.".FormatWith(CultureInfo.InvariantCulture, v), ex);
+                        throw JsonReaderException.Create(this,
+                            "Could not convert to decimal: {0}.".FormatWith(CultureInfo.InvariantCulture, v), ex);
                     }
                 }
 
@@ -724,7 +728,8 @@ namespace Dreamcast.Json
                     return ReadDecimalString((string?) Value);
             }
 
-            throw JsonReaderException.Create(this, "Error reading decimal. Unexpected token: {0}.".FormatWith(CultureInfo.InvariantCulture, t));
+            throw JsonReaderException.Create(this,
+                "Error reading decimal. Unexpected token: {0}.".FormatWith(CultureInfo.InvariantCulture, t));
         }
 
         internal decimal? ReadDecimalString(string? s)
@@ -749,7 +754,8 @@ namespace Dreamcast.Json
             }
 
             SetToken(JsonToken.String, s, false);
-            throw JsonReaderException.Create(this, "Could not convert string to decimal: {0}.".FormatWith(CultureInfo.InvariantCulture, s));
+            throw JsonReaderException.Create(this,
+                "Could not convert string to decimal: {0}.".FormatWith(CultureInfo.InvariantCulture, s));
         }
 
         /// <summary>
@@ -780,7 +786,8 @@ namespace Dreamcast.Json
                     return ReadDateTimeString((string?) Value);
             }
 
-            throw JsonReaderException.Create(this, "Error reading date. Unexpected token: {0}.".FormatWith(CultureInfo.InvariantCulture, TokenType));
+            throw JsonReaderException.Create(this,
+                "Error reading date. Unexpected token: {0}.".FormatWith(CultureInfo.InvariantCulture, TokenType));
         }
 
         internal DateTime? ReadDateTimeString(string? s)
@@ -805,7 +812,8 @@ namespace Dreamcast.Json
                 return dt;
             }
 
-            throw JsonReaderException.Create(this, "Could not convert string to DateTime: {0}.".FormatWith(CultureInfo.InvariantCulture, s));
+            throw JsonReaderException.Create(this,
+                "Could not convert string to DateTime: {0}.".FormatWith(CultureInfo.InvariantCulture, s));
         }
 
 #if HAVE_DATE_TIME_OFFSET
@@ -886,7 +894,9 @@ namespace Dreamcast.Json
                 }
             }
 
-            throw JsonReaderException.Create(this, "Error reading bytes. Unexpected token: {0}.".FormatWith(CultureInfo.InvariantCulture, JsonToken.StartObject));
+            throw JsonReaderException.Create(this,
+                "Error reading bytes. Unexpected token: {0}.".FormatWith(CultureInfo.InvariantCulture,
+                    JsonToken.StartObject));
         }
 
         /// <summary>
@@ -997,7 +1007,10 @@ namespace Dreamcast.Json
         {
             var currentObject = Pop();
 
-            if (GetTypeForCloseToken(endToken) != currentObject) throw JsonReaderException.Create(this, "JsonToken {0} is not valid for closing JsonType {1}.".FormatWith(CultureInfo.InvariantCulture, endToken, currentObject));
+            if (GetTypeForCloseToken(endToken) != currentObject)
+                throw JsonReaderException.Create(this,
+                    "JsonToken {0} is not valid for closing JsonType {1}.".FormatWith(CultureInfo.InvariantCulture,
+                        endToken, currentObject));
 
             if (Peek() != JsonContainerType.None || SupportMultipleContent)
                 _currentState = State.PostValue;
@@ -1027,7 +1040,9 @@ namespace Dreamcast.Json
                     SetFinished();
                     break;
                 default:
-                    throw JsonReaderException.Create(this, "While setting the reader state back to current object an unexpected JsonType was encountered: {0}".FormatWith(CultureInfo.InvariantCulture, currentObject));
+                    throw JsonReaderException.Create(this,
+                        "While setting the reader state back to current object an unexpected JsonType was encountered: {0}"
+                            .FormatWith(CultureInfo.InvariantCulture, currentObject));
             }
         }
 
@@ -1047,7 +1062,8 @@ namespace Dreamcast.Json
                 case JsonToken.EndConstructor:
                     return JsonContainerType.Constructor;
                 default:
-                    throw JsonReaderException.Create(this, "Not a valid close JsonToken: {0}".FormatWith(CultureInfo.InvariantCulture, token));
+                    throw JsonReaderException.Create(this,
+                        "Not a valid close JsonToken: {0}".FormatWith(CultureInfo.InvariantCulture, token));
             }
         }
 
@@ -1087,7 +1103,8 @@ namespace Dreamcast.Json
 
         internal void ReadForTypeAndAssert(JsonContract? contract, bool hasConverter)
         {
-            if (!ReadForType(contract, hasConverter)) throw JsonSerializationException.Create(this, "Unexpected end when reading JSON.");
+            if (!ReadForType(contract, hasConverter))
+                throw JsonSerializationException.Create(this, "Unexpected end when reading JSON.");
         }
 
         internal bool ReadForType(JsonContract? contract, bool hasConverter)
@@ -1107,7 +1124,10 @@ namespace Dreamcast.Json
                     break;
                 case ReadType.ReadAsInt64:
                     var result = ReadAndMoveToContent();
-                    if (TokenType == JsonToken.Undefined) throw JsonReaderException.Create(this, "An undefined token is not a valid {0}.".FormatWith(CultureInfo.InvariantCulture, contract?.UnderlyingType ?? typeof(long)));
+                    if (TokenType == JsonToken.Undefined)
+                        throw JsonReaderException.Create(this,
+                            "An undefined token is not a valid {0}.".FormatWith(CultureInfo.InvariantCulture,
+                                contract?.UnderlyingType ?? typeof(long)));
                     return result;
                 case ReadType.ReadAsDecimal:
                     ReadAsDecimal();

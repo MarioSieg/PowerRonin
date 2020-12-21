@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Dreamcast.Lua.Interpreter.Execution.VM
 {
@@ -31,7 +16,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
 
                 for (var i = 0; i < values.Count - 1; i++) result[i] = values[i].ToScalar();
 
-                for (var i = 0; i < values[values.Count - 1].Tuple.Length; i++) result[values.Count + i - 1] = values[values.Count - 1].Tuple[i];
+                for (var i = 0; i < values[values.Count - 1].Tuple.Length; i++)
+                    result[values.Count + i - 1] = values[values.Count - 1].Tuple[i];
 
                 if (result[result.Length - 1].Type == DataType.Tuple)
                     return Internal_AdjustTuple(result);
@@ -52,7 +38,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
         {
             DynValue m = null;
 
-            if (op1.Type == DataType.UserData) m = op1.UserData.Descriptor.MetaIndex(m_Script, op1.UserData.Object, eventName);
+            if (op1.Type == DataType.UserData)
+                m = op1.UserData.Descriptor.MetaIndex(m_Script, op1.UserData.Object, eventName);
 
             if (m == null)
             {
@@ -76,7 +63,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
             return -1;
         }
 
-        private int Internal_InvokeBinaryMetaMethod(DynValue l, DynValue r, string eventName, int instructionPtr, DynValue extraPush = null)
+        private int Internal_InvokeBinaryMetaMethod(DynValue l, DynValue r, string eventName, int instructionPtr,
+            DynValue extraPush = null)
         {
             var m = GetBinaryMetamethod(l, r, eventName);
 

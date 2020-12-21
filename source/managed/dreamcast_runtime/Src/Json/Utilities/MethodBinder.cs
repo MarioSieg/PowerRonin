@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-#if !HAVE_LINQ
+﻿#if !HAVE_LINQ
 #else
 using System.Linq;
 #endif
@@ -131,7 +116,8 @@ namespace Dreamcast.Json.Utilities
 
             for (int i = 0; i < types.Count; i++)
             {
-                Type paramType = (paramArrayType != null && i >= parameters.Length - 1) ? paramArrayType : parameters[i].ParameterType;
+                Type paramType =
+ (paramArrayType != null && i >= parameters.Length - 1) ? paramArrayType : parameters[i].ParameterType;
 
                 if (paramType == types[i])
                 {
@@ -226,8 +212,10 @@ namespace Dreamcast.Json.Utilities
 
                 for (int i = 0; i < _types.Count; i++)
                 {
-                    Type type1 = (paramArrayType1 != null && i >= parameters1.Length - 1) ? paramArrayType1 : parameters1[i].ParameterType;
-                    Type type2 = (paramArrayType2 != null && i >= parameters2.Length - 1) ? paramArrayType2 : parameters2[i].ParameterType;
+                    Type type1 =
+ (paramArrayType1 != null && i >= parameters1.Length - 1) ? paramArrayType1 : parameters1[i].ParameterType;
+                    Type type2 =
+ (paramArrayType2 != null && i >= parameters2.Length - 1) ? paramArrayType2 : parameters2[i].ParameterType;
 
                     if (type1 == type2)
                     {

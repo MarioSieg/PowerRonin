@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -228,7 +213,8 @@ namespace Dreamcast.Mathematics
             if (values == null)
                 throw new ArgumentNullException("values");
             if (values.Length != 4)
-                throw new ArgumentOutOfRangeException("values", "There must be four and only four input values for Color.");
+                throw new ArgumentOutOfRangeException("values",
+                    "There must be four and only four input values for Color.");
 
             R = ToByte(values[0]);
             G = ToByte(values[1]);
@@ -253,7 +239,8 @@ namespace Dreamcast.Mathematics
             if (values == null)
                 throw new ArgumentNullException("values");
             if (values.Length != 4)
-                throw new ArgumentOutOfRangeException("values", "There must be four and only four input values for Color.");
+                throw new ArgumentOutOfRangeException("values",
+                    "There must be four and only four input values for Color.");
 
             R = values[0];
             G = values[1];
@@ -587,7 +574,8 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled color.</returns>
         public static Color Scale(Color value, float scale)
         {
-            return new((byte) (value.R * scale), (byte) (value.G * scale), (byte) (value.B * scale), (byte) (value.A * scale));
+            return new((byte) (value.R * scale), (byte) (value.G * scale), (byte) (value.B * scale),
+                (byte) (value.A * scale));
         }
 
         /// <summary>
@@ -673,7 +661,8 @@ namespace Dreamcast.Mathematics
         /// <returns>A color.</returns>
         public static Color FromBgra(int color)
         {
-            return new((byte) ((color >> 16) & 255), (byte) ((color >> 8) & 255), (byte) (color & 255), (byte) ((color >> 24) & 255));
+            return new((byte) ((color >> 16) & 255), (byte) ((color >> 8) & 255), (byte) (color & 255),
+                (byte) ((color >> 24) & 255));
         }
 
         /// <summary>
@@ -881,7 +870,8 @@ namespace Dreamcast.Mathematics
         /// <returns>The adjusted color.</returns>
         public static Color AdjustContrast(Color value, float contrast)
         {
-            return new(ToByte(0.5f + contrast * (value.R / 255.0f - 0.5f)), ToByte(0.5f + contrast * (value.G / 255.0f - 0.5f)),
+            return new(ToByte(0.5f + contrast * (value.R / 255.0f - 0.5f)),
+                ToByte(0.5f + contrast * (value.G / 255.0f - 0.5f)),
                 ToByte(0.5f + contrast * (value.B / 255.0f - 0.5f)), value.A);
         }
 
@@ -911,7 +901,8 @@ namespace Dreamcast.Mathematics
         {
             var grey = value.R / 255.0f * 0.2125f + value.G / 255.0f * 0.7154f + value.B / 255.0f * 0.0721f;
 
-            return new Color(ToByte(grey + saturation * (value.R / 255.0f - grey)), ToByte(grey + saturation * (value.G / 255.0f - grey)),
+            return new Color(ToByte(grey + saturation * (value.R / 255.0f - grey)),
+                ToByte(grey + saturation * (value.G / 255.0f - grey)),
                 ToByte(grey + saturation * (value.B / 255.0f - grey)), value.A);
         }
 
@@ -965,7 +956,8 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled color.</returns>
         public static Color operator *(float scale, Color value)
         {
-            return new((byte) (value.R * scale), (byte) (value.G * scale), (byte) (value.B * scale), (byte) (value.A * scale));
+            return new((byte) (value.R * scale), (byte) (value.G * scale), (byte) (value.B * scale),
+                (byte) (value.A * scale));
         }
 
         /// <summary>
@@ -976,7 +968,8 @@ namespace Dreamcast.Mathematics
         /// <returns>The scaled color.</returns>
         public static Color operator *(Color value, float scale)
         {
-            return new((byte) (value.R * scale), (byte) (value.G * scale), (byte) (value.B * scale), (byte) (value.A * scale));
+            return new((byte) (value.R * scale), (byte) (value.G * scale), (byte) (value.B * scale),
+                (byte) (value.A * scale));
         }
 
         /// <summary>
@@ -987,7 +980,8 @@ namespace Dreamcast.Mathematics
         /// <returns>The modulated color.</returns>
         public static Color operator *(Color left, Color right)
         {
-            return new((byte) (left.R * right.R / 255.0f), (byte) (left.G * right.G / 255.0f), (byte) (left.B * right.B / 255.0f),
+            return new((byte) (left.R * right.R / 255.0f), (byte) (left.G * right.G / 255.0f),
+                (byte) (left.B * right.B / 255.0f),
                 (byte) (left.A * right.A / 255.0f));
         }
 
@@ -1182,7 +1176,8 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString(formatProvider);
 
-            return string.Format(formatProvider, toStringFormat, A.ToString(format, formatProvider), R.ToString(format, formatProvider),
+            return string.Format(formatProvider, toStringFormat, A.ToString(format, formatProvider),
+                R.ToString(format, formatProvider),
                 G.ToString(format, formatProvider), B.ToString(format, formatProvider));
         }
 

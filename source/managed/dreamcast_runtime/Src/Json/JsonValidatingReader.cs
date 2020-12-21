@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #if HAVE_BIG_INTEGER
 using System.Numerics;
 #endif
@@ -45,7 +30,8 @@ namespace Dreamcast.Json
     ///         <see href="https://www.newtonsoft.com/jsonschema">https://www.newtonsoft.com/jsonschema</see> for more details.
     ///     </note>
     /// </summary>
-    [Obsolete("JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
+    [Obsolete(
+        "JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
     public class JsonValidatingReader : JsonReader, IJsonLineInfo
     {
         private class SchemaScope
@@ -55,7 +41,8 @@ namespace Dreamcast.Json
                 TokenType = tokenType;
                 Schemas = schemas;
 
-                RequiredProperties = schemas.SelectMany(GetRequiredProperties).Distinct().ToDictionary(p => p, p => false);
+                RequiredProperties = schemas.SelectMany(GetRequiredProperties).Distinct()
+                    .ToDictionary(p => p, p => false);
 
                 if (tokenType == JTokenType.Array && schemas.Any(s => s.UniqueItems))
                 {
@@ -167,19 +154,23 @@ namespace Dreamcast.Json
                         return _currentScope.Schemas;
                     case JTokenType.Object:
                     {
-                        if (_currentScope.CurrentPropertyName == null) throw new JsonReaderException("CurrentPropertyName has not been set on scope.");
+                        if (_currentScope.CurrentPropertyName == null)
+                            throw new JsonReaderException("CurrentPropertyName has not been set on scope.");
 
                         IList<JsonSchemaModel> schemas = new List<JsonSchemaModel>();
 
                         foreach (var schema in CurrentSchemas)
                         {
-                            if (schema.Properties != null && schema.Properties.TryGetValue(_currentScope.CurrentPropertyName, out var propertySchema)) schemas.Add(propertySchema);
+                            if (schema.Properties != null &&
+                                schema.Properties.TryGetValue(_currentScope.CurrentPropertyName, out var propertySchema)
+                            ) schemas.Add(propertySchema);
                             if (schema.PatternProperties != null)
                                 foreach (var patternProperty in schema.PatternProperties)
                                     if (Regex.IsMatch(_currentScope.CurrentPropertyName, patternProperty.Key))
                                         schemas.Add(patternProperty.Value);
 
-                            if (schemas.Count == 0 && schema.AllowAdditionalProperties && schema.AdditionalProperties != null) schemas.Add(schema.AdditionalProperties);
+                            if (schemas.Count == 0 && schema.AllowAdditionalProperties &&
+                                schema.AdditionalProperties != null) schemas.Add(schema.AdditionalProperties);
                         }
 
                         return schemas;
@@ -199,7 +190,8 @@ namespace Dreamcast.Json
                                     if (schema.Items.Count > _currentScope.ArrayItemCount - 1)
                                         schemas.Add(schema.Items[_currentScope.ArrayItemCount - 1]);
 
-                                if (schema.AllowAdditionalItems && schema.AdditionalItems != null) schemas.Add(schema.AdditionalItems);
+                                if (schema.AllowAdditionalItems && schema.AdditionalItems != null)
+                                    schemas.Add(schema.AdditionalItems);
                             }
 
                         return schemas;
@@ -207,7 +199,9 @@ namespace Dreamcast.Json
                     case JTokenType.Constructor:
                         return EmptySchemaList;
                     default:
-                        throw new ArgumentOutOfRangeException("TokenType", "Unexpected token type: {0}".FormatWith(CultureInfo.InvariantCulture, _currentScope.TokenType));
+                        throw new ArgumentOutOfRangeException("TokenType",
+                            "Unexpected token type: {0}".FormatWith(CultureInfo.InvariantCulture,
+                                _currentScope.TokenType));
                 }
             }
         }
@@ -217,10 +211,12 @@ namespace Dreamcast.Json
             IJsonLineInfo lineInfo = this;
 
             var exceptionMessage = lineInfo.HasLineInfo()
-                ? message + " Line {0}, position {1}.".FormatWith(CultureInfo.InvariantCulture, lineInfo.LineNumber, lineInfo.LinePosition)
+                ? message + " Line {0}, position {1}.".FormatWith(CultureInfo.InvariantCulture, lineInfo.LineNumber,
+                    lineInfo.LinePosition)
                 : message;
 
-            OnValidationEvent(new JsonSchemaException(exceptionMessage, null, Path, lineInfo.LineNumber, lineInfo.LinePosition));
+            OnValidationEvent(new JsonSchemaException(exceptionMessage, null, Path, lineInfo.LineNumber,
+                lineInfo.LinePosition));
         }
 
         private void OnValidationEvent(JsonSchemaException exception)
@@ -253,7 +249,8 @@ namespace Dreamcast.Json
             get => _schema;
             set
             {
-                if (TokenType != JsonToken.None) throw new InvalidOperationException("Cannot change schema while validating JSON.");
+                if (TokenType != JsonToken.None)
+                    throw new InvalidOperationException("Cannot change schema while validating JSON.");
 
                 _schema = value;
                 _model = null;
@@ -284,7 +281,8 @@ namespace Dreamcast.Json
             var currentNodeType = GetCurrentNodeSchemaType();
             if (currentNodeType != null)
                 if (JsonSchemaGenerator.HasFlag(schema.Disallow, currentNodeType.GetValueOrDefault()))
-                    RaiseError("Type {0} is disallowed.".FormatWith(CultureInfo.InvariantCulture, currentNodeType), schema);
+                    RaiseError("Type {0} is disallowed.".FormatWith(CultureInfo.InvariantCulture, currentNodeType),
+                        schema);
         }
 
         private JsonSchemaType? GetCurrentNodeSchemaType()
@@ -442,7 +440,8 @@ namespace Dreamcast.Json
                 var builder = new JsonSchemaModelBuilder();
                 _model = builder.Build(_schema);
 
-                if (!JsonTokenUtils.IsStartToken(Reader.TokenType)) Push(new SchemaScope(JTokenType.None, CurrentMemberSchemas));
+                if (!JsonTokenUtils.IsStartToken(Reader.TokenType))
+                    Push(new SchemaScope(JTokenType.None, CurrentMemberSchemas));
             }
 
             switch (Reader.TokenType)
@@ -528,7 +527,8 @@ namespace Dreamcast.Json
         {
             foreach (var schemaScope in _stack)
             {
-                var isInUniqueArray = schemaScope.TokenType == JTokenType.Array && schemaScope.IsUniqueArray && schemaScope.ArrayItemCount > 0;
+                var isInUniqueArray = schemaScope.TokenType == JTokenType.Array && schemaScope.IsUniqueArray &&
+                                      schemaScope.ArrayItemCount > 0;
 
                 if (isInUniqueArray || schemas.Any(s => s.Enum != null))
                 {
@@ -551,7 +551,10 @@ namespace Dreamcast.Json
 
                         if (isInUniqueArray)
                         {
-                            if (schemaScope.UniqueArrayItems.Contains(finishedItem, JToken.EqualityComparer)) RaiseError("Non-unique array item at index {0}.".FormatWith(CultureInfo.InvariantCulture, schemaScope.ArrayItemCount - 1), schemaScope.Schemas.First(s => s.UniqueItems));
+                            if (schemaScope.UniqueArrayItems.Contains(finishedItem, JToken.EqualityComparer))
+                                RaiseError(
+                                    "Non-unique array item at index {0}.".FormatWith(CultureInfo.InvariantCulture,
+                                        schemaScope.ArrayItemCount - 1), schemaScope.Schemas.First(s => s.UniqueItems));
 
                             schemaScope.UniqueArrayItems.Add(finishedItem);
                         }
@@ -564,7 +567,9 @@ namespace Dreamcast.Json
                                         var sw = new StringWriter(CultureInfo.InvariantCulture);
                                         finishedItem.WriteTo(new JsonTextWriter(sw));
 
-                                        RaiseError("Value {0} is not defined in enum.".FormatWith(CultureInfo.InvariantCulture, sw.ToString()), schema);
+                                        RaiseError(
+                                            "Value {0} is not defined in enum.".FormatWith(CultureInfo.InvariantCulture,
+                                                sw.ToString()), schema);
                                     }
                         }
                     }
@@ -581,11 +586,12 @@ namespace Dreamcast.Json
             if (requiredProperties != null && requiredProperties.Values.Any(v => !v))
             {
                 var unmatchedRequiredProperties = requiredProperties.Where(kv => !kv.Value).Select(kv => kv.Key);
-                RaiseError("Required properties are missing from object: {0}.".FormatWith(CultureInfo.InvariantCulture, string.Join(", ", unmatchedRequiredProperties
+                RaiseError("Required properties are missing from object: {0}.".FormatWith(CultureInfo.InvariantCulture,
+                    string.Join(", ", unmatchedRequiredProperties
 #if !HAVE_STRING_JOIN_WITH_ENUMERABLE
-                        .ToArray()
+                            .ToArray()
 #endif
-                )), schema);
+                    )), schema);
             }
         }
 
@@ -595,9 +601,15 @@ namespace Dreamcast.Json
 
             var arrayItemCount = _currentScope.ArrayItemCount;
 
-            if (schema.MaximumItems != null && arrayItemCount > schema.MaximumItems) RaiseError("Array item count {0} exceeds maximum count of {1}.".FormatWith(CultureInfo.InvariantCulture, arrayItemCount, schema.MaximumItems), schema);
+            if (schema.MaximumItems != null && arrayItemCount > schema.MaximumItems)
+                RaiseError(
+                    "Array item count {0} exceeds maximum count of {1}.".FormatWith(CultureInfo.InvariantCulture,
+                        arrayItemCount, schema.MaximumItems), schema);
 
-            if (schema.MinimumItems != null && arrayItemCount < schema.MinimumItems) RaiseError("Array item count {0} is less than minimum count of {1}.".FormatWith(CultureInfo.InvariantCulture, arrayItemCount, schema.MinimumItems), schema);
+            if (schema.MinimumItems != null && arrayItemCount < schema.MinimumItems)
+                RaiseError(
+                    "Array item count {0} is less than minimum count of {1}.".FormatWith(CultureInfo.InvariantCulture,
+                        arrayItemCount, schema.MinimumItems), schema);
         }
 
         private void ValidateNull(JsonSchemaModel schema)
@@ -628,14 +640,22 @@ namespace Dreamcast.Json
 
             var value = Reader.Value.ToString();
 
-            if (schema.MaximumLength != null && value.Length > schema.MaximumLength) RaiseError("String '{0}' exceeds maximum length of {1}.".FormatWith(CultureInfo.InvariantCulture, value, schema.MaximumLength), schema);
+            if (schema.MaximumLength != null && value.Length > schema.MaximumLength)
+                RaiseError(
+                    "String '{0}' exceeds maximum length of {1}.".FormatWith(CultureInfo.InvariantCulture, value,
+                        schema.MaximumLength), schema);
 
-            if (schema.MinimumLength != null && value.Length < schema.MinimumLength) RaiseError("String '{0}' is less than minimum length of {1}.".FormatWith(CultureInfo.InvariantCulture, value, schema.MinimumLength), schema);
+            if (schema.MinimumLength != null && value.Length < schema.MinimumLength)
+                RaiseError(
+                    "String '{0}' is less than minimum length of {1}.".FormatWith(CultureInfo.InvariantCulture, value,
+                        schema.MinimumLength), schema);
 
             if (schema.Patterns != null)
                 foreach (var pattern in schema.Patterns)
                     if (!Regex.IsMatch(value, pattern))
-                        RaiseError("String '{0}' does not match regex pattern '{1}'.".FormatWith(CultureInfo.InvariantCulture, value, pattern), schema);
+                        RaiseError(
+                            "String '{0}' does not match regex pattern '{1}'.".FormatWith(CultureInfo.InvariantCulture,
+                                value, pattern), schema);
         }
 
         private void ValidateInteger(JsonSchemaModel schema)
@@ -650,14 +670,26 @@ namespace Dreamcast.Json
 
             if (schema.Maximum != null)
             {
-                if (JValue.Compare(JTokenType.Integer, value, schema.Maximum) > 0) RaiseError("Integer {0} exceeds maximum value of {1}.".FormatWith(CultureInfo.InvariantCulture, value, schema.Maximum), schema);
-                if (schema.ExclusiveMaximum && JValue.Compare(JTokenType.Integer, value, schema.Maximum) == 0) RaiseError("Integer {0} equals maximum value of {1} and exclusive maximum is true.".FormatWith(CultureInfo.InvariantCulture, value, schema.Maximum), schema);
+                if (JValue.Compare(JTokenType.Integer, value, schema.Maximum) > 0)
+                    RaiseError(
+                        "Integer {0} exceeds maximum value of {1}.".FormatWith(CultureInfo.InvariantCulture, value,
+                            schema.Maximum), schema);
+                if (schema.ExclusiveMaximum && JValue.Compare(JTokenType.Integer, value, schema.Maximum) == 0)
+                    RaiseError(
+                        "Integer {0} equals maximum value of {1} and exclusive maximum is true.".FormatWith(
+                            CultureInfo.InvariantCulture, value, schema.Maximum), schema);
             }
 
             if (schema.Minimum != null)
             {
-                if (JValue.Compare(JTokenType.Integer, value, schema.Minimum) < 0) RaiseError("Integer {0} is less than minimum value of {1}.".FormatWith(CultureInfo.InvariantCulture, value, schema.Minimum), schema);
-                if (schema.ExclusiveMinimum && JValue.Compare(JTokenType.Integer, value, schema.Minimum) == 0) RaiseError("Integer {0} equals minimum value of {1} and exclusive minimum is true.".FormatWith(CultureInfo.InvariantCulture, value, schema.Minimum), schema);
+                if (JValue.Compare(JTokenType.Integer, value, schema.Minimum) < 0)
+                    RaiseError(
+                        "Integer {0} is less than minimum value of {1}.".FormatWith(CultureInfo.InvariantCulture, value,
+                            schema.Minimum), schema);
+                if (schema.ExclusiveMinimum && JValue.Compare(JTokenType.Integer, value, schema.Minimum) == 0)
+                    RaiseError(
+                        "Integer {0} equals minimum value of {1} and exclusive minimum is true.".FormatWith(
+                            CultureInfo.InvariantCulture, value, schema.Minimum), schema);
             }
 
             if (schema.DivisibleBy != null)
@@ -668,7 +700,8 @@ namespace Dreamcast.Json
                 {
                     // not that this will lose any decimal point on DivisibleBy
                     // so manually raise an error if DivisibleBy is not an integer and value is not zero
-                    bool divisibleNonInteger = !Math.Abs(schema.DivisibleBy.Value - Math.Truncate(schema.DivisibleBy.Value)).Equals(0);
+                    bool divisibleNonInteger =
+ !Math.Abs(schema.DivisibleBy.Value - Math.Truncate(schema.DivisibleBy.Value)).Equals(0);
                     if (divisibleNonInteger)
                     {
                         notDivisible = i != 0;
@@ -681,10 +714,14 @@ namespace Dreamcast.Json
                 else
 #endif
                 {
-                    notDivisible = !IsZero(Convert.ToInt64(value, CultureInfo.InvariantCulture) % schema.DivisibleBy.GetValueOrDefault());
+                    notDivisible = !IsZero(Convert.ToInt64(value, CultureInfo.InvariantCulture) %
+                                           schema.DivisibleBy.GetValueOrDefault());
                 }
 
-                if (notDivisible) RaiseError("Integer {0} is not evenly divisible by {1}.".FormatWith(CultureInfo.InvariantCulture, JsonConvert.ToString(value), schema.DivisibleBy), schema);
+                if (notDivisible)
+                    RaiseError(
+                        "Integer {0} is not evenly divisible by {1}.".FormatWith(CultureInfo.InvariantCulture,
+                            JsonConvert.ToString(value), schema.DivisibleBy), schema);
             }
         }
 
@@ -699,8 +736,11 @@ namespace Dreamcast.Json
                     if (currentSchema != null
                         && currentSchema.PositionalItemsValidation
                         && !currentSchema.AllowAdditionalItems
-                        && (currentSchema.Items == null || _currentScope.ArrayItemCount - 1 >= currentSchema.Items.Count))
-                        RaiseError("Index {0} has not been defined and the schema does not allow additional items.".FormatWith(CultureInfo.InvariantCulture, _currentScope.ArrayItemCount), currentSchema);
+                        && (currentSchema.Items == null ||
+                            _currentScope.ArrayItemCount - 1 >= currentSchema.Items.Count))
+                        RaiseError(
+                            "Index {0} has not been defined and the schema does not allow additional items.".FormatWith(
+                                CultureInfo.InvariantCulture, _currentScope.ArrayItemCount), currentSchema);
             }
         }
 
@@ -716,21 +756,36 @@ namespace Dreamcast.Json
 
             if (schema.Maximum != null)
             {
-                if (value > schema.Maximum) RaiseError("Float {0} exceeds maximum value of {1}.".FormatWith(CultureInfo.InvariantCulture, JsonConvert.ToString(value), schema.Maximum), schema);
-                if (schema.ExclusiveMaximum && value == schema.Maximum) RaiseError("Float {0} equals maximum value of {1} and exclusive maximum is true.".FormatWith(CultureInfo.InvariantCulture, JsonConvert.ToString(value), schema.Maximum), schema);
+                if (value > schema.Maximum)
+                    RaiseError(
+                        "Float {0} exceeds maximum value of {1}.".FormatWith(CultureInfo.InvariantCulture,
+                            JsonConvert.ToString(value), schema.Maximum), schema);
+                if (schema.ExclusiveMaximum && value == schema.Maximum)
+                    RaiseError(
+                        "Float {0} equals maximum value of {1} and exclusive maximum is true.".FormatWith(
+                            CultureInfo.InvariantCulture, JsonConvert.ToString(value), schema.Maximum), schema);
             }
 
             if (schema.Minimum != null)
             {
-                if (value < schema.Minimum) RaiseError("Float {0} is less than minimum value of {1}.".FormatWith(CultureInfo.InvariantCulture, JsonConvert.ToString(value), schema.Minimum), schema);
-                if (schema.ExclusiveMinimum && value == schema.Minimum) RaiseError("Float {0} equals minimum value of {1} and exclusive minimum is true.".FormatWith(CultureInfo.InvariantCulture, JsonConvert.ToString(value), schema.Minimum), schema);
+                if (value < schema.Minimum)
+                    RaiseError(
+                        "Float {0} is less than minimum value of {1}.".FormatWith(CultureInfo.InvariantCulture,
+                            JsonConvert.ToString(value), schema.Minimum), schema);
+                if (schema.ExclusiveMinimum && value == schema.Minimum)
+                    RaiseError(
+                        "Float {0} equals minimum value of {1} and exclusive minimum is true.".FormatWith(
+                            CultureInfo.InvariantCulture, JsonConvert.ToString(value), schema.Minimum), schema);
             }
 
             if (schema.DivisibleBy != null)
             {
                 var remainder = FloatingPointRemainder(value, schema.DivisibleBy.GetValueOrDefault());
 
-                if (!IsZero(remainder)) RaiseError("Float {0} is not evenly divisible by {1}.".FormatWith(CultureInfo.InvariantCulture, JsonConvert.ToString(value), schema.DivisibleBy), schema);
+                if (!IsZero(remainder))
+                    RaiseError(
+                        "Float {0} is not evenly divisible by {1}.".FormatWith(CultureInfo.InvariantCulture,
+                            JsonConvert.ToString(value), schema.DivisibleBy), schema);
             }
         }
 
@@ -752,13 +807,17 @@ namespace Dreamcast.Json
 
             var propertyName = Convert.ToString(Reader.Value, CultureInfo.InvariantCulture);
 
-            if (_currentScope.RequiredProperties.ContainsKey(propertyName)) _currentScope.RequiredProperties[propertyName] = true;
+            if (_currentScope.RequiredProperties.ContainsKey(propertyName))
+                _currentScope.RequiredProperties[propertyName] = true;
 
             if (!schema.AllowAdditionalProperties)
             {
                 var propertyDefinied = IsPropertyDefinied(schema, propertyName);
 
-                if (!propertyDefinied) RaiseError("Property '{0}' has not been defined and the schema does not allow additional properties.".FormatWith(CultureInfo.InvariantCulture, propertyName), schema);
+                if (!propertyDefinied)
+                    RaiseError(
+                        "Property '{0}' has not been defined and the schema does not allow additional properties."
+                            .FormatWith(CultureInfo.InvariantCulture, propertyName), schema);
             }
 
             _currentScope.CurrentPropertyName = propertyName;
@@ -794,7 +853,9 @@ namespace Dreamcast.Json
         {
             if (!JsonSchemaGenerator.HasFlag(currentSchema.Type, currentType))
             {
-                RaiseError("Invalid type. Expected {0} but got {1}.".FormatWith(CultureInfo.InvariantCulture, currentSchema.Type, currentType), currentSchema);
+                RaiseError(
+                    "Invalid type. Expected {0} but got {1}.".FormatWith(CultureInfo.InvariantCulture,
+                        currentSchema.Type, currentType), currentSchema);
                 return false;
             }
 

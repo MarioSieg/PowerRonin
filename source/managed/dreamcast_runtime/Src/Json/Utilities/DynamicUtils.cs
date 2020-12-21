@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-#if HAVE_DYNAMIC
+﻿#if HAVE_DYNAMIC
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -37,12 +22,16 @@ namespace Dreamcast.Json.Utilities
         internal static class BinderWrapper
         {
 #if !HAVE_REFLECTION_BINDER
-            public const string CSharpAssemblyName = "Microsoft.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a";
+            public const string CSharpAssemblyName =
+ "Microsoft.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a";
 
             private const string BinderTypeName = "Microsoft.CSharp.RuntimeBinder.Binder, " + CSharpAssemblyName;
-            private const string CSharpArgumentInfoTypeName = "Microsoft.CSharp.RuntimeBinder.CSharpArgumentInfo, " + CSharpAssemblyName;
-            private const string CSharpArgumentInfoFlagsTypeName = "Microsoft.CSharp.RuntimeBinder.CSharpArgumentInfoFlags, " + CSharpAssemblyName;
-            private const string CSharpBinderFlagsTypeName = "Microsoft.CSharp.RuntimeBinder.CSharpBinderFlags, " + CSharpAssemblyName;
+            private const string CSharpArgumentInfoTypeName =
+ "Microsoft.CSharp.RuntimeBinder.CSharpArgumentInfo, " + CSharpAssemblyName;
+            private const string CSharpArgumentInfoFlagsTypeName =
+ "Microsoft.CSharp.RuntimeBinder.CSharpArgumentInfoFlags, " + CSharpAssemblyName;
+            private const string CSharpBinderFlagsTypeName =
+ "Microsoft.CSharp.RuntimeBinder.CSharpBinderFlags, " + CSharpAssemblyName;
 
             private static object? _getCSharpArgumentInfoArray;
             private static object? _setCSharpArgumentInfoArray;
@@ -79,7 +68,8 @@ namespace Dreamcast.Json.Utilities
 
                 for (int i = 0; i < values.Length; i++)
                 {
-                    MethodInfo createArgumentInfoMethod = csharpArgumentInfoType.GetMethod("Create", new[] { csharpArgumentInfoFlags, typeof(string) });
+                    MethodInfo createArgumentInfoMethod =
+ csharpArgumentInfoType.GetMethod("Create", new[] { csharpArgumentInfoFlags, typeof(string) });
                     object arg = createArgumentInfoMethod.Invoke(null, new object?[] { 0, null });
                     a.SetValue(arg, i);
                 }
@@ -93,12 +83,15 @@ namespace Dreamcast.Json.Utilities
                 Type csharpBinderFlagsType = Type.GetType(CSharpBinderFlagsTypeName, true);
                 Type binderType = Type.GetType(BinderTypeName, true);
 
-                Type csharpArgumentInfoTypeEnumerableType = typeof(IEnumerable<>).MakeGenericType(csharpArgumentInfoType);
+                Type csharpArgumentInfoTypeEnumerableType =
+ typeof(IEnumerable<>).MakeGenericType(csharpArgumentInfoType);
 
-                MethodInfo getMemberMethod = binderType.GetMethod("GetMember", new[] { csharpBinderFlagsType, typeof(string), typeof(Type), csharpArgumentInfoTypeEnumerableType });
+                MethodInfo getMemberMethod =
+ binderType.GetMethod("GetMember", new[] { csharpBinderFlagsType, typeof(string), typeof(Type), csharpArgumentInfoTypeEnumerableType });
                 _getMemberCall = JsonTypeReflector.ReflectionDelegateFactory.CreateMethodCall<object?>(getMemberMethod);
 
-                MethodInfo setMemberMethod = binderType.GetMethod("SetMember", new[] { csharpBinderFlagsType, typeof(string), typeof(Type), csharpArgumentInfoTypeEnumerableType });
+                MethodInfo setMemberMethod =
+ binderType.GetMethod("SetMember", new[] { csharpBinderFlagsType, typeof(string), typeof(Type), csharpArgumentInfoTypeEnumerableType });
                 _setMemberCall = JsonTypeReflector.ReflectionDelegateFactory.CreateMethodCall<object?>(setMemberMethod);
             }
 #endif
@@ -153,7 +146,8 @@ namespace Dreamcast.Json.Utilities
 
         public override DynamicMetaObject FallbackGetMember(DynamicMetaObject target, DynamicMetaObject errorSuggestion)
         {
-            DynamicMetaObject retMetaObject = _innerBinder.Bind(target, CollectionUtils.ArrayEmpty<DynamicMetaObject>());
+            DynamicMetaObject retMetaObject =
+ _innerBinder.Bind(target, CollectionUtils.ArrayEmpty<DynamicMetaObject>());
 
             NoThrowExpressionVisitor noThrowVisitor = new NoThrowExpressionVisitor();
             Expression resultExpression = noThrowVisitor.Visit(retMetaObject.Expression);

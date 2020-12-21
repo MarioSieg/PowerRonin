@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
@@ -115,7 +100,9 @@ namespace Dreamcast.Json.Serialization
                 }
 #endif
 
-                if (assembly == null) throw new JsonSerializationException("Could not load assembly '{0}'.".FormatWith(CultureInfo.InvariantCulture, assemblyName));
+                if (assembly == null)
+                    throw new JsonSerializationException(
+                        "Could not load assembly '{0}'.".FormatWith(CultureInfo.InvariantCulture, assemblyName));
 
                 var type = assembly.GetType(typeName);
                 if (type == null)
@@ -129,10 +116,15 @@ namespace Dreamcast.Json.Serialization
                         }
                         catch (Exception ex)
                         {
-                            throw new JsonSerializationException("Could not find type '{0}' in assembly '{1}'.".FormatWith(CultureInfo.InvariantCulture, typeName, assembly.FullName), ex);
+                            throw new JsonSerializationException(
+                                "Could not find type '{0}' in assembly '{1}'.".FormatWith(CultureInfo.InvariantCulture,
+                                    typeName, assembly.FullName), ex);
                         }
 
-                    if (type == null) throw new JsonSerializationException("Could not find type '{0}' in assembly '{1}'.".FormatWith(CultureInfo.InvariantCulture, typeName, assembly.FullName));
+                    if (type == null)
+                        throw new JsonSerializationException(
+                            "Could not find type '{0}' in assembly '{1}'.".FormatWith(CultureInfo.InvariantCulture,
+                                typeName, assembly.FullName));
                 }
 
                 return type;
@@ -168,9 +160,11 @@ namespace Dreamcast.Json.Serialization
                                 --scope;
                                 if (scope == 0)
                                 {
-                                    var typeArgAssemblyQualifiedName = typeName.Substring(typeArgStartIndex, i - typeArgStartIndex);
+                                    var typeArgAssemblyQualifiedName =
+                                        typeName.Substring(typeArgStartIndex, i - typeArgStartIndex);
 
-                                    var typeNameKey = ReflectionUtils.SplitFullyQualifiedTypeName(typeArgAssemblyQualifiedName);
+                                    var typeNameKey =
+                                        ReflectionUtils.SplitFullyQualifiedTypeName(typeArgAssemblyQualifiedName);
                                     genericTypeArguments.Add(GetTypeByName(typeNameKey));
                                 }
 

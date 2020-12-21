@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Dreamcast.Lua.Interpreter.DataStructs;
 
 namespace Dreamcast.Lua.Interpreter
@@ -138,7 +123,10 @@ namespace Dreamcast.Lua.Interpreter
         /// <returns></returns>
         public DynValue AsType(int argNum, string funcName, DataType type, bool allowNil = false)
         {
-            return this[argNum].CheckType(funcName, type, argNum, allowNil ? TypeValidationFlags.AllowNil | TypeValidationFlags.AutoConvert : TypeValidationFlags.AutoConvert);
+            return this[argNum].CheckType(funcName, type, argNum,
+                allowNil
+                    ? TypeValidationFlags.AllowNil | TypeValidationFlags.AutoConvert
+                    : TypeValidationFlags.AutoConvert);
         }
 
         /// <summary>
@@ -152,7 +140,8 @@ namespace Dreamcast.Lua.Interpreter
         /// <returns></returns>
         public T AsUserData<T>(int argNum, string funcName, bool allowNil = false)
         {
-            return this[argNum].CheckUserDataType<T>(funcName, argNum, allowNil ? TypeValidationFlags.AllowNil : TypeValidationFlags.None);
+            return this[argNum].CheckUserDataType<T>(funcName, argNum,
+                allowNil ? TypeValidationFlags.AllowNil : TypeValidationFlags.None);
         }
 
         /// <summary>
@@ -196,7 +185,8 @@ namespace Dreamcast.Lua.Interpreter
             if (this[argNum].Type == DataType.Table && this[argNum].Table.MetaTable != null &&
                 this[argNum].Table.MetaTable.RawGet("__tostring") != null)
             {
-                var v = executionContext.GetScript().Call(this[argNum].Table.MetaTable.RawGet("__tostring"), this[argNum]);
+                var v = executionContext.GetScript()
+                    .Call(this[argNum].Table.MetaTable.RawGet("__tostring"), this[argNum]);
 
                 if (v.Type != DataType.String)
                     throw new ScriptRuntimeException("'tostring' must return a string to '{0}'", funcName);

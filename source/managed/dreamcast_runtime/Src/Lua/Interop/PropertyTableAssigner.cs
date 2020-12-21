@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -148,7 +133,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
                 string name = attr.Name ?? pi.Name;
 
                 if (m_PropertyMap.ContainsKey(name))
-                    throw new ArgumentException(string.Format("Type {0} has two definitions for Dreamcast.Lua property {1}", m_Type.FullName, name));
+                    throw new ArgumentException(string.Format(
+                        "Type {0} has two definitions for Dreamcast.Lua property {1}", m_Type.FullName, name));
                 m_PropertyMap.Add(name, pi);
             }
         }
@@ -208,9 +194,15 @@ namespace Dreamcast.Lua.Interpreter.Interop
         private void AssignProperty(object obj, string name, DynValue value)
         {
             if (TryAssignProperty(obj, name, value)) return;
-            if ((Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.UpperFirstLetter) == FuzzySymbolMatchingBehavior.UpperFirstLetter && TryAssignProperty(obj, DescriptorHelpers.UpperFirstLetter(name), value)) return;
-            if ((Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.Camelify) == FuzzySymbolMatchingBehavior.Camelify && TryAssignProperty(obj, DescriptorHelpers.Camelify(name), value)) return;
-            if ((Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.PascalCase) == FuzzySymbolMatchingBehavior.PascalCase && TryAssignProperty(obj, DescriptorHelpers.UpperFirstLetter(DescriptorHelpers.Camelify(name)), value)) return;
+            if ((Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.UpperFirstLetter) ==
+                FuzzySymbolMatchingBehavior.UpperFirstLetter &&
+                TryAssignProperty(obj, DescriptorHelpers.UpperFirstLetter(name), value)) return;
+            if ((Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.Camelify) ==
+                FuzzySymbolMatchingBehavior.Camelify &&
+                TryAssignProperty(obj, DescriptorHelpers.Camelify(name), value)) return;
+            if ((Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.PascalCase) ==
+                FuzzySymbolMatchingBehavior.PascalCase && TryAssignProperty(obj,
+                    DescriptorHelpers.UpperFirstLetter(DescriptorHelpers.Camelify(name)), value)) return;
 
             throw new ScriptRuntimeException("Invalid property {0}", name);
         }
@@ -232,11 +224,13 @@ namespace Dreamcast.Lua.Interpreter.Interop
                 throw new ArgumentNullException("Object is null");
 
             if (!Framework.Do.IsInstanceOfType(m_Type, obj))
-                throw new ArgumentException(string.Format("Invalid type of object : got '{0}', expected {1}", obj.GetType().FullName, m_Type.FullName));
+                throw new ArgumentException(string.Format("Invalid type of object : got '{0}', expected {1}",
+                    obj.GetType().FullName, m_Type.FullName));
 
             foreach (var pair in data.Pairs)
             {
-                if (pair.Key.Type != DataType.String) throw new ScriptRuntimeException("Invalid property of type {0}", pair.Key.Type.ToErrorTypeString());
+                if (pair.Key.Type != DataType.String)
+                    throw new ScriptRuntimeException("Invalid property of type {0}", pair.Key.Type.ToErrorTypeString());
 
                 AssignProperty(obj, pair.Key.String, pair.Value);
             }

@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using Dreamcast.Lua.Interpreter.Execution.VM;
 
 namespace Dreamcast.Lua.Interpreter.Execution
@@ -83,7 +68,8 @@ namespace Dreamcast.Lua.Interpreter.Execution
                 case OpCode.IndexSet:
                 case OpCode.IndexSetN:
                 case OpCode.IndexSetL:
-                    return InstructionFieldUsage.Symbol | InstructionFieldUsage.Value | InstructionFieldUsage.NumVal | InstructionFieldUsage.NumVal2;
+                    return InstructionFieldUsage.Symbol | InstructionFieldUsage.Value | InstructionFieldUsage.NumVal |
+                           InstructionFieldUsage.NumVal2;
                 case OpCode.StoreLcl:
                 case OpCode.StoreUpv:
                     return InstructionFieldUsage.Symbol | InstructionFieldUsage.NumVal | InstructionFieldUsage.NumVal2;
@@ -95,7 +81,8 @@ namespace Dreamcast.Lua.Interpreter.Execution
                 case OpCode.Args:
                     return InstructionFieldUsage.SymbolList;
                 case OpCode.BeginFn:
-                    return InstructionFieldUsage.SymbolList | InstructionFieldUsage.NumVal | InstructionFieldUsage.NumVal2;
+                    return InstructionFieldUsage.SymbolList | InstructionFieldUsage.NumVal |
+                           InstructionFieldUsage.NumVal2;
                 case OpCode.Closure:
                     return InstructionFieldUsage.SymbolList | InstructionFieldUsage.NumValAsCodeAddress;
                 case OpCode.Nop:
@@ -106,9 +93,11 @@ namespace Dreamcast.Lua.Interpreter.Execution
                 case OpCode.ThisCall:
                     return InstructionFieldUsage.NumVal | InstructionFieldUsage.Name;
                 case OpCode.Meta:
-                    return InstructionFieldUsage.NumVal | InstructionFieldUsage.NumVal2 | InstructionFieldUsage.Value | InstructionFieldUsage.Name;
+                    return InstructionFieldUsage.NumVal | InstructionFieldUsage.NumVal2 | InstructionFieldUsage.Value |
+                           InstructionFieldUsage.Name;
                 default:
-                    throw new NotImplementedException(string.Format("InstructionFieldUsage for instruction {0}", (int) op));
+                    throw new NotImplementedException(string.Format("InstructionFieldUsage for instruction {0}",
+                        (int) op));
             }
         }
     }

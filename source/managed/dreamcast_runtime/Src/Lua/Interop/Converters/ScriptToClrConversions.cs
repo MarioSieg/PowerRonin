@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using Dreamcast.Lua.Interpreter.Compatibility;
 
 namespace Dreamcast.Lua.Interpreter.Interop.Converters
@@ -48,7 +33,8 @@ namespace Dreamcast.Lua.Interpreter.Interop.Converters
         /// </summary>
         internal static object DynValueToObject(DynValue value)
         {
-            var converter = Script.GlobalOptions.CustomConverters.GetScriptToClrCustomConversion(value.Type, typeof(object));
+            var converter =
+                Script.GlobalOptions.CustomConverters.GetScriptToClrCustomConversion(value.Type, typeof(object));
             if (converter != null)
             {
                 var v = converter(value);
@@ -91,12 +77,14 @@ namespace Dreamcast.Lua.Interpreter.Interop.Converters
         /// <summary>
         ///     Converts a DynValue to a CLR object of a specific type
         /// </summary>
-        internal static object DynValueToObjectOfType(DynValue value, Type desiredType, object defaultValue, bool isOptional)
+        internal static object DynValueToObjectOfType(DynValue value, Type desiredType, object defaultValue,
+            bool isOptional)
         {
             if (desiredType.IsByRef)
                 desiredType = desiredType.GetElementType();
 
-            var converter = Script.GlobalOptions.CustomConverters.GetScriptToClrCustomConversion(value.Type, desiredType);
+            var converter =
+                Script.GlobalOptions.CustomConverters.GetScriptToClrCustomConversion(value.Type, desiredType);
             if (converter != null)
             {
                 var v = converter(value);
@@ -179,7 +167,8 @@ namespace Dreamcast.Lua.Interpreter.Interop.Converters
                     break;
                 case DataType.ClrFunction:
                     if (desiredType == typeof(CallbackFunction)) return value.Callback;
-                    else if (desiredType == typeof(Func<ScriptExecutionContext, CallbackArguments, DynValue>)) return value.Callback.ClrCallback;
+                    else if (desiredType == typeof(Func<ScriptExecutionContext, CallbackArguments, DynValue>))
+                        return value.Callback.ClrCallback;
                     break;
                 case DataType.UserData:
                     if (value.UserData.Object != null)
@@ -228,7 +217,8 @@ namespace Dreamcast.Lua.Interpreter.Interop.Converters
             if (desiredType.IsByRef)
                 desiredType = desiredType.GetElementType();
 
-            var customConverter = Script.GlobalOptions.CustomConverters.GetScriptToClrCustomConversion(value.Type, desiredType);
+            var customConverter =
+                Script.GlobalOptions.CustomConverters.GetScriptToClrCustomConversion(value.Type, desiredType);
             if (customConverter != null)
                 return WEIGHT_CUSTOM_CONVERTER_MATCH;
 
@@ -301,7 +291,8 @@ namespace Dreamcast.Lua.Interpreter.Interop.Converters
                     break;
                 case DataType.ClrFunction:
                     if (desiredType == typeof(CallbackFunction)) return WEIGHT_EXACT_MATCH;
-                    else if (desiredType == typeof(Func<ScriptExecutionContext, CallbackArguments, DynValue>)) return WEIGHT_EXACT_MATCH;
+                    else if (desiredType == typeof(Func<ScriptExecutionContext, CallbackArguments, DynValue>))
+                        return WEIGHT_EXACT_MATCH;
                     break;
                 case DataType.UserData:
                     if (value.UserData.Object != null)

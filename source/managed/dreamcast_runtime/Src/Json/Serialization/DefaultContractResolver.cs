@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-#if HAVE_CONCURRENT_DICTIONARY
+﻿#if HAVE_CONCURRENT_DICTIONARY
 using System.Collections.Concurrent;
 #endif
 #if HAVE_DYNAMIC
@@ -51,7 +36,8 @@ namespace Dreamcast.Json.Serialization
         // Json.NET Schema requires a property
         internal static IContractResolver Instance { get; } = new DefaultContractResolver();
 
-        private static readonly string[] BlacklistedTypeNames = {"System.IO.DriveInfo", "System.IO.FileInfo", "System.IO.DirectoryInfo"};
+        private static readonly string[] BlacklistedTypeNames =
+            {"System.IO.DriveInfo", "System.IO.FileInfo", "System.IO.DirectoryInfo"};
 
         private static readonly JsonConverter[] BuiltInConverters =
         {
@@ -97,7 +83,8 @@ namespace Dreamcast.Json.Serialization
         ///     Gets or sets the default members search flags.
         /// </summary>
         /// <value>The default members search flags.</value>
-        [Obsolete("DefaultMembersSearchFlags is obsolete. To modify the members serialized inherit from DefaultContractResolver and override the GetSerializableMembers method instead.")]
+        [Obsolete(
+            "DefaultMembersSearchFlags is obsolete. To modify the members serialized inherit from DefaultContractResolver and override the GetSerializableMembers method instead.")]
         public BindingFlags DefaultMembersSearchFlags { get; set; }
 #else
         private readonly BindingFlags DefaultMembersSearchFlags;
@@ -209,11 +196,13 @@ namespace Dreamcast.Json.Serialization
             ignoreSerializableAttribute = true;
 #endif
 
-            var memberSerialization = JsonTypeReflector.GetObjectMemberSerialization(objectType, ignoreSerializableAttribute);
+            var memberSerialization =
+                JsonTypeReflector.GetObjectMemberSerialization(objectType, ignoreSerializableAttribute);
 
             // Exclude index properties
             // Do not filter ByRef types here because accessing FieldType/PropertyType can trigger additonal assembly loads
-            var allMembers = ReflectionUtils.GetFieldsAndProperties(objectType, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)
+            var allMembers = ReflectionUtils.GetFieldsAndProperties(objectType,
+                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)
                 .Where(m => m is PropertyInfo p ? !ReflectionUtils.IsIndexedProperty(p) : true);
 
             var serializableMembers = new List<MemberInfo>();
@@ -232,7 +221,8 @@ namespace Dreamcast.Json.Serialization
 
                 foreach (var member in allMembers)
                     // exclude members that are compiler generated if set
-                    if (SerializeCompilerGeneratedMembers || !member.IsDefined(typeof(CompilerGeneratedAttribute), true))
+                    if (SerializeCompilerGeneratedMembers ||
+                        !member.IsDefined(typeof(CompilerGeneratedAttribute), true))
                     {
                         if (defaultMembers.Contains(member))
                         {
@@ -253,7 +243,8 @@ namespace Dreamcast.Json.Serialization
                                 serializableMembers.Add(member);
                             }
 #endif
-                            else if (memberSerialization == MemberSerialization.Fields && member.MemberType() == MemberTypes.Field) serializableMembers.Add(member);
+                            else if (memberSerialization == MemberSerialization.Fields &&
+                                     member.MemberType() == MemberTypes.Field) serializableMembers.Add(member);
                         }
                     }
 
@@ -266,7 +257,9 @@ namespace Dreamcast.Json.Serialization
 #endif
                 // don't include TargetSite on non-serializable exceptions
                 // MemberBase is problematic to serialize. Large, self referencing instances, etc
-                if (typeof(Exception).IsAssignableFrom(objectType)) serializableMembers = serializableMembers.Where(m => !string.Equals(m.Name, "TargetSite", StringComparison.Ordinal)).ToList();
+                if (typeof(Exception).IsAssignableFrom(objectType))
+                    serializableMembers = serializableMembers
+                        .Where(m => !string.Equals(m.Name, "TargetSite", StringComparison.Ordinal)).ToList();
             }
             else
             {
@@ -311,12 +304,16 @@ namespace Dreamcast.Json.Serialization
             ignoreSerializableAttribute = true;
 #endif
 
-            contract.MemberSerialization = JsonTypeReflector.GetObjectMemberSerialization(contract.NonNullableUnderlyingType, ignoreSerializableAttribute);
-            contract.Properties.AddRange(CreateProperties(contract.NonNullableUnderlyingType, contract.MemberSerialization));
+            contract.MemberSerialization =
+                JsonTypeReflector.GetObjectMemberSerialization(contract.NonNullableUnderlyingType,
+                    ignoreSerializableAttribute);
+            contract.Properties.AddRange(CreateProperties(contract.NonNullableUnderlyingType,
+                contract.MemberSerialization));
 
             Func<string, string>? extensionDataNameResolver = null;
 
-            var attribute = JsonTypeReflector.GetCachedAttribute<JsonObjectAttribute>(contract.NonNullableUnderlyingType);
+            var attribute =
+                JsonTypeReflector.GetCachedAttribute<JsonObjectAttribute>(contract.NonNullableUnderlyingType);
             if (attribute != null)
             {
                 contract.ItemRequired = attribute._itemRequired;
@@ -341,8 +338,10 @@ namespace Dreamcast.Json.Serialization
                 // check if a JsonConstructorAttribute has been defined and use that
                 if (overrideConstructor != null)
                 {
-                    contract.OverrideCreator = JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(overrideConstructor);
-                    contract.CreatorParameters.AddRange(CreateConstructorParameters(overrideConstructor, contract.Properties));
+                    contract.OverrideCreator =
+                        JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(overrideConstructor);
+                    contract.CreatorParameters.AddRange(CreateConstructorParameters(overrideConstructor,
+                        contract.Properties));
                 }
                 else if (contract.MemberSerialization == MemberSerialization.Fields)
                 {
@@ -360,8 +359,10 @@ namespace Dreamcast.Json.Serialization
                     var constructor = GetParameterizedConstructor(contract.NonNullableUnderlyingType);
                     if (constructor != null)
                     {
-                        contract.ParameterizedCreator = JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(constructor);
-                        contract.CreatorParameters.AddRange(CreateConstructorParameters(constructor, contract.Properties));
+                        contract.ParameterizedCreator =
+                            JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(constructor);
+                        contract.CreatorParameters.AddRange(CreateConstructorParameters(constructor,
+                            contract.Properties));
                     }
                 }
                 else if (contract.NonNullableUnderlyingType.IsValueType())
@@ -371,8 +372,10 @@ namespace Dreamcast.Json.Serialization
                     var constructor = GetImmutableConstructor(contract.NonNullableUnderlyingType, contract.Properties);
                     if (constructor != null)
                     {
-                        contract.OverrideCreator = JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(constructor);
-                        contract.CreatorParameters.AddRange(CreateConstructorParameters(constructor, contract.Properties));
+                        contract.OverrideCreator =
+                            JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(constructor);
+                        contract.CreatorParameters.AddRange(CreateConstructorParameters(constructor,
+                            contract.Properties));
                     }
                 }
             }
@@ -382,14 +385,16 @@ namespace Dreamcast.Json.Serialization
 
             // serializing DirectoryInfo without ISerializable will stackoverflow
             // https://github.com/JamesNK/Dreamcast.Json/issues/1541
-            if (Array.IndexOf(BlacklistedTypeNames, objectType.FullName) != -1) contract.OnSerializingCallbacks.Add(ThrowUnableToSerializeError);
+            if (Array.IndexOf(BlacklistedTypeNames, objectType.FullName) != -1)
+                contract.OnSerializingCallbacks.Add(ThrowUnableToSerializeError);
 
             return contract;
         }
 
         private static void ThrowUnableToSerializeError(object o, StreamingContext context)
         {
-            throw new JsonSerializationException("Unable to serialize instance of '{0}'.".FormatWith(CultureInfo.InvariantCulture, o.GetType()));
+            throw new JsonSerializationException(
+                "Unable to serialize instance of '{0}'.".FormatWith(CultureInfo.InvariantCulture, o.GetType()));
         }
 
         private MemberInfo GetExtensionDataMemberForType(Type type)
@@ -397,8 +402,10 @@ namespace Dreamcast.Json.Serialization
             var members = GetClassHierarchyForType(type).SelectMany(baseType =>
             {
                 IList<MemberInfo> m = new List<MemberInfo>();
-                m.AddRange(baseType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly));
-                m.AddRange(baseType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly));
+                m.AddRange(baseType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance |
+                                                  BindingFlags.DeclaredOnly));
+                m.AddRange(baseType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance |
+                                              BindingFlags.DeclaredOnly));
 
                 return m;
             });
@@ -411,7 +418,10 @@ namespace Dreamcast.Json.Serialization
                 // last instance of attribute wins on type if there are multiple
                 if (!m.IsDefined(typeof(JsonExtensionDataAttribute), false)) return false;
 
-                if (!ReflectionUtils.CanReadMemberValue(m, true)) throw new JsonException("Invalid extension data attribute on '{0}'. Member '{1}' must have a getter.".FormatWith(CultureInfo.InvariantCulture, GetClrTypeFullName(m.DeclaringType), m.Name));
+                if (!ReflectionUtils.CanReadMemberValue(m, true))
+                    throw new JsonException(
+                        "Invalid extension data attribute on '{0}'. Member '{1}' must have a getter.".FormatWith(
+                            CultureInfo.InvariantCulture, GetClrTypeFullName(m.DeclaringType), m.Name));
 
                 var t = ReflectionUtils.GetMemberUnderlyingType(m);
 
@@ -420,10 +430,13 @@ namespace Dreamcast.Json.Serialization
                     var keyType = dictionaryType.GetGenericArguments()[0];
                     var valueType = dictionaryType.GetGenericArguments()[1];
 
-                    if (keyType.IsAssignableFrom(typeof(string)) && valueType.IsAssignableFrom(typeof(JToken))) return true;
+                    if (keyType.IsAssignableFrom(typeof(string)) && valueType.IsAssignableFrom(typeof(JToken)))
+                        return true;
                 }
 
-                throw new JsonException("Invalid extension data attribute on '{0}'. Member '{1}' type must implement IDictionary<string, JToken>.".FormatWith(CultureInfo.InvariantCulture, GetClrTypeFullName(m.DeclaringType), m.Name));
+                throw new JsonException(
+                    "Invalid extension data attribute on '{0}'. Member '{1}' type must implement IDictionary<string, JToken>."
+                        .FormatWith(CultureInfo.InvariantCulture, GetClrTypeFullName(m.DeclaringType), m.Name));
             });
 
             return extensionDataMember;
@@ -456,21 +469,28 @@ namespace Dreamcast.Json.Serialization
                 var setExtensionDataDictionary = ReflectionUtils.CanSetMemberValue(member, true, false)
                     ? JsonTypeReflector.ReflectionDelegateFactory.CreateSet<object>(member)
                     : null;
-                var createExtensionDataDictionary = JsonTypeReflector.ReflectionDelegateFactory.CreateDefaultConstructor<object>(createdType);
-                var setMethod = t.GetProperty("Item", BindingFlags.Public | BindingFlags.Instance, null, valueType, new[] {keyType}, null)?.GetSetMethod();
+                var createExtensionDataDictionary =
+                    JsonTypeReflector.ReflectionDelegateFactory.CreateDefaultConstructor<object>(createdType);
+                var setMethod = t.GetProperty("Item", BindingFlags.Public | BindingFlags.Instance, null, valueType,
+                    new[] {keyType}, null)?.GetSetMethod();
                 if (setMethod == null)
                     // Item is explicitly implemented and non-public
                     // get from dictionary interface
-                    setMethod = dictionaryType!.GetProperty("Item", BindingFlags.Public | BindingFlags.Instance, null, valueType, new[] {keyType}, null)?.GetSetMethod();
+                    setMethod = dictionaryType!.GetProperty("Item", BindingFlags.Public | BindingFlags.Instance, null,
+                        valueType, new[] {keyType}, null)?.GetSetMethod();
 
-                var setExtensionDataDictionaryValue = JsonTypeReflector.ReflectionDelegateFactory.CreateMethodCall<object>(setMethod!);
+                var setExtensionDataDictionaryValue =
+                    JsonTypeReflector.ReflectionDelegateFactory.CreateMethodCall<object>(setMethod!);
 
                 ExtensionDataSetter extensionDataSetter = (o, key, value) =>
                 {
                     var dictionary = getExtensionDataDictionary(o);
                     if (dictionary == null)
                     {
-                        if (setExtensionDataDictionary == null) throw new JsonSerializationException("Cannot set value onto extension data member '{0}'. The extension data collection is null and it cannot be set.".FormatWith(CultureInfo.InvariantCulture, member.Name));
+                        if (setExtensionDataDictionary == null)
+                            throw new JsonSerializationException(
+                                "Cannot set value onto extension data member '{0}'. The extension data collection is null and it cannot be set."
+                                    .FormatWith(CultureInfo.InvariantCulture, member.Name));
 
                         dictionary = createExtensionDataDictionary();
                         setExtensionDataDictionary(o, dictionary);
@@ -486,7 +506,8 @@ namespace Dreamcast.Json.Serialization
             {
                 var enumerableWrapper = typeof(EnumerableDictionaryWrapper<,>).MakeGenericType(keyType, valueType);
                 var constructors = enumerableWrapper.GetConstructors().First();
-                var createEnumerableWrapper = JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(constructors);
+                var createEnumerableWrapper =
+                    JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(constructors);
 
                 ExtensionDataGetter extensionDataGetter = o =>
                 {
@@ -504,7 +525,8 @@ namespace Dreamcast.Json.Serialization
 
         // leave as class instead of struct
         // will be always return as an interface and boxed
-        internal class EnumerableDictionaryWrapper<TEnumeratorKey, TEnumeratorValue> : IEnumerable<KeyValuePair<object, object>>
+        internal class
+            EnumerableDictionaryWrapper<TEnumeratorKey, TEnumeratorValue> : IEnumerable<KeyValuePair<object, object>>
         {
             private readonly IEnumerable<KeyValuePair<TEnumeratorKey, TEnumeratorValue>> _e;
 
@@ -527,7 +549,8 @@ namespace Dreamcast.Json.Serialization
 
         private ConstructorInfo? GetAttributeConstructor(Type objectType)
         {
-            var en = objectType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).Where(c => c.IsDefined(typeof(JsonConstructorAttribute), true)).GetEnumerator();
+            var en = objectType.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                .Where(c => c.IsDefined(typeof(JsonConstructorAttribute), true)).GetEnumerator();
 
             if (en.MoveNext())
             {
@@ -538,7 +561,8 @@ namespace Dreamcast.Json.Serialization
             }
 
             // little hack to get Version objects to deserialize correctly
-            if (objectType == typeof(Version)) return objectType.GetConstructor(new[] {typeof(int), typeof(int), typeof(int), typeof(int)});
+            if (objectType == typeof(Version))
+                return objectType.GetConstructor(new[] {typeof(int), typeof(int), typeof(int), typeof(int)});
 
             return null;
         }
@@ -557,7 +581,8 @@ namespace Dreamcast.Json.Serialization
                     {
                         foreach (var parameterInfo in parameters)
                         {
-                            var memberProperty = MatchProperty(memberProperties, parameterInfo.Name, parameterInfo.ParameterType);
+                            var memberProperty = MatchProperty(memberProperties, parameterInfo.Name,
+                                parameterInfo.ParameterType);
                             if (memberProperty == null || memberProperty.Writable) return null;
                         }
 
@@ -572,7 +597,8 @@ namespace Dreamcast.Json.Serialization
         private ConstructorInfo? GetParameterizedConstructor(Type objectType)
         {
 #if PORTABLE
-            IEnumerable<ConstructorInfo> constructors = objectType.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
+            IEnumerable<ConstructorInfo> constructors =
+ objectType.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
             IEnumerator<ConstructorInfo> en = constructors.GetEnumerator();
             if (en.MoveNext())
             {
@@ -595,7 +621,8 @@ namespace Dreamcast.Json.Serialization
         /// <param name="constructor">The constructor to create properties for.</param>
         /// <param name="memberProperties">The type's member properties.</param>
         /// <returns>Properties for the given <see cref="ConstructorInfo" />.</returns>
-        protected virtual IList<JsonProperty> CreateConstructorParameters(ConstructorInfo constructor, JsonPropertyCollection memberProperties)
+        protected virtual IList<JsonProperty> CreateConstructorParameters(ConstructorInfo constructor,
+            JsonPropertyCollection memberProperties)
         {
             var constructorParameters = constructor.GetParameters();
 
@@ -605,7 +632,8 @@ namespace Dreamcast.Json.Serialization
             {
                 if (parameterInfo.Name == null) continue;
 
-                var matchingMemberProperty = MatchProperty(memberProperties, parameterInfo.Name, parameterInfo.ParameterType);
+                var matchingMemberProperty =
+                    MatchProperty(memberProperties, parameterInfo.Name, parameterInfo.ParameterType);
 
                 // ensure that property will have a name from matching property or from parameterinfo
                 // parameterinfo could have no name if generated by a proxy (I'm looking at you Castle)
@@ -639,13 +667,15 @@ namespace Dreamcast.Json.Serialization
         /// <param name="matchingMemberProperty">The matching member property.</param>
         /// <param name="parameterInfo">The constructor parameter.</param>
         /// <returns>A created <see cref="JsonProperty" /> for the given <see cref="ParameterInfo" />.</returns>
-        protected virtual JsonProperty CreatePropertyFromConstructorParameter(JsonProperty? matchingMemberProperty, ParameterInfo parameterInfo)
+        protected virtual JsonProperty CreatePropertyFromConstructorParameter(JsonProperty? matchingMemberProperty,
+            ParameterInfo parameterInfo)
         {
             var property = new JsonProperty();
             property.PropertyType = parameterInfo.ParameterType;
             property.AttributeProvider = new ReflectionAttributeProvider(parameterInfo);
 
-            SetPropertySettingsFromAttributes(property, parameterInfo, parameterInfo.Name, parameterInfo.Member.DeclaringType, MemberSerialization.OptOut, out _);
+            SetPropertySettingsFromAttributes(property, parameterInfo, parameterInfo.Name,
+                parameterInfo.Member.DeclaringType, MemberSerialization.OptOut, out _);
 
             property.Readable = false;
             property.Writable = true;
@@ -653,17 +683,23 @@ namespace Dreamcast.Json.Serialization
             // "inherit" values from matching member property if unset on parameter
             if (matchingMemberProperty != null)
             {
-                property.PropertyName = property.PropertyName != parameterInfo.Name ? property.PropertyName : matchingMemberProperty.PropertyName;
+                property.PropertyName = property.PropertyName != parameterInfo.Name
+                    ? property.PropertyName
+                    : matchingMemberProperty.PropertyName;
                 property.Converter = property.Converter ?? matchingMemberProperty.Converter;
 
-                if (!property._hasExplicitDefaultValue && matchingMemberProperty._hasExplicitDefaultValue) property.DefaultValue = matchingMemberProperty.DefaultValue;
+                if (!property._hasExplicitDefaultValue && matchingMemberProperty._hasExplicitDefaultValue)
+                    property.DefaultValue = matchingMemberProperty.DefaultValue;
 
                 property._required = property._required ?? matchingMemberProperty._required;
                 property.IsReference = property.IsReference ?? matchingMemberProperty.IsReference;
                 property.NullValueHandling = property.NullValueHandling ?? matchingMemberProperty.NullValueHandling;
-                property.DefaultValueHandling = property.DefaultValueHandling ?? matchingMemberProperty.DefaultValueHandling;
-                property.ReferenceLoopHandling = property.ReferenceLoopHandling ?? matchingMemberProperty.ReferenceLoopHandling;
-                property.ObjectCreationHandling = property.ObjectCreationHandling ?? matchingMemberProperty.ObjectCreationHandling;
+                property.DefaultValueHandling =
+                    property.DefaultValueHandling ?? matchingMemberProperty.DefaultValueHandling;
+                property.ReferenceLoopHandling =
+                    property.ReferenceLoopHandling ?? matchingMemberProperty.ReferenceLoopHandling;
+                property.ObjectCreationHandling =
+                    property.ObjectCreationHandling ?? matchingMemberProperty.ObjectCreationHandling;
                 property.TypeNameHandling = property.TypeNameHandling ?? matchingMemberProperty.TypeNameHandling;
             }
 
@@ -686,16 +722,19 @@ namespace Dreamcast.Json.Serialization
         }
 
 #if NET35
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Portability", "CA1903:UseOnlyApiFromTargetedFramework", MessageId = "System.Runtime.Serialization.DataContractAttribute.#get_IsReference()")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Portability", "CA1903:UseOnlyApiFromTargetedFramework", MessageId
+ = "System.Runtime.Serialization.DataContractAttribute.#get_IsReference()")]
 #endif
         private void InitializeContract(JsonContract contract)
         {
-            var containerAttribute = JsonTypeReflector.GetCachedAttribute<JsonContainerAttribute>(contract.NonNullableUnderlyingType);
+            var containerAttribute =
+                JsonTypeReflector.GetCachedAttribute<JsonContainerAttribute>(contract.NonNullableUnderlyingType);
             if (containerAttribute != null) contract.IsReference = containerAttribute._isReference;
 #if HAVE_DATA_CONTRACTS
             else
             {
-                DataContractAttribute? dataContractAttribute = JsonTypeReflector.GetDataContractAttribute(contract.NonNullableUnderlyingType);
+                DataContractAttribute? dataContractAttribute =
+ JsonTypeReflector.GetDataContractAttribute(contract.NonNullableUnderlyingType);
                 // doesn't have a null value
                 if (dataContractAttribute != null && dataContractAttribute.IsReference)
                 {
@@ -707,10 +746,12 @@ namespace Dreamcast.Json.Serialization
             contract.Converter = ResolveContractConverter(contract.NonNullableUnderlyingType);
 
             // then see whether object is compatible with any of the built in converters
-            contract.InternalConverter = JsonSerializer.GetMatchingConverter(BuiltInConverters, contract.NonNullableUnderlyingType);
+            contract.InternalConverter =
+                JsonSerializer.GetMatchingConverter(BuiltInConverters, contract.NonNullableUnderlyingType);
 
             if (contract.IsInstantiable
-                && (ReflectionUtils.HasDefaultConstructor(contract.CreatedType, true) || contract.CreatedType.IsValueType()))
+                && (ReflectionUtils.HasDefaultConstructor(contract.CreatedType, true) ||
+                    contract.CreatedType.IsValueType()))
             {
                 contract.DefaultCreator = GetDefaultCreator(contract.CreatedType);
 
@@ -742,7 +783,9 @@ namespace Dreamcast.Json.Serialization
             if (onError != null) contract.OnErrorCallbacks.AddRange(onError);
         }
 
-        private void GetCallbackMethodsForType(Type type, out List<SerializationCallback>? onSerializing, out List<SerializationCallback>? onSerialized, out List<SerializationCallback>? onDeserializing, out List<SerializationCallback>? onDeserialized, out List<SerializationErrorCallback>? onError)
+        private void GetCallbackMethodsForType(Type type, out List<SerializationCallback>? onSerializing,
+            out List<SerializationCallback>? onSerialized, out List<SerializationCallback>? onDeserializing,
+            out List<SerializationCallback>? onDeserialized, out List<SerializationErrorCallback>? onError)
         {
             onSerializing = null;
             onSerialized = null;
@@ -762,7 +805,8 @@ namespace Dreamcast.Json.Serialization
                 var skipSerializing = ShouldSkipSerializing(baseType);
                 var skipDeserialized = ShouldSkipDeserialized(baseType);
 
-                foreach (var method in baseType.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
+                foreach (var method in baseType.GetMethods(BindingFlags.NonPublic | BindingFlags.Public |
+                                                           BindingFlags.Instance | BindingFlags.DeclaredOnly))
                 {
                     // compact framework errors when getting parameters for a generic method
                     // lame, but generic methods should not be callbacks anyway
@@ -771,35 +815,40 @@ namespace Dreamcast.Json.Serialization
                     Type? prevAttributeType = null;
                     var parameters = method.GetParameters();
 
-                    if (!skipSerializing && IsValidCallback(method, parameters, typeof(OnSerializingAttribute), currentOnSerializing, ref prevAttributeType))
+                    if (!skipSerializing && IsValidCallback(method, parameters, typeof(OnSerializingAttribute),
+                        currentOnSerializing, ref prevAttributeType))
                     {
                         onSerializing = onSerializing ?? new List<SerializationCallback>();
                         onSerializing.Add(JsonContract.CreateSerializationCallback(method));
                         currentOnSerializing = method;
                     }
 
-                    if (IsValidCallback(method, parameters, typeof(OnSerializedAttribute), currentOnSerialized, ref prevAttributeType))
+                    if (IsValidCallback(method, parameters, typeof(OnSerializedAttribute), currentOnSerialized,
+                        ref prevAttributeType))
                     {
                         onSerialized = onSerialized ?? new List<SerializationCallback>();
                         onSerialized.Add(JsonContract.CreateSerializationCallback(method));
                         currentOnSerialized = method;
                     }
 
-                    if (IsValidCallback(method, parameters, typeof(OnDeserializingAttribute), currentOnDeserializing, ref prevAttributeType))
+                    if (IsValidCallback(method, parameters, typeof(OnDeserializingAttribute), currentOnDeserializing,
+                        ref prevAttributeType))
                     {
                         onDeserializing = onDeserializing ?? new List<SerializationCallback>();
                         onDeserializing.Add(JsonContract.CreateSerializationCallback(method));
                         currentOnDeserializing = method;
                     }
 
-                    if (!skipDeserialized && IsValidCallback(method, parameters, typeof(OnDeserializedAttribute), currentOnDeserialized, ref prevAttributeType))
+                    if (!skipDeserialized && IsValidCallback(method, parameters, typeof(OnDeserializedAttribute),
+                        currentOnDeserialized, ref prevAttributeType))
                     {
                         onDeserialized = onDeserialized ?? new List<SerializationCallback>();
                         onDeserialized.Add(JsonContract.CreateSerializationCallback(method));
                         currentOnDeserialized = method;
                     }
 
-                    if (IsValidCallback(method, parameters, typeof(OnErrorAttribute), currentOnError, ref prevAttributeType))
+                    if (IsValidCallback(method, parameters, typeof(OnErrorAttribute), currentOnError,
+                        ref prevAttributeType))
                     {
                         onError = onError ?? new List<SerializationErrorCallback>();
                         onError.Add(JsonContract.CreateSerializationErrorCallback(method));
@@ -901,7 +950,9 @@ namespace Dreamcast.Json.Serialization
             {
                 var parameters = overrideConstructor.GetParameters();
                 var expectedParameterType = contract.DictionaryKeyType != null && contract.DictionaryValueType != null
-                    ? typeof(IEnumerable<>).MakeGenericType(typeof(KeyValuePair<,>).MakeGenericType(contract.DictionaryKeyType, contract.DictionaryValueType))
+                    ? typeof(IEnumerable<>).MakeGenericType(
+                        typeof(KeyValuePair<,>).MakeGenericType(contract.DictionaryKeyType,
+                            contract.DictionaryValueType))
                     : typeof(IDictionary);
 
                 if (parameters.Length == 0)
@@ -909,9 +960,12 @@ namespace Dreamcast.Json.Serialization
                 else if (parameters.Length == 1 && expectedParameterType.IsAssignableFrom(parameters[0].ParameterType))
                     contract.HasParameterizedCreator = true;
                 else
-                    throw new JsonException("Constructor for '{0}' must have no parameters or a single parameter that implements '{1}'.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType, expectedParameterType));
+                    throw new JsonException(
+                        "Constructor for '{0}' must have no parameters or a single parameter that implements '{1}'."
+                            .FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType, expectedParameterType));
 
-                contract.OverrideCreator = JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(overrideConstructor);
+                contract.OverrideCreator =
+                    JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(overrideConstructor);
             }
 
             return contract;
@@ -941,9 +995,12 @@ namespace Dreamcast.Json.Serialization
                 else if (parameters.Length == 1 && expectedParameterType.IsAssignableFrom(parameters[0].ParameterType))
                     contract.HasParameterizedCreator = true;
                 else
-                    throw new JsonException("Constructor for '{0}' must have no parameters or a single parameter that implements '{1}'.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType, expectedParameterType));
+                    throw new JsonException(
+                        "Constructor for '{0}' must have no parameters or a single parameter that implements '{1}'."
+                            .FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType, expectedParameterType));
 
-                contract.OverrideCreator = JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(overrideConstructor);
+                contract.OverrideCreator =
+                    JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(overrideConstructor);
             }
 
             return contract;
@@ -988,10 +1045,12 @@ namespace Dreamcast.Json.Serialization
 
             if (contract.IsInstantiable)
             {
-                ConstructorInfo constructorInfo = contract.NonNullableUnderlyingType.GetConstructor(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance, null, new[] {typeof(SerializationInfo), typeof(StreamingContext)}, null);
+                ConstructorInfo constructorInfo =
+ contract.NonNullableUnderlyingType.GetConstructor(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance, null, new[] {typeof(SerializationInfo), typeof(StreamingContext)}, null);
                 if (constructorInfo != null)
                 {
-                    ObjectConstructor<object> creator = JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(constructorInfo);
+                    ObjectConstructor<object> creator =
+ JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(constructorInfo);
 
                     contract.ISerializableCreator = creator;
                 }
@@ -1012,7 +1071,8 @@ namespace Dreamcast.Json.Serialization
             JsonDynamicContract contract = new JsonDynamicContract(objectType);
             InitializeContract(contract);
 
-            JsonContainerAttribute? containerAttribute = JsonTypeReflector.GetAttribute<JsonContainerAttribute>(objectType);
+            JsonContainerAttribute? containerAttribute =
+ JsonTypeReflector.GetAttribute<JsonContainerAttribute>(objectType);
             if (containerAttribute?.NamingStrategyType != null)
             {
                 NamingStrategy namingStrategy = JsonTypeReflector.GetContainerNamingStrategy(containerAttribute)!;
@@ -1129,25 +1189,49 @@ namespace Dreamcast.Json.Serialization
             return false;
         }
 
-        private static bool IsValidCallback(MethodInfo method, ParameterInfo[] parameters, Type attributeType, MethodInfo? currentCallback, ref Type? prevAttributeType)
+        private static bool IsValidCallback(MethodInfo method, ParameterInfo[] parameters, Type attributeType,
+            MethodInfo? currentCallback, ref Type? prevAttributeType)
         {
             if (!method.IsDefined(attributeType, false)) return false;
 
-            if (currentCallback != null) throw new JsonException("Invalid attribute. Both '{0}' and '{1}' in type '{2}' have '{3}'.".FormatWith(CultureInfo.InvariantCulture, method, currentCallback, GetClrTypeFullName(method.DeclaringType), attributeType));
+            if (currentCallback != null)
+                throw new JsonException("Invalid attribute. Both '{0}' and '{1}' in type '{2}' have '{3}'.".FormatWith(
+                    CultureInfo.InvariantCulture, method, currentCallback, GetClrTypeFullName(method.DeclaringType),
+                    attributeType));
 
-            if (prevAttributeType != null) throw new JsonException("Invalid Callback. Method '{3}' in type '{2}' has both '{0}' and '{1}'.".FormatWith(CultureInfo.InvariantCulture, prevAttributeType, attributeType, GetClrTypeFullName(method.DeclaringType), method));
+            if (prevAttributeType != null)
+                throw new JsonException(
+                    "Invalid Callback. Method '{3}' in type '{2}' has both '{0}' and '{1}'.".FormatWith(
+                        CultureInfo.InvariantCulture, prevAttributeType, attributeType,
+                        GetClrTypeFullName(method.DeclaringType), method));
 
-            if (method.IsVirtual) throw new JsonException("Virtual Method '{0}' of type '{1}' cannot be marked with '{2}' attribute.".FormatWith(CultureInfo.InvariantCulture, method, GetClrTypeFullName(method.DeclaringType), attributeType));
+            if (method.IsVirtual)
+                throw new JsonException(
+                    "Virtual Method '{0}' of type '{1}' cannot be marked with '{2}' attribute.".FormatWith(
+                        CultureInfo.InvariantCulture, method, GetClrTypeFullName(method.DeclaringType), attributeType));
 
-            if (method.ReturnType != typeof(void)) throw new JsonException("Serialization Callback '{1}' in type '{0}' must return void.".FormatWith(CultureInfo.InvariantCulture, GetClrTypeFullName(method.DeclaringType), method));
+            if (method.ReturnType != typeof(void))
+                throw new JsonException("Serialization Callback '{1}' in type '{0}' must return void.".FormatWith(
+                    CultureInfo.InvariantCulture, GetClrTypeFullName(method.DeclaringType), method));
 
             if (attributeType == typeof(OnErrorAttribute))
             {
-                if (parameters == null || parameters.Length != 2 || parameters[0].ParameterType != typeof(StreamingContext) || parameters[1].ParameterType != typeof(ErrorContext)) throw new JsonException("Serialization Error Callback '{1}' in type '{0}' must have two parameters of type '{2}' and '{3}'.".FormatWith(CultureInfo.InvariantCulture, GetClrTypeFullName(method.DeclaringType), method, typeof(StreamingContext), typeof(ErrorContext)));
+                if (parameters == null || parameters.Length != 2 ||
+                    parameters[0].ParameterType != typeof(StreamingContext) ||
+                    parameters[1].ParameterType != typeof(ErrorContext))
+                    throw new JsonException(
+                        "Serialization Error Callback '{1}' in type '{0}' must have two parameters of type '{2}' and '{3}'."
+                            .FormatWith(CultureInfo.InvariantCulture, GetClrTypeFullName(method.DeclaringType), method,
+                                typeof(StreamingContext), typeof(ErrorContext)));
             }
             else
             {
-                if (parameters == null || parameters.Length != 1 || parameters[0].ParameterType != typeof(StreamingContext)) throw new JsonException("Serialization Callback '{1}' in type '{0}' must have a single parameter of type '{2}'.".FormatWith(CultureInfo.InvariantCulture, GetClrTypeFullName(method.DeclaringType), method, typeof(StreamingContext)));
+                if (parameters == null || parameters.Length != 1 ||
+                    parameters[0].ParameterType != typeof(StreamingContext))
+                    throw new JsonException(
+                        "Serialization Callback '{1}' in type '{0}' must have a single parameter of type '{2}'."
+                            .FormatWith(CultureInfo.InvariantCulture, GetClrTypeFullName(method.DeclaringType), method,
+                                typeof(StreamingContext)));
             }
 
             prevAttributeType = attributeType;
@@ -1172,7 +1256,8 @@ namespace Dreamcast.Json.Serialization
         protected virtual IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         {
             var members = GetSerializableMembers(type);
-            if (members == null) throw new JsonSerializationException("Null collection of serializable members returned.");
+            if (members == null)
+                throw new JsonSerializationException("Null collection of serializable members returned.");
 
             var nameTable = GetNameTable();
 
@@ -1245,12 +1330,14 @@ namespace Dreamcast.Json.Serialization
             property.ValueProvider = CreateMemberValueProvider(member);
             property.AttributeProvider = new ReflectionAttributeProvider(member);
 
-            SetPropertySettingsFromAttributes(property, member, member.Name, member.DeclaringType, memberSerialization, out var allowNonPublicAccess);
+            SetPropertySettingsFromAttributes(property, member, member.Name, member.DeclaringType, memberSerialization,
+                out var allowNonPublicAccess);
 
             if (memberSerialization != MemberSerialization.Fields)
             {
                 property.Readable = ReflectionUtils.CanReadMemberValue(member, allowNonPublicAccess);
-                property.Writable = ReflectionUtils.CanSetMemberValue(member, allowNonPublicAccess, property.HasMemberAttribute);
+                property.Writable =
+                    ReflectionUtils.CanSetMemberValue(member, allowNonPublicAccess, property.HasMemberAttribute);
             }
             else
             {
@@ -1266,7 +1353,8 @@ namespace Dreamcast.Json.Serialization
             return property;
         }
 
-        private void SetPropertySettingsFromAttributes(JsonProperty property, object attributeProvider, string name, Type declaringType, MemberSerialization memberSerialization, out bool allowNonPublicAccess)
+        private void SetPropertySettingsFromAttributes(JsonProperty property, object attributeProvider, string name,
+            Type declaringType, MemberSerialization memberSerialization, out bool allowNonPublicAccess)
         {
 #if HAVE_DATA_CONTRACTS
             DataContractAttribute? dataContractAttribute = JsonTypeReflector.GetDataContractAttribute(declaringType);
@@ -1311,7 +1399,8 @@ namespace Dreamcast.Json.Serialization
 
             NamingStrategy? namingStrategy;
             if (propertyAttribute?.NamingStrategyType != null)
-                namingStrategy = JsonTypeReflector.CreateNamingStrategyInstance(propertyAttribute.NamingStrategyType, propertyAttribute.NamingStrategyParameters);
+                namingStrategy = JsonTypeReflector.CreateNamingStrategyInstance(propertyAttribute.NamingStrategyType,
+                    propertyAttribute.NamingStrategyParameters);
             else if (containerAttribute?.NamingStrategyType != null)
                 namingStrategy = JsonTypeReflector.GetContainerNamingStrategy(containerAttribute);
             else
@@ -1338,7 +1427,10 @@ namespace Dreamcast.Json.Serialization
                 property.IsReference = propertyAttribute._isReference;
 
                 property.ItemIsReference = propertyAttribute._itemIsReference;
-                property.ItemConverter = propertyAttribute.ItemConverterType != null ? JsonTypeReflector.CreateJsonConverterInstance(propertyAttribute.ItemConverterType, propertyAttribute.ItemConverterParameters) : null;
+                property.ItemConverter = propertyAttribute.ItemConverterType != null
+                    ? JsonTypeReflector.CreateJsonConverterInstance(propertyAttribute.ItemConverterType,
+                        propertyAttribute.ItemConverterParameters)
+                    : null;
                 property.ItemReferenceLoopHandling = propertyAttribute._itemReferenceLoopHandling;
                 property.ItemTypeNameHandling = propertyAttribute._itemTypeNameHandling;
             }
@@ -1358,7 +1450,8 @@ namespace Dreamcast.Json.Serialization
                 {
                     property._required = (dataMemberAttribute.IsRequired) ? Required.AllowNull : Required.Default;
                     property.Order = (dataMemberAttribute.Order != -1) ? (int?)dataMemberAttribute.Order : null;
-                    property.DefaultValueHandling = (!dataMemberAttribute.EmitDefaultValue) ? (DefaultValueHandling?)DefaultValueHandling.Ignore : null;
+                    property.DefaultValueHandling =
+ (!dataMemberAttribute.EmitDefaultValue) ? (DefaultValueHandling?)DefaultValueHandling.Ignore : null;
                     hasMemberAttribute = true;
                 }
 #endif
@@ -1386,7 +1479,8 @@ namespace Dreamcast.Json.Serialization
                 var hasIgnoreDataMemberAttribute = false;
 
 #if HAVE_IGNORE_DATA_MEMBER_ATTRIBUTE
-                hasIgnoreDataMemberAttribute = (JsonTypeReflector.GetAttribute<IgnoreDataMemberAttribute>(attributeProvider) != null);
+                hasIgnoreDataMemberAttribute =
+ (JsonTypeReflector.GetAttribute<IgnoreDataMemberAttribute>(attributeProvider) != null);
 #endif
 
                 // ignored if it has JsonIgnore or NonSerialized or IgnoreDataMember attributes
@@ -1407,7 +1501,8 @@ namespace Dreamcast.Json.Serialization
 
             allowNonPublicAccess = false;
 #pragma warning disable 618
-            if ((DefaultMembersSearchFlags & BindingFlags.NonPublic) == BindingFlags.NonPublic) allowNonPublicAccess = true;
+            if ((DefaultMembersSearchFlags & BindingFlags.NonPublic) == BindingFlags.NonPublic)
+                allowNonPublicAccess = true;
 #pragma warning restore 618
             if (hasMemberAttribute) allowNonPublicAccess = true;
             if (memberSerialization == MemberSerialization.Fields) allowNonPublicAccess = true;
@@ -1415,7 +1510,9 @@ namespace Dreamcast.Json.Serialization
 
         private Predicate<object>? CreateShouldSerializeTest(MemberInfo member)
         {
-            var shouldSerializeMethod = member.DeclaringType.GetMethod(JsonTypeReflector.ShouldSerializePrefix + member.Name, ReflectionUtils.EmptyTypes);
+            var shouldSerializeMethod =
+                member.DeclaringType.GetMethod(JsonTypeReflector.ShouldSerializePrefix + member.Name,
+                    ReflectionUtils.EmptyTypes);
 
             if (shouldSerializeMethod == null || shouldSerializeMethod.ReturnType != typeof(bool)) return null;
 
@@ -1427,16 +1524,23 @@ namespace Dreamcast.Json.Serialization
 
         private void SetIsSpecifiedActions(JsonProperty property, MemberInfo member, bool allowNonPublicAccess)
         {
-            MemberInfo? specifiedMember = member.DeclaringType.GetProperty(member.Name + JsonTypeReflector.SpecifiedPostfix, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            if (specifiedMember == null) specifiedMember = member.DeclaringType.GetField(member.Name + JsonTypeReflector.SpecifiedPostfix, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            MemberInfo? specifiedMember = member.DeclaringType.GetProperty(
+                member.Name + JsonTypeReflector.SpecifiedPostfix,
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            if (specifiedMember == null)
+                specifiedMember = member.DeclaringType.GetField(member.Name + JsonTypeReflector.SpecifiedPostfix,
+                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
-            if (specifiedMember == null || ReflectionUtils.GetMemberUnderlyingType(specifiedMember) != typeof(bool)) return;
+            if (specifiedMember == null ||
+                ReflectionUtils.GetMemberUnderlyingType(specifiedMember) != typeof(bool)) return;
 
             var specifiedPropertyGet = JsonTypeReflector.ReflectionDelegateFactory.CreateGet<object>(specifiedMember)!;
 
             property.GetIsSpecified = o => (bool) specifiedPropertyGet(o);
 
-            if (ReflectionUtils.CanSetMemberValue(specifiedMember, allowNonPublicAccess, false)) property.SetIsSpecified = JsonTypeReflector.ReflectionDelegateFactory.CreateSet<object>(specifiedMember);
+            if (ReflectionUtils.CanSetMemberValue(specifiedMember, allowNonPublicAccess, false))
+                property.SetIsSpecified =
+                    JsonTypeReflector.ReflectionDelegateFactory.CreateSet<object>(specifiedMember);
         }
 
         /// <summary>

@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System.IO;
+﻿using System.IO;
 
 #pragma warning disable 1591
 
@@ -26,8 +11,7 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
     [LuaModule]
     public class LoadModule
     {
-        [LuaModuleMethod]
-        public const string require = @"
+        [LuaModuleMethod] public const string require = @"
 function(modulename)
 	if (package == nil) then package = { }; end
 	if (package.loaded == nil) then package.loaded = { }; end
@@ -105,7 +89,8 @@ end";
             return load_impl(executionContext, args, GetSafeDefaultEnv(executionContext));
         }
 
-        public static DynValue load_impl(ScriptExecutionContext executionContext, CallbackArguments args, Table defaultEnv)
+        public static DynValue load_impl(ScriptExecutionContext executionContext, CallbackArguments args,
+            Table defaultEnv)
         {
             try
             {
@@ -122,7 +107,8 @@ end";
                         else if (ret.IsNil())
                             break;
                         else
-                            return DynValue.NewTuple(DynValue.Nil, DynValue.NewString("reader function must return a string"));
+                            return DynValue.NewTuple(DynValue.Nil,
+                                DynValue.NewString("reader function must return a string"));
                     }
                 else if (ld.Type == DataType.String)
                     script = ld.String;
@@ -165,7 +151,8 @@ end";
         }
 
 
-        private static DynValue loadfile_impl(ScriptExecutionContext executionContext, CallbackArguments args, Table defaultEnv)
+        private static DynValue loadfile_impl(ScriptExecutionContext executionContext, CallbackArguments args,
+            Table defaultEnv)
         {
             try
             {

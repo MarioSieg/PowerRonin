@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-#if HAVE_DYNAMIC
+﻿#if HAVE_DYNAMIC
 using System.Dynamic;
 using System.Linq.Expressions;
 #endif
@@ -52,18 +37,44 @@ namespace Dreamcast.Json.Linq
 
         private object? _annotations;
 
-        private static readonly JTokenType[] BooleanTypes = {JTokenType.Integer, JTokenType.Float, JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.Boolean};
-        private static readonly JTokenType[] NumberTypes = {JTokenType.Integer, JTokenType.Float, JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.Boolean};
+        private static readonly JTokenType[] BooleanTypes =
+        {
+            JTokenType.Integer, JTokenType.Float, JTokenType.String, JTokenType.Comment, JTokenType.Raw,
+            JTokenType.Boolean
+        };
+
+        private static readonly JTokenType[] NumberTypes =
+        {
+            JTokenType.Integer, JTokenType.Float, JTokenType.String, JTokenType.Comment, JTokenType.Raw,
+            JTokenType.Boolean
+        };
 #if HAVE_BIG_INTEGER
-        private static readonly JTokenType[] BigIntegerTypes = new[] { JTokenType.Integer, JTokenType.Float, JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.Boolean, JTokenType.Bytes };
+        private static readonly JTokenType[] BigIntegerTypes =
+ new[] { JTokenType.Integer, JTokenType.Float, JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.Boolean, JTokenType.Bytes };
 #endif
-        private static readonly JTokenType[] StringTypes = {JTokenType.Date, JTokenType.Integer, JTokenType.Float, JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.Boolean, JTokenType.Bytes, JTokenType.Guid, JTokenType.TimeSpan, JTokenType.Uri};
-        private static readonly JTokenType[] GuidTypes = {JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.Guid, JTokenType.Bytes};
-        private static readonly JTokenType[] TimeSpanTypes = {JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.TimeSpan};
-        private static readonly JTokenType[] UriTypes = {JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.Uri};
-        private static readonly JTokenType[] CharTypes = {JTokenType.Integer, JTokenType.Float, JTokenType.String, JTokenType.Comment, JTokenType.Raw};
-        private static readonly JTokenType[] DateTimeTypes = {JTokenType.Date, JTokenType.String, JTokenType.Comment, JTokenType.Raw};
-        private static readonly JTokenType[] BytesTypes = {JTokenType.Bytes, JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.Integer};
+        private static readonly JTokenType[] StringTypes =
+        {
+            JTokenType.Date, JTokenType.Integer, JTokenType.Float, JTokenType.String, JTokenType.Comment,
+            JTokenType.Raw, JTokenType.Boolean, JTokenType.Bytes, JTokenType.Guid, JTokenType.TimeSpan, JTokenType.Uri
+        };
+
+        private static readonly JTokenType[] GuidTypes =
+            {JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.Guid, JTokenType.Bytes};
+
+        private static readonly JTokenType[] TimeSpanTypes =
+            {JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.TimeSpan};
+
+        private static readonly JTokenType[] UriTypes =
+            {JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.Uri};
+
+        private static readonly JTokenType[] CharTypes =
+            {JTokenType.Integer, JTokenType.Float, JTokenType.String, JTokenType.Comment, JTokenType.Raw};
+
+        private static readonly JTokenType[] DateTimeTypes =
+            {JTokenType.Date, JTokenType.String, JTokenType.Comment, JTokenType.Raw};
+
+        private static readonly JTokenType[] BytesTypes =
+            {JTokenType.Bytes, JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.Integer};
 
         /// <summary>
         ///     Gets a comparer that can compare two tokens for value equality.
@@ -83,12 +94,7 @@ namespace Dreamcast.Json.Linq
         ///     Gets or sets the parent.
         /// </summary>
         /// <value>The parent.</value>
-        public JContainer? Parent
-        {
-            [DebuggerStepThrough]
-            get;
-            internal set;
-        }
+        public JContainer? Parent { [DebuggerStepThrough] get; internal set; }
 
         /// <summary>
         ///     Gets the root <see cref="JToken" /> of this <see cref="JToken" />.
@@ -276,8 +282,10 @@ namespace Dreamcast.Json.Linq
         /// <value>The <see cref="JToken" /> with the specified key.</value>
         public virtual JToken? this[object key]
         {
-            get => throw new InvalidOperationException("Cannot access child value on {0}.".FormatWith(CultureInfo.InvariantCulture, GetType()));
-            set => throw new InvalidOperationException("Cannot set child value on {0}.".FormatWith(CultureInfo.InvariantCulture, GetType()));
+            get => throw new InvalidOperationException(
+                "Cannot access child value on {0}.".FormatWith(CultureInfo.InvariantCulture, GetType()));
+            set => throw new InvalidOperationException(
+                "Cannot set child value on {0}.".FormatWith(CultureInfo.InvariantCulture, GetType()));
         }
 
         /// <summary>
@@ -298,13 +306,17 @@ namespace Dreamcast.Json.Linq
         ///     Get the first child token of this token.
         /// </summary>
         /// <value>A <see cref="JToken" /> containing the first child token of the <see cref="JToken" />.</value>
-        public virtual JToken? First => throw new InvalidOperationException("Cannot access child value on {0}.".FormatWith(CultureInfo.InvariantCulture, GetType()));
+        public virtual JToken? First =>
+            throw new InvalidOperationException(
+                "Cannot access child value on {0}.".FormatWith(CultureInfo.InvariantCulture, GetType()));
 
         /// <summary>
         ///     Get the last child token of this token.
         /// </summary>
         /// <value>A <see cref="JToken" /> containing the last child token of the <see cref="JToken" />.</value>
-        public virtual JToken? Last => throw new InvalidOperationException("Cannot access child value on {0}.".FormatWith(CultureInfo.InvariantCulture, GetType()));
+        public virtual JToken? Last =>
+            throw new InvalidOperationException(
+                "Cannot access child value on {0}.".FormatWith(CultureInfo.InvariantCulture, GetType()));
 
         /// <summary>
         ///     Returns a collection of the child tokens of this token, in document order.
@@ -335,7 +347,8 @@ namespace Dreamcast.Json.Linq
         /// <returns>A <see cref="IEnumerable{T}" /> containing the child values of this <see cref="JToken" />, in document order.</returns>
         public virtual IEnumerable<T?> Values<T>()
         {
-            throw new InvalidOperationException("Cannot access child value on {0}.".FormatWith(CultureInfo.InvariantCulture, GetType()));
+            throw new InvalidOperationException(
+                "Cannot access child value on {0}.".FormatWith(CultureInfo.InvariantCulture, GetType()));
         }
 
         /// <summary>
@@ -422,7 +435,8 @@ namespace Dreamcast.Json.Linq
 
         private static bool ValidateToken(JToken o, JTokenType[] validTypes, bool nullable)
         {
-            return Array.IndexOf(validTypes, o.Type) != -1 || nullable && (o.Type == JTokenType.Null || o.Type == JTokenType.Undefined);
+            return Array.IndexOf(validTypes, o.Type) != -1 ||
+                   nullable && (o.Type == JTokenType.Null || o.Type == JTokenType.Undefined);
         }
 
         #region Cast from operators
@@ -435,7 +449,9 @@ namespace Dreamcast.Json.Linq
         public static explicit operator bool(JToken value)
         {
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, BooleanTypes, false)) throw new ArgumentException("Can not convert {0} to Boolean.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, BooleanTypes, false))
+                throw new ArgumentException(
+                    "Can not convert {0} to Boolean.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -485,7 +501,9 @@ namespace Dreamcast.Json.Linq
             if (value == null) return null;
 
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, BooleanTypes, true)) throw new ArgumentException("Can not convert {0} to Boolean.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, BooleanTypes, true))
+                throw new ArgumentException(
+                    "Can not convert {0} to Boolean.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -505,7 +523,9 @@ namespace Dreamcast.Json.Linq
         public static explicit operator long(JToken value)
         {
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, false)) throw new ArgumentException("Can not convert {0} to Int64.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, false))
+                throw new ArgumentException(
+                    "Can not convert {0} to Int64.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -528,7 +548,9 @@ namespace Dreamcast.Json.Linq
             if (value == null) return null;
 
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, DateTimeTypes, true)) throw new ArgumentException("Can not convert {0} to DateTime.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, DateTimeTypes, true))
+                throw new ArgumentException(
+                    "Can not convert {0} to DateTime.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_DATE_TIME_OFFSET
             if (v.Value is DateTimeOffset offset)
@@ -587,7 +609,9 @@ namespace Dreamcast.Json.Linq
             if (value == null) return null;
 
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, true)) throw new ArgumentException("Can not convert {0} to Decimal.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, true))
+                throw new ArgumentException(
+                    "Can not convert {0} to Decimal.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -609,7 +633,9 @@ namespace Dreamcast.Json.Linq
             if (value == null) return null;
 
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, true)) throw new ArgumentException("Can not convert {0} to Double.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, true))
+                throw new ArgumentException(
+                    "Can not convert {0} to Double.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -631,7 +657,9 @@ namespace Dreamcast.Json.Linq
             if (value == null) return null;
 
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, CharTypes, true)) throw new ArgumentException("Can not convert {0} to Char.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, CharTypes, true))
+                throw new ArgumentException(
+                    "Can not convert {0} to Char.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -651,7 +679,9 @@ namespace Dreamcast.Json.Linq
         public static explicit operator int(JToken value)
         {
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, false)) throw new ArgumentException("Can not convert {0} to Int32.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, false))
+                throw new ArgumentException(
+                    "Can not convert {0} to Int32.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -671,7 +701,9 @@ namespace Dreamcast.Json.Linq
         public static explicit operator short(JToken value)
         {
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, false)) throw new ArgumentException("Can not convert {0} to Int16.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, false))
+                throw new ArgumentException(
+                    "Can not convert {0} to Int16.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -692,7 +724,9 @@ namespace Dreamcast.Json.Linq
         public static explicit operator ushort(JToken value)
         {
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, false)) throw new ArgumentException("Can not convert {0} to UInt16.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, false))
+                throw new ArgumentException(
+                    "Can not convert {0} to UInt16.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -713,7 +747,9 @@ namespace Dreamcast.Json.Linq
         public static explicit operator char(JToken value)
         {
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, CharTypes, false)) throw new ArgumentException("Can not convert {0} to Char.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, CharTypes, false))
+                throw new ArgumentException(
+                    "Can not convert {0} to Char.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -733,7 +769,9 @@ namespace Dreamcast.Json.Linq
         public static explicit operator byte(JToken value)
         {
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, false)) throw new ArgumentException("Can not convert {0} to Byte.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, false))
+                throw new ArgumentException(
+                    "Can not convert {0} to Byte.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -754,7 +792,9 @@ namespace Dreamcast.Json.Linq
         public static explicit operator sbyte(JToken value)
         {
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, false)) throw new ArgumentException("Can not convert {0} to SByte.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, false))
+                throw new ArgumentException(
+                    "Can not convert {0} to SByte.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -776,7 +816,9 @@ namespace Dreamcast.Json.Linq
             if (value == null) return null;
 
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, true)) throw new ArgumentException("Can not convert {0} to Int32.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, true))
+                throw new ArgumentException(
+                    "Can not convert {0} to Int32.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -798,7 +840,9 @@ namespace Dreamcast.Json.Linq
             if (value == null) return null;
 
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, true)) throw new ArgumentException("Can not convert {0} to Int16.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, true))
+                throw new ArgumentException(
+                    "Can not convert {0} to Int16.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -821,7 +865,9 @@ namespace Dreamcast.Json.Linq
             if (value == null) return null;
 
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, true)) throw new ArgumentException("Can not convert {0} to UInt16.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, true))
+                throw new ArgumentException(
+                    "Can not convert {0} to UInt16.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -843,7 +889,9 @@ namespace Dreamcast.Json.Linq
             if (value == null) return null;
 
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, true)) throw new ArgumentException("Can not convert {0} to Byte.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, true))
+                throw new ArgumentException(
+                    "Can not convert {0} to Byte.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -866,7 +914,9 @@ namespace Dreamcast.Json.Linq
             if (value == null) return null;
 
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, true)) throw new ArgumentException("Can not convert {0} to SByte.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, true))
+                throw new ArgumentException(
+                    "Can not convert {0} to SByte.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -887,7 +937,9 @@ namespace Dreamcast.Json.Linq
         public static explicit operator DateTime(JToken value)
         {
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, DateTimeTypes, false)) throw new ArgumentException("Can not convert {0} to DateTime.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, DateTimeTypes, false))
+                throw new ArgumentException(
+                    "Can not convert {0} to DateTime.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_DATE_TIME_OFFSET
             if (v.Value is DateTimeOffset offset)
@@ -909,7 +961,9 @@ namespace Dreamcast.Json.Linq
             if (value == null) return null;
 
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, true)) throw new ArgumentException("Can not convert {0} to Int64.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, true))
+                throw new ArgumentException(
+                    "Can not convert {0} to Int64.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -931,7 +985,9 @@ namespace Dreamcast.Json.Linq
             if (value == null) return null;
 
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, true)) throw new ArgumentException("Can not convert {0} to Single.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, true))
+                throw new ArgumentException(
+                    "Can not convert {0} to Single.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -951,7 +1007,9 @@ namespace Dreamcast.Json.Linq
         public static explicit operator decimal(JToken value)
         {
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, false)) throw new ArgumentException("Can not convert {0} to Decimal.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, false))
+                throw new ArgumentException(
+                    "Can not convert {0} to Decimal.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -974,7 +1032,9 @@ namespace Dreamcast.Json.Linq
             if (value == null) return null;
 
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, true)) throw new ArgumentException("Can not convert {0} to UInt32.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, true))
+                throw new ArgumentException(
+                    "Can not convert {0} to UInt32.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -997,7 +1057,9 @@ namespace Dreamcast.Json.Linq
             if (value == null) return null;
 
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, true)) throw new ArgumentException("Can not convert {0} to UInt64.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, true))
+                throw new ArgumentException(
+                    "Can not convert {0} to UInt64.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -1017,7 +1079,9 @@ namespace Dreamcast.Json.Linq
         public static explicit operator double(JToken value)
         {
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, false)) throw new ArgumentException("Can not convert {0} to Double.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, false))
+                throw new ArgumentException(
+                    "Can not convert {0} to Double.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -1037,7 +1101,9 @@ namespace Dreamcast.Json.Linq
         public static explicit operator float(JToken value)
         {
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, false)) throw new ArgumentException("Can not convert {0} to Single.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, false))
+                throw new ArgumentException(
+                    "Can not convert {0} to Single.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -1059,7 +1125,9 @@ namespace Dreamcast.Json.Linq
             if (value == null) return null;
 
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, StringTypes, true)) throw new ArgumentException("Can not convert {0} to String.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, StringTypes, true))
+                throw new ArgumentException(
+                    "Can not convert {0} to String.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
             if (v.Value == null) return null;
 
@@ -1084,7 +1152,9 @@ namespace Dreamcast.Json.Linq
         public static explicit operator uint(JToken value)
         {
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, false)) throw new ArgumentException("Can not convert {0} to UInt32.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, false))
+                throw new ArgumentException(
+                    "Can not convert {0} to UInt32.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -1105,7 +1175,9 @@ namespace Dreamcast.Json.Linq
         public static explicit operator ulong(JToken value)
         {
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, NumberTypes, false)) throw new ArgumentException("Can not convert {0} to UInt64.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, NumberTypes, false))
+                throw new ArgumentException(
+                    "Can not convert {0} to UInt64.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
@@ -1127,9 +1199,12 @@ namespace Dreamcast.Json.Linq
             if (value == null) return null;
 
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, BytesTypes, false)) throw new ArgumentException("Can not convert {0} to byte array.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, BytesTypes, false))
+                throw new ArgumentException(
+                    "Can not convert {0} to byte array.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
-            if (v.Value is string) return Convert.FromBase64String(Convert.ToString(v.Value, CultureInfo.InvariantCulture));
+            if (v.Value is string)
+                return Convert.FromBase64String(Convert.ToString(v.Value, CultureInfo.InvariantCulture));
 #if HAVE_BIG_INTEGER
             if (v.Value is BigInteger integer)
             {
@@ -1139,7 +1214,8 @@ namespace Dreamcast.Json.Linq
 
             if (v.Value is byte[] bytes) return bytes;
 
-            throw new ArgumentException("Can not convert {0} to byte array.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            throw new ArgumentException(
+                "Can not convert {0} to byte array.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
         }
 
         /// <summary>
@@ -1150,7 +1226,9 @@ namespace Dreamcast.Json.Linq
         public static explicit operator Guid(JToken value)
         {
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, GuidTypes, false)) throw new ArgumentException("Can not convert {0} to Guid.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, GuidTypes, false))
+                throw new ArgumentException(
+                    "Can not convert {0} to Guid.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
             if (v.Value is byte[] bytes) return new Guid(bytes);
 
@@ -1167,7 +1245,9 @@ namespace Dreamcast.Json.Linq
             if (value == null) return null;
 
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, GuidTypes, true)) throw new ArgumentException("Can not convert {0} to Guid.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, GuidTypes, true))
+                throw new ArgumentException(
+                    "Can not convert {0} to Guid.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
             if (v.Value == null) return null;
 
@@ -1184,9 +1264,13 @@ namespace Dreamcast.Json.Linq
         public static explicit operator TimeSpan(JToken value)
         {
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, TimeSpanTypes, false)) throw new ArgumentException("Can not convert {0} to TimeSpan.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, TimeSpanTypes, false))
+                throw new ArgumentException(
+                    "Can not convert {0} to TimeSpan.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
-            return v.Value is TimeSpan span ? span : ConvertUtils.ParseTimeSpan(Convert.ToString(v.Value, CultureInfo.InvariantCulture));
+            return v.Value is TimeSpan span
+                ? span
+                : ConvertUtils.ParseTimeSpan(Convert.ToString(v.Value, CultureInfo.InvariantCulture));
         }
 
         /// <summary>
@@ -1200,11 +1284,15 @@ namespace Dreamcast.Json.Linq
             if (value == null) return null;
 
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, TimeSpanTypes, true)) throw new ArgumentException("Can not convert {0} to TimeSpan.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, TimeSpanTypes, true))
+                throw new ArgumentException(
+                    "Can not convert {0} to TimeSpan.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
             if (v.Value == null) return null;
 
-            return v.Value is TimeSpan span ? span : ConvertUtils.ParseTimeSpan(Convert.ToString(v.Value, CultureInfo.InvariantCulture));
+            return v.Value is TimeSpan span
+                ? span
+                : ConvertUtils.ParseTimeSpan(Convert.ToString(v.Value, CultureInfo.InvariantCulture));
         }
 
         /// <summary>
@@ -1217,7 +1305,9 @@ namespace Dreamcast.Json.Linq
             if (value == null) return null;
 
             var v = EnsureValue(value);
-            if (v == null || !ValidateToken(v, UriTypes, true)) throw new ArgumentException("Can not convert {0} to Uri.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            if (v == null || !ValidateToken(v, UriTypes, true))
+                throw new ArgumentException(
+                    "Can not convert {0} to Uri.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
 
             if (v.Value == null) return null;
 
@@ -1718,7 +1808,9 @@ namespace Dreamcast.Json.Linq
                         catch (Exception ex)
                         {
                             var enumType = objectType.IsEnum() ? objectType : Nullable.GetUnderlyingType(objectType);
-                            throw new ArgumentException("Could not convert '{0}' to {1}.".FormatWith(CultureInfo.InvariantCulture, (string?) this, enumType.Name), ex);
+                            throw new ArgumentException(
+                                "Could not convert '{0}' to {1}.".FormatWith(CultureInfo.InvariantCulture,
+                                    (string?) this, enumType.Name), ex);
                         }
 
                     if (Type == JTokenType.Integer)
@@ -1924,7 +2016,9 @@ namespace Dreamcast.Json.Linq
                     v.SetLineInfo(lineInfo, settings);
                     return v;
                 default:
-                    throw JsonReaderException.Create(reader, "Error reading JToken from JsonReader. Unexpected token: {0}".FormatWith(CultureInfo.InvariantCulture, reader.TokenType));
+                    throw JsonReaderException.Create(reader,
+                        "Error reading JToken from JsonReader. Unexpected token: {0}".FormatWith(
+                            CultureInfo.InvariantCulture, reader.TokenType));
             }
         }
 

@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System.Text;
+﻿using System.Text;
 using Dreamcast.Lua.Interpreter.Tree;
 
 namespace Dreamcast.Lua.Interpreter.Serialization.Json
@@ -250,7 +235,8 @@ namespace Dreamcast.Lua.Interpreter.Serialization.Json
                 negative = false;
             }
 
-            if (L.Current.Type != TokenType.Number) throw new SyntaxErrorException(L.Current, "Unexpected token : '{0}'", L.Current.Text);
+            if (L.Current.Type != TokenType.Number)
+                throw new SyntaxErrorException(L.Current, "Unexpected token : '{0}'", L.Current.Text);
             var numberValue = L.Current.GetNumberValue();
             if (negative) numberValue = -numberValue;
             return DynValue.NewNumber(numberValue).AsReadOnly();

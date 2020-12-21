@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -34,7 +19,8 @@ namespace Dreamcast.Json.Utilities
         private const char EnumSeparatorChar = ',';
         private const string EnumSeparatorString = ", ";
 
-        private static readonly ThreadSafeStore<StructMultiKey<Type, NamingStrategy?>, EnumInfo> ValuesAndNamesPerEnum = new(InitializeValuesAndNames);
+        private static readonly ThreadSafeStore<StructMultiKey<Type, NamingStrategy?>, EnumInfo> ValuesAndNamesPerEnum =
+            new(InitializeValuesAndNames);
 
         // Used by Dreamcast.Json.Schema
         private static readonly CamelCaseNamingStrategy _camelCaseNamingStrategy = new();
@@ -85,7 +71,9 @@ namespace Dreamcast.Json.Utilities
         {
             var enumType = typeof(T);
 
-            if (!enumType.IsDefined(typeof(FlagsAttribute), false)) throw new ArgumentException("Enum type {0} is not a set of flags.".FormatWith(CultureInfo.InvariantCulture, enumType));
+            if (!enumType.IsDefined(typeof(FlagsAttribute), false))
+                throw new ArgumentException(
+                    "Enum type {0} is not a set of flags.".FormatWith(CultureInfo.InvariantCulture, enumType));
 
             var underlyingType = Enum.GetUnderlyingType(value.GetType());
 
@@ -97,10 +85,12 @@ namespace Dreamcast.Json.Utilities
             {
                 var v = enumNameValues.Values[i];
 
-                if ((num & v) == v && v != 0) selectedFlagsValues.Add((T) Convert.ChangeType(v, underlyingType, CultureInfo.CurrentCulture));
+                if ((num & v) == v && v != 0)
+                    selectedFlagsValues.Add((T) Convert.ChangeType(v, underlyingType, CultureInfo.CurrentCulture));
             }
 
-            if (selectedFlagsValues.Count == 0 && enumNameValues.Values.Any(v => v == 0)) selectedFlagsValues.Add(default);
+            if (selectedFlagsValues.Count == 0 && enumNameValues.Values.Any(v => v == 0))
+                selectedFlagsValues.Add(default);
 
             return selectedFlagsValues;
         }
@@ -108,8 +98,7 @@ namespace Dreamcast.Json.Utilities
         public static bool TryToString(Type enumType,
             object value,
             bool camelCase,
-            [NotNullWhen(true)]
-            out string? name)
+            [NotNullWhen(true)] out string? name)
         {
             return TryToString(enumType, value, camelCase ? _camelCaseNamingStrategy : null, out name);
         }
@@ -117,10 +106,10 @@ namespace Dreamcast.Json.Utilities
         public static bool TryToString(Type enumType,
             object value,
             NamingStrategy? namingStrategy,
-            [NotNullWhen(true)]
-            out string? name)
+            [NotNullWhen(true)] out string? name)
         {
-            var enumInfo = ValuesAndNamesPerEnum.Get(new StructMultiKey<Type, NamingStrategy?>(enumType, namingStrategy));
+            var enumInfo =
+                ValuesAndNamesPerEnum.Get(new StructMultiKey<Type, NamingStrategy?>(enumType, namingStrategy));
             var v = ToUInt64(value);
 
             if (!enumInfo.IsFlags)
@@ -255,7 +244,8 @@ namespace Dreamcast.Json.Utilities
                     break;
                 }
 
-            if (firstNonWhitespaceIndex == -1) throw new ArgumentException("Must specify valid information for parsing in the string.");
+            if (firstNonWhitespaceIndex == -1)
+                throw new ArgumentException("Must specify valid information for parsing in the string.");
 
             // check whether string is a number and parse as a number value
             var firstNonWhitespaceChar = value[firstNonWhitespaceIndex];
@@ -279,7 +269,9 @@ namespace Dreamcast.Json.Utilities
 
                 if (temp != null)
                 {
-                    if (disallowNumber) throw new FormatException("Integer string '{0}' is not allowed.".FormatWith(CultureInfo.InvariantCulture, value));
+                    if (disallowNumber)
+                        throw new FormatException(
+                            "Integer string '{0}' is not allowed.".FormatWith(CultureInfo.InvariantCulture, value));
 
                     return Enum.ToObject(enumType, temp);
                 }
@@ -298,24 +290,30 @@ namespace Dreamcast.Json.Utilities
                 var endIndexNoWhitespace = endIndex;
                 while (valueIndex < endIndex && char.IsWhiteSpace(value[valueIndex])) valueIndex++;
 
-                while (endIndexNoWhitespace > valueIndex && char.IsWhiteSpace(value[endIndexNoWhitespace - 1])) endIndexNoWhitespace--;
+                while (endIndexNoWhitespace > valueIndex && char.IsWhiteSpace(value[endIndexNoWhitespace - 1]))
+                    endIndexNoWhitespace--;
                 var valueSubstringLength = endIndexNoWhitespace - valueIndex;
 
                 // match with case sensitivity
-                matchingIndex = MatchName(value, enumNames, resolvedNames, valueIndex, valueSubstringLength, StringComparison.Ordinal);
+                matchingIndex = MatchName(value, enumNames, resolvedNames, valueIndex, valueSubstringLength,
+                    StringComparison.Ordinal);
 
                 // if no match found, attempt case insensitive search
-                if (matchingIndex == null) matchingIndex = MatchName(value, enumNames, resolvedNames, valueIndex, valueSubstringLength, StringComparison.OrdinalIgnoreCase);
+                if (matchingIndex == null)
+                    matchingIndex = MatchName(value, enumNames, resolvedNames, valueIndex, valueSubstringLength,
+                        StringComparison.OrdinalIgnoreCase);
 
                 if (matchingIndex == null)
                 {
                     // still can't find a match
                     // before we throw an error, check whether the entire string has a case insensitive match against resolve names
-                    matchingIndex = FindIndexByName(resolvedNames, value, 0, value.Length, StringComparison.OrdinalIgnoreCase);
+                    matchingIndex = FindIndexByName(resolvedNames, value, 0, value.Length,
+                        StringComparison.OrdinalIgnoreCase);
                     if (matchingIndex != null) return Enum.ToObject(enumType, enumValues[matchingIndex.Value]);
 
                     // no match so error
-                    throw new ArgumentException("Requested value '{0}' was not found.".FormatWith(CultureInfo.InvariantCulture, value));
+                    throw new ArgumentException(
+                        "Requested value '{0}' was not found.".FormatWith(CultureInfo.InvariantCulture, value));
                 }
 
                 result |= enumValues[matchingIndex.Value];
@@ -327,15 +325,18 @@ namespace Dreamcast.Json.Utilities
             return Enum.ToObject(enumType, result);
         }
 
-        private static int? MatchName(string value, string[] enumNames, string[] resolvedNames, int valueIndex, int valueSubstringLength, StringComparison comparison)
+        private static int? MatchName(string value, string[] enumNames, string[] resolvedNames, int valueIndex,
+            int valueSubstringLength, StringComparison comparison)
         {
             var matchingIndex = FindIndexByName(resolvedNames, value, valueIndex, valueSubstringLength, comparison);
-            if (matchingIndex == null) matchingIndex = FindIndexByName(enumNames, value, valueIndex, valueSubstringLength, comparison);
+            if (matchingIndex == null)
+                matchingIndex = FindIndexByName(enumNames, value, valueIndex, valueSubstringLength, comparison);
 
             return matchingIndex;
         }
 
-        private static int? FindIndexByName(string[] enumNames, string value, int valueIndex, int valueSubstringLength, StringComparison comparison)
+        private static int? FindIndexByName(string[] enumNames, string value, int valueIndex, int valueSubstringLength,
+            StringComparison comparison)
         {
             for (var i = 0; i < enumNames.Length; i++)
                 if (enumNames[i].Length == valueSubstringLength &&

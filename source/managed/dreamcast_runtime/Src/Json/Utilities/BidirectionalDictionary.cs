@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -31,7 +16,8 @@ namespace Dreamcast.Json.Utilities
         {
         }
 
-        public BidirectionalDictionary(IEqualityComparer<TFirst> firstEqualityComparer, IEqualityComparer<TSecond> secondEqualityComparer)
+        public BidirectionalDictionary(IEqualityComparer<TFirst> firstEqualityComparer,
+            IEqualityComparer<TSecond> secondEqualityComparer)
             : this(
                 firstEqualityComparer,
                 secondEqualityComparer,
@@ -55,11 +41,13 @@ namespace Dreamcast.Json.Utilities
         {
             if (_firstToSecond.TryGetValue(first, out var existingSecond))
                 if (!existingSecond!.Equals(second))
-                    throw new ArgumentException(_duplicateFirstErrorMessage.FormatWith(CultureInfo.InvariantCulture, first));
+                    throw new ArgumentException(
+                        _duplicateFirstErrorMessage.FormatWith(CultureInfo.InvariantCulture, first));
 
             if (_secondToFirst.TryGetValue(second, out var existingFirst))
                 if (!existingFirst!.Equals(first))
-                    throw new ArgumentException(_duplicateSecondErrorMessage.FormatWith(CultureInfo.InvariantCulture, second));
+                    throw new ArgumentException(
+                        _duplicateSecondErrorMessage.FormatWith(CultureInfo.InvariantCulture, second));
 
             _firstToSecond.Add(first, second);
             _secondToFirst.Add(second, first);

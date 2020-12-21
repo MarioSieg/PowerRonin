@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #pragma once
 
 #include <cstdint>
@@ -112,23 +97,22 @@ namespace dce {
 	/// Contains all GPR registers.
 	/// </summary>
 	enum class GprRegisters {
-		RAX
-		, RBX
-		, RCX
-		, RDX
-		, RBP
-		, RSI
-		, RDI
-		, RSP
-		, R8
-		, R9
-		, R10
-		, R11
-		, R12
-		, R13
-		, R14
-		, R15
-		,
+		RAX,
+		RBX,
+		RCX,
+		RDX,
+		RBP,
+		RSI,
+		RDI,
+		RSP,
+		R8,
+		R9,
+		R10,
+		R11,
+		R12,
+		R13,
+		R14,
+		R15,
 	};
 
 	/// <summary>
@@ -145,99 +129,95 @@ namespace dce {
 	/// Contains all MMX registers.
 	/// </summary>
 	enum class MmxRegisters {
-		XMMX0_FPR0
-		, XMMX1_FPR1
-		, XMMX2_FPR2
-		, XMMX3_FPR3
-		, XMMX4_FPR4
-		, XMMX5_FPR5
-		, XMMX6_FPR6
-		, XMMX7_FPR7
-		,
+		XMMX0_FPR0,
+		XMMX1_FPR1,
+		XMMX2_FPR2,
+		XMMX3_FPR3,
+		XMMX4_FPR4,
+		XMMX5_FPR5,
+		XMMX6_FPR6,
+		XMMX7_FPR7,
 	};
 
 	/// <summary>
 	/// Contains SSE registers.
 	/// </summary>
 	enum class SseRegisters {
-		XMM0
-		, XMM1
-		, XMM2
-		, XMM3
-		, XMM4
-		, XMM5
-		, XMM6
-		, XMM7
-		, XMM8
-		, XMM9
-		, XMM10
-		, XMM11
-		, XMM12
-		, XMM13
-		, XMM14
-		, XMM15
-		,
+		XMM0,
+		XMM1,
+		XMM2,
+		XMM3,
+		XMM4,
+		XMM5,
+		XMM6,
+		XMM7,
+		XMM8,
+		XMM9,
+		XMM10,
+		XMM11,
+		XMM12,
+		XMM13,
+		XMM14,
+		XMM15,
 	};
 
 	/// <summary>
 	/// Contains all AVX registers.
 	/// </summary>
 	enum class AvxRegisters {
-		YMM0
-		, YMM1
-		, YMM2
-		, YMM3
-		, YMM4
-		, YMM5
-		, YMM6
-		, YMM7
-		, YMM8
-		, YMM9
-		, YMM10
-		, YMM11
-		, YMM12
-		, YMM13
-		, YMM14
-		, YMM15
-		,
+		YMM0,
+		YMM1,
+		YMM2,
+		YMM3,
+		YMM4,
+		YMM5,
+		YMM6,
+		YMM7,
+		YMM8,
+		YMM9,
+		YMM10,
+		YMM11,
+		YMM12,
+		YMM13,
+		YMM14,
+		YMM15,
 	};
 
 	/// <summary>
 	/// Contains all AVX-512 registers.
 	/// </summary>
 	enum class Avx512Registers {
-		ZMM0
-		, ZMM1
-		, ZMM2
-		, ZMM3
-		, ZMM4
-		, ZMM5
-		, ZMM6
-		, ZMM7
-		, ZMM8
-		, ZMM9
-		, ZMM10
-		, ZMM11
-		, ZMM12
-		, ZMM13
-		, ZMM14
-		, ZMM15
-		, ZMM16
-		, ZMM17
-		, ZMM18
-		, ZMM19
-		, ZMM20
-		, ZMM21
-		, ZMM22
-		, ZMM23
-		, ZMM24
-		, ZMM25
-		, ZMM26
-		, ZMM27
-		, ZMM28
-		, ZMM29
-		, ZMM30
-		, ZMM31
-		,
+		ZMM0,
+		ZMM1,
+		ZMM2,
+		ZMM3,
+		ZMM4,
+		ZMM5,
+		ZMM6,
+		ZMM7,
+		ZMM8,
+		ZMM9,
+		ZMM10,
+		ZMM11,
+		ZMM12,
+		ZMM13,
+		ZMM14,
+		ZMM15,
+		ZMM16,
+		ZMM17,
+		ZMM18,
+		ZMM19,
+		ZMM20,
+		ZMM21,
+		ZMM22,
+		ZMM23,
+		ZMM24,
+		ZMM25,
+		ZMM26,
+		ZMM27,
+		ZMM28,
+		ZMM29,
+		ZMM30,
+		ZMM31,
 	};
 }

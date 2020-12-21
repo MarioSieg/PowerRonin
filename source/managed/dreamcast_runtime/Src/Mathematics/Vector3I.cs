@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -108,7 +93,8 @@ namespace Dreamcast.Mathematics
             if (values == null)
                 throw new ArgumentNullException("values");
             if (values.Length != 3)
-                throw new ArgumentOutOfRangeException("values", "There must be three and only three input values for IVector3.");
+                throw new ArgumentOutOfRangeException("values",
+                    "There must be three and only three input values for IVector3.");
 
             X = values[0];
             Y = values[1];
@@ -159,7 +145,8 @@ namespace Dreamcast.Mathematics
                         Z = value;
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException("index", "Indices for IVector3 run from 0 to 2, inclusive.");
+                        throw new ArgumentOutOfRangeException("index",
+                            "Indices for IVector3 run from 0 to 2, inclusive.");
                 }
             }
         }
@@ -544,7 +531,8 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString();
 
-            return string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1} Z:{2}", X.ToString(format, CultureInfo.CurrentCulture),
+            return string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1} Z:{2}",
+                X.ToString(format, CultureInfo.CurrentCulture),
                 Y.ToString(format, CultureInfo.CurrentCulture), Z.ToString(format, CultureInfo.CurrentCulture));
         }
 
@@ -573,7 +561,8 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 ToString(formatProvider);
 
-            return string.Format(formatProvider, "X:{0} Y:{1} Z:{2}", X.ToString(format, formatProvider), Y.ToString(format, formatProvider),
+            return string.Format(formatProvider, "X:{0} Y:{1} Z:{2}", X.ToString(format, formatProvider),
+                Y.ToString(format, formatProvider),
                 Z.ToString(format, formatProvider));
         }
 

@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -93,7 +78,8 @@ namespace Dreamcast.Lua.Interpreter
         /// <typeparam name="T">The type to be registered</typeparam>
         /// <param name="accessMode">The access mode (optional).</param>
         /// <param name="friendlyName">Friendly name for the type (optional)</param>
-        public static IUserDataDescriptor RegisterType<T>(InteropAccessMode accessMode = InteropAccessMode.Default, string friendlyName = null)
+        public static IUserDataDescriptor RegisterType<T>(InteropAccessMode accessMode = InteropAccessMode.Default,
+            string friendlyName = null)
         {
             return TypeDescriptorRegistry.RegisterType_Impl(typeof(T), accessMode, friendlyName, null);
         }
@@ -104,7 +90,8 @@ namespace Dreamcast.Lua.Interpreter
         /// <param name="type">The type to be registered</param>
         /// <param name="accessMode">The access mode (optional).</param>
         /// <param name="friendlyName">Friendly name for the type (optional)</param>
-        public static IUserDataDescriptor RegisterType(Type type, InteropAccessMode accessMode = InteropAccessMode.Default, string friendlyName = null)
+        public static IUserDataDescriptor RegisterType(Type type,
+            InteropAccessMode accessMode = InteropAccessMode.Default, string friendlyName = null)
         {
             return TypeDescriptorRegistry.RegisterType_Impl(type, accessMode, friendlyName, null);
         }
@@ -117,7 +104,8 @@ namespace Dreamcast.Lua.Interpreter
         /// <param name="accessMode">The access mode.</param>
         /// <param name="friendlyName">A friendly name for the descriptor.</param>
         /// <returns></returns>
-        public static IUserDataDescriptor RegisterProxyType(IProxyFactory proxyFactory, InteropAccessMode accessMode = InteropAccessMode.Default, string friendlyName = null)
+        public static IUserDataDescriptor RegisterProxyType(IProxyFactory proxyFactory,
+            InteropAccessMode accessMode = InteropAccessMode.Default, string friendlyName = null)
         {
             return TypeDescriptorRegistry.RegisterProxyType_Impl(proxyFactory, accessMode, friendlyName);
         }
@@ -131,7 +119,8 @@ namespace Dreamcast.Lua.Interpreter
         /// <param name="accessMode">The access mode.</param>
         /// <param name="friendlyName">A friendly name for the descriptor.</param>
         /// <returns></returns>
-        public static IUserDataDescriptor RegisterProxyType<TProxy, TTarget>(Func<TTarget, TProxy> wrapDelegate, InteropAccessMode accessMode = InteropAccessMode.Default, string friendlyName = null)
+        public static IUserDataDescriptor RegisterProxyType<TProxy, TTarget>(Func<TTarget, TProxy> wrapDelegate,
+            InteropAccessMode accessMode = InteropAccessMode.Default, string friendlyName = null)
             where TProxy : class
             where TTarget : class
         {
@@ -146,7 +135,8 @@ namespace Dreamcast.Lua.Interpreter
         /// <param name="customDescriptor">The custom descriptor.</param>
         public static IUserDataDescriptor RegisterType<T>(IUserDataDescriptor customDescriptor)
         {
-            return TypeDescriptorRegistry.RegisterType_Impl(typeof(T), InteropAccessMode.Default, null, customDescriptor);
+            return TypeDescriptorRegistry.RegisterType_Impl(typeof(T), InteropAccessMode.Default, null,
+                customDescriptor);
         }
 
         /// <summary>
@@ -165,7 +155,8 @@ namespace Dreamcast.Lua.Interpreter
         /// <param name="customDescriptor">The custom descriptor.</param>
         public static IUserDataDescriptor RegisterType(IUserDataDescriptor customDescriptor)
         {
-            return TypeDescriptorRegistry.RegisterType_Impl(customDescriptor.Type, InteropAccessMode.Default, null, customDescriptor);
+            return TypeDescriptorRegistry.RegisterType_Impl(customDescriptor.Type, InteropAccessMode.Default, null,
+                customDescriptor);
         }
 
 
@@ -314,7 +305,8 @@ namespace Dreamcast.Lua.Interpreter
         /// <param name="name">The name.</param>
         /// <param name="extendedType">The extended type.</param>
         /// <returns></returns>
-        public static List<IOverloadableMemberDescriptor> GetExtensionMethodsByNameAndType(string name, Type extendedType)
+        public static List<IOverloadableMemberDescriptor> GetExtensionMethodsByNameAndType(string name,
+            Type extendedType)
         {
             return ExtensionMethodsRegistry.GetExtensionMethodsByNameAndType(name, extendedType);
         }
@@ -374,7 +366,9 @@ namespace Dreamcast.Lua.Interpreter
         public static Table GetDescriptionOfRegisteredTypes(bool useHistoricalData = false)
         {
             DynValue output = DynValue.NewPrimeTable();
-            var registeredTypesPairs = useHistoricalData ? TypeDescriptorRegistry.RegisteredTypesHistory : TypeDescriptorRegistry.RegisteredTypes;
+            var registeredTypesPairs = useHistoricalData
+                ? TypeDescriptorRegistry.RegisteredTypesHistory
+                : TypeDescriptorRegistry.RegisteredTypes;
 
             foreach (var descpair in registeredTypesPairs)
             {
@@ -401,7 +395,9 @@ namespace Dreamcast.Lua.Interpreter
         /// <returns></returns>
         public static IEnumerable<Type> GetRegisteredTypes(bool useHistoricalData = false)
         {
-            var registeredTypesPairs = useHistoricalData ? TypeDescriptorRegistry.RegisteredTypesHistory : TypeDescriptorRegistry.RegisteredTypes;
+            var registeredTypesPairs = useHistoricalData
+                ? TypeDescriptorRegistry.RegisteredTypesHistory
+                : TypeDescriptorRegistry.RegisteredTypes;
             return registeredTypesPairs.Select(p => p.Value.Type);
         }
     }

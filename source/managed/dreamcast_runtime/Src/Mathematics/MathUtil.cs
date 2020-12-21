@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 
 namespace Dreamcast.Mathematics
 {
@@ -35,17 +20,17 @@ namespace Dreamcast.Mathematics
         /// <summary>
         ///     A value specifying the approximation of 2π which is 360 degrees.
         /// </summary>
-        public const float TwoPi = (float) (2 * Math.PI);
+        public const float TwoPi = 2 * Math.PI;
 
         /// <summary>
         ///     A value specifying the approximation of π/2 which is 90 degrees.
         /// </summary>
-        public const float PiOverTwo = (float) (Math.PI / 2);
+        public const float PiOverTwo = Math.PI / 2;
 
         /// <summary>
         ///     A value specifying the approximation of π/4 which is 45 degrees.
         /// </summary>
-        public const float PiOverFour = (float) (Math.PI / 4);
+        public const float PiOverFour = Math.PI / 4;
 
         /// <summary>
         ///     Checks if a and b are almost equals, taking into account the magnitude of floating point numbers (unlike
@@ -406,7 +391,8 @@ namespace Dreamcast.Mathematics
         /// <param name="sigmaX">Curve sigma X.</param>
         /// <param name="sigmaY">Curve sigma Y.</param>
         /// <returns>The result of Gaussian function.</returns>
-        public static float Gauss(float amplitude, float x, float y, float centerX, float centerY, float sigmaX, float sigmaY)
+        public static float Gauss(float amplitude, float x, float y, float centerX, float centerY, float sigmaX,
+            float sigmaY)
         {
             return (float) Gauss((double) amplitude, x, y, centerX, centerY, sigmaX, sigmaY);
         }
@@ -423,7 +409,8 @@ namespace Dreamcast.Mathematics
         /// <param name="sigmaX">Curve sigma X.</param>
         /// <param name="sigmaY">Curve sigma Y.</param>
         /// <returns>The result of Gaussian function.</returns>
-        public static double Gauss(double amplitude, double x, double y, double centerX, double centerY, double sigmaX, double sigmaY)
+        public static double Gauss(double amplitude, double x, double y, double centerX, double centerY, double sigmaX,
+            double sigmaY)
         {
             var cx = x - centerX;
             var cy = y - centerY;

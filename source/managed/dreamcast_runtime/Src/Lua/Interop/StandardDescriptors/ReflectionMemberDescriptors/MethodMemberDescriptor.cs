@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -78,7 +63,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
             }
 
 
-            var isExtensionMethod = methodBase.IsStatic && parameters.Length > 0 && methodBase.GetCustomAttributes(typeof(ExtensionAttribute), false).Any();
+            var isExtensionMethod = methodBase.IsStatic && parameters.Length > 0 &&
+                                    methodBase.GetCustomAttributes(typeof(ExtensionAttribute), false).Any();
 
             Initialize(methodBase.Name, isStatic, parameters, isExtensionMethod);
 
@@ -193,7 +179,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
             else
                 t.Set("ret", DynValue.NewString(((MethodInfo) MethodInfo).ReturnType.FullName));
 
-            if (m_IsArrayCtor) t.Set("arraytype", DynValue.NewString(MethodInfo.DeclaringType.GetElementType().FullName));
+            if (m_IsArrayCtor)
+                t.Set("arraytype", DynValue.NewString(MethodInfo.DeclaringType.GetElementType().FullName));
 
             t.Set("decltype", DynValue.NewString(MethodInfo.DeclaringType.FullName));
             t.Set("static", DynValue.NewBoolean(IsStatic));
@@ -224,7 +211,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
         /// <returns>
         ///     A new MethodMemberDescriptor or null.
         /// </returns>
-        public static MethodMemberDescriptor TryCreateIfVisible(MethodBase methodBase, InteropAccessMode accessMode, bool forceVisibility = false)
+        public static MethodMemberDescriptor TryCreateIfVisible(MethodBase methodBase, InteropAccessMode accessMode,
+            bool forceVisibility = false)
         {
             if (!CheckMethodIsCompatible(methodBase, false))
                 return null;
@@ -276,7 +264,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
 
                 if (Framework.Do.IsGenericTypeDefinition(mi.ReturnType))
                 {
-                    if (throwException) throw new ArgumentException("Method cannot have an unresolved generic return type");
+                    if (throwException)
+                        throw new ArgumentException("Method cannot have an unresolved generic return type");
                     return false;
                 }
             }
@@ -292,7 +281,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
         /// <param name="context">The context.</param>
         /// <param name="args">The arguments.</param>
         /// <returns></returns>
-        public override DynValue Execute(Script script, object obj, ScriptExecutionContext context, CallbackArguments args)
+        public override DynValue Execute(Script script, object obj, ScriptExecutionContext context,
+            CallbackArguments args)
         {
             this.CheckAccess(MemberDescriptorAccess.CanExecute, obj);
 

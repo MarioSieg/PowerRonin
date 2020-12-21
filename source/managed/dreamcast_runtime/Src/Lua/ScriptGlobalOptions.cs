@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using Dreamcast.Lua.Interpreter.Interop;
+﻿using Dreamcast.Lua.Interpreter.Interop;
 using Dreamcast.Lua.Interpreter.Platforms;
 
 namespace Dreamcast.Lua.Interpreter
@@ -28,7 +13,8 @@ namespace Dreamcast.Lua.Interpreter
         {
             Platform = PlatformAutoDetector.GetDefaultPlatform();
             CustomConverters = new CustomConvertersCollection();
-            FuzzySymbolMatching = FuzzySymbolMatchingBehavior.Camelify | FuzzySymbolMatchingBehavior.UpperFirstLetter | FuzzySymbolMatchingBehavior.PascalCase;
+            FuzzySymbolMatching = FuzzySymbolMatchingBehavior.Camelify | FuzzySymbolMatchingBehavior.UpperFirstLetter |
+                                  FuzzySymbolMatchingBehavior.PascalCase;
         }
 
         /// <summary>

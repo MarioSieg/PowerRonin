@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Dreamcast.Json.Serialization;
@@ -56,43 +41,55 @@ namespace Dreamcast.Json.Utilities
         private const string ImmutableHashSetTypeName = "System.Collections.Immutable.ImmutableHashSet";
         private const string ImmutableHashSetGenericTypeName = "System.Collections.Immutable.ImmutableHashSet`1";
 
-        private const string ImmutableDictionaryGenericInterfaceTypeName = "System.Collections.Immutable.IImmutableDictionary`2";
+        private const string ImmutableDictionaryGenericInterfaceTypeName =
+            "System.Collections.Immutable.IImmutableDictionary`2";
 
         private const string ImmutableDictionaryTypeName = "System.Collections.Immutable.ImmutableDictionary";
         private const string ImmutableDictionaryGenericTypeName = "System.Collections.Immutable.ImmutableDictionary`2";
 
-        private const string ImmutableSortedDictionaryTypeName = "System.Collections.Immutable.ImmutableSortedDictionary";
-        private const string ImmutableSortedDictionaryGenericTypeName = "System.Collections.Immutable.ImmutableSortedDictionary`2";
+        private const string ImmutableSortedDictionaryTypeName =
+            "System.Collections.Immutable.ImmutableSortedDictionary";
 
-        private static readonly IList<ImmutableCollectionTypeInfo> ArrayContractImmutableCollectionDefinitions = new List<ImmutableCollectionTypeInfo>
-        {
-            new(ImmutableListGenericInterfaceTypeName, ImmutableListGenericTypeName, ImmutableListTypeName),
-            new(ImmutableListGenericTypeName, ImmutableListGenericTypeName, ImmutableListTypeName),
-            new(ImmutableQueueGenericInterfaceTypeName, ImmutableQueueGenericTypeName, ImmutableQueueTypeName),
-            new(ImmutableQueueGenericTypeName, ImmutableQueueGenericTypeName, ImmutableQueueTypeName),
-            new(ImmutableStackGenericInterfaceTypeName, ImmutableStackGenericTypeName, ImmutableStackTypeName),
-            new(ImmutableStackGenericTypeName, ImmutableStackGenericTypeName, ImmutableStackTypeName),
-            new(ImmutableSetGenericInterfaceTypeName, ImmutableHashSetGenericTypeName, ImmutableHashSetTypeName),
-            new(ImmutableSortedSetGenericTypeName, ImmutableSortedSetGenericTypeName, ImmutableSortedSetTypeName),
-            new(ImmutableHashSetGenericTypeName, ImmutableHashSetGenericTypeName, ImmutableHashSetTypeName),
-            new(ImmutableArrayGenericTypeName, ImmutableArrayGenericTypeName, ImmutableArrayTypeName)
-        };
+        private const string ImmutableSortedDictionaryGenericTypeName =
+            "System.Collections.Immutable.ImmutableSortedDictionary`2";
 
-        private static readonly IList<ImmutableCollectionTypeInfo> DictionaryContractImmutableCollectionDefinitions = new List<ImmutableCollectionTypeInfo> {new(ImmutableDictionaryGenericInterfaceTypeName, ImmutableDictionaryGenericTypeName, ImmutableDictionaryTypeName), new(ImmutableSortedDictionaryGenericTypeName, ImmutableSortedDictionaryGenericTypeName, ImmutableSortedDictionaryTypeName), new(ImmutableDictionaryGenericTypeName, ImmutableDictionaryGenericTypeName, ImmutableDictionaryTypeName)};
+        private static readonly IList<ImmutableCollectionTypeInfo> ArrayContractImmutableCollectionDefinitions =
+            new List<ImmutableCollectionTypeInfo>
+            {
+                new(ImmutableListGenericInterfaceTypeName, ImmutableListGenericTypeName, ImmutableListTypeName),
+                new(ImmutableListGenericTypeName, ImmutableListGenericTypeName, ImmutableListTypeName),
+                new(ImmutableQueueGenericInterfaceTypeName, ImmutableQueueGenericTypeName, ImmutableQueueTypeName),
+                new(ImmutableQueueGenericTypeName, ImmutableQueueGenericTypeName, ImmutableQueueTypeName),
+                new(ImmutableStackGenericInterfaceTypeName, ImmutableStackGenericTypeName, ImmutableStackTypeName),
+                new(ImmutableStackGenericTypeName, ImmutableStackGenericTypeName, ImmutableStackTypeName),
+                new(ImmutableSetGenericInterfaceTypeName, ImmutableHashSetGenericTypeName, ImmutableHashSetTypeName),
+                new(ImmutableSortedSetGenericTypeName, ImmutableSortedSetGenericTypeName, ImmutableSortedSetTypeName),
+                new(ImmutableHashSetGenericTypeName, ImmutableHashSetGenericTypeName, ImmutableHashSetTypeName),
+                new(ImmutableArrayGenericTypeName, ImmutableArrayGenericTypeName, ImmutableArrayTypeName)
+            };
+
+        private static readonly IList<ImmutableCollectionTypeInfo> DictionaryContractImmutableCollectionDefinitions =
+            new List<ImmutableCollectionTypeInfo>
+            {
+                new(ImmutableDictionaryGenericInterfaceTypeName, ImmutableDictionaryGenericTypeName,
+                    ImmutableDictionaryTypeName),
+                new(ImmutableSortedDictionaryGenericTypeName, ImmutableSortedDictionaryGenericTypeName,
+                    ImmutableSortedDictionaryTypeName),
+                new(ImmutableDictionaryGenericTypeName, ImmutableDictionaryGenericTypeName, ImmutableDictionaryTypeName)
+            };
 
         internal static bool TryBuildImmutableForArrayContract(Type underlyingType,
             Type collectionItemType,
-            [NotNullWhen(true)]
-            out Type? createdType,
-            [NotNullWhen(true)]
-            out ObjectConstructor<object>? parameterizedCreator)
+            [NotNullWhen(true)] out Type? createdType,
+            [NotNullWhen(true)] out ObjectConstructor<object>? parameterizedCreator)
         {
             if (underlyingType.IsGenericType())
             {
                 var underlyingTypeDefinition = underlyingType.GetGenericTypeDefinition();
                 var name = underlyingTypeDefinition.FullName;
 
-                var definition = ArrayContractImmutableCollectionDefinitions.FirstOrDefault(d => d.ContractTypeName == name);
+                var definition =
+                    ArrayContractImmutableCollectionDefinitions.FirstOrDefault(d => d.ContractTypeName == name);
                 if (definition != null)
                 {
                     var createdTypeDefinition = underlyingTypeDefinition.Assembly().GetType(definition.CreatedTypeName);
@@ -100,12 +97,14 @@ namespace Dreamcast.Json.Utilities
 
                     if (createdTypeDefinition != null && builderTypeDefinition != null)
                     {
-                        var mb = builderTypeDefinition.GetMethods().FirstOrDefault(m => m.Name == "CreateRange" && m.GetParameters().Length == 1);
+                        var mb = builderTypeDefinition.GetMethods().FirstOrDefault(m =>
+                            m.Name == "CreateRange" && m.GetParameters().Length == 1);
                         if (mb != null)
                         {
                             createdType = createdTypeDefinition.MakeGenericType(collectionItemType);
                             var method = mb.MakeGenericMethod(collectionItemType);
-                            parameterizedCreator = JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(method);
+                            parameterizedCreator =
+                                JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(method);
                             return true;
                         }
                     }
@@ -120,17 +119,16 @@ namespace Dreamcast.Json.Utilities
         internal static bool TryBuildImmutableForDictionaryContract(Type underlyingType,
             Type keyItemType,
             Type valueItemType,
-            [NotNullWhen(true)]
-            out Type? createdType,
-            [NotNullWhen(true)]
-            out ObjectConstructor<object>? parameterizedCreator)
+            [NotNullWhen(true)] out Type? createdType,
+            [NotNullWhen(true)] out ObjectConstructor<object>? parameterizedCreator)
         {
             if (underlyingType.IsGenericType())
             {
                 var underlyingTypeDefinition = underlyingType.GetGenericTypeDefinition();
                 var name = underlyingTypeDefinition.FullName;
 
-                var definition = DictionaryContractImmutableCollectionDefinitions.FirstOrDefault(d => d.ContractTypeName == name);
+                var definition =
+                    DictionaryContractImmutableCollectionDefinitions.FirstOrDefault(d => d.ContractTypeName == name);
                 if (definition != null)
                 {
                     var createdTypeDefinition = underlyingTypeDefinition.Assembly().GetType(definition.CreatedTypeName);
@@ -142,13 +140,16 @@ namespace Dreamcast.Json.Utilities
                         {
                             var parameters = m.GetParameters();
 
-                            return m.Name == "CreateRange" && parameters.Length == 1 && parameters[0].ParameterType.IsGenericType() && parameters[0].ParameterType.GetGenericTypeDefinition() == typeof(IEnumerable<>);
+                            return m.Name == "CreateRange" && parameters.Length == 1 &&
+                                   parameters[0].ParameterType.IsGenericType() &&
+                                   parameters[0].ParameterType.GetGenericTypeDefinition() == typeof(IEnumerable<>);
                         });
                         if (mb != null)
                         {
                             createdType = createdTypeDefinition.MakeGenericType(keyItemType, valueItemType);
                             var method = mb.MakeGenericMethod(keyItemType, valueItemType);
-                            parameterizedCreator = JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(method);
+                            parameterizedCreator =
+                                JsonTypeReflector.ReflectionDelegateFactory.CreateParameterizedConstructor(method);
                             return true;
                         }
                     }

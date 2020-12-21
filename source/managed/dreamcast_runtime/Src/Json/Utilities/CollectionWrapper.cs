@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -145,7 +130,8 @@ namespace Dreamcast.Json.Utilities
 
         int IList.IndexOf(object value)
         {
-            if (_genericCollection != null) throw new InvalidOperationException("Wrapped ICollection<T> does not support IndexOf.");
+            if (_genericCollection != null)
+                throw new InvalidOperationException("Wrapped ICollection<T> does not support IndexOf.");
 
             if (IsCompatibleObject(value)) return _list!.IndexOf((T) value);
 
@@ -154,14 +140,16 @@ namespace Dreamcast.Json.Utilities
 
         void IList.RemoveAt(int index)
         {
-            if (_genericCollection != null) throw new InvalidOperationException("Wrapped ICollection<T> does not support RemoveAt.");
+            if (_genericCollection != null)
+                throw new InvalidOperationException("Wrapped ICollection<T> does not support RemoveAt.");
 
             _list!.RemoveAt(index);
         }
 
         void IList.Insert(int index, object value)
         {
-            if (_genericCollection != null) throw new InvalidOperationException("Wrapped ICollection<T> does not support Insert.");
+            if (_genericCollection != null)
+                throw new InvalidOperationException("Wrapped ICollection<T> does not support Insert.");
 
             VerifyValueType(value);
             _list!.Insert(index, (T) value);
@@ -187,13 +175,15 @@ namespace Dreamcast.Json.Utilities
         {
             get
             {
-                if (_genericCollection != null) throw new InvalidOperationException("Wrapped ICollection<T> does not support indexer.");
+                if (_genericCollection != null)
+                    throw new InvalidOperationException("Wrapped ICollection<T> does not support indexer.");
 
                 return _list![index];
             }
             set
             {
-                if (_genericCollection != null) throw new InvalidOperationException("Wrapped ICollection<T> does not support indexer.");
+                if (_genericCollection != null)
+                    throw new InvalidOperationException("Wrapped ICollection<T> does not support indexer.");
 
                 VerifyValueType(value);
                 _list![index] = (T) value;
@@ -221,12 +211,16 @@ namespace Dreamcast.Json.Utilities
 
         private static void VerifyValueType(object value)
         {
-            if (!IsCompatibleObject(value)) throw new ArgumentException("The value '{0}' is not of type '{1}' and cannot be used in this generic collection.".FormatWith(CultureInfo.InvariantCulture, value, typeof(T)), nameof(value));
+            if (!IsCompatibleObject(value))
+                throw new ArgumentException(
+                    "The value '{0}' is not of type '{1}' and cannot be used in this generic collection.".FormatWith(
+                        CultureInfo.InvariantCulture, value, typeof(T)), nameof(value));
         }
 
         private static bool IsCompatibleObject(object value)
         {
-            if (!(value is T) && (value != null || typeof(T).IsValueType() && !ReflectionUtils.IsNullableType(typeof(T)))) return false;
+            if (!(value is T) &&
+                (value != null || typeof(T).IsValueType() && !ReflectionUtils.IsNullableType(typeof(T)))) return false;
 
             return true;
         }

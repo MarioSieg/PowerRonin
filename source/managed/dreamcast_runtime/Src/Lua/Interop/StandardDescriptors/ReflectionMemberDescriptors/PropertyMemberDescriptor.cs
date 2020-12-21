@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading;
@@ -55,7 +40,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
         /// <param name="accessMode">The <see cref="InteropAccessMode" /></param>
         /// <param name="getter">The getter method. Use null to make the property writeonly.</param>
         /// <param name="setter">The setter method. Use null to make the property readonly.</param>
-        public PropertyMemberDescriptor(PropertyInfo pi, InteropAccessMode accessMode, MethodInfo getter, MethodInfo setter)
+        public PropertyMemberDescriptor(PropertyInfo pi, InteropAccessMode accessMode, MethodInfo getter,
+            MethodInfo setter)
         {
             if (getter == null && setter == null)
                 throw new ArgumentNullException("getter and setter cannot both be null");
@@ -127,7 +113,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
             this.CheckAccess(MemberDescriptorAccess.CanRead, obj);
 
             if (m_Getter == null)
-                throw new ScriptRuntimeException("userdata property '{0}.{1}' cannot be read from.", PropertyInfo.DeclaringType.Name, Name);
+                throw new ScriptRuntimeException("userdata property '{0}.{1}' cannot be read from.",
+                    PropertyInfo.DeclaringType.Name, Name);
 
             if (AccessMode == InteropAccessMode.LazyOptimized && m_OptimizedGetter == null)
                 OptimizeGetter();
@@ -137,7 +124,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
             if (m_OptimizedGetter != null)
                 result = m_OptimizedGetter(obj);
             else
-                result = m_Getter.Invoke(IsStatic ? null : obj, null); // convoluted workaround for --full-aot Mono execution
+                result = m_Getter.Invoke(IsStatic ? null : obj,
+                    null); // convoluted workaround for --full-aot Mono execution
 
             return ClrToScriptConversions.ObjectToDynValue(script, result);
         }
@@ -153,7 +141,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
             this.CheckAccess(MemberDescriptorAccess.CanWrite, obj);
 
             if (m_Setter == null)
-                throw new ScriptRuntimeException("userdata property '{0}.{1}' cannot be written to.", PropertyInfo.DeclaringType.Name, Name);
+                throw new ScriptRuntimeException("userdata property '{0}.{1}' cannot be written to.",
+                    PropertyInfo.DeclaringType.Name, Name);
 
             object value = ScriptToClrConversions.DynValueToObjectOfType(v, PropertyInfo.PropertyType, null, false);
 
@@ -168,7 +157,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
                 if (m_OptimizedSetter != null)
                     m_OptimizedSetter(obj, value);
                 else
-                    m_Setter.Invoke(IsStatic ? null : obj, new[] {value}); // convoluted workaround for --full-aot Mono execution
+                    m_Setter.Invoke(IsStatic ? null : obj,
+                        new[] {value}); // convoluted workaround for --full-aot Mono execution
             }
             catch (ArgumentException)
             {
@@ -253,7 +243,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
                 svisible ?? setter.IsPublic ? setter : null);
         }
 
-        private static PropertyMemberDescriptor TryCreate(PropertyInfo pi, InteropAccessMode accessMode, MethodInfo getter, MethodInfo setter)
+        private static PropertyMemberDescriptor TryCreate(PropertyInfo pi, InteropAccessMode accessMode,
+            MethodInfo getter, MethodInfo setter)
         {
             if (getter == null && setter == null)
                 return null;

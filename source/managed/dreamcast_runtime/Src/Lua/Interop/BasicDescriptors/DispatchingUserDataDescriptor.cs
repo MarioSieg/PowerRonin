@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dreamcast.Lua.Interpreter.Compatibility;
@@ -137,18 +122,29 @@ namespace Dreamcast.Lua.Interpreter.Interop.BasicDescriptors
                 return null;
 
             DynValue v = TryIndex(script, obj, index.String);
-            if (v == null && (Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.UpperFirstLetter) == FuzzySymbolMatchingBehavior.UpperFirstLetter) v = TryIndex(script, obj, UpperFirstLetter(index.String));
-            if (v == null && (Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.Camelify) == FuzzySymbolMatchingBehavior.Camelify) v = TryIndex(script, obj, Camelify(index.String));
-            if (v == null && (Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.PascalCase) == FuzzySymbolMatchingBehavior.PascalCase) v = TryIndex(script, obj, UpperFirstLetter(Camelify(index.String)));
+            if (v == null &&
+                (Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.UpperFirstLetter) ==
+                FuzzySymbolMatchingBehavior.UpperFirstLetter) v = TryIndex(script, obj, UpperFirstLetter(index.String));
+            if (v == null && (Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.Camelify) ==
+                FuzzySymbolMatchingBehavior.Camelify) v = TryIndex(script, obj, Camelify(index.String));
+            if (v == null && (Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.PascalCase) ==
+                FuzzySymbolMatchingBehavior.PascalCase)
+                v = TryIndex(script, obj, UpperFirstLetter(Camelify(index.String)));
 
             if (v == null && m_ExtMethodsVersion < UserData.GetExtensionMethodsChangeVersion())
             {
                 m_ExtMethodsVersion = UserData.GetExtensionMethodsChangeVersion();
 
                 v = TryIndexOnExtMethod(script, obj, index.String);
-                if (v == null && (Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.UpperFirstLetter) == FuzzySymbolMatchingBehavior.UpperFirstLetter) v = TryIndexOnExtMethod(script, obj, UpperFirstLetter(index.String));
-                if (v == null && (Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.Camelify) == FuzzySymbolMatchingBehavior.Camelify) v = TryIndexOnExtMethod(script, obj, Camelify(index.String));
-                if (v == null && (Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.PascalCase) == FuzzySymbolMatchingBehavior.PascalCase) v = TryIndexOnExtMethod(script, obj, UpperFirstLetter(Camelify(index.String)));
+                if (v == null &&
+                    (Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.UpperFirstLetter) ==
+                    FuzzySymbolMatchingBehavior.UpperFirstLetter)
+                    v = TryIndexOnExtMethod(script, obj, UpperFirstLetter(index.String));
+                if (v == null && (Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.Camelify) ==
+                    FuzzySymbolMatchingBehavior.Camelify) v = TryIndexOnExtMethod(script, obj, Camelify(index.String));
+                if (v == null && (Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.PascalCase) ==
+                    FuzzySymbolMatchingBehavior.PascalCase)
+                    v = TryIndexOnExtMethod(script, obj, UpperFirstLetter(Camelify(index.String)));
             }
 
             return v;
@@ -184,9 +180,14 @@ namespace Dreamcast.Lua.Interpreter.Interop.BasicDescriptors
                 return false;
 
             var v = TrySetIndex(script, obj, index.String, value);
-            if (!v && (Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.UpperFirstLetter) == FuzzySymbolMatchingBehavior.UpperFirstLetter) v = TrySetIndex(script, obj, UpperFirstLetter(index.String), value);
-            if (!v && (Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.Camelify) == FuzzySymbolMatchingBehavior.Camelify) v = TrySetIndex(script, obj, Camelify(index.String), value);
-            if (!v && (Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.PascalCase) == FuzzySymbolMatchingBehavior.PascalCase) v = TrySetIndex(script, obj, UpperFirstLetter(Camelify(index.String)), value);
+            if (!v && (Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.UpperFirstLetter) ==
+                FuzzySymbolMatchingBehavior.UpperFirstLetter)
+                v = TrySetIndex(script, obj, UpperFirstLetter(index.String), value);
+            if (!v && (Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.Camelify) ==
+                FuzzySymbolMatchingBehavior.Camelify) v = TrySetIndex(script, obj, Camelify(index.String), value);
+            if (!v && (Script.GlobalOptions.FuzzySymbolMatching & FuzzySymbolMatchingBehavior.PascalCase) ==
+                FuzzySymbolMatchingBehavior.PascalCase)
+                v = TrySetIndex(script, obj, UpperFirstLetter(Camelify(index.String)), value);
 
             return v;
         }
@@ -366,7 +367,9 @@ namespace Dreamcast.Lua.Interpreter.Interop.BasicDescriptors
                     if (overloads != null)
                         overloads.AddOverload(odesc);
                     else
-                        throw new ArgumentException(string.Format("Multiple members named {0} are being added to type {1} and one or more of these members do not support overloads.", name, Type.FullName));
+                        throw new ArgumentException(string.Format(
+                            "Multiple members named {0} are being added to type {1} and one or more of these members do not support overloads.",
+                            name, Type.FullName));
                 }
                 else
                 {
@@ -376,7 +379,9 @@ namespace Dreamcast.Lua.Interpreter.Interop.BasicDescriptors
             else
             {
                 if (members.ContainsKey(name))
-                    throw new ArgumentException(string.Format("Multiple members named {0} are being added to type {1} and one or more of these members do not support overloads.", name, Type.FullName));
+                    throw new ArgumentException(string.Format(
+                        "Multiple members named {0} are being added to type {1} and one or more of these members do not support overloads.",
+                        name, Type.FullName));
                 members.Add(name, desc);
             }
         }
@@ -496,7 +501,8 @@ namespace Dreamcast.Lua.Interpreter.Interop.BasicDescriptors
         /// <param name="value">The dynvalue to set on a setter, or null.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        protected virtual DynValue ExecuteIndexer(IMemberDescriptor mdesc, Script script, object obj, DynValue index, DynValue value)
+        protected virtual DynValue ExecuteIndexer(IMemberDescriptor mdesc, Script script, object obj, DynValue index,
+            DynValue value)
         {
             IList<DynValue> values;
 
@@ -526,7 +532,8 @@ namespace Dreamcast.Lua.Interpreter.Interop.BasicDescriptors
             DynValue v = mdesc.GetValue(script, obj);
 
             if (v.Type != DataType.ClrFunction)
-                throw new ScriptRuntimeException("a clr callback was expected in member {0}, while a {1} was found", mdesc.Name, v.Type);
+                throw new ScriptRuntimeException("a clr callback was expected in member {0}, while a {1} was found",
+                    mdesc.Name, v.Type);
 
             return v.Callback.ClrCallback(execCtx, args);
         }
@@ -576,10 +583,12 @@ namespace Dreamcast.Lua.Interpreter.Interop.BasicDescriptors
             if (obj == null) return null;
 
             var lenprop = m_Members.GetOrDefault("Length");
-            if (lenprop != null && lenprop.CanRead() && !lenprop.CanExecute()) return lenprop.GetGetterCallbackAsDynValue(script, obj);
+            if (lenprop != null && lenprop.CanRead() && !lenprop.CanExecute())
+                return lenprop.GetGetterCallbackAsDynValue(script, obj);
 
             var countprop = m_Members.GetOrDefault("Count");
-            if (countprop != null && countprop.CanRead() && !countprop.CanExecute()) return countprop.GetGetterCallbackAsDynValue(script, obj);
+            if (countprop != null && countprop.CanRead() && !countprop.CanExecute())
+                return countprop.GetGetterCallbackAsDynValue(script, obj);
 
             return null;
         }

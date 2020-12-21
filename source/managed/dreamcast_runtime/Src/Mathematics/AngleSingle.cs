@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
@@ -59,11 +44,9 @@ namespace Dreamcast.Mathematics
         /// <summary>
         ///     The internal representation of the angle.
         /// </summary>
-        [FieldOffset(0)]
-        private float radians;
+        [FieldOffset(0)] private float radians;
 
-        [FieldOffset(0)]
-        private readonly int radiansInt;
+        [FieldOffset(0)] private readonly int radiansInt;
 
         /// <summary>
         ///     Initializes a new instance of the SharpDX.AngleSingle structure with the
@@ -658,7 +641,8 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString();
 
-            return string.Format(CultureInfo.CurrentCulture, "{0}°", MathUtil.RadiansToDegrees(radians).ToString(format, CultureInfo.CurrentCulture));
+            return string.Format(CultureInfo.CurrentCulture, "{0}°",
+                MathUtil.RadiansToDegrees(radians).ToString(format, CultureInfo.CurrentCulture));
         }
 
         /// <summary>
@@ -686,7 +670,8 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString(formatProvider);
 
-            return string.Format(formatProvider, "{0}°", MathUtil.RadiansToDegrees(radians).ToString(format, CultureInfo.CurrentCulture));
+            return string.Format(formatProvider, "{0}°",
+                MathUtil.RadiansToDegrees(radians).ToString(format, CultureInfo.CurrentCulture));
         }
 
         /// <summary>

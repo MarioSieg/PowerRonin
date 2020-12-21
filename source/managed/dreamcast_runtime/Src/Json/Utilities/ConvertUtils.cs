@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #if HAVE_BIG_INTEGER
 using System.Numerics;
 #endif
@@ -205,7 +190,8 @@ namespace Dreamcast.Json.Utilities
                 var nonNullable = Nullable.GetUnderlyingType(t);
                 if (nonNullable.IsEnum())
                 {
-                    var nullableUnderlyingType = typeof(Nullable<>).MakeGenericType(Enum.GetUnderlyingType(nonNullable));
+                    var nullableUnderlyingType =
+                        typeof(Nullable<>).MakeGenericType(Enum.GetUnderlyingType(nonNullable));
                     isEnum = true;
                     return GetTypeCode(nullableUnderlyingType);
                 }
@@ -228,8 +214,10 @@ namespace Dreamcast.Json.Utilities
 #if HAVE_ICONVERTIBLE
             return typeof(IConvertible).IsAssignableFrom(t);
 #else
-            return t == typeof(bool) || t == typeof(byte) || t == typeof(char) || t == typeof(DateTime) || t == typeof(decimal) || t == typeof(double) || t == typeof(short) || t == typeof(int) ||
-                   t == typeof(long) || t == typeof(sbyte) || t == typeof(float) || t == typeof(string) || t == typeof(ushort) || t == typeof(uint) || t == typeof(ulong) || t.IsEnum();
+            return t == typeof(bool) || t == typeof(byte) || t == typeof(char) || t == typeof(DateTime) ||
+                   t == typeof(decimal) || t == typeof(double) || t == typeof(short) || t == typeof(int) ||
+                   t == typeof(long) || t == typeof(sbyte) || t == typeof(float) || t == typeof(string) ||
+                   t == typeof(ushort) || t == typeof(uint) || t == typeof(ulong) || t.IsEnum();
 #endif
         }
 
@@ -242,8 +230,9 @@ namespace Dreamcast.Json.Utilities
 #endif
         }
 
-        private static readonly ThreadSafeStore<StructMultiKey<Type, Type>, Serialization.Func<object?, object?>?> CastConverters =
-            new(CreateCastConverter);
+        private static readonly ThreadSafeStore<StructMultiKey<Type, Type>, Serialization.Func<object?, object?>?>
+            CastConverters =
+                new(CreateCastConverter);
 
         private static Serialization.Func<object?, object?>? CreateCastConverter(StructMultiKey<Type, Type> t)
         {
@@ -360,11 +349,17 @@ namespace Dreamcast.Json.Utilities
                 case ConvertResult.Success:
                     return value!;
                 case ConvertResult.CannotConvertNull:
-                    throw new Exception("Can not convert null {0} into non-nullable {1}.".FormatWith(CultureInfo.InvariantCulture, initialValue.GetType(), targetType));
+                    throw new Exception(
+                        "Can not convert null {0} into non-nullable {1}.".FormatWith(CultureInfo.InvariantCulture,
+                            initialValue.GetType(), targetType));
                 case ConvertResult.NotInstantiableType:
-                    throw new ArgumentException("Target type {0} is not a value type or a non-abstract class.".FormatWith(CultureInfo.InvariantCulture, targetType), nameof(targetType));
+                    throw new ArgumentException(
+                        "Target type {0} is not a value type or a non-abstract class.".FormatWith(
+                            CultureInfo.InvariantCulture, targetType), nameof(targetType));
                 case ConvertResult.NoValidConversion:
-                    throw new InvalidOperationException("Can not convert from {0} to {1}.".FormatWith(CultureInfo.InvariantCulture, initialValue.GetType(), targetType));
+                    throw new InvalidOperationException(
+                        "Can not convert from {0} to {1}.".FormatWith(CultureInfo.InvariantCulture,
+                            initialValue.GetType(), targetType));
                 default:
                     throw new InvalidOperationException("Unexpected conversion result.");
             }
@@ -374,7 +369,8 @@ namespace Dreamcast.Json.Utilities
         {
             try
             {
-                if (TryConvertInternal(initialValue, culture, targetType, out value) == ConvertResult.Success) return true;
+                if (TryConvertInternal(initialValue, culture, targetType, out value) == ConvertResult.Success)
+                    return true;
 
                 value = null;
                 return false;
@@ -386,7 +382,8 @@ namespace Dreamcast.Json.Utilities
             }
         }
 
-        private static ConvertResult TryConvertInternal(object? initialValue, CultureInfo culture, Type targetType, out object? value)
+        private static ConvertResult TryConvertInternal(object? initialValue, CultureInfo culture, Type targetType,
+            out object? value)
         {
             if (initialValue == null) throw new ArgumentNullException(nameof(initialValue));
 
@@ -588,12 +585,13 @@ namespace Dreamcast.Json.Utilities
                 if (ReflectionUtils.IsNullable(targetType)) return null;
             }
 
-            throw new ArgumentException("Could not cast or convert from {0} to {1}.".FormatWith(CultureInfo.InvariantCulture, initialType?.ToString() ?? "{null}", targetType));
+            throw new ArgumentException(
+                "Could not cast or convert from {0} to {1}.".FormatWith(CultureInfo.InvariantCulture,
+                    initialType?.ToString() ?? "{null}", targetType));
         }
 
         public static bool VersionTryParse(string input,
-            [NotNullWhen(true)]
-            out Version? result)
+            [NotNullWhen(true)] out Version? result)
         {
 #if HAVE_VERSION_TRY_PARSE
             return Version.TryParse(input, out result);
@@ -1308,7 +1306,14 @@ namespace Dreamcast.Json.Utilities
                             }
                         }
 
-                        if (mantissaDigits < 29 && (mantissaDigits != 28 || !(storeOnly28Digits ?? (storeOnly28Digits = hi19 > decimalMaxValueHi19 || hi19 == decimalMaxValueHi19 && (lo10 > decimalMaxValueLo9 || lo10 == decimalMaxValueLo9 && c > decimalMaxValueLo1)).GetValueOrDefault())))
+                        if (mantissaDigits < 29 && (mantissaDigits != 28 || !(storeOnly28Digits ??
+                                                                              (storeOnly28Digits =
+                                                                                  hi19 > decimalMaxValueHi19 ||
+                                                                                  hi19 == decimalMaxValueHi19 &&
+                                                                                  (lo10 > decimalMaxValueLo9 ||
+                                                                                      lo10 == decimalMaxValueLo9 &&
+                                                                                      c > decimalMaxValueLo1))
+                                                                              .GetValueOrDefault())))
                         {
                             if (mantissaDigits < 19)
                                 hi19 = hi19 * 10UL + (ulong) (c - '0');

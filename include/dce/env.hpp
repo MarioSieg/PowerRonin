@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #pragma once
 
 #include <string_view>
@@ -26,9 +11,9 @@
 
 /* Contains all supported operating systems. */
 enum class System {
-	LINUX
-	, WINDOWS
-	, MAC
+	LINUX,
+	WINDOWS,
+	MAC
 };
 
 #define SYS_LINUX false
@@ -38,12 +23,10 @@ enum class System {
 /* Contains all supported compiler. */
 enum class Compiler {
 	/* GNU compiler collection. */
-	GCC
-	,
+	GCC,
 
 	/* Microsoft Visual C++ */
-	MSVC
-	,
+	MSVC,
 
 	/* LLVM Clang */
 	CLANG

@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using Dreamcast.Lua.Interpreter.Debugging;
 using Dreamcast.Lua.Interpreter.Execution.VM;
 using Dreamcast.Lua.Interpreter.Interop.LuaStateInterop;
@@ -28,7 +13,8 @@ namespace Dreamcast.Lua.Interpreter
         private readonly CallbackFunction m_Callback;
         private readonly Processor m_Processor;
 
-        internal ScriptExecutionContext(Processor p, CallbackFunction callBackFunction, SourceRef sourceRef, bool isDynamic = false)
+        internal ScriptExecutionContext(Processor p, CallbackFunction callBackFunction, SourceRef sourceRef,
+            bool isDynamic = false)
         {
             IsDynamicExecution = isDynamic;
             m_Processor = p;
@@ -56,7 +42,9 @@ namespace Dreamcast.Lua.Interpreter
             get => m_Callback != null ? m_Callback.AdditionalData : null;
             set
             {
-                if (m_Callback == null) throw new InvalidOperationException("Cannot set additional data on a context which has no callback");
+                if (m_Callback == null)
+                    throw new InvalidOperationException(
+                        "Cannot set additional data on a context which has no callback");
                 m_Callback.AdditionalData = value;
             }
         }
@@ -186,7 +174,9 @@ namespace Dreamcast.Lua.Interpreter
                     {
                         var tail = ret.TailCallData;
 
-                        if (tail.Continuation != null || tail.ErrorHandler != null) throw new ScriptRuntimeException("the function passed cannot be called directly. wrap in a script function instead.");
+                        if (tail.Continuation != null || tail.ErrorHandler != null)
+                            throw new ScriptRuntimeException(
+                                "the function passed cannot be called directly. wrap in a script function instead.");
 
                         args = tail.Args;
                         func = tail.Function;
@@ -249,7 +239,9 @@ namespace Dreamcast.Lua.Interpreter
         public void PerformMessageDecorationBeforeUnwind(DynValue messageHandler, ScriptRuntimeException exception)
         {
             if (messageHandler != null)
-                exception.DecoratedMessage = m_Processor.PerformMessageDecorationBeforeUnwind(messageHandler, exception.Message, CallingLocation);
+                exception.DecoratedMessage =
+                    m_Processor.PerformMessageDecorationBeforeUnwind(messageHandler, exception.Message,
+                        CallingLocation);
             else
                 exception.DecoratedMessage = exception.Message;
         }

@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 #if !HAVE_LINQ
 using Dreamcast.Json.Utilities.LinqBridge;
@@ -27,7 +12,8 @@ using System.Linq;
 
 namespace Dreamcast.Json.Schema
 {
-    [Obsolete("JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
+    [Obsolete(
+        "JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
     internal class JsonSchemaModelBuilder
     {
         private JsonSchemaNode _node;
@@ -140,7 +126,8 @@ namespace Dreamcast.Json.Schema
 
             foreach (var property in node.PatternProperties)
             {
-                if (model.PatternProperties == null) model.PatternProperties = new Dictionary<string, JsonSchemaModel>();
+                if (model.PatternProperties == null)
+                    model.PatternProperties = new Dictionary<string, JsonSchemaModel>();
 
                 model.PatternProperties[property.Key] = BuildNodeModel(property.Value);
             }
@@ -152,7 +139,8 @@ namespace Dreamcast.Json.Schema
                 model.Items.Add(BuildNodeModel(t));
             }
 
-            if (node.AdditionalProperties != null) model.AdditionalProperties = BuildNodeModel(node.AdditionalProperties);
+            if (node.AdditionalProperties != null)
+                model.AdditionalProperties = BuildNodeModel(node.AdditionalProperties);
             if (node.AdditionalItems != null) model.AdditionalItems = BuildNodeModel(node.AdditionalItems);
 
             return model;

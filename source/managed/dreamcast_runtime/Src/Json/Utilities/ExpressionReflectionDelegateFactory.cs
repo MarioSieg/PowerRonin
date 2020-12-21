@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #if !(NET20 || NET35)
 
 using System;
@@ -39,7 +24,8 @@ namespace Dreamcast.Json.Utilities
 
             var callExpression = BuildMethodCall(method, type, null, argsParameterExpression);
 
-            var lambdaExpression = Expression.Lambda(typeof(ObjectConstructor<object>), callExpression, argsParameterExpression);
+            var lambdaExpression =
+                Expression.Lambda(typeof(ObjectConstructor<object>), callExpression, argsParameterExpression);
 
             var compiled = (ObjectConstructor<object>) lambdaExpression.Compile();
             return compiled;
@@ -56,13 +42,15 @@ namespace Dreamcast.Json.Utilities
 
             var callExpression = BuildMethodCall(method, type, targetParameterExpression, argsParameterExpression);
 
-            var lambdaExpression = Expression.Lambda(typeof(MethodCall<T, object>), callExpression, targetParameterExpression, argsParameterExpression);
+            var lambdaExpression = Expression.Lambda(typeof(MethodCall<T, object>), callExpression,
+                targetParameterExpression, argsParameterExpression);
 
             var compiled = (MethodCall<T, object?>) lambdaExpression.Compile();
             return compiled;
         }
 
-        private Expression BuildMethodCall(MethodBase method, Type type, ParameterExpression? targetParameterExpression, ParameterExpression argsParameterExpression)
+        private Expression BuildMethodCall(MethodBase method, Type type, ParameterExpression? targetParameterExpression,
+            ParameterExpression argsParameterExpression)
         {
             var parametersInfo = method.GetParameters();
 
@@ -91,7 +79,8 @@ namespace Dreamcast.Json.Utilities
 
                     Expression indexExpression = Expression.Constant(i);
 
-                    Expression paramAccessorExpression = Expression.ArrayIndex(argsParameterExpression, indexExpression);
+                    Expression paramAccessorExpression =
+                        Expression.ArrayIndex(argsParameterExpression, indexExpression);
 
                     var argExpression = EnsureCastExpression(paramAccessorExpression, parameterType, !isByRef);
 
@@ -208,7 +197,8 @@ namespace Dreamcast.Json.Utilities
 
             resultExpression = EnsureCastExpression(resultExpression, resultType);
 
-            var lambdaExpression = Expression.Lambda(typeof(Serialization.Func<T, object>), resultExpression, parameterExpression);
+            var lambdaExpression = Expression.Lambda(typeof(Serialization.Func<T, object>), resultExpression,
+                parameterExpression);
 
             var compiled = (Serialization.Func<T, object?>) lambdaExpression.Compile();
             return compiled;
@@ -234,7 +224,8 @@ namespace Dreamcast.Json.Utilities
 
             fieldExpression = EnsureCastExpression(fieldExpression, typeof(object));
 
-            var compiled = Expression.Lambda<Serialization.Func<T, object?>>(fieldExpression, sourceParameter).Compile();
+            var compiled = Expression.Lambda<Serialization.Func<T, object?>>(fieldExpression, sourceParameter)
+                .Compile();
             return compiled;
         }
 
@@ -244,7 +235,8 @@ namespace Dreamcast.Json.Utilities
 
             // use reflection for structs
             // expression doesn't correctly set value
-            if (fieldInfo.DeclaringType.IsValueType() || fieldInfo.IsInitOnly) return LateBoundReflectionDelegateFactory.Instance.CreateSet<T>(fieldInfo);
+            if (fieldInfo.DeclaringType.IsValueType() || fieldInfo.IsInitOnly)
+                return LateBoundReflectionDelegateFactory.Instance.CreateSet<T>(fieldInfo);
 
             var sourceParameterExpression = Expression.Parameter(typeof(T), "source");
             var valueParameterExpression = Expression.Parameter(typeof(object), "value");
@@ -265,7 +257,8 @@ namespace Dreamcast.Json.Utilities
 
             var assignExpression = Expression.Assign(fieldExpression, valueExpression);
 
-            var lambdaExpression = Expression.Lambda(typeof(Serialization.Action<T, object>), assignExpression, sourceParameterExpression, valueParameterExpression);
+            var lambdaExpression = Expression.Lambda(typeof(Serialization.Action<T, object>), assignExpression,
+                sourceParameterExpression, valueParameterExpression);
 
             var compiled = (Serialization.Action<T, object?>) lambdaExpression.Compile();
             return compiled;
@@ -277,7 +270,8 @@ namespace Dreamcast.Json.Utilities
 
             // use reflection for structs
             // expression doesn't correctly set value
-            if (propertyInfo.DeclaringType.IsValueType()) return LateBoundReflectionDelegateFactory.Instance.CreateSet<T>(propertyInfo);
+            if (propertyInfo.DeclaringType.IsValueType())
+                return LateBoundReflectionDelegateFactory.Instance.CreateSet<T>(propertyInfo);
 
             var instanceType = typeof(T);
             var valueType = typeof(object);
@@ -302,7 +296,8 @@ namespace Dreamcast.Json.Utilities
                 setExpression = Expression.Call(readInstanceParameter, setMethod, readValueParameter);
             }
 
-            var lambdaExpression = Expression.Lambda(typeof(Serialization.Action<T, object?>), setExpression, instanceParameter, valueParameter);
+            var lambdaExpression = Expression.Lambda(typeof(Serialization.Action<T, object?>), setExpression,
+                instanceParameter, valueParameter);
 
             var compiled = (Serialization.Action<T, object?>) lambdaExpression.Compile();
             return compiled;
@@ -313,7 +308,8 @@ namespace Dreamcast.Json.Utilities
             var expressionType = expression.Type;
 
             // check if a cast or conversion is required
-            if (expressionType == targetType || !expressionType.IsValueType() && targetType.IsAssignableFrom(expressionType)) return expression;
+            if (expressionType == targetType ||
+                !expressionType.IsValueType() && targetType.IsAssignableFrom(expressionType)) return expression;
 
             if (targetType.IsValueType())
             {

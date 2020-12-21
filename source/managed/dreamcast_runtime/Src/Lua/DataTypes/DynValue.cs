@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -178,7 +163,8 @@ namespace Dreamcast.Lua.Interpreter
         /// <summary>
         ///     Creates a new writable value initialized to the specified CLR callback.
         /// </summary>
-        public static DynValue NewCallback(Func<ScriptExecutionContext, CallbackArguments, DynValue> callBack, string name = null)
+        public static DynValue NewCallback(Func<ScriptExecutionContext, CallbackArguments, DynValue> callBack,
+            string name = null)
         {
             return new() {m_Object = new CallbackFunction(callBack, name), Type = DataType.ClrFunction};
         }
@@ -238,7 +224,8 @@ namespace Dreamcast.Lua.Interpreter
         /// <returns></returns>
         public static DynValue NewTailCallReq(DynValue tailFn, params DynValue[] args)
         {
-            return new() {m_Object = new TailCallData {Args = args, Function = tailFn}, Type = DataType.TailCallRequest};
+            return new()
+                {m_Object = new TailCallData {Args = args, Function = tailFn}, Type = DataType.TailCallRequest};
         }
 
         /// <summary>
@@ -846,7 +833,8 @@ namespace Dreamcast.Lua.Interpreter
         ///     if the value is not of the specified type or - considering the TypeValidationFlags - is not convertible
         ///     to the specified type.
         /// </exception>
-        public DynValue CheckType(string funcName, DataType desiredType, int argNum = -1, TypeValidationFlags flags = TypeValidationFlags.Default)
+        public DynValue CheckType(string funcName, DataType desiredType, int argNum = -1,
+            TypeValidationFlags flags = TypeValidationFlags.Default)
         {
             if (Type == desiredType)
                 return this;
@@ -892,7 +880,8 @@ namespace Dreamcast.Lua.Interpreter
         /// <param name="argNum">The argument number.</param>
         /// <param name="flags">The flags.</param>
         /// <returns></returns>
-        public T CheckUserDataType<T>(string funcName, int argNum = -1, TypeValidationFlags flags = TypeValidationFlags.Default)
+        public T CheckUserDataType<T>(string funcName, int argNum = -1,
+            TypeValidationFlags flags = TypeValidationFlags.Default)
         {
             DynValue v = CheckType(funcName, DataType.UserData, argNum, flags);
             var allowNil = (int) (flags & TypeValidationFlags.AllowNil) != 0;

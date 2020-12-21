@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -246,10 +231,12 @@ namespace Dreamcast.Json.Linq
                         }
 #endif
                     if (objA is ulong || objB is ulong || objA is decimal || objB is decimal)
-                        return Convert.ToDecimal(objA, CultureInfo.InvariantCulture).CompareTo(Convert.ToDecimal(objB, CultureInfo.InvariantCulture));
+                        return Convert.ToDecimal(objA, CultureInfo.InvariantCulture)
+                            .CompareTo(Convert.ToDecimal(objB, CultureInfo.InvariantCulture));
                     if (objA is float || objB is float || objA is double || objB is double)
                         return CompareFloat(objA, objB);
-                    return Convert.ToInt64(objA, CultureInfo.InvariantCulture).CompareTo(Convert.ToInt64(objB, CultureInfo.InvariantCulture));
+                    return Convert.ToInt64(objA, CultureInfo.InvariantCulture)
+                        .CompareTo(Convert.ToInt64(objB, CultureInfo.InvariantCulture));
                 }
                 case JTokenType.Float:
                 {
@@ -263,7 +250,9 @@ namespace Dreamcast.Json.Linq
                         return -CompareBigInteger(integerB, objA);
                     }
 #endif
-                    if (objA is ulong || objB is ulong || objA is decimal || objB is decimal) return Convert.ToDecimal(objA, CultureInfo.InvariantCulture).CompareTo(Convert.ToDecimal(objB, CultureInfo.InvariantCulture));
+                    if (objA is ulong || objB is ulong || objA is decimal || objB is decimal)
+                        return Convert.ToDecimal(objA, CultureInfo.InvariantCulture)
+                            .CompareTo(Convert.ToDecimal(objB, CultureInfo.InvariantCulture));
                     return CompareFloat(objA, objB);
                 }
                 case JTokenType.Comment:
@@ -341,7 +330,8 @@ namespace Dreamcast.Json.Linq
 
                     return ts1.CompareTo(ts2);
                 default:
-                    throw MiscellaneousUtils.CreateArgumentOutOfRangeException(nameof(valueType), valueType, "Unexpected value type: {0}".FormatWith(CultureInfo.InvariantCulture, valueType));
+                    throw MiscellaneousUtils.CreateArgumentOutOfRangeException(nameof(valueType), valueType,
+                        "Unexpected value type: {0}".FormatWith(CultureInfo.InvariantCulture, valueType));
             }
         }
 
@@ -590,7 +580,9 @@ namespace Dreamcast.Json.Linq
                 return JTokenType.Uri;
             if (value is TimeSpan) return JTokenType.TimeSpan;
 
-            throw new ArgumentException("Could not determine JSON object type for type {0}.".FormatWith(CultureInfo.InvariantCulture, value.GetType()));
+            throw new ArgumentException(
+                "Could not determine JSON object type for type {0}.".FormatWith(CultureInfo.InvariantCulture,
+                    value.GetType()));
         }
 
         private static JTokenType GetStringValueType(JTokenType? current)
@@ -721,7 +713,8 @@ namespace Dreamcast.Json.Linq
                     return;
             }
 
-            throw MiscellaneousUtils.CreateArgumentOutOfRangeException(nameof(Type), _valueType, "Unexpected token type.");
+            throw MiscellaneousUtils.CreateArgumentOutOfRangeException(nameof(Type), _valueType,
+                "Unexpected token type.");
         }
 
         internal override int GetDeepHashCode()

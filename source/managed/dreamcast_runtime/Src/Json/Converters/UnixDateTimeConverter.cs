@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Globalization;
 using Dreamcast.Json.Utilities;
 
@@ -47,7 +32,9 @@ namespace Dreamcast.Json.Converters
             else
                 throw new JsonSerializationException("Expected date object value.");
 
-            if (seconds < 0) throw new JsonSerializationException("Cannot convert date value that is before Unix epoch of 00:00:00 UTC on 1 January 1970.");
+            if (seconds < 0)
+                throw new JsonSerializationException(
+                    "Cannot convert date value that is before Unix epoch of 00:00:00 UTC on 1 January 1970.");
 
             writer.WriteValue(seconds);
         }
@@ -60,12 +47,15 @@ namespace Dreamcast.Json.Converters
         /// <param name="existingValue">The existing property value of the JSON that is being converted.</param>
         /// <param name="serializer">The calling serializer.</param>
         /// <returns>The object value.</returns>
-        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue,
+            JsonSerializer serializer)
         {
             var nullable = ReflectionUtils.IsNullable(objectType);
             if (reader.TokenType == JsonToken.Null)
             {
-                if (!nullable) throw JsonSerializationException.Create(reader, "Cannot convert null value to {0}.".FormatWith(CultureInfo.InvariantCulture, objectType));
+                if (!nullable)
+                    throw JsonSerializationException.Create(reader,
+                        "Cannot convert null value to {0}.".FormatWith(CultureInfo.InvariantCulture, objectType));
 
                 return null;
             }
@@ -78,11 +68,15 @@ namespace Dreamcast.Json.Converters
             }
             else if (reader.TokenType == JsonToken.String)
             {
-                if (!long.TryParse((string) reader.Value!, out seconds)) throw JsonSerializationException.Create(reader, "Cannot convert invalid value to {0}.".FormatWith(CultureInfo.InvariantCulture, objectType));
+                if (!long.TryParse((string) reader.Value!, out seconds))
+                    throw JsonSerializationException.Create(reader,
+                        "Cannot convert invalid value to {0}.".FormatWith(CultureInfo.InvariantCulture, objectType));
             }
             else
             {
-                throw JsonSerializationException.Create(reader, "Unexpected token parsing date. Expected Integer or String, got {0}.".FormatWith(CultureInfo.InvariantCulture, reader.TokenType));
+                throw JsonSerializationException.Create(reader,
+                    "Unexpected token parsing date. Expected Integer or String, got {0}.".FormatWith(
+                        CultureInfo.InvariantCulture, reader.TokenType));
             }
 
             if (seconds >= 0)
@@ -101,7 +95,9 @@ namespace Dreamcast.Json.Converters
                 return d;
             }
 
-            throw JsonSerializationException.Create(reader, "Cannot convert value that is before Unix epoch of 00:00:00 UTC on 1 January 1970 to {0}.".FormatWith(CultureInfo.InvariantCulture, objectType));
+            throw JsonSerializationException.Create(reader,
+                "Cannot convert value that is before Unix epoch of 00:00:00 UTC on 1 January 1970 to {0}.".FormatWith(
+                    CultureInfo.InvariantCulture, objectType));
         }
     }
 }

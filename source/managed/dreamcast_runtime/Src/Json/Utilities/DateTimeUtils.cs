@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.IO;
 using System.Xml;
@@ -60,7 +45,8 @@ namespace Dreamcast.Json.Utilities
                 case DateTimeKind.Utc:
                     return XmlDateTimeSerializationMode.Utc;
                 default:
-                    throw MiscellaneousUtils.CreateArgumentOutOfRangeException(nameof(kind), kind, "Unexpected DateTimeKind value.");
+                    throw MiscellaneousUtils.CreateArgumentOutOfRangeException(nameof(kind), kind,
+                        "Unexpected DateTimeKind value.");
             }
         }
 #else
@@ -147,7 +133,8 @@ namespace Dreamcast.Json.Utilities
         {
             // special case min and max value
             // they never have a timezone appended to avoid issues
-            if (dateTime.Kind == DateTimeKind.Utc || dateTime == DateTime.MaxValue || dateTime == DateTime.MinValue) return dateTime.Ticks;
+            if (dateTime.Kind == DateTimeKind.Utc || dateTime == DateTime.MaxValue || dateTime == DateTime.MinValue)
+                return dateTime.Ticks;
 
             var ticks = dateTime.Ticks - offset.Ticks;
             if (ticks > 3155378975999999999L) return 3155378975999999999L;
@@ -192,7 +179,8 @@ namespace Dreamcast.Json.Utilities
 
         #region Parse
 
-        internal static bool TryParseDateTimeIso(StringReference text, DateTimeZoneHandling dateTimeZoneHandling, out DateTime dt)
+        internal static bool TryParseDateTimeIso(StringReference text, DateTimeZoneHandling dateTimeZoneHandling,
+            out DateTime dt)
         {
             var dateTimeParser = new DateTimeParser();
             if (!dateTimeParser.Parse(text.Chars, text.StartIndex, text.Length))
@@ -308,14 +296,16 @@ namespace Dreamcast.Json.Utilities
                 is24Hour = false;
             }
 
-            var d = new DateTime(dateTimeParser.Year, dateTimeParser.Month, dateTimeParser.Day, dateTimeParser.Hour, dateTimeParser.Minute, dateTimeParser.Second);
+            var d = new DateTime(dateTimeParser.Year, dateTimeParser.Month, dateTimeParser.Day, dateTimeParser.Hour,
+                dateTimeParser.Minute, dateTimeParser.Second);
             d = d.AddTicks(dateTimeParser.Fraction);
 
             if (is24Hour) d = d.AddDays(1);
             return d;
         }
 
-        internal static bool TryParseDateTime(StringReference s, DateTimeZoneHandling dateTimeZoneHandling, string? dateFormatString, CultureInfo culture, out DateTime dt)
+        internal static bool TryParseDateTime(StringReference s, DateTimeZoneHandling dateTimeZoneHandling,
+            string? dateFormatString, CultureInfo culture, out DateTime dt)
         {
             if (s.Length > 0)
             {
@@ -340,19 +330,23 @@ namespace Dreamcast.Json.Utilities
             return false;
         }
 
-        internal static bool TryParseDateTime(string s, DateTimeZoneHandling dateTimeZoneHandling, string? dateFormatString, CultureInfo culture, out DateTime dt)
+        internal static bool TryParseDateTime(string s, DateTimeZoneHandling dateTimeZoneHandling,
+            string? dateFormatString, CultureInfo culture, out DateTime dt)
         {
             if (s.Length > 0)
             {
                 if (s[0] == '/')
                 {
-                    if (s.Length >= 9 && s.StartsWith("/Date(", StringComparison.Ordinal) && s.EndsWith(")/", StringComparison.Ordinal))
-                        if (TryParseDateTimeMicrosoft(new StringReference(s.ToCharArray(), 0, s.Length), dateTimeZoneHandling, out dt))
+                    if (s.Length >= 9 && s.StartsWith("/Date(", StringComparison.Ordinal) &&
+                        s.EndsWith(")/", StringComparison.Ordinal))
+                        if (TryParseDateTimeMicrosoft(new StringReference(s.ToCharArray(), 0, s.Length),
+                            dateTimeZoneHandling, out dt))
                             return true;
                 }
                 else if (s.Length >= 19 && s.Length <= 40 && char.IsDigit(s[0]) && s[10] == 'T')
                 {
-                    if (DateTime.TryParseExact(s, IsoDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out dt))
+                    if (DateTime.TryParseExact(s, IsoDateFormat, CultureInfo.InvariantCulture,
+                        DateTimeStyles.RoundtripKind, out dt))
                     {
                         dt = EnsureDateTime(dt, dateTimeZoneHandling);
                         return true;
@@ -444,7 +438,8 @@ namespace Dreamcast.Json.Utilities
         }
 #endif
 
-        private static bool TryParseMicrosoftDate(StringReference text, out long ticks, out TimeSpan offset, out DateTimeKind kind)
+        private static bool TryParseMicrosoftDate(StringReference text, out long ticks, out TimeSpan offset,
+            out DateTimeKind kind)
         {
             kind = DateTimeKind.Utc;
 
@@ -468,10 +463,12 @@ namespace Dreamcast.Json.Utilities
                 index = text.Length - 2;
             }
 
-            return ConvertUtils.Int64TryParse(text.Chars, 6 + text.StartIndex, index - 6, out ticks) == ParseResult.Success;
+            return ConvertUtils.Int64TryParse(text.Chars, 6 + text.StartIndex, index - 6, out ticks) ==
+                   ParseResult.Success;
         }
 
-        private static bool TryParseDateTimeMicrosoft(StringReference text, DateTimeZoneHandling dateTimeZoneHandling, out DateTime dt)
+        private static bool TryParseDateTimeMicrosoft(StringReference text, DateTimeZoneHandling dateTimeZoneHandling,
+            out DateTime dt)
         {
             if (!TryParseMicrosoftDate(text, out var ticks, out _, out var kind))
             {
@@ -498,7 +495,8 @@ namespace Dreamcast.Json.Utilities
             return true;
         }
 
-        private static bool TryParseDateTimeExact(string text, DateTimeZoneHandling dateTimeZoneHandling, string dateFormatString, CultureInfo culture, out DateTime dt)
+        private static bool TryParseDateTimeExact(string text, DateTimeZoneHandling dateTimeZoneHandling,
+            string dateFormatString, CultureInfo culture, out DateTime dt)
         {
             if (DateTime.TryParseExact(text, dateFormatString, culture, DateTimeStyles.RoundtripKind, out var temp))
             {
@@ -567,7 +565,8 @@ namespace Dreamcast.Json.Utilities
 
         #region Write
 
-        internal static void WriteDateTimeString(TextWriter writer, DateTime value, DateFormatHandling format, string? formatString, CultureInfo culture)
+        internal static void WriteDateTimeString(TextWriter writer, DateTime value, DateFormatHandling format,
+            string? formatString, CultureInfo culture)
         {
             if (StringUtils.IsNullOrEmpty(formatString))
             {
@@ -581,7 +580,8 @@ namespace Dreamcast.Json.Utilities
             }
         }
 
-        internal static int WriteDateTimeString(char[] chars, int start, DateTime value, TimeSpan? offset, DateTimeKind kind, DateFormatHandling format)
+        internal static int WriteDateTimeString(char[] chars, int start, DateTime value, TimeSpan? offset,
+            DateTimeKind kind, DateFormatHandling format)
         {
             var pos = start;
 
@@ -601,7 +601,8 @@ namespace Dreamcast.Json.Utilities
                 switch (kind)
                 {
                     case DateTimeKind.Unspecified:
-                        if (value != DateTime.MaxValue && value != DateTime.MinValue) pos = WriteDateTimeOffset(chars, pos, o, format);
+                        if (value != DateTime.MaxValue && value != DateTime.MinValue)
+                            pos = WriteDateTimeOffset(chars, pos, o, format);
                         break;
                     case DateTimeKind.Local:
                         pos = WriteDateTimeOffset(chars, pos, o, format);
@@ -699,7 +700,8 @@ namespace Dreamcast.Json.Utilities
             if (StringUtils.IsNullOrEmpty(formatString))
             {
                 char[] chars = new char[64];
-                int pos = WriteDateTimeString(chars, 0, (format == DateFormatHandling.IsoDateFormat) ? value.DateTime : value.UtcDateTime, value.Offset, DateTimeKind.Local, format);
+                int pos =
+ WriteDateTimeString(chars, 0, (format == DateFormatHandling.IsoDateFormat) ? value.DateTime : value.UtcDateTime, value.Offset, DateTimeKind.Local, format);
 
                 writer.Write(chars, 0, pos);
             }

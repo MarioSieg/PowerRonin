@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 using System;
 using System.IO;
 using Dreamcast.Json.Utilities;
@@ -86,7 +71,9 @@ namespace Dreamcast.Json
             get => _quoteChar;
             set
             {
-                if (value != '"' && value != '\'') throw new ArgumentException(@"Invalid JavaScript string quote character. Valid quote characters are ' and "".");
+                if (value != '"' && value != '\'')
+                    throw new ArgumentException(
+                        @"Invalid JavaScript string quote character. Valid quote characters are ' and "".");
 
                 _quoteChar = value;
                 UpdateCharEscapeFlags();
@@ -292,7 +279,8 @@ namespace Dreamcast.Json
 
             _writer.Write(_indentChars, 0, newLineLen + Math.Min(currentIndentCount, IndentCharBufferSize));
 
-            while ((currentIndentCount -= IndentCharBufferSize) > 0) _writer.Write(_indentChars, newLineLen, Math.Min(currentIndentCount, IndentCharBufferSize));
+            while ((currentIndentCount -= IndentCharBufferSize) > 0)
+                _writer.Write(_indentChars, newLineLen, Math.Min(currentIndentCount, IndentCharBufferSize));
         }
 
         private int SetIndentChars()
@@ -406,7 +394,8 @@ namespace Dreamcast.Json
         private void WriteEscapedString(string value, bool quote)
         {
             EnsureWriteBuffer();
-            JavaScriptUtils.WriteEscapedJavaScriptString(_writer, value, _quoteChar, quote, _charEscapeFlags!, StringEscapeHandling, _arrayPool, ref _writeBuffer);
+            JavaScriptUtils.WriteEscapedJavaScriptString(_writer, value, _quoteChar, quote, _charEscapeFlags!,
+                StringEscapeHandling, _arrayPool, ref _writeBuffer);
         }
 
         /// <summary>
@@ -474,7 +463,9 @@ namespace Dreamcast.Json
             else
             {
                 InternalWriteValue(JsonToken.Float);
-                WriteValueInternal(JsonConvert.ToString(value.GetValueOrDefault(), FloatFormatHandling, QuoteChar, true), JsonToken.Float);
+                WriteValueInternal(
+                    JsonConvert.ToString(value.GetValueOrDefault(), FloatFormatHandling, QuoteChar, true),
+                    JsonToken.Float);
             }
         }
 
@@ -501,7 +492,9 @@ namespace Dreamcast.Json
             else
             {
                 InternalWriteValue(JsonToken.Float);
-                WriteValueInternal(JsonConvert.ToString(value.GetValueOrDefault(), FloatFormatHandling, QuoteChar, true), JsonToken.Float);
+                WriteValueInternal(
+                    JsonConvert.ToString(value.GetValueOrDefault(), FloatFormatHandling, QuoteChar, true),
+                    JsonToken.Float);
             }
         }
 
@@ -662,7 +655,8 @@ namespace Dreamcast.Json
 
             int pos = 0;
             _writeBuffer[pos++] = _quoteChar;
-            pos = DateTimeUtils.WriteDateTimeString(_writeBuffer, pos, (DateFormatHandling == DateFormatHandling.IsoDateFormat) ? value.DateTime : value.UtcDateTime, value.Offset, DateTimeKind.Local, DateFormatHandling);
+            pos =
+ DateTimeUtils.WriteDateTimeString(_writeBuffer, pos, (DateFormatHandling == DateFormatHandling.IsoDateFormat) ? value.DateTime : value.UtcDateTime, value.Offset, DateTimeKind.Local, DateFormatHandling);
             _writeBuffer[pos++] = _quoteChar;
             return pos;
         }

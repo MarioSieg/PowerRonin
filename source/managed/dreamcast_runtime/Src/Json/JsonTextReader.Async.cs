@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #if HAVE_ASYNC
 using System;
 using System.Globalization;
@@ -225,7 +210,8 @@ namespace Dreamcast.Json
 
             PrepareBufferForReadData(append, charsRequired);
 
-            int charsRead = await _reader.ReadAsync(_chars, _charsUsed, _chars.Length - _charsUsed - 1, cancellationToken).ConfigureAwait(false);
+            int charsRead =
+ await _reader.ReadAsync(_chars, _charsUsed, _chars.Length - _charsUsed - 1, cancellationToken).ConfigureAwait(false);
 
             _charsUsed += charsRead;
 
@@ -459,7 +445,8 @@ namespace Dreamcast.Json
                                             char highSurrogate = writeChar;
 
                                             _charPos += 2;
-                                            writeChar = await ParseUnicodeAsync(cancellationToken).ConfigureAwait(false);
+                                            writeChar =
+ await ParseUnicodeAsync(cancellationToken).ConfigureAwait(false);
 
                                             if (StringUtils.IsLowSurrogate(writeChar))
                                             {
@@ -995,7 +982,8 @@ namespace Dreamcast.Json
 
             if (PropertyNameTable != null)
             {
-                propertyName = PropertyNameTable.Get(_stringReference.Chars, _stringReference.StartIndex, _stringReference.Length)
+                propertyName =
+ PropertyNameTable.Get(_stringReference.Chars, _stringReference.StartIndex, _stringReference.Length)
                     // no match in name table
                     ?? _stringReference.ToString();
             }

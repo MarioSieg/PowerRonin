@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Dreamcast.Lua.Interpreter.Interop;
@@ -63,7 +48,8 @@ namespace Dreamcast.Lua.Interpreter
             get => m_DefaultAccessMode;
             set
             {
-                if (value == InteropAccessMode.Default || value == InteropAccessMode.HideMembers || value == InteropAccessMode.BackgroundOptimized)
+                if (value == InteropAccessMode.Default || value == InteropAccessMode.HideMembers ||
+                    value == InteropAccessMode.BackgroundOptimized)
                     throw new ArgumentException("DefaultAccessMode");
 
                 m_DefaultAccessMode = value;
@@ -105,7 +91,8 @@ namespace Dreamcast.Lua.Interpreter
         /// <param name="del">The delegate.</param>
         /// <param name="accessMode">The access mode.</param>
         /// <returns></returns>
-        public static CallbackFunction FromDelegate(Script script, Delegate del, InteropAccessMode accessMode = InteropAccessMode.Default)
+        public static CallbackFunction FromDelegate(Script script, Delegate del,
+            InteropAccessMode accessMode = InteropAccessMode.Default)
         {
             if (accessMode == InteropAccessMode.Default)
                 accessMode = m_DefaultAccessMode;
@@ -128,7 +115,8 @@ namespace Dreamcast.Lua.Interpreter
         /// <param name="accessMode">The access mode.</param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentException">The method is not static.</exception>
-        public static CallbackFunction FromMethodInfo(Script script, MethodInfo mi, object obj = null, InteropAccessMode accessMode = InteropAccessMode.Default)
+        public static CallbackFunction FromMethodInfo(Script script, MethodInfo mi, object obj = null,
+            InteropAccessMode accessMode = InteropAccessMode.Default)
         {
             if (accessMode == InteropAccessMode.Default)
                 accessMode = m_DefaultAccessMode;
@@ -146,7 +134,8 @@ namespace Dreamcast.Lua.Interpreter
             ParameterInfo[] pi = mi.GetParameters();
 
             return pi.Length == 2 && pi[0].ParameterType == typeof(ScriptExecutionContext)
-                                  && pi[1].ParameterType == typeof(CallbackArguments) && mi.ReturnType == typeof(DynValue) && (requirePublicVisibility || mi.IsPublic);
+                                  && pi[1].ParameterType == typeof(CallbackArguments) &&
+                                  mi.ReturnType == typeof(DynValue) && (requirePublicVisibility || mi.IsPublic);
         }
     }
 }

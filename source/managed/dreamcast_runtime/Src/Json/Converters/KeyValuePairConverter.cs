@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Dreamcast.Json.Serialization;
 using Dreamcast.Json.Utilities;
@@ -28,7 +13,8 @@ namespace Dreamcast.Json.Converters
         private const string KeyName = "Key";
         private const string ValueName = "Value";
 
-        private static readonly ThreadSafeStore<Type, ReflectionObject> ReflectionObjectPerType = new(InitializeReflectionObject);
+        private static readonly ThreadSafeStore<Type, ReflectionObject> ReflectionObjectPerType =
+            new(InitializeReflectionObject);
 
         private static ReflectionObject InitializeReflectionObject(Type t)
         {
@@ -61,7 +47,8 @@ namespace Dreamcast.Json.Converters
             writer.WritePropertyName(resolver != null ? resolver.GetResolvedPropertyName(KeyName) : KeyName);
             serializer.Serialize(writer, reflectionObject.GetValue(value, KeyName), reflectionObject.GetType(KeyName));
             writer.WritePropertyName(resolver != null ? resolver.GetResolvedPropertyName(ValueName) : ValueName);
-            serializer.Serialize(writer, reflectionObject.GetValue(value, ValueName), reflectionObject.GetType(ValueName));
+            serializer.Serialize(writer, reflectionObject.GetValue(value, ValueName),
+                reflectionObject.GetType(ValueName));
             writer.WriteEndObject();
         }
 
@@ -73,11 +60,13 @@ namespace Dreamcast.Json.Converters
         /// <param name="existingValue">The existing value of object being read.</param>
         /// <param name="serializer">The calling serializer.</param>
         /// <returns>The object value.</returns>
-        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue,
+            JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.Null)
             {
-                if (!ReflectionUtils.IsNullableType(objectType)) throw JsonSerializationException.Create(reader, "Cannot convert null value to KeyValuePair.");
+                if (!ReflectionUtils.IsNullableType(objectType))
+                    throw JsonSerializationException.Create(reader, "Cannot convert null value to KeyValuePair.");
 
                 return null;
             }

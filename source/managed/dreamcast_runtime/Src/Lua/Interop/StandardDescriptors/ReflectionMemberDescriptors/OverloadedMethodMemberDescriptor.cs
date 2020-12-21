@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-//#define DEBUG_OVERLOAD_RESOLVER
+﻿//#define DEBUG_OVERLOAD_RESOLVER
 
 using System;
 using System.Collections.Generic;
@@ -54,7 +39,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
         /// <param name="name">The name.</param>
         /// <param name="declaringType">The declaring type.</param>
         /// <param name="descriptor">The descriptor of the first overloaded method.</param>
-        public OverloadedMethodMemberDescriptor(string name, Type declaringType, IOverloadableMemberDescriptor descriptor)
+        public OverloadedMethodMemberDescriptor(string name, Type declaringType,
+            IOverloadableMemberDescriptor descriptor)
             : this(name, declaringType)
         {
             m_Overloads.Add(descriptor);
@@ -66,7 +52,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
         /// <param name="name">The name.</param>
         /// <param name="declaringType">The declaring type.</param>
         /// <param name="descriptors">The descriptors of the overloaded methods.</param>
-        public OverloadedMethodMemberDescriptor(string name, Type declaringType, IEnumerable<IOverloadableMemberDescriptor> descriptors)
+        public OverloadedMethodMemberDescriptor(string name, Type declaringType,
+            IEnumerable<IOverloadableMemberDescriptor> descriptors)
             : this(name, declaringType)
         {
             m_Overloads.AddRange(descriptors);
@@ -108,7 +95,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
         /// <summary>
         ///     Gets the types of access supported by this member
         /// </summary>
-        public MemberDescriptorAccess MemberAccess => MemberDescriptorAccess.CanExecute | MemberDescriptorAccess.CanRead;
+        public MemberDescriptorAccess MemberAccess =>
+            MemberDescriptorAccess.CanExecute | MemberDescriptorAccess.CanRead;
 
         /// <summary>
         ///     Gets the value of this member as a <see cref="DynValue" /> to be exposed to scripts.
@@ -170,7 +158,9 @@ namespace Dreamcast.Lua.Interpreter.Interop
                 }
                 else
                 {
-                    mst.Table.Set(++i, DynValue.NewString(string.Format("unsupported - {0} is not serializable", m.GetType().FullName)));
+                    mst.Table.Set(++i,
+                        DynValue.NewString(string.Format("unsupported - {0} is not serializable",
+                            m.GetType().FullName)));
                 }
             }
         }
@@ -205,9 +195,11 @@ namespace Dreamcast.Lua.Interpreter.Interop
         /// <param name="args">The arguments.</param>
         /// <returns></returns>
         /// <exception cref="ScriptRuntimeException">function call doesn't match any overload</exception>
-        private DynValue PerformOverloadedCall(Script script, object obj, ScriptExecutionContext context, CallbackArguments args)
+        private DynValue PerformOverloadedCall(Script script, object obj, ScriptExecutionContext context,
+            CallbackArguments args)
         {
-            var extMethodCacheNotExpired = IgnoreExtensionMethods || obj == null || m_ExtensionMethodVersion == UserData.GetExtensionMethodsChangeVersion();
+            var extMethodCacheNotExpired = IgnoreExtensionMethods || obj == null ||
+                                           m_ExtensionMethodVersion == UserData.GetExtensionMethodsChangeVersion();
 
             // common case, let's optimize for it
             if (m_Overloads.Count == 1 && m_ExtOverloads.Count == 0 && extMethodCacheNotExpired)
@@ -282,7 +274,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
             for (var i = 0; i < m_Cache.Length; i++)
                 if (m_Cache[i] == null)
                 {
-                    found = new OverloadCacheItem {ArgsDataType = new List<DataType>(), ArgsUserDataType = new List<Type>()};
+                    found = new OverloadCacheItem
+                        {ArgsDataType = new List<DataType>(), ArgsUserDataType = new List<Type>()};
                     m_Cache[i] = found;
                     break;
                 }
@@ -296,7 +289,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
             {
                 // overflow..
                 m_Cache = new OverloadCacheItem[CACHE_SIZE];
-                found = new OverloadCacheItem {ArgsDataType = new List<DataType>(), ArgsUserDataType = new List<Type>()};
+                found = new OverloadCacheItem
+                    {ArgsDataType = new List<DataType>(), ArgsUserDataType = new List<Type>()};
                 m_Cache[0] = found;
                 m_CacheHits = 0;
             }
@@ -348,7 +342,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
         /// <param name="method">The method.</param>
         /// <param name="isExtMethod">if set to <c>true</c>, is an extension method.</param>
         /// <returns></returns>
-        private int CalcScoreForOverload(ScriptExecutionContext context, CallbackArguments args, IOverloadableMemberDescriptor method, bool isExtMethod)
+        private int CalcScoreForOverload(ScriptExecutionContext context, CallbackArguments args,
+            IOverloadableMemberDescriptor method, bool isExtMethod)
         {
             var totalScore = ScriptToClrConversions.WEIGHT_EXACT_MATCH;
             var argsBase = args.IsMethodCall ? 1 : 0;
@@ -366,7 +361,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
 
                 Type parameterType = method.Parameters[i].Type;
 
-                if (parameterType == typeof(Script) || parameterType == typeof(ScriptExecutionContext) || parameterType == typeof(CallbackArguments))
+                if (parameterType == typeof(Script) || parameterType == typeof(ScriptExecutionContext) ||
+                    parameterType == typeof(CallbackArguments))
                     continue;
 
                 if (i == method.Parameters.Length - 1 && method.VarArgsArrayType != null)
@@ -387,14 +383,16 @@ namespace Dreamcast.Lua.Interpreter.Interop
 
                         varargCnt += 1;
 
-                        var score = CalcScoreForSingleArgument(method.Parameters[i], method.VarArgsElementType, arg, false);
+                        var score = CalcScoreForSingleArgument(method.Parameters[i], method.VarArgsElementType, arg,
+                            false);
                         totalScore = Math.Min(totalScore, score);
                     }
 
                     // check if exact-match
                     if (varargCnt == 1)
                         if (firstArg.Type == DataType.UserData && firstArg.UserData.Object != null)
-                            if (Framework.Do.IsAssignableFrom(method.VarArgsArrayType, firstArg.UserData.Object.GetType()))
+                            if (Framework.Do.IsAssignableFrom(method.VarArgsArrayType,
+                                firstArg.UserData.Object.GetType()))
                             {
                                 totalScore = scoreBeforeVargars;
                                 continue;
@@ -410,7 +408,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
                 {
                     var arg = args.RawGet(argsCnt, false) ?? DynValue.Void;
 
-                    var score = CalcScoreForSingleArgument(method.Parameters[i], parameterType, arg, method.Parameters[i].HasDefaultValue);
+                    var score = CalcScoreForSingleArgument(method.Parameters[i], parameterType, arg,
+                        method.Parameters[i].HasDefaultValue);
 
                     totalScore = Math.Min(totalScore, score);
 
@@ -433,7 +432,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
                 else
                 {
                     totalScore *= 1000;
-                    totalScore -= ScriptToClrConversions.WEIGHT_EXTRA_PARAMS_MALUS * (args.Count - argsBase - method.Parameters.Length);
+                    totalScore -= ScriptToClrConversions.WEIGHT_EXTRA_PARAMS_MALUS *
+                                  (args.Count - argsBase - method.Parameters.Length);
                     totalScore = Math.Max(1, totalScore);
                 }
             }
@@ -444,7 +444,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
             return totalScore;
         }
 
-        private static int CalcScoreForSingleArgument(ParameterDescriptor desc, Type parameterType, DynValue arg, bool isOptional)
+        private static int CalcScoreForSingleArgument(ParameterDescriptor desc, Type parameterType, DynValue arg,
+            bool isOptional)
         {
             var score = ScriptToClrConversions.DynValueToObjectOfTypeWeight(arg,
                 parameterType, isOptional);

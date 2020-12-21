@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-#pragma warning disable 1591
+﻿#pragma warning disable 1591
 
 using System.Collections.Generic;
 
@@ -50,7 +35,9 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
                     if (ret.Type == DataType.TailCallRequest)
                     {
                         if (ret.TailCallData.Continuation != null || ret.TailCallData.ErrorHandler != null)
-                            throw new ScriptRuntimeException("the function passed to {0} cannot be called directly by {0}. wrap in a script function instead.", funcName);
+                            throw new ScriptRuntimeException(
+                                "the function passed to {0} cannot be called directly by {0}. wrap in a script function instead.",
+                                funcName);
 
                         return DynValue.NewTailCallReq(new TailCallData
                         {
@@ -63,7 +50,9 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
                     }
 
                     if (ret.Type == DataType.YieldRequest)
-                        throw new ScriptRuntimeException("the function passed to {0} cannot be called directly by {0}. wrap in a script function instead.", funcName);
+                        throw new ScriptRuntimeException(
+                            "the function passed to {0} cannot be called directly by {0}. wrap in a script function instead.",
+                            funcName);
                     return DynValue.NewTupleNested(DynValue.True, ret);
                 }
                 catch (ScriptRuntimeException ex)
@@ -73,7 +62,8 @@ namespace Dreamcast.Lua.Interpreter.CoreLib
                 }
 
             if (args[0].Type != DataType.Function)
-                return DynValue.NewTupleNested(DynValue.False, DynValue.NewString("attempt to " + funcName + " a non-function"));
+                return DynValue.NewTupleNested(DynValue.False,
+                    DynValue.NewString("attempt to " + funcName + " a non-function"));
             return DynValue.NewTailCallReq(new TailCallData
             {
                 Args = a,

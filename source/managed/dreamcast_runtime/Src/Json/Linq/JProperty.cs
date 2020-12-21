@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -83,11 +68,7 @@ namespace Dreamcast.Json.Linq
         ///     Gets the property name.
         /// </summary>
         /// <value>The property name.</value>
-        public string Name
-        {
-            [DebuggerStepThrough]
-            get;
-        }
+        public string Name { [DebuggerStepThrough] get; }
 
         /// <summary>
         ///     Gets or sets the property value.
@@ -95,8 +76,7 @@ namespace Dreamcast.Json.Linq
         /// <value>The property value.</value>
         public JToken Value
         {
-            [DebuggerStepThrough]
-            get => _content._token!;
+            [DebuggerStepThrough] get => _content._token!;
             set
             {
                 CheckReentrancy();
@@ -116,8 +96,7 @@ namespace Dreamcast.Json.Linq
         /// <value>The type.</value>
         public override JTokenType Type
         {
-            [DebuggerStepThrough]
-            get => JTokenType.Property;
+            [DebuggerStepThrough] get => JTokenType.Property;
         }
 
         internal override JToken GetItem(int index)
@@ -142,12 +121,14 @@ namespace Dreamcast.Json.Linq
 
         internal override bool RemoveItem(JToken? item)
         {
-            throw new JsonException("Cannot add or remove items from {0}.".FormatWith(CultureInfo.InvariantCulture, typeof(JProperty)));
+            throw new JsonException(
+                "Cannot add or remove items from {0}.".FormatWith(CultureInfo.InvariantCulture, typeof(JProperty)));
         }
 
         internal override void RemoveItemAt(int index)
         {
-            throw new JsonException("Cannot add or remove items from {0}.".FormatWith(CultureInfo.InvariantCulture, typeof(JProperty)));
+            throw new JsonException(
+                "Cannot add or remove items from {0}.".FormatWith(CultureInfo.InvariantCulture, typeof(JProperty)));
         }
 
         internal override int IndexOfItem(JToken? item)
@@ -162,7 +143,9 @@ namespace Dreamcast.Json.Linq
             // don't add comments to JProperty
             if (item != null && item.Type == JTokenType.Comment) return;
 
-            if (Value != null) throw new JsonException("{0} cannot have multiple values.".FormatWith(CultureInfo.InvariantCulture, typeof(JProperty)));
+            if (Value != null)
+                throw new JsonException(
+                    "{0} cannot have multiple values.".FormatWith(CultureInfo.InvariantCulture, typeof(JProperty)));
 
             base.InsertItem(0, item, false);
         }
@@ -181,7 +164,8 @@ namespace Dreamcast.Json.Linq
 
         internal override void ClearItems()
         {
-            throw new JsonException("Cannot add or remove items from {0}.".FormatWith(CultureInfo.InvariantCulture, typeof(JProperty)));
+            throw new JsonException(
+                "Cannot add or remove items from {0}.".FormatWith(CultureInfo.InvariantCulture, typeof(JProperty)));
         }
 
         internal override bool DeepEquals(JToken node)
@@ -242,7 +226,10 @@ namespace Dreamcast.Json.Linq
 
             reader.MoveToContent();
 
-            if (reader.TokenType != JsonToken.PropertyName) throw JsonReaderException.Create(reader, "Error reading JProperty from JsonReader. Current JsonReader item is not a property: {0}".FormatWith(CultureInfo.InvariantCulture, reader.TokenType));
+            if (reader.TokenType != JsonToken.PropertyName)
+                throw JsonReaderException.Create(reader,
+                    "Error reading JProperty from JsonReader. Current JsonReader item is not a property: {0}"
+                        .FormatWith(CultureInfo.InvariantCulture, reader.TokenType));
 
             var p = new JProperty((string) reader.Value!);
             p.SetLineInfo(reader as IJsonLineInfo, settings);

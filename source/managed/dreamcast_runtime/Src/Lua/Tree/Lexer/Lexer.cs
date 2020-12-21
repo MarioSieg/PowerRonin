@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System.Text;
+﻿using System.Text;
 
 namespace Dreamcast.Lua.Interpreter.Tree
 {
@@ -174,15 +159,19 @@ namespace Dreamcast.Lua.Interpreter.Tree
                     CursorCharNext();
                     return CreateToken(TokenType.SemiColon, fromLine, fromCol, ";");
                 case '=':
-                    return PotentiallyDoubleCharOperator('=', TokenType.Op_Assignment, TokenType.Op_Equal, fromLine, fromCol);
+                    return PotentiallyDoubleCharOperator('=', TokenType.Op_Assignment, TokenType.Op_Equal, fromLine,
+                        fromCol);
                 case '<':
-                    return PotentiallyDoubleCharOperator('=', TokenType.Op_LessThan, TokenType.Op_LessThanEqual, fromLine, fromCol);
+                    return PotentiallyDoubleCharOperator('=', TokenType.Op_LessThan, TokenType.Op_LessThanEqual,
+                        fromLine, fromCol);
                 case '>':
-                    return PotentiallyDoubleCharOperator('=', TokenType.Op_GreaterThan, TokenType.Op_GreaterThanEqual, fromLine, fromCol);
+                    return PotentiallyDoubleCharOperator('=', TokenType.Op_GreaterThan, TokenType.Op_GreaterThanEqual,
+                        fromLine, fromCol);
                 case '~':
                 case '!':
                     if (CursorCharNext() != '=')
-                        throw new SyntaxErrorException(CreateToken(TokenType.Invalid, fromLine, fromCol), "unexpected symbol near '{0}'", c);
+                        throw new SyntaxErrorException(CreateToken(TokenType.Invalid, fromLine, fromCol),
+                            "unexpected symbol near '{0}'", c);
 
                     CursorCharNext();
                     return CreateToken(TokenType.Op_NotEqual, fromLine, fromCol, "~=");
@@ -190,7 +179,8 @@ namespace Dreamcast.Lua.Interpreter.Tree
                 {
                     var next = CursorCharNext();
                     if (next == '.')
-                        return PotentiallyDoubleCharOperator('.', TokenType.Op_Concat, TokenType.VarArgs, fromLine, fromCol);
+                        return PotentiallyDoubleCharOperator('.', TokenType.Op_Concat, TokenType.VarArgs, fromLine,
+                            fromCol);
                     if (LexerUtils.CharIsDigit(next))
                         return ReadNumberToken(fromLine, fromCol, true);
                     return CreateToken(TokenType.Dot, fromLine, fromCol, ".");
@@ -213,7 +203,8 @@ namespace Dreamcast.Lua.Interpreter.Tree
                 case '^':
                     return CreateSingleCharToken(TokenType.Op_Pwr, fromLine, fromCol);
                 case '$':
-                    return PotentiallyDoubleCharOperator('{', TokenType.Op_Dollar, TokenType.Brk_Open_Curly_Shared, fromLine, fromCol);
+                    return PotentiallyDoubleCharOperator('{', TokenType.Op_Dollar, TokenType.Brk_Open_Curly_Shared,
+                        fromLine, fromCol);
                 case '#':
                     if (m_Cursor == 0 && m_Code.Length > 1 && m_Code[1] == '!')
                         return ReadHashBang(fromLine, fromCol);
@@ -243,12 +234,14 @@ namespace Dreamcast.Lua.Interpreter.Tree
                 case ',':
                     return CreateSingleCharToken(TokenType.Comma, fromLine, fromCol);
                 case ':':
-                    return PotentiallyDoubleCharOperator(':', TokenType.Colon, TokenType.DoubleColon, fromLine, fromCol);
+                    return PotentiallyDoubleCharOperator(':', TokenType.Colon, TokenType.DoubleColon, fromLine,
+                        fromCol);
                 case '"':
                 case '\'':
                     return ReadSimpleStringToken(fromLine, fromCol);
                 case '\0':
-                    throw new SyntaxErrorException(CreateToken(TokenType.Invalid, fromLine, fromCol), "unexpected symbol near '{0}'", CursorChar()) {IsPrematureStreamTermination = true};
+                    throw new SyntaxErrorException(CreateToken(TokenType.Invalid, fromLine, fromCol),
+                        "unexpected symbol near '{0}'", CursorChar()) {IsPrematureStreamTermination = true};
                 default:
                 {
                     if (char.IsLetter(c) || c == '_')
@@ -260,7 +253,8 @@ namespace Dreamcast.Lua.Interpreter.Tree
                     if (LexerUtils.CharIsDigit(c)) return ReadNumberToken(fromLine, fromCol, false);
                 }
 
-                    throw new SyntaxErrorException(CreateToken(TokenType.Invalid, fromLine, fromCol), "unexpected symbol near '{0}'", CursorChar());
+                    throw new SyntaxErrorException(CreateToken(TokenType.Invalid, fromLine, fromCol),
+                        "unexpected symbol near '{0}'", CursorChar());
             }
         }
 
@@ -290,8 +284,9 @@ namespace Dreamcast.Lua.Interpreter.Tree
                     else
                     {
                         throw new SyntaxErrorException(
-                            CreateToken(TokenType.Invalid, fromLine, fromCol),
-                            "invalid long {0} delimiter near '{1}'", subtypeforerrors, c) {IsPrematureStreamTermination = true};
+                                CreateToken(TokenType.Invalid, fromLine, fromCol),
+                                "invalid long {0} delimiter near '{1}'", subtypeforerrors, c)
+                            {IsPrematureStreamTermination = true};
                     }
             else
                 end_pattern = startpattern.Replace('[', ']');
@@ -299,13 +294,15 @@ namespace Dreamcast.Lua.Interpreter.Tree
 
             for (var c = CursorCharNext();; c = CursorCharNext())
             {
-                if (c == '\r') // XXI century and we still debate on how a newline is made. throw new DeveloperExtremelyAngryException.
+                if (c == '\r'
+                ) // XXI century and we still debate on how a newline is made. throw new DeveloperExtremelyAngryException.
                     continue;
 
                 if (c == '\0' || !CursorNotEof())
                     throw new SyntaxErrorException(
-                        CreateToken(TokenType.Invalid, fromLine, fromCol),
-                        "unfinished long {0} near '{1}'", subtypeforerrors, text.ToString()) {IsPrematureStreamTermination = true};
+                            CreateToken(TokenType.Invalid, fromLine, fromCol),
+                            "unfinished long {0} near '{1}'", subtypeforerrors, text.ToString())
+                        {IsPrematureStreamTermination = true};
 
                 if (c == ']' && CursorMatches(end_pattern))
                 {
@@ -516,7 +513,8 @@ namespace Dreamcast.Lua.Interpreter.Tree
         }
 
 
-        private Token PotentiallyDoubleCharOperator(char expectedSecondChar, TokenType singleCharToken, TokenType doubleCharToken, int fromLine, int fromCol)
+        private Token PotentiallyDoubleCharOperator(char expectedSecondChar, TokenType singleCharToken,
+            TokenType doubleCharToken, int fromLine, int fromCol)
         {
             string op = CursorChar().ToString();
 
@@ -544,7 +542,8 @@ namespace Dreamcast.Lua.Interpreter.Tree
 
         private Token CreateToken(TokenType tokenType, int fromLine, int fromCol, string text = null)
         {
-            Token t = new(tokenType, m_SourceId, fromLine, fromCol, m_Line, m_Col, m_PrevLineTo, m_PrevColTo) {Text = text};
+            Token t = new(tokenType, m_SourceId, fromLine, fromCol, m_Line, m_Col, m_PrevLineTo, m_PrevColTo)
+                {Text = text};
             m_PrevLineTo = m_Line;
             m_PrevColTo = m_Col;
             return t;

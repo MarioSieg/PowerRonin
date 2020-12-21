@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -147,7 +132,8 @@ namespace Dreamcast.Mathematics
             if (values == null)
                 throw new ArgumentNullException("values");
             if (values.Length != 4)
-                throw new ArgumentOutOfRangeException("values", "There must be four and only four input values for Vector4.");
+                throw new ArgumentOutOfRangeException("values",
+                    "There must be four and only four input values for Vector4.");
 
             X = values[0];
             Y = values[1];
@@ -210,7 +196,8 @@ namespace Dreamcast.Mathematics
                         W = value;
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException("index", "Indices for Vector4 run from 0 to 3, inclusive.");
+                        throw new ArgumentOutOfRangeException("index",
+                            "Indices for Vector4 run from 0 to 3, inclusive.");
                 }
             }
         }
@@ -500,7 +487,8 @@ namespace Dreamcast.Mathematics
         ///     <paramref name="value3" />).
         /// </param>
         /// <param name="result">When the method completes, contains the 4D Cartesian coordinates of the specified point.</param>
-        public static void Barycentric(ref Vector4 value1, ref Vector4 value2, ref Vector4 value3, float amount1, float amount2, out Vector4 result)
+        public static void Barycentric(ref Vector4 value1, ref Vector4 value2, ref Vector4 value3, float amount1,
+            float amount2, out Vector4 result)
         {
             result = new Vector4(value1.X + amount1 * (value2.X - value1.X) + amount2 * (value3.X - value1.X),
                 value1.Y + amount1 * (value2.Y - value1.Y) + amount2 * (value3.Y - value1.Y),
@@ -776,7 +764,8 @@ namespace Dreamcast.Mathematics
         /// <param name="tangent2">Second source tangent vector.</param>
         /// <param name="amount">Weighting factor.</param>
         /// <param name="result">When the method completes, contains the result of the Hermite spline interpolation.</param>
-        public static void Hermite(ref Vector4 value1, ref Vector4 tangent1, ref Vector4 value2, ref Vector4 tangent2, float amount, out Vector4 result)
+        public static void Hermite(ref Vector4 value1, ref Vector4 tangent1, ref Vector4 value2, ref Vector4 tangent2,
+            float amount, out Vector4 result)
         {
             var squared = amount * amount;
             var cubed = amount * squared;
@@ -815,18 +804,23 @@ namespace Dreamcast.Mathematics
         /// <param name="value4">The fourth position in the interpolation.</param>
         /// <param name="amount">Weighting factor.</param>
         /// <param name="result">When the method completes, contains the result of the Catmull-Rom interpolation.</param>
-        public static void CatmullRom(ref Vector4 value1, ref Vector4 value2, ref Vector4 value3, ref Vector4 value4, float amount, out Vector4 result)
+        public static void CatmullRom(ref Vector4 value1, ref Vector4 value2, ref Vector4 value3, ref Vector4 value4,
+            float amount, out Vector4 result)
         {
             var squared = amount * amount;
             var cubed = amount * squared;
 
-            result.X = 0.5f * (2.0f * value2.X + (-value1.X + value3.X) * amount + (2.0f * value1.X - 5.0f * value2.X + 4.0f * value3.X - value4.X) * squared +
+            result.X = 0.5f * (2.0f * value2.X + (-value1.X + value3.X) * amount +
+                               (2.0f * value1.X - 5.0f * value2.X + 4.0f * value3.X - value4.X) * squared +
                                (-value1.X + 3.0f * value2.X - 3.0f * value3.X + value4.X) * cubed);
-            result.Y = 0.5f * (2.0f * value2.Y + (-value1.Y + value3.Y) * amount + (2.0f * value1.Y - 5.0f * value2.Y + 4.0f * value3.Y - value4.Y) * squared +
+            result.Y = 0.5f * (2.0f * value2.Y + (-value1.Y + value3.Y) * amount +
+                               (2.0f * value1.Y - 5.0f * value2.Y + 4.0f * value3.Y - value4.Y) * squared +
                                (-value1.Y + 3.0f * value2.Y - 3.0f * value3.Y + value4.Y) * cubed);
-            result.Z = 0.5f * (2.0f * value2.Z + (-value1.Z + value3.Z) * amount + (2.0f * value1.Z - 5.0f * value2.Z + 4.0f * value3.Z - value4.Z) * squared +
+            result.Z = 0.5f * (2.0f * value2.Z + (-value1.Z + value3.Z) * amount +
+                               (2.0f * value1.Z - 5.0f * value2.Z + 4.0f * value3.Z - value4.Z) * squared +
                                (-value1.Z + 3.0f * value2.Z - 3.0f * value3.Z + value4.Z) * cubed);
-            result.W = 0.5f * (2.0f * value2.W + (-value1.W + value3.W) * amount + (2.0f * value1.W - 5.0f * value2.W + 4.0f * value3.W - value4.W) * squared +
+            result.W = 0.5f * (2.0f * value2.W + (-value1.W + value3.W) * amount +
+                               (2.0f * value1.W - 5.0f * value2.W + 4.0f * value3.W - value4.W) * squared +
                                (-value1.W + 3.0f * value2.W - 3.0f * value3.W + value4.W) * cubed);
         }
 
@@ -943,7 +937,8 @@ namespace Dreamcast.Mathematics
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination",
+                    "The destination array must be of same length or larger length than the source array.");
 
             for (var i = 0; i < source.Length; ++i)
             {
@@ -998,7 +993,8 @@ namespace Dreamcast.Mathematics
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination",
+                    "The destination array must be of same length or larger length than the source array.");
 
             for (var i = 0; i < source.Length; ++i)
             {
@@ -1073,7 +1069,8 @@ namespace Dreamcast.Mathematics
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination",
+                    "The destination array must be of same length or larger length than the source array.");
 
             var x = rotation.X + rotation.X;
             var y = rotation.Y + rotation.Y;
@@ -1100,7 +1097,8 @@ namespace Dreamcast.Mathematics
 
             for (var i = 0; i < source.Length; ++i)
                 destination[i] = new Vector4(source[i].X * num1 + source[i].Y * num2 + source[i].Z * num3,
-                    source[i].X * num4 + source[i].Y * num5 + source[i].Z * num6, source[i].X * num7 + source[i].Y * num8 + source[i].Z * num9, source[i].W);
+                    source[i].X * num4 + source[i].Y * num5 + source[i].Z * num6,
+                    source[i].X * num7 + source[i].Y * num8 + source[i].Z * num9, source[i].W);
         }
 
         /// <summary>
@@ -1111,10 +1109,15 @@ namespace Dreamcast.Mathematics
         /// <param name="result">When the method completes, contains the transformed <see cref="Vector4" />.</param>
         public static void Transform(ref Vector4 vector, ref Matrix4x4 transform, out Vector4 result)
         {
-            result = new Vector4(vector.X * transform.M11 + vector.Y * transform.M21 + vector.Z * transform.M31 + vector.W * transform.M41,
-                vector.X * transform.M12 + vector.Y * transform.M22 + vector.Z * transform.M32 + vector.W * transform.M42,
-                vector.X * transform.M13 + vector.Y * transform.M23 + vector.Z * transform.M33 + vector.W * transform.M43,
-                vector.X * transform.M14 + vector.Y * transform.M24 + vector.Z * transform.M34 + vector.W * transform.M44);
+            result = new Vector4(
+                vector.X * transform.M11 + vector.Y * transform.M21 + vector.Z * transform.M31 +
+                vector.W * transform.M41,
+                vector.X * transform.M12 + vector.Y * transform.M22 + vector.Z * transform.M32 +
+                vector.W * transform.M42,
+                vector.X * transform.M13 + vector.Y * transform.M23 + vector.Z * transform.M33 +
+                vector.W * transform.M43,
+                vector.X * transform.M14 + vector.Y * transform.M24 + vector.Z * transform.M34 +
+                vector.W * transform.M44);
         }
 
         /// <summary>
@@ -1137,10 +1140,15 @@ namespace Dreamcast.Mathematics
         /// <param name="result">When the method completes, contains the transformed <see cref="Vector4" />.</param>
         public static void Transform(ref Vector4 vector, ref Matrix5x4 transform, out Vector4 result)
         {
-            result = new Vector4(vector.X * transform.M11 + vector.Y * transform.M21 + vector.Z * transform.M31 + vector.W * transform.M41 + transform.M51,
-                vector.X * transform.M12 + vector.Y * transform.M22 + vector.Z * transform.M32 + vector.W * transform.M42 + transform.M52,
-                vector.X * transform.M13 + vector.Y * transform.M23 + vector.Z * transform.M33 + vector.W * transform.M43 + transform.M53,
-                vector.X * transform.M14 + vector.Y * transform.M24 + vector.Z * transform.M34 + vector.W * transform.M44 + transform.M54);
+            result = new Vector4(
+                vector.X * transform.M11 + vector.Y * transform.M21 + vector.Z * transform.M31 +
+                vector.W * transform.M41 + transform.M51,
+                vector.X * transform.M12 + vector.Y * transform.M22 + vector.Z * transform.M32 +
+                vector.W * transform.M42 + transform.M52,
+                vector.X * transform.M13 + vector.Y * transform.M23 + vector.Z * transform.M33 +
+                vector.W * transform.M43 + transform.M53,
+                vector.X * transform.M14 + vector.Y * transform.M24 + vector.Z * transform.M34 +
+                vector.W * transform.M44 + transform.M54);
         }
 
         /// <summary>
@@ -1179,7 +1187,8 @@ namespace Dreamcast.Mathematics
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination",
+                    "The destination array must be of same length or larger length than the source array.");
 
             for (var i = 0; i < source.Length; ++i) Transform(ref source[i], ref transform, out destination[i]);
         }
@@ -1410,8 +1419,10 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 return ToString();
 
-            return string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1} Z:{2} W:{3}", X.ToString(format, CultureInfo.CurrentCulture),
-                Y.ToString(format, CultureInfo.CurrentCulture), Z.ToString(format, CultureInfo.CurrentCulture), W.ToString(format, CultureInfo.CurrentCulture));
+            return string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1} Z:{2} W:{3}",
+                X.ToString(format, CultureInfo.CurrentCulture),
+                Y.ToString(format, CultureInfo.CurrentCulture), Z.ToString(format, CultureInfo.CurrentCulture),
+                W.ToString(format, CultureInfo.CurrentCulture));
         }
 
         /// <summary>
@@ -1439,7 +1450,8 @@ namespace Dreamcast.Mathematics
             if (format == null)
                 ToString(formatProvider);
 
-            return string.Format(formatProvider, "X:{0} Y:{1} Z:{2} W:{3}", X.ToString(format, formatProvider), Y.ToString(format, formatProvider),
+            return string.Format(formatProvider, "X:{0} Y:{1} Z:{2} W:{3}", X.ToString(format, formatProvider),
+                Y.ToString(format, formatProvider),
                 Z.ToString(format, formatProvider), W.ToString(format, formatProvider));
         }
 
@@ -1470,7 +1482,8 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public bool Equals(ref Vector4 other)
         {
-            return MathUtil.NearEqual(other.X, X) && MathUtil.NearEqual(other.Y, Y) && MathUtil.NearEqual(other.Z, Z) && MathUtil.NearEqual(other.W, W);
+            return MathUtil.NearEqual(other.X, X) && MathUtil.NearEqual(other.Y, Y) && MathUtil.NearEqual(other.Z, Z) &&
+                   MathUtil.NearEqual(other.W, W);
         }
 
         /// <summary>

@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Dreamcast.Lua.Interpreter.Execution;
 using Dreamcast.Lua.Interpreter.Tree.Expressions;
 
@@ -105,7 +90,8 @@ namespace Dreamcast.Lua.Interpreter.Tree
 
                     e = powerChain[powerChain.Count - 1];
 
-                    for (var i = powerChain.Count - 2; i >= 0; i--) e = BinaryOperatorExpression.CreatePowerExpression(powerChain[i], e, lcontext);
+                    for (var i = powerChain.Count - 2; i >= 0; i--)
+                        e = BinaryOperatorExpression.CreatePowerExpression(powerChain[i], e, lcontext);
                 }
 
                 e = new UnaryOperatorExpression(lcontext, e, unaryOp);
@@ -240,7 +226,8 @@ namespace Dreamcast.Lua.Interpreter.Tree
                 case TokenType.Name:
                     return new SymbolRefExpression(T, lcontext);
                 default:
-                    throw new SyntaxErrorException(T, "unexpected symbol near '{0}'", T.Text) {IsPrematureStreamTermination = T.Type == TokenType.Eof};
+                    throw new SyntaxErrorException(T, "unexpected symbol near '{0}'", T.Text)
+                        {IsPrematureStreamTermination = T.Type == TokenType.Eof};
             }
         }
     }

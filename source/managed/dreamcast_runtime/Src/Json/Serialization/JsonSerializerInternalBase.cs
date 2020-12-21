@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Dreamcast.Json.Utilities;
@@ -54,7 +39,8 @@ namespace Dreamcast.Json.Serialization
             }
         }
 
-        protected NullValueHandling ResolvedNullValueHandling(JsonObjectContract? containerContract, JsonProperty property)
+        protected NullValueHandling ResolvedNullValueHandling(JsonObjectContract? containerContract,
+            JsonProperty property)
         {
             var resolvedNullValueHandling =
                 property.NullValueHandling
@@ -66,21 +52,25 @@ namespace Dreamcast.Json.Serialization
 
         private ErrorContext GetErrorContext(object? currentObject, object? member, string path, Exception error)
         {
-            if (_currentErrorContext == null) _currentErrorContext = new ErrorContext(currentObject, member, path, error);
+            if (_currentErrorContext == null)
+                _currentErrorContext = new ErrorContext(currentObject, member, path, error);
 
-            if (_currentErrorContext.Error != error) throw new InvalidOperationException("Current error context error is different to requested error.");
+            if (_currentErrorContext.Error != error)
+                throw new InvalidOperationException("Current error context error is different to requested error.");
 
             return _currentErrorContext;
         }
 
         protected void ClearErrorContext()
         {
-            if (_currentErrorContext == null) throw new InvalidOperationException("Could not clear error context. Error context is already null.");
+            if (_currentErrorContext == null)
+                throw new InvalidOperationException("Could not clear error context. Error context is already null.");
 
             _currentErrorContext = null;
         }
 
-        protected bool IsErrorHandled(object? currentObject, JsonContract? contract, object? keyValue, IJsonLineInfo? lineInfo, string path, Exception ex)
+        protected bool IsErrorHandled(object? currentObject, JsonContract? contract, object? keyValue,
+            IJsonLineInfo? lineInfo, string path, Exception ex)
         {
             var errorContext = GetErrorContext(currentObject, keyValue, path, ex);
 
@@ -90,7 +80,9 @@ namespace Dreamcast.Json.Serialization
                 errorContext.Traced = true;
 
                 // kind of a hack but meh. might clean this up later
-                var message = GetType() == typeof(JsonSerializerInternalWriter) ? "Error serializing" : "Error deserializing";
+                var message = GetType() == typeof(JsonSerializerInternalWriter)
+                    ? "Error serializing"
+                    : "Error deserializing";
                 if (contract != null) message += " " + contract.UnderlyingType;
                 message += ". " + ex.Message;
 
@@ -101,7 +93,8 @@ namespace Dreamcast.Json.Serialization
             }
 
             // attribute method is non-static so don't invoke if no object
-            if (contract != null && currentObject != null) contract.InvokeOnError(currentObject, Serializer.Context, errorContext);
+            if (contract != null && currentObject != null)
+                contract.InvokeOnError(currentObject, Serializer.Context, errorContext);
 
             if (!errorContext.Handled) Serializer.OnError(new ErrorEventArgs(currentObject, errorContext));
 

@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #pragma once
 
 #include "subsystem.hpp"
@@ -125,7 +110,8 @@ namespace dce {
 			/// <typeparam name="...Q"></typeparam>
 			/// <param name="_args"></param>
 			/// <returns></returns>
-			template <typename T, typename... Q> requires Subsystem<T> auto create_install_subsystem(Q&&..._args) -> Kernel&;
+			template <typename T, typename... Q> requires Subsystem<T> auto create_install_subsystem(
+				Q&&..._args) -> Kernel&;
 
 			/// <summary>
 			/// Uninstalls a subsystem and removes all hooks
@@ -164,7 +150,8 @@ namespace dce {
 			const std::unique_ptr<Core> core_;
 		};
 
-		template <typename T, typename... Q> requires Subsystem<T> auto Kernel::create_install_subsystem(Q&&... _args) -> Kernel& {
+		template <typename T, typename... Q> requires Subsystem<T> auto Kernel::create_install_subsystem(
+			Q&&... _args) -> Kernel& {
 			auto x = std::make_unique<T>(_args...);
 			x->kernel_ = this;
 			this->install_subsystem(std::move(x));

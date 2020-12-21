@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 using System;
 using System.Globalization;
 using System.Reflection;
@@ -31,14 +16,18 @@ namespace Dreamcast.Json.Utilities
             if (memberInfo is PropertyInfo propertyInfo)
             {
                 // https://github.com/dotnet/corefx/issues/26053
-                if (propertyInfo.PropertyType.IsByRef) throw new InvalidOperationException("Could not create getter for {0}. ByRef return values are not supported.".FormatWith(CultureInfo.InvariantCulture, propertyInfo));
+                if (propertyInfo.PropertyType.IsByRef)
+                    throw new InvalidOperationException(
+                        "Could not create getter for {0}. ByRef return values are not supported.".FormatWith(
+                            CultureInfo.InvariantCulture, propertyInfo));
 
                 return CreateGet<T>(propertyInfo);
             }
 
             if (memberInfo is FieldInfo fieldInfo) return CreateGet<T>(fieldInfo);
 
-            throw new Exception("Could not create getter for {0}.".FormatWith(CultureInfo.InvariantCulture, memberInfo));
+            throw new Exception(
+                "Could not create getter for {0}.".FormatWith(CultureInfo.InvariantCulture, memberInfo));
         }
 
         public Serialization.Action<T, object?> CreateSet<T>(MemberInfo memberInfo)
@@ -47,7 +36,8 @@ namespace Dreamcast.Json.Utilities
 
             if (memberInfo is FieldInfo fieldInfo) return CreateSet<T>(fieldInfo);
 
-            throw new Exception("Could not create setter for {0}.".FormatWith(CultureInfo.InvariantCulture, memberInfo));
+            throw new Exception(
+                "Could not create setter for {0}.".FormatWith(CultureInfo.InvariantCulture, memberInfo));
         }
 
         public abstract MethodCall<T, object?> CreateMethodCall<T>(MethodBase method);

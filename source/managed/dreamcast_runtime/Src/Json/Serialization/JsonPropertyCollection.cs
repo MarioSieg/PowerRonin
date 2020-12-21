@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -81,7 +66,8 @@ namespace Dreamcast.Json.Serialization
                     if (property.DeclaringType != null && existingProperty.DeclaringType != null)
                     {
                         if (property.DeclaringType.IsSubclassOf(existingProperty.DeclaringType)
-                            || existingProperty.DeclaringType.IsInterface() && property.DeclaringType.ImplementInterface(existingProperty.DeclaringType))
+                            || existingProperty.DeclaringType.IsInterface() &&
+                            property.DeclaringType.ImplementInterface(existingProperty.DeclaringType))
                         {
                             // current property is on a derived class and hides the existing
                             Remove(existingProperty);
@@ -89,17 +75,22 @@ namespace Dreamcast.Json.Serialization
                         }
 
                         if (existingProperty.DeclaringType.IsSubclassOf(property.DeclaringType)
-                            || property.DeclaringType.IsInterface() && existingProperty.DeclaringType.ImplementInterface(property.DeclaringType))
+                            || property.DeclaringType.IsInterface() &&
+                            existingProperty.DeclaringType.ImplementInterface(property.DeclaringType))
                             // current property is hidden by the existing so don't add it
                             return;
 
-                        if (_type.ImplementInterface(existingProperty.DeclaringType) && _type.ImplementInterface(property.DeclaringType))
+                        if (_type.ImplementInterface(existingProperty.DeclaringType) &&
+                            _type.ImplementInterface(property.DeclaringType))
                             // current property was already defined on another interface
                             return;
                     }
                 }
 
-                if (duplicateProperty) throw new JsonSerializationException("A member with the name '{0}' already exists on '{1}'. Use the JsonPropertyAttribute to specify another name.".FormatWith(CultureInfo.InvariantCulture, property.PropertyName, _type));
+                if (duplicateProperty)
+                    throw new JsonSerializationException(
+                        "A member with the name '{0}' already exists on '{1}'. Use the JsonPropertyAttribute to specify another name."
+                            .FormatWith(CultureInfo.InvariantCulture, property.PropertyName, _type));
             }
 
             Add(property);
@@ -121,8 +112,7 @@ namespace Dreamcast.Json.Serialization
         }
 
         private bool TryGetValue(string key,
-            [NotNullWhen(true)]
-            out JsonProperty? item)
+            [NotNullWhen(true)] out JsonProperty? item)
         {
             if (Dictionary == null)
             {

@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using Dreamcast.Lua.Interpreter.Execution;
+﻿using Dreamcast.Lua.Interpreter.Execution;
 using Dreamcast.Lua.Interpreter.Execution.VM;
 
 namespace Dreamcast.Lua.Interpreter.Tree.Statements
@@ -35,7 +20,8 @@ namespace Dreamcast.Lua.Interpreter.Tree.Statements
             m_Block = new CompositeStatement(lcontext);
 
             if (lcontext.Lexer.Current.Type != TokenType.Eof)
-                throw new SyntaxErrorException(lcontext.Lexer.Current, "<eof> expected near '{0}'", lcontext.Lexer.Current.Text);
+                throw new SyntaxErrorException(lcontext.Lexer.Current, "<eof> expected near '{0}'",
+                    lcontext.Lexer.Current.Text);
 
             m_StackFrame = lcontext.Scope.PopFunction();
         }

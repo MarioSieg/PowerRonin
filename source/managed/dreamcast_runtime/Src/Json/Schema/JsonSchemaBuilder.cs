@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Dreamcast.Json.Linq;
@@ -30,7 +15,8 @@ using System.Linq;
 
 namespace Dreamcast.Json.Schema
 {
-    [Obsolete("JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
+    [Obsolete(
+        "JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
     internal class JsonSchemaBuilder
     {
         private readonly IDictionary<string, JsonSchema> _documentSchemas;
@@ -97,7 +83,8 @@ namespace Dreamcast.Json.Schema
                 {
                     if (locationReference)
                     {
-                        var escapedParts = schema.DeferredReference.TrimStart('#').Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
+                        var escapedParts = schema.DeferredReference.TrimStart('#')
+                            .Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
                         JToken currentToken = _rootSchema;
                         foreach (var escapedPart in escapedParts)
                         {
@@ -107,7 +94,8 @@ namespace Dreamcast.Json.Schema
                             {
                                 currentToken = currentToken[part];
                             }
-                            else if (currentToken.Type == JTokenType.Array || currentToken.Type == JTokenType.Constructor)
+                            else if (currentToken.Type == JTokenType.Array ||
+                                     currentToken.Type == JTokenType.Constructor)
                             {
                                 if (int.TryParse(part, out var index) && index >= 0 && index < currentToken.Count())
                                     currentToken = currentToken[index];
@@ -121,7 +109,10 @@ namespace Dreamcast.Json.Schema
                         if (currentToken != null) resolvedSchema = BuildSchema(currentToken);
                     }
 
-                    if (resolvedSchema == null) throw new JsonException("Could not resolve schema reference '{0}'.".FormatWith(CultureInfo.InvariantCulture, schema.DeferredReference));
+                    if (resolvedSchema == null)
+                        throw new JsonException(
+                            "Could not resolve schema reference '{0}'.".FormatWith(CultureInfo.InvariantCulture,
+                                schema.DeferredReference));
                 }
 
                 schema = resolvedSchema;
@@ -149,14 +140,18 @@ namespace Dreamcast.Json.Schema
                 foreach (var property in schema.Properties.ToList())
                     schema.Properties[property.Key] = ResolveReferences(property.Value);
 
-            if (schema.AdditionalProperties != null) schema.AdditionalProperties = ResolveReferences(schema.AdditionalProperties);
+            if (schema.AdditionalProperties != null)
+                schema.AdditionalProperties = ResolveReferences(schema.AdditionalProperties);
 
             return schema;
         }
 
         private JsonSchema BuildSchema(JToken token)
         {
-            if (!(token is JObject schemaObject)) throw JsonException.Create(token, token.Path, "Expected object while parsing schema object, got {0}.".FormatWith(CultureInfo.InvariantCulture, token.Type));
+            if (!(token is JObject schemaObject))
+                throw JsonException.Create(token, token.Path,
+                    "Expected object while parsing schema object, got {0}.".FormatWith(CultureInfo.InvariantCulture,
+                        token.Type));
 
             if (schemaObject.TryGetValue(JsonTypeReflector.RefPropertyName, out var referenceToken))
             {
@@ -293,7 +288,10 @@ namespace Dreamcast.Json.Schema
 
         private void ProcessEnum(JToken token)
         {
-            if (token.Type != JTokenType.Array) throw JsonException.Create(token, token.Path, "Expected Array token while parsing enum values, got {0}.".FormatWith(CultureInfo.InvariantCulture, token.Type));
+            if (token.Type != JTokenType.Array)
+                throw JsonException.Create(token, token.Path,
+                    "Expected Array token while parsing enum values, got {0}.".FormatWith(CultureInfo.InvariantCulture,
+                        token.Type));
 
             CurrentSchema.Enum = new List<JToken>();
 
@@ -320,11 +318,17 @@ namespace Dreamcast.Json.Schema
         {
             IDictionary<string, JsonSchema> properties = new Dictionary<string, JsonSchema>();
 
-            if (token.Type != JTokenType.Object) throw JsonException.Create(token, token.Path, "Expected Object token while parsing schema properties, got {0}.".FormatWith(CultureInfo.InvariantCulture, token.Type));
+            if (token.Type != JTokenType.Object)
+                throw JsonException.Create(token, token.Path,
+                    "Expected Object token while parsing schema properties, got {0}.".FormatWith(
+                        CultureInfo.InvariantCulture, token.Type));
 
             foreach (JProperty propertyToken in token)
             {
-                if (properties.ContainsKey(propertyToken.Name)) throw new JsonException("Property {0} has already been defined in schema.".FormatWith(CultureInfo.InvariantCulture, propertyToken.Name));
+                if (properties.ContainsKey(propertyToken.Name))
+                    throw new JsonException(
+                        "Property {0} has already been defined in schema.".FormatWith(CultureInfo.InvariantCulture,
+                            propertyToken.Name));
 
                 properties.Add(propertyToken.Name, BuildSchema(propertyToken.Value));
             }
@@ -347,7 +351,9 @@ namespace Dreamcast.Json.Schema
                     foreach (var schemaToken in token) CurrentSchema.Items.Add(BuildSchema(schemaToken));
                     break;
                 default:
-                    throw JsonException.Create(token, token.Path, "Expected array or JSON schema object, got {0}.".FormatWith(CultureInfo.InvariantCulture, token.Type));
+                    throw JsonException.Create(token, token.Path,
+                        "Expected array or JSON schema object, got {0}.".FormatWith(CultureInfo.InvariantCulture,
+                            token.Type));
             }
         }
 
@@ -361,7 +367,10 @@ namespace Dreamcast.Json.Schema
 
                     foreach (var typeToken in token)
                     {
-                        if (typeToken.Type != JTokenType.String) throw JsonException.Create(typeToken, typeToken.Path, "Expected JSON schema type string token, got {0}.".FormatWith(CultureInfo.InvariantCulture, token.Type));
+                        if (typeToken.Type != JTokenType.String)
+                            throw JsonException.Create(typeToken, typeToken.Path,
+                                "Expected JSON schema type string token, got {0}.".FormatWith(
+                                    CultureInfo.InvariantCulture, token.Type));
 
                         type = type | MapType((string) typeToken);
                     }
@@ -370,13 +379,16 @@ namespace Dreamcast.Json.Schema
                 case JTokenType.String:
                     return MapType((string) token);
                 default:
-                    throw JsonException.Create(token, token.Path, "Expected array or JSON schema type string token, got {0}.".FormatWith(CultureInfo.InvariantCulture, token.Type));
+                    throw JsonException.Create(token, token.Path,
+                        "Expected array or JSON schema type string token, got {0}.".FormatWith(
+                            CultureInfo.InvariantCulture, token.Type));
             }
         }
 
         internal static JsonSchemaType MapType(string type)
         {
-            if (!JsonSchemaConstants.JsonSchemaTypeMapping.TryGetValue(type, out var mappedType)) throw new JsonException("Invalid JSON schema type: {0}".FormatWith(CultureInfo.InvariantCulture, type));
+            if (!JsonSchemaConstants.JsonSchemaTypeMapping.TryGetValue(type, out var mappedType))
+                throw new JsonException("Invalid JSON schema type: {0}".FormatWith(CultureInfo.InvariantCulture, type));
 
             return mappedType;
         }

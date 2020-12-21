@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -84,14 +69,17 @@ namespace Dreamcast.Json.Utilities
             return false;
         }
 
-        public static ConstructorInfo? ResolveEnumerableCollectionConstructor(Type collectionType, Type collectionItemType)
+        public static ConstructorInfo? ResolveEnumerableCollectionConstructor(Type collectionType,
+            Type collectionItemType)
         {
             var genericConstructorArgument = typeof(IList<>).MakeGenericType(collectionItemType);
 
-            return ResolveEnumerableCollectionConstructor(collectionType, collectionItemType, genericConstructorArgument);
+            return ResolveEnumerableCollectionConstructor(collectionType, collectionItemType,
+                genericConstructorArgument);
         }
 
-        public static ConstructorInfo? ResolveEnumerableCollectionConstructor(Type collectionType, Type collectionItemType, Type constructorArgumentType)
+        public static ConstructorInfo? ResolveEnumerableCollectionConstructor(Type collectionType,
+            Type collectionItemType, Type constructorArgumentType)
         {
             var genericEnumerable = typeof(IEnumerable<>).MakeGenericType(collectionItemType);
             ConstructorInfo? match = null;
@@ -135,7 +123,8 @@ namespace Dreamcast.Json.Utilities
         }
 
         // this is here because LINQ Bridge doesn't support Contains with IEqualityComparer<T>
-        public static bool ContainsValue<TSource>(this IEnumerable<TSource> source, TSource value, IEqualityComparer<TSource> comparer)
+        public static bool ContainsValue<TSource>(this IEnumerable<TSource> source, TSource value,
+            IEqualityComparer<TSource> comparer)
         {
             if (comparer == null) comparer = EqualityComparer<TSource>.Default;
 
@@ -229,7 +218,8 @@ namespace Dreamcast.Json.Utilities
             return dimensions;
         }
 
-        private static void CopyFromJaggedToMultidimensionalArray(IList values, Array multidimensionalArray, int[] indices)
+        private static void CopyFromJaggedToMultidimensionalArray(IList values, Array multidimensionalArray,
+            int[] indices)
         {
             var dimension = indices.Length;
             if (dimension == multidimensionalArray.Rank)
@@ -241,7 +231,8 @@ namespace Dreamcast.Json.Utilities
             var dimensionLength = multidimensionalArray.GetLength(dimension);
             var list = (IList) JaggedArrayGetValue(values, indices);
             var currentValuesLength = list.Count;
-            if (currentValuesLength != dimensionLength) throw new Exception("Cannot deserialize non-cubical array as multidimensional array.");
+            if (currentValuesLength != dimensionLength)
+                throw new Exception("Cannot deserialize non-cubical array as multidimensional array.");
 
             var newIndices = new int[dimension + 1];
             for (var i = 0; i < dimension; i++) newIndices[i] = indices[i];

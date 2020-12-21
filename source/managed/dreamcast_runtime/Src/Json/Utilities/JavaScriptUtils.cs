@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #if HAVE_ASYNC
 using System.Threading;
 using System.Threading.Tasks;
@@ -78,7 +63,8 @@ namespace Dreamcast.Json.Utilities
 
             foreach (var escapeChar in escapeChars.Union(new[] {'\''})) SingleQuoteCharEscapeFlags[escapeChar] = true;
             foreach (var escapeChar in escapeChars.Union(new[] {'"'})) DoubleQuoteCharEscapeFlags[escapeChar] = true;
-            foreach (var escapeChar in escapeChars.Union(new[] {'"', '\'', '<', '>', '&'})) HtmlCharEscapeFlags[escapeChar] = true;
+            foreach (var escapeChar in escapeChars.Union(new[] {'"', '\'', '<', '>', '&'}))
+                HtmlCharEscapeFlags[escapeChar] = true;
         }
 
         private const string EscapedUnicodeText = "!";
@@ -128,7 +114,8 @@ namespace Dreamcast.Json.Utilities
                 {
                     if (lastWritePosition != 0)
                     {
-                        if (writeBuffer == null || writeBuffer.Length < lastWritePosition) writeBuffer = BufferUtils.EnsureBufferSize(bufferPool, lastWritePosition, writeBuffer);
+                        if (writeBuffer == null || writeBuffer.Length < lastWritePosition)
+                            writeBuffer = BufferUtils.EnsureBufferSize(bufferPool, lastWritePosition, writeBuffer);
 
                         // write unchanged chars at start of text.
                         s.CopyTo(0, writeBuffer, 0, lastWritePosition);
@@ -174,7 +161,8 @@ namespace Dreamcast.Json.Utilities
                                 escapedValue = @"\u2029";
                                 break;
                             default:
-                                if (c < charEscapeFlags.Length || stringEscapeHandling == StringEscapeHandling.EscapeNonAscii)
+                                if (c < charEscapeFlags.Length ||
+                                    stringEscapeHandling == StringEscapeHandling.EscapeNonAscii)
                                 {
                                     if (c == '\'' && stringEscapeHandling != StringEscapeHandling.EscapeHtml)
                                     {
@@ -186,7 +174,9 @@ namespace Dreamcast.Json.Utilities
                                     }
                                     else
                                     {
-                                        if (writeBuffer == null || writeBuffer.Length < UnicodeTextLength) writeBuffer = BufferUtils.EnsureBufferSize(bufferPool, UnicodeTextLength, writeBuffer);
+                                        if (writeBuffer == null || writeBuffer.Length < UnicodeTextLength)
+                                            writeBuffer = BufferUtils.EnsureBufferSize(bufferPool, UnicodeTextLength,
+                                                writeBuffer);
 
                                         StringUtils.ToCharAsUnicode(c, writeBuffer!);
 
@@ -204,7 +194,8 @@ namespace Dreamcast.Json.Utilities
 
                         if (escapedValue == null) continue;
 
-                        var isEscapedUnicodeText = string.Equals(escapedValue, EscapedUnicodeText, StringComparison.Ordinal);
+                        var isEscapedUnicodeText =
+                            string.Equals(escapedValue, EscapedUnicodeText, StringComparison.Ordinal);
 
                         if (i > lastWritePosition)
                         {
@@ -219,7 +210,8 @@ namespace Dreamcast.Json.Utilities
                                 // copy it over when creating new buffer
                                 if (isEscapedUnicodeText)
                                 {
-                                    MiscellaneousUtils.Assert(writeBuffer != null, "Write buffer should never be null because it is set when the escaped unicode text is encountered.");
+                                    MiscellaneousUtils.Assert(writeBuffer != null,
+                                        "Write buffer should never be null because it is set when the escaped unicode text is encountered.");
 
                                     Array.Copy(writeBuffer, newBuffer, UnicodeTextLength);
                                 }
@@ -246,7 +238,8 @@ namespace Dreamcast.Json.Utilities
                     length = s.Length - lastWritePosition;
                     if (length > 0)
                     {
-                        if (writeBuffer == null || writeBuffer.Length < length) writeBuffer = BufferUtils.EnsureBufferSize(bufferPool, length, writeBuffer);
+                        if (writeBuffer == null || writeBuffer.Length < length)
+                            writeBuffer = BufferUtils.EnsureBufferSize(bufferPool, length, writeBuffer);
 
                         s.CopyTo(lastWritePosition, writeBuffer, 0, length);
 
@@ -260,19 +253,22 @@ namespace Dreamcast.Json.Utilities
             if (appendDelimiters) writer.Write(delimiter);
         }
 
-        public static string ToEscapedJavaScriptString(string? value, char delimiter, bool appendDelimiters, StringEscapeHandling stringEscapeHandling)
+        public static string ToEscapedJavaScriptString(string? value, char delimiter, bool appendDelimiters,
+            StringEscapeHandling stringEscapeHandling)
         {
             var charEscapeFlags = GetCharEscapeFlags(stringEscapeHandling, delimiter);
 
             using (var w = StringUtils.CreateStringWriter(value?.Length ?? 16))
             {
                 char[]? buffer = null;
-                WriteEscapedJavaScriptString(w, value, delimiter, appendDelimiters, charEscapeFlags, stringEscapeHandling, null, ref buffer);
+                WriteEscapedJavaScriptString(w, value, delimiter, appendDelimiters, charEscapeFlags,
+                    stringEscapeHandling, null, ref buffer);
                 return w.ToString();
             }
         }
 
-        private static int FirstCharToEscape(string s, bool[] charEscapeFlags, StringEscapeHandling stringEscapeHandling)
+        private static int FirstCharToEscape(string s, bool[] charEscapeFlags,
+            StringEscapeHandling stringEscapeHandling)
         {
             for (var i = 0; i != s.Length; i++)
             {
@@ -302,7 +298,8 @@ namespace Dreamcast.Json.Utilities
         }
 
 #if HAVE_ASYNC
-        public static Task WriteEscapedJavaScriptStringAsync(TextWriter writer, string s, char delimiter, bool appendDelimiters, bool[] charEscapeFlags, StringEscapeHandling stringEscapeHandling, JsonTextWriter client, char[] writeBuffer, CancellationToken cancellationToken = default)
+        public static Task WriteEscapedJavaScriptStringAsync(TextWriter writer, string s, char delimiter, bool appendDelimiters, bool[] charEscapeFlags, StringEscapeHandling stringEscapeHandling, JsonTextWriter client, char[] writeBuffer, CancellationToken cancellationToken
+ = default)
         {
             if (cancellationToken.IsCancellationRequested)
             {
@@ -333,7 +330,8 @@ namespace Dreamcast.Json.Utilities
 
             if (!StringUtils.IsNullOrEmpty(s))
             {
-                task = WriteEscapedJavaScriptStringWithoutDelimitersAsync(writer, s, charEscapeFlags, stringEscapeHandling, client, writeBuffer, cancellationToken);
+                task =
+ WriteEscapedJavaScriptStringWithoutDelimitersAsync(writer, s, charEscapeFlags, stringEscapeHandling, client, writeBuffer, cancellationToken);
                 if (task.IsCompletedSucessfully())
                 {
                     return writer.WriteAsync(delimiter, cancellationToken);
@@ -510,8 +508,7 @@ namespace Dreamcast.Json.Utilities
 
         public static bool TryGetDateFromConstructorJson(JsonReader reader,
             out DateTime dateTime,
-            [NotNullWhen(false)]
-            out string? errorMessage)
+            [NotNullWhen(false)] out string? errorMessage)
         {
             dateTime = default;
             errorMessage = null;
@@ -545,7 +542,8 @@ namespace Dreamcast.Json.Utilities
                 // Pad args out to the number used by the ctor
                 while (dateArgs.Count < 7) dateArgs.Add(0);
 
-                dateTime = new DateTime((int) dateArgs[0], (int) dateArgs[1] + 1, dateArgs[2] == 0 ? 1 : (int) dateArgs[2],
+                dateTime = new DateTime((int) dateArgs[0], (int) dateArgs[1] + 1,
+                    dateArgs[2] == 0 ? 1 : (int) dateArgs[2],
                     (int) dateArgs[3], (int) dateArgs[4], (int) dateArgs[5], (int) dateArgs[6]);
             }
             else
@@ -558,8 +556,7 @@ namespace Dreamcast.Json.Utilities
 
         private static bool TryGetDateConstructorValue(JsonReader reader,
             out long? integer,
-            [NotNullWhen(false)]
-            out string? errorMessage)
+            [NotNullWhen(false)] out string? errorMessage)
         {
             integer = null;
             errorMessage = null;
@@ -573,7 +570,8 @@ namespace Dreamcast.Json.Utilities
             if (reader.TokenType == JsonToken.EndConstructor) return true;
             if (reader.TokenType != JsonToken.Integer)
             {
-                errorMessage = "Unexpected token when reading date constructor. Expected Integer, got " + reader.TokenType;
+                errorMessage = "Unexpected token when reading date constructor. Expected Integer, got " +
+                               reader.TokenType;
                 return false;
             }
 

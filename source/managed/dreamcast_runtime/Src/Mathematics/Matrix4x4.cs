@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -319,7 +304,8 @@ namespace Dreamcast.Mathematics
             if (values == null)
                 throw new ArgumentNullException("values");
             if (values.Length != 16)
-                throw new ArgumentOutOfRangeException("values", "There must be sixteen and only sixteen input values for Matrix4x4.");
+                throw new ArgumentOutOfRangeException("values",
+                    "There must be sixteen and only sixteen input values for Matrix4x4.");
 
             M11 = values[0];
             M12 = values[1];
@@ -588,7 +574,8 @@ namespace Dreamcast.Mathematics
                         M44 = value;
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException("index", "Indices for Matrix4x4 run from 0 to 15, inclusive.");
+                        throw new ArgumentOutOfRangeException("index",
+                            "Indices for Matrix4x4 run from 0 to 15, inclusive.");
                 }
             }
         }
@@ -609,9 +596,11 @@ namespace Dreamcast.Mathematics
             get
             {
                 if (row < 0 || row > 3)
-                    throw new ArgumentOutOfRangeException("row", "Rows and columns for matrices run from 0 to 3, inclusive.");
+                    throw new ArgumentOutOfRangeException("row",
+                        "Rows and columns for matrices run from 0 to 3, inclusive.");
                 if (column < 0 || column > 3)
-                    throw new ArgumentOutOfRangeException("column", "Rows and columns for matrices run from 0 to 3, inclusive.");
+                    throw new ArgumentOutOfRangeException("column",
+                        "Rows and columns for matrices run from 0 to 3, inclusive.");
 
                 return this[row * 4 + column];
             }
@@ -619,9 +608,11 @@ namespace Dreamcast.Mathematics
             set
             {
                 if (row < 0 || row > 3)
-                    throw new ArgumentOutOfRangeException("row", "Rows and columns for matrices run from 0 to 3, inclusive.");
+                    throw new ArgumentOutOfRangeException("row",
+                        "Rows and columns for matrices run from 0 to 3, inclusive.");
                 if (column < 0 || column > 3)
-                    throw new ArgumentOutOfRangeException("column", "Rows and columns for matrices run from 0 to 3, inclusive.");
+                    throw new ArgumentOutOfRangeException("column",
+                        "Rows and columns for matrices run from 0 to 3, inclusive.");
 
                 this[row * 4 + column] = value;
             }
@@ -872,13 +863,17 @@ namespace Dreamcast.Mathematics
         public void ExchangeRows(int firstRow, int secondRow)
         {
             if (firstRow < 0)
-                throw new ArgumentOutOfRangeException("firstRow", "The parameter firstRow must be greater than or equal to zero.");
+                throw new ArgumentOutOfRangeException("firstRow",
+                    "The parameter firstRow must be greater than or equal to zero.");
             if (firstRow > 3)
-                throw new ArgumentOutOfRangeException("firstRow", "The parameter firstRow must be less than or equal to three.");
+                throw new ArgumentOutOfRangeException("firstRow",
+                    "The parameter firstRow must be less than or equal to three.");
             if (secondRow < 0)
-                throw new ArgumentOutOfRangeException("secondRow", "The parameter secondRow must be greater than or equal to zero.");
+                throw new ArgumentOutOfRangeException("secondRow",
+                    "The parameter secondRow must be greater than or equal to zero.");
             if (secondRow > 3)
-                throw new ArgumentOutOfRangeException("secondRow", "The parameter secondRow must be less than or equal to three.");
+                throw new ArgumentOutOfRangeException("secondRow",
+                    "The parameter secondRow must be less than or equal to three.");
 
             if (firstRow == secondRow)
                 return;
@@ -907,13 +902,17 @@ namespace Dreamcast.Mathematics
         public void ExchangeColumns(int firstColumn, int secondColumn)
         {
             if (firstColumn < 0)
-                throw new ArgumentOutOfRangeException("firstColumn", "The parameter firstColumn must be greater than or equal to zero.");
+                throw new ArgumentOutOfRangeException("firstColumn",
+                    "The parameter firstColumn must be greater than or equal to zero.");
             if (firstColumn > 3)
-                throw new ArgumentOutOfRangeException("firstColumn", "The parameter firstColumn must be less than or equal to three.");
+                throw new ArgumentOutOfRangeException("firstColumn",
+                    "The parameter firstColumn must be less than or equal to three.");
             if (secondColumn < 0)
-                throw new ArgumentOutOfRangeException("secondColumn", "The parameter secondColumn must be greater than or equal to zero.");
+                throw new ArgumentOutOfRangeException("secondColumn",
+                    "The parameter secondColumn must be greater than or equal to zero.");
             if (secondColumn > 3)
-                throw new ArgumentOutOfRangeException("secondColumn", "The parameter secondColumn must be less than or equal to three.");
+                throw new ArgumentOutOfRangeException("secondColumn",
+                    "The parameter secondColumn must be less than or equal to three.");
 
             if (firstColumn == secondColumn)
                 return;
@@ -1883,7 +1882,8 @@ namespace Dreamcast.Mathematics
         ///         to analyze both the input and the result to determine if a solution really exists.
         ///     </para>
         /// </remarks>
-        public static void ReducedRowEchelonForm(ref Matrix4x4 value, ref Vector4 augment, out Matrix4x4 result, out Vector4 augmentResult)
+        public static void ReducedRowEchelonForm(ref Matrix4x4 value, ref Vector4 augment, out Matrix4x4 result,
+            out Vector4 augmentResult)
         {
             //Source: http://rosettacode.org
             //Reference: http://rosettacode.org/wiki/Reduced_row_echelon_form
@@ -2038,9 +2038,11 @@ namespace Dreamcast.Mathematics
         /// <param name="cameraUpVector">The up vector of the camera.</param>
         /// <param name="cameraForwardVector">The forward vector of the camera.</param>
         /// <returns>The created billboard matrix.</returns>
-        public static Matrix4x4 BillboardLH(Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector, Vector3 cameraForwardVector)
+        public static Matrix4x4 BillboardLH(Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector,
+            Vector3 cameraForwardVector)
         {
-            BillboardLH(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector, out var result);
+            BillboardLH(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector,
+                out var result);
             return result;
         }
 
@@ -2096,9 +2098,11 @@ namespace Dreamcast.Mathematics
         /// <param name="cameraUpVector">The up vector of the camera.</param>
         /// <param name="cameraForwardVector">The forward vector of the camera.</param>
         /// <returns>The created billboard matrix.</returns>
-        public static Matrix4x4 BillboardRH(Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector, Vector3 cameraForwardVector)
+        public static Matrix4x4 BillboardRH(Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector,
+            Vector3 cameraForwardVector)
         {
-            BillboardRH(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector, out var result);
+            BillboardRH(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector,
+                out var result);
             return result;
         }
 
@@ -2268,7 +2272,8 @@ namespace Dreamcast.Mathematics
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <param name="result">When the method completes, contains the created projection matrix.</param>
-        public static void OrthoOffCenterLH(float left, float right, float bottom, float top, float znear, float zfar, out Matrix4x4 result)
+        public static void OrthoOffCenterLH(float left, float right, float bottom, float top, float znear, float zfar,
+            out Matrix4x4 result)
         {
             var zRange = 1.0f / (zfar - znear);
 
@@ -2291,7 +2296,8 @@ namespace Dreamcast.Mathematics
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <returns>The created projection matrix.</returns>
-        public static Matrix4x4 OrthoOffCenterLH(float left, float right, float bottom, float top, float znear, float zfar)
+        public static Matrix4x4 OrthoOffCenterLH(float left, float right, float bottom, float top, float znear,
+            float zfar)
         {
             OrthoOffCenterLH(left, right, bottom, top, znear, zfar, out var result);
             return result;
@@ -2307,7 +2313,8 @@ namespace Dreamcast.Mathematics
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <param name="result">When the method completes, contains the created projection matrix.</param>
-        public static void OrthoOffCenterRH(float left, float right, float bottom, float top, float znear, float zfar, out Matrix4x4 result)
+        public static void OrthoOffCenterRH(float left, float right, float bottom, float top, float znear, float zfar,
+            out Matrix4x4 result)
         {
             OrthoOffCenterLH(left, right, bottom, top, znear, zfar, out result);
             result.M33 *= -1.0f;
@@ -2323,7 +2330,8 @@ namespace Dreamcast.Mathematics
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <returns>The created projection matrix.</returns>
-        public static Matrix4x4 OrthoOffCenterRH(float left, float right, float bottom, float top, float znear, float zfar)
+        public static Matrix4x4 OrthoOffCenterRH(float left, float right, float bottom, float top, float znear,
+            float zfar)
         {
             OrthoOffCenterRH(left, right, bottom, top, znear, zfar, out var result);
             return result;
@@ -2399,7 +2407,7 @@ namespace Dreamcast.Mathematics
         /// <param name="result">When the method completes, contains the created projection matrix.</param>
         public static void PerspectiveFovLH(float fov, float aspect, float znear, float zfar, out Matrix4x4 result)
         {
-            var yScale = (float) (1.0f / Math.Tan(fov * 0.5f));
+            var yScale = 1.0f / Math.Tan(fov * 0.5f);
             var q = zfar / (zfar - znear);
 
             result = new Matrix4x4();
@@ -2434,7 +2442,7 @@ namespace Dreamcast.Mathematics
         /// <param name="result">When the method completes, contains the created projection matrix.</param>
         public static void PerspectiveFovRH(float fov, float aspect, float znear, float zfar, out Matrix4x4 result)
         {
-            var yScale = (float) (1.0f / Math.Tan(fov * 0.5f));
+            var yScale = 1.0f / Math.Tan(fov * 0.5f);
             var q = zfar / (znear - zfar);
 
             result = new Matrix4x4();
@@ -2469,7 +2477,8 @@ namespace Dreamcast.Mathematics
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <param name="result">When the method completes, contains the created projection matrix.</param>
-        public static void PerspectiveOffCenterLH(float left, float right, float bottom, float top, float znear, float zfar, out Matrix4x4 result)
+        public static void PerspectiveOffCenterLH(float left, float right, float bottom, float top, float znear,
+            float zfar, out Matrix4x4 result)
         {
             var zRange = zfar / (zfar - znear);
 
@@ -2493,7 +2502,8 @@ namespace Dreamcast.Mathematics
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <returns>The created projection matrix.</returns>
-        public static Matrix4x4 PerspectiveOffCenterLH(float left, float right, float bottom, float top, float znear, float zfar)
+        public static Matrix4x4 PerspectiveOffCenterLH(float left, float right, float bottom, float top, float znear,
+            float zfar)
         {
             PerspectiveOffCenterLH(left, right, bottom, top, znear, zfar, out var result);
             return result;
@@ -2509,7 +2519,8 @@ namespace Dreamcast.Mathematics
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <param name="result">When the method completes, contains the created projection matrix.</param>
-        public static void PerspectiveOffCenterRH(float left, float right, float bottom, float top, float znear, float zfar, out Matrix4x4 result)
+        public static void PerspectiveOffCenterRH(float left, float right, float bottom, float top, float znear,
+            float zfar, out Matrix4x4 result)
         {
             PerspectiveOffCenterLH(left, right, bottom, top, znear, zfar, out result);
             result.M31 *= -1.0f;
@@ -2528,7 +2539,8 @@ namespace Dreamcast.Mathematics
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <returns>The created projection matrix.</returns>
-        public static Matrix4x4 PerspectiveOffCenterRH(float left, float right, float bottom, float top, float znear, float zfar)
+        public static Matrix4x4 PerspectiveOffCenterRH(float left, float right, float bottom, float top, float znear,
+            float zfar)
         {
             PerspectiveOffCenterRH(left, right, bottom, top, znear, zfar, out var result);
             return result;
@@ -2923,7 +2935,8 @@ namespace Dreamcast.Mathematics
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <param name="result">When the method completes, contains the created affine transformation matrix.</param>
-        public static void AffineTransformation(float scaling, ref Quaternion rotation, ref Vector3 translation, out Matrix4x4 result)
+        public static void AffineTransformation(float scaling, ref Quaternion rotation, ref Vector3 translation,
+            out Matrix4x4 result)
         {
             result = Scaling(scaling) * RotationQuaternion(rotation) * Translation(translation);
         }
@@ -2955,7 +2968,8 @@ namespace Dreamcast.Mathematics
             ref Vector3 translation,
             out Matrix4x4 result)
         {
-            result = Scaling(scaling) * Translation(-rotationCenter) * RotationQuaternion(rotation) * Translation(rotationCenter) * Translation(translation);
+            result = Scaling(scaling) * Translation(-rotationCenter) * RotationQuaternion(rotation) *
+                     Translation(rotationCenter) * Translation(translation);
         }
 
         /// <summary>
@@ -2966,7 +2980,8 @@ namespace Dreamcast.Mathematics
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <returns>The created affine transformation matrix.</returns>
-        public static Matrix4x4 AffineTransformation(float scaling, Vector3 rotationCenter, Quaternion rotation, Vector3 translation)
+        public static Matrix4x4 AffineTransformation(float scaling, Vector3 rotationCenter, Quaternion rotation,
+            Vector3 translation)
         {
             AffineTransformation(scaling, ref rotationCenter, ref rotation, ref translation, out var result);
             return result;
@@ -2979,7 +2994,8 @@ namespace Dreamcast.Mathematics
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <param name="result">When the method completes, contains the created affine transformation matrix.</param>
-        public static void AffineTransformation2D(float scaling, float rotation, ref Vector2 translation, out Matrix4x4 result)
+        public static void AffineTransformation2D(float scaling, float rotation, ref Vector2 translation,
+            out Matrix4x4 result)
         {
             result = Scaling(scaling, scaling, 1.0f) * RotationZ(rotation) * Translation((Vector3) translation);
         }
@@ -3005,9 +3021,11 @@ namespace Dreamcast.Mathematics
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <param name="result">When the method completes, contains the created affine transformation matrix.</param>
-        public static void AffineTransformation2D(float scaling, ref Vector2 rotationCenter, float rotation, ref Vector2 translation, out Matrix4x4 result)
+        public static void AffineTransformation2D(float scaling, ref Vector2 rotationCenter, float rotation,
+            ref Vector2 translation, out Matrix4x4 result)
         {
-            result = Scaling(scaling, scaling, 1.0f) * Translation((Vector3) (-rotationCenter)) * RotationZ(rotation) * Translation((Vector3) rotationCenter) *
+            result = Scaling(scaling, scaling, 1.0f) * Translation((Vector3) (-rotationCenter)) * RotationZ(rotation) *
+                     Translation((Vector3) rotationCenter) *
                      Translation((Vector3) translation);
         }
 
@@ -3019,7 +3037,8 @@ namespace Dreamcast.Mathematics
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <returns>The created affine transformation matrix.</returns>
-        public static Matrix4x4 AffineTransformation2D(float scaling, Vector2 rotationCenter, float rotation, Vector2 translation)
+        public static Matrix4x4 AffineTransformation2D(float scaling, Vector2 rotationCenter, float rotation,
+            Vector2 translation)
         {
             AffineTransformation2D(scaling, ref rotationCenter, rotation, ref translation, out var result);
             return result;
@@ -3045,7 +3064,8 @@ namespace Dreamcast.Mathematics
         {
             var sr = RotationQuaternion(scalingRotation);
 
-            result = Translation(-scalingCenter) * Transpose(sr) * Scaling(scaling) * sr * Translation(scalingCenter) * Translation(-rotationCenter) *
+            result = Translation(-scalingCenter) * Transpose(sr) * Scaling(scaling) * sr * Translation(scalingCenter) *
+                     Translation(-rotationCenter) *
                      RotationQuaternion(rotation) * Translation(rotationCenter) * Translation(translation);
         }
 
@@ -3066,7 +3086,8 @@ namespace Dreamcast.Mathematics
             Quaternion rotation,
             Vector3 translation)
         {
-            Transformation(ref scalingCenter, ref scalingRotation, ref scaling, ref rotationCenter, ref rotation, ref translation, out var result);
+            Transformation(ref scalingCenter, ref scalingRotation, ref scaling, ref rotationCenter, ref rotation,
+                ref translation, out var result);
             return result;
         }
 
@@ -3088,8 +3109,10 @@ namespace Dreamcast.Mathematics
             ref Vector2 translation,
             out Matrix4x4 result)
         {
-            result = Translation((Vector3) (-scalingCenter)) * RotationZ(-scalingRotation) * Scaling((Vector3) scaling) * RotationZ(scalingRotation) *
-                     Translation((Vector3) scalingCenter) * Translation((Vector3) (-rotationCenter)) * RotationZ(rotation) *
+            result = Translation((Vector3) (-scalingCenter)) * RotationZ(-scalingRotation) *
+                     Scaling((Vector3) scaling) * RotationZ(scalingRotation) *
+                     Translation((Vector3) scalingCenter) * Translation((Vector3) (-rotationCenter)) *
+                     RotationZ(rotation) *
                      Translation((Vector3) rotationCenter) * Translation((Vector3) translation);
 
             result.M33 = 1f;
@@ -3113,7 +3136,8 @@ namespace Dreamcast.Mathematics
             float rotation,
             Vector2 translation)
         {
-            Transformation2D(ref scalingCenter, scalingRotation, ref scaling, ref rotationCenter, rotation, ref translation, out var result);
+            Transformation2D(ref scalingCenter, scalingRotation, ref scaling, ref rotationCenter, rotation,
+                ref translation, out var result);
             return result;
         }
 
@@ -3300,10 +3324,14 @@ namespace Dreamcast.Mathematics
         {
             return string.Format(formatProvider,
                 "[M11:{0} M12:{1} M13:{2} M14:{3}] [M21:{4} M22:{5} M23:{6} M24:{7}] [M31:{8} M32:{9} M33:{10} M34:{11}] [M41:{12} M42:{13} M43:{14} M44:{15}]",
-                M11.ToString(formatProvider), M12.ToString(formatProvider), M13.ToString(formatProvider), M14.ToString(formatProvider),
-                M21.ToString(formatProvider), M22.ToString(formatProvider), M23.ToString(formatProvider), M24.ToString(formatProvider),
-                M31.ToString(formatProvider), M32.ToString(formatProvider), M33.ToString(formatProvider), M34.ToString(formatProvider),
-                M41.ToString(formatProvider), M42.ToString(formatProvider), M43.ToString(formatProvider), M44.ToString(formatProvider));
+                M11.ToString(formatProvider), M12.ToString(formatProvider), M13.ToString(formatProvider),
+                M14.ToString(formatProvider),
+                M21.ToString(formatProvider), M22.ToString(formatProvider), M23.ToString(formatProvider),
+                M24.ToString(formatProvider),
+                M31.ToString(formatProvider), M32.ToString(formatProvider), M33.ToString(formatProvider),
+                M34.ToString(formatProvider),
+                M41.ToString(formatProvider), M42.ToString(formatProvider), M43.ToString(formatProvider),
+                M44.ToString(formatProvider));
         }
 
         /// <summary>
@@ -3321,11 +3349,16 @@ namespace Dreamcast.Mathematics
 
             return string.Format(formatProvider,
                 "[M11:{0} M12:{1} M13:{2} M14:{3}] [M21:{4} M22:{5} M23:{6} M24:{7}] [M31:{8} M32:{9} M33:{10} M34:{11}] [M41:{12} M42:{13} M43:{14} M44:{15}]",
-                M11.ToString(format, formatProvider), M12.ToString(format, formatProvider), M13.ToString(format, formatProvider),
-                M14.ToString(format, formatProvider), M21.ToString(format, formatProvider), M22.ToString(format, formatProvider),
-                M23.ToString(format, formatProvider), M24.ToString(format, formatProvider), M31.ToString(format, formatProvider),
-                M32.ToString(format, formatProvider), M33.ToString(format, formatProvider), M34.ToString(format, formatProvider),
-                M41.ToString(format, formatProvider), M42.ToString(format, formatProvider), M43.ToString(format, formatProvider),
+                M11.ToString(format, formatProvider), M12.ToString(format, formatProvider),
+                M13.ToString(format, formatProvider),
+                M14.ToString(format, formatProvider), M21.ToString(format, formatProvider),
+                M22.ToString(format, formatProvider),
+                M23.ToString(format, formatProvider), M24.ToString(format, formatProvider),
+                M31.ToString(format, formatProvider),
+                M32.ToString(format, formatProvider), M33.ToString(format, formatProvider),
+                M34.ToString(format, formatProvider),
+                M41.ToString(format, formatProvider), M42.ToString(format, formatProvider),
+                M43.ToString(format, formatProvider),
                 M44.ToString(format, formatProvider));
         }
 
@@ -3368,11 +3401,16 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public bool Equals(ref Matrix4x4 other)
         {
-            return MathUtil.NearEqual(other.M11, M11) && MathUtil.NearEqual(other.M12, M12) && MathUtil.NearEqual(other.M13, M13) &&
-                   MathUtil.NearEqual(other.M14, M14) && MathUtil.NearEqual(other.M21, M21) && MathUtil.NearEqual(other.M22, M22) &&
-                   MathUtil.NearEqual(other.M23, M23) && MathUtil.NearEqual(other.M24, M24) && MathUtil.NearEqual(other.M31, M31) &&
-                   MathUtil.NearEqual(other.M32, M32) && MathUtil.NearEqual(other.M33, M33) && MathUtil.NearEqual(other.M34, M34) &&
-                   MathUtil.NearEqual(other.M41, M41) && MathUtil.NearEqual(other.M42, M42) && MathUtil.NearEqual(other.M43, M43) &&
+            return MathUtil.NearEqual(other.M11, M11) && MathUtil.NearEqual(other.M12, M12) &&
+                   MathUtil.NearEqual(other.M13, M13) &&
+                   MathUtil.NearEqual(other.M14, M14) && MathUtil.NearEqual(other.M21, M21) &&
+                   MathUtil.NearEqual(other.M22, M22) &&
+                   MathUtil.NearEqual(other.M23, M23) && MathUtil.NearEqual(other.M24, M24) &&
+                   MathUtil.NearEqual(other.M31, M31) &&
+                   MathUtil.NearEqual(other.M32, M32) && MathUtil.NearEqual(other.M33, M33) &&
+                   MathUtil.NearEqual(other.M34, M34) &&
+                   MathUtil.NearEqual(other.M41, M41) && MathUtil.NearEqual(other.M42, M42) &&
+                   MathUtil.NearEqual(other.M43, M43) &&
                    MathUtil.NearEqual(other.M44, M44);
         }
 

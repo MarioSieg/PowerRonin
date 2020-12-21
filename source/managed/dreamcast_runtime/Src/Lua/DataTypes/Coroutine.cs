@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -130,9 +115,11 @@ namespace Dreamcast.Lua.Interpreter
         public IEnumerable<DynValue> AsTypedEnumerable()
         {
             if (Type != CoroutineType.Coroutine)
-                throw new InvalidOperationException("Only non-CLR coroutines can be resumed with this overload of the Resume method. Use the overload accepting a ScriptExecutionContext instead");
+                throw new InvalidOperationException(
+                    "Only non-CLR coroutines can be resumed with this overload of the Resume method. Use the overload accepting a ScriptExecutionContext instead");
 
-            while (State == CoroutineState.NotStarted || State == CoroutineState.Suspended || State == CoroutineState.ForceSuspended)
+            while (State == CoroutineState.NotStarted || State == CoroutineState.Suspended ||
+                   State == CoroutineState.ForceSuspended)
                 yield return Resume();
         }
 
@@ -205,7 +192,8 @@ namespace Dreamcast.Lua.Interpreter
 
             if (Type == CoroutineType.Coroutine)
                 return m_Processor.Coroutine_Resume(args);
-            throw new InvalidOperationException("Only non-CLR coroutines can be resumed with this overload of the Resume method. Use the overload accepting a ScriptExecutionContext instead");
+            throw new InvalidOperationException(
+                "Only non-CLR coroutines can be resumed with this overload of the Resume method. Use the overload accepting a ScriptExecutionContext instead");
         }
 
 
@@ -272,7 +260,8 @@ namespace Dreamcast.Lua.Interpreter
         public DynValue Resume(params object[] args)
         {
             if (Type != CoroutineType.Coroutine)
-                throw new InvalidOperationException("Only non-CLR coroutines can be resumed with this overload of the Resume method. Use the overload accepting a ScriptExecutionContext instead");
+                throw new InvalidOperationException(
+                    "Only non-CLR coroutines can be resumed with this overload of the Resume method. Use the overload accepting a ScriptExecutionContext instead");
 
             DynValue[] dargs = new DynValue[args.Length];
 

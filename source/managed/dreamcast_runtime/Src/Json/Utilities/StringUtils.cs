@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -36,8 +21,7 @@ namespace Dreamcast.Json.Utilities
         public const char LineFeed = '\n';
         public const char Tab = '\t';
 
-        public static bool IsNullOrEmpty([NotNullWhen(false)]
-            string? value)
+        public static bool IsNullOrEmpty([NotNullWhen(false)] string? value)
         {
             return string.IsNullOrEmpty(value);
         }
@@ -52,12 +36,14 @@ namespace Dreamcast.Json.Utilities
             return format.FormatWith(provider, new[] {arg0, arg1});
         }
 
-        public static string FormatWith(this string format, IFormatProvider provider, object? arg0, object? arg1, object? arg2)
+        public static string FormatWith(this string format, IFormatProvider provider, object? arg0, object? arg1,
+            object? arg2)
         {
             return format.FormatWith(provider, new[] {arg0, arg1, arg2});
         }
 
-        public static string FormatWith(this string format, IFormatProvider provider, object? arg0, object? arg1, object? arg2, object? arg3)
+        public static string FormatWith(this string format, IFormatProvider provider, object? arg0, object? arg1,
+            object? arg2, object? arg3)
         {
             return format.FormatWith(provider, new[] {arg0, arg1, arg2, arg3});
         }
@@ -109,16 +95,19 @@ namespace Dreamcast.Json.Utilities
             buffer[5] = MathUtils.IntToHex(c & '\x000f');
         }
 
-        public static TSource ForgivingCaseSensitiveFind<TSource>(this IEnumerable<TSource> source, Serialization.Func<TSource, string> valueSelector, string testValue)
+        public static TSource ForgivingCaseSensitiveFind<TSource>(this IEnumerable<TSource> source,
+            Serialization.Func<TSource, string> valueSelector, string testValue)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
             if (valueSelector == null) throw new ArgumentNullException(nameof(valueSelector));
 
-            var caseInsensitiveResults = source.Where(s => string.Equals(valueSelector(s), testValue, StringComparison.OrdinalIgnoreCase));
+            var caseInsensitiveResults = source.Where(s =>
+                string.Equals(valueSelector(s), testValue, StringComparison.OrdinalIgnoreCase));
             if (caseInsensitiveResults.Count() <= 1) return caseInsensitiveResults.SingleOrDefault();
 
             // multiple results returned. now filter using case sensitivity
-            var caseSensitiveResults = source.Where(s => string.Equals(valueSelector(s), testValue, StringComparison.Ordinal));
+            var caseSensitiveResults =
+                source.Where(s => string.Equals(valueSelector(s), testValue, StringComparison.Ordinal));
             return caseSensitiveResults.SingleOrDefault();
         }
 

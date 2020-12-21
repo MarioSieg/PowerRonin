@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -342,7 +327,8 @@ namespace Dreamcast.Json.Utilities
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
         {
             if (_dictionary != null)
-                return _dictionary.Cast<DictionaryEntry>().Select(de => new KeyValuePair<TKey, TValue>((TKey) de.Key, (TValue) de.Value)).GetEnumerator();
+                return _dictionary.Cast<DictionaryEntry>()
+                    .Select(de => new KeyValuePair<TKey, TValue>((TKey) de.Key, (TValue) de.Value)).GetEnumerator();
 #if HAVE_READ_ONLY_COLLECTIONS
             else if (_readOnlyDictionary != null)
             {

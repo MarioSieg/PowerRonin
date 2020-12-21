@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -272,9 +257,11 @@ namespace Dreamcast.Mathematics
             var nearPoint = new Vector3(x, y, 0);
             var farPoint = new Vector3(x, y, 1);
 
-            nearPoint = Vector3.Unproject(nearPoint, viewport.X, viewport.Y, viewport.Width, viewport.Height, viewport.MinDepth, viewport.MaxDepth,
+            nearPoint = Vector3.Unproject(nearPoint, viewport.X, viewport.Y, viewport.Width, viewport.Height,
+                viewport.MinDepth, viewport.MaxDepth,
                 worldViewProjection);
-            farPoint = Vector3.Unproject(farPoint, viewport.X, viewport.Y, viewport.Width, viewport.Height, viewport.MinDepth, viewport.MaxDepth,
+            farPoint = Vector3.Unproject(farPoint, viewport.X, viewport.Y, viewport.Width, viewport.Height,
+                viewport.MinDepth, viewport.MaxDepth,
                 worldViewProjection);
 
             var direction = farPoint - nearPoint;
@@ -321,7 +308,8 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.CurrentCulture, "Position:{0} Direction:{1}", Position.ToString(), Direction.ToString());
+            return string.Format(CultureInfo.CurrentCulture, "Position:{0} Direction:{1}", Position.ToString(),
+                Direction.ToString());
         }
 
         /// <summary>
@@ -333,7 +321,8 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public string ToString(string format)
         {
-            return string.Format(CultureInfo.CurrentCulture, "Position:{0} Direction:{1}", Position.ToString(format, CultureInfo.CurrentCulture),
+            return string.Format(CultureInfo.CurrentCulture, "Position:{0} Direction:{1}",
+                Position.ToString(format, CultureInfo.CurrentCulture),
                 Direction.ToString(format, CultureInfo.CurrentCulture));
         }
 
@@ -346,7 +335,8 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public string ToString(IFormatProvider formatProvider)
         {
-            return string.Format(formatProvider, "Position:{0} Direction:{1}", Position.ToString(), Direction.ToString());
+            return string.Format(formatProvider, "Position:{0} Direction:{1}", Position.ToString(),
+                Direction.ToString());
         }
 
         /// <summary>
@@ -359,7 +349,8 @@ namespace Dreamcast.Mathematics
         /// </returns>
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            return string.Format(formatProvider, "Position:{0} Direction:{1}", Position.ToString(format, formatProvider),
+            return string.Format(formatProvider, "Position:{0} Direction:{1}",
+                Position.ToString(format, formatProvider),
                 Direction.ToString(format, formatProvider));
         }
 

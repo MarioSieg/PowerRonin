@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-#if HAVE_INOTIFY_COLLECTION_CHANGED
+﻿#if HAVE_INOTIFY_COLLECTION_CHANGED
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 #endif
@@ -132,7 +117,9 @@ namespace Dreamcast.Json.Linq
         {
             ValidationUtils.ArgumentNotNull(o, nameof(o));
 
-            if (o.Type != JTokenType.Property) throw new ArgumentException("Can not add {0} to {1}.".FormatWith(CultureInfo.InvariantCulture, o.GetType(), GetType()));
+            if (o.Type != JTokenType.Property)
+                throw new ArgumentException(
+                    "Can not add {0} to {1}.".FormatWith(CultureInfo.InvariantCulture, o.GetType(), GetType()));
 
             var newProperty = (JProperty) o;
 
@@ -143,7 +130,10 @@ namespace Dreamcast.Json.Linq
                 if (newProperty.Name == existingProperty.Name) return;
             }
 
-            if (_properties.TryGetValue(newProperty.Name, out existing)) throw new ArgumentException("Can not add property {0} to {1}. Property with the same name already exists on object.".FormatWith(CultureInfo.InvariantCulture, newProperty.Name, GetType()));
+            if (_properties.TryGetValue(newProperty.Name, out existing))
+                throw new ArgumentException(
+                    "Can not add property {0} to {1}. Property with the same name already exists on object.".FormatWith(
+                        CultureInfo.InvariantCulture, newProperty.Name, GetType()));
         }
 
         internal override void MergeItem(object content, JsonMergeSettings? settings)
@@ -152,7 +142,8 @@ namespace Dreamcast.Json.Linq
 
             foreach (var contentItem in o)
             {
-                var existingProperty = Property(contentItem.Key, settings?.PropertyNameComparison ?? StringComparison.Ordinal);
+                var existingProperty = Property(contentItem.Key,
+                    settings?.PropertyNameComparison ?? StringComparison.Ordinal);
 
                 if (existingProperty == null)
                 {
@@ -160,9 +151,12 @@ namespace Dreamcast.Json.Linq
                 }
                 else if (contentItem.Value != null)
                 {
-                    if (!(existingProperty.Value is JContainer existingContainer) || existingContainer.Type != contentItem.Value.Type)
+                    if (!(existingProperty.Value is JContainer existingContainer) ||
+                        existingContainer.Type != contentItem.Value.Type)
                     {
-                        if (!IsNull(contentItem.Value) || settings?.MergeNullValueHandling == MergeNullValueHandling.Merge) existingProperty.Value = contentItem.Value;
+                        if (!IsNull(contentItem.Value) ||
+                            settings?.MergeNullValueHandling == MergeNullValueHandling.Merge)
+                            existingProperty.Value = contentItem.Value;
                     }
                     else
                     {
@@ -279,7 +273,10 @@ namespace Dreamcast.Json.Linq
             {
                 ValidationUtils.ArgumentNotNull(key, nameof(key));
 
-                if (!(key is string propertyName)) throw new ArgumentException("Accessed JObject values with invalid key value: {0}. Object property name expected.".FormatWith(CultureInfo.InvariantCulture, MiscellaneousUtils.ToString(key)));
+                if (!(key is string propertyName))
+                    throw new ArgumentException(
+                        "Accessed JObject values with invalid key value: {0}. Object property name expected."
+                            .FormatWith(CultureInfo.InvariantCulture, MiscellaneousUtils.ToString(key)));
 
                 return this[propertyName];
             }
@@ -287,7 +284,10 @@ namespace Dreamcast.Json.Linq
             {
                 ValidationUtils.ArgumentNotNull(key, nameof(key));
 
-                if (!(key is string propertyName)) throw new ArgumentException("Set JObject values with invalid key value: {0}. Object property name expected.".FormatWith(CultureInfo.InvariantCulture, MiscellaneousUtils.ToString(key)));
+                if (!(key is string propertyName))
+                    throw new ArgumentException(
+                        "Set JObject values with invalid key value: {0}. Object property name expected.".FormatWith(
+                            CultureInfo.InvariantCulture, MiscellaneousUtils.ToString(key)));
 
                 this[propertyName] = value;
             }
@@ -360,7 +360,10 @@ namespace Dreamcast.Json.Linq
 
             reader.MoveToContent();
 
-            if (reader.TokenType != JsonToken.StartObject) throw JsonReaderException.Create(reader, "Error reading JObject from JsonReader. Current JsonReader item is not an object: {0}".FormatWith(CultureInfo.InvariantCulture, reader.TokenType));
+            if (reader.TokenType != JsonToken.StartObject)
+                throw JsonReaderException.Create(reader,
+                    "Error reading JObject from JsonReader. Current JsonReader item is not an object: {0}".FormatWith(
+                        CultureInfo.InvariantCulture, reader.TokenType));
 
             var o = new JObject();
             o.SetLineInfo(reader as IJsonLineInfo, settings);
@@ -438,7 +441,10 @@ namespace Dreamcast.Json.Linq
         {
             var token = FromObjectInternal(o, jsonSerializer);
 
-            if (token.Type != JTokenType.Object) throw new ArgumentException("Object serialized to {0}. JObject instance expected.".FormatWith(CultureInfo.InvariantCulture, token.Type));
+            if (token.Type != JTokenType.Object)
+                throw new ArgumentException(
+                    "Object serialized to {0}. JObject instance expected.".FormatWith(CultureInfo.InvariantCulture,
+                        token.Type));
 
             return (JObject) token;
         }
@@ -496,8 +502,7 @@ namespace Dreamcast.Json.Linq
         /// <returns><c>true</c> if a value was successfully retrieved; otherwise, <c>false</c>.</returns>
         public bool TryGetValue(string propertyName,
             StringComparison comparison,
-            [NotNullWhen(true)]
-            out JToken? value)
+            [NotNullWhen(true)] out JToken? value)
         {
             value = GetValue(propertyName, comparison);
             return value != null;
@@ -550,8 +555,7 @@ namespace Dreamcast.Json.Linq
         /// <param name="value">The value.</param>
         /// <returns><c>true</c> if a value was successfully retrieved; otherwise, <c>false</c>.</returns>
         public bool TryGetValue(string propertyName,
-            [NotNullWhen(true)]
-            out JToken? value)
+            [NotNullWhen(true)] out JToken? value)
         {
             var property = Property(propertyName, StringComparison.Ordinal);
             if (property == null)
@@ -592,8 +596,11 @@ namespace Dreamcast.Json.Linq
         {
             if (array == null) throw new ArgumentNullException(nameof(array));
             if (arrayIndex < 0) throw new ArgumentOutOfRangeException(nameof(arrayIndex), "arrayIndex is less than 0.");
-            if (arrayIndex >= array.Length && arrayIndex != 0) throw new ArgumentException("arrayIndex is equal to or greater than the length of array.");
-            if (Count > array.Length - arrayIndex) throw new ArgumentException("The number of elements in the source JObject is greater than the available space from arrayIndex to the end of the destination array.");
+            if (arrayIndex >= array.Length && arrayIndex != 0)
+                throw new ArgumentException("arrayIndex is equal to or greater than the length of array.");
+            if (Count > array.Length - arrayIndex)
+                throw new ArgumentException(
+                    "The number of elements in the source JObject is greater than the available space from arrayIndex to the end of the destination array.");
 
             var index = 0;
             foreach (JProperty property in _properties)
@@ -628,7 +635,8 @@ namespace Dreamcast.Json.Linq
         /// </returns>
         public IEnumerator<KeyValuePair<string, JToken?>> GetEnumerator()
         {
-            foreach (JProperty property in _properties) yield return new KeyValuePair<string, JToken?>(property.Name, property.Value);
+            foreach (JProperty property in _properties)
+                yield return new KeyValuePair<string, JToken?>(property.Name, property.Value);
         }
 
         /// <summary>

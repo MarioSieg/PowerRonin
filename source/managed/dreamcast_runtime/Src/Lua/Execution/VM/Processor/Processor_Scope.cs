@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 
 namespace Dreamcast.Lua.Interpreter.Execution.VM
 {
@@ -43,7 +28,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
                 case SymbolRefType.Upvalue:
                     return GetTopNonClrFunction().ClosureScope[symref.i_Index];
                 default:
-                    throw new InternalErrorException("Unexpected {0} LRef at resolution: {1}", symref.i_Type, symref.i_Name);
+                    throw new InternalErrorException("Unexpected {0} LRef at resolution: {1}", symref.i_Type,
+                        symref.i_Name);
             }
         }
 
@@ -98,7 +84,8 @@ namespace Dreamcast.Lua.Interpreter.Execution.VM
                     throw new ArgumentException("Can't AssignGenericSymbol on a DefaultEnv symbol");
                 }
                 default:
-                    throw new InternalErrorException("Unexpected {0} LRef at resolution: {1}", symref.i_Type, symref.i_Name);
+                    throw new InternalErrorException("Unexpected {0} LRef at resolution: {1}", symref.i_Type,
+                        symref.i_Name);
             }
         }
 

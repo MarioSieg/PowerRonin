@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -40,7 +25,8 @@ namespace Dreamcast.Json.Schema
     ///         <see href="https://www.newtonsoft.com/jsonschema">https://www.newtonsoft.com/jsonschema</see> for more details.
     ///     </note>
     /// </summary>
-    [Obsolete("JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
+    [Obsolete(
+        "JSON Schema validation has been moved to its own package. See https://www.newtonsoft.com/jsonschema for more details.")]
     public class JsonSchemaGenerator
     {
         /// <summary>
@@ -210,7 +196,8 @@ namespace Dreamcast.Json.Schema
                 {
                     // resolved schema is not null but referencing member allows nulls
                     // change resolved schema to allow nulls. hacky but what are ya gonna do?
-                    if (valueRequired != Required.Always && !HasFlag(resolvedSchema.Type, JsonSchemaType.Null)) resolvedSchema.Type |= JsonSchemaType.Null;
+                    if (valueRequired != Required.Always && !HasFlag(resolvedSchema.Type, JsonSchemaType.Null))
+                        resolvedSchema.Type |= JsonSchemaType.Null;
                     if (required && resolvedSchema.Required != true) resolvedSchema.Required = true;
 
                     return resolvedSchema;
@@ -218,7 +205,10 @@ namespace Dreamcast.Json.Schema
             }
 
             // test for unresolved circular reference
-            if (_stack.Any(tc => tc.Type == type)) throw new JsonException("Unresolved circular reference for type '{0}'. Explicitly define an Id for the type using a JsonObject/JsonArray attribute or automatically generate a type Id using the UndefinedSchemaIdHandling property.".FormatWith(CultureInfo.InvariantCulture, type));
+            if (_stack.Any(tc => tc.Type == type))
+                throw new JsonException(
+                    "Unresolved circular reference for type '{0}'. Explicitly define an Id for the type using a JsonObject/JsonArray attribute or automatically generate a type Id using the UndefinedSchemaIdHandling property."
+                        .FormatWith(CultureInfo.InvariantCulture, type));
 
             var contract = ContractResolver.ResolveContract(type);
             var converter = contract.Converter ?? contract.InternalConverter;
@@ -254,14 +244,16 @@ namespace Dreamcast.Json.Schema
                         if (collectionItemType != null)
                         {
                             CurrentSchema.Items = new List<JsonSchema>();
-                            CurrentSchema.Items.Add(GenerateInternal(collectionItemType, !allowNullItem ? Required.Always : Required.Default, false));
+                            CurrentSchema.Items.Add(GenerateInternal(collectionItemType,
+                                !allowNullItem ? Required.Always : Required.Default, false));
                         }
 
                         break;
                     case JsonContractType.Primitive:
                         CurrentSchema.Type = GetJsonSchemaType(type, valueRequired);
 
-                        if (CurrentSchema.Type == JsonSchemaType.Integer && type.IsEnum() && !type.IsDefined(typeof(FlagsAttribute), true))
+                        if (CurrentSchema.Type == JsonSchemaType.Integer && type.IsEnum() &&
+                            !type.IsDefined(typeof(FlagsAttribute), true))
                         {
                             CurrentSchema.Enum = new List<JToken>();
 
@@ -295,7 +287,9 @@ namespace Dreamcast.Json.Schema
                             var keyContract = ContractResolver.ResolveContract(keyType);
 
                             // can be converted to a string
-                            if (keyContract.ContractType == JsonContractType.Primitive) CurrentSchema.AdditionalProperties = GenerateInternal(valueType, Required.Default, false);
+                            if (keyContract.ContractType == JsonContractType.Primitive)
+                                CurrentSchema.AdditionalProperties =
+                                    GenerateInternal(valueType, Required.Default, false);
                         }
 
                         break;
@@ -313,7 +307,8 @@ namespace Dreamcast.Json.Schema
                         CurrentSchema.Type = JsonSchemaType.Any;
                         break;
                     default:
-                        throw new JsonException("Unexpected contract type: {0}".FormatWith(CultureInfo.InvariantCulture, contract));
+                        throw new JsonException(
+                            "Unexpected contract type: {0}".FormatWith(CultureInfo.InvariantCulture, contract));
                 }
 
             return Pop().Schema;
@@ -338,13 +333,15 @@ namespace Dreamcast.Json.Schema
                 if (!property.Ignored)
                 {
                     var optional = property.NullValueHandling == NullValueHandling.Ignore ||
-                                   HasFlag(property.DefaultValueHandling.GetValueOrDefault(), DefaultValueHandling.Ignore) ||
+                                   HasFlag(property.DefaultValueHandling.GetValueOrDefault(),
+                                       DefaultValueHandling.Ignore) ||
                                    property.ShouldSerialize != null ||
                                    property.GetIsSpecified != null;
 
                     var propertySchema = GenerateInternal(property.PropertyType, property.Required, !optional);
 
-                    if (property.DefaultValue != null) propertySchema.Default = JToken.FromObject(property.DefaultValue);
+                    if (property.DefaultValue != null)
+                        propertySchema.Default = JToken.FromObject(property.DefaultValue);
 
                     CurrentSchema.Properties.Add(property.PropertyName, propertySchema);
                 }
@@ -426,7 +423,9 @@ namespace Dreamcast.Json.Schema
                 case PrimitiveTypeCode.Bytes:
                     return schemaType | JsonSchemaType.String;
                 default:
-                    throw new JsonException("Unexpected type code '{0}' for type '{1}'.".FormatWith(CultureInfo.InvariantCulture, typeCode, type));
+                    throw new JsonException(
+                        "Unexpected type code '{0}' for type '{1}'.".FormatWith(CultureInfo.InvariantCulture, typeCode,
+                            type));
             }
         }
     }

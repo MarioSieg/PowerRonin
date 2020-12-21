@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #if HAVE_DYNAMIC
 using System.Dynamic;
 #endif
@@ -102,12 +87,14 @@ namespace Dreamcast.Json.Serialization
             return Serializer._contractResolver.ResolveContract(value.GetType());
         }
 
-        private void SerializePrimitive(JsonWriter writer, object value, JsonPrimitiveContract contract, JsonProperty? member, JsonContainerContract? containerContract, JsonProperty? containerProperty)
+        private void SerializePrimitive(JsonWriter writer, object value, JsonPrimitiveContract contract,
+            JsonProperty? member, JsonContainerContract? containerContract, JsonProperty? containerProperty)
         {
             if (contract.TypeCode == PrimitiveTypeCode.Bytes)
             {
                 // if type name handling is enabled then wrap the base64 byte string in an object with the type name
-                var includeTypeDetails = ShouldWriteType(TypeNameHandling.Objects, contract, member, containerContract, containerProperty);
+                var includeTypeDetails = ShouldWriteType(TypeNameHandling.Objects, contract, member, containerContract,
+                    containerProperty);
                 if (includeTypeDetails)
                 {
                     writer.WriteStartObject();
@@ -124,7 +111,8 @@ namespace Dreamcast.Json.Serialization
             JsonWriter.WriteValue(writer, contract.TypeCode, value);
         }
 
-        private void SerializeValue(JsonWriter writer, object? value, JsonContract? valueContract, JsonProperty? member, JsonContainerContract? containerContract, JsonProperty? containerProperty)
+        private void SerializeValue(JsonWriter writer, object? value, JsonContract? valueContract, JsonProperty? member,
+            JsonContainerContract? containerContract, JsonProperty? containerProperty)
         {
             if (value == null)
             {
@@ -151,24 +139,30 @@ namespace Dreamcast.Json.Serialization
             switch (valueContract.ContractType)
             {
                 case JsonContractType.Object:
-                    SerializeObject(writer, value, (JsonObjectContract) valueContract, member, containerContract, containerProperty);
+                    SerializeObject(writer, value, (JsonObjectContract) valueContract, member, containerContract,
+                        containerProperty);
                     break;
                 case JsonContractType.Array:
                     var arrayContract = (JsonArrayContract) valueContract;
                     if (!arrayContract.IsMultidimensionalArray)
-                        SerializeList(writer, (IEnumerable) value, arrayContract, member, containerContract, containerProperty);
+                        SerializeList(writer, (IEnumerable) value, arrayContract, member, containerContract,
+                            containerProperty);
                     else
-                        SerializeMultidimensionalArray(writer, (Array) value, arrayContract, member, containerContract, containerProperty);
+                        SerializeMultidimensionalArray(writer, (Array) value, arrayContract, member, containerContract,
+                            containerProperty);
                     break;
                 case JsonContractType.Primitive:
-                    SerializePrimitive(writer, value, (JsonPrimitiveContract) valueContract, member, containerContract, containerProperty);
+                    SerializePrimitive(writer, value, (JsonPrimitiveContract) valueContract, member, containerContract,
+                        containerProperty);
                     break;
                 case JsonContractType.String:
                     SerializeString(writer, value, (JsonStringContract) valueContract);
                     break;
                 case JsonContractType.Dictionary:
                     var dictionaryContract = (JsonDictionaryContract) valueContract;
-                    SerializeDictionary(writer, value is IDictionary dictionary ? dictionary : dictionaryContract.CreateWrapper(value), dictionaryContract, member, containerContract, containerProperty);
+                    SerializeDictionary(writer,
+                        value is IDictionary dictionary ? dictionary : dictionaryContract.CreateWrapper(value),
+                        dictionaryContract, member, containerContract, containerProperty);
                     break;
 #if HAVE_DYNAMIC
                 case JsonContractType.Dynamic:
@@ -186,7 +180,8 @@ namespace Dreamcast.Json.Serialization
             }
         }
 
-        private bool? ResolveIsReference(JsonContract contract, JsonProperty? property, JsonContainerContract? collectionContract, JsonProperty? containerProperty)
+        private bool? ResolveIsReference(JsonContract contract, JsonProperty? property,
+            JsonContainerContract? collectionContract, JsonProperty? containerProperty)
         {
             bool? isReference = null;
 
@@ -202,13 +197,15 @@ namespace Dreamcast.Json.Serialization
             return isReference;
         }
 
-        private bool ShouldWriteReference(object? value, JsonProperty? property, JsonContract? valueContract, JsonContainerContract? collectionContract, JsonProperty? containerProperty)
+        private bool ShouldWriteReference(object? value, JsonProperty? property, JsonContract? valueContract,
+            JsonContainerContract? collectionContract, JsonProperty? containerProperty)
         {
             if (value == null) return false;
 
             MiscellaneousUtils.Assert(valueContract != null);
 
-            if (valueContract.ContractType == JsonContractType.Primitive || valueContract.ContractType == JsonContractType.String) return false;
+            if (valueContract.ContractType == JsonContractType.Primitive ||
+                valueContract.ContractType == JsonContractType.String) return false;
 
             var isReference = ResolveIsReference(valueContract, property, collectionContract, containerProperty);
 
@@ -225,32 +222,39 @@ namespace Dreamcast.Json.Serialization
             return Serializer.GetReferenceResolver().IsReferenced(this, value);
         }
 
-        private bool ShouldWriteProperty(object? memberValue, JsonObjectContract? containerContract, JsonProperty property)
+        private bool ShouldWriteProperty(object? memberValue, JsonObjectContract? containerContract,
+            JsonProperty property)
         {
-            if (memberValue == null && ResolvedNullValueHandling(containerContract, property) == NullValueHandling.Ignore) return false;
+            if (memberValue == null &&
+                ResolvedNullValueHandling(containerContract, property) == NullValueHandling.Ignore) return false;
 
-            if (HasFlag(property.DefaultValueHandling.GetValueOrDefault(Serializer._defaultValueHandling), DefaultValueHandling.Ignore)
+            if (HasFlag(property.DefaultValueHandling.GetValueOrDefault(Serializer._defaultValueHandling),
+                    DefaultValueHandling.Ignore)
                 && MiscellaneousUtils.ValueEquals(memberValue, property.GetResolvedDefaultValue()))
                 return false;
 
             return true;
         }
 
-        private bool CheckForCircularReference(JsonWriter writer, object? value, JsonProperty? property, JsonContract? contract, JsonContainerContract? containerContract, JsonProperty? containerProperty)
+        private bool CheckForCircularReference(JsonWriter writer, object? value, JsonProperty? property,
+            JsonContract? contract, JsonContainerContract? containerContract, JsonProperty? containerProperty)
         {
             if (value == null) return true;
 
             MiscellaneousUtils.Assert(contract != null);
 
-            if (contract.ContractType == JsonContractType.Primitive || contract.ContractType == JsonContractType.String) return true;
+            if (contract.ContractType == JsonContractType.Primitive ||
+                contract.ContractType == JsonContractType.String) return true;
 
             ReferenceLoopHandling? referenceLoopHandling = null;
 
             if (property != null) referenceLoopHandling = property.ReferenceLoopHandling;
 
-            if (referenceLoopHandling == null && containerProperty != null) referenceLoopHandling = containerProperty.ItemReferenceLoopHandling;
+            if (referenceLoopHandling == null && containerProperty != null)
+                referenceLoopHandling = containerProperty.ItemReferenceLoopHandling;
 
-            if (referenceLoopHandling == null && containerContract != null) referenceLoopHandling = containerContract.ItemReferenceLoopHandling;
+            if (referenceLoopHandling == null && containerContract != null)
+                referenceLoopHandling = containerContract.ItemReferenceLoopHandling;
 
             var exists = Serializer._equalityComparer != null
                 ? _serializeStack.Contains(value, Serializer._equalityComparer)
@@ -259,7 +263,8 @@ namespace Dreamcast.Json.Serialization
             if (exists)
             {
                 var message = "Self referencing loop detected";
-                if (property != null) message += " for property '{0}'".FormatWith(CultureInfo.InvariantCulture, property.PropertyName);
+                if (property != null)
+                    message += " for property '{0}'".FormatWith(CultureInfo.InvariantCulture, property.PropertyName);
                 message += " with type '{0}'.".FormatWith(CultureInfo.InvariantCulture, value.GetType());
 
                 switch (referenceLoopHandling.GetValueOrDefault(Serializer._referenceLoopHandling))
@@ -267,11 +272,17 @@ namespace Dreamcast.Json.Serialization
                     case ReferenceLoopHandling.Error:
                         throw JsonSerializationException.Create(null, writer.ContainerPath, message, null);
                     case ReferenceLoopHandling.Ignore:
-                        if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose) TraceWriter.Trace(TraceLevel.Verbose, JsonPosition.FormatMessage(null, writer.Path, message + ". Skipping serializing self referenced value."), null);
+                        if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose)
+                            TraceWriter.Trace(TraceLevel.Verbose,
+                                JsonPosition.FormatMessage(null, writer.Path,
+                                    message + ". Skipping serializing self referenced value."), null);
 
                         return false;
                     case ReferenceLoopHandling.Serialize:
-                        if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose) TraceWriter.Trace(TraceLevel.Verbose, JsonPosition.FormatMessage(null, writer.Path, message + ". Serializing self referenced value."), null);
+                        if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose)
+                            TraceWriter.Trace(TraceLevel.Verbose,
+                                JsonPosition.FormatMessage(null, writer.Path,
+                                    message + ". Serializing self referenced value."), null);
 
                         return true;
                 }
@@ -284,7 +295,11 @@ namespace Dreamcast.Json.Serialization
         {
             var reference = GetReference(writer, value);
 
-            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info) TraceWriter.Trace(TraceLevel.Info, JsonPosition.FormatMessage(null, writer.Path, "Writing object reference to Id '{0}' for {1}.".FormatWith(CultureInfo.InvariantCulture, reference, value.GetType())), null);
+            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info)
+                TraceWriter.Trace(TraceLevel.Info,
+                    JsonPosition.FormatMessage(null, writer.Path,
+                        "Writing object reference to Id '{0}' for {1}.".FormatWith(CultureInfo.InvariantCulture,
+                            reference, value.GetType())), null);
 
             writer.WriteStartObject();
             writer.WritePropertyName(JsonTypeReflector.RefPropertyName, false);
@@ -302,14 +317,15 @@ namespace Dreamcast.Json.Serialization
             }
             catch (Exception ex)
             {
-                throw JsonSerializationException.Create(null, writer.ContainerPath, "Error writing object reference for '{0}'.".FormatWith(CultureInfo.InvariantCulture, value.GetType()), ex);
+                throw JsonSerializationException.Create(null, writer.ContainerPath,
+                    "Error writing object reference for '{0}'.".FormatWith(CultureInfo.InvariantCulture,
+                        value.GetType()), ex);
             }
         }
 
         internal static bool TryConvertToString(object value,
             Type type,
-            [NotNullWhen(true)]
-            out string? s)
+            [NotNullWhen(true)] out string? s)
         {
 #if HAVE_TYPE_DESCRIPTOR
             if (JsonTypeReflector.CanTypeDescriptorConvertString(type, out TypeConverter converter))
@@ -349,19 +365,28 @@ namespace Dreamcast.Json.Serialization
 
         private void OnSerializing(JsonWriter writer, JsonContract contract, object value)
         {
-            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info) TraceWriter.Trace(TraceLevel.Info, JsonPosition.FormatMessage(null, writer.Path, "Started serializing {0}".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType)), null);
+            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info)
+                TraceWriter.Trace(TraceLevel.Info,
+                    JsonPosition.FormatMessage(null, writer.Path,
+                        "Started serializing {0}".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType)),
+                    null);
 
             contract.InvokeOnSerializing(value, Serializer._context);
         }
 
         private void OnSerialized(JsonWriter writer, JsonContract contract, object value)
         {
-            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info) TraceWriter.Trace(TraceLevel.Info, JsonPosition.FormatMessage(null, writer.Path, "Finished serializing {0}".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType)), null);
+            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info)
+                TraceWriter.Trace(TraceLevel.Info,
+                    JsonPosition.FormatMessage(null, writer.Path,
+                        "Finished serializing {0}".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType)),
+                    null);
 
             contract.InvokeOnSerialized(value, Serializer._context);
         }
 
-        private void SerializeObject(JsonWriter writer, object value, JsonObjectContract contract, JsonProperty? member, JsonContainerContract? collectionContract, JsonProperty? containerProperty)
+        private void SerializeObject(JsonWriter writer, object value, JsonObjectContract contract, JsonProperty? member,
+            JsonContainerContract? collectionContract, JsonProperty? containerProperty)
         {
             OnSerializing(writer, contract, value);
 
@@ -376,7 +401,8 @@ namespace Dreamcast.Json.Serialization
                 var property = contract.Properties[index];
                 try
                 {
-                    if (!CalculatePropertyValues(writer, value, contract, member, property, out var memberContract, out var memberValue)) continue;
+                    if (!CalculatePropertyValues(writer, value, contract, member, property, out var memberContract,
+                        out var memberValue)) continue;
 
                     property.WritePropertyName(writer);
                     SerializeValue(writer, memberValue, memberContract, property, contract, member);
@@ -410,7 +436,8 @@ namespace Dreamcast.Json.Serialization
                     }
                     else
                     {
-                        if (!CheckForCircularReference(writer, e.Value, null, valueContract, contract, member)) continue;
+                        if (!CheckForCircularReference(writer, e.Value, null, valueContract, contract, member))
+                            continue;
 
                         writer.WritePropertyName(propertyName);
 
@@ -430,16 +457,19 @@ namespace Dreamcast.Json.Serialization
             JsonContainerContract contract,
             JsonProperty? member,
             JsonProperty property,
-            [NotNullWhen(true)]
-            out JsonContract? memberContract,
+            [NotNullWhen(true)] out JsonContract? memberContract,
             out object? memberValue)
         {
-            if (!property.Ignored && property.Readable && ShouldSerialize(writer, property, value) && IsSpecified(writer, property, value))
+            if (!property.Ignored && property.Readable && ShouldSerialize(writer, property, value) &&
+                IsSpecified(writer, property, value))
             {
-                if (property.PropertyContract == null) property.PropertyContract = Serializer._contractResolver.ResolveContract(property.PropertyType!);
+                if (property.PropertyContract == null)
+                    property.PropertyContract = Serializer._contractResolver.ResolveContract(property.PropertyType!);
 
                 memberValue = property.ValueProvider!.GetValue(value);
-                memberContract = property.PropertyContract.IsSealed ? property.PropertyContract : GetContractSafe(memberValue);
+                memberContract = property.PropertyContract.IsSealed
+                    ? property.PropertyContract
+                    : GetContractSafe(memberValue);
 
                 if (ShouldWriteProperty(memberValue, contract as JsonObjectContract, property))
                 {
@@ -450,14 +480,21 @@ namespace Dreamcast.Json.Serialization
                         return false;
                     }
 
-                    if (!CheckForCircularReference(writer, memberValue, property, memberContract, contract, member)) return false;
+                    if (!CheckForCircularReference(writer, memberValue, property, memberContract, contract, member))
+                        return false;
 
                     if (memberValue == null)
                     {
                         var objectContract = contract as JsonObjectContract;
                         var resolvedRequired = property._required ?? objectContract?.ItemRequired ?? Required.Default;
-                        if (resolvedRequired == Required.Always) throw JsonSerializationException.Create(null, writer.ContainerPath, "Cannot write a null value for property '{0}'. Property requires a value.".FormatWith(CultureInfo.InvariantCulture, property.PropertyName), null);
-                        if (resolvedRequired == Required.DisallowNull) throw JsonSerializationException.Create(null, writer.ContainerPath, "Cannot write a null value for property '{0}'. Property requires a non-null value.".FormatWith(CultureInfo.InvariantCulture, property.PropertyName), null);
+                        if (resolvedRequired == Required.Always)
+                            throw JsonSerializationException.Create(null, writer.ContainerPath,
+                                "Cannot write a null value for property '{0}'. Property requires a value.".FormatWith(
+                                    CultureInfo.InvariantCulture, property.PropertyName), null);
+                        if (resolvedRequired == Required.DisallowNull)
+                            throw JsonSerializationException.Create(null, writer.ContainerPath,
+                                "Cannot write a null value for property '{0}'. Property requires a non-null value."
+                                    .FormatWith(CultureInfo.InvariantCulture, property.PropertyName), null);
                     }
 
 #pragma warning disable CS8762 // Parameter must have a non-null value when exiting in some condition.
@@ -471,14 +508,18 @@ namespace Dreamcast.Json.Serialization
             return false;
         }
 
-        private void WriteObjectStart(JsonWriter writer, object value, JsonContract contract, JsonProperty? member, JsonContainerContract? collectionContract, JsonProperty? containerProperty)
+        private void WriteObjectStart(JsonWriter writer, object value, JsonContract contract, JsonProperty? member,
+            JsonContainerContract? collectionContract, JsonProperty? containerProperty)
         {
             writer.WriteStartObject();
 
-            var isReference = ResolveIsReference(contract, member, collectionContract, containerProperty) ?? HasFlag(Serializer._preserveReferencesHandling, PreserveReferencesHandling.Objects);
+            var isReference = ResolveIsReference(contract, member, collectionContract, containerProperty) ??
+                              HasFlag(Serializer._preserveReferencesHandling, PreserveReferencesHandling.Objects);
             // don't make readonly fields that aren't creator parameters the referenced value because they can't be deserialized to
-            if (isReference && (member == null || member.Writable || HasCreatorParameter(collectionContract, member))) WriteReferenceIdProperty(writer, contract.UnderlyingType, value);
-            if (ShouldWriteType(TypeNameHandling.Objects, contract, member, collectionContract, containerProperty)) WriteTypeProperty(writer, contract.UnderlyingType);
+            if (isReference && (member == null || member.Writable || HasCreatorParameter(collectionContract, member)))
+                WriteReferenceIdProperty(writer, contract.UnderlyingType, value);
+            if (ShouldWriteType(TypeNameHandling.Objects, contract, member, collectionContract, containerProperty))
+                WriteTypeProperty(writer, contract.UnderlyingType);
         }
 
         private bool HasCreatorParameter(JsonContainerContract? contract, JsonProperty property)
@@ -492,7 +533,11 @@ namespace Dreamcast.Json.Serialization
         {
             var reference = GetReference(writer, value);
 
-            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose) TraceWriter.Trace(TraceLevel.Verbose, JsonPosition.FormatMessage(null, writer.Path, "Writing object reference Id '{0}' for {1}.".FormatWith(CultureInfo.InvariantCulture, reference, type)), null);
+            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose)
+                TraceWriter.Trace(TraceLevel.Verbose,
+                    JsonPosition.FormatMessage(null, writer.Path,
+                        "Writing object reference Id '{0}' for {1}.".FormatWith(CultureInfo.InvariantCulture, reference,
+                            type)), null);
 
             writer.WritePropertyName(JsonTypeReflector.IdPropertyName, false);
             writer.WriteValue(reference);
@@ -500,9 +545,14 @@ namespace Dreamcast.Json.Serialization
 
         private void WriteTypeProperty(JsonWriter writer, Type type)
         {
-            var typeName = ReflectionUtils.GetTypeName(type, Serializer._typeNameAssemblyFormatHandling, Serializer._serializationBinder);
+            var typeName = ReflectionUtils.GetTypeName(type, Serializer._typeNameAssemblyFormatHandling,
+                Serializer._serializationBinder);
 
-            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose) TraceWriter.Trace(TraceLevel.Verbose, JsonPosition.FormatMessage(null, writer.Path, "Writing type name '{0}' for {1}.".FormatWith(CultureInfo.InvariantCulture, typeName, type)), null);
+            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose)
+                TraceWriter.Trace(TraceLevel.Verbose,
+                    JsonPosition.FormatMessage(null, writer.Path,
+                        "Writing type name '{0}' for {1}.".FormatWith(CultureInfo.InvariantCulture, typeName, type)),
+                    null);
 
             writer.WritePropertyName(JsonTypeReflector.TypePropertyName, false);
             writer.WriteValue(typeName);
@@ -523,7 +573,8 @@ namespace Dreamcast.Json.Serialization
             return (value & flag) == flag;
         }
 
-        private void SerializeConvertable(JsonWriter writer, JsonConverter converter, object value, JsonContract contract, JsonContainerContract? collectionContract, JsonProperty? containerProperty)
+        private void SerializeConvertable(JsonWriter writer, JsonConverter converter, object value,
+            JsonContract contract, JsonContainerContract? collectionContract, JsonProperty? containerProperty)
         {
             if (ShouldWriteReference(value, null, contract, collectionContract, containerProperty))
             {
@@ -531,29 +582,42 @@ namespace Dreamcast.Json.Serialization
             }
             else
             {
-                if (!CheckForCircularReference(writer, value, null, contract, collectionContract, containerProperty)) return;
+                if (!CheckForCircularReference(writer, value, null, contract, collectionContract, containerProperty)
+                ) return;
 
                 _serializeStack.Add(value);
 
-                if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info) TraceWriter.Trace(TraceLevel.Info, JsonPosition.FormatMessage(null, writer.Path, "Started serializing {0} with converter {1}.".FormatWith(CultureInfo.InvariantCulture, value.GetType(), converter.GetType())), null);
+                if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info)
+                    TraceWriter.Trace(TraceLevel.Info,
+                        JsonPosition.FormatMessage(null, writer.Path,
+                            "Started serializing {0} with converter {1}.".FormatWith(CultureInfo.InvariantCulture,
+                                value.GetType(), converter.GetType())), null);
 
                 converter.WriteJson(writer, value, GetInternalSerializer());
 
-                if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info) TraceWriter.Trace(TraceLevel.Info, JsonPosition.FormatMessage(null, writer.Path, "Finished serializing {0} with converter {1}.".FormatWith(CultureInfo.InvariantCulture, value.GetType(), converter.GetType())), null);
+                if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Info)
+                    TraceWriter.Trace(TraceLevel.Info,
+                        JsonPosition.FormatMessage(null, writer.Path,
+                            "Finished serializing {0} with converter {1}.".FormatWith(CultureInfo.InvariantCulture,
+                                value.GetType(), converter.GetType())), null);
 
                 _serializeStack.RemoveAt(_serializeStack.Count - 1);
             }
         }
 
-        private void SerializeList(JsonWriter writer, IEnumerable values, JsonArrayContract contract, JsonProperty? member, JsonContainerContract? collectionContract, JsonProperty? containerProperty)
+        private void SerializeList(JsonWriter writer, IEnumerable values, JsonArrayContract contract,
+            JsonProperty? member, JsonContainerContract? collectionContract, JsonProperty? containerProperty)
         {
-            var underlyingList = values is IWrappedCollection wrappedCollection ? wrappedCollection.UnderlyingCollection : values;
+            var underlyingList = values is IWrappedCollection wrappedCollection
+                ? wrappedCollection.UnderlyingCollection
+                : values;
 
             OnSerializing(writer, contract, underlyingList);
 
             _serializeStack.Add(underlyingList);
 
-            var hasWrittenMetadataObject = WriteStartArray(writer, underlyingList, contract, member, collectionContract, containerProperty);
+            var hasWrittenMetadataObject = WriteStartArray(writer, underlyingList, contract, member, collectionContract,
+                containerProperty);
 
             writer.WriteStartArray();
 
@@ -572,7 +636,8 @@ namespace Dreamcast.Json.Serialization
                     }
                     else
                     {
-                        if (CheckForCircularReference(writer, value, null, valueContract, contract, member)) SerializeValue(writer, value, valueContract, null, contract, member);
+                        if (CheckForCircularReference(writer, value, null, valueContract, contract, member))
+                            SerializeValue(writer, value, valueContract, null, contract, member);
                     }
                 }
                 catch (Exception ex)
@@ -596,15 +661,18 @@ namespace Dreamcast.Json.Serialization
             OnSerialized(writer, contract, underlyingList);
         }
 
-        private void SerializeMultidimensionalArray(JsonWriter writer, Array values, JsonArrayContract contract, JsonProperty? member, JsonContainerContract? collectionContract, JsonProperty? containerProperty)
+        private void SerializeMultidimensionalArray(JsonWriter writer, Array values, JsonArrayContract contract,
+            JsonProperty? member, JsonContainerContract? collectionContract, JsonProperty? containerProperty)
         {
             OnSerializing(writer, contract, values);
 
             _serializeStack.Add(values);
 
-            var hasWrittenMetadataObject = WriteStartArray(writer, values, contract, member, collectionContract, containerProperty);
+            var hasWrittenMetadataObject =
+                WriteStartArray(writer, values, contract, member, collectionContract, containerProperty);
 
-            SerializeMultidimensionalArray(writer, values, contract, member, writer.Top, CollectionUtils.ArrayEmpty<int>());
+            SerializeMultidimensionalArray(writer, values, contract, member, writer.Top,
+                CollectionUtils.ArrayEmpty<int>());
 
             if (hasWrittenMetadataObject) writer.WriteEndObject();
 
@@ -613,7 +681,8 @@ namespace Dreamcast.Json.Serialization
             OnSerialized(writer, contract, values);
         }
 
-        private void SerializeMultidimensionalArray(JsonWriter writer, Array values, JsonArrayContract contract, JsonProperty? member, int initialDepth, int[] indices)
+        private void SerializeMultidimensionalArray(JsonWriter writer, Array values, JsonArrayContract contract,
+            JsonProperty? member, int initialDepth, int[] indices)
         {
             var dimension = indices.Length;
             var newIndices = new int[dimension + 1];
@@ -640,7 +709,8 @@ namespace Dreamcast.Json.Serialization
                         }
                         else
                         {
-                            if (CheckForCircularReference(writer, value, null, valueContract, contract, member)) SerializeValue(writer, value, valueContract, null, contract, member);
+                            if (CheckForCircularReference(writer, value, null, valueContract, contract, member))
+                                SerializeValue(writer, value, valueContract, null, contract, member);
                         }
                     }
                     catch (Exception ex)
@@ -660,13 +730,17 @@ namespace Dreamcast.Json.Serialization
             writer.WriteEndArray();
         }
 
-        private bool WriteStartArray(JsonWriter writer, object values, JsonArrayContract contract, JsonProperty? member, JsonContainerContract? containerContract, JsonProperty? containerProperty)
+        private bool WriteStartArray(JsonWriter writer, object values, JsonArrayContract contract, JsonProperty? member,
+            JsonContainerContract? containerContract, JsonProperty? containerProperty)
         {
-            var isReference = ResolveIsReference(contract, member, containerContract, containerProperty) ?? HasFlag(Serializer._preserveReferencesHandling, PreserveReferencesHandling.Arrays);
+            var isReference = ResolveIsReference(contract, member, containerContract, containerProperty) ??
+                              HasFlag(Serializer._preserveReferencesHandling, PreserveReferencesHandling.Arrays);
             // don't make readonly fields that aren't creator parameters the referenced value because they can't be deserialized to
-            isReference = isReference && (member == null || member.Writable || HasCreatorParameter(containerContract, member));
+            isReference = isReference &&
+                          (member == null || member.Writable || HasCreatorParameter(containerContract, member));
 
-            var includeTypeDetails = ShouldWriteType(TypeNameHandling.Arrays, contract, member, containerContract, containerProperty);
+            var includeTypeDetails = ShouldWriteType(TypeNameHandling.Arrays, contract, member, containerContract,
+                containerProperty);
             var writeMetadataObject = isReference || includeTypeDetails;
 
             if (writeMetadataObject)
@@ -678,7 +752,9 @@ namespace Dreamcast.Json.Serialization
                 writer.WritePropertyName(JsonTypeReflector.ArrayValuesPropertyName, false);
             }
 
-            if (contract.ItemContract == null) contract.ItemContract = Serializer._contractResolver.ResolveContract(contract.CollectionItemType ?? typeof(object));
+            if (contract.ItemContract == null)
+                contract.ItemContract =
+                    Serializer._contractResolver.ResolveContract(contract.CollectionItemType ?? typeof(object));
 
             return writeMetadataObject;
         }
@@ -691,7 +767,8 @@ namespace Dreamcast.Json.Serialization
         {
             if (!JsonTypeReflector.FullyTrusted)
             {
-                string message = @"Type '{0}' implements ISerializable but cannot be serialized using the ISerializable interface because the current application is not fully trusted and ISerializable can expose secure data." + Environment.NewLine +
+                string message =
+ @"Type '{0}' implements ISerializable but cannot be serialized using the ISerializable interface because the current application is not fully trusted and ISerializable can expose secure data." + Environment.NewLine +
                                  @"To fix this error either change the environment to be fully trusted, change the application to not deserialize the type, add JsonObjectAttribute to the type or change the JsonSerializer setting ContractResolver to use a new DefaultContractResolver with IgnoreSerializableInterface set to true." + Environment.NewLine;
                 message = message.FormatWith(CultureInfo.InvariantCulture, value.GetType());
 
@@ -703,7 +780,8 @@ namespace Dreamcast.Json.Serialization
 
             WriteObjectStart(writer, value, contract, member, collectionContract, containerProperty);
 
-            SerializationInfo serializationInfo = new SerializationInfo(contract.UnderlyingType, new FormatterConverter());
+            SerializationInfo serializationInfo =
+ new SerializationInfo(contract.UnderlyingType, new FormatterConverter());
             value.GetObjectData(serializationInfo, Serializer._context);
 
             foreach (SerializationEntry serializationEntry in serializationInfo)
@@ -819,13 +897,15 @@ namespace Dreamcast.Json.Serialization
             if (Serializer._nullValueHandling == NullValueHandling.Ignore && memberValue == null) return false;
 
             if (HasFlag(Serializer._defaultValueHandling, DefaultValueHandling.Ignore) &&
-                (memberValue == null || MiscellaneousUtils.ValueEquals(memberValue, ReflectionUtils.GetDefaultValue(memberValue.GetType()))))
+                (memberValue == null || MiscellaneousUtils.ValueEquals(memberValue,
+                    ReflectionUtils.GetDefaultValue(memberValue.GetType()))))
                 return false;
 
             return true;
         }
 
-        private bool ShouldWriteType(TypeNameHandling typeNameHandlingFlag, JsonContract contract, JsonProperty? member, JsonContainerContract? containerContract, JsonProperty? containerProperty)
+        private bool ShouldWriteType(TypeNameHandling typeNameHandlingFlag, JsonContract contract, JsonProperty? member,
+            JsonContainerContract? containerContract, JsonProperty? containerProperty)
         {
             var resolvedTypeNameHandling =
                 member?.TypeNameHandling
@@ -844,7 +924,8 @@ namespace Dreamcast.Json.Serialization
                 }
                 else if (containerContract != null)
                 {
-                    if (containerContract.ItemContract == null || contract.NonNullableUnderlyingType != containerContract.ItemContract.CreatedType) return true;
+                    if (containerContract.ItemContract == null || contract.NonNullableUnderlyingType !=
+                        containerContract.ItemContract.CreatedType) return true;
                 }
                 else if (_rootType != null && _serializeStack.Count == _rootLevel)
                 {
@@ -857,19 +938,26 @@ namespace Dreamcast.Json.Serialization
             return false;
         }
 
-        private void SerializeDictionary(JsonWriter writer, IDictionary values, JsonDictionaryContract contract, JsonProperty? member, JsonContainerContract? collectionContract, JsonProperty? containerProperty)
+        private void SerializeDictionary(JsonWriter writer, IDictionary values, JsonDictionaryContract contract,
+            JsonProperty? member, JsonContainerContract? collectionContract, JsonProperty? containerProperty)
         {
 #pragma warning disable CS8600, CS8602, CS8604
-            var underlyingDictionary = values is IWrappedDictionary wrappedDictionary ? wrappedDictionary.UnderlyingDictionary : values;
+            var underlyingDictionary = values is IWrappedDictionary wrappedDictionary
+                ? wrappedDictionary.UnderlyingDictionary
+                : values;
 
             OnSerializing(writer, contract, underlyingDictionary);
             _serializeStack.Add(underlyingDictionary);
 
             WriteObjectStart(writer, underlyingDictionary, contract, member, collectionContract, containerProperty);
 
-            if (contract.ItemContract == null) contract.ItemContract = Serializer._contractResolver.ResolveContract(contract.DictionaryValueType ?? typeof(object));
+            if (contract.ItemContract == null)
+                contract.ItemContract =
+                    Serializer._contractResolver.ResolveContract(contract.DictionaryValueType ?? typeof(object));
 
-            if (contract.KeyContract == null) contract.KeyContract = Serializer._contractResolver.ResolveContract(contract.DictionaryKeyType ?? typeof(object));
+            if (contract.KeyContract == null)
+                contract.KeyContract =
+                    Serializer._contractResolver.ResolveContract(contract.DictionaryKeyType ?? typeof(object));
 
             var initialDepth = writer.Top;
 
@@ -899,7 +987,8 @@ namespace Dreamcast.Json.Serialization
                         }
                         else
                         {
-                            if (!CheckForCircularReference(writer, value, null, valueContract, contract, member)) continue;
+                            if (!CheckForCircularReference(writer, value, null, valueContract, contract, member))
+                                continue;
 
                             writer.WritePropertyName(propertyName, escape);
 
@@ -908,7 +997,8 @@ namespace Dreamcast.Json.Serialization
                     }
                     catch (Exception ex)
                     {
-                        if (IsErrorHandled(underlyingDictionary, contract, propertyName, null, writer.ContainerPath, ex))
+                        if (IsErrorHandled(underlyingDictionary, contract, propertyName, null, writer.ContainerPath,
+                            ex))
                             HandleError(writer, initialDepth);
                         else
                             throw;
@@ -942,7 +1032,8 @@ namespace Dreamcast.Json.Serialization
 
                         escape = false;
                         var sw = new StringWriter(CultureInfo.InvariantCulture);
-                        DateTimeUtils.WriteDateTimeString(sw, dt, writer.DateFormatHandling, writer.DateFormatString, writer.Culture);
+                        DateTimeUtils.WriteDateTimeString(sw, dt, writer.DateFormatHandling, writer.DateFormatString,
+                            writer.Culture);
                         return sw.ToString();
                     }
 #if HAVE_DATE_TIME_OFFSET
@@ -975,7 +1066,9 @@ namespace Dreamcast.Json.Serialization
                     {
                         escape = true;
 
-                        if (primitiveContract.IsEnum && EnumUtils.TryToString(primitiveContract.NonNullableUnderlyingType, name, null, out var enumName)) return enumName;
+                        if (primitiveContract.IsEnum &&
+                            EnumUtils.TryToString(primitiveContract.NonNullableUnderlyingType, name, null,
+                                out var enumName)) return enumName;
 
                         return Convert.ToString(name, CultureInfo.InvariantCulture);
                     }
@@ -1007,7 +1100,11 @@ namespace Dreamcast.Json.Serialization
 
             var shouldSerialize = property.ShouldSerialize(target);
 
-            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose) TraceWriter.Trace(TraceLevel.Verbose, JsonPosition.FormatMessage(null, writer.Path, "ShouldSerialize result for property '{0}' on {1}: {2}".FormatWith(CultureInfo.InvariantCulture, property.PropertyName, property.DeclaringType, shouldSerialize)), null);
+            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose)
+                TraceWriter.Trace(TraceLevel.Verbose,
+                    JsonPosition.FormatMessage(null, writer.Path,
+                        "ShouldSerialize result for property '{0}' on {1}: {2}".FormatWith(CultureInfo.InvariantCulture,
+                            property.PropertyName, property.DeclaringType, shouldSerialize)), null);
 
             return shouldSerialize;
         }
@@ -1018,7 +1115,11 @@ namespace Dreamcast.Json.Serialization
 
             var isSpecified = property.GetIsSpecified(target);
 
-            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose) TraceWriter.Trace(TraceLevel.Verbose, JsonPosition.FormatMessage(null, writer.Path, "IsSpecified result for property '{0}' on {1}: {2}".FormatWith(CultureInfo.InvariantCulture, property.PropertyName, property.DeclaringType, isSpecified)), null);
+            if (TraceWriter != null && TraceWriter.LevelFilter >= TraceLevel.Verbose)
+                TraceWriter.Trace(TraceLevel.Verbose,
+                    JsonPosition.FormatMessage(null, writer.Path,
+                        "IsSpecified result for property '{0}' on {1}: {2}".FormatWith(CultureInfo.InvariantCulture,
+                            property.PropertyName, property.DeclaringType, isSpecified)), null);
 
             return isSpecified;
         }

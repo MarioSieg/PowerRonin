@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -26,8 +11,7 @@ namespace Dreamcast.Json.Utilities
     internal static class MiscellaneousUtils
     {
         [Conditional("DEBUG")]
-        public static void Assert([DoesNotReturnIf(false)]
-            bool condition,
+        public static void Assert([DoesNotReturnIf(false)] bool condition,
             string? message = null)
         {
             Debug.Assert(condition, message);
@@ -43,18 +27,23 @@ namespace Dreamcast.Json.Utilities
             if (objA.GetType() != objB.GetType())
             {
                 if (ConvertUtils.IsInteger(objA) && ConvertUtils.IsInteger(objB))
-                    return Convert.ToDecimal(objA, CultureInfo.CurrentCulture).Equals(Convert.ToDecimal(objB, CultureInfo.CurrentCulture));
-                if ((objA is double || objA is float || objA is decimal) && (objB is double || objB is float || objB is decimal))
-                    return MathUtils.ApproxEquals(Convert.ToDouble(objA, CultureInfo.CurrentCulture), Convert.ToDouble(objB, CultureInfo.CurrentCulture));
+                    return Convert.ToDecimal(objA, CultureInfo.CurrentCulture)
+                        .Equals(Convert.ToDecimal(objB, CultureInfo.CurrentCulture));
+                if ((objA is double || objA is float || objA is decimal) &&
+                    (objB is double || objB is float || objB is decimal))
+                    return MathUtils.ApproxEquals(Convert.ToDouble(objA, CultureInfo.CurrentCulture),
+                        Convert.ToDouble(objB, CultureInfo.CurrentCulture));
                 return false;
             }
 
             return objA.Equals(objB);
         }
 
-        public static ArgumentOutOfRangeException CreateArgumentOutOfRangeException(string paramName, object actualValue, string message)
+        public static ArgumentOutOfRangeException CreateArgumentOutOfRangeException(string paramName,
+            object actualValue, string message)
         {
-            var newMessage = message + Environment.NewLine + @"Actual value was {0}.".FormatWith(CultureInfo.InvariantCulture, actualValue);
+            var newMessage = message + Environment.NewLine +
+                             @"Actual value was {0}.".FormatWith(CultureInfo.InvariantCulture, actualValue);
 
             return new ArgumentOutOfRangeException(paramName, newMessage);
         }

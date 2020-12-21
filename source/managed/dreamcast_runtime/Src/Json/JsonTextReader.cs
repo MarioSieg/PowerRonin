@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 using System;
 using System.Globalization;
 using System.IO;
@@ -151,10 +136,12 @@ namespace Dreamcast.Json
                     byte[] data;
                     if (_stringReference.Length == 0)
                         data = CollectionUtils.ArrayEmpty<byte>();
-                    else if (_stringReference.Length == 36 && ConvertUtils.TryConvertGuid(_stringReference.ToString(), out g))
+                    else if (_stringReference.Length == 36 &&
+                             ConvertUtils.TryConvertGuid(_stringReference.ToString(), out g))
                         data = g.ToByteArray();
                     else
-                        data = Convert.FromBase64CharArray(_stringReference.Chars, _stringReference.StartIndex, _stringReference.Length);
+                        data = Convert.FromBase64CharArray(_stringReference.Chars, _stringReference.StartIndex,
+                            _stringReference.Length);
 
                     SetToken(JsonToken.Bytes, data, false);
                     break;
@@ -185,7 +172,8 @@ namespace Dreamcast.Json
                             dateParseHandling = _dateParseHandling;
 
                         if (dateParseHandling == DateParseHandling.DateTime)
-                            if (DateTimeUtils.TryParseDateTime(_stringReference, DateTimeZoneHandling, DateFormatString, Culture, out var dt))
+                            if (DateTimeUtils.TryParseDateTime(_stringReference, DateTimeZoneHandling, DateFormatString,
+                                Culture, out var dt))
                             {
                                 SetToken(JsonToken.Date, dt, false);
                                 return;
@@ -388,13 +376,16 @@ namespace Dreamcast.Json
                                 return true;
                             }
 
-                            throw JsonReaderException.Create(this, "Additional text encountered after finished reading JSON content: {0}.".FormatWith(CultureInfo.InvariantCulture, _chars[_charPos]));
+                            throw JsonReaderException.Create(this,
+                                "Additional text encountered after finished reading JSON content: {0}.".FormatWith(
+                                    CultureInfo.InvariantCulture, _chars[_charPos]));
                         }
 
                         SetToken(JsonToken.None);
                         return false;
                     default:
-                        throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, CurrentState));
+                        throw JsonReaderException.Create(this,
+                            "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, CurrentState));
                 }
         }
 
@@ -479,7 +470,10 @@ namespace Dreamcast.Json
                                 if (isWrapped)
                                 {
                                     ReaderReadAndAssert();
-                                    if (TokenType != JsonToken.EndObject) throw JsonReaderException.Create(this, "Error reading bytes. Unexpected token: {0}.".FormatWith(CultureInfo.InvariantCulture, TokenType));
+                                    if (TokenType != JsonToken.EndObject)
+                                        throw JsonReaderException.Create(this,
+                                            "Error reading bytes. Unexpected token: {0}.".FormatWith(
+                                                CultureInfo.InvariantCulture, TokenType));
                                     SetToken(JsonToken.Bytes, data, false);
                                 }
 
@@ -505,7 +499,8 @@ namespace Dreamcast.Json
                                 break;
                             case ']':
                                 _charPos++;
-                                if (_currentState == State.Array || _currentState == State.ArrayStart || _currentState == State.PostValue)
+                                if (_currentState == State.Array || _currentState == State.ArrayStart ||
+                                    _currentState == State.PostValue)
                                 {
                                     SetToken(JsonToken.EndArray);
                                     return null;
@@ -526,7 +521,8 @@ namespace Dreamcast.Json
                             default:
                                 _charPos++;
 
-                                if (!char.IsWhiteSpace(currentChar)) throw CreateUnexpectedCharacterException(currentChar);
+                                if (!char.IsWhiteSpace(currentChar))
+                                    throw CreateUnexpectedCharacterException(currentChar);
 
                                 // eat
                                 break;
@@ -536,7 +532,8 @@ namespace Dreamcast.Json
                     ReadFinished();
                     return null;
                 default:
-                    throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, CurrentState));
+                    throw JsonReaderException.Create(this,
+                        "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, CurrentState));
             }
         }
 
@@ -612,7 +609,8 @@ namespace Dreamcast.Json
                                 }
 
                                 var expected = currentChar == 't' ? JsonConvert.True : JsonConvert.False;
-                                if (!MatchValueWithTrailingSeparator(expected)) throw CreateUnexpectedCharacterException(_chars[_charPos]);
+                                if (!MatchValueWithTrailingSeparator(expected))
+                                    throw CreateUnexpectedCharacterException(_chars[_charPos]);
                                 SetToken(JsonToken.String, expected);
                                 return expected;
                             case 'I':
@@ -630,7 +628,8 @@ namespace Dreamcast.Json
                                 break;
                             case ']':
                                 _charPos++;
-                                if (_currentState == State.Array || _currentState == State.ArrayStart || _currentState == State.PostValue)
+                                if (_currentState == State.Array || _currentState == State.ArrayStart ||
+                                    _currentState == State.PostValue)
                                 {
                                     SetToken(JsonToken.EndArray);
                                     return null;
@@ -651,7 +650,8 @@ namespace Dreamcast.Json
                             default:
                                 _charPos++;
 
-                                if (!char.IsWhiteSpace(currentChar)) throw CreateUnexpectedCharacterException(currentChar);
+                                if (!char.IsWhiteSpace(currentChar))
+                                    throw CreateUnexpectedCharacterException(currentChar);
 
                                 // eat
                                 break;
@@ -661,7 +661,8 @@ namespace Dreamcast.Json
                     ReadFinished();
                     return null;
                 default:
-                    throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, CurrentState));
+                    throw JsonReaderException.Create(this,
+                        "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, CurrentState));
             }
         }
 
@@ -692,7 +693,9 @@ namespace Dreamcast.Json
 
         private JsonReaderException CreateUnexpectedCharacterException(char c)
         {
-            return JsonReaderException.Create(this, "Unexpected character encountered while parsing value: {0}.".FormatWith(CultureInfo.InvariantCulture, c));
+            return JsonReaderException.Create(this,
+                "Unexpected character encountered while parsing value: {0}.".FormatWith(CultureInfo.InvariantCulture,
+                    c));
         }
 
         /// <summary>
@@ -771,7 +774,8 @@ namespace Dreamcast.Json
                                 var isTrue = currentChar == 't';
                                 var expected = isTrue ? JsonConvert.True : JsonConvert.False;
 
-                                if (!MatchValueWithTrailingSeparator(expected)) throw CreateUnexpectedCharacterException(_chars[_charPos]);
+                                if (!MatchValueWithTrailingSeparator(expected))
+                                    throw CreateUnexpectedCharacterException(_chars[_charPos]);
                                 SetToken(JsonToken.Boolean, isTrue);
                                 return isTrue;
                             case '/':
@@ -782,7 +786,8 @@ namespace Dreamcast.Json
                                 break;
                             case ']':
                                 _charPos++;
-                                if (_currentState == State.Array || _currentState == State.ArrayStart || _currentState == State.PostValue)
+                                if (_currentState == State.Array || _currentState == State.ArrayStart ||
+                                    _currentState == State.PostValue)
                                 {
                                     SetToken(JsonToken.EndArray);
                                     return null;
@@ -803,7 +808,8 @@ namespace Dreamcast.Json
                             default:
                                 _charPos++;
 
-                                if (!char.IsWhiteSpace(currentChar)) throw CreateUnexpectedCharacterException(currentChar);
+                                if (!char.IsWhiteSpace(currentChar))
+                                    throw CreateUnexpectedCharacterException(currentChar);
 
                                 // eat
                                 break;
@@ -813,7 +819,8 @@ namespace Dreamcast.Json
                     ReadFinished();
                     return null;
                 default:
-                    throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, CurrentState));
+                    throw JsonReaderException.Create(this,
+                        "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, CurrentState));
             }
         }
 
@@ -906,7 +913,8 @@ namespace Dreamcast.Json
                                 break;
                             case ']':
                                 _charPos++;
-                                if (_currentState == State.Array || _currentState == State.ArrayStart || _currentState == State.PostValue)
+                                if (_currentState == State.Array || _currentState == State.ArrayStart ||
+                                    _currentState == State.PostValue)
                                 {
                                     SetToken(JsonToken.EndArray);
                                     return null;
@@ -927,7 +935,8 @@ namespace Dreamcast.Json
                             default:
                                 _charPos++;
 
-                                if (!char.IsWhiteSpace(currentChar)) throw CreateUnexpectedCharacterException(currentChar);
+                                if (!char.IsWhiteSpace(currentChar))
+                                    throw CreateUnexpectedCharacterException(currentChar);
 
                                 // eat
                                 break;
@@ -937,7 +946,8 @@ namespace Dreamcast.Json
                     ReadFinished();
                     return null;
                 default:
-                    throw JsonReaderException.Create(this, "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, CurrentState));
+                    throw JsonReaderException.Create(this,
+                        "Unexpected state: {0}.".FormatWith(CultureInfo.InvariantCulture, CurrentState));
             }
         }
 
@@ -1026,7 +1036,9 @@ namespace Dreamcast.Json
                 if (_chars[_charPos] == '/')
                     ParseComment(false);
                 else
-                    throw JsonReaderException.Create(this, "Additional text encountered after finished reading JSON content: {0}.".FormatWith(CultureInfo.InvariantCulture, _chars[_charPos]));
+                    throw JsonReaderException.Create(this,
+                        "Additional text encountered after finished reading JSON content: {0}.".FormatWith(
+                            CultureInfo.InvariantCulture, _chars[_charPos]));
             }
 
             SetToken(JsonToken.None);
@@ -1079,14 +1091,19 @@ namespace Dreamcast.Json
                             if (ReadData(true) == 0)
                             {
                                 _charPos = charPos;
-                                throw JsonReaderException.Create(this, "Unterminated string. Expected delimiter: {0}.".FormatWith(CultureInfo.InvariantCulture, quote));
+                                throw JsonReaderException.Create(this,
+                                    "Unterminated string. Expected delimiter: {0}.".FormatWith(
+                                        CultureInfo.InvariantCulture, quote));
                             }
                         }
 
                         break;
                     case '\\':
                         _charPos = charPos;
-                        if (!EnsureChars(0, true)) throw JsonReaderException.Create(this, "Unterminated string. Expected delimiter: {0}.".FormatWith(CultureInfo.InvariantCulture, quote));
+                        if (!EnsureChars(0, true))
+                            throw JsonReaderException.Create(this,
+                                "Unterminated string. Expected delimiter: {0}.".FormatWith(CultureInfo.InvariantCulture,
+                                    quote));
 
                         // start of escape sequence
                         var escapeStartPos = charPos - 1;
@@ -1140,7 +1157,8 @@ namespace Dreamcast.Json
                                         anotherHighSurrogate = false;
 
                                         // potential start of a surrogate pair
-                                        if (EnsureChars(2, true) && _chars[_charPos] == '\\' && _chars[_charPos + 1] == 'u')
+                                        if (EnsureChars(2, true) && _chars[_charPos] == '\\' &&
+                                            _chars[_charPos + 1] == 'u')
                                         {
                                             var highSurrogate = writeChar;
 
@@ -1181,7 +1199,9 @@ namespace Dreamcast.Json
                                 break;
                             default:
                                 _charPos = charPos;
-                                throw JsonReaderException.Create(this, "Bad JSON escape sequence: {0}.".FormatWith(CultureInfo.InvariantCulture, @"\" + currentChar));
+                                throw JsonReaderException.Create(this,
+                                    "Bad JSON escape sequence: {0}.".FormatWith(CultureInfo.InvariantCulture,
+                                        @"\" + currentChar));
                         }
 
                         EnsureBufferNotEmpty();
@@ -1223,7 +1243,8 @@ namespace Dreamcast.Json
             {
                 EnsureBufferNotEmpty();
 
-                if (charPos > lastWritePosition) _stringBuffer.Append(_arrayPool, _chars, lastWritePosition, charPos - lastWritePosition);
+                if (charPos > lastWritePosition)
+                    _stringBuffer.Append(_arrayPool, _chars, lastWritePosition, charPos - lastWritePosition);
 
                 _stringReference = new StringReference(_stringBuffer.InternalBuffer!, 0, _stringBuffer.Position);
             }
@@ -1235,7 +1256,8 @@ namespace Dreamcast.Json
         {
             MiscellaneousUtils.Assert(_chars != null);
 
-            if (writeToPosition > lastWritePosition) _stringBuffer.Append(_arrayPool, _chars, lastWritePosition, writeToPosition - lastWritePosition);
+            if (writeToPosition > lastWritePosition)
+                _stringBuffer.Append(_arrayPool, _chars, lastWritePosition, writeToPosition - lastWritePosition);
 
             _stringBuffer.Append(_arrayPool, writeChar);
         }
@@ -1253,7 +1275,9 @@ namespace Dreamcast.Json
                     return hexChar;
                 }
 
-                throw JsonReaderException.Create(this, @"Invalid Unicode escape sequence: \u{0}.".FormatWith(CultureInfo.InvariantCulture, new string(_chars, _charPos, 4)));
+                throw JsonReaderException.Create(this,
+                    @"Invalid Unicode escape sequence: \u{0}.".FormatWith(CultureInfo.InvariantCulture,
+                        new string(_chars, _charPos, 4)));
             }
 
             throw JsonReaderException.Create(this, "Unexpected end while parsing Unicode escape sequence.");
@@ -1332,9 +1356,12 @@ namespace Dreamcast.Json
                 default:
                     _charPos = charPos;
 
-                    if (char.IsWhiteSpace(currentChar) || currentChar == ',' || currentChar == '}' || currentChar == ']' || currentChar == ')' || currentChar == '/') return true;
+                    if (char.IsWhiteSpace(currentChar) || currentChar == ',' || currentChar == '}' ||
+                        currentChar == ']' || currentChar == ')' || currentChar == '/') return true;
 
-                    throw JsonReaderException.Create(this, "Unexpected character encountered while parsing number: {0}.".FormatWith(CultureInfo.InvariantCulture, currentChar));
+                    throw JsonReaderException.Create(this,
+                        "Unexpected character encountered while parsing number: {0}.".FormatWith(
+                            CultureInfo.InvariantCulture, currentChar));
             }
         }
 
@@ -1417,7 +1444,9 @@ namespace Dreamcast.Json
                                 return false;
                             }
 
-                            throw JsonReaderException.Create(this, "After parsing a value an unexpected character was encountered: {0}.".FormatWith(CultureInfo.InvariantCulture, currentChar));
+                            throw JsonReaderException.Create(this,
+                                "After parsing a value an unexpected character was encountered: {0}.".FormatWith(
+                                    CultureInfo.InvariantCulture, currentChar));
                         }
 
                         break;
@@ -1497,14 +1526,17 @@ namespace Dreamcast.Json
             }
             else
             {
-                throw JsonReaderException.Create(this, "Invalid property identifier character: {0}.".FormatWith(CultureInfo.InvariantCulture, _chars[_charPos]));
+                throw JsonReaderException.Create(this,
+                    "Invalid property identifier character: {0}.".FormatWith(CultureInfo.InvariantCulture,
+                        _chars[_charPos]));
             }
 
             string? propertyName;
 
             if (PropertyNameTable != null)
             {
-                propertyName = PropertyNameTable.Get(_stringReference.Chars, _stringReference.StartIndex, _stringReference.Length);
+                propertyName = PropertyNameTable.Get(_stringReference.Chars, _stringReference.StartIndex,
+                    _stringReference.Length);
 
                 // no match in name table
                 if (propertyName == null) propertyName = _stringReference.ToString();
@@ -1516,7 +1548,10 @@ namespace Dreamcast.Json
 
             EatWhitespace();
 
-            if (_chars[_charPos] != ':') throw JsonReaderException.Create(this, "Invalid character after parsing property name. Expected ':' but got: {0}.".FormatWith(CultureInfo.InvariantCulture, _chars[_charPos]));
+            if (_chars[_charPos] != ':')
+                throw JsonReaderException.Create(this,
+                    "Invalid character after parsing property name. Expected ':' but got: {0}.".FormatWith(
+                        CultureInfo.InvariantCulture, _chars[_charPos]));
 
             _charPos++;
 
@@ -1546,7 +1581,9 @@ namespace Dreamcast.Json
                 {
                     if (_charsUsed == _charPos)
                     {
-                        if (ReadData(true) == 0) throw JsonReaderException.Create(this, "Unexpected end while parsing unquoted property name.");
+                        if (ReadData(true) == 0)
+                            throw JsonReaderException.Create(this,
+                                "Unexpected end while parsing unquoted property name.");
 
                         continue;
                     }
@@ -1575,7 +1612,9 @@ namespace Dreamcast.Json
                 return true;
             }
 
-            throw JsonReaderException.Create(this, "Invalid JavaScript property identifier character: {0}.".FormatWith(CultureInfo.InvariantCulture, currentChar));
+            throw JsonReaderException.Create(this,
+                "Invalid JavaScript property identifier character: {0}.".FormatWith(CultureInfo.InvariantCulture,
+                    currentChar));
         }
 
         private bool ParseValue()
@@ -1765,7 +1804,8 @@ namespace Dreamcast.Json
                     {
                         if (_charsUsed == _charPos)
                         {
-                            if (ReadData(true) == 0) throw JsonReaderException.Create(this, "Unexpected end while parsing constructor.");
+                            if (ReadData(true) == 0)
+                                throw JsonReaderException.Create(this, "Unexpected end while parsing constructor.");
                         }
                         else
                         {
@@ -1803,7 +1843,9 @@ namespace Dreamcast.Json
                     }
                     else
                     {
-                        throw JsonReaderException.Create(this, "Unexpected character while parsing constructor: {0}.".FormatWith(CultureInfo.InvariantCulture, currentChar));
+                        throw JsonReaderException.Create(this,
+                            "Unexpected character while parsing constructor: {0}.".FormatWith(
+                                CultureInfo.InvariantCulture, currentChar));
                     }
                 }
 
@@ -1812,7 +1854,10 @@ namespace Dreamcast.Json
 
                 EatWhitespace();
 
-                if (_chars[_charPos] != '(') throw JsonReaderException.Create(this, "Unexpected character while parsing constructor: {0}.".FormatWith(CultureInfo.InvariantCulture, _chars[_charPos]));
+                if (_chars[_charPos] != '(')
+                    throw JsonReaderException.Create(this,
+                        "Unexpected character while parsing constructor: {0}.".FormatWith(CultureInfo.InvariantCulture,
+                            _chars[_charPos]));
 
                 _charPos++;
 
@@ -1852,7 +1897,10 @@ namespace Dreamcast.Json
             JsonToken numberType;
 
             var singleDigit = char.IsDigit(firstChar) && _stringReference.Length == 1;
-            var nonBase10 = firstChar == '0' && _stringReference.Length > 1 && _stringReference.Chars[_stringReference.StartIndex + 1] != '.' && _stringReference.Chars[_stringReference.StartIndex + 1] != 'e' && _stringReference.Chars[_stringReference.StartIndex + 1] != 'E';
+            var nonBase10 = firstChar == '0' && _stringReference.Length > 1 &&
+                            _stringReference.Chars[_stringReference.StartIndex + 1] != '.' &&
+                            _stringReference.Chars[_stringReference.StartIndex + 1] != 'e' &&
+                            _stringReference.Chars[_stringReference.StartIndex + 1] != 'E';
 
             switch (readType)
             {
@@ -1872,12 +1920,17 @@ namespace Dreamcast.Json
                         }
                         catch (Exception ex)
                         {
-                            throw ThrowReaderError("Input string '{0}' is not a valid number.".FormatWith(CultureInfo.InvariantCulture, number), ex);
+                            throw ThrowReaderError(
+                                "Input string '{0}' is not a valid number.".FormatWith(CultureInfo.InvariantCulture,
+                                    number), ex);
                         }
                     }
                     else
                     {
-                        if (!double.TryParse(number, NumberStyles.Float, CultureInfo.InvariantCulture, out _)) throw ThrowReaderError("Input string '{0}' is not a valid number.".FormatWith(CultureInfo.InvariantCulture, _stringReference.ToString()));
+                        if (!double.TryParse(number, NumberStyles.Float, CultureInfo.InvariantCulture, out _))
+                            throw ThrowReaderError(
+                                "Input string '{0}' is not a valid number.".FormatWith(CultureInfo.InvariantCulture,
+                                    _stringReference.ToString()));
                     }
 
                     numberType = JsonToken.String;
@@ -1897,24 +1950,33 @@ namespace Dreamcast.Json
 
                         try
                         {
-                            var integer = number.StartsWith("0x", StringComparison.OrdinalIgnoreCase) ? Convert.ToInt32(number, 16) : Convert.ToInt32(number, 8);
+                            var integer = number.StartsWith("0x", StringComparison.OrdinalIgnoreCase)
+                                ? Convert.ToInt32(number, 16)
+                                : Convert.ToInt32(number, 8);
 
                             numberValue = integer;
                         }
                         catch (Exception ex)
                         {
-                            throw ThrowReaderError("Input string '{0}' is not a valid integer.".FormatWith(CultureInfo.InvariantCulture, number), ex);
+                            throw ThrowReaderError(
+                                "Input string '{0}' is not a valid integer.".FormatWith(CultureInfo.InvariantCulture,
+                                    number), ex);
                         }
                     }
                     else
                     {
-                        var parseResult = ConvertUtils.Int32TryParse(_stringReference.Chars, _stringReference.StartIndex, _stringReference.Length, out var value);
+                        var parseResult = ConvertUtils.Int32TryParse(_stringReference.Chars,
+                            _stringReference.StartIndex, _stringReference.Length, out var value);
                         if (parseResult == ParseResult.Success)
                             numberValue = value;
                         else if (parseResult == ParseResult.Overflow)
-                            throw ThrowReaderError("JSON integer {0} is too large or small for an Int32.".FormatWith(CultureInfo.InvariantCulture, _stringReference.ToString()));
+                            throw ThrowReaderError(
+                                "JSON integer {0} is too large or small for an Int32.".FormatWith(
+                                    CultureInfo.InvariantCulture, _stringReference.ToString()));
                         else
-                            throw ThrowReaderError("Input string '{0}' is not a valid integer.".FormatWith(CultureInfo.InvariantCulture, _stringReference.ToString()));
+                            throw ThrowReaderError(
+                                "Input string '{0}' is not a valid integer.".FormatWith(CultureInfo.InvariantCulture,
+                                    _stringReference.ToString()));
                     }
 
                     numberType = JsonToken.Integer;
@@ -1934,22 +1996,29 @@ namespace Dreamcast.Json
                         try
                         {
                             // decimal.Parse doesn't support parsing hexadecimal values
-                            var integer = number.StartsWith("0x", StringComparison.OrdinalIgnoreCase) ? Convert.ToInt64(number, 16) : Convert.ToInt64(number, 8);
+                            var integer = number.StartsWith("0x", StringComparison.OrdinalIgnoreCase)
+                                ? Convert.ToInt64(number, 16)
+                                : Convert.ToInt64(number, 8);
 
                             numberValue = Convert.ToDecimal(integer);
                         }
                         catch (Exception ex)
                         {
-                            throw ThrowReaderError("Input string '{0}' is not a valid decimal.".FormatWith(CultureInfo.InvariantCulture, number), ex);
+                            throw ThrowReaderError(
+                                "Input string '{0}' is not a valid decimal.".FormatWith(CultureInfo.InvariantCulture,
+                                    number), ex);
                         }
                     }
                     else
                     {
-                        var parseResult = ConvertUtils.DecimalTryParse(_stringReference.Chars, _stringReference.StartIndex, _stringReference.Length, out var value);
+                        var parseResult = ConvertUtils.DecimalTryParse(_stringReference.Chars,
+                            _stringReference.StartIndex, _stringReference.Length, out var value);
                         if (parseResult == ParseResult.Success)
                             numberValue = value;
                         else
-                            throw ThrowReaderError("Input string '{0}' is not a valid decimal.".FormatWith(CultureInfo.InvariantCulture, _stringReference.ToString()));
+                            throw ThrowReaderError(
+                                "Input string '{0}' is not a valid decimal.".FormatWith(CultureInfo.InvariantCulture,
+                                    _stringReference.ToString()));
                     }
 
                     numberType = JsonToken.Float;
@@ -1969,13 +2038,17 @@ namespace Dreamcast.Json
                         try
                         {
                             // double.Parse doesn't support parsing hexadecimal values
-                            var integer = number.StartsWith("0x", StringComparison.OrdinalIgnoreCase) ? Convert.ToInt64(number, 16) : Convert.ToInt64(number, 8);
+                            var integer = number.StartsWith("0x", StringComparison.OrdinalIgnoreCase)
+                                ? Convert.ToInt64(number, 16)
+                                : Convert.ToInt64(number, 8);
 
                             numberValue = Convert.ToDouble(integer);
                         }
                         catch (Exception ex)
                         {
-                            throw ThrowReaderError("Input string '{0}' is not a valid double.".FormatWith(CultureInfo.InvariantCulture, number), ex);
+                            throw ThrowReaderError(
+                                "Input string '{0}' is not a valid double.".FormatWith(CultureInfo.InvariantCulture,
+                                    number), ex);
                         }
                     }
                     else
@@ -1985,7 +2058,9 @@ namespace Dreamcast.Json
                         if (double.TryParse(number, NumberStyles.Float, CultureInfo.InvariantCulture, out var value))
                             numberValue = value;
                         else
-                            throw ThrowReaderError("Input string '{0}' is not a valid double.".FormatWith(CultureInfo.InvariantCulture, _stringReference.ToString()));
+                            throw ThrowReaderError(
+                                "Input string '{0}' is not a valid double.".FormatWith(CultureInfo.InvariantCulture,
+                                    _stringReference.ToString()));
                     }
 
                     numberType = JsonToken.Float;
@@ -2006,18 +2081,23 @@ namespace Dreamcast.Json
 
                         try
                         {
-                            numberValue = number.StartsWith("0x", StringComparison.OrdinalIgnoreCase) ? Convert.ToInt64(number, 16) : Convert.ToInt64(number, 8);
+                            numberValue = number.StartsWith("0x", StringComparison.OrdinalIgnoreCase)
+                                ? Convert.ToInt64(number, 16)
+                                : Convert.ToInt64(number, 8);
                         }
                         catch (Exception ex)
                         {
-                            throw ThrowReaderError("Input string '{0}' is not a valid number.".FormatWith(CultureInfo.InvariantCulture, number), ex);
+                            throw ThrowReaderError(
+                                "Input string '{0}' is not a valid number.".FormatWith(CultureInfo.InvariantCulture,
+                                    number), ex);
                         }
 
                         numberType = JsonToken.Integer;
                     }
                     else
                     {
-                        var parseResult = ConvertUtils.Int64TryParse(_stringReference.Chars, _stringReference.StartIndex, _stringReference.Length, out var value);
+                        var parseResult = ConvertUtils.Int64TryParse(_stringReference.Chars,
+                            _stringReference.StartIndex, _stringReference.Length, out var value);
                         if (parseResult == ParseResult.Success)
                         {
                             numberValue = value;
@@ -2036,27 +2116,35 @@ namespace Dreamcast.Json
                                 numberValue = BigIntegerParse(number, CultureInfo.InvariantCulture);
                                 numberType = JsonToken.Integer;
 #else
-                            throw ThrowReaderError("JSON integer {0} is too large or small for an Int64.".FormatWith(CultureInfo.InvariantCulture, _stringReference.ToString()));
+                            throw ThrowReaderError(
+                                "JSON integer {0} is too large or small for an Int64.".FormatWith(
+                                    CultureInfo.InvariantCulture, _stringReference.ToString()));
 #endif
                         }
                         else
                         {
                             if (_floatParseHandling == FloatParseHandling.Decimal)
                             {
-                                parseResult = ConvertUtils.DecimalTryParse(_stringReference.Chars, _stringReference.StartIndex, _stringReference.Length, out var d);
+                                parseResult = ConvertUtils.DecimalTryParse(_stringReference.Chars,
+                                    _stringReference.StartIndex, _stringReference.Length, out var d);
                                 if (parseResult == ParseResult.Success)
                                     numberValue = d;
                                 else
-                                    throw ThrowReaderError("Input string '{0}' is not a valid decimal.".FormatWith(CultureInfo.InvariantCulture, _stringReference.ToString()));
+                                    throw ThrowReaderError(
+                                        "Input string '{0}' is not a valid decimal.".FormatWith(
+                                            CultureInfo.InvariantCulture, _stringReference.ToString()));
                             }
                             else
                             {
                                 var number = _stringReference.ToString();
 
-                                if (double.TryParse(number, NumberStyles.Float, CultureInfo.InvariantCulture, out var d))
+                                if (double.TryParse(number, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out var d))
                                     numberValue = d;
                                 else
-                                    throw ThrowReaderError("Input string '{0}' is not a valid number.".FormatWith(CultureInfo.InvariantCulture, _stringReference.ToString()));
+                                    throw ThrowReaderError(
+                                        "Input string '{0}' is not a valid number.".FormatWith(
+                                            CultureInfo.InvariantCulture, _stringReference.ToString()));
                             }
 
                             numberType = JsonToken.Float;
@@ -2108,7 +2196,9 @@ namespace Dreamcast.Json
             else if (_chars[_charPos] == '/')
                 singlelineComment = true;
             else
-                throw JsonReaderException.Create(this, "Error parsing comment. Expected: *, got {0}.".FormatWith(CultureInfo.InvariantCulture, _chars[_charPos]));
+                throw JsonReaderException.Create(this,
+                    "Error parsing comment. Expected: *, got {0}.".FormatWith(CultureInfo.InvariantCulture,
+                        _chars[_charPos]));
 
             _charPos++;
 
@@ -2122,7 +2212,8 @@ namespace Dreamcast.Json
                         {
                             if (ReadData(true) == 0)
                             {
-                                if (!singlelineComment) throw JsonReaderException.Create(this, "Unexpected end while parsing comment.");
+                                if (!singlelineComment)
+                                    throw JsonReaderException.Create(this, "Unexpected end while parsing comment.");
 
                                 EndComment(setToken, initialPosition, _charPos);
                                 return;
@@ -2174,7 +2265,8 @@ namespace Dreamcast.Json
 
         private void EndComment(bool setToken, int initialPosition, int endPosition)
         {
-            if (setToken) SetToken(JsonToken.Comment, new string(_chars, initialPosition, endPosition - initialPosition));
+            if (setToken)
+                SetToken(JsonToken.Comment, new string(_chars, initialPosition, endPosition - initialPosition));
         }
 
         private bool MatchValue(string value)

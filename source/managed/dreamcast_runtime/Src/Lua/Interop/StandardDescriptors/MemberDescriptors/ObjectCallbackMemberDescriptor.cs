@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using Dreamcast.Lua.Interpreter.Interop.BasicDescriptors;
 using Dreamcast.Lua.Interpreter.Interop.Converters;
 
@@ -46,7 +31,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
         /// </summary>
         /// <param name="funcName">Name of the function.</param>
         /// <param name="callBack">The callback function.</param>
-        public ObjectCallbackMemberDescriptor(string funcName, Func<object, ScriptExecutionContext, CallbackArguments, object> callBack)
+        public ObjectCallbackMemberDescriptor(string funcName,
+            Func<object, ScriptExecutionContext, CallbackArguments, object> callBack)
             : this(funcName, callBack, new ParameterDescriptor[0])
         {
         }
@@ -58,7 +44,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
         /// <param name="funcName">Name of the function.</param>
         /// <param name="callBack">The call back.</param>
         /// <param name="parameters">The parameters.</param>
-        public ObjectCallbackMemberDescriptor(string funcName, Func<object, ScriptExecutionContext, CallbackArguments, object> callBack, ParameterDescriptor[] parameters)
+        public ObjectCallbackMemberDescriptor(string funcName,
+            Func<object, ScriptExecutionContext, CallbackArguments, object> callBack, ParameterDescriptor[] parameters)
         {
             m_CallbackFunc = callBack;
             Initialize(funcName, false, parameters, false);
@@ -72,7 +59,8 @@ namespace Dreamcast.Lua.Interpreter.Interop
         /// <param name="context">The context.</param>
         /// <param name="args">The arguments.</param>
         /// <returns></returns>
-        public override DynValue Execute(Script script, object obj, ScriptExecutionContext context, CallbackArguments args)
+        public override DynValue Execute(Script script, object obj, ScriptExecutionContext context,
+            CallbackArguments args)
         {
             if (m_CallbackFunc != null)
             {

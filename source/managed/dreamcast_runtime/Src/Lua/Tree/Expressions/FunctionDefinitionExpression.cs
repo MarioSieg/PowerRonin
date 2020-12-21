@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Dreamcast.Lua.Interpreter.Debugging;
 using Dreamcast.Lua.Interpreter.Execution;
@@ -48,7 +33,8 @@ namespace Dreamcast.Lua.Interpreter.Tree.Expressions
         }
 
 
-        private FunctionDefinitionExpression(ScriptLoadingContext lcontext, bool pushSelfParam, bool usesGlobalEnv, bool isLambda)
+        private FunctionDefinitionExpression(ScriptLoadingContext lcontext, bool pushSelfParam, bool usesGlobalEnv,
+            bool isLambda)
             : base(lcontext)
         {
             if (m_UsesGlobalEnv = usesGlobalEnv)
@@ -113,7 +99,9 @@ namespace Dreamcast.Lua.Interpreter.Tree.Expressions
             Statement s = new CompositeStatement(lcontext);
 
             if (lcontext.Lexer.Current.Type != TokenType.End)
-                throw new SyntaxErrorException(lcontext.Lexer.Current, "'end' expected near '{0}'", lcontext.Lexer.Current.Text) {IsPrematureStreamTermination = lcontext.Lexer.Current.Type == TokenType.Eof};
+                throw new SyntaxErrorException(lcontext.Lexer.Current, "'end' expected near '{0}'",
+                        lcontext.Lexer.Current.Text)
+                    {IsPrematureStreamTermination = lcontext.Lexer.Current.Type == TokenType.Eof};
 
             m_End = lcontext.Lexer.Current.GetSourceRef();
 
@@ -121,7 +109,8 @@ namespace Dreamcast.Lua.Interpreter.Tree.Expressions
             return s;
         }
 
-        private List<string> BuildParamList(ScriptLoadingContext lcontext, bool pushSelfParam, Token openBracketToken, bool isLambda)
+        private List<string> BuildParamList(ScriptLoadingContext lcontext, bool pushSelfParam, Token openBracketToken,
+            bool isLambda)
         {
             var closeToken = isLambda ? TokenType.Lambda : TokenType.Brk_Close_Round;
 

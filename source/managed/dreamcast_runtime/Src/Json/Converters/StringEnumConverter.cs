@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Globalization;
 using Dreamcast.Json.Serialization;
 using Dreamcast.Json.Utilities;
@@ -43,7 +28,8 @@ namespace Dreamcast.Json.Converters
         ///     Initializes a new instance of the <see cref="StringEnumConverter" /> class.
         /// </summary>
         /// <param name="camelCaseText"><c>true</c> if the written enum text will be camel case; otherwise, <c>false</c>.</param>
-        [Obsolete("StringEnumConverter(bool) is obsolete. Create a converter with StringEnumConverter(NamingStrategy, bool) instead.")]
+        [Obsolete(
+            "StringEnumConverter(bool) is obsolete. Create a converter with StringEnumConverter(NamingStrategy, bool) instead.")]
         public StringEnumConverter(bool camelCaseText)
         {
             if (camelCaseText) NamingStrategy = new CamelCaseNamingStrategy();
@@ -96,7 +82,8 @@ namespace Dreamcast.Json.Converters
         {
             ValidationUtils.ArgumentNotNull(namingStrategyType, nameof(namingStrategyType));
 
-            NamingStrategy = JsonTypeReflector.CreateNamingStrategyInstance(namingStrategyType, namingStrategyParameters);
+            NamingStrategy =
+                JsonTypeReflector.CreateNamingStrategyInstance(namingStrategyType, namingStrategyParameters);
         }
 
         /// <summary>
@@ -122,7 +109,8 @@ namespace Dreamcast.Json.Converters
         {
             ValidationUtils.ArgumentNotNull(namingStrategyType, nameof(namingStrategyType));
 
-            NamingStrategy = JsonTypeReflector.CreateNamingStrategyInstance(namingStrategyType, namingStrategyParameters);
+            NamingStrategy =
+                JsonTypeReflector.CreateNamingStrategyInstance(namingStrategyType, namingStrategyParameters);
             AllowIntegerValues = allowIntegerValues;
         }
 
@@ -131,7 +119,8 @@ namespace Dreamcast.Json.Converters
         ///     The default value is <c>false</c>.
         /// </summary>
         /// <value><c>true</c> if the written enum text will be camel case; otherwise, <c>false</c>.</value>
-        [Obsolete("StringEnumConverter.CamelCaseText is obsolete. Set StringEnumConverter.NamingStrategy with CamelCaseNamingStrategy instead.")]
+        [Obsolete(
+            "StringEnumConverter.CamelCaseText is obsolete. Set StringEnumConverter.NamingStrategy with CamelCaseNamingStrategy instead.")]
         public bool CamelCaseText
         {
             get => NamingStrategy is CamelCaseNamingStrategy ? true : false;
@@ -183,7 +172,10 @@ namespace Dreamcast.Json.Converters
 
             if (!EnumUtils.TryToString(e.GetType(), value, NamingStrategy, out var enumName))
             {
-                if (!AllowIntegerValues) throw JsonSerializationException.Create(null, writer.ContainerPath, "Integer value {0} is not allowed.".FormatWith(CultureInfo.InvariantCulture, e.ToString("D")), null);
+                if (!AllowIntegerValues)
+                    throw JsonSerializationException.Create(null, writer.ContainerPath,
+                        "Integer value {0} is not allowed.".FormatWith(CultureInfo.InvariantCulture, e.ToString("D")),
+                        null);
 
                 // enum value has no name so write number
                 writer.WriteValue(value);
@@ -202,11 +194,14 @@ namespace Dreamcast.Json.Converters
         /// <param name="existingValue">The existing value of object being read.</param>
         /// <param name="serializer">The calling serializer.</param>
         /// <returns>The object value.</returns>
-        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue,
+            JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.Null)
             {
-                if (!ReflectionUtils.IsNullableType(objectType)) throw JsonSerializationException.Create(reader, "Cannot convert null value to {0}.".FormatWith(CultureInfo.InvariantCulture, objectType));
+                if (!ReflectionUtils.IsNullableType(objectType))
+                    throw JsonSerializationException.Create(reader,
+                        "Cannot convert null value to {0}.".FormatWith(CultureInfo.InvariantCulture, objectType));
 
                 return null;
             }
@@ -227,18 +222,23 @@ namespace Dreamcast.Json.Converters
 
                 if (reader.TokenType == JsonToken.Integer)
                 {
-                    if (!AllowIntegerValues) throw JsonSerializationException.Create(reader, "Integer value {0} is not allowed.".FormatWith(CultureInfo.InvariantCulture, reader.Value));
+                    if (!AllowIntegerValues)
+                        throw JsonSerializationException.Create(reader,
+                            "Integer value {0} is not allowed.".FormatWith(CultureInfo.InvariantCulture, reader.Value));
 
                     return ConvertUtils.ConvertOrCast(reader.Value, CultureInfo.InvariantCulture, t);
                 }
             }
             catch (Exception ex)
             {
-                throw JsonSerializationException.Create(reader, "Error converting value {0} to type '{1}'.".FormatWith(CultureInfo.InvariantCulture, MiscellaneousUtils.ToString(reader.Value), objectType), ex);
+                throw JsonSerializationException.Create(reader,
+                    "Error converting value {0} to type '{1}'.".FormatWith(CultureInfo.InvariantCulture,
+                        MiscellaneousUtils.ToString(reader.Value), objectType), ex);
             }
 
             // we don't actually expect to get here.
-            throw JsonSerializationException.Create(reader, "Unexpected token {0} when parsing enum.".FormatWith(CultureInfo.InvariantCulture, reader.TokenType));
+            throw JsonSerializationException.Create(reader,
+                "Unexpected token {0} when parsing enum.".FormatWith(CultureInfo.InvariantCulture, reader.TokenType));
         }
 
         /// <summary>

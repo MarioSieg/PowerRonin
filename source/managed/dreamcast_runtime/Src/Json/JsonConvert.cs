@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -254,14 +239,19 @@ namespace Dreamcast.Json
             return EnsureDecimalPlace(value, value.ToString("R", CultureInfo.InvariantCulture));
         }
 
-        internal static string ToString(float value, FloatFormatHandling floatFormatHandling, char quoteChar, bool nullable)
+        internal static string ToString(float value, FloatFormatHandling floatFormatHandling, char quoteChar,
+            bool nullable)
         {
-            return EnsureFloatFormat(value, EnsureDecimalPlace(value, value.ToString("R", CultureInfo.InvariantCulture)), floatFormatHandling, quoteChar, nullable);
+            return EnsureFloatFormat(value,
+                EnsureDecimalPlace(value, value.ToString("R", CultureInfo.InvariantCulture)), floatFormatHandling,
+                quoteChar, nullable);
         }
 
-        private static string EnsureFloatFormat(double value, string text, FloatFormatHandling floatFormatHandling, char quoteChar, bool nullable)
+        private static string EnsureFloatFormat(double value, string text, FloatFormatHandling floatFormatHandling,
+            char quoteChar, bool nullable)
         {
-            if (floatFormatHandling == FloatFormatHandling.Symbol || !(double.IsInfinity(value) || double.IsNaN(value))) return text;
+            if (floatFormatHandling == FloatFormatHandling.Symbol ||
+                !(double.IsInfinity(value) || double.IsNaN(value))) return text;
 
             if (floatFormatHandling == FloatFormatHandling.DefaultValue) return !nullable ? "0.0" : Null;
 
@@ -278,14 +268,18 @@ namespace Dreamcast.Json
             return EnsureDecimalPlace(value, value.ToString("R", CultureInfo.InvariantCulture));
         }
 
-        internal static string ToString(double value, FloatFormatHandling floatFormatHandling, char quoteChar, bool nullable)
+        internal static string ToString(double value, FloatFormatHandling floatFormatHandling, char quoteChar,
+            bool nullable)
         {
-            return EnsureFloatFormat(value, EnsureDecimalPlace(value, value.ToString("R", CultureInfo.InvariantCulture)), floatFormatHandling, quoteChar, nullable);
+            return EnsureFloatFormat(value,
+                EnsureDecimalPlace(value, value.ToString("R", CultureInfo.InvariantCulture)), floatFormatHandling,
+                quoteChar, nullable);
         }
 
         private static string EnsureDecimalPlace(double value, string text)
         {
-            if (double.IsNaN(value) || double.IsInfinity(value) || text.IndexOf('.') != -1 || text.IndexOf('E') != -1 || text.IndexOf('e') != -1) return text;
+            if (double.IsNaN(value) || double.IsInfinity(value) || text.IndexOf('.') != -1 || text.IndexOf('E') != -1 ||
+                text.IndexOf('e') != -1) return text;
 
             return text + ".0";
         }
@@ -415,7 +409,8 @@ namespace Dreamcast.Json
         /// <returns>A JSON string representation of the <see cref="String" />.</returns>
         public static string ToString(string? value, char delimiter, StringEscapeHandling stringEscapeHandling)
         {
-            if (delimiter != '"' && delimiter != '\'') throw new ArgumentException("Delimiter must be a single or double quote.", nameof(delimiter));
+            if (delimiter != '"' && delimiter != '\'')
+                throw new ArgumentException("Delimiter must be a single or double quote.", nameof(delimiter));
 
             return JavaScriptUtils.ToEscapedJavaScriptString(value, delimiter, true, stringEscapeHandling);
         }
@@ -483,7 +478,9 @@ namespace Dreamcast.Json
 #endif
             }
 
-            throw new ArgumentException("Unsupported type: {0}. Use the JsonSerializer class to get the object's JSON representation.".FormatWith(CultureInfo.InvariantCulture, value.GetType()));
+            throw new ArgumentException(
+                "Unsupported type: {0}. Use the JsonSerializer class to get the object's JSON representation."
+                    .FormatWith(CultureInfo.InvariantCulture, value.GetType()));
         }
 
         #region Serialize
@@ -627,7 +624,8 @@ namespace Dreamcast.Json
         ///     A JSON string representation of the object.
         /// </returns>
         [DebuggerStepThrough]
-        public static string SerializeObject(object? value, Type? type, Formatting formatting, JsonSerializerSettings? settings)
+        public static string SerializeObject(object? value, Type? type, Formatting formatting,
+            JsonSerializerSettings? settings)
         {
             var jsonSerializer = JsonSerializer.CreateDefault(settings);
             jsonSerializer.Formatting = formatting;
@@ -736,7 +734,8 @@ namespace Dreamcast.Json
         /// </param>
         /// <returns>The deserialized anonymous type from the JSON string.</returns>
         [DebuggerStepThrough]
-        public static T? DeserializeAnonymousType<T>(string value, T anonymousTypeObject, JsonSerializerSettings settings)
+        public static T? DeserializeAnonymousType<T>(string value, T anonymousTypeObject,
+            JsonSerializerSettings settings)
         {
             return DeserializeObject<T>(value, settings);
         }
@@ -851,7 +850,8 @@ namespace Dreamcast.Json
                 if (settings != null && settings.CheckAdditionalContent)
                     while (jsonReader.Read())
                         if (jsonReader.TokenType != JsonToken.Comment)
-                            throw JsonSerializationException.Create(jsonReader, "Additional text found in JSON string after finishing deserializing object.");
+                            throw JsonSerializationException.Create(jsonReader,
+                                "Additional text found in JSON string after finishing deserializing object.");
             }
         }
 

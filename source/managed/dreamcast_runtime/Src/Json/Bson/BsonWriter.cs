@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 using System;
 using System.Globalization;
 using System.IO;
@@ -29,7 +14,8 @@ namespace Dreamcast.Json.Bson
     /// <summary>
     ///     Represents a writer that provides a fast, non-cached, forward-only way of generating BSON data.
     /// </summary>
-    [Obsolete("BSON reading and writing has been moved to its own package. See https://www.nuget.org/packages/Dreamcast.Json.Bson for more details.")]
+    [Obsolete(
+        "BSON reading and writing has been moved to its own package. See https://www.nuget.org/packages/Dreamcast.Json.Bson for more details.")]
     public class BsonWriter : JsonWriter
     {
         private readonly BsonBinaryWriter _writer;
@@ -201,7 +187,10 @@ namespace Dreamcast.Json.Bson
             }
             else
             {
-                if (token.Type != BsonType.Object && token.Type != BsonType.Array) throw JsonWriterException.Create(this, "Error writing {0} value. BSON must start with an Object or Array.".FormatWith(CultureInfo.InvariantCulture, token.Type), null);
+                if (token.Type != BsonType.Object && token.Type != BsonType.Array)
+                    throw JsonWriterException.Create(this,
+                        "Error writing {0} value. BSON must start with an Object or Array.".FormatWith(
+                            CultureInfo.InvariantCulture, token.Type), null);
 
                 _parent = token;
                 _root = token;
@@ -275,7 +264,10 @@ namespace Dreamcast.Json.Bson
         [CLSCompliant(false)]
         public override void WriteValue(uint value)
         {
-            if (value > int.MaxValue) throw JsonWriterException.Create(this, "Value is too large to fit in a signed 32 bit integer. BSON does not support unsigned values.", null);
+            if (value > int.MaxValue)
+                throw JsonWriterException.Create(this,
+                    "Value is too large to fit in a signed 32 bit integer. BSON does not support unsigned values.",
+                    null);
 
             base.WriteValue(value);
             AddValue(value, BsonType.Integer);
@@ -298,7 +290,10 @@ namespace Dreamcast.Json.Bson
         [CLSCompliant(false)]
         public override void WriteValue(ulong value)
         {
-            if (value > long.MaxValue) throw JsonWriterException.Create(this, "Value is too large to fit in a signed 64 bit integer. BSON does not support unsigned values.", null);
+            if (value > long.MaxValue)
+                throw JsonWriterException.Create(this,
+                    "Value is too large to fit in a signed 64 bit integer. BSON does not support unsigned values.",
+                    null);
 
             base.WriteValue(value);
             AddValue(value, BsonType.Long);
