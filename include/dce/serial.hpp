@@ -18,12 +18,12 @@ namespace dce {
 		auto operator=(ISerializable&&) noexcept -> ISerializable& = default;
 		virtual ~ISerializable() = default;
 
-		[[nodiscard]] virtual void serialize(JsonStream&) const = 0;
+		virtual void serialize(JsonStream&) const = 0;
 
-		[[nodiscard]] virtual void deserialize(const JsonStream&) = 0;
+		virtual void deserialize(const JsonStream&) = 0;
 
-		[[nodiscard]] virtual auto serialize_to_file(const std::filesystem::path& _path) const -> bool;
+		virtual auto serialize_to_file(const std::filesystem::path& _path) const -> bool;
 
-		[[nodiscard]] virtual auto deserialize_from_file(const std::filesystem::path& _path) -> bool;
+		virtual auto deserialize_from_file(const std::filesystem::path& _path) -> bool;
 	};
 } // namespace dce // namespace dce

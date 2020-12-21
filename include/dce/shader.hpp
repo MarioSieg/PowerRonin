@@ -17,10 +17,10 @@ namespace dce {
 	};
 
 	struct ShaderMeta final : ISerializable {
-		[[nodiscard]] inline void serialize(JsonStream&) const override {
+		inline void serialize(JsonStream&) const override {
 		}
 
-		[[nodiscard]] inline void deserialize(const JsonStream&) override {
+		inline void deserialize(const JsonStream&) override {
 		}
 	};
 

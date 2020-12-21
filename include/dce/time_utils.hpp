@@ -21,5 +21,5 @@ namespace dce {
 	/// Writes safe_localtime as timestamp string into a fixed buffer.
 	/// </summary>
 	/// <param name="_buffer"></param>
-	[[nodiscard]] extern void time_stamp(char (&_buffer)[32]);
+	extern void time_stamp(char (&_buffer)[32]);
 }

@@ -1,19 +1,16 @@
 #pragma once
 
 #include "texture.hpp"
-#include "mathlib.hpp"
-
 #include <variant>
-#include <optional>
 
 namespace dce {
 	class ResourceManager;
 
 	struct MaterialMeta final : ISerializable {
-		[[nodiscard]] inline void serialize(JsonStream&) const override {
+		inline void serialize(JsonStream&) const override {
 		}
 
-		[[nodiscard]] inline void deserialize(const JsonStream&) override {
+		inline void deserialize(const JsonStream&) override {
 		}
 	};
 

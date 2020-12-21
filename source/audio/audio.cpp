@@ -1,10 +1,6 @@
 #include "audio.hpp"
-#include "audio_headers.hpp"
-#include "../wincom.hpp"
 
 namespace dce::audio {
-	FMOD::System* AUDIO_SYSTEM_HANDLE = nullptr;
-
 	Audio::Audio() : ISubsystem("Audio", EVENTS) {
 	}
 
@@ -12,44 +8,67 @@ namespace dce::audio {
 
 		auto& proto = _rt.protocol();
 
-		proto.info("Initializing COM...");
-		co_initialize();
+		// Create memory manager:
 
-		proto.info("Creating audio system...");
-
-		FMOD_RESULT result = System_Create(&this->system_);
-		[[unlikely]] if (result != FMOD_OK) {
+		AK::MemoryMgr::GetDefaultSettings(this->mem_settings_);
+		proto.info("Initializing audio memory manager...");
+		[[unlikely]] if (AK::MemoryMgr::Init(&this->mem_settings_) != AKRESULT::AK_Success) {
 			return false;
 		}
 
-		const auto max_channels = _rt.config().audio.max_channels;
-		constexpr auto flags = FMOD_INIT_NORMAL; //| FMOD_INIT_3D_RIGHTHANDED;
-		proto.info("Initializing audio system...");
+		// Create streaming manager:
 
-		result = this->system_->init(max_channels, flags, nullptr);
-		[[unlikely]] if (result != FMOD_OK) {
+		AK::StreamMgr::GetDefaultSettings(this->stream_settings_);
+		proto.info("Initializing audio streaming manager...");
+		[[unlikely]] if (!AK::StreamMgr::Create(this->stream_settings_)) {
 			return false;
 		}
 
-		proto.info("Max channels: {}", max_channels);
-		proto.info("Creation flags: {:B}", flags);
+		// Create a streaming device with blocking low-level I/O handshaking:
 
-		AUDIO_SYSTEM_HANDLE = this->system_;
+		AK::StreamMgr::GetDefaultDeviceSettings(this->device_settings_);
+		proto.info("Initializing audio device...");
+		[[unlikely]] if (this->io_.Init(this->device_settings_) != AKRESULT::AK_Success) {
+			return false;
+		}
+
+		// Create sound engine:
+
+		AK::SoundEngine::GetDefaultInitSettings(this->init_settings_);
+		AK::SoundEngine::GetDefaultPlatformInitSettings(this->platform_init_settings_);
+		proto.info("Initializing sound engine...");
+		[[unlikely]] if (AK::SoundEngine::Init(&this->init_settings_, &this->platform_init_settings_) != AKRESULT::AK_Success) {
+			return false;
+		}
+
+		// Create interactive music engine:
+
+		AK::MusicEngine::GetDefaultInitSettings(this->music_settings_);
+		proto.info("Initializing music engine...");
+		[[unlikely]] if (AK::MusicEngine::Init(&this->music_settings_) != AKRESULT::AK_Success) {
+			return false;
+		}
+
+		// Create spatial audio engine:
+		proto.info("Initializing spatial audio...");
+		[[unlikely]] if (AK::SpatialAudio::Init(this->spatial_audio_init_settings_) != AKRESULT::AK_Success) {
+			return false;
+		}
 
 		return true;
 	}
 
 	auto Audio::on_pre_tick(Runtime& _rt) -> bool {
-		return true;
+		return AK::SoundEngine::RenderAudio() == AKRESULT::AK_Success;
 	}
 
 	auto Audio::on_pre_shutdown(Runtime& _rt) -> bool {
-		[[likely]] if (this->system_) {
-			this->system_->release();
-			this->system_ = nullptr;
-			AUDIO_SYSTEM_HANDLE = nullptr;
+		AK::MusicEngine::Term();
+		AK::SoundEngine::Term();
+		[[likely]] if (AK::IAkStreamMgr::Get()) {
+			AK::IAkStreamMgr::Get()->Destroy();
 		}
-		co_uninitialize();
+		AK::MemoryMgr::Term();
 		return true;
 	}
 

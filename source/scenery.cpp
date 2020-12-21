@@ -20,7 +20,6 @@ namespace dce {
 
 			auto& meta = this->registry_.emplace<MetaData>(cube);
 			auto& transform = this->registry_.emplace<Transform>(cube);
-			auto& audio = this->registry_.emplace<AudioSource>(cube);
 			auto& renderer = this->registry_.emplace<MeshRenderer>(cube);
 			auto& collider = this->registry_.emplace<Collider>(cube);
 
@@ -29,12 +28,6 @@ namespace dce {
 			lambert.albedo = _resource_manager.system_resources.checkerboard;
 			renderer.material = Material::create_from_data(lambert, "cube", _resource_manager);
 			renderer.mesh = _resource_manager.system_resources.cube;
-			AudioClipMeta aumeta = {};
-			aumeta.enable_3d_sound = false;
-			aumeta.is_stream = true;
-			audio.clip = _resource_manager.load<AudioClip>("audio/music/scifi_ambience.ogg", &aumeta);
-			//audio.play();
-			audio.set_volume(0.1F);
 		}
 
 		// Create platform:

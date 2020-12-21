@@ -27,7 +27,6 @@ namespace dce::gui::widgets {
 
 		build_filter_extensions(this->mesh_filer_, Mesh::FILE_EXTENSIONS);
 		build_filter_extensions(this->texture_filer_, Texture::FILE_EXTENSIONS);
-		build_filter_extensions(this->audio_filter_, AudioClip::FILE_EXTENSIONS);
 	}
 
 	void Inspector::update(bool& _show, Registry& _registry, ResourceManager& _resource_manager, const ERef _entity) {
@@ -183,32 +182,6 @@ namespace dce::gui::widgets {
 					[[likely]] if (CollapsingHeader(ICON_FA_GLOBE " Rigidbody", ImGuiTreeNodeFlags_DefaultOpen)) {
 						DragFloat("Mass", &rigidbody.mass);
 						Checkbox("Is Kinematic", &rigidbody.is_kinematic);
-					}
-				}
-
-				[[unlikely]] if (_registry.has<AudioSource>(_entity)) {
-					auto& audio_source = _registry.get<AudioSource>(_entity);
-					[[likely]] if (CollapsingHeader(ICON_FA_VOLUME " Audio Source", ImGuiTreeNodeFlags_DefaultOpen)) {
-						[[unlikely]] if (Button(ICON_FA_PLAY_CIRCLE)) {
-							audio_source.play();
-						}
-						SameLine();
-						[[unlikely]] if (Button(ICON_FA_STOP_CIRCLE)) {
-							audio_source.stop();
-						}
-						const auto file_name = audio_source.clip->get_file_path().filename().string();
-
-						PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
-						if (Button(file_name.c_str())) {
-							char* path = nullptr;
-							open_file_dialog(path, this->audio_filter_.c_str(), this->current_path_.c_str());
-							[[likely]] if (path) {
-								audio_source.clip = _resource_manager.load<AudioClip>(path);
-							}
-						}
-						PopStyleColor();
-						SameLine();
-						TextUnformatted("Clip");
 					}
 				}
 				EndChild();

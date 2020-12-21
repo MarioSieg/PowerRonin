@@ -68,29 +68,6 @@ namespace Dreamcast.Tools
                     CopyDir.Copy(dir, Path.Combine(outputDir, dir));
                 }
 
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                {
-                    if (!Directory.Exists(LinuxOnlyDir))
-                    {
-                        Protocol.Error("Missing Linux specific dir: " + LinuxOnlyDir);
-                        return;
-                    }
-
-                    foreach (var file in Directory.GetFiles(LinuxOnlyDir, "*.so"))
-                        File.Copy(file, Path.Combine(outputDir, OutputDirMain, Path.GetFileName(file)));
-                }
-                else
-                {
-                    if (!Directory.Exists(WindowsOnlyDir))
-                    {
-                        Protocol.Error("Missing Windows specific dir: " + WindowsOnlyDir);
-                        return;
-                    }
-
-                    foreach (var file in Directory.GetFiles(WindowsOnlyDir, "*.dll"))
-                        File.Copy(file, Path.Combine(outputDir, OutputDirMain, Path.GetFileName(file)));
-                }
-
                 Protocol.Info("Done! Check: " + outputDir);
             }
             catch (Exception exception)

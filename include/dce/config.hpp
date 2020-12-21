@@ -60,10 +60,6 @@ namespace dce {
 		} graphics;
 
 		struct {
-			std::uint16_t max_channels = 2048;
-		} audio;
-
-		struct {
 			std::filesystem::path config_dir = "runtime/etc";
 			std::filesystem::path library_dir = "runtime/lib";
 		} scripting;
