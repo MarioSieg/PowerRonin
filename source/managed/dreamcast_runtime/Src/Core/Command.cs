@@ -14,27 +14,27 @@
         /// <summary>
         ///     The name used in the terminal.
         /// </summary>
-        public string name;
+        public string Name;
 
         /// <summary>
         ///     Short description.
         /// </summary>
-        public string brief;
+        public string Brief;
 
         /// <summary>
         ///     Number of parameters. 0 if none.
         /// </summary>
-        public byte parameterCount;
+        public byte ParameterCount;
 
         /// <summary>
         ///     True if it requires native engine root privileges, else false.
         /// </summary>
-        public bool requiresRootPrivileges;
+        public bool RequiresRootPrivileges;
 
         /// <summary>
         ///     Executor hook.
         /// </summary>
-        public CommandExecutor executor;
+        public CommandExecutor Executor;
 
         /// <summary>
         /// </summary>
@@ -42,7 +42,7 @@
         public override string ToString()
         {
             return
-                $"{nameof(name)}: {name}, {nameof(brief)}: {brief}, {nameof(parameterCount)}: {parameterCount}, {nameof(requiresRootPrivileges)}: {requiresRootPrivileges}";
+                $"{nameof(Name)}: {Name}, {nameof(Brief)}: {Brief}, {nameof(ParameterCount)}: {ParameterCount}, {nameof(RequiresRootPrivileges)}: {RequiresRootPrivileges}";
         }
     }
 }

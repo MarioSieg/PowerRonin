@@ -9,17 +9,27 @@ namespace Dreamcast.Core
     /// <summary>
     ///     Contains helpers for de/serialization.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public static class Serializer<T> where T : new()
+    public static class Serializer
     {
+        public static void SetupFormatter()
+        {
+            JsonConvert.DefaultSettings = () =>
+            {
+                var settings = new JsonSerializerSettings();
+                settings.Converters.Add(new StringEnumConverter());
+                settings.Formatting = Formatting.Indented;
+                return settings;
+            };
+        }
+
         /// <summary>
         ///     Serializes T into a XML string.
         /// </summary>
         /// <param name="instance">The instance to serialize.</param>
         /// <returns></returns>
-        public static string SerializeToJsonString(in T instance)
+        public static string SerializeToJsonString<T>(in T instance) where T : new()
         {
-            return JsonConvert.SerializeObject(instance, Formatting.Indented, new StringEnumConverter());
+            return JsonConvert.SerializeObject(instance);
         }
 
         /// <summary>
@@ -27,7 +37,7 @@ namespace Dreamcast.Core
         /// </summary>
         /// <param name="data">The XML string.</param>
         /// <returns>The deserialized object.</returns>
-        public static T DeserializeFromJsonString(string data)
+        public static T DeserializeFromJsonString<T>(string data) where T : new()
         {
             return (T) (JsonConvert.DeserializeObject(data) ?? new T());
         }
@@ -37,10 +47,10 @@ namespace Dreamcast.Core
         /// </summary>
         /// <param name="instance">The instance to serialize.</param>
         /// <param name="path">The file to serialize into.</param>
-        public static void SerializeToJsonFile(in T instance, string path)
+        public static void SerializeToJsonFile<T>(in T instance, string path) where T : new()
         {
             File.WriteAllText(path,
-                JsonConvert.SerializeObject(instance, Formatting.Indented, new StringEnumConverter()));
+                JsonConvert.SerializeObject(instance));
         }
 
         /// <summary>
@@ -48,7 +58,7 @@ namespace Dreamcast.Core
         /// </summary>
         /// <param name="path">The file to serialize from.</param>
         /// <returns>The deserialized object.</returns>
-        public static T DeserializeFromJsonFile(string path)
+        public static T DeserializeFromJsonFile<T>(string path) where T : new()
         {
             return (T) (JsonConvert.DeserializeObject(File.ReadAllText(path)) ?? new T());
         }
@@ -58,7 +68,7 @@ namespace Dreamcast.Core
         /// </summary>
         /// <param name="instance">The instance to serialize.</param>
         /// <param name="path">The file to serialize into.</param>
-        public static void SerializeToBinaryFile(in T instance, string path)
+        public static void SerializeToBinaryFile<T>(in T instance, string path) where T : new()
         {
             if (instance == null) throw new ArgumentNullException(nameof(instance));
             var formatter = new BinaryFormatter();
@@ -72,7 +82,7 @@ namespace Dreamcast.Core
         /// </summary>
         /// <param name="path">The file to serialize from.</param>
         /// <returns>The deserialized object.</returns>
-        public static T DeserializeFromBinaryFile(string path)
+        public static T DeserializeFromBinaryFile<T>(string path) where T : new()
         {
             var formatter = new BinaryFormatter();
             using var stream = new FileStream(path, FileMode.Open);

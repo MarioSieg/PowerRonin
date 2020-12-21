@@ -35,27 +35,27 @@
                 Represents an executable terminal command.
             </summary>
         </member>
-        <member name="F:Dreamcast.Core.Command.name">
+        <member name="F:Dreamcast.Core.Command.Name">
             <summary>
                 The name used in the terminal.
             </summary>
         </member>
-        <member name="F:Dreamcast.Core.Command.brief">
+        <member name="F:Dreamcast.Core.Command.Brief">
             <summary>
                 Short description.
             </summary>
         </member>
-        <member name="F:Dreamcast.Core.Command.parameterCount">
+        <member name="F:Dreamcast.Core.Command.ParameterCount">
             <summary>
                 Number of parameters. 0 if none.
             </summary>
         </member>
-        <member name="F:Dreamcast.Core.Command.requiresRootPrivileges">
+        <member name="F:Dreamcast.Core.Command.RequiresRootPrivileges">
             <summary>
                 True if it requires native engine root privileges, else false.
             </summary>
         </member>
-        <member name="F:Dreamcast.Core.Command.executor">
+        <member name="F:Dreamcast.Core.Command.Executor">
             <summary>
                 Executor hook.
             </summary>
@@ -209,6 +209,59 @@
             </summary>
             <param name="mouseButton">The mouse button.</param>
             <returns>True if the mouse button is currently pressed, else false.</returns>
+        </member>
+        <member name="T:Dreamcast.Core.RequiredItemType">
+            <summary>
+                Represents the type a required item.
+                Can be a file or a dir.
+            </summary>
+        </member>
+        <member name="F:Dreamcast.Core.RequiredItemType.Directory">
+            <summary>
+                A directory is required.
+            </summary>
+        </member>
+        <member name="F:Dreamcast.Core.RequiredItemType.File">
+            <summary>
+                A file is required.
+            </summary>
+        </member>
+        <member name="T:Dreamcast.Core.MissingAction">
+            <summary>
+                Action to do if an important item is missing.
+            </summary>
+        </member>
+        <member name="F:Dreamcast.Core.MissingAction.Create">
+            <summary>
+                Create the file or directory.
+            </summary>
+        </member>
+        <member name="F:Dreamcast.Core.MissingAction.Error">
+            <summary>
+                Abort the program with a fatal error.
+            </summary>
+        </member>
+        <member name="F:Dreamcast.Core.MissingAction.Ignore">
+            <summary>
+                Ignore it, it's not important or the file/directory is not needed strictly.
+            </summary>
+        </member>
+        <member name="T:Dreamcast.Core.InstallationValidation">
+            <summary>
+                Contains tools to validate an editor and retail installation directory.
+            </summary>
+        </member>
+        <member name="F:Dreamcast.Core.InstallationValidation.RequiredEntries">
+            <summary>
+                All commonly required directories in an editor installation.
+                You can add your own.
+            </summary>
+        </member>
+        <member name="M:Dreamcast.Core.InstallationValidation.Run(System.String)">
+            <summary>
+                Run it in the specified directory.
+            </summary>
+            <param name="directory">Validate the directory.</param>
         </member>
         <member name="T:Dreamcast.Core.Key">
             <summary>
@@ -982,48 +1035,47 @@
             </summary>
             <param name="pattern"></param>
         </member>
-        <member name="T:Dreamcast.Core.Serializer`1">
+        <member name="T:Dreamcast.Core.Serializer">
             <summary>
                 Contains helpers for de/serialization.
             </summary>
-            <typeparam name="T"></typeparam>
         </member>
-        <member name="M:Dreamcast.Core.Serializer`1.SerializeToJsonString(`0@)">
+        <member name="M:Dreamcast.Core.Serializer.SerializeToJsonString``1(``0@)">
             <summary>
                 Serializes T into a XML string.
             </summary>
             <param name="instance">The instance to serialize.</param>
             <returns></returns>
         </member>
-        <member name="M:Dreamcast.Core.Serializer`1.DeserializeFromJsonString(System.String)">
+        <member name="M:Dreamcast.Core.Serializer.DeserializeFromJsonString``1(System.String)">
             <summary>
                 Deserializes the object from a XML string.
             </summary>
             <param name="data">The XML string.</param>
             <returns>The deserialized object.</returns>
         </member>
-        <member name="M:Dreamcast.Core.Serializer`1.SerializeToJsonFile(`0@,System.String)">
+        <member name="M:Dreamcast.Core.Serializer.SerializeToJsonFile``1(``0@,System.String)">
             <summary>
                 Serializes T into a XML file.
             </summary>
             <param name="instance">The instance to serialize.</param>
             <param name="path">The file to serialize into.</param>
         </member>
-        <member name="M:Dreamcast.Core.Serializer`1.DeserializeFromJsonFile(System.String)">
+        <member name="M:Dreamcast.Core.Serializer.DeserializeFromJsonFile``1(System.String)">
             <summary>
                 Deserializes the object from a XML file.
             </summary>
             <param name="path">The file to serialize from.</param>
             <returns>The deserialized object.</returns>
         </member>
-        <member name="M:Dreamcast.Core.Serializer`1.SerializeToBinaryFile(`0@,System.String)">
+        <member name="M:Dreamcast.Core.Serializer.SerializeToBinaryFile``1(``0@,System.String)">
             <summary>
                 Serializes T into a binary file.
             </summary>
             <param name="instance">The instance to serialize.</param>
             <param name="path">The file to serialize into.</param>
         </member>
-        <member name="M:Dreamcast.Core.Serializer`1.DeserializeFromBinaryFile(System.String)">
+        <member name="M:Dreamcast.Core.Serializer.DeserializeFromBinaryFile``1(System.String)">
             <summary>
                 Deserializes the object from a binary file.
             </summary>
@@ -13380,7 +13432,7 @@
                 A zero size with (width, height) = (0,0)
             </summary>
         </member>
-        <member name="M:Dreamcast.Mathematics.Size2.#ctor(System.Int32,System.Int32)">
+        <member name="M:Dreamcast.Mathematics.Size2.#ctor(System.UInt32,System.UInt32)">
             <summary>
                 Initializes a new instance of the <see cref="T:Dreamcast.Mathematics.Size2" /> struct.
             </summary>

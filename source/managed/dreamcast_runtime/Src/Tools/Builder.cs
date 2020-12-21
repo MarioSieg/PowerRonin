@@ -19,7 +19,7 @@ namespace Dreamcast.Tools
             RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ? "dreamcast" : "dreamcast.exe";
 
         private static readonly string[] RequiredDirs =
-            {"audio", "fonts", "meshes", "shaders", "textures", "examples", "runtime"};
+            {"audio", "fonts", "meshes", "shaders", "examples", "textures", "runtime"};
 
         public static void BuildEditorStandalone(string outputDir = "retail")
         {

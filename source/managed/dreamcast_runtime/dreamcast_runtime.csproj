@@ -82,6 +82,7 @@
     <Compile Include="Src\Core\Entry.cs" />
     <Compile Include="Src\Core\GraphicsAPI.cs" />
     <Compile Include="Src\Core\Input.cs" />
+    <Compile Include="Src\Core\InstallationValidation.cs" />
     <Compile Include="Src\Core\Key.cs" />
     <Compile Include="Src\Core\LogLevel.cs" />
     <Compile Include="Src\Core\Lua.cs" />

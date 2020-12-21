@@ -1,37 +1,3 @@
-/*******************************************************************************
-The content of this file includes portions of the AUDIOKINETIC Wwise Technology
-released in source code form as part of the SDK installer package.
-
-Commercial License Usage
-
-Licensees holding valid commercial licenses to the AUDIOKINETIC Wwise Technology
-may use this file in accordance with the end user license agreement provided 
-with the software or, alternatively, in accordance with the terms contained in a
-written agreement between you and Audiokinetic Inc.
-
-  Version: v2019.2.7  Build: 7402
-  Copyright (c) 2006-2020 Audiokinetic Inc.
-*******************************************************************************/
-//////////////////////////////////////////////////////////////////////
-// 
-// AkFilePackageLUT.h
-//
-// This class parses the header of file packages that were created with the 
-// AkFilePackager utility app (located in ($WWISESDK)/samples/FilePackager/),
-// and looks-up files at run-time.
-// 
-// The header of these file packages contains look-up tables that describe the 
-// internal offset of each file it references, their block size (required alignment), 
-// and their language. Each combination of AkFileID and Language ID is unique.
-//
-// The language was created dynamically when the package was created. The header 
-// also contains a map of language names (strings) to their ID, so that the proper 
-// language-specific version of files can be resolved. The language name that is stored
-// matches the name of the directory that is created by the Wwise Bank Manager,
-// except for the trailing slash.
-//
-//////////////////////////////////////////////////////////////////////
-
 #ifndef _AK_FILE_PACKAGE_LUT_H_
 #define _AK_FILE_PACKAGE_LUT_H_
 
@@ -51,169 +17,165 @@ written agreement between you and Audiokinetic Inc.
 // Desc: Keeps pointers to various parts of the header. Offers look-up services
 // for file look-up and soundbank ID retrieval.
 //-----------------------------------------------------------------------------
-class CAkFilePackageLUT
-{
+class CAkFilePackageLUT {
 public:
 
 	static const AkUInt16 AK_INVALID_LANGUAGE_ID = 0;
 
-// Ensure no padding is done because this structure is mapped to file content
+	// Ensure no padding is done because this structure is mapped to file content
 #pragma pack(push, 4)
 	template <class T_FILEID>
-	struct AkFileEntry 
-    {
-        T_FILEID	fileID;		// File identifier. 
-		AkUInt32	uBlockSize;	// Size of one block, required alignment (in bytes).
-		AkUInt32	uFileSize;  // File size in bytes. 
-        AkUInt32	uStartBlock;// Start block, expressed in terms of uBlockSize. 
-        AkUInt32	uLanguageID;// Language ID. AK_INVALID_LANGUAGE_ID if not language-specific. 
-    };
+	struct AkFileEntry {
+		T_FILEID fileID; // File identifier. 
+		AkUInt32 uBlockSize; // Size of one block, required alignment (in bytes).
+		AkUInt32 uFileSize; // File size in bytes. 
+		AkUInt32 uStartBlock; // Start block, expressed in terms of uBlockSize. 
+		AkUInt32 uLanguageID; // Language ID. AK_INVALID_LANGUAGE_ID if not language-specific. 
+	};
 #pragma pack(pop)
 
-    CAkFilePackageLUT();
-    virtual ~CAkFilePackageLUT();
+	CAkFilePackageLUT();
+	virtual ~CAkFilePackageLUT();
 
 	// Create a new LUT from a packaged file header.
 	// The LUT sets pointers to appropriate location inside header data (in_pData).
-	AKRESULT Setup(
-		AkUInt8 *			in_pData,			// Header data.
-		AkUInt32			in_uHeaderSize		// Size of file package header.
-		);
+	auto Setup(
+		AkUInt8* in_pData, // Header data.
+		AkUInt32 in_uHeaderSize // Size of file package header.
+	) -> AKRESULT;
 
 	// Find a file entry by ID.
-	const AkFileEntry<AkFileID> * LookupFile(
-		AkFileID			in_uID,				// File ID.
-		AkFileSystemFlags * in_pFlags			// Special flags. Do not pass NULL.
-		);
-	
-    // Find a file entry by ID with 64 bit ID.
-	const AkFileEntry<AkUInt64> * LookupFile(
-		AkUInt64			in_uID,				// File ID.
-		AkFileSystemFlags * in_pFlags			// Special flags. Do not pass NULL.
-		);
+	auto LookupFile(
+		AkFileID in_uID, // File ID.
+		AkFileSystemFlags* in_pFlags // Special flags. Do not pass NULL.
+	) -> const AkFileEntry<AkFileID>*;
+
+	// Find a file entry by ID with 64 bit ID.
+	auto LookupFile(
+		AkUInt64 in_uID, // File ID.
+		AkFileSystemFlags* in_pFlags // Special flags. Do not pass NULL.
+	) -> const AkFileEntry<AkUInt64>*;
 
 	// Set current language.
 	// Returns AK_InvalidLanguage if a package is loaded but the language string cannot be found.
 	// Returns AK_Success otherwise.
-	AKRESULT SetCurLanguage(
-		const AkOSChar*			in_pszLanguage		// Language string.
-		);
+	auto SetCurLanguage(
+		const AkOSChar* in_pszLanguage // Language string.
+	) -> AKRESULT;
 
 	// Find a soundbank ID by its name (by hashing its name)
-	AkFileID GetSoundBankID( 
-		const AkOSChar*			in_pszBankName		// Soundbank name.
-		);
+	auto GetSoundBankID(
+		const AkOSChar* in_pszBankName // Soundbank name.
+	) -> AkFileID;
 
-    // Return the id of an external file (by hashing its name in 64 bits)
-	AkUInt64 GetExternalID( 
-		const AkOSChar*			in_pszExternalName		// External Source name.
-		);	
+	// Return the id of an external file (by hashing its name in 64 bits)
+	auto GetExternalID(
+		const AkOSChar* in_pszExternalName // External Source name.
+	) -> AkUInt64;
 
 protected:
-	static void RemoveFileExtension( AkOSChar* in_pstring );
-	static void _MakeLower( AkOSChar* in_pString );
-	static void _MakeLowerA( char* in_pString, size_t in_strlen );
-	static AkUInt64 _MakeLowerAndHash64( char* in_pszString );
-	static AkUInt64 GetID64FromString( const char* in_pszString );
-	static AkUInt64 GetID64FromString( const wchar_t* in_pszString );
+	static void RemoveFileExtension(AkOSChar* in_pstring);
+	static void _MakeLower(AkOSChar* in_pString);
+	static void _MakeLowerA(char* in_pString, size_t in_strlen);
+	static auto _MakeLowerAndHash64(char* in_pszString) -> AkUInt64;
+	static auto GetID64FromString(const char* in_pszString) -> AkUInt64;
+	static auto GetID64FromString(const wchar_t* in_pszString) -> AkUInt64;
 
 	//
 	// File LUTs.
 	// 
 	template <class T_FILEID>
-	class FileLUT
-	{
+	class FileLUT {
 	public:
-		const AkFileEntry<T_FILEID> *	FileEntries() const { return (AkFileEntry<T_FILEID>*)((AkUInt32*)this + 1); }
-		bool HasFiles() const { return ( m_uNumFiles > 0 ); }
-		AkUInt32 NumFiles() const { return m_uNumFiles; }
+		[[nodiscard]] auto FileEntries() const -> const AkFileEntry<T_FILEID>* {
+			return static_cast<AkFileEntry<T_FILEID>*>(static_cast<AkUInt32*>(this) + 1);
+		}
+
+		[[nodiscard]] auto HasFiles() const -> bool { return m_uNumFiles > 0; }
+		[[nodiscard]] auto NumFiles() const -> AkUInt32 { return m_uNumFiles; }
 	private:
-		FileLUT();	// Do not create this object, just cast raw data.
-		AkUInt32		m_uNumFiles;
+		FileLUT() = delete; // Do not create this object, just cast raw data.
+		AkUInt32 m_uNumFiles;
 	};
 
 	// Helper: Find a file entry by ID.
 	template <class T_FILEID>
-	const AkFileEntry<T_FILEID> * LookupFile(
-		T_FILEID					in_uID,					// File ID.
-		const FileLUT<T_FILEID> *	in_pLut,				// LUT to search.
-		bool						in_bIsLanguageSpecific	// True: match language ID.
-		);
+	auto LookupFile(
+		T_FILEID in_uID, // File ID.
+		const FileLUT<T_FILEID>* in_pLut, // LUT to search.
+		bool in_bIsLanguageSpecific // True: match language ID.
+	) -> const AkFileEntry<T_FILEID>*;
 
 private:
 
-	AkUInt16			m_curLangID;	// Current language.
+	AkUInt16 m_curLangID; // Current language.
 
 
 	//
 	// Maps format.
 	//
-	class StringMap
-	{
+	class StringMap {
 	public:
 		// Returns AK_INVALID_UNIQUE_ID if ID is not found.
-		AkUInt32 GetID( const AkOSChar* in_pszString );
-		inline AkUInt32 GetNumStrings() { return m_uNumStrings; }
+		auto GetID(const AkOSChar* in_pszString) -> AkUInt32;
+		inline auto GetNumStrings() const -> AkUInt32 { return m_uNumStrings; }
 	private:
-		struct StringEntry
-		{
-			AkUInt32	uOffset;	// Byte offset of the string in the packaged strings section, 
-									// from beginning of the string map.
-			AkUInt32	uID;		// ID.
+		struct StringEntry {
+			AkUInt32 uOffset; // Byte offset of the string in the packaged strings section, 
+			// from beginning of the string map.
+			AkUInt32 uID; // ID.
 		};
-		StringMap();	// Do not create this object, just cast raw data to use GetID().
-		AkUInt32	m_uNumStrings;
+
+		StringMap() = delete; // Do not create this object, just cast raw data to use GetID().
+		AkUInt32 m_uNumStrings;
 	};
 
 	// Languages map.
-	StringMap *			m_pLangMap;
+	StringMap* m_pLangMap{NULL};
 
 	// SoundBanks LUT.
-    FileLUT<AkFileID> *			m_pSoundBanks;
-	
+	FileLUT<AkFileID>* m_pSoundBanks{NULL};
+
 	// StreamedFiles LUT.
-    FileLUT<AkFileID> *			m_pStmFiles;
+	FileLUT<AkFileID>* m_pStmFiles{NULL};
 
 	// External Sources LUT.
-    FileLUT<AkUInt64> *			m_pExternals;
+	FileLUT<AkUInt64>* m_pExternals{NULL};
 };
 
 // Helper: Find a file entry by ID.
 template <class T_FILEID>
-const CAkFilePackageLUT::AkFileEntry<T_FILEID> * CAkFilePackageLUT::LookupFile(
-	T_FILEID					in_uID,					// File ID.
-	const FileLUT<T_FILEID> *	in_pLut,				// LUT to search.
-	bool						in_bIsLanguageSpecific	// True: match language ID.
-	)
-{
-	const AkFileEntry<T_FILEID> * pTable	= in_pLut->FileEntries();
+auto CAkFilePackageLUT::LookupFile(
+	T_FILEID in_uID, // File ID.
+	const FileLUT<T_FILEID>* in_pLut, // LUT to search.
+	bool in_bIsLanguageSpecific // True: match language ID.
+) -> const CAkFilePackageLUT::AkFileEntry<T_FILEID>* {
+	const AkFileEntry<T_FILEID>* pTable = in_pLut->FileEntries();
 
-	AKASSERT( pTable && in_pLut->HasFiles() );
+	AKASSERT(pTable && in_pLut->HasFiles());
 	AkUInt16 uLangID = in_bIsLanguageSpecific ? m_curLangID : AK_INVALID_LANGUAGE_ID;
 
 	// Binary search. LUT items should be sorted by fileID, then by language ID.
-	AkInt32 uTop = 0, uBottom = in_pLut->NumFiles()-1;
-	do
-	{
-		AkInt32 uThis = ( uBottom - uTop ) / 2 + uTop; 
-		if ( pTable[ uThis ].fileID > in_uID ) 
+	AkInt32 uTop = 0, uBottom = in_pLut->NumFiles() - 1;
+	do {
+		AkInt32 uThis = (uBottom - uTop) / 2 + uTop;
+		if (pTable[uThis].fileID > in_uID)
 			uBottom = uThis - 1;
-		else if ( pTable[ uThis ].fileID < in_uID ) 
+		else if (pTable[uThis].fileID < in_uID)
 			uTop = uThis + 1;
-		else
-		{
+		else {
 			// Correct ID. Check language.
-			if ( pTable[ uThis ].uLanguageID > uLangID ) 
+			if (pTable[uThis].uLanguageID > uLangID)
 				uBottom = uThis - 1;
-			else if ( pTable[ uThis ].uLanguageID < uLangID ) 
+			else if (pTable[uThis].uLanguageID < uLangID)
 				uTop = uThis + 1;
 			else
 				return pTable + uThis;
 		}
 	}
-	while ( uTop <= uBottom );
+	while (uTop <= uBottom);
 
-	return NULL;
+	return nullptr;
 }
 
 #endif //_AK_FILE_PACKAGE_LUT_H_

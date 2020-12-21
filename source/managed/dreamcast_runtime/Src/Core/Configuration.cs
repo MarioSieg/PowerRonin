@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Dreamcast.Mathematics;
 
 namespace Dreamcast.Core
 {
@@ -52,13 +53,13 @@ namespace Dreamcast.Core
             {
                 if (!Directory.Exists(ConfigDirectory))
                     Directory.CreateDirectory(ConfigDirectory);
-                Serializer<DisplayConfiguration>.SerializeToJsonFile(Current.Display, DisplayConfiguration.FilePath);
-                Serializer<OverlayConfiguration>.SerializeToJsonFile(Current.Overlay, OverlayConfiguration.FilePath);
-                Serializer<GraphicsConfiguration>.SerializeToJsonFile(Current.Graphics, GraphicsConfiguration.FilePath);
+                Serializer.SerializeToJsonFile(Current.Display, DisplayConfiguration.FilePath);
+                Serializer.SerializeToJsonFile(Current.Overlay, OverlayConfiguration.FilePath);
+                Serializer.SerializeToJsonFile(Current.Graphics, GraphicsConfiguration.FilePath);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Protocol.Error("Failed to serialize config: " + e.Message);
+                Protocol.Error("Failed to serialize config: " + ex);
             }
         }
 
@@ -76,16 +77,15 @@ namespace Dreamcast.Core
             try
             {
                 Current.Display =
-                    Serializer<DisplayConfiguration>.DeserializeFromJsonFile(DisplayConfiguration.FilePath);
+                    Serializer.DeserializeFromJsonFile<DisplayConfiguration>(DisplayConfiguration.FilePath);
                 Current.Overlay =
-                    Serializer<OverlayConfiguration>.DeserializeFromJsonFile(OverlayConfiguration.FilePath);
+                    Serializer.DeserializeFromJsonFile<OverlayConfiguration>(OverlayConfiguration.FilePath);
                 Current.Graphics =
-                    Serializer<GraphicsConfiguration>.DeserializeFromJsonFile(GraphicsConfiguration.FilePath);
-                Protocol.Info("Deserialized all configs!");
+                    Serializer.DeserializeFromJsonFile<GraphicsConfiguration>(GraphicsConfiguration.FilePath);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Protocol.Warn("Failed to deserialize config!");
+                Protocol.Error("Failed to deserialize config: " + ex);
                 Serialize();
                 Protocol.Info("Serialized default config.");
             }
@@ -102,8 +102,8 @@ namespace Dreamcast.Core
             {
                 Display_IsWindowFullscreen = Current.Display.IsWindowFullscreen,
                 Display_IsWindowMaximized = Current.Display.IsWindowMaximized,
-                Display_WindowWidth = Current.Display.WindowWidth,
-                Display_WindowHeight = Current.Display.WindowHeight,
+                Display_WindowWidth = (ushort) Current.Display.Resolution.Width,
+                Display_WindowHeight = (ushort) Current.Display.Resolution.Height,
                 Display_VSync = Current.Display.VSync,
                 Display_MaxFrameRate = Current.Display.MaxFrameRate,
                 Overlay_FontSize = Current.Overlay.FontSize,
@@ -136,9 +136,7 @@ namespace Dreamcast.Core
 
             public bool IsWindowMaximized { get; set; } = true;
 
-            public ushort WindowWidth { get; set; } = 1920;
-
-            public ushort WindowHeight { get; set; } = 1080;
+            public Size2 Resolution { get; set; } = new(1920, 1080);
 
             public bool VSync { get; set; } = false;
 

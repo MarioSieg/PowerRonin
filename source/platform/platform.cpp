@@ -162,9 +162,8 @@ namespace dce::platform {
 
 		/* Disable any GLFW side API: */
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 		glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_FALSE);
-		glfwSwapInterval(0);
+		glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
 		proto.separator();
 		proto.info("Initializing window...");
@@ -179,9 +178,6 @@ namespace dce::platform {
 		}
 
 		[[likely]] if (display_settings.is_full_screen || display_settings.is_maximized) {
-			[[likely]] if (display_settings.is_maximized) {
-				glfwMaximizeWindow(this->window_);
-			}
 			int w = 0;
 			int h = 0;
 			glfwGetFramebufferSize(this->window_, &w, &h);
@@ -189,9 +185,11 @@ namespace dce::platform {
 				display_settings.width = static_cast<std::uint16_t>(w);
 				display_settings.height = static_cast<std::uint16_t>(h);
 			}
+			glfwFocusWindow(this->window_);
 		}
 
-		[[unlikely]] if (!display_settings.is_full_screen) {
+
+		[[unlikely]] if (!display_settings.is_full_screen && !display_settings.is_maximized) {
 			center_window(this->window_, primary_monitor);
 		}
 
@@ -307,10 +305,6 @@ namespace dce::platform {
 
 	auto Platform::on_post_startup(Runtime& _rt) -> bool {
 		glfwFocusWindow(this->window_);
-		[[likely]] if (_rt.config().display.is_maximized) {
-			glfwMaximizeWindow(this->window_);
-		}
-		glfwShowWindow(this->window_);
 		return true;
 	}
 

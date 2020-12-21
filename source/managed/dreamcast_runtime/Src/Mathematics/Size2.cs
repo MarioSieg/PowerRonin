@@ -24,7 +24,7 @@ namespace Dreamcast.Mathematics
         /// </summary>
         /// <param name="width">The x.</param>
         /// <param name="height">The y.</param>
-        public Size2(int width, int height)
+        public Size2(uint width, uint height)
         {
             Width = width;
             Height = height;
@@ -33,12 +33,12 @@ namespace Dreamcast.Mathematics
         /// <summary>
         ///     Width.
         /// </summary>
-        public int Width;
+        public uint Width;
 
         /// <summary>
         ///     Height.
         /// </summary>
-        public int Height;
+        public uint Height;
 
         /// <summary>
         ///     Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -66,7 +66,7 @@ namespace Dreamcast.Mathematics
         {
             unchecked
             {
-                return (Width * 397) ^ Height;
+                return (int) ((Width * 397) ^ Height);
             }
         }
 

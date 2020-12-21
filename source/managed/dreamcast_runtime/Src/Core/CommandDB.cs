@@ -34,11 +34,11 @@ namespace Dreamcast.Core
             {
                 new Command
                 {
-                    name = "help",
-                    brief = "Displays some help.",
-                    parameterCount = 0,
-                    requiresRootPrivileges = false,
-                    executor = delegate
+                    Name = "help",
+                    Brief = "Displays some help.",
+                    ParameterCount = 0,
+                    RequiresRootPrivileges = false,
+                    Executor = delegate
                     {
                         for (var i = 0; i < RegisteredCommands.Count; ++i)
                             Protocol.Info($"Command {i}: {RegisteredCommands[i]}");
@@ -46,38 +46,38 @@ namespace Dreamcast.Core
                 },
                 new Command
                 {
-                    name = "flush",
-                    brief = "Clears the terminal and writes it into a log file.",
-                    parameterCount = 0,
-                    requiresRootPrivileges = false,
-                    executor = delegate { Protocol.Flush(); }
+                    Name = "flush",
+                    Brief = "Clears the terminal and writes it into a log file.",
+                    ParameterCount = 0,
+                    RequiresRootPrivileges = false,
+                    Executor = delegate { Protocol.Flush(); }
                 },
                 new Command
                 {
-                    name = "echo",
-                    brief = "Writes the command into the terminal.",
-                    parameterCount = 1,
-                    requiresRootPrivileges = false,
-                    executor = Protocol.Info
+                    Name = "echo",
+                    Brief = "Writes the command into the terminal.",
+                    ParameterCount = 1,
+                    RequiresRootPrivileges = false,
+                    Executor = Protocol.Info
                 },
                 new Command
                 {
-                    name = "history",
-                    brief = "Displays all commands history with execution time.",
-                    parameterCount = 0,
-                    requiresRootPrivileges = false,
-                    executor = delegate
+                    Name = "history",
+                    Brief = "Displays all commands history with execution time.",
+                    ParameterCount = 0,
+                    RequiresRootPrivileges = false,
+                    Executor = delegate
                     {
                         foreach (var (item1, item2) in CommandHistory) Protocol.Info($"{item1} -> {item2}ms");
                     }
                 },
                 new Command
                 {
-                    name = "clear_history",
-                    brief = "Clears the command history.",
-                    parameterCount = 0,
-                    requiresRootPrivileges = false,
-                    executor = delegate
+                    Name = "clear_history",
+                    Brief = "Clears the command history.",
+                    ParameterCount = 0,
+                    RequiresRootPrivileges = false,
+                    Executor = delegate
                     {
                         var size = CommandHistory.Count;
                         CommandHistory.Clear();
@@ -86,11 +86,11 @@ namespace Dreamcast.Core
                 },
                 new Command
                 {
-                    name = "info",
-                    brief = "Prints some basic system info.",
-                    parameterCount = 0,
-                    requiresRootPrivileges = false,
-                    executor = delegate
+                    Name = "info",
+                    Brief = "Prints some basic system info.",
+                    ParameterCount = 0,
+                    RequiresRootPrivileges = false,
+                    Executor = delegate
                     {
                         Protocol.Info("C# CLR v." + Environment.Version);
                         Protocol.Info("Current directory: " + Environment.CurrentDirectory);
@@ -102,11 +102,11 @@ namespace Dreamcast.Core
                 },
                 new Command
                 {
-                    name = "env",
-                    brief = "Displays all environment variables.",
-                    parameterCount = 0,
-                    requiresRootPrivileges = false,
-                    executor = delegate
+                    Name = "env",
+                    Brief = "Displays all environment variables.",
+                    ParameterCount = 0,
+                    RequiresRootPrivileges = false,
+                    Executor = delegate
                     {
                         foreach (DictionaryEntry entry in Environment.GetEnvironmentVariables())
                         {
@@ -118,11 +118,11 @@ namespace Dreamcast.Core
                 },
                 new Command
                 {
-                    name = "list_dir",
-                    brief = "Recursively lists all files and folders in the current working directory",
-                    parameterCount = 0,
-                    requiresRootPrivileges = false,
-                    executor = delegate
+                    Name = "list_dir",
+                    Brief = "Recursively lists all files and folders in the current working directory",
+                    ParameterCount = 0,
+                    RequiresRootPrivileges = false,
+                    Executor = delegate
                     {
                         var files = Directory.GetFiles(Directory.GetCurrentDirectory(), "*",
                             SearchOption.AllDirectories);
@@ -131,11 +131,11 @@ namespace Dreamcast.Core
                 },
                 new Command
                 {
-                    name = "test_math_format",
-                    brief = "Prints all math structures to test correct formatting.",
-                    parameterCount = 0,
-                    requiresRootPrivileges = false,
-                    executor = delegate
+                    Name = "test_math_format",
+                    Brief = "Prints all math structures to test correct formatting.",
+                    ParameterCount = 0,
+                    RequiresRootPrivileges = false,
+                    Executor = delegate
                     {
                         var angle = new AngleSingle(30.0f, AngleType.Degree);
                         Protocol.Info($"{nameof(angle)}: {angle}");
@@ -236,11 +236,11 @@ namespace Dreamcast.Core
                 },
                 new Command
                 {
-                    name = "args",
-                    brief = "Prints the command line arguments.",
-                    parameterCount = 0,
-                    requiresRootPrivileges = false,
-                    executor = delegate
+                    Name = "args",
+                    Brief = "Prints the command line arguments.",
+                    ParameterCount = 0,
+                    RequiresRootPrivileges = false,
+                    Executor = delegate
                     {
                         var args = Environment.GetCommandLineArgs();
                         if (args.Length == 0)
@@ -254,22 +254,22 @@ namespace Dreamcast.Core
                 },
                 new Command
                 {
-                    name = "drives",
-                    brief = "Prints all logical drives.",
-                    parameterCount = 0,
-                    requiresRootPrivileges = false,
-                    executor = delegate
+                    Name = "drives",
+                    Brief = "Prints all logical drives.",
+                    ParameterCount = 0,
+                    RequiresRootPrivileges = false,
+                    Executor = delegate
                     {
                         foreach (var drive in Environment.GetLogicalDrives()) Protocol.Info("Drive " + drive);
                     }
                 },
                 new Command
                 {
-                    name = "gc",
-                    brief = "Print some garbage collector info.",
-                    parameterCount = 0,
-                    requiresRootPrivileges = false,
-                    executor = delegate
+                    Name = "gc",
+                    Brief = "Print some garbage collector info.",
+                    ParameterCount = 0,
+                    RequiresRootPrivileges = false,
+                    Executor = delegate
                     {
                         Protocol.Info("Max generation: " + GC.MaxGeneration);
                         Protocol.Info("Total memory: " + GC.GetTotalMemory(false) + "B");
@@ -277,11 +277,11 @@ namespace Dreamcast.Core
                 },
                 new Command
                 {
-                    name = "ip",
-                    brief = "Print the local ip.",
-                    parameterCount = 0,
-                    requiresRootPrivileges = false,
-                    executor = delegate
+                    Name = "ip",
+                    Brief = "Print the local ip.",
+                    ParameterCount = 0,
+                    RequiresRootPrivileges = false,
+                    Executor = delegate
                     {
                         string? localIp;
                         using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0))
@@ -296,62 +296,72 @@ namespace Dreamcast.Core
                 },
                 new Command
                 {
-                    name = "config",
-                    brief = "Prints the system config.",
-                    parameterCount = 0,
-                    requiresRootPrivileges = false,
-                    executor = delegate
+                    Name = "config",
+                    Brief = "Prints the current system config.",
+                    ParameterCount = 0,
+                    RequiresRootPrivileges = false,
+                    Executor = delegate
                     {
-                        Protocol.Info(Configuration.DisplayConfiguration.FilePath + ":\n" +
-                                      Serializer<Configuration.DisplayConfiguration>.SerializeToJsonString(Configuration
-                                          .Current.Display));
-                        Protocol.Info(Configuration.OverlayConfiguration.FilePath + ":\n" +
-                                      Serializer<Configuration.OverlayConfiguration>.SerializeToJsonString(Configuration
-                                          .Current.Overlay));
-                        Protocol.Info(Configuration.GraphicsConfiguration.FilePath + ":\n" +
-                                      Serializer<Configuration.GraphicsConfiguration>.SerializeToJsonString(
-                                          Configuration.Current.Graphics));
+                        Protocol.Info(Serializer.SerializeToJsonString(Configuration.Current.Display));
+                        Protocol.Info(Serializer.SerializeToJsonString(Configuration.Current.Overlay));
+                        Protocol.Info(Serializer.SerializeToJsonString(Configuration.Current.Graphics));
                     }
                 },
                 new Command
                 {
-                    name = "config_apply",
-                    brief = "Applies the whole config to all systems.",
-                    parameterCount = 0,
-                    requiresRootPrivileges = false,
-                    executor = delegate { Configuration.Current.Apply(); }
+                    Name = "config_files",
+                    Brief = "Prints the current config saved in the config files.",
+                    ParameterCount = 0,
+                    RequiresRootPrivileges = false,
+                    Executor = delegate
+                    {
+                        Protocol.Info(Configuration.DisplayConfiguration.FilePath + ":\n" +
+                                      File.ReadAllText(Configuration.DisplayConfiguration.FilePath));
+                        Protocol.Info(Configuration.OverlayConfiguration.FilePath + ":\n" +
+                                      File.ReadAllText(Configuration.OverlayConfiguration.FilePath));
+                        Protocol.Info(Configuration.GraphicsConfiguration.FilePath + ":\n" +
+                                      File.ReadAllText(Configuration.GraphicsConfiguration.FilePath));
+                    }
                 },
                 new Command
                 {
-                    name = "config_load",
-                    brief = "Loads the current config from the config file.",
-                    parameterCount = 0,
-                    requiresRootPrivileges = false,
-                    executor = delegate { Configuration.Deserialize(); }
+                    Name = "config_apply",
+                    Brief = "Applies the whole config to all systems.",
+                    ParameterCount = 0,
+                    RequiresRootPrivileges = false,
+                    Executor = delegate { Configuration.Current.Apply(); }
                 },
                 new Command
                 {
-                    name = "config_save",
-                    brief = "Saves the current config to the config file.",
-                    parameterCount = 0,
-                    requiresRootPrivileges = false,
-                    executor = delegate { Configuration.Serialize(); }
+                    Name = "config_load",
+                    Brief = "Loads the current config from the config file.",
+                    ParameterCount = 0,
+                    RequiresRootPrivileges = false,
+                    Executor = delegate { Configuration.Deserialize(); }
                 },
                 new Command
                 {
-                    name = "config_rem",
-                    brief = "Deletes the config files.",
-                    parameterCount = 0,
-                    requiresRootPrivileges = false,
-                    executor = delegate { Directory.Delete(Configuration.ConfigDirectory, true); }
+                    Name = "config_save",
+                    Brief = "Saves the current config to the config file.",
+                    ParameterCount = 0,
+                    RequiresRootPrivileges = false,
+                    Executor = delegate { Configuration.Serialize(); }
                 },
                 new Command
                 {
-                    name = "deploy_editor",
-                    brief = "Builds the editor into the \"bin\" folder.",
-                    parameterCount = 0,
-                    requiresRootPrivileges = false,
-                    executor = delegate { Builder.BuildEditorStandalone(); }
+                    Name = "config_rem",
+                    Brief = "Deletes the config files.",
+                    ParameterCount = 0,
+                    RequiresRootPrivileges = false,
+                    Executor = delegate { Directory.Delete(Configuration.ConfigDirectory, true); }
+                },
+                new Command
+                {
+                    Name = "deploy_editor",
+                    Brief = "Builds the editor into the \"bin\" folder.",
+                    ParameterCount = 0,
+                    RequiresRootPrivileges = false,
+                    Executor = delegate { Builder.BuildEditorStandalone(); }
                 }
             });
         }
@@ -371,12 +381,12 @@ namespace Dreamcast.Core
                 foreach (var command in RegisteredCommands)
                 {
                     // Not this command:
-                    if (!commandText.StartsWith(command.name)) continue;
+                    if (!commandText.StartsWith(command.Name)) continue;
 
                     // Remove the command itself from the string;
-                    var cleanedCommand = commandText.Replace(command.name, string.Empty);
+                    var cleanedCommand = commandText.Replace(command.Name, string.Empty);
 
-                    if (command.parameterCount > 0 && string.IsNullOrWhiteSpace(cleanedCommand))
+                    if (command.ParameterCount > 0 && string.IsNullOrWhiteSpace(cleanedCommand))
                     {
                         Protocol.Warn("Missing parameter for command: " + command);
                         return;
@@ -386,7 +396,7 @@ namespace Dreamcast.Core
                     Protocol.Trace(commandText);
 
                     // Call executor delegate:
-                    command.executor(cleanedCommand);
+                    command.Executor(cleanedCommand);
 
                     // Converts ticks to milliseconds.
                     double frequency = Stopwatch.Frequency;

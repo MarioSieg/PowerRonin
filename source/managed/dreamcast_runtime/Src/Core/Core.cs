@@ -1,4 +1,6 @@
-﻿namespace Dreamcast.Core
+﻿using System.IO;
+
+namespace Dreamcast.Core
 {
     /// <summary>
     ///     Engine core class.
@@ -9,6 +11,8 @@
         {
             CommandDB.RegisterCommonCommands();
             CommandDB.Execute("info");
+            InstallationValidation.Run(Directory.GetCurrentDirectory());
+            Serializer.SetupFormatter();
             Configuration.Deserialize();
             Configuration.Current.Apply();
         }

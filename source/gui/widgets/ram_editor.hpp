@@ -112,8 +112,10 @@ struct MemoryEditor {
 	void CalcSizes(Sizes& s, size_t mem_size, size_t base_display_addr) const {
 		ImGuiStyle& style = ImGui::GetStyle();
 		s.AddrDigitsCount = OptAddrDigitsCount;
-		if (s.AddrDigitsCount == 0) for (size_t n = base_display_addr + mem_size - 1; n > 0; n >>= 4) s.AddrDigitsCount
-			++;
+		if (s.AddrDigitsCount == 0)
+			for (size_t n = base_display_addr + mem_size - 1; n > 0; n >>= 4)
+				s.AddrDigitsCount
+					++;
 		s.LineHeight = ImGui::GetTextLineHeight();
 		s.GlyphWidth = ImGui::CalcTextSize("F").x + 1; // We assume the font is mono-space
 		s.HexCellWidth = static_cast<float>(static_cast<int>(s.GlyphWidth * 2.5f));
@@ -249,8 +251,9 @@ struct MemoryEditor {
 			// Draw Hexadecimal
 			for (int n = 0; n < Cols && addr < mem_size; n++, addr++) {
 				float byte_pos_x = s.PosHexStart + s.HexCellWidth * n;
-				if (OptMidColsCount > 0) byte_pos_x += static_cast<float>(n / OptMidColsCount) * s.
-					SpacingBetweenMidCols;
+				if (OptMidColsCount > 0)
+					byte_pos_x += static_cast<float>(n / OptMidColsCount) * s.
+						SpacingBetweenMidCols;
 				ImGui::SameLine(byte_pos_x);
 
 				// Draw highlight
