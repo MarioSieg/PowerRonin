@@ -7,7 +7,7 @@ namespace dce {
 		__debugbreak();
 #elif CPU_ARM
 		asm("bkpt 0");
-#elif CPU_X86 && (COM_GCC || COM_CLANG)
+#elif CPU_X86_64 && (COM_GCC || COM_CLANG)
 		asm volatile("int $3");
 #else
 		int* int3 = reinterpret_cast<int*>(3L);

@@ -121,7 +121,7 @@ constexpr auto MEMORY_KEY = '&';
 #define CPU_MIPS  false
 #define CPU_PPC   false
 #define CPU_RISCV false
-#define CPU_X86   false
+#define CPU_X86_64   false
 
 #if defined(__arm__)     \
  || defined(__aarch64__) \
@@ -147,8 +147,8 @@ constexpr auto MEMORY_KEY = '&';
  ||   defined(_M_X64)     \
  ||   defined(__i386__)   \
  ||   defined(__x86_64__)
-#	undef  CPU_X86
-#	define CPU_X86 true
+#	undef  CPU_X86_64
+#	define CPU_X86_64 true
 #else
 #	undef  CPU_JIT
 #	define CPU_JIT true

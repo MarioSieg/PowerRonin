@@ -173,7 +173,7 @@ add_library(
     "source/renderer.cpp"
     "source/gui/widgets/scenery_viewer.hpp"
     "source/gui/widgets/scenery_viewer.cpp"
-    "source/cpu_registers.cpp" 
+     
     "source/scripting/mono_headers.hpp" 
     "source/scripting/internal_calls.cpp" 
     "source/scripting/helpers.hpp" 
