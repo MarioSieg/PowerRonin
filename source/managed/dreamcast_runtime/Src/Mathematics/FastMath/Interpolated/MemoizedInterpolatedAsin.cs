@@ -15,21 +15,23 @@
 
 using System;
 using System.Runtime.CompilerServices;
-using FastMath.Core;
+using Dreamcast.Math.Fast.Core;
 
-namespace FastMath
+namespace Dreamcast.Math.Fast.Interpolated
 {
-    public sealed class MemoizedAsin : IMemoizedMethod
+    public sealed class MemoizedInterpolatedAsin : IMemoizedMethod
     {
+        private const int AdditionalValueCount = 3;
+
         private readonly float _argumentMultiplier;
 
-        private MemoizedAsin(int valuesCount)
+        private MemoizedInterpolatedAsin(int valuesCount)
         {
             MinArgument = -1;
             MaxArgument = 1;
             Values = new float[valuesCount];
-            Step = (MaxArgument - MinArgument) / (valuesCount - 1);
-            this.ProduceValuesArray();
+            Step = (MaxArgument - MinArgument) / (valuesCount - AdditionalValueCount);
+            this.ProduceValuesArray(AdditionalValueCount);
             _argumentMultiplier = 1 / Step;
         }
 
@@ -37,38 +39,38 @@ namespace FastMath
 
         public float MaxArgument { get; }
 
-        public bool IsLinearInterpolated => false;
+        public bool IsLinearInterpolated => true;
 
         public float Step { get; }
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod => x => (float) Math.Asin(x);
+        public Func<float, float> BaseMethod => x => (float) System.Math.Asin(x);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
         {
-            var index = (int) ((argument - MinArgument) * _argumentMultiplier);
-            return Values[index];
+            var floatIndex = (argument - MinArgument) * _argumentMultiplier;
+            var index = (int) floatIndex;
+            var alpha = floatIndex - index;
+            return (1 - alpha) * Values[index] + alpha * Values[index + 1];
         }
 
-        public static MemoizedAsin ConstructByValuesCount(int valuesCount)
+        public static MemoizedInterpolatedAsin ConstructByValuesCount(int valuesCount)
         {
-            return new(valuesCount + 1);
+            return new(valuesCount + 2);
         }
 
-        public static MemoizedAsin ConstructByMaxError(float maxError)
+        public static MemoizedInterpolatedAsin ConstructByMaxError(float maxError)
         {
-            var step = 1 - Math.Sin(Math.PI / 2 - maxError);
-            step *= 0.95f;
-            var valuesCount = (int) (2 / step) + 2;
-            return new MemoizedAsin(valuesCount);
+            return ConstructByStep((float) System.Math.Pow(3 * maxError, 2));
         }
 
-        public static MemoizedAsin ConstructByStep(float step)
+        public static MemoizedInterpolatedAsin ConstructByStep(float step)
         {
-            var valuesCount = (int) Math.Round(2 / step) + 1;
-            return new MemoizedAsin(valuesCount);
+            var valuesCount = (int) System.Math.Round(2 / step) + AdditionalValueCount;
+            if (valuesCount == AdditionalValueCount) ++valuesCount;
+            return new MemoizedInterpolatedAsin(valuesCount);
         }
     }
 }

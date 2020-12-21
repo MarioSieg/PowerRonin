@@ -1,4 +1,4 @@
-// *******************************************************************************
+﻿// *******************************************************************************
 // The content of this file includes portions of the KerboGames Dreamcast Technology
 // released in source code form as part of the SDK package.
 // 
@@ -15,28 +15,25 @@
 
 using System;
 using System.Runtime.CompilerServices;
-using FastMath.Core;
+using Dreamcast.Math.Fast.Core;
 
-namespace FastMath.Interpolated
+namespace Dreamcast.Math.Fast.Interpolated
 {
-    public sealed class MemoizedInterpolatedLog : IMemoizedMethod
+    public sealed class MemoizedInterpolatedMethod : IMemoizedMethod
     {
-        private const int AdditionalValueCount = 3;
-
         private readonly float _argumentMultiplier;
 
-        private MemoizedInterpolatedLog(float minArgument, float maxArgument, float @base, int valuesCount)
+        private MemoizedInterpolatedMethod(Func<float, float> baseMethod, float minArgument, float maxArgument, int valuesCount)
         {
+            BaseMethod = baseMethod;
             MinArgument = minArgument;
             MaxArgument = maxArgument;
-            Base = @base;
             Values = new float[valuesCount];
-            Step = (MaxArgument - MinArgument) / (valuesCount - AdditionalValueCount);
-            this.ProduceValuesArray(AdditionalValueCount);
+            Step = (MaxArgument - MinArgument) / (valuesCount - 2);
+            this.ProduceValuesArray(2);
             _argumentMultiplier = 1 / Step;
         }
 
-        public float Base { get; }
         public float MinArgument { get; }
 
         public float MaxArgument { get; }
@@ -47,7 +44,7 @@ namespace FastMath.Interpolated
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod => x => (float) Math.Log(x, Base);
+        public Func<float, float> BaseMethod { get; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
@@ -58,21 +55,16 @@ namespace FastMath.Interpolated
             return (1 - alpha) * Values[index] + alpha * Values[index + 1];
         }
 
-        public static MemoizedInterpolatedLog ConstructByValuesCount(float minArgument, float maxArgument, float @base, int valuesCount)
+        public static MemoizedInterpolatedMethod ConstructByValuesCount(Func<float, float> baseMethod, float minArgument, float maxArgument, int valuesCount)
         {
-            return new(minArgument, maxArgument, @base, valuesCount + AdditionalValueCount);
+            return new(baseMethod, minArgument, maxArgument, valuesCount + 2);
         }
 
-        public static MemoizedInterpolatedLog ConstructByMaxError(float minArgument, float maxArgument, float @base, float maxError)
+        public static MemoizedInterpolatedMethod ConstructByStep(Func<float, float> baseMethod, float minArgument, float maxArgument, float step)
         {
-            var step = Math.Sqrt(8 * maxError) * minArgument;
-            return ConstructByStep(minArgument, maxArgument, @base, (float) step);
-        }
-
-        public static MemoizedInterpolatedLog ConstructByStep(float minArgument, float maxArgument, float @base, float step)
-        {
-            var valuesCount = (int) Math.Round((maxArgument - minArgument) / step) + AdditionalValueCount;
-            return new MemoizedInterpolatedLog(minArgument, maxArgument, @base, valuesCount);
+            var valuesCount = (int) System.Math.Round((maxArgument - minArgument) / step) + 2;
+            if (valuesCount == 2) valuesCount = 3;
+            return new MemoizedInterpolatedMethod(baseMethod, minArgument, maxArgument, valuesCount + 2);
         }
     }
 }

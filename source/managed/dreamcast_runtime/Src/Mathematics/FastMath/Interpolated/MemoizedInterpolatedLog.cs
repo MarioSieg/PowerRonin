@@ -15,26 +15,28 @@
 
 using System;
 using System.Runtime.CompilerServices;
-using FastMath.Core;
+using Dreamcast.Math.Fast.Core;
 
-namespace FastMath.Interpolated
+namespace Dreamcast.Math.Fast.Interpolated
 {
-    public sealed class MemoizedInterpolatedAsin : IMemoizedMethod
+    public sealed class MemoizedInterpolatedLog : IMemoizedMethod
     {
         private const int AdditionalValueCount = 3;
 
         private readonly float _argumentMultiplier;
 
-        private MemoizedInterpolatedAsin(int valuesCount)
+        private MemoizedInterpolatedLog(float minArgument, float maxArgument, float @base, int valuesCount)
         {
-            MinArgument = -1;
-            MaxArgument = 1;
+            MinArgument = minArgument;
+            MaxArgument = maxArgument;
+            Base = @base;
             Values = new float[valuesCount];
             Step = (MaxArgument - MinArgument) / (valuesCount - AdditionalValueCount);
             this.ProduceValuesArray(AdditionalValueCount);
             _argumentMultiplier = 1 / Step;
         }
 
+        public float Base { get; }
         public float MinArgument { get; }
 
         public float MaxArgument { get; }
@@ -45,7 +47,7 @@ namespace FastMath.Interpolated
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod => x => (float) Math.Asin(x);
+        public Func<float, float> BaseMethod => x => (float) System.Math.Log(x, Base);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
@@ -56,21 +58,21 @@ namespace FastMath.Interpolated
             return (1 - alpha) * Values[index] + alpha * Values[index + 1];
         }
 
-        public static MemoizedInterpolatedAsin ConstructByValuesCount(int valuesCount)
+        public static MemoizedInterpolatedLog ConstructByValuesCount(float minArgument, float maxArgument, float @base, int valuesCount)
         {
-            return new(valuesCount + 2);
+            return new(minArgument, maxArgument, @base, valuesCount + AdditionalValueCount);
         }
 
-        public static MemoizedInterpolatedAsin ConstructByMaxError(float maxError)
+        public static MemoizedInterpolatedLog ConstructByMaxError(float minArgument, float maxArgument, float @base, float maxError)
         {
-            return ConstructByStep((float) Math.Pow(3 * maxError, 2));
+            var step = System.Math.Sqrt(8 * maxError) * minArgument;
+            return ConstructByStep(minArgument, maxArgument, @base, (float) step);
         }
 
-        public static MemoizedInterpolatedAsin ConstructByStep(float step)
+        public static MemoizedInterpolatedLog ConstructByStep(float minArgument, float maxArgument, float @base, float step)
         {
-            var valuesCount = (int) Math.Round(2 / step) + AdditionalValueCount;
-            if (valuesCount == AdditionalValueCount) ++valuesCount;
-            return new MemoizedInterpolatedAsin(valuesCount);
+            var valuesCount = (int) System.Math.Round((maxArgument - minArgument) / step) + AdditionalValueCount;
+            return new MemoizedInterpolatedLog(minArgument, maxArgument, @base, valuesCount);
         }
     }
 }

@@ -1,4 +1,4 @@
-// *******************************************************************************
+﻿// *******************************************************************************
 // The content of this file includes portions of the KerboGames Dreamcast Technology
 // released in source code form as part of the SDK package.
 // 
@@ -15,27 +15,26 @@
 
 using System;
 using System.Runtime.CompilerServices;
-using FastMath.Core;
+using Dreamcast.Math.Fast.Core;
 
-namespace FastMath
+namespace Dreamcast.Math.Fast
 {
-    public sealed class MemoizedTan : IUnboundMethod
+    public class MemoizedAtan : IUnboundMethod
     {
+        private const float MinValue = (float) -System.Math.PI / 2;
+
+        private const float MaxValue = (float) System.Math.PI / 2;
+
         private readonly float _argumentMultiplier;
 
-        private readonly int _valuesCycleLength;
-
-        private MemoizedTan(int valuesCount)
+        private MemoizedAtan(int valuesCount, float maxArgument)
         {
-            MinArgument = (float) -Math.PI / 2;
-            MaxArgument = (float) Math.PI / 2;
+            MinArgument = -maxArgument;
+            MaxArgument = maxArgument;
             Values = new float[valuesCount];
             Step = (MaxArgument - MinArgument) / (valuesCount - 1);
             this.ProduceValuesArray();
-            Values[0] = (float) Math.Tan(-Math.PI / 2);
-            Values[Values.Length - 1] = (float) Math.Tan(Math.PI / 2);
             _argumentMultiplier = 1 / Step;
-            _valuesCycleLength = Values.Length - 1;
         }
 
         public float MinArgument { get; }
@@ -48,7 +47,7 @@ namespace FastMath
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod => x => (float) Math.Tan(x);
+        public Func<float, float> BaseMethod => x => (float) System.Math.Atan(x);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
@@ -60,26 +59,33 @@ namespace FastMath
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float CalculateUnbound(float argument)
         {
-            var multiplier = 1;
-            if (argument < 0)
-            {
-                argument = -argument;
-                multiplier = -1;
-            }
-
+            if (argument < MinArgument)
+                return MinValue;
+            if (argument > MaxArgument)
+                return MaxValue;
             var index = (int) ((argument - MinArgument) * _argumentMultiplier);
-            return multiplier * Values[index % _valuesCycleLength];
+            return Values[index];
         }
 
-        public static MemoizedTan ConstructByValuesCount(int valuesCount)
+        public static MemoizedAtan ConstructByValuesCount(int valuesCount, float maxArgument)
         {
-            return new(valuesCount + 1);
+            return new(valuesCount + 1, maxArgument);
         }
 
-        public static MemoizedTan ConstructByStep(float step)
+        public static MemoizedAtan ConstructByMaxError(float maxError)
         {
-            var valuesCount = (int) Math.Round(Math.PI / step) + 1;
-            return new MemoizedTan(valuesCount);
+            maxError *= 0.95f;
+            var maxArgument = (float) System.Math.Tan(System.Math.PI / 2 - maxError);
+            var valuesCount = (int) (2.5f * maxArgument / maxError + 2);
+            return new MemoizedAtan(valuesCount, maxArgument);
+        }
+
+        public static MemoizedAtan ConstructByStep(float step)
+        {
+            var maxError = (float) System.Math.Atan(step);
+            var maxArgument = (float) System.Math.Tan(System.Math.PI / 2 - maxError);
+            var valuesCount = (int) System.Math.Round(2 * maxArgument / maxError);
+            return new MemoizedAtan(valuesCount, maxArgument);
         }
     }
 }

@@ -15,22 +15,22 @@
 
 using System;
 using System.Runtime.CompilerServices;
-using FastMath.Core;
+using Dreamcast.Math.Fast.Core;
 
-namespace FastMath.Interpolated
+namespace Dreamcast.Math.Fast
 {
-    public sealed class MemoizedInterpolatedMethod : IMemoizedMethod
+    public sealed class MemoizedMethod : IMemoizedMethod
     {
         private readonly float _argumentMultiplier;
 
-        private MemoizedInterpolatedMethod(Func<float, float> baseMethod, float minArgument, float maxArgument, int valuesCount)
+        private MemoizedMethod(Func<float, float> baseMethod, float minArgument, float maxArgument, int valuesCount)
         {
             BaseMethod = baseMethod;
             MinArgument = minArgument;
             MaxArgument = maxArgument;
             Values = new float[valuesCount];
-            Step = (MaxArgument - MinArgument) / (valuesCount - 2);
-            this.ProduceValuesArray(2);
+            Step = (MaxArgument - MinArgument) / (valuesCount - 1);
+            this.ProduceValuesArray();
             _argumentMultiplier = 1 / Step;
         }
 
@@ -38,7 +38,7 @@ namespace FastMath.Interpolated
 
         public float MaxArgument { get; }
 
-        public bool IsLinearInterpolated => true;
+        public bool IsLinearInterpolated => false;
 
         public float Step { get; }
 
@@ -49,22 +49,20 @@ namespace FastMath.Interpolated
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
         {
-            var floatIndex = (argument - MinArgument) * _argumentMultiplier;
-            var index = (int) floatIndex;
-            var alpha = floatIndex - index;
-            return (1 - alpha) * Values[index] + alpha * Values[index + 1];
+            var index = (int) ((argument - MinArgument) * _argumentMultiplier);
+            return Values[index];
         }
 
-        public static MemoizedInterpolatedMethod ConstructByValuesCount(Func<float, float> baseMethod, float minArgument, float maxArgument, int valuesCount)
+        public static MemoizedMethod ConstructByValuesCount(Func<float, float> baseMethod, float minArgument, float maxArgument, int valuesCount)
         {
-            return new(baseMethod, minArgument, maxArgument, valuesCount + 2);
+            return new(baseMethod, minArgument, maxArgument, valuesCount + 1);
         }
 
-        public static MemoizedInterpolatedMethod ConstructByStep(Func<float, float> baseMethod, float minArgument, float maxArgument, float step)
+        public static MemoizedMethod ConstructByStep(Func<float, float> baseMethod, float minArgument, float maxArgument, float step)
         {
-            var valuesCount = (int) Math.Round((maxArgument - minArgument) / step) + 2;
-            if (valuesCount == 2) valuesCount = 3;
-            return new MemoizedInterpolatedMethod(baseMethod, minArgument, maxArgument, valuesCount + 2);
+            var valuesCount = (int) System.Math.Round((maxArgument - minArgument) / step) + 1;
+            if (valuesCount == 1) valuesCount = 2;
+            return new MemoizedMethod(baseMethod, minArgument, maxArgument, valuesCount + 1);
         }
     }
 }

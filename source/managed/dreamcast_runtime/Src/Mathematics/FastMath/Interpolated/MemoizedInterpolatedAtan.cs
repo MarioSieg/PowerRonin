@@ -15,19 +15,19 @@
 
 using System;
 using System.Runtime.CompilerServices;
-using FastMath.Core;
+using Dreamcast.Math.Fast.Core;
 
-namespace FastMath.Interpolated
+namespace Dreamcast.Math.Fast.Interpolated
 {
     public class MemoizedInterpolatedAtan : IUnboundMethod
     {
-        private const float MinValue = (float) -Math.PI / 2;
+        private const float MinValue = (float) -System.Math.PI / 2;
 
-        private const float MaxValue = (float) Math.PI / 2;
+        private const float MaxValue = (float) System.Math.PI / 2;
 
         private const int AdditionalValueCount = 2;
 
-        private static readonly float Max2DerivativeValue = (float) (3 * Math.Sqrt(3) / 8);
+        private static readonly float Max2DerivativeValue = (float) (3 * System.Math.Sqrt(3) / 8);
 
         private readonly float _argumentMultiplier;
 
@@ -51,7 +51,7 @@ namespace FastMath.Interpolated
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod => x => (float) Math.Atan(x);
+        public Func<float, float> BaseMethod => x => (float) System.Math.Atan(x);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
@@ -83,17 +83,17 @@ namespace FastMath.Interpolated
         public static MemoizedInterpolatedAtan ConstructByMaxError(float maxError)
         {
             maxError *= 0.95f;
-            var maxArgument = (float) Math.Tan(Math.PI / 2 - maxError);
-            var step = (float) Math.Sqrt(8 * maxError / Max2DerivativeValue);
+            var maxArgument = (float) System.Math.Tan(System.Math.PI / 2 - maxError);
+            var step = (float) System.Math.Sqrt(8 * maxError / Max2DerivativeValue);
             var valuesCount = (int) (2 * maxArgument / step + AdditionalValueCount + AdditionalValueCount);
             return new MemoizedInterpolatedAtan(valuesCount, maxArgument);
         }
 
         public static MemoizedInterpolatedAtan ConstructByStep(float step)
         {
-            var maxError = (float) Math.Atan(step);
-            var maxArgument = (float) Math.Tan(Math.PI / 2 - maxError);
-            var valuesCount = (int) Math.Round(2 * maxArgument / maxError + AdditionalValueCount);
+            var maxError = (float) System.Math.Atan(step);
+            var maxArgument = (float) System.Math.Tan(System.Math.PI / 2 - maxError);
+            var valuesCount = (int) System.Math.Round(2 * maxArgument / maxError + AdditionalValueCount);
             if (valuesCount == AdditionalValueCount) ++valuesCount;
             return new MemoizedInterpolatedAtan(valuesCount, maxArgument);
         }

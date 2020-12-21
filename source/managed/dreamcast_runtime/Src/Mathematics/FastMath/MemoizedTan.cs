@@ -1,4 +1,4 @@
-﻿// *******************************************************************************
+// *******************************************************************************
 // The content of this file includes portions of the KerboGames Dreamcast Technology
 // released in source code form as part of the SDK package.
 // 
@@ -15,23 +15,25 @@
 
 using System;
 using System.Runtime.CompilerServices;
-using FastMath.Core;
+using Dreamcast.Math.Fast.Core;
 
-namespace FastMath
+namespace Dreamcast.Math.Fast
 {
-    public sealed class MemoizedSin : IUnboundMethod
+    public sealed class MemoizedTan : IUnboundMethod
     {
         private readonly float _argumentMultiplier;
 
         private readonly int _valuesCycleLength;
 
-        private MemoizedSin(int valuesCount)
+        private MemoizedTan(int valuesCount)
         {
-            MinArgument = 0;
-            MaxArgument = (float) (Math.PI * 2);
+            MinArgument = (float) -System.Math.PI / 2;
+            MaxArgument = (float) System.Math.PI / 2;
             Values = new float[valuesCount];
-            Step = MaxArgument / (valuesCount - 1);
+            Step = (MaxArgument - MinArgument) / (valuesCount - 1);
             this.ProduceValuesArray();
+            Values[0] = (float) System.Math.Tan(-System.Math.PI / 2);
+            Values[Values.Length - 1] = (float) System.Math.Tan(System.Math.PI / 2);
             _argumentMultiplier = 1 / Step;
             _valuesCycleLength = Values.Length - 1;
         }
@@ -46,12 +48,12 @@ namespace FastMath
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod => x => (float) Math.Sin(x);
+        public Func<float, float> BaseMethod => x => (float) System.Math.Tan(x);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
         {
-            var index = (int) (argument * _argumentMultiplier);
+            var index = (int) ((argument - MinArgument) * _argumentMultiplier);
             return Values[index];
         }
 
@@ -65,29 +67,19 @@ namespace FastMath
                 multiplier = -1;
             }
 
-            var index = (int) (argument * _argumentMultiplier);
+            var index = (int) ((argument - MinArgument) * _argumentMultiplier);
             return multiplier * Values[index % _valuesCycleLength];
         }
 
-        public static MemoizedSin ConstructByValuesCount(int valuesCount)
+        public static MemoizedTan ConstructByValuesCount(int valuesCount)
         {
             return new(valuesCount + 1);
         }
 
-        public static MemoizedSin ConstructByMaxError(float maxError)
+        public static MemoizedTan ConstructByStep(float step)
         {
-            return new(GetValuesCountByMaxError(maxError));
-        }
-
-        public static MemoizedSin ConstructByStep(float step)
-        {
-            var valuesCount = (int) Math.Round(Math.PI * 2 / step) + 1;
-            return new MemoizedSin(valuesCount);
-        }
-
-        private static int GetValuesCountByMaxError(float maxError)
-        {
-            return (int) Math.Round(3 * Math.PI / maxError + 1);
+            var valuesCount = (int) System.Math.Round(System.Math.PI / step) + 1;
+            return new MemoizedTan(valuesCount);
         }
     }
 }

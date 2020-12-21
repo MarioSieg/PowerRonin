@@ -15,22 +15,22 @@
 
 using System;
 using System.Runtime.CompilerServices;
-using FastMath.Core;
+using Dreamcast.Math.Fast.Core;
 
-namespace FastMath
+namespace Dreamcast.Math.Fast
 {
-    public sealed class MemoizedCos : IUnboundMethod
+    public sealed class MemoizedSin : IUnboundMethod
     {
         private readonly float _argumentMultiplier;
 
         private readonly int _valuesCycleLength;
 
-        private MemoizedCos(int valuesCount)
+        private MemoizedSin(int valuesCount)
         {
             MinArgument = 0;
-            MaxArgument = (float) (Math.PI * 2);
+            MaxArgument = (float) (System.Math.PI * 2);
             Values = new float[valuesCount];
-            Step = (MaxArgument - MinArgument) / (valuesCount - 1);
+            Step = MaxArgument / (valuesCount - 1);
             this.ProduceValuesArray();
             _argumentMultiplier = 1 / Step;
             _valuesCycleLength = Values.Length - 1;
@@ -46,7 +46,7 @@ namespace FastMath
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod => x => (float) Math.Cos(x);
+        public Func<float, float> BaseMethod => x => (float) System.Math.Sin(x);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
@@ -58,30 +58,36 @@ namespace FastMath
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float CalculateUnbound(float argument)
         {
-            if (argument < 0) argument = -argument;
+            var multiplier = 1;
+            if (argument < 0)
+            {
+                argument = -argument;
+                multiplier = -1;
+            }
+
             var index = (int) (argument * _argumentMultiplier);
-            return Values[index % _valuesCycleLength];
+            return multiplier * Values[index % _valuesCycleLength];
         }
 
-        public static MemoizedCos ConstructByValuesCount(int valuesCount)
+        public static MemoizedSin ConstructByValuesCount(int valuesCount)
         {
             return new(valuesCount + 1);
         }
 
-        public static MemoizedCos ConstructByMaxError(float maxError)
+        public static MemoizedSin ConstructByMaxError(float maxError)
         {
             return new(GetValuesCountByMaxError(maxError));
         }
 
-        public static MemoizedCos ConstructByStep(float step)
+        public static MemoizedSin ConstructByStep(float step)
         {
-            var valuesCount = (int) Math.Round(Math.PI * 2 / step) + 1;
-            return new MemoizedCos(valuesCount);
+            var valuesCount = (int) System.Math.Round(System.Math.PI * 2 / step) + 1;
+            return new MemoizedSin(valuesCount);
         }
 
         private static int GetValuesCountByMaxError(float maxError)
         {
-            return (int) Math.Round(3 * Math.PI / maxError + 1);
+            return (int) System.Math.Round(3 * System.Math.PI / maxError + 1);
         }
     }
 }

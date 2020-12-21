@@ -1,4 +1,4 @@
-﻿// *******************************************************************************
+// *******************************************************************************
 // The content of this file includes portions of the KerboGames Dreamcast Technology
 // released in source code form as part of the SDK package.
 // 
@@ -15,27 +15,24 @@
 
 using System;
 using System.Runtime.CompilerServices;
-using FastMath.Core;
-using static System.Math;
+using Dreamcast.Math.Fast.Core;
 
-namespace FastMath
+namespace Dreamcast.Math.Fast
 {
-    public sealed class MemoizedLog : IMemoizedMethod
+    public class MemoizedTanh : IMemoizedMethod
     {
         private readonly float _argumentMultiplier;
 
-        private MemoizedLog(float minArgument, float maxArgument, float @base, int valuesCount)
+        private MemoizedTanh(float minArgument, float maxArgument, int valuesCount)
         {
             MinArgument = minArgument;
             MaxArgument = maxArgument;
-            Base = @base;
             Values = new float[valuesCount];
             Step = (MaxArgument - MinArgument) / (valuesCount - 1);
             this.ProduceValuesArray();
             _argumentMultiplier = 1 / Step;
         }
 
-        public float Base { get; }
         public float MinArgument { get; }
 
         public float MaxArgument { get; }
@@ -46,7 +43,7 @@ namespace FastMath
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod => x => (float) Log(x, Base);
+        public Func<float, float> BaseMethod => x => (float) System.Math.Tanh(x);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
@@ -55,24 +52,27 @@ namespace FastMath
             return Values[index];
         }
 
-        public static MemoizedLog ConstructByValuesCount(float minArgument, float maxArgument, float @base, int valuesCount)
+        public static MemoizedTanh ConstructByValuesCount(float minArgument, float maxArgument, int valuesCount)
         {
-            return new(minArgument, maxArgument, @base, valuesCount + 1);
+            return new(minArgument, maxArgument, valuesCount + 1);
         }
 
-        public static MemoizedLog ConstructByMaxError(float minArgument, float maxArgument, float @base, float maxError)
+        public static MemoizedTanh ConstructByMaxError(float minArgument, float maxArgument, float maxError)
         {
-            if (Abs(@base - 1) < 1e-3f) throw new ArgumentException("Can't create log with base equal to 1");
-            var step = Abs(Pow(@base, maxError + Log(minArgument, @base)) - minArgument) * 0.95f;
-            var valuesCount = (int) ((maxArgument - minArgument) / step) + 2;
-            return new MemoizedLog(minArgument, maxArgument, @base, valuesCount);
+            var valuesCount = GetValuesCountByMaxError(minArgument, maxArgument, maxError);
+            return new MemoizedTanh(minArgument, maxArgument, valuesCount);
         }
 
-        public static MemoizedLog ConstructByStep(float minArgument, float maxArgument, float @base, float step)
+        public static MemoizedTanh ConstructByStep(float minArgument, float maxArgument, float step)
         {
-            var valuesCount = (int) Round((maxArgument - minArgument) / step);
-            if (valuesCount == 1) ++valuesCount;
-            return new MemoizedLog(minArgument, maxArgument, @base, valuesCount);
+            var valuesCount = (int) System.Math.Round((maxArgument - minArgument) / step) + 1;
+            return new MemoizedTanh(minArgument, maxArgument, valuesCount);
+        }
+
+        private static int GetValuesCountByMaxError(float minArgument, float maxArgument, float maxError)
+        {
+            var step = maxError * 0.95f;
+            return (int) System.Math.Round((maxArgument - minArgument) / step) + 1;
         }
     }
 }

@@ -15,26 +15,25 @@
 
 using System;
 using System.Runtime.CompilerServices;
-using FastMath.Core;
+using Dreamcast.Math.Fast.Core;
 
-namespace FastMath
+namespace Dreamcast.Math.Fast
 {
-    public class MemoizedAtan : IUnboundMethod
+    public sealed class MemoizedCos : IUnboundMethod
     {
-        private const float MinValue = (float) -Math.PI / 2;
-
-        private const float MaxValue = (float) Math.PI / 2;
-
         private readonly float _argumentMultiplier;
 
-        private MemoizedAtan(int valuesCount, float maxArgument)
+        private readonly int _valuesCycleLength;
+
+        private MemoizedCos(int valuesCount)
         {
-            MinArgument = -maxArgument;
-            MaxArgument = maxArgument;
+            MinArgument = 0;
+            MaxArgument = (float) (System.Math.PI * 2);
             Values = new float[valuesCount];
             Step = (MaxArgument - MinArgument) / (valuesCount - 1);
             this.ProduceValuesArray();
             _argumentMultiplier = 1 / Step;
+            _valuesCycleLength = Values.Length - 1;
         }
 
         public float MinArgument { get; }
@@ -47,45 +46,42 @@ namespace FastMath
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod => x => (float) Math.Atan(x);
+        public Func<float, float> BaseMethod => x => (float) System.Math.Cos(x);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
         {
-            var index = (int) ((argument - MinArgument) * _argumentMultiplier);
+            var index = (int) (argument * _argumentMultiplier);
             return Values[index];
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float CalculateUnbound(float argument)
         {
-            if (argument < MinArgument)
-                return MinValue;
-            if (argument > MaxArgument)
-                return MaxValue;
-            var index = (int) ((argument - MinArgument) * _argumentMultiplier);
-            return Values[index];
+            if (argument < 0) argument = -argument;
+            var index = (int) (argument * _argumentMultiplier);
+            return Values[index % _valuesCycleLength];
         }
 
-        public static MemoizedAtan ConstructByValuesCount(int valuesCount, float maxArgument)
+        public static MemoizedCos ConstructByValuesCount(int valuesCount)
         {
-            return new(valuesCount + 1, maxArgument);
+            return new(valuesCount + 1);
         }
 
-        public static MemoizedAtan ConstructByMaxError(float maxError)
+        public static MemoizedCos ConstructByMaxError(float maxError)
         {
-            maxError *= 0.95f;
-            var maxArgument = (float) Math.Tan(Math.PI / 2 - maxError);
-            var valuesCount = (int) (2.5f * maxArgument / maxError + 2);
-            return new MemoizedAtan(valuesCount, maxArgument);
+            return new(GetValuesCountByMaxError(maxError));
         }
 
-        public static MemoizedAtan ConstructByStep(float step)
+        public static MemoizedCos ConstructByStep(float step)
         {
-            var maxError = (float) Math.Atan(step);
-            var maxArgument = (float) Math.Tan(Math.PI / 2 - maxError);
-            var valuesCount = (int) Math.Round(2 * maxArgument / maxError);
-            return new MemoizedAtan(valuesCount, maxArgument);
+            var valuesCount = (int) System.Math.Round(System.Math.PI * 2 / step) + 1;
+            return new MemoizedCos(valuesCount);
+        }
+
+        private static int GetValuesCountByMaxError(float maxError)
+        {
+            return (int) System.Math.Round(3 * System.Math.PI / maxError + 1);
         }
     }
 }

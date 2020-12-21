@@ -13,22 +13,17 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-using System;
-
-namespace FastMath.Core
+namespace Dreamcast.Math.Fast.Core
 {
-    public interface IMemoizedMethod
+    /// <summary>
+    ///     Method that could be calculated with any argument, but with a bit lower performance
+    /// </summary>
+    public interface IUnboundMethod : IMemoizedMethod
     {
-        float MinArgument { get; }
-        float MaxArgument { get; }
-        float Step { get; }
-        float[] Values { get; }
-        bool IsLinearInterpolated { get; }
-        Func<float, float> BaseMethod { get; }
-
         /// <summary>
-        ///     Caclulate method. Note that argument should be in range from MinArgument to MaxArgument.
+        ///     Calculates method with any argument. Has a bit less performance than original calculate method
+        ///     Be care to use this method with very small or big arguments - possible accuracy problems
         /// </summary>
-        float Calculate(float argument);
+        float CalculateUnbound(float argument);
     }
 }

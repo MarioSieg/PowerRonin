@@ -15,10 +15,10 @@
 
 using System;
 using System.Runtime.CompilerServices;
-using FastMath.Core;
+using Dreamcast.Math.Fast.Core;
 using static System.Math;
 
-namespace FastMath
+namespace Dreamcast.Math.Fast
 {
     public sealed class MemoizedPow : IMemoizedMethod
     {

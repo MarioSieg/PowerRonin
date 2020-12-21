@@ -15,7 +15,7 @@
 
 using System;
 
-namespace FastMath.Core
+namespace Dreamcast.Math.Fast.Core
 {
     public static class Utils
     {
@@ -44,7 +44,7 @@ namespace FastMath.Core
         /// </summary>
         public static float Error(this IMemoizedMethod method, float argument)
         {
-            return Math.Abs(method.Calculate(argument) - method.BaseMethod(argument));
+            return System.Math.Abs(method.Calculate(argument) - method.BaseMethod(argument));
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace FastMath.Core
         /// </summary>
         public static float Error(this IUnboundMethod method, float argument)
         {
-            return Math.Abs(method.CalculateUnbound(argument) - method.BaseMethod(argument));
+            return System.Math.Abs(method.CalculateUnbound(argument) - method.BaseMethod(argument));
         }
 
         private static float SimpleMaxError(IMemoizedMethod method)
@@ -60,7 +60,7 @@ namespace FastMath.Core
             var maxError = 0f;
             for (var i = 1; i < method.Values.Length; ++i)
             {
-                var difference = Math.Abs(method.Values[i] - method.Values[i - 1]);
+                var difference = System.Math.Abs(method.Values[i] - method.Values[i - 1]);
                 if (difference > maxError) maxError = difference;
             }
 
@@ -74,7 +74,7 @@ namespace FastMath.Core
             {
                 var argument = method.MinArgument + method.Step * 0.5f + i * method.Step;
                 if (argument > method.MaxArgument) break;
-                var difference = Math.Abs(method.Calculate(argument) - method.BaseMethod(argument));
+                var difference = System.Math.Abs(method.Calculate(argument) - method.BaseMethod(argument));
                 if (difference > maxError) maxError = difference;
             }
 
@@ -88,7 +88,7 @@ namespace FastMath.Core
             {
                 var argument = method.MinArgument + method.Step * 0.5f + i * method.Step;
                 if (argument > method.MaxArgument) break;
-                var error = Math.Abs(method.BaseMethod(argument) - method.Calculate(argument));
+                var error = System.Math.Abs(method.BaseMethod(argument) - method.Calculate(argument));
                 if (!float.IsInfinity(error) && !float.IsNaN(error)) sumError += error;
             }
 

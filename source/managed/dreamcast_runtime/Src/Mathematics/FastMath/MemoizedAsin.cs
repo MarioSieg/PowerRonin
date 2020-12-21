@@ -15,18 +15,18 @@
 
 using System;
 using System.Runtime.CompilerServices;
-using FastMath.Core;
+using Dreamcast.Math.Fast.Core;
 
-namespace FastMath
+namespace Dreamcast.Math.Fast
 {
-    public class MemoizedTanh : IMemoizedMethod
+    public sealed class MemoizedAsin : IMemoizedMethod
     {
         private readonly float _argumentMultiplier;
 
-        private MemoizedTanh(float minArgument, float maxArgument, int valuesCount)
+        private MemoizedAsin(int valuesCount)
         {
-            MinArgument = minArgument;
-            MaxArgument = maxArgument;
+            MinArgument = -1;
+            MaxArgument = 1;
             Values = new float[valuesCount];
             Step = (MaxArgument - MinArgument) / (valuesCount - 1);
             this.ProduceValuesArray();
@@ -43,7 +43,7 @@ namespace FastMath
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod => x => (float) Math.Tanh(x);
+        public Func<float, float> BaseMethod => x => (float) System.Math.Asin(x);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
@@ -52,27 +52,23 @@ namespace FastMath
             return Values[index];
         }
 
-        public static MemoizedTanh ConstructByValuesCount(float minArgument, float maxArgument, int valuesCount)
+        public static MemoizedAsin ConstructByValuesCount(int valuesCount)
         {
-            return new(minArgument, maxArgument, valuesCount + 1);
+            return new(valuesCount + 1);
         }
 
-        public static MemoizedTanh ConstructByMaxError(float minArgument, float maxArgument, float maxError)
+        public static MemoizedAsin ConstructByMaxError(float maxError)
         {
-            var valuesCount = GetValuesCountByMaxError(minArgument, maxArgument, maxError);
-            return new MemoizedTanh(minArgument, maxArgument, valuesCount);
+            var step = 1 - System.Math.Sin(System.Math.PI / 2 - maxError);
+            step *= 0.95f;
+            var valuesCount = (int) (2 / step) + 2;
+            return new MemoizedAsin(valuesCount);
         }
 
-        public static MemoizedTanh ConstructByStep(float minArgument, float maxArgument, float step)
+        public static MemoizedAsin ConstructByStep(float step)
         {
-            var valuesCount = (int) Math.Round((maxArgument - minArgument) / step) + 1;
-            return new MemoizedTanh(minArgument, maxArgument, valuesCount);
-        }
-
-        private static int GetValuesCountByMaxError(float minArgument, float maxArgument, float maxError)
-        {
-            var step = maxError * 0.95f;
-            return (int) Math.Round((maxArgument - minArgument) / step) + 1;
+            var valuesCount = (int) System.Math.Round(2 / step) + 1;
+            return new MemoizedAsin(valuesCount);
         }
     }
 }

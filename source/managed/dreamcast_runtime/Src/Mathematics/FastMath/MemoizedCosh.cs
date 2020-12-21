@@ -1,4 +1,4 @@
-﻿// *******************************************************************************
+// *******************************************************************************
 // The content of this file includes portions of the KerboGames Dreamcast Technology
 // released in source code form as part of the SDK package.
 // 
@@ -15,17 +15,16 @@
 
 using System;
 using System.Runtime.CompilerServices;
-using FastMath.Core;
+using Dreamcast.Math.Fast.Core;
 
-namespace FastMath
+namespace Dreamcast.Math.Fast
 {
-    public sealed class MemoizedMethod : IMemoizedMethod
+    public class MemoizedCosh : IMemoizedMethod
     {
         private readonly float _argumentMultiplier;
 
-        private MemoizedMethod(Func<float, float> baseMethod, float minArgument, float maxArgument, int valuesCount)
+        private MemoizedCosh(float minArgument, float maxArgument, int valuesCount)
         {
-            BaseMethod = baseMethod;
             MinArgument = minArgument;
             MaxArgument = maxArgument;
             Values = new float[valuesCount];
@@ -44,7 +43,7 @@ namespace FastMath
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod { get; }
+        public Func<float, float> BaseMethod => x => (float) System.Math.Cosh(x);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
@@ -53,16 +52,29 @@ namespace FastMath
             return Values[index];
         }
 
-        public static MemoizedMethod ConstructByValuesCount(Func<float, float> baseMethod, float minArgument, float maxArgument, int valuesCount)
+        public static MemoizedCosh ConstructByValuesCount(float minArgument, float maxArgument, int valuesCount)
         {
-            return new(baseMethod, minArgument, maxArgument, valuesCount + 1);
+            return new(minArgument, maxArgument, valuesCount + 1);
         }
 
-        public static MemoizedMethod ConstructByStep(Func<float, float> baseMethod, float minArgument, float maxArgument, float step)
+        public static MemoizedCosh ConstructByMaxError(float minArgument, float maxArgument, float maxError)
         {
-            var valuesCount = (int) Math.Round((maxArgument - minArgument) / step) + 1;
+            var valuesCount = GetValuesCountByMaxError(minArgument, maxArgument, maxError);
+            return new MemoizedCosh(minArgument, maxArgument, valuesCount);
+        }
+
+        public static MemoizedCosh ConstructByStep(float minArgument, float maxArgument, float step)
+        {
+            var valuesCount = (int) System.Math.Round((maxArgument - minArgument) / step) + 1;
             if (valuesCount == 1) valuesCount = 2;
-            return new MemoizedMethod(baseMethod, minArgument, maxArgument, valuesCount + 1);
+            return new MemoizedCosh(minArgument, maxArgument, valuesCount);
+        }
+
+        private static int GetValuesCountByMaxError(float minArgument, float maxArgument, float maxError)
+        {
+            var argument = System.Math.Max(System.Math.Abs(minArgument), System.Math.Abs(maxArgument));
+            var step = (float) System.Math.Abs(System.Math.Log(1 - maxError * System.Math.Pow(System.Math.E, -argument), System.Math.E));
+            return (int) System.Math.Round((maxArgument - minArgument) / step) + 2;
         }
     }
 }
