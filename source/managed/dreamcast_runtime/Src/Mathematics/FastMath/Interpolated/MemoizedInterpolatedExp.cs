@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.CompilerServices;
-using Dreamcast.Math.Fast.Core;
+using Dreamcast.Mathematics.Fast.Core;
 
-namespace Dreamcast.Math.Fast.Interpolated
+namespace Dreamcast.Mathematics.Fast.Interpolated
 {
     public sealed class MemoizedInterpolatedExp : IMemoizedMethod
     {
@@ -34,7 +34,7 @@ namespace Dreamcast.Math.Fast.Interpolated
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod => x => (float) System.Math.Pow(Base, x);
+        public Func<float, float> BaseMethod => x => (float) Math.Pow(Base, x);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
@@ -54,7 +54,7 @@ namespace Dreamcast.Math.Fast.Interpolated
         public static MemoizedInterpolatedExp ConstructByStep(float minArgument, float maxArgument, float @base,
             float step)
         {
-            var valuesCount = (int) System.Math.Round((maxArgument - minArgument) / step) + AdditionalValueCount;
+            var valuesCount = (int) Math.Round((maxArgument - minArgument) / step) + AdditionalValueCount;
             if (valuesCount == AdditionalValueCount) ++valuesCount;
             return new MemoizedInterpolatedExp(minArgument, maxArgument, @base, valuesCount);
         }
@@ -70,8 +70,8 @@ namespace Dreamcast.Math.Fast.Interpolated
         {
             float CalculateStep(float argument)
             {
-                return (float) System.Math.Abs(System.Math.Log(maxError + System.Math.Pow(@base, argument), @base) -
-                                               argument);
+                return (float) Math.Abs(Math.Log(maxError + Math.Pow(@base, argument), @base) -
+                                        argument);
             }
 
             if (@base < 0) throw new ArgumentException("Can't calculate values count: base is less then zero");

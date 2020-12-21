@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using Dreamcast.Math.Fast.Core;
+using Dreamcast.Mathematics.Fast.Core;
 
-namespace Dreamcast.Math.Fast
+namespace Dreamcast.Mathematics.Fast
 {
     public class MemoizedAtan : IUnboundMethod
     {
-        private const float MinValue = (float) -System.Math.PI / 2;
+        private const float MinValue = (float) -Math.PI / 2;
 
-        private const float MaxValue = (float) System.Math.PI / 2;
+        private const float MaxValue = (float) Math.PI / 2;
 
         private readonly float _argumentMultiplier;
 
@@ -32,7 +32,7 @@ namespace Dreamcast.Math.Fast
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod => x => (float) System.Math.Atan(x);
+        public Func<float, float> BaseMethod => x => (float) Math.Atan(x);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
@@ -60,16 +60,16 @@ namespace Dreamcast.Math.Fast
         public static MemoizedAtan ConstructByMaxError(float maxError)
         {
             maxError *= 0.95f;
-            var maxArgument = (float) System.Math.Tan(System.Math.PI / 2 - maxError);
+            var maxArgument = (float) Math.Tan(Math.PI / 2 - maxError);
             var valuesCount = (int) (2.5f * maxArgument / maxError + 2);
             return new MemoizedAtan(valuesCount, maxArgument);
         }
 
         public static MemoizedAtan ConstructByStep(float step)
         {
-            var maxError = (float) System.Math.Atan(step);
-            var maxArgument = (float) System.Math.Tan(System.Math.PI / 2 - maxError);
-            var valuesCount = (int) System.Math.Round(2 * maxArgument / maxError);
+            var maxError = (float) Math.Atan(step);
+            var maxArgument = (float) Math.Tan(Math.PI / 2 - maxError);
+            var valuesCount = (int) Math.Round(2 * maxArgument / maxError);
             return new MemoizedAtan(valuesCount, maxArgument);
         }
     }

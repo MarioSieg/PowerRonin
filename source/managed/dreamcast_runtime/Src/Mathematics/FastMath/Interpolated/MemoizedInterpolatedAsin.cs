@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.CompilerServices;
-using Dreamcast.Math.Fast.Core;
+using Dreamcast.Mathematics.Fast.Core;
 
-namespace Dreamcast.Math.Fast.Interpolated
+namespace Dreamcast.Mathematics.Fast.Interpolated
 {
     public sealed class MemoizedInterpolatedAsin : IMemoizedMethod
     {
@@ -30,7 +30,7 @@ namespace Dreamcast.Math.Fast.Interpolated
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod => x => (float) System.Math.Asin(x);
+        public Func<float, float> BaseMethod => x => (float) Math.Asin(x);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
@@ -48,12 +48,12 @@ namespace Dreamcast.Math.Fast.Interpolated
 
         public static MemoizedInterpolatedAsin ConstructByMaxError(float maxError)
         {
-            return ConstructByStep((float) System.Math.Pow(3 * maxError, 2));
+            return ConstructByStep((float) Math.Pow(3 * maxError, 2));
         }
 
         public static MemoizedInterpolatedAsin ConstructByStep(float step)
         {
-            var valuesCount = (int) System.Math.Round(2 / step) + AdditionalValueCount;
+            var valuesCount = (int) Math.Round(2 / step) + AdditionalValueCount;
             if (valuesCount == AdditionalValueCount) ++valuesCount;
             return new MemoizedInterpolatedAsin(valuesCount);
         }

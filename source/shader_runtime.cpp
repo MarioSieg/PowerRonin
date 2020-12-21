@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "../include/dce/shader.hpp"
 #include "../include/dce/blob.hpp"
 #include "renderer/gl_headers.hpp"
@@ -79,8 +64,9 @@ namespace dce {
 		}
 
 		const auto* const vs_mem = bgfx::makeRef(this->vertex_shader_bytecode_.data()
-		                                         , static_cast<std::uint32_t>(this->vertex_shader_bytecode_.size() * sizeof(
-			                                         std::byte)), nullptr, nullptr);
+		                                         , static_cast<std::uint32_t>(this->vertex_shader_bytecode_.size() *
+			                                         sizeof(
+				                                         std::byte)), nullptr, nullptr);
 
 		[[unlikely]] if (!vs_mem) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload shader!");
@@ -95,7 +81,8 @@ namespace dce {
 
 		[[likely]] if (this->fragment_shader_bytecode_) {
 			const auto* const fs_mem = bgfx::makeRef((*this->fragment_shader_bytecode_).data()
-			                                         , static_cast<std::uint32_t>((*this->fragment_shader_bytecode_).size() * sizeof
+			                                         , static_cast<std::uint32_t>((*this->fragment_shader_bytecode_).
+				                                         size() * sizeof
 				                                         (std::byte)), nullptr, nullptr);
 
 			[[unlikely]] if (!fs_mem) {
@@ -158,7 +145,8 @@ namespace dce {
 	}
 
 	auto ShaderImporteur::load(std::filesystem::path&& _path
-	                           , std::unordered_map<std::string_view, std::tuple<UniformType, std::uint16_t>>&& _uniforms
+	                           , std::unordered_map<std::string_view, std::tuple<UniformType, std::uint16_t>>&&
+	                           _uniforms
 	                           , const ShaderMeta* const _meta) const -> std::shared_ptr<Shader> {
 		[[unlikely]] if (_path.extension() != Shader::FILE_EXTENSIONS[0]) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load shader from file!");
@@ -193,7 +181,8 @@ namespace dce {
 		return self;
 	}
 
-	auto ShaderCompiler::load(std::filesystem::path&& _path, const ShaderMeta* const _meta) const -> std::shared_ptr<Shader> {
+	auto ShaderCompiler::load(std::filesystem::path&& _path,
+	                          const ShaderMeta* const _meta) const -> std::shared_ptr<Shader> {
 		auto self = IResource<ShaderMeta>::allocate<Shader>();
 
 		self->file_path_ = std::move(_path);

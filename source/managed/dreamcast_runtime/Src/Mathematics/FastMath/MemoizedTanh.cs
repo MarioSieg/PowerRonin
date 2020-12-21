@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.CompilerServices;
-using Dreamcast.Math.Fast.Core;
+using Dreamcast.Mathematics.Fast.Core;
 
-namespace Dreamcast.Math.Fast
+namespace Dreamcast.Mathematics.Fast
 {
     public class MemoizedTanh : IMemoizedMethod
     {
@@ -28,7 +28,7 @@ namespace Dreamcast.Math.Fast
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod => x => (float) System.Math.Tanh(x);
+        public Func<float, float> BaseMethod => x => (float) Math.Tanh(x);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
@@ -50,14 +50,14 @@ namespace Dreamcast.Math.Fast
 
         public static MemoizedTanh ConstructByStep(float minArgument, float maxArgument, float step)
         {
-            var valuesCount = (int) System.Math.Round((maxArgument - minArgument) / step) + 1;
+            var valuesCount = (int) Math.Round((maxArgument - minArgument) / step) + 1;
             return new MemoizedTanh(minArgument, maxArgument, valuesCount);
         }
 
         private static int GetValuesCountByMaxError(float minArgument, float maxArgument, float maxError)
         {
             var step = maxError * 0.95f;
-            return (int) System.Math.Round((maxArgument - minArgument) / step) + 1;
+            return (int) Math.Round((maxArgument - minArgument) / step) + 1;
         }
     }
 }

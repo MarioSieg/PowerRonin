@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using Dreamcast.Math.Fast.Core;
+using Dreamcast.Mathematics.Fast.Core;
 
-namespace Dreamcast.Math.Fast
+namespace Dreamcast.Mathematics.Fast
 {
     public sealed class MemoizedSin : IUnboundMethod
     {
@@ -13,7 +13,7 @@ namespace Dreamcast.Math.Fast
         private MemoizedSin(int valuesCount)
         {
             MinArgument = 0;
-            MaxArgument = (float) (System.Math.PI * 2);
+            MaxArgument = (float) (Math.PI * 2);
             Values = new float[valuesCount];
             Step = MaxArgument / (valuesCount - 1);
             this.ProduceValuesArray();
@@ -31,7 +31,7 @@ namespace Dreamcast.Math.Fast
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod => x => (float) System.Math.Sin(x);
+        public Func<float, float> BaseMethod => x => (float) Math.Sin(x);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
@@ -66,13 +66,13 @@ namespace Dreamcast.Math.Fast
 
         public static MemoizedSin ConstructByStep(float step)
         {
-            var valuesCount = (int) System.Math.Round(System.Math.PI * 2 / step) + 1;
+            var valuesCount = (int) Math.Round(Math.PI * 2 / step) + 1;
             return new MemoizedSin(valuesCount);
         }
 
         private static int GetValuesCountByMaxError(float maxError)
         {
-            return (int) System.Math.Round(3 * System.Math.PI / maxError + 1);
+            return (int) Math.Round(3 * Math.PI / maxError + 1);
         }
     }
 }

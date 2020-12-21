@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dreamcast.Math.Fast.Core
+namespace Dreamcast.Mathematics.Fast.Core
 {
     public interface IMemoizedMethod
     {

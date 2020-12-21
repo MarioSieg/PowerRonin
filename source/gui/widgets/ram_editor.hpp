@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #pragma once
 
 #include <stdio.h>      // sprintf, scanf
@@ -33,10 +18,10 @@
 
 struct MemoryEditor {
 	enum DataFormat {
-		DataFormat_Bin = 0
-		, DataFormat_Dec = 1
-		, DataFormat_Hex = 2
-		, DataFormat_COUNT
+		DataFormat_Bin = 0,
+		DataFormat_Dec = 1,
+		DataFormat_Hex = 2,
+		DataFormat_COUNT
 	};
 
 	// Settings
@@ -127,7 +112,8 @@ struct MemoryEditor {
 	void CalcSizes(Sizes& s, size_t mem_size, size_t base_display_addr) const {
 		ImGuiStyle& style = ImGui::GetStyle();
 		s.AddrDigitsCount = OptAddrDigitsCount;
-		if (s.AddrDigitsCount == 0) for (size_t n = base_display_addr + mem_size - 1; n > 0; n >>= 4) s.AddrDigitsCount++;
+		if (s.AddrDigitsCount == 0) for (size_t n = base_display_addr + mem_size - 1; n > 0; n >>= 4) s.AddrDigitsCount
+			++;
 		s.LineHeight = ImGui::GetTextLineHeight();
 		s.GlyphWidth = ImGui::CalcTextSize("F").x + 1; // We assume the font is mono-space
 		s.HexCellWidth = static_cast<float>(static_cast<int>(s.GlyphWidth * 2.5f));
@@ -140,7 +126,8 @@ struct MemoryEditor {
 		if (OptShowAscii) {
 			s.PosAsciiStart = s.PosHexEnd + s.GlyphWidth * 1;
 			if (OptMidColsCount > 0)
-				s.PosAsciiStart += static_cast<float>((Cols + OptMidColsCount - 1) / OptMidColsCount) * s.SpacingBetweenMidCols;
+				s.PosAsciiStart += static_cast<float>((Cols + OptMidColsCount - 1) / OptMidColsCount) * s.
+					SpacingBetweenMidCols;
 			s.PosAsciiEnd = s.PosAsciiStart + Cols * s.GlyphWidth;
 		}
 		s.WindowWidth = s.PosAsciiEnd + style.ScrollbarSize + style.WindowPadding.x * 2 + s.GlyphWidth;
@@ -154,7 +141,8 @@ struct MemoryEditor {
 
 		Open = true;
 		if (ImGui::Begin(title, &Open, ImGuiWindowFlags_NoScrollbar)) {
-			if (ImGui::IsWindowHovered(ImGuiHoveredFlags_RootAndChildWindows) && ImGui::IsMouseReleased(ImGuiMouseButton_Right))
+			if (ImGui::IsWindowHovered(ImGuiHoveredFlags_RootAndChildWindows) && ImGui::IsMouseReleased(
+				ImGuiMouseButton_Right))
 				ImGui::OpenPopup("context");
 			DrawContents(mem_data, mem_size, base_display_addr);
 			if (ContentsWidthChanged) {
@@ -179,9 +167,11 @@ struct MemoryEditor {
 		const float height_separator = style.ItemSpacing.y;
 		float footer_height = 0;
 		if (OptShowOptions) footer_height += height_separator + ImGui::GetFrameHeightWithSpacing() * 1;
-		if (OptShowDataPreview) footer_height += height_separator + ImGui::GetFrameHeightWithSpacing() * 1 +
-			ImGui::GetTextLineHeightWithSpacing() * 3;
-		ImGui::BeginChild("##scrolling", ImVec2(0, -footer_height), false, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoNav);
+		if (OptShowDataPreview)
+			footer_height += height_separator + ImGui::GetFrameHeightWithSpacing() * 1 +
+				ImGui::GetTextLineHeightWithSpacing() * 3;
+		ImGui::BeginChild("##scrolling", ImVec2(0, -footer_height), false,
+		                  ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoNav);
 		ImDrawList* draw_list = ImGui::GetWindowDrawList();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
@@ -203,10 +193,11 @@ struct MemoryEditor {
 		const size_t preview_data_type_size = OptShowDataPreview ? DataTypeGetSize(PreviewDataType) : 0;
 
 		const size_t data_editing_addr_backup = DataEditingAddr;
-		size_t data_editing_addr_next = static_cast<size_t>(-1);
+		auto data_editing_addr_next = static_cast<size_t>(-1);
 		if (DataEditingAddr != static_cast<size_t>(-1)) {
 			// Move cursor but only apply on next frame so scrolling with be synchronized (because currently we can't change the scrolling while the window is being rendered)
-			if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_UpArrow)) && DataEditingAddr >= static_cast<size_t>(Cols)) {
+			if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_UpArrow)) && DataEditingAddr >= static_cast<size_t>(Cols
+			)) {
 				data_editing_addr_next = DataEditingAddr - Cols;
 				DataEditingTakeFocus = true;
 			}
@@ -223,11 +214,14 @@ struct MemoryEditor {
 				DataEditingTakeFocus = true;
 			}
 		}
-		if (data_editing_addr_next != static_cast<size_t>(-1) && data_editing_addr_next / Cols != data_editing_addr_backup / Cols) {
+		if (data_editing_addr_next != static_cast<size_t>(-1) && data_editing_addr_next / Cols !=
+			data_editing_addr_backup / Cols) {
 			// Track cursor movements
-			const int scroll_offset = static_cast<int>(data_editing_addr_next / Cols) - static_cast<int>(data_editing_addr_backup /
+			const int scroll_offset = static_cast<int>(data_editing_addr_next / Cols) - static_cast<int>(
+				data_editing_addr_backup /
 				Cols);
-			const bool scroll_desired = scroll_offset < 0 && data_editing_addr_next < visible_start_addr + Cols * 2 || scroll_offset
+			const bool scroll_desired = scroll_offset < 0 && data_editing_addr_next < visible_start_addr + Cols * 2 ||
+				scroll_offset
 				> 0 && data_editing_addr_next > visible_end_addr - Cols * 2;
 			if (scroll_desired) ImGui::SetScrollY(ImGui::GetScrollY() + scroll_offset * s.LineHeight);
 		}
@@ -249,30 +243,34 @@ struct MemoryEditor {
 
 		for (int line_i = clipper.DisplayStart; line_i < clipper.DisplayEnd; line_i++) // display only visible lines
 		{
-			size_t addr = static_cast<size_t>(line_i * Cols);
+			auto addr = static_cast<size_t>(line_i * Cols);
 			ImGui::Text(format_address, s.AddrDigitsCount, base_display_addr + addr);
 
 			// Draw Hexadecimal
 			for (int n = 0; n < Cols && addr < mem_size; n++, addr++) {
 				float byte_pos_x = s.PosHexStart + s.HexCellWidth * n;
-				if (OptMidColsCount > 0) byte_pos_x += static_cast<float>(n / OptMidColsCount) * s.SpacingBetweenMidCols;
+				if (OptMidColsCount > 0) byte_pos_x += static_cast<float>(n / OptMidColsCount) * s.
+					SpacingBetweenMidCols;
 				ImGui::SameLine(byte_pos_x);
 
 				// Draw highlight
 				const bool is_highlight_from_user_range = addr >= HighlightMin && addr < HighlightMax;
 				const bool is_highlight_from_user_func = HighlightFn && HighlightFn(mem_data, addr);
-				const bool is_highlight_from_preview = addr >= DataPreviewAddr && addr < DataPreviewAddr + preview_data_type_size;
+				const bool is_highlight_from_preview = addr >= DataPreviewAddr && addr < DataPreviewAddr +
+					preview_data_type_size;
 				if (is_highlight_from_user_range || is_highlight_from_user_func || is_highlight_from_preview) {
 					ImVec2 pos = ImGui::GetCursorScreenPos();
 					float highlight_width = s.GlyphWidth * 2;
-					const bool is_next_byte_highlighted = addr + 1 < mem_size && (HighlightMax != static_cast<size_t>(-1) && addr +
+					const bool is_next_byte_highlighted = addr + 1 < mem_size && (HighlightMax != static_cast<size_t>(-1
+						) && addr +
 						1 < HighlightMax || HighlightFn && HighlightFn(mem_data, addr + 1));
 					if (is_next_byte_highlighted || n + 1 == Cols) {
 						highlight_width = s.HexCellWidth;
 						if (OptMidColsCount > 0 && n > 0 && n + 1 < Cols && (n + 1) % OptMidColsCount == 0)
 							highlight_width += s.SpacingBetweenMidCols;
 					}
-					draw_list->AddRectFilled(pos, ImVec2(pos.x + highlight_width, pos.y + s.LineHeight), HighlightColor);
+					draw_list->AddRectFilled(pos, ImVec2(pos.x + highlight_width, pos.y + s.LineHeight),
+					                         HighlightColor);
 				}
 
 				if (DataEditingAddr == addr) {
@@ -288,8 +286,8 @@ struct MemoryEditor {
 					ImGui::PushItemWidth(s.GlyphWidth * 2);
 					struct UserData {
 						// FIXME: We should have a way to retrieve the text edit cursor position more easily in the API, this is rather tedious. This is such a ugly mess we may be better off not using InputText() at all here.
-						static int Callback(ImGuiInputTextCallbackData* data) {
-							UserData* user_data = static_cast<UserData*>(data->UserData);
+						static auto Callback(ImGuiInputTextCallbackData* data) -> int {
+							auto* user_data = static_cast<UserData*>(data->UserData);
 							if (!data->HasSelection()) user_data->CursorPos = data->CursorPos;
 							if (data->SelectionStart == 0 && data->SelectionEnd == data->BufTextLen) {
 								// When not editing a byte, always rewrite its content (this is a bit tricky, since InputText technically "owns" the master copy of the buffer we edit it in there)
@@ -307,8 +305,10 @@ struct MemoryEditor {
 					};
 					UserData user_data;
 					user_data.CursorPos = -1;
-					sprintf(user_data.CurrentBufOverwrite, format_byte, ReadFn ? ReadFn(mem_data, addr) : mem_data[addr]);
-					const ImGuiInputTextFlags flags = ImGuiInputTextFlags_CharsHexadecimal | ImGuiInputTextFlags_EnterReturnsTrue |
+					sprintf(user_data.CurrentBufOverwrite, format_byte,
+					        ReadFn ? ReadFn(mem_data, addr) : mem_data[addr]);
+					const ImGuiInputTextFlags flags = ImGuiInputTextFlags_CharsHexadecimal |
+						ImGuiInputTextFlags_EnterReturnsTrue |
 						ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_NoHorizontalScroll |
 						ImGuiInputTextFlags_AlwaysInsertMode | ImGuiInputTextFlags_CallbackAlways;
 					if (ImGui::InputText("##data", DataInputBuf, 32, flags, UserData::Callback, &user_data))
@@ -354,7 +354,8 @@ struct MemoryEditor {
 				addr = line_i * Cols;
 				ImGui::PushID(line_i);
 				if (ImGui::InvisibleButton("ascii", ImVec2(s.PosAsciiEnd - s.PosAsciiStart, s.LineHeight))) {
-					DataEditingAddr = DataPreviewAddr = addr + static_cast<size_t>((ImGui::GetIO().MousePos.x - pos.x) / s.
+					DataEditingAddr = DataPreviewAddr = addr + static_cast<size_t>((ImGui::GetIO().MousePos.x - pos.x) /
+						s.
 						GlyphWidth);
 					DataEditingTakeFocus = true;
 				}
@@ -427,7 +428,8 @@ struct MemoryEditor {
 		}
 
 		ImGui::SameLine();
-		ImGui::Text(format_range, s.AddrDigitsCount, base_display_addr, s.AddrDigitsCount, base_display_addr + mem_size - 1);
+		ImGui::Text(format_range, s.AddrDigitsCount, base_display_addr, s.AddrDigitsCount,
+		            base_display_addr + mem_size - 1);
 		ImGui::SameLine();
 		ImGui::PushItemWidth(static_cast<float>((s.AddrDigitsCount + 1) * s.GlyphWidth + style.FramePadding.x * 2.0f));
 		if (ImGui::InputText("##addr", AddrInputBuf, 32
@@ -498,34 +500,36 @@ struct MemoryEditor {
 	}
 
 	// Utilities for Data Preview
-	const char* DataTypeGetDesc(ImGuiDataType data_type) const {
-		const char* descs[] = {"Int8", "Uint8", "Int16", "Uint16", "Int32", "Uint32", "Int64", "Uint64", "Float", "Double"};
+	[[nodiscard]] auto DataTypeGetDesc(ImGuiDataType data_type) const -> const char* {
+		const char* descs[] = {
+			"Int8", "Uint8", "Int16", "Uint16", "Int32", "Uint32", "Int64", "Uint64", "Float", "Double"
+		};
 		IM_ASSERT(data_type >= 0 && data_type < ImGuiDataType_COUNT);
 		return descs[data_type];
 	}
 
-	size_t DataTypeGetSize(ImGuiDataType data_type) const {
+	[[nodiscard]] auto DataTypeGetSize(ImGuiDataType data_type) const -> size_t {
 		const size_t sizes[] = {1, 1, 2, 2, 4, 4, 8, 8, sizeof(float), sizeof(double)};
 		IM_ASSERT(data_type >= 0 && data_type < ImGuiDataType_COUNT);
 		return sizes[data_type];
 	}
 
-	const char* DataFormatGetDesc(DataFormat data_format) const {
+	[[nodiscard]] auto DataFormatGetDesc(DataFormat data_format) const -> const char* {
 		const char* descs[] = {"Bin", "Dec", "Hex"};
 		IM_ASSERT(data_format >= 0 && data_format < DataFormat_COUNT);
 		return descs[data_format];
 	}
 
-	bool IsBigEndian() const {
+	[[nodiscard]] auto IsBigEndian() const -> bool {
 		uint16_t x = 1;
 		char c[2];
 		memcpy(c, &x, 2);
 		return c[0] != 0;
 	}
 
-	static void* EndianessCopyBigEndian(void* _dst, void* _src, size_t s, int is_little_endian) {
+	static auto EndianessCopyBigEndian(void* _dst, void* _src, size_t s, int is_little_endian) -> void* {
 		if (is_little_endian) {
-			uint8_t* dst = static_cast<uint8_t*>(_dst);
+			auto* dst = static_cast<uint8_t*>(_dst);
 			uint8_t* src = static_cast<uint8_t*>(_src) + s - 1;
 			for (int i = 0, n = static_cast<int>(s); i < n; ++i) memcpy(dst++, src--, 1);
 			return _dst;
@@ -533,23 +537,23 @@ struct MemoryEditor {
 		return memcpy(_dst, _src, s);
 	}
 
-	static void* EndianessCopyLittleEndian(void* _dst, void* _src, size_t s, int is_little_endian) {
+	static auto EndianessCopyLittleEndian(void* _dst, void* _src, size_t s, int is_little_endian) -> void* {
 		if (is_little_endian) {
 			return memcpy(_dst, _src, s);
 		}
-		uint8_t* dst = static_cast<uint8_t*>(_dst);
+		auto* dst = static_cast<uint8_t*>(_dst);
 		uint8_t* src = static_cast<uint8_t*>(_src) + s - 1;
 		for (int i = 0, n = static_cast<int>(s); i < n; ++i) memcpy(dst++, src--, 1);
 		return _dst;
 	}
 
-	void* EndianessCopy(void* dst, void* src, size_t size) const {
+	auto EndianessCopy(void* dst, void* src, size_t size) const -> void* {
 		static void* (*fp)(void*, void*, size_t, int) = nullptr;
 		if (fp == nullptr) fp = IsBigEndian() ? EndianessCopyBigEndian : EndianessCopyLittleEndian;
 		return fp(dst, src, size, PreviewEndianess);
 	}
 
-	const char* FormatBinary(const uint8_t* buf, int width) const {
+	auto FormatBinary(const uint8_t* buf, int width) const -> const char* {
 		IM_ASSERT(width <= 64);
 		size_t out_n = 0;
 		static char out_buf[64 + 8 + 1];

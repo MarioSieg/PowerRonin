@@ -1,25 +1,11 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "../../include/dce/core/subsystem.hpp"
 #include "../../include/dce/xorshift.hpp"
 
 namespace dce::core {
 	ISubsystem::ISubsystem(const std::string_view _name
 	                       , const std::underlying_type<ServiceEvents::Enum>::type _subscribed_events) noexcept
-		: name(_name), subscribed_events(_subscribed_events), id(xorshift32()) { }
+		: name(_name), subscribed_events(_subscribed_events), id(xorshift32()) {
+	}
 
 	auto ISubsystem::get_pre_startup_time() const noexcept -> double {
 		return this->pre_startup_time_;

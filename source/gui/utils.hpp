@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #pragma once
 
 #include "gui_headers.hpp"
@@ -25,7 +10,8 @@ namespace dce::gui {
 	                          , const std::uint8_t _g
 	                          , const std::uint8_t _b
 	                          , const std::uint8_t _a = 0xFF) noexcept -> std::uint32_t {
-		return static_cast<std::uint32_t>(_r) << 0 | static_cast<std::uint32_t>(_g) << 8 | static_cast<std::uint32_t>(_b) << 16 |
+		return static_cast<std::uint32_t>(_r) << 0 | static_cast<std::uint32_t>(_g) << 8 | static_cast<std::uint32_t>(_b
+			) << 16 |
 			static_cast<std::uint32_t>(_a) << 24;
 	}
 
@@ -36,7 +22,8 @@ namespace dce::gui {
 		return ImVec4{_r / 255.f, _g / 255.f, _b / 255.f, _a / 255.f,};
 	}
 
-	inline auto to_imgui_id(const bgfx::TextureHandle handle, const std::uint8_t flags, const std::uint8_t mip) -> ImTextureID {
+	inline auto to_imgui_id(const bgfx::TextureHandle handle, const std::uint8_t flags,
+	                        const std::uint8_t mip) -> ImTextureID {
 		union {
 			struct {
 				bgfx::TextureHandle handle_s;
@@ -110,7 +97,8 @@ namespace dce::gui {
 	                         , const int frame_padding = -1
 	                         , const ImVec4& bg_col = ImVec4(0.0F, 0.0F, 0.0F, 0.0F)
 	                         , const ImVec4& tint_col = ImVec4(1.0F, 1.0F, 1.0F, 1.0F)) noexcept -> bool {
-		return image_button({texture->get_texel_buffer_id()}, UINT8_C(0x01), 0, size, uv0, uv1, frame_padding, bg_col, tint_col);
+		return image_button({texture->get_texel_buffer_id()}, UINT8_C(0x01), 0, size, uv0, uv1, frame_padding, bg_col,
+		                    tint_col);
 	}
 
 	inline auto is_mouse_over_area() noexcept -> bool {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using Dreamcast.Math.Fast.Core;
+using Dreamcast.Mathematics.Fast.Core;
 
-namespace Dreamcast.Math.Fast
+namespace Dreamcast.Mathematics.Fast
 {
     public sealed class MemoizedMethod : IMemoizedMethod
     {
@@ -47,7 +47,7 @@ namespace Dreamcast.Math.Fast
         public static MemoizedMethod ConstructByStep(Func<float, float> baseMethod, float minArgument,
             float maxArgument, float step)
         {
-            var valuesCount = (int) System.Math.Round((maxArgument - minArgument) / step) + 1;
+            var valuesCount = (int) Math.Round((maxArgument - minArgument) / step) + 1;
             if (valuesCount == 1) valuesCount = 2;
             return new MemoizedMethod(baseMethod, minArgument, maxArgument, valuesCount + 1);
         }

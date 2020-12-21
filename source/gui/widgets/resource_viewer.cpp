@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "resource_viewer.hpp"
 #include "../font_headers.hpp"
 #include "../gui_headers.hpp"
@@ -59,8 +44,9 @@ namespace dce::gui::widgets {
 					SameLine();
 					TextUnformatted(_mesh->get_file_path().filename().string().c_str());
 					if (IsItemHovered()) {
-						const auto size = _mesh->get_vertices().size() * sizeof(Vertex) + _mesh->get_indices().size() * sizeof(
-							std::uint16_t);
+						const auto size = _mesh->get_vertices().size() * sizeof(Vertex) + _mesh->get_indices().size() *
+							sizeof(
+								std::uint16_t);
 						BeginTooltip();
 						TextUnformatted(_mesh->is_uploaded() ? "Uploaded: yes" : "Uploaded: no");
 						Text("Vertices: %zu", _mesh->get_vertices().size());

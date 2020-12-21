@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "renderer.hpp"
 #include "clocks.hpp"
 #include "stats.hpp"
@@ -25,7 +10,8 @@
 #include "../../include/dce/sun.hpp"
 
 namespace dce::renderer {
-	Renderer::Renderer() : ISubsystem("Renderer", EVENTS), shader_bucket_(this->gpu_) { }
+	Renderer::Renderer() : ISubsystem("Renderer", EVENTS), shader_bucket_(this->gpu_) {
+	}
 
 	auto Renderer::on_pre_startup(Runtime& _rt) -> bool {
 		if (!this->gpu_.initialize_drivers(_rt.config(), _rt.protocol())) {
@@ -65,7 +51,8 @@ namespace dce::renderer {
 		this->gpu_.set_viewport(math::ZERO, {_rt.config().display.width, _rt.config().display.height}, FULLSCREEN_VIEW);
 		this->gpu_.clear_view(FULLSCREEN_VIEW, BGFX_CLEAR_DEPTH | BGFX_CLEAR_COLOR, 1.F, 0x040404FF);
 		this->gpu_.sort_draw_calls(FULLSCREEN_VIEW);
-		this->gpu_.set_viewport(_rt.render_data().scenery_viewport_position, _rt.render_data().scenery_viewport_size, SCENERY_VIEW);
+		this->gpu_.set_viewport(_rt.render_data().scenery_viewport_position, _rt.render_data().scenery_viewport_size,
+		                        SCENERY_VIEW);
 		return true;
 	}
 
@@ -83,7 +70,8 @@ namespace dce::renderer {
 	}
 
 	void Renderer::update_camera(Runtime& _rt) {
-		this->fly_cam_.update(_rt.input(), _rt.render_data().scenery_viewport_size.x, _rt.render_data().scenery_viewport_size.y
+		this->fly_cam_.update(_rt.input(), _rt.render_data().scenery_viewport_size.x,
+		                      _rt.render_data().scenery_viewport_size.y
 		                      , static_cast<float>(_rt.chrono().delta_time));
 		auto& data = _rt.render_data();
 		data.view_matrix = this->fly_cam_.get_view_matrix();
@@ -115,8 +103,9 @@ namespace dce::renderer {
 
 	void Renderer::set_per_frame_data(const Scenery::Configuration::Lighting& _lighting) const {
 		const auto orbit = calculate_sun_orbit(6, math::radians(23.4f));
-		const auto sun_dir = Vector4<>(calculate_sun_dir(_lighting.sun.hour, _lighting.sun.latitude, orbit, math::UP, math::NORTH)
-		                               , 1.f);
+		const auto sun_dir = Vector4<>(
+			calculate_sun_dir(_lighting.sun.hour, _lighting.sun.latitude, orbit, math::UP, math::NORTH)
+			, 1.f);
 		this->shader_bucket_.lambert.per_frame(sun_dir, _lighting.sun.color, _lighting.const_ambient_color);
 	}
 
@@ -147,14 +136,12 @@ namespace dce::renderer {
 				           // Render with unlit material:
 				           [this, mesh](const Material::Unlit& _material) {
 					           this->shader_bucket_.unlit.per_object(mesh, _material);
-				           }
-				           ,
+				           },
 
 				           // Render with lambert material:
 				           [this, mesh](const Material::Lambert& _material) {
 					           this->shader_bucket_.lambert.per_object(mesh, _material);
-				           }
-				           ,
+				           },
 			           }, _mesh_renderer.material->properties);
 		};
 

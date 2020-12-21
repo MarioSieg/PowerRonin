@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Dreamcast.Lua.Interpreter.Debugging;
 using Dreamcast.Lua.Interpreter.Execution;
 using Dreamcast.Lua.Interpreter.Execution.VM;

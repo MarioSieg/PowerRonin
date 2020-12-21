@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "gpu.hpp"
 #include "stats.hpp"
 
@@ -26,7 +11,8 @@
 namespace dce::renderer {
 	auto GPU::initialize_drivers(const Config& _config, AsyncProtocol& _proto) const -> bool {
 		if (platform::NATIVE_WINDOW_HANDLE == nullptr) {
-			_proto.error("platform::NATIVE_WINDOW_HANDLE was nullptr! Platform system must be initialized before render system!");
+			_proto.error(
+				"platform::NATIVE_WINDOW_HANDLE was nullptr! Platform system must be initialized before render system!");
 			return false;
 		}
 
@@ -117,7 +103,8 @@ namespace dce::renderer {
 		bgfx::frame();
 	}
 
-	void GPU::set_camera(const bgfx::ViewId _view_id, const Matrix4x4<>& _view, const Matrix4x4<>& _proj) const noexcept {
+	void GPU::set_camera(const bgfx::ViewId _view_id, const Matrix4x4<>& _view,
+	                     const Matrix4x4<>& _proj) const noexcept {
 		bgfx::setViewTransform(_view_id, value_ptr(_view), value_ptr(_proj));
 	}
 
@@ -146,7 +133,8 @@ namespace dce::renderer {
 		setVertexBuffer(0, vb_buffer);
 	}
 
-	void GPU::set_texture(const Texture& _texture, const bgfx::UniformHandle _sampler, const std::uint8_t _stage) const noexcept {
+	void GPU::set_texture(const Texture& _texture, const bgfx::UniformHandle _sampler,
+	                      const std::uint8_t _stage) const noexcept {
 		assert(_texture.is_uploaded());
 
 		const auto view = bgfx::TextureHandle{_texture.get_texel_buffer_id()};

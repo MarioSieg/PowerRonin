@@ -1,19 +1,4 @@
-﻿// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -34,6 +19,11 @@ namespace Dreamcast.Core
     public sealed class Configuration
     {
         /// <summary>
+        ///     The name of the directory where configs are saved in.
+        /// </summary>
+        public const string ConfigDirectory = "config";
+
+        /// <summary>
         ///     Display config.
         /// </summary>
         public DisplayConfiguration Display { get; set; } = new();
@@ -52,11 +42,6 @@ namespace Dreamcast.Core
         ///     Current global system config.
         /// </summary>
         public static Configuration Current { get; set; } = new();
-
-        /// <summary>
-        ///     The name of the directory where configs are saved in.
-        /// </summary>
-        public const string ConfigDirectory = "config";
 
         /// <summary>
         ///     Serializes all configs into their files.
@@ -90,9 +75,12 @@ namespace Dreamcast.Core
 
             try
             {
-                Current.Display = Serializer<DisplayConfiguration>.DeserializeFromJsonFile(DisplayConfiguration.FilePath);
-                Current.Overlay = Serializer<OverlayConfiguration>.DeserializeFromJsonFile(OverlayConfiguration.FilePath);
-                Current.Graphics = Serializer<GraphicsConfiguration>.DeserializeFromJsonFile(GraphicsConfiguration.FilePath);
+                Current.Display =
+                    Serializer<DisplayConfiguration>.DeserializeFromJsonFile(DisplayConfiguration.FilePath);
+                Current.Overlay =
+                    Serializer<OverlayConfiguration>.DeserializeFromJsonFile(OverlayConfiguration.FilePath);
+                Current.Graphics =
+                    Serializer<GraphicsConfiguration>.DeserializeFromJsonFile(GraphicsConfiguration.FilePath);
                 Protocol.Info("Deserialized all configs!");
             }
             catch (Exception)
@@ -180,7 +168,15 @@ namespace Dreamcast.Core
         {
             public static string FilePath { get; set; } = Path.Combine(ConfigDirectory, "graphics.ini");
 
-            public Dictionary<BuildTarget, GraphicsAPI[]> GraphicBackends { get; set; } = new() {{BuildTarget.StandaloneWindows, new[] {GraphicsAPI.Direct3D11, GraphicsAPI.Direct3D12, GraphicsAPI.Vulkan, GraphicsAPI.OpenGL}}, {BuildTarget.StandaloneLinux, new[] {GraphicsAPI.OpenGL, GraphicsAPI.Vulkan}}, {BuildTarget.StandaloneMac, new[] {GraphicsAPI.Metal, GraphicsAPI.OpenGL}}};
+            public Dictionary<BuildTarget, GraphicsAPI[]> GraphicBackends { get; set; } = new()
+            {
+                {
+                    BuildTarget.StandaloneWindows,
+                    new[] {GraphicsAPI.Direct3D11, GraphicsAPI.Direct3D12, GraphicsAPI.Vulkan, GraphicsAPI.OpenGL}
+                },
+                {BuildTarget.StandaloneLinux, new[] {GraphicsAPI.OpenGL, GraphicsAPI.Vulkan}},
+                {BuildTarget.StandaloneMac, new[] {GraphicsAPI.Metal, GraphicsAPI.OpenGL}}
+            };
 
             public MsaaMode MSAAMode { get; set; } = MsaaMode.X16;
 

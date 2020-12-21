@@ -1,3 +1,5 @@
+using System;
+
 namespace Dreamcast.Json.Utilities
 {
     internal static class MathUtils

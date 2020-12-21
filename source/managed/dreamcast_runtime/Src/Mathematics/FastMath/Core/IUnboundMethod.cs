@@ -1,4 +1,4 @@
-﻿namespace Dreamcast.Math.Fast.Core
+﻿namespace Dreamcast.Mathematics.Fast.Core
 {
     /// <summary>
     ///     Method that could be calculated with any argument, but with a bit lower performance

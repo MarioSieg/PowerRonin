@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #pragma once
 
 #include <cstdint>
@@ -124,9 +109,11 @@ namespace dce::renderer {
 		/// <param name="_texture"></param>
 		/// <param name="_sampler"></param>
 		/// <returns></returns>
-		void set_texture(const Texture& _texture, bgfx::UniformHandle _sampler, const std::uint8_t _stage) const noexcept;
+		void set_texture(const Texture& _texture, bgfx::UniformHandle _sampler,
+		                 const std::uint8_t _stage) const noexcept;
 
-		static constexpr auto DEFAULT_STATE_FLAGS = BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_Z | BGFX_STATE_DEPTH_TEST_LESS |
+		static constexpr auto DEFAULT_STATE_FLAGS = BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_Z |
+			BGFX_STATE_DEPTH_TEST_LESS |
 			BGFX_STATE_MSAA | BGFX_STATE_CULL_CCW;
 
 		/// <summary>

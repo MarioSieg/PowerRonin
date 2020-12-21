@@ -1,10 +1,11 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 
-namespace Dreamcast.Math.Fast
+namespace Dreamcast.Mathematics.Fast
 {
     public class MemoizedAtan2
     {
-        private const float Pi = (float) System.Math.PI;
+        private const float Pi = (float) Math.PI;
 
         private const float MinArgumentValue = 1e-3f;
 
@@ -38,7 +39,7 @@ namespace Dreamcast.Math.Fast
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float y, float x)
         {
-            if (System.Math.Abs(x) < MinArgumentValue) return y < 0 ? -Pi / 2 : Pi / 2;
+            if (Math.Abs(x) < MinArgumentValue) return y < 0 ? -Pi / 2 : Pi / 2;
             if (x > 0)
                 return _atan.CalculateUnbound(y / x);
             return y < 0

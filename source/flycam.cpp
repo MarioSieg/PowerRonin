@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "../../include/dce/flycam.hpp"
 #include "../../include/dce/runtime.hpp"
 #include "gui/gui_headers.hpp"
@@ -38,7 +23,8 @@ namespace dce {
 		this->eye_ = _position;
 	}
 
-	void FlyCam::update(const Input& _input, const float _viewport_x, const float _viewport_y, const float _delta_time) {
+	void FlyCam::update(const Input& _input, const float _viewport_x, const float _viewport_y,
+	                    const float _delta_time) {
 		/*[[unlikely]] if (ImGui::IsAnyItemHovered() || ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow)) {
 			return;
 		}*/
@@ -60,9 +46,11 @@ namespace dce {
 
 			this->mouse_angles_.y = std::clamp(this->mouse_angles_.y, -this->clamp_y, this->clamp_y);
 
-			const auto dir_x = math::cos(math::radians(this->mouse_angles_.y)) * math::sin(math::radians(this->mouse_angles_.x));
+			const auto dir_x = math::cos(math::radians(this->mouse_angles_.y)) * math::sin(
+				math::radians(this->mouse_angles_.x));
 			const auto dir_y = math::sin(math::radians(this->mouse_angles_.y));
-			const auto dir_z = math::cos(math::radians(this->mouse_angles_.y)) * math::cos(math::radians(this->mouse_angles_.x));
+			const auto dir_z = math::cos(math::radians(this->mouse_angles_.y)) * math::cos(
+				math::radians(this->mouse_angles_.x));
 
 			this->dir_ = {dir_x, dir_y, dir_z};
 

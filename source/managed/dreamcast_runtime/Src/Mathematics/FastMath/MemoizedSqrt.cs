@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using Dreamcast.Math.Fast.Core;
+using Dreamcast.Mathematics.Fast.Core;
 
-namespace Dreamcast.Math.Fast
+namespace Dreamcast.Mathematics.Fast
 {
     public sealed class MemoizedSqrt : IMemoizedMethod
     {
@@ -28,7 +28,7 @@ namespace Dreamcast.Math.Fast
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod => x => (float) System.Math.Sqrt(x);
+        public Func<float, float> BaseMethod => x => (float) Math.Sqrt(x);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
@@ -50,7 +50,7 @@ namespace Dreamcast.Math.Fast
 
         public static MemoizedSqrt ConstructByStep(float minArgument, float maxArgument, float step)
         {
-            var valuesCount = (int) System.Math.Round((maxArgument - minArgument) / step) + 1;
+            var valuesCount = (int) Math.Round((maxArgument - minArgument) / step) + 1;
             return new MemoizedSqrt(minArgument, maxArgument, valuesCount);
         }
 
@@ -58,13 +58,13 @@ namespace Dreamcast.Math.Fast
         {
             double CalculateStep(float arg)
             {
-                return arg - System.Math.Pow(System.Math.Abs(System.Math.Sqrt(arg) - maxError), 2);
+                return arg - Math.Pow(Math.Abs(Math.Sqrt(arg) - maxError), 2);
             }
 
-            var step = System.Math.Min(CalculateStep(minArgument), CalculateStep(maxArgument));
-            step = System.Math.Abs(step);
+            var step = Math.Min(CalculateStep(minArgument), CalculateStep(maxArgument));
+            step = Math.Abs(step);
 
-            return (int) System.Math.Round((maxArgument - minArgument) / step + 1);
+            return (int) Math.Round((maxArgument - minArgument) / step + 1);
         }
     }
 }

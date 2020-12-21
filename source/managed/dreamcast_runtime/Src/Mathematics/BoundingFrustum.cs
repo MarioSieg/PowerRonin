@@ -263,14 +263,14 @@ namespace Dreamcast.Mathematics
             var farHalfWidth = farHalfHeight * aspect;
 
             var rightDir = Vector3.Normalize(Vector3.Cross(upDir, lookDir));
-            var Near1 = nearCenter - nearHalfHeight * upDir + nearHalfWidth * rightDir;
-            var Near2 = nearCenter + nearHalfHeight * upDir + nearHalfWidth * rightDir;
-            var Near3 = nearCenter + nearHalfHeight * upDir - nearHalfWidth * rightDir;
-            var Near4 = nearCenter - nearHalfHeight * upDir - nearHalfWidth * rightDir;
-            var Far1 = farCenter - farHalfHeight * upDir + farHalfWidth * rightDir;
-            var Far2 = farCenter + farHalfHeight * upDir + farHalfWidth * rightDir;
-            var Far3 = farCenter + farHalfHeight * upDir - farHalfWidth * rightDir;
-            var Far4 = farCenter - farHalfHeight * upDir - farHalfWidth * rightDir;
+            var Near1 = nearCenter - (float) nearHalfHeight * upDir + (float) nearHalfWidth * rightDir;
+            var Near2 = nearCenter + (float) nearHalfHeight * upDir + (float) nearHalfWidth * rightDir;
+            var Near3 = nearCenter + (float) nearHalfHeight * upDir - (float) nearHalfWidth * rightDir;
+            var Near4 = nearCenter - (float) nearHalfHeight * upDir - (float) nearHalfWidth * rightDir;
+            var Far1 = farCenter - (float) farHalfHeight * upDir + (float) farHalfWidth * rightDir;
+            var Far2 = farCenter + (float) farHalfHeight * upDir + (float) farHalfWidth * rightDir;
+            var Far3 = farCenter + (float) farHalfHeight * upDir - (float) farHalfWidth * rightDir;
+            var Far4 = farCenter - (float) farHalfHeight * upDir - (float) farHalfWidth * rightDir;
 
             var result = new BoundingFrustum();
             result.pNear = new Plane(Near1, Near2, Near3);
@@ -711,7 +711,7 @@ namespace Dreamcast.Mathematics
         public float GetWidthAtDepth(float depth)
         {
             var hAngle = (float) (Math.PI / 2.0 - Math.Acos(Vector3.Dot(pNear.Normal, pLeft.Normal)));
-            return Math.Tan(hAngle) * depth * 2;
+            return (float) Math.Tan(hAngle) * depth * 2;
         }
 
         /// <summary>
@@ -722,7 +722,7 @@ namespace Dreamcast.Mathematics
         public float GetHeightAtDepth(float depth)
         {
             var vAngle = (float) (Math.PI / 2.0 - Math.Acos(Vector3.Dot(pNear.Normal, pTop.Normal)));
-            return Math.Tan(vAngle) * depth * 2;
+            return (float) (Math.Tan(vAngle) * depth * 2);
         }
 
         private BoundingFrustum GetInsideOutClone()

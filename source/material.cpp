@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "../../include/dce/material.hpp"
 #include "../../include/dce/json_impl.hpp"
 #include "../../include/dce/resource_manager.hpp"
@@ -32,7 +17,8 @@ namespace dce {
 	                                , ResourceManager& _rm) -> IRef<Material> {
 		class MaterialFactory final : public ResourceImporteur<MaterialFactory, Material> {
 		public:
-			auto load(Properties&& _props, std::filesystem::path&& _name_path_alias) const -> std::shared_ptr<Material> {
+			auto load(Properties&& _props,
+			          std::filesystem::path&& _name_path_alias) const -> std::shared_ptr<Material> {
 				auto self = allocate<Material>();
 				self->properties = std::move(_props);
 				self->file_path_ = std::move(_name_path_alias);

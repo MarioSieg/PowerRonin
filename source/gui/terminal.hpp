@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #pragma once
 
 #include "../terminal_sink.hpp"
@@ -35,7 +20,8 @@ namespace dce {
 			static constexpr auto COLOR_TRACE = 0xFF'BB'BB'BB;
 			static constexpr auto COLOR_WARN = 0xFF'66'AA'FF;
 
-			auto initialize(const AsyncProtocol& _system_protocol, const AsyncProtocol& _scripting_protocol) noexcept -> bool;
+			auto initialize(const AsyncProtocol& _system_protocol,
+			                const AsyncProtocol& _scripting_protocol) noexcept -> bool;
 			void update(bool& _show, Runtime& _rt);
 
 		private:

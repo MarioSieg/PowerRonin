@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.CompilerServices;
-using Dreamcast.Math.Fast.Core;
+using Dreamcast.Mathematics.Fast.Core;
 
-namespace Dreamcast.Math.Fast
+namespace Dreamcast.Mathematics.Fast
 {
     public sealed class MemoizedTan : IUnboundMethod
     {
@@ -12,13 +12,13 @@ namespace Dreamcast.Math.Fast
 
         private MemoizedTan(int valuesCount)
         {
-            MinArgument = (float) -System.Math.PI / 2;
-            MaxArgument = (float) System.Math.PI / 2;
+            MinArgument = (float) -Math.PI / 2;
+            MaxArgument = (float) Math.PI / 2;
             Values = new float[valuesCount];
             Step = (MaxArgument - MinArgument) / (valuesCount - 1);
             this.ProduceValuesArray();
-            Values[0] = (float) System.Math.Tan(-System.Math.PI / 2);
-            Values[Values.Length - 1] = (float) System.Math.Tan(System.Math.PI / 2);
+            Values[0] = (float) Math.Tan(-Math.PI / 2);
+            Values[Values.Length - 1] = (float) Math.Tan(Math.PI / 2);
             _argumentMultiplier = 1 / Step;
             _valuesCycleLength = Values.Length - 1;
         }
@@ -33,7 +33,7 @@ namespace Dreamcast.Math.Fast
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod => x => (float) System.Math.Tan(x);
+        public Func<float, float> BaseMethod => x => (float) Math.Tan(x);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
@@ -63,7 +63,7 @@ namespace Dreamcast.Math.Fast
 
         public static MemoizedTan ConstructByStep(float step)
         {
-            var valuesCount = (int) System.Math.Round(System.Math.PI / step) + 1;
+            var valuesCount = (int) Math.Round(Math.PI / step) + 1;
             return new MemoizedTan(valuesCount);
         }
     }

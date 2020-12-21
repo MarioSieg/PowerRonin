@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "gui_renderer.hpp"
 #include "renderer.hpp"
 #include "utils.hpp"
@@ -47,7 +32,8 @@ namespace dce::renderer {
 		}
 
 		layout.begin().add(bgfx::Attrib::Position, 2, bgfx::AttribType::Float).
-		       add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float).add(bgfx::Attrib::Color0, 4, bgfx::AttribType::Uint8, true).
+		       add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float).add(
+			       bgfx::Attrib::Color0, 4, bgfx::AttribType::Uint8, true).
 		       end();
 
 		this->texture_uniform_ = createUniform("s_tex", bgfx::UniformType::Sampler);
@@ -64,7 +50,8 @@ namespace dce::renderer {
 			config.FontDataOwnedByAtlas = false;
 			config.MergeMode = false;
 
-			[[unlikely]] if (io.Fonts->AddFontFromFileTTF("fonts/jet_brains_mono_regular.ttf", static_cast<float>(_font_size) - 3.F
+			[[unlikely]] if (io.Fonts->AddFontFromFileTTF("fonts/jet_brains_mono_regular.ttf",
+			                                              static_cast<float>(_font_size) - 3.F
 			                                              , &config, ranges) == nullptr) {
 				return false;
 			}
@@ -84,7 +71,8 @@ namespace dce::renderer {
 			}
 			*/
 			[[unlikely]] if (!io.Fonts->AddFontFromFileTTF("fonts/font_awesome_pro_regular.ttf"
-			                                               , static_cast<float>(_font_size) - 3.F, &config, glyph_ranges)) {
+			                                               , static_cast<float>(_font_size) - 3.F, &config,
+			                                               glyph_ranges)) {
 				return false;
 			}
 
@@ -105,7 +93,8 @@ namespace dce::renderer {
 		const auto height = static_cast<std::uint16_t>(io.DisplaySize.y);
 		setViewMode(GUI_VIEW, bgfx::ViewMode::Sequential);
 		{
-			Matrix4x4<> ortho = math::ortho(.0F, static_cast<float>(width), static_cast<float>(height), .0F, .0F, 1000.F);
+			Matrix4x4<> ortho = math::ortho(.0F, static_cast<float>(width), static_cast<float>(height), .0F, .0F,
+			                                1000.F);
 			bgfx::setViewTransform(GUI_VIEW, nullptr, math::value_ptr(ortho));
 			bgfx::setViewRect(GUI_VIEW, 0, 0, width, height);
 		}

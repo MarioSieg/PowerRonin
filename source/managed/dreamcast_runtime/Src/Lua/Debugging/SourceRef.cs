@@ -1,4 +1,6 @@
-﻿namespace Dreamcast.Lua.Interpreter.Debugging
+﻿using System;
+
+namespace Dreamcast.Lua.Interpreter.Debugging
 {
     /// <summary>
     ///     Class representing a reference to source code interval

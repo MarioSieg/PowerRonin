@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.CompilerServices;
-using Dreamcast.Math.Fast.Core;
+using Dreamcast.Mathematics.Fast.Core;
 
-namespace Dreamcast.Math.Fast
+namespace Dreamcast.Mathematics.Fast
 {
     public sealed class MemoizedAcos : IMemoizedMethod
     {
@@ -28,7 +28,7 @@ namespace Dreamcast.Math.Fast
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod => x => (float) System.Math.Acos(x);
+        public Func<float, float> BaseMethod => x => (float) Math.Acos(x);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
@@ -44,7 +44,7 @@ namespace Dreamcast.Math.Fast
 
         public static MemoizedAcos ConstructByMaxError(float maxError)
         {
-            var step = 1 - System.Math.Sin(System.Math.PI / 2 - maxError);
+            var step = 1 - Math.Sin(Math.PI / 2 - maxError);
             step *= 0.95f;
             var valuesCount = (int) (2 / step) + 2;
             return new MemoizedAcos(valuesCount);
@@ -52,7 +52,7 @@ namespace Dreamcast.Math.Fast
 
         public static MemoizedAcos ConstructByStep(float step)
         {
-            var valuesCount = (int) System.Math.Round(2 / step) + 1;
+            var valuesCount = (int) Math.Round(2 / step) + 1;
             return new MemoizedAcos(valuesCount);
         }
     }

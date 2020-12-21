@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using Dreamcast.Math.Fast.Core;
+using Dreamcast.Mathematics.Fast.Core;
 
-namespace Dreamcast.Math.Fast.Interpolated
+namespace Dreamcast.Mathematics.Fast.Interpolated
 {
     public sealed class MemoizedInterpolatedMethod : IMemoizedMethod
     {
@@ -50,7 +50,7 @@ namespace Dreamcast.Math.Fast.Interpolated
         public static MemoizedInterpolatedMethod ConstructByStep(Func<float, float> baseMethod, float minArgument,
             float maxArgument, float step)
         {
-            var valuesCount = (int) System.Math.Round((maxArgument - minArgument) / step) + 2;
+            var valuesCount = (int) Math.Round((maxArgument - minArgument) / step) + 2;
             if (valuesCount == 2) valuesCount = 3;
             return new MemoizedInterpolatedMethod(baseMethod, minArgument, maxArgument, valuesCount + 2);
         }

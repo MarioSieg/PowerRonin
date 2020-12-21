@@ -1,4 +1,6 @@
-﻿namespace Dreamcast.Mathematics
+﻿using System;
+
+namespace Dreamcast.Mathematics
 {
     /*
        * This class is organized so that the least complex objects come first so that the least

@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.CompilerServices;
-using Dreamcast.Math.Fast.Core;
+using Dreamcast.Mathematics.Fast.Core;
 
-namespace Dreamcast.Math.Fast.Interpolated
+namespace Dreamcast.Mathematics.Fast.Interpolated
 {
     public sealed class MemoizedInterpolatedLog : IMemoizedMethod
     {
@@ -32,7 +32,7 @@ namespace Dreamcast.Math.Fast.Interpolated
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod => x => (float) System.Math.Log(x, Base);
+        public Func<float, float> BaseMethod => x => (float) Math.Log(x, Base);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
@@ -52,14 +52,14 @@ namespace Dreamcast.Math.Fast.Interpolated
         public static MemoizedInterpolatedLog ConstructByMaxError(float minArgument, float maxArgument, float @base,
             float maxError)
         {
-            var step = System.Math.Sqrt(8 * maxError) * minArgument;
+            var step = Math.Sqrt(8 * maxError) * minArgument;
             return ConstructByStep(minArgument, maxArgument, @base, (float) step);
         }
 
         public static MemoizedInterpolatedLog ConstructByStep(float minArgument, float maxArgument, float @base,
             float step)
         {
-            var valuesCount = (int) System.Math.Round((maxArgument - minArgument) / step) + AdditionalValueCount;
+            var valuesCount = (int) Math.Round((maxArgument - minArgument) / step) + AdditionalValueCount;
             return new MemoizedInterpolatedLog(minArgument, maxArgument, @base, valuesCount);
         }
     }

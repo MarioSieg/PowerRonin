@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "stats.hpp"
 
 #include "../../include/dce/runtime.hpp"
@@ -102,7 +87,8 @@ namespace dce::renderer {
 		std::uint16_t pos_y = math::map_range<std::uint16_t>(viewport_pos_y, 0, screen_height, 0, 128) + 4;
 
 		bgfx::dbgTextClear();
-		bgfx::dbgTextPrintf(pos_x, pos_y, 0xF, "View x: %u y: %u w: %u h: %u", viewport_pos_x, viewport_pos_y, viewport_width
+		bgfx::dbgTextPrintf(pos_x, pos_y, 0xF, "View x: %u y: %u w: %u h: %u", viewport_pos_x, viewport_pos_y,
+		                    viewport_width
 		                    , viewport_height);
 		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "Tick: %u, T: %.3f, FT: %.3f ms, FPS: %.2f", chrono.cycles, chrono.time
 		                    , chrono.frame_time, chrono.fps);

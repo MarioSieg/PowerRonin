@@ -20,17 +20,17 @@ namespace Dreamcast.Mathematics
         /// <summary>
         ///     A value specifying the approximation of 2π which is 360 degrees.
         /// </summary>
-        public const float TwoPi = 2 * Math.PI;
+        public const float TwoPi = 2 * Pi;
 
         /// <summary>
         ///     A value specifying the approximation of π/2 which is 90 degrees.
         /// </summary>
-        public const float PiOverTwo = Math.PI / 2;
+        public const float PiOverTwo = Pi / 2;
 
         /// <summary>
         ///     A value specifying the approximation of π/4 which is 45 degrees.
         /// </summary>
-        public const float PiOverFour = Math.PI / 4;
+        public const float PiOverFour = Pi / 4;
 
         /// <summary>
         ///     Checks if a and b are almost equals, taking into account the magnitude of floating point numbers (unlike

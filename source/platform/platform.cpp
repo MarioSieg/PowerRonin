@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "platform.hpp"
 #include "util.hpp"
 #include "../../include/dce/config.hpp"
@@ -62,7 +47,8 @@ namespace {
 		using namespace dce;
 
 		_logger.info("\t\tResolution: ({}, {})", _current->width, _current->height);
-		_logger.info("\t\tAspect ratio: {}", static_cast<float>(_current->width) / static_cast<float>(_current->height));
+		_logger.info("\t\tAspect ratio: {}",
+		             static_cast<float>(_current->width) / static_cast<float>(_current->height));
 		_logger.info("\t\tRefresh rate: {}Hz", _current->refreshRate);
 		_logger.info("\t\tR bits: {}", _current->redBits);
 		_logger.info("\t\tG bits: {}", _current->greenBits);
@@ -111,7 +97,8 @@ namespace dce::platform {
 	void* NATIVE_WINDOW_HANDLE = nullptr;
 	void* WINDOW_HANDLE = nullptr;
 
-	Platform::Platform() : ISubsystem("Platform", EVENTS) { }
+	Platform::Platform() : ISubsystem("Platform", EVENTS) {
+	}
 
 	auto Platform::on_pre_startup(Runtime& _rt) -> bool {
 		auto& proto = _rt.protocol();
@@ -243,10 +230,12 @@ namespace dce::platform {
 			const auto os_info = iware::system::OS_info();
 			const auto quantities = iware::cpu::quantities();
 
-			proto.info("RAM physical: {}B -> {}GB, available: {}B -> {}GB", memory.physical_total, memory.physical_available
+			proto.info("RAM physical: {}B -> {}GB, available: {}B -> {}GB", memory.physical_total,
+			           memory.physical_available
 			           , static_cast<float>(memory.physical_total) / (1024.F * 1024.F * 1024.F)
 			           , static_cast<float>(memory.physical_available) / (1024.F * 1024.F * 1024.F));
-			proto.info("RAM virtual: {}B -> {}GB, available: {}B -> {}GB", memory.virtual_available, memory.virtual_total
+			proto.info("RAM virtual: {}B -> {}GB, available: {}B -> {}GB", memory.virtual_available,
+			           memory.virtual_total
 			           , static_cast<float>(memory.virtual_available) / (1024.F * 1024.F * 1024.F)
 			           , static_cast<float>(memory.virtual_total) / (1024.F * 1024.F * 1024.F));
 			proto.info("Kernel: {}, version: {}.{}.{}.{}", kernel_variant_name(kernel_info.variant), kernel_info.major
@@ -258,11 +247,13 @@ namespace dce::platform {
 			proto.info("CPU frequency: {}Hz", iware::cpu::frequency());
 			proto.info("CPU endianness: {}", endianness_name(iware::cpu::endianness()));
 			proto.info("CPU vendor: {}", iware::cpu::vendor_id());
-			proto.info("CPU cores: {}, logical: {}, sockets: {}", quantities.physical, quantities.logical, quantities.packages);
+			proto.info("CPU cores: {}, logical: {}, sockets: {}", quantities.physical, quantities.logical,
+			           quantities.packages);
 
 			for (auto i = 1U; i <= 3; ++i) {
 				const auto cache = iware::cpu::cache(i);
-				proto.info("CPU cache L{} size: {}B, line size: {}B, associativity: {}, type: {}", i, cache.size, cache.line_size
+				proto.info("CPU cache L{} size: {}B, line size: {}B, associativity: {}, type: {}", i, cache.size,
+				           cache.line_size
 				           , cache.associativity, cache_type_name(cache.type));
 			}
 

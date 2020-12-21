@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "../include/dce/texture.hpp"
 #include "../include/dce/resource_manager.hpp"
 #include "../include/dce/blob.hpp"
@@ -35,7 +20,8 @@ namespace dce {
 
 		const auto format = static_cast<bgfx::TextureFormat::Enum>(this->format_);
 
-		const auto* const mem = bgfx::makeRef(this->texels_.data(), static_cast<std::uint32_t>(this->size_), nullptr, nullptr);
+		const auto* const mem = bgfx::makeRef(this->texels_.data(), static_cast<std::uint32_t>(this->size_), nullptr,
+		                                      nullptr);
 		[[unlikely]] if (mem == nullptr) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload texture!");
 		}
@@ -46,10 +32,12 @@ namespace dce {
 
 		constexpr auto flags = BGFX_TEXTURE_SRGB;
 		const bgfx::TextureHandle texture_handle = this->is_cubemap_
-			                                           ? createTextureCube(this->width_, false, this->layer_count_, format, flags
-			                                                               , mem)
-			                                           : createTexture2D(this->width_, this->height_, this->mipmap_count_ > 1
-			                                                             , this->layer_count_, format, flags, mem);
+			                                           ? createTextureCube(
+				                                           this->width_, false, this->layer_count_, format, flags
+				                                           , mem)
+			                                           : createTexture2D(
+				                                           this->width_, this->height_, this->mipmap_count_ > 1
+				                                           , this->layer_count_, format, flags, mem);
 		[[unlikely]] if (!isValid(texture_handle)) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload texture!");
 		}
@@ -71,7 +59,8 @@ namespace dce {
 		this->is_uploaded_ = false;
 	}
 
-	auto TextureImporteur::load(std::filesystem::path&& _path, const TextureMeta* const _meta) const -> std::shared_ptr<Texture> {
+	auto TextureImporteur::load(std::filesystem::path&& _path,
+	                            const TextureMeta* const _meta) const -> std::shared_ptr<Texture> {
 		auto self = IResource<TextureMeta>::allocate<Texture>();
 
 		const auto ext = _path.extension();
@@ -84,8 +73,10 @@ namespace dce {
 
 			bx::DefaultAllocator allocator;
 			auto* const image = ext == ".dds"
-				                    ? bimg::imageParseDds(&allocator, blob.data(), static_cast<std::uint32_t>(blob.size()), nullptr)
-				                    : bimg::imageParseKtx(&allocator, blob.data(), static_cast<std::uint32_t>(blob.size())
+				                    ? bimg::imageParseDds(&allocator, blob.data(),
+				                                          static_cast<std::uint32_t>(blob.size()), nullptr)
+				                    : bimg::imageParseKtx(&allocator, blob.data(),
+				                                          static_cast<std::uint32_t>(blob.size())
 				                                          , nullptr);
 			[[unlikely]] if (!image) {
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load texture from file!");
@@ -106,7 +97,8 @@ namespace dce {
 
 			bgfx::TextureInfo info = {};
 			calcTextureSize(info, static_cast<std::uint16_t>(self->width_), static_cast<std::uint16_t>(self->height_), 1
-			                , self->is_cubemap_, self->mipmap_count_ > 1, 1, static_cast<bgfx::TextureFormat::Enum>(self->format_));
+			                , self->is_cubemap_, self->mipmap_count_ > 1, 1,
+			                static_cast<bgfx::TextureFormat::Enum>(self->format_));
 
 			self->size_ = info.storageSize;
 			self->bits_per_pel_ = info.bitsPerPixel;
@@ -137,7 +129,8 @@ namespace dce {
 			self->mipmap_count_ = 1;
 
 			bgfx::TextureInfo info = {};
-			calcTextureSize(info, static_cast<std::uint16_t>(self->width_), static_cast<std::uint16_t>(self->height_), 1, false
+			calcTextureSize(info, static_cast<std::uint16_t>(self->width_), static_cast<std::uint16_t>(self->height_),
+			                1, false
 			                , false, 1, static_cast<bgfx::TextureFormat::Enum>(self->format_));
 
 			self->size_ = info.storageSize;

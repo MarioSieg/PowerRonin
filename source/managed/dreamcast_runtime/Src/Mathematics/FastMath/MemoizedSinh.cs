@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.CompilerServices;
-using Dreamcast.Math.Fast.Core;
+using Dreamcast.Mathematics.Fast.Core;
 
-namespace Dreamcast.Math.Fast
+namespace Dreamcast.Mathematics.Fast
 {
     public class MemoizedSinh : IMemoizedMethod
     {
@@ -28,7 +28,7 @@ namespace Dreamcast.Math.Fast
 
         public float[] Values { get; }
 
-        public Func<float, float> BaseMethod => x => (float) System.Math.Sinh(x);
+        public Func<float, float> BaseMethod => x => (float) Math.Sinh(x);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Calculate(float argument)
@@ -50,17 +50,17 @@ namespace Dreamcast.Math.Fast
 
         public static MemoizedSinh ConstructByStep(float minArgument, float maxArgument, float step)
         {
-            var valuesCount = (int) System.Math.Round((maxArgument - minArgument) / step) + 1;
+            var valuesCount = (int) Math.Round((maxArgument - minArgument) / step) + 1;
             if (valuesCount == 1) ++valuesCount;
             return new MemoizedSinh(minArgument, maxArgument, valuesCount);
         }
 
         private static int GetValuesCountByMaxError(float minArgument, float maxArgument, float maxError)
         {
-            var argument = System.Math.Max(System.Math.Abs(minArgument), System.Math.Abs(maxArgument));
-            var step = (float) System.Math.Abs(System.Math.Log(1 - maxError * System.Math.Pow(System.Math.E, -argument),
-                System.Math.E));
-            return (int) System.Math.Round((maxArgument - minArgument) / step) + 2;
+            var argument = Math.Max(Math.Abs(minArgument), Math.Abs(maxArgument));
+            var step = (float) Math.Abs(Math.Log(1 - maxError * Math.Pow(Math.E, -argument),
+                Math.E));
+            return (int) Math.Round((maxArgument - minArgument) / step) + 2;
         }
     }
 }

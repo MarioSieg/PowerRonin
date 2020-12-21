@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "../include/dce/mesh.hpp"
 #include "../extern/assimp/include/assimp/Importer.hpp"
 #include "../extern/assimp/include/assimp/postprocess.h"
@@ -24,8 +9,10 @@ namespace {
 	auto create_vertex_layout() -> bgfx::VertexLayout {
 		bgfx::VertexLayout layout;
 		layout.begin().add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float).
-		       add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float).add(bgfx::Attrib::Normal, 3, bgfx::AttribType::Float).
-		       add(bgfx::Attrib::Tangent, 3, bgfx::AttribType::Float).add(bgfx::Attrib::Bitangent, 3, bgfx::AttribType::Float).
+		       add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float).add(
+			       bgfx::Attrib::Normal, 3, bgfx::AttribType::Float).
+		       add(bgfx::Attrib::Tangent, 3, bgfx::AttribType::Float).add(
+			       bgfx::Attrib::Bitangent, 3, bgfx::AttribType::Float).
 		       end();
 		return layout;
 	}
@@ -44,7 +31,8 @@ namespace dce {
 		static const auto VERTEX_LAYOUT = create_vertex_layout();
 
 		const auto* const index_buffer_mem = bgfx::makeRef(this->indices_.data()
-		                                                   , static_cast<std::uint32_t>(sizeof(std::uint16_t) * this->indices_.
+		                                                   , static_cast<std::uint32_t>(sizeof(std::uint16_t) * this->
+			                                                   indices_.
 			                                                   size()), nullptr, nullptr);
 
 		[[unlikely]] if (index_buffer_mem == nullptr) {
@@ -58,7 +46,8 @@ namespace dce {
 		}
 
 		const auto* const vertex_buffer_mem = bgfx::makeRef(this->vertices_.data()
-		                                                    , static_cast<std::uint32_t>(this->vertices_.size() * VERTEX_LAYOUT.
+		                                                    , static_cast<std::uint32_t>(this->vertices_.size() *
+			                                                    VERTEX_LAYOUT.
 			                                                    getStride()), nullptr, nullptr);
 		[[unlikely]] if (vertex_buffer_mem == nullptr) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload mesh!");
@@ -95,10 +84,12 @@ namespace dce {
 		this->is_uploaded_ = false;
 	}
 
-	auto MeshImporteur::load(std::filesystem::path&& _path, const MeshMeta* const _meta) const -> std::shared_ptr<Mesh> {
+	auto MeshImporteur::load(std::filesystem::path&& _path,
+	                         const MeshMeta* const _meta) const -> std::shared_ptr<Mesh> {
 		Assimp::Importer importer;
 
-		constexpr unsigned flags = aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace | aiProcess_Triangulate |
+		constexpr unsigned flags = aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace | aiProcess_Triangulate
+			|
 			aiProcess_GenUVCoords | aiProcess_GenSmoothNormals | aiProcess_ConvertToLeftHanded;
 
 		//importer.SetPropertyFloat(AI_CONFIG_GLOBAL_SCALE_FACTOR_KEY, .1f);

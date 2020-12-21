@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "profiler.hpp"
 
 #include "../font_headers.hpp"
@@ -43,7 +28,8 @@ namespace dce::gui::widgets {
 
 				Text("Delta clock: %f", _chrono.delta_time);
 				Text("Monotonic clock: %f", _chrono.time);
-				Text("Submit clocks: CPU %.3f, GPU %.3f, Max GPU latency: %" PRIu32, _chrono.submit_cpu, _chrono.submit_gpu
+				Text("Submit clocks: CPU %.3f, GPU %.3f, Max GPU latency: %" PRIu32, _chrono.submit_cpu,
+				     _chrono.submit_gpu
 				     , _chrono.max_gpu_latency);
 			}
 			const auto pie_size = ImVec2{250, 250};
@@ -55,8 +41,8 @@ namespace dce::gui::widgets {
 				                         , ImPlotAxisFlags_NoDecorations, ImPlotAxisFlags_NoDecorations)) {
 					constexpr const char* const labels[] = {"Available", "Used"};
 					const float data[] = {
-						static_cast<float>(_diag.graphics.max_vram - _diag.graphics.used_vram) / 1024.f / 1024.f
-						, static_cast<float>(_diag.graphics.used_vram) / 1024.f / 1024.f
+						static_cast<float>(_diag.graphics.max_vram - _diag.graphics.used_vram) / 1024.f / 1024.f,
+						static_cast<float>(_diag.graphics.used_vram) / 1024.f / 1024.f
 					};
 					PlotPieChart(labels, data, sizeof data / sizeof *data, .5, .5, .4, false, "%.1fMB");
 					EndPlot();
@@ -72,8 +58,7 @@ namespace dce::gui::widgets {
 				                         , ImPlotAxisFlags_NoDecorations, ImPlotAxisFlags_NoDecorations)) {
 					constexpr const char* const labels[] = {"Available", "Used"};
 					const std::size_t data[] = {
-						_diag.graphics.max_draw_calls - _diag.graphics.used_draw_calls
-						, _diag.graphics.used_draw_calls
+						_diag.graphics.max_draw_calls - _diag.graphics.used_draw_calls, _diag.graphics.used_draw_calls
 					};
 					PlotPieChart(labels, data, sizeof data / sizeof *data, .5, .5, .4, false, "%.0f");
 					EndPlot();
@@ -85,12 +70,12 @@ namespace dce::gui::widgets {
 				}
 				SameLine();
 				snprintf(total_buf, sizeof total_buf, "Total: %zu", _diag.graphics.max_blit_calls);
-				[[likely]] if (BeginPlot("##blits", ICON_FA_LAYER_GROUP" Blits", total_buf, pie_size, ImPlotFlags_NoMousePos
+				[[likely]] if (BeginPlot("##blits", ICON_FA_LAYER_GROUP" Blits", total_buf, pie_size,
+				                         ImPlotFlags_NoMousePos
 				                         , ImPlotAxisFlags_NoDecorations, ImPlotAxisFlags_NoDecorations)) {
 					constexpr const char* const labels[] = {"Available", "Used"};
 					const std::size_t data[] = {
-						_diag.graphics.max_blit_calls - _diag.graphics.used_blit_calls
-						, _diag.graphics.used_blit_calls
+						_diag.graphics.max_blit_calls - _diag.graphics.used_blit_calls, _diag.graphics.used_blit_calls
 					};
 					PlotPieChart(labels, data, sizeof data / sizeof *data, .5, .5, .4, false, "%.0f");
 					EndPlot();
@@ -102,12 +87,12 @@ namespace dce::gui::widgets {
 				}
 				SameLine();
 				snprintf(total_buf, sizeof total_buf, "Total: %zu", _diag.graphics.max_textures);
-				[[likely]] if (BeginPlot("##textures", ICON_FA_IMAGE " Textures", total_buf, pie_size, ImPlotFlags_NoMousePos
+				[[likely]] if (BeginPlot("##textures", ICON_FA_IMAGE " Textures", total_buf, pie_size,
+				                         ImPlotFlags_NoMousePos
 				                         , ImPlotAxisFlags_NoDecorations, ImPlotAxisFlags_NoDecorations)) {
 					constexpr const char* const labels[] = {"Available", "Used"};
 					const std::size_t data[] = {
-						_diag.graphics.max_textures - _diag.graphics.used_textures
-						, _diag.graphics.used_textures
+						_diag.graphics.max_textures - _diag.graphics.used_textures, _diag.graphics.used_textures
 					};
 					PlotPieChart(labels, data, sizeof data / sizeof *data, .5, .5, .4, false, "%.0f");
 					EndPlot();
@@ -119,12 +104,12 @@ namespace dce::gui::widgets {
 				}
 				SameLine();
 				snprintf(total_buf, sizeof total_buf, "Total: %zu", _diag.graphics.max_shaders);
-				[[likely]] if (BeginPlot("##shaders", ICON_FA_EYE " Shaders", total_buf, pie_size, ImPlotFlags_NoMousePos
+				[[likely]] if (BeginPlot("##shaders", ICON_FA_EYE " Shaders", total_buf, pie_size,
+				                         ImPlotFlags_NoMousePos
 				                         , ImPlotAxisFlags_NoDecorations, ImPlotAxisFlags_NoDecorations)) {
 					constexpr const char* const labels[] = {"Available", "Used"};
 					const std::size_t data[] = {
-						_diag.graphics.max_shaders - _diag.graphics.used_shaders
-						, _diag.graphics.used_shaders
+						_diag.graphics.max_shaders - _diag.graphics.used_shaders, _diag.graphics.used_shaders
 					};
 					PlotPieChart(labels, data, sizeof data / sizeof *data, .5, .5, .4, false, "%.0f");
 					EndPlot();
@@ -137,11 +122,11 @@ namespace dce::gui::widgets {
 				SameLine();
 				snprintf(total_buf, sizeof total_buf, "Total: %zu", _diag.graphics.max_shaders);
 				[[likely]] if (BeginPlot("##programs", ICON_FA_PAINT_ROLLER" Shader Programs", total_buf, pie_size
-				                         , ImPlotFlags_NoMousePos, ImPlotAxisFlags_NoDecorations, ImPlotAxisFlags_NoDecorations)) {
+				                         , ImPlotFlags_NoMousePos, ImPlotAxisFlags_NoDecorations,
+				                         ImPlotAxisFlags_NoDecorations)) {
 					constexpr const char* const labels[] = {"Available", "Used"};
 					const std::size_t data[] = {
-						_diag.graphics.max_programs - _diag.graphics.used_programs
-						, _diag.graphics.used_programs
+						_diag.graphics.max_programs - _diag.graphics.used_programs, _diag.graphics.used_programs
 					};
 					PlotPieChart(labels, data, sizeof data / sizeof *data, .5, .5, .4, false, "%.0f");
 					EndPlot();
@@ -153,12 +138,12 @@ namespace dce::gui::widgets {
 				}
 				SameLine();
 				snprintf(total_buf, sizeof total_buf, "Total: %zu", _diag.graphics.max_uniforms);
-				[[likely]] if (BeginPlot("##uniforms", ICON_FA_ETHERNET" Uniforms", total_buf, pie_size, ImPlotFlags_NoMousePos
+				[[likely]] if (BeginPlot("##uniforms", ICON_FA_ETHERNET" Uniforms", total_buf, pie_size,
+				                         ImPlotFlags_NoMousePos
 				                         , ImPlotAxisFlags_NoDecorations, ImPlotAxisFlags_NoDecorations)) {
 					constexpr const char* const labels[] = {"Available", "Used"};
 					const std::size_t data[] = {
-						_diag.graphics.max_uniforms - _diag.graphics.used_uniforms
-						, _diag.graphics.used_uniforms
+						_diag.graphics.max_uniforms - _diag.graphics.used_uniforms, _diag.graphics.used_uniforms
 					};
 					PlotPieChart(labels, data, sizeof data / sizeof *data, .5, .5, .4, false, "%.0f");
 					EndPlot();
@@ -170,12 +155,13 @@ namespace dce::gui::widgets {
 				}
 
 				snprintf(total_buf, sizeof total_buf, "Total: %zu", _diag.graphics.max_vertex_buffers);
-				[[likely]] if (BeginPlot("##vbs", ICON_FA_TRIANGLE " Vertex Buffers", total_buf, pie_size, ImPlotFlags_NoMousePos
+				[[likely]] if (BeginPlot("##vbs", ICON_FA_TRIANGLE " Vertex Buffers", total_buf, pie_size,
+				                         ImPlotFlags_NoMousePos
 				                         , ImPlotAxisFlags_NoDecorations, ImPlotAxisFlags_NoDecorations)) {
 					constexpr const char* const labels[] = {"Available", "Used"};
 					const std::size_t data[] = {
-						_diag.graphics.max_vertex_buffers - _diag.graphics.used_vertex_buffers
-						, _diag.graphics.used_vertex_buffers
+						_diag.graphics.max_vertex_buffers - _diag.graphics.used_vertex_buffers,
+						_diag.graphics.used_vertex_buffers
 					};
 					PlotPieChart(labels, data, sizeof data / sizeof *data, .5, .5, .4, false, "%.0f");
 					EndPlot();
@@ -187,12 +173,13 @@ namespace dce::gui::widgets {
 				}
 				SameLine();
 				snprintf(total_buf, sizeof total_buf, "Total: %zu", _diag.graphics.max_index_buffers);
-				[[likely]] if (BeginPlot("##ibs", ICON_FA_SIGMA " Index Buffers", total_buf, pie_size, ImPlotFlags_NoMousePos
+				[[likely]] if (BeginPlot("##ibs", ICON_FA_SIGMA " Index Buffers", total_buf, pie_size,
+				                         ImPlotFlags_NoMousePos
 				                         , ImPlotAxisFlags_NoDecorations, ImPlotAxisFlags_NoDecorations)) {
 					constexpr const char* const labels[] = {"Available", "Used"};
 					const std::size_t data[] = {
-						_diag.graphics.max_index_buffers - _diag.graphics.used_index_buffers
-						, _diag.graphics.used_index_buffers
+						_diag.graphics.max_index_buffers - _diag.graphics.used_index_buffers,
+						_diag.graphics.used_index_buffers
 					};
 					PlotPieChart(labels, data, sizeof data / sizeof *data, .5, .5, .4, false, "%.0f");
 					EndPlot();
@@ -205,11 +192,12 @@ namespace dce::gui::widgets {
 				SameLine();
 				snprintf(total_buf, sizeof total_buf, "Total: %zu", _diag.graphics.max_dynamic_vertex_buffers);
 				[[likely]] if (BeginPlot("##tvbs", ICON_FA_TRIANGLE " Dynamic Vertex Buffers", total_buf, pie_size
-				                         , ImPlotFlags_NoMousePos, ImPlotAxisFlags_NoDecorations, ImPlotAxisFlags_NoDecorations)) {
+				                         , ImPlotFlags_NoMousePos, ImPlotAxisFlags_NoDecorations,
+				                         ImPlotAxisFlags_NoDecorations)) {
 					constexpr const char* const labels[] = {"Available", "Used"};
 					const std::size_t data[] = {
-						_diag.graphics.max_dynamic_vertex_buffers - _diag.graphics.used_dynamic_vertex_buffers
-						, _diag.graphics.used_dynamic_vertex_buffers
+						_diag.graphics.max_dynamic_vertex_buffers - _diag.graphics.used_dynamic_vertex_buffers,
+						_diag.graphics.used_dynamic_vertex_buffers
 					};
 					PlotPieChart(labels, data, sizeof data / sizeof *data, .5, .5, .4, false, "%.0f");
 					EndPlot();
@@ -222,11 +210,12 @@ namespace dce::gui::widgets {
 				SameLine();
 				snprintf(total_buf, sizeof total_buf, "Total: %zu", _diag.graphics.max_dynamic_index_buffers);
 				[[likely]] if (BeginPlot("##tibs", ICON_FA_SIGMA " Dynamic Index Buffers", total_buf, pie_size
-				                         , ImPlotFlags_NoMousePos, ImPlotAxisFlags_NoDecorations, ImPlotAxisFlags_NoDecorations)) {
+				                         , ImPlotFlags_NoMousePos, ImPlotAxisFlags_NoDecorations,
+				                         ImPlotAxisFlags_NoDecorations)) {
 					constexpr const char* const labels[] = {"Available", "Used"};
 					const std::size_t data[] = {
-						_diag.graphics.max_dynamic_index_buffers - _diag.graphics.used_dynamic_index_buffers
-						, _diag.graphics.used_dynamic_index_buffers
+						_diag.graphics.max_dynamic_index_buffers - _diag.graphics.used_dynamic_index_buffers,
+						_diag.graphics.used_dynamic_index_buffers
 					};
 					PlotPieChart(labels, data, sizeof data / sizeof *data, .5, .5, .4, false, "%.0f");
 					EndPlot();
@@ -238,12 +227,13 @@ namespace dce::gui::widgets {
 				}
 				SameLine();
 				snprintf(total_buf, sizeof total_buf, "Total: %zu", _diag.graphics.max_frame_buffers);
-				[[likely]] if (BeginPlot("##fbs", ICON_FA_IMAGES " Frame Buffers", total_buf, pie_size, ImPlotFlags_NoMousePos
+				[[likely]] if (BeginPlot("##fbs", ICON_FA_IMAGES " Frame Buffers", total_buf, pie_size,
+				                         ImPlotFlags_NoMousePos
 				                         , ImPlotAxisFlags_NoDecorations, ImPlotAxisFlags_NoDecorations)) {
 					constexpr const char* const labels[] = {"Available", "Used"};
 					const std::size_t data[] = {
-						_diag.graphics.max_frame_buffers - _diag.graphics.used_frame_buffers
-						, _diag.graphics.used_frame_buffers
+						_diag.graphics.max_frame_buffers - _diag.graphics.used_frame_buffers,
+						_diag.graphics.used_frame_buffers
 					};
 					PlotPieChart(labels, data, sizeof data / sizeof *data, .5, .5, .4, false, "%.0f");
 					EndPlot();

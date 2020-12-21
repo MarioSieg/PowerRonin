@@ -2407,7 +2407,7 @@ namespace Dreamcast.Mathematics
         /// <param name="result">When the method completes, contains the created projection matrix.</param>
         public static void PerspectiveFovLH(float fov, float aspect, float znear, float zfar, out Matrix4x4 result)
         {
-            var yScale = 1.0f / Math.Tan(fov * 0.5f);
+            var yScale = 1.0f / (float) Math.Tan(fov * 0.5f);
             var q = zfar / (zfar - znear);
 
             result = new Matrix4x4();
@@ -2442,7 +2442,7 @@ namespace Dreamcast.Mathematics
         /// <param name="result">When the method completes, contains the created projection matrix.</param>
         public static void PerspectiveFovRH(float fov, float aspect, float znear, float zfar, out Matrix4x4 result)
         {
-            var yScale = 1.0f / Math.Tan(fov * 0.5f);
+            var yScale = 1.0f / (float) Math.Tan(fov * 0.5f);
             var q = zfar / (znear - zfar);
 
             result = new Matrix4x4();

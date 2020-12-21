@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "../include/dce/resource_manager.hpp"
 #include "../include/dce/proto.hpp"
 
@@ -23,12 +8,17 @@ namespace dce {
 		auto texture_meta = TextureMeta{};
 		auto mesh_meta = MeshMeta{};
 
-		this->empty_black_1x1 = _rm.load<Texture>(std::filesystem::absolute("textures/common/unit/black.png"), &texture_meta);
-		this->empty_white_1x1 = _rm.load<Texture>(std::filesystem::absolute("textures/common/unit/white.png"), &texture_meta);
-		this->empty_normal_1x1 = _rm.load<Texture>(std::filesystem::absolute("textures/common/unit/normal.png"), &texture_meta);
-		this->empty_pbr_1x1 = _rm.load<Texture>(std::filesystem::absolute("textures/common/unit/pbr.png"), &texture_meta);
+		this->empty_black_1x1 = _rm.load<Texture>(std::filesystem::absolute("textures/common/unit/black.png"),
+		                                          &texture_meta);
+		this->empty_white_1x1 = _rm.load<Texture>(std::filesystem::absolute("textures/common/unit/white.png"),
+		                                          &texture_meta);
+		this->empty_normal_1x1 = _rm.load<Texture>(std::filesystem::absolute("textures/common/unit/normal.png"),
+		                                           &texture_meta);
+		this->empty_pbr_1x1 = _rm.load<Texture>(std::filesystem::absolute("textures/common/unit/pbr.png"),
+		                                        &texture_meta);
 		this->error_marker = _rm.load<Texture>(std::filesystem::absolute("textures/common/invalid.dds"), &texture_meta);
-		this->checkerboard = _rm.load<Texture>(std::filesystem::absolute("textures/common/checkerboard.dds"), &texture_meta);
+		this->checkerboard = _rm.load<Texture>(std::filesystem::absolute("textures/common/checkerboard.dds"),
+		                                       &texture_meta);
 		this->skybox = _rm.load<Texture>(std::filesystem::absolute("textures/skybox/default.dds"), &texture_meta);
 
 		this->error_text = _rm.load<Mesh>(std::filesystem::absolute("meshes/common/invalid.obj"), &mesh_meta);
@@ -38,7 +28,8 @@ namespace dce {
 		_rm.proto_.info("System resources loaded!");
 	}
 
-	ResourceManager::ResourceManager(AsyncProtocol& _proto) noexcept : proto_(_proto) { }
+	ResourceManager::ResourceManager(AsyncProtocol& _proto) noexcept : proto_(_proto) {
+	}
 
 	auto ResourceManager::get_texture_cache() const noexcept -> const ResourceCache<Texture>& {
 		return this->texture_cache_;
@@ -85,7 +76,8 @@ namespace dce {
 		return ptr;
 	}
 
-	auto ResourceManager::load_material(std::filesystem::path&& _file, const MaterialMeta* const _meta) -> RRef<Material> {
+	auto ResourceManager::load_material(std::filesystem::path&& _file,
+	                                    const MaterialMeta* const _meta) -> RRef<Material> {
 		const auto state_clock = std::chrono::high_resolution_clock::now();
 		const auto id = HString(_file.string().c_str());
 		const auto file = _file.filename().string();
@@ -96,7 +88,8 @@ namespace dce {
 		return ptr;
 	}
 
-	auto ResourceManager::load_audio_clip(std::filesystem::path&& _file, const AudioClipMeta* const _meta) -> RRef<AudioClip> {
+	auto ResourceManager::load_audio_clip(std::filesystem::path&& _file,
+	                                      const AudioClipMeta* const _meta) -> RRef<AudioClip> {
 		const auto state_clock = std::chrono::high_resolution_clock::now();
 		const auto id = HString(_file.string().c_str());
 		const auto file = _file.filename().string();

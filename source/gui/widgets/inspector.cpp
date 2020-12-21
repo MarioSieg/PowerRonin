@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "inspector.hpp"
 #include "../gui_headers.hpp"
 #include "../font_headers.hpp"
@@ -81,7 +66,8 @@ namespace dce::gui::widgets {
 				}
 				[[likely]] if (_registry.has<Transform>(_entity)) {
 					auto& transform = _registry.get<Transform>(_entity);
-					[[likely]] if (CollapsingHeader(ICON_FA_MAP_MARKER_ALT " Transform ", ImGuiTreeNodeFlags_DefaultOpen)) {
+					[[likely]] if (CollapsingHeader(
+						ICON_FA_MAP_MARKER_ALT " Transform ", ImGuiTreeNodeFlags_DefaultOpen)) {
 						[[unlikely]] if (Button(ICON_FA_ARROWS)) {
 							this->modifier_ = ImGuizmo::TRANSLATE;
 						}

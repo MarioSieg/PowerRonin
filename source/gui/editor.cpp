@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "editor.hpp"
 #include "gui_headers.hpp"
 #include "font_headers.hpp"
@@ -73,10 +58,14 @@ namespace dce::gui {
 	void Editor::main_menu(Runtime& _rt, bool& _show_terminal) {
 		[[likely]] if (BeginMainMenuBar()) {
 			[[unlikely]] if (BeginMenu("File")) {
-				if (MenuItem("New")) { }
-				if (MenuItem("Open")) { }
-				if (MenuItem("Save")) { }
-				if (MenuItem("Exit")) { }
+				if (MenuItem("New")) {
+				}
+				if (MenuItem("Open")) {
+				}
+				if (MenuItem("Save")) {
+				}
+				if (MenuItem("Exit")) {
+				}
 				EndMenu();
 			}
 			[[unlikely]] if (BeginMenu("Tools")) {
@@ -112,39 +101,53 @@ namespace dce::gui {
 			PushStyleColor(ImGuiCol_Button, 0x00000000);
 			Separator();
 
-			[[unlikely]] if (Button(ICON_FA_HAND_ROCK)) { }
+			[[unlikely]] if (Button(ICON_FA_HAND_ROCK)) {
+			}
 
-			[[unlikely]] if (Button(ICON_FA_ARROWS)) { }
+			[[unlikely]] if (Button(ICON_FA_ARROWS)) {
+			}
 
-			[[unlikely]] if (Button(ICON_FA_SYNC)) { }
+			[[unlikely]] if (Button(ICON_FA_SYNC)) {
+			}
 
-			[[unlikely]] if (Button(ICON_FA_EXPAND)) { }
+			[[unlikely]] if (Button(ICON_FA_EXPAND)) {
+			}
 
 			Separator();
 
-			[[unlikely]] if (Button(ICON_FA_CUBES)) { }
+			[[unlikely]] if (Button(ICON_FA_CUBES)) {
+			}
 
-			[[unlikely]] if (Button(ICON_FA_LIGHTBULB_ON)) { }
+			[[unlikely]] if (Button(ICON_FA_LIGHTBULB_ON)) {
+			}
 
-			[[unlikely]] if (Button(ICON_FA_VOLUME_UP)) { }
+			[[unlikely]] if (Button(ICON_FA_VOLUME_UP)) {
+			}
 
 			[[unlikely]] if (Button(ICON_FA_TH)) {
 				_rt.render_data().enable_wireframe = !_rt.render_data().enable_wireframe;
 			}
 
-			[[unlikely]] if (Button(ICON_FA_MAP_MARKER_SMILE)) { }
+			[[unlikely]] if (Button(ICON_FA_MAP_MARKER_SMILE)) {
+			}
 
-			[[unlikely]] if (Button(ICON_FA_FUNCTION)) { }
+			[[unlikely]] if (Button(ICON_FA_FUNCTION)) {
+			}
 
-			[[unlikely]] if (Button(ICON_FA_SMILE)) { }
+			[[unlikely]] if (Button(ICON_FA_SMILE)) {
+			}
 
-			[[unlikely]] if (Button(ICON_FA_CAMERA)) { }
+			[[unlikely]] if (Button(ICON_FA_CAMERA)) {
+			}
 
 			Separator();
 
-			[[unlikely]] if (Button(ICON_FA_PLAY)) { }
-			[[unlikely]] if (Button(ICON_FA_PAUSE)) { }
-			[[unlikely]] if (Button(ICON_FA_STOP)) { }
+			[[unlikely]] if (Button(ICON_FA_PLAY)) {
+			}
+			[[unlikely]] if (Button(ICON_FA_PAUSE)) {
+			}
+			[[unlikely]] if (Button(ICON_FA_STOP)) {
+			}
 			PopStyleColor();
 			EndMainMenuBar();
 		}
