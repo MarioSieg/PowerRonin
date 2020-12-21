@@ -46,7 +46,7 @@ namespace dce {
 	void ResourceManager::unload_all_resources() {
 		this->texture_cache_.clear();
 		this->mesh_cache_.clear();
-		this->material_cache_.clear();;
+		this->material_cache_.clear();
 	}
 
 	auto ResourceManager::load_texture(std::filesystem::path&& _file, const TextureMeta* const _meta) -> RRef<Texture> {

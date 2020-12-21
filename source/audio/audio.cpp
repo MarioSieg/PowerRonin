@@ -37,7 +37,8 @@ namespace dce::audio {
 		AK::SoundEngine::GetDefaultInitSettings(this->init_settings_);
 		AK::SoundEngine::GetDefaultPlatformInitSettings(this->platform_init_settings_);
 		proto.info("Initializing sound engine...");
-		[[unlikely]] if (AK::SoundEngine::Init(&this->init_settings_, &this->platform_init_settings_) != AKRESULT::AK_Success) {
+		[[unlikely]] if (AK::SoundEngine::Init(&this->init_settings_, &this->platform_init_settings_) !=
+			AKRESULT::AK_Success) {
 			return false;
 		}
 

@@ -75,23 +75,15 @@ namespace dce::renderer {
 
 	void render_stats(const Runtime& _runtime) {
 		const auto& chrono = _runtime.chrono();
-
 		const auto viewport_pos_x = static_cast<std::uint16_t>(_runtime.render_data().scenery_viewport_position.x);
 		const auto viewport_pos_y = static_cast<std::uint16_t>(_runtime.render_data().scenery_viewport_position.y);
 		const auto viewport_width = static_cast<std::uint32_t>(_runtime.render_data().scenery_viewport_size.x);
 		const auto viewport_height = static_cast<std::uint32_t>(_runtime.render_data().scenery_viewport_size.y);
-		const auto screen_width = bgfx::getStats()->width;
-		const auto screen_height = bgfx::getStats()->height;
-
-		const auto pos_x = math::map_range<std::uint16_t>(viewport_pos_x, 0, screen_width, 0, 500);
-		std::uint16_t pos_y = math::map_range<std::uint16_t>(viewport_pos_y, 0, screen_height, 0, 128) + 4;
-
+		const std::uint16_t pos_x = viewport_pos_x / 8 + 4;
+		std::uint16_t pos_y = viewport_pos_y / 16 + 4;
 		bgfx::dbgTextClear();
-		bgfx::dbgTextPrintf(pos_x, pos_y, 0xF, "View x: %u y: %u w: %u h: %u", viewport_pos_x, viewport_pos_y,
-		                    viewport_width
-		                    , viewport_height);
-		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "Tick: %u, T: %.3f, FT: %.3f ms, FPS: %.2f", chrono.cycles, chrono.time
-		                    , chrono.frame_time, chrono.fps);
+		bgfx::dbgTextPrintf(pos_x, pos_y, 0xF, "View x: %u y: %u w: %u h: %u", viewport_pos_x, viewport_pos_y, viewport_width, viewport_height);
+		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "Tick: %u, T: %.3f, FT: %.3f ms, FPS: %.2f", chrono.cycles, chrono.time, chrono.frame_time, chrono.fps);
 
 	}
 }

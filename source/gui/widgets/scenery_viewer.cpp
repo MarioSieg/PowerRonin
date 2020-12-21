@@ -1,6 +1,5 @@
 #include "scenery_viewer.hpp"
 #include "../gui_headers.hpp"
-#include "../font_headers.hpp"
 #include "../window_names.hpp"
 #include "../../include/dce/renderer_data.hpp"
 

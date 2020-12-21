@@ -204,7 +204,7 @@ namespace dce::platform {
 		nat_handle = reinterpret_cast<void*>(glfwGetCocoaWindow(this->window_));
 #endif
 
-		[[unlikely]] if (nat_handle == nullptr) {
+		[[unlikely]] if (!nat_handle) {
 			proto.error("Failed to retrieve native window handle!");
 			return false;
 		}
