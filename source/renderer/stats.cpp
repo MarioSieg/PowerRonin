@@ -58,27 +58,27 @@ namespace dce::renderer {
 	}
 
 	void get_runtime_stats(Diagnostics& _diag) noexcept {
-		const auto& stats = *bgfx::getStats();
-		_diag.graphics.used_vram = stats.gpuMemoryUsed;
-		_diag.graphics.used_draw_calls = stats.numDraw;
-		_diag.graphics.used_blit_calls = stats.numBlit;
-		_diag.graphics.used_textures = stats.numTextures;
-		_diag.graphics.used_shaders = stats.numShaders;
-		_diag.graphics.used_programs = stats.numPrograms;
-		_diag.graphics.used_uniforms = stats.numUniforms;
-		_diag.graphics.used_vertex_buffers = stats.numVertexBuffers;
-		_diag.graphics.used_index_buffers = stats.numIndexBuffers;
-		_diag.graphics.used_dynamic_vertex_buffers = stats.numDynamicVertexBuffers;
-		_diag.graphics.used_dynamic_index_buffers = stats.numDynamicIndexBuffers;
-		_diag.graphics.used_frame_buffers = stats.numFrameBuffers;
+		const auto* const stats = bgfx::getStats();
+		_diag.graphics.used_vram = stats->gpuMemoryUsed;
+		_diag.graphics.used_draw_calls = stats->numDraw;
+		_diag.graphics.used_blit_calls = stats->numBlit;
+		_diag.graphics.used_textures = stats->numTextures;
+		_diag.graphics.used_shaders = stats->numShaders;
+		_diag.graphics.used_programs = stats->numPrograms;
+		_diag.graphics.used_uniforms = stats->numUniforms;
+		_diag.graphics.used_vertex_buffers = stats->numVertexBuffers;
+		_diag.graphics.used_index_buffers = stats->numIndexBuffers;
+		_diag.graphics.used_dynamic_vertex_buffers = stats->numDynamicVertexBuffers;
+		_diag.graphics.used_dynamic_index_buffers = stats->numDynamicIndexBuffers;
+		_diag.graphics.used_frame_buffers = stats->numFrameBuffers;
 	}
 
 	void render_stats(const Runtime& _runtime) {
 		const auto& chrono = _runtime.chrono();
-		const auto& stats = *bgfx::getStats();
+		const auto* const stats = bgfx::getStats();
 		const auto& view = _runtime.render_data().view_matrix;
 		const auto& proj = _runtime.render_data().projection_matrix;
-		
+		constexpr auto byte_2_gb = 1000.f * 1000.f * 1000.f;
 		const auto viewport_pos_x = static_cast<std::uint16_t>(_runtime.render_data().scenery_viewport_position.x);
 		const auto viewport_pos_y = static_cast<std::uint16_t>(_runtime.render_data().scenery_viewport_position.y);
 		const auto viewport_width = static_cast<std::uint32_t>(_runtime.render_data().scenery_viewport_size.x);
@@ -89,11 +89,12 @@ namespace dce::renderer {
 		const std::uint16_t pos_x = viewport_pos_x / 8 + 4;
 		std::uint16_t pos_y = viewport_pos_y / 16 + 4;
 		bgfx::dbgTextClear();
-		bgfx::dbgTextPrintf(pos_x, pos_y, 0xF, "%s, DrawCalls: %u", bgfx::getRendererName(bgfx::getRendererType()), stats.numDraw);
+		bgfx::dbgTextPrintf(pos_x, pos_y, 0xF, "%s, DrawCalls: %u, ComputeCalls: %u, BlitCalls: %u", bgfx::getRendererName(bgfx::getRendererType()), stats->numDraw, stats->numCompute, stats->numBlit);
 		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "View x: %u y: %u w: %u h: %u", viewport_pos_x, viewport_pos_y, viewport_width, viewport_height);
 		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "Tick: %u, Time: %.2f", chrono.cycles, chrono.time);
-		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "FrameTime: %.2fms, DeltaTime: %f, FPS: %.2f", chrono.frame_time, chrono.delta_time, chrono.fps);
+		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "FrameTime: %.3fms, DeltaTime: %f, FPS: %.2f", chrono.frame_time, chrono.delta_time, chrono.fps);
 		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "Forward: %.2f %.2f %.2f, Left: %.2f %.2f %.2f, FOV: %.1f", forward.x, forward.y, forward.z, left.x, left.y, left.z, fov);
+		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "VRAM %.1fGB/%.1fGB", stats->gpuMemoryUsed / byte_2_gb, stats->gpuMemoryMax / byte_2_gb);
 
 	}
 }
