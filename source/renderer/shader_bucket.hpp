@@ -1,15 +1,11 @@
 #pragma once
 
-#include "shaders/unlit.hpp"
-#include "shaders/lambert.hpp"
+#include "shaders/unlit_textured.hpp"
+#include "shaders/diffuse.hpp"
+#include "shaders/bumped_diffuse.hpp"
 #include "shaders/skybox.hpp"
 
 namespace dce::renderer {
-	enum class ShaderType {
-		UNLIT,
-		LAMBERT
-	};
-
 	class ShaderBucket final {
 	public:
 		explicit ShaderBucket(GPU& _gpu) noexcept;
@@ -22,8 +18,9 @@ namespace dce::renderer {
 		void load_all();
 		void unload_all();
 
-		shaders::Unlit unlit;
-		shaders::Lambert lambert;
+		shaders::UnlitTextured unlit_textured;
+		shaders::Diffuse diffuse;
+		shaders::BumpedDiffuse bumped_diffuse;
 		shaders::Skybox skybox;
 
 	private:

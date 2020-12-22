@@ -8,12 +8,14 @@
 namespace {
 	auto create_vertex_layout() -> bgfx::VertexLayout {
 		bgfx::VertexLayout layout;
-		layout.begin().add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float).
-		       add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float).add(
-			       bgfx::Attrib::Normal, 3, bgfx::AttribType::Float).
-		       add(bgfx::Attrib::Tangent, 3, bgfx::AttribType::Float).add(
-			       bgfx::Attrib::Bitangent, 3, bgfx::AttribType::Float).
-		       end();
+		// @formatter:off
+		layout.begin()
+		.add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float)
+		.add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float)
+		.add(bgfx::Attrib::Normal, 3, bgfx::AttribType::Float)
+		.add(bgfx::Attrib::Tangent, 3, bgfx::AttribType::Float)
+		.end();
+		// @formatter:one
 		return layout;
 	}
 } // namespace
@@ -123,26 +125,21 @@ namespace dce {
 		for (unsigned i = 0; i < mesh->mNumVertices; ++i) {
 			const auto& vertex = mesh->mVertices[i];
 
-			auto o_vertex = Vertex{Vertex::Data{.position = {vertex.x, vertex.y, vertex.z}}};
+			auto o_vertex = Vertex{Vertex{.position = {vertex.x, vertex.y, vertex.z}}};
 
 			[[likely]] if (mesh->mTextureCoords[0]) {
 				const auto& uv = mesh->mTextureCoords[0][i];
-				o_vertex.data.uv = {uv.x, uv.y};
+				o_vertex.uv = {uv.x, uv.y};
 			}
 
 			[[likely]] if (mesh->mNormals) {
 				const auto& normal = mesh->mNormals[i];
-				o_vertex.data.normal = {normal.x, normal.y, normal.z};
+				o_vertex.normal = {normal.x, normal.y, normal.z};
 			}
 
 			[[likely]] if (mesh->mTangents) {
 				const auto& tangent = mesh->mTangents[i];
-				o_vertex.data.tangent = {tangent.x, tangent.y, tangent.z};
-			}
-
-			[[likely]] if (mesh->mBitangents) {
-				const auto& bi_tangent = mesh->mBitangents[i];
-				o_vertex.data.bitangent = {bi_tangent.x, bi_tangent.y, bi_tangent.z};
+				o_vertex.tangent = {tangent.x, tangent.y, tangent.z};
 			}
 
 			vertices.push_back(o_vertex);

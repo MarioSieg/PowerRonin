@@ -11,7 +11,7 @@ namespace dce::renderer::shaders {
 	}
 
 	void Skybox::unload() {
-		BGFX_FREE(this->u_s_tex_cube_)
+		destroy(this->u_s_tex_cube_);
 		IShader::unload();
 	}
 

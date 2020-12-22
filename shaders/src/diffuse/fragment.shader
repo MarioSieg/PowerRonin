@@ -18,7 +18,6 @@ $input v_texcoord0, v_normal
 #include "../../common.shader"
 
 SAMPLER2D(s_tex_color,  0);
-SAMPLER2D(s_normal_map, 1);
 uniform vec4 u_ambient_color;
 uniform vec4 u_light_dir;
 uniform vec4 u_light_color;

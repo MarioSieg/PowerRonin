@@ -102,11 +102,13 @@ namespace dce::renderer {
 	}
 
 	void Renderer::set_per_frame_data(const Scenery::Configuration::Lighting& _lighting) const {
-		const auto orbit = calculate_sun_orbit(6, math::radians(23.4f));
-		const auto sun_dir = Vector4<>(
-			calculate_sun_dir(_lighting.sun.hour, _lighting.sun.latitude, orbit, math::UP, math::NORTH)
-			, 1.f);
-		this->shader_bucket_.lambert.per_frame(sun_dir, _lighting.sun.color, _lighting.const_ambient_color);
+		const float orbit = calculate_sun_orbit(6, math::radians(23.4f));
+		const float hour = _lighting.sun.hour;
+		const float latitude = _lighting.sun.latitude;
+		//const auto sun_dir = Vector4<>(calculate_sun_dir(hour, latitude, orbit, math::UP, math::NORTH), 1.f);
+		const auto sun_dir = Vector4<>{ math::radians(60.f), math::radians(60.f), math::radians(0.f), 0 };
+		this->shader_bucket_.diffuse.per_frame(sun_dir, _lighting.sun.color, _lighting.const_ambient_color);
+		this->shader_bucket_.bumped_diffuse.per_frame(sun_dir, _lighting.sun.color, _lighting.const_ambient_color);
 	}
 
 	void Renderer::render_scene(Runtime& _rt) {
@@ -130,19 +132,27 @@ namespace dce::renderer {
 			// Get a reference to the mesh to capture.
 			const auto& mesh = _mesh_renderer.mesh;
 
+			// @formatter:off
+			
 			// Render each material with the corresponding shader:
 			std::visit(overload{
 
-				           // Render with unlit material:
-				           [this, mesh](const Material::Unlit& _material) {
-					           this->shader_bucket_.unlit.per_object(mesh, _material);
-				           },
+				// Render with unlit material:
+				[this, mesh](const Material::UnlitTextured& _material) {
+					this->shader_bucket_.unlit_textured.per_object(mesh, _material);
+				},
 
-				           // Render with lambert material:
-				           [this, mesh](const Material::Lambert& _material) {
-					           this->shader_bucket_.lambert.per_object(mesh, _material);
-				           },
-			           }, _mesh_renderer.material->properties);
+				// Render with diffuse material:
+				[this, mesh](const Material::Diffuse& _material) {
+					this->shader_bucket_.diffuse.per_object(mesh, _material);
+				},
+
+				[this, mesh](const Material::BumpedDiffuse& _material) {
+					this->shader_bucket_.bumped_diffuse.per_object(mesh, _material);
+				}
+			}, _mesh_renderer.material->properties);
+
+			// @formatter:on
 		};
 
 		// Iterate and draw:

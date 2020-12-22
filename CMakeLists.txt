@@ -127,15 +127,19 @@ add_library(
     "source/flycam.cpp" 
     "include/dce/light.hpp" 
     "include/dce/material.hpp" 
-    "source/renderer/shaders/unlit.hpp" 
-    "source/renderer/shaders/unlit.cpp" 
+    "source/renderer/shaders/unlit_textured.hpp" 
+    "source/renderer/shaders/unlit_textured.cpp"
+    "source/renderer/shaders/diffuse.hpp"
+    "source/renderer/shaders/diffuse.cpp" 
+    "source/renderer/shaders/skybox.hpp"
+    "source/renderer/shaders/skybox.cpp"
+    "source/renderer/shaders/bumped_diffuse.hpp"
+    "source/renderer/shaders/bumped_diffuse.cpp" 
     "source/renderer/shader_bucket.hpp" 
     "source/renderer/program_loader.hpp" 
     "source/renderer/program_loader.cpp" 
     "source/renderer/ishader.hpp"  
     "source/renderer/shader_bucket.cpp" 
-    "source/renderer/shaders/lambert.hpp"
-    "source/renderer/shaders/lambert.cpp" 
     "include/dce/sun.hpp" 
     "source/sun.cpp" 
     "source/gui/widgets/config_editor.hpp"
@@ -144,8 +148,6 @@ add_library(
     "source/time_utils.cpp" 
     "source/scripting/scripting.hpp"
     "source/scripting/scripting.cpp" 
-    "source/renderer/shaders/skybox.hpp"
-    "source/renderer/shaders/skybox.cpp" 
     "source/renderer/ishader.cpp" 
     "include/dce/variant_visit_overloader.hpp" 
     "source/renderer/views.hpp" 
@@ -172,8 +174,7 @@ add_library(
     "include/dce/renderer_data.hpp" 
     "source/renderer.cpp"
     "source/gui/widgets/scenery_viewer.hpp"
-    "source/gui/widgets/scenery_viewer.cpp"
-     
+    "source/gui/widgets/scenery_viewer.cpp" 
     "source/scripting/mono_headers.hpp" 
     "source/scripting/internal_calls.cpp" 
     "source/scripting/helpers.hpp" 
@@ -218,7 +219,9 @@ add_library(
     "source/audio/audio_engine_core/Win32/AkDefaultIOHookDeferred.h" 
     "source/audio/audio_engine_core/Win32/AkFileHelpers.h" 
     "source/audio/audio_engine_core/Win32/AkFilePackageLowLevelIOBlocking.h" 
-    "source/audio/audio_engine_core/Win32/AkFilePackageLowLevelIODeferred.h")
+    "source/audio/audio_engine_core/Win32/AkFilePackageLowLevelIODeferred.h" 
+    "source/renderer/shared_per_frame_uniform.hpp"
+    "source/renderer/shared_per_frame_uniform.cpp")
 
 include("extern/CMakeLists.txt")
 

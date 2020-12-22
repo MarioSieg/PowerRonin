@@ -19,6 +19,6 @@ namespace dce::renderer {
 	}
 
 	void IShader::unload() {
-		BGFX_FREE(this->program_);
+		BGFX_CHECKED_FREE(this->program_);
 	}
 }

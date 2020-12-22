@@ -8,7 +8,9 @@
 #include <filesystem>
 
 namespace dce {
-	class ResourceManager;
+	class Runtime;
+	class RenderData;
+	class Transform;
 }
 
 namespace dce::gui::widgets {
@@ -17,10 +19,11 @@ namespace dce::gui::widgets {
 		static constexpr auto BUFFER_SIZE = 256;
 
 		void initialize();
-		void update(bool& _show, Registry& _registry, ResourceManager& _resource_manager, ERef _entity);
+		void update(bool& _show, ERef _entity, Runtime& _rt);
 
 	private:
-		ImGuizmo::OPERATION modifier_ = {};
+		void render_manipulator_gizmos(Transform& _transform, const RenderData& _data) const noexcept;
+		ImGuizmo::OPERATION modifier_ = ImGuizmo::OPERATION::TRANSLATE;
 		std::array<char, BUFFER_SIZE> string_buffer_ = {};
 		std::string current_path_ = {};
 		std::string mesh_filer_ = {};

@@ -21,24 +21,23 @@ namespace dce {
 		friend class MaterialImporteur;
 
 	public:
-		/// <summary>
-		/// Material properties for the type "UNLIT".
-		/// </summary>
-		struct Unlit final {
+		struct UnlitTextured final {
 			RRef<Texture> albedo = {};
 		};
 
-		/// <summary>
-		/// Material properties for the type "LAMBERT".
-		/// </summary>
-		struct Lambert final {
+		struct Diffuse final {
 			RRef<Texture> albedo = {};
+		};
+
+		struct BumpedDiffuse final {
+			RRef<Texture> albedo = {};
+			RRef<Texture> normal = {};
 		};
 
 		/// <summary>
 		/// Properties are saved inside a type safe union (variant) to safe memory.
 		/// </summary>
-		using Properties = std::variant<Unlit, Lambert>;
+		using Properties = std::variant<UnlitTextured, Diffuse, BumpedDiffuse>;
 
 		/// <summary>
 		/// All associated file types.
@@ -69,7 +68,7 @@ namespace dce {
 		/// <summary>
 		/// Material properties.
 		/// </summary>
-		Properties properties = {Unlit{}};
+		Properties properties = {UnlitTextured{}};
 	};
 
 	/// <summary>

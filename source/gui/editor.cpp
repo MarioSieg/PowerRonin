@@ -38,8 +38,7 @@ namespace dce::gui {
 		}
 
 		[[likely]] if (this->show_inspector_) {
-			this->inspector_.update(this->show_inspector_, _rt.scenery().registry(), _rt.resource_manager()
-			                        , this->hierarchy_.get_selected());
+			this->inspector_.update(this->show_inspector_, this->hierarchy_.get_selected(), _rt);
 		}
 
 		[[unlikely]] if (this->memory_editor_.Open) {

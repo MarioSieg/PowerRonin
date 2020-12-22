@@ -1,46 +1,17 @@
 #pragma once
 
 #include "resource.hpp"
+#include "mathlib.hpp"
 
 namespace dce {
 	/// <summary>
 	/// Vertex type.
 	/// </summary>
-	union Vertex {
-		struct Data final {
-
-			struct {
-				float x = .0f;
-				float y = .0f;
-				float z = .0f;
-			} position = {};
-
-			struct {
-				float u = .0f;
-				float v = .0f;
-			} uv = {};
-
-			struct {
-				float x = .0f;
-				float y = .0f;
-				float z = .0f;
-			} normal = {};
-
-			struct {
-				float x = .0f;
-				float y = .0f;
-				float z = .0f;
-			} tangent = {};
-
-			struct {
-				float x = .0f;
-				float y = .0f;
-				float z = .0f;
-			} bitangent = {};
-
-		} data = {};
-
-		std::uint8_t raw[sizeof(Data)];
+	struct Vertex final {
+		Vector3<> position = {};
+		Vector2<> uv = {};
+		Vector3<> normal = {};
+		Vector3<> tangent = {};
 	};
 
 	struct MeshMeta final : ISerializable {
