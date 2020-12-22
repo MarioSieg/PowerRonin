@@ -78,7 +78,7 @@ namespace dce::renderer {
 		const auto* const stats = bgfx::getStats();
 		const auto& view = _runtime.render_data().view_matrix;
 		const auto& proj = _runtime.render_data().projection_matrix;
-		constexpr auto byte_2_gb = 1000.f * 1000.f * 1000.f;
+		constexpr auto byte_2_gb = 1024.f * 1024.f * 1024.f;
 		const auto viewport_pos_x = static_cast<std::uint16_t>(_runtime.render_data().scenery_viewport_position.x);
 		const auto viewport_pos_y = static_cast<std::uint16_t>(_runtime.render_data().scenery_viewport_position.y);
 		const auto viewport_width = static_cast<std::uint32_t>(_runtime.render_data().scenery_viewport_size.x);
@@ -94,7 +94,7 @@ namespace dce::renderer {
 		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "Tick: %u, Time: %.2f", chrono.cycles, chrono.time);
 		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "FrameTime: %.3fms, DeltaTime: %f, FPS: %.2f", chrono.frame_time, chrono.delta_time, chrono.fps);
 		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "Forward: %.2f %.2f %.2f, Left: %.2f %.2f %.2f, FOV: %.1f", forward.x, forward.y, forward.z, left.x, left.y, left.z, fov);
-		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "VRAM %.1fGB/%.1fGB", stats->gpuMemoryUsed / byte_2_gb, stats->gpuMemoryMax / byte_2_gb);
+		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "VRAM %.2fGB/%.2fGB, TexMEM: %.2fGB", stats->gpuMemoryUsed / byte_2_gb, stats->gpuMemoryMax / byte_2_gb, stats->textureMemoryUsed / byte_2_gb);
 
 	}
 }
