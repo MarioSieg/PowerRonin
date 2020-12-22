@@ -135,7 +135,7 @@ namespace dce::renderer {
 			// @formatter:off
 			
 			// Render each material with the corresponding shader:
-			std::visit(overload{
+			std::visit(overload {
 
 				// Render with unlit material:
 				[this, mesh](const Material::UnlitTextured& _material) {

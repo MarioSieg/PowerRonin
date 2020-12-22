@@ -24,8 +24,9 @@ namespace dce {
 			auto& collider = this->registry_.emplace<Collider>(cube);
 
 			meta.name = "Cube";
-			Material::Diffuse lambert;
-			lambert.albedo = _resource_manager.system_resources.checkerboard;
+			Material::BumpedDiffuse lambert;
+			lambert.albedo = _resource_manager.load<Texture>("examples/snow_albedo.dds");
+			lambert.normal = _resource_manager.load<Texture>("examples/snow_normal.dds");
 			renderer.material = Material::create_from_data(lambert, "cube", _resource_manager);
 			renderer.mesh = _resource_manager.system_resources.cube;
 		}
@@ -41,9 +42,8 @@ namespace dce {
 			meta.name = "Platform";
 			transform.position.y = -1.f;
 			transform.scale *= 3.f;
-			Material::BumpedDiffuse lambert;
-			lambert.albedo = _resource_manager.load<Texture>("examples/snow_albedo.dds");
-			lambert.normal = _resource_manager.load<Texture>("examples/snow_normal.dds");
+			Material::Diffuse lambert;
+			lambert.albedo = _resource_manager.system_resources.checkerboard;
 			renderer.material = Material::create_from_data(lambert, "platform", _resource_manager);
 			renderer.mesh = _resource_manager.load<Mesh>("meshes/common/platform.obj");
 		}

@@ -220,8 +220,8 @@ add_library(
     "source/audio/audio_engine_core/Win32/AkFileHelpers.h" 
     "source/audio/audio_engine_core/Win32/AkFilePackageLowLevelIOBlocking.h" 
     "source/audio/audio_engine_core/Win32/AkFilePackageLowLevelIODeferred.h" 
-    "source/renderer/shared_per_frame_uniform.hpp"
-    "source/renderer/shared_per_frame_uniform.cpp")
+    "source/renderer/uniform.hpp"
+    )
 
 include("extern/CMakeLists.txt")
 
