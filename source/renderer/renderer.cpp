@@ -106,7 +106,7 @@ namespace dce::renderer {
 		const float hour = _lighting.sun.hour;
 		const float latitude = _lighting.sun.latitude;
 		//const auto sun_dir = Vector4<>(calculate_sun_dir(hour, latitude, orbit, math::UP, math::NORTH), 1.f);
-		const auto sun_dir = Vector4<>{ math::radians(60.f), math::radians(60.f), math::radians(0.f), 0 };
+		const auto sun_dir = Vector4<>{ 0, 1, 0, 0 };
 		this->shader_bucket_.diffuse.per_frame(sun_dir, _lighting.sun.color, _lighting.const_ambient_color);
 		this->shader_bucket_.bumped_diffuse.per_frame(sun_dir, _lighting.sun.color, _lighting.const_ambient_color);
 	}

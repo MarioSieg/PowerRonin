@@ -25,7 +25,7 @@ namespace dce {
 
 			meta.name = "Cube";
 			Material::BumpedDiffuse lambert;
-			lambert.albedo = _resource_manager.load<Texture>("examples/snow_albedo.dds");
+			lambert.albedo = _resource_manager.system_resources.checkerboard;
 			lambert.normal = _resource_manager.load<Texture>("examples/snow_normal.dds");
 			renderer.material = Material::create_from_data(lambert, "cube", _resource_manager);
 			renderer.mesh = _resource_manager.system_resources.cube;
