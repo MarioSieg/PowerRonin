@@ -103,8 +103,8 @@ namespace dce::renderer {
 		bgfx::frame();
 	}
 
-	void GPU::set_camera(const bgfx::ViewId _view_id, const Matrix4x4<>& _view,
-	                     const Matrix4x4<>& _proj) const noexcept {
+	void GPU::set_camera(const bgfx::ViewId _view_id, const SimdMatrix4x4<>& _view,
+	                     const SimdMatrix4x4<>& _proj) const noexcept {
 		bgfx::setViewTransform(_view_id, value_ptr(_view), value_ptr(_proj));
 	}
 
@@ -153,19 +153,19 @@ namespace dce::renderer {
 		submit(_view_id, _shader, _depth);
 	}
 
-	void GPU::set_viewport(const Vector2<> _xy, const Vector2<> _wh, const bgfx::ViewId _view_id) const noexcept {
+	void GPU::set_viewport(const SimdVector2<> _xy, const SimdVector2<> _wh, const bgfx::ViewId _view_id) const noexcept {
 		bgfx::setViewRect(_view_id, _xy.x, _xy.y, _wh.x, _wh.y);
 	}
 
-	void GPU::set_uniform(const bgfx::UniformHandle _handle, const Vector4<>& _value) const noexcept {
+	void GPU::set_uniform(const bgfx::UniformHandle _handle, const SimdVector4<>& _value) const noexcept {
 		setUniform(_handle, value_ptr(_value));
 	}
 
-	void GPU::set_uniform(const bgfx::UniformHandle _handle, const Matrix3x3<>& _value) const noexcept {
+	void GPU::set_uniform(const bgfx::UniformHandle _handle, const SimdMatrix3x3<>& _value) const noexcept {
 		setUniform(_handle, value_ptr(_value));
 	}
 
-	void GPU::set_uniform(const bgfx::UniformHandle _handle, const Matrix4x4<>& _value) const noexcept {
+	void GPU::set_uniform(const bgfx::UniformHandle _handle, const SimdMatrix4x4<>& _value) const noexcept {
 		setUniform(_handle, value_ptr(_value));
 	}
 

@@ -5,8 +5,8 @@ namespace dce {
 	auto calculate_sun_dir(float _hour
 	                       , float _latitude
 	                       , const float _delta
-	                       , const Vector3<>& _up
-	                       , const Vector3<>& _north) noexcept -> Vector3<> {
+	                       , const SimdVector3<>& _up
+	                       , const SimdVector3<>& _north) noexcept -> SimdVector3<> {
 		_latitude = math::radians(_latitude);
 		_hour *= math::pi<float>() / 12.f;
 		const auto azimuth = std::atan2(std::sin(_hour)
@@ -14,11 +14,11 @@ namespace dce {
 		                                std::cos(_latitude));
 		const auto altitude = std::asin(
 			std::sin(_latitude) * std::sin(_delta) + std::cos(_latitude) * std::cos(_delta) * std::cos(_hour));
-		auto rotation = math::identity<Quaternion<>>();
+		auto rotation = math::identity<SimdQuaternion<>>();
 		rotation = rotate(rotation, -azimuth, _up);
-		const Vector3<> dir = _north * rotation;
-		const Vector3<> udx = cross(_up, dir);
-		rotation = math::identity<Quaternion<>>();
+		const SimdVector3<> dir = _north * rotation;
+		const SimdVector3<> udx = cross(_up, dir);
+		rotation = math::identity<SimdQuaternion<>>();
 		rotate(rotation, altitude, udx);
 		return dir * rotation;
 	}

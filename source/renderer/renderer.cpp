@@ -83,8 +83,8 @@ namespace dce::renderer {
 		this->gpu_.clear_view(SKYBOX_VIEW, BGFX_CLEAR_NONE);
 		this->gpu_.set_viewport(_data.scenery_viewport_position, _data.scenery_viewport_size, SKYBOX_VIEW);
 		// Create transform matrix:
-		auto skybox_matrix = math::identity<Matrix4x4<>>();
-		skybox_matrix = scale(skybox_matrix, Vector3<>{10});
+		auto skybox_matrix = math::identity<SimdMatrix4x4<>>();
+		skybox_matrix = scale(skybox_matrix, SimdVector3<>{10});
 
 		// Remove translation:
 		_data.view_matrix[3][0] = .0F;
@@ -105,8 +105,8 @@ namespace dce::renderer {
 		const float orbit = calculate_sun_orbit(6, math::radians(23.4f));
 		const float hour = _lighting.sun.hour;
 		const float latitude = _lighting.sun.latitude;
-		//const auto sun_dir = Vector4<>(calculate_sun_dir(hour, latitude, orbit, math::UP, math::NORTH), 1.f);
-		const auto sun_dir = Vector4<>{ 0, 1, 0, 0 };
+		//const auto sun_dir = SimdVector4<>(calculate_sun_dir(hour, latitude, orbit, math::UP, math::NORTH), 1.f);
+		const auto sun_dir = SimdVector4<>{ 0, 1, 0, 0 };
 		this->shader_bucket_.diffuse.per_frame(sun_dir, _lighting.sun.color, _lighting.const_ambient_color);
 		this->shader_bucket_.bumped_diffuse.per_frame(sun_dir, _lighting.sun.color, _lighting.const_ambient_color);
 	}

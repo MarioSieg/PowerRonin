@@ -8,10 +8,10 @@ namespace dce {
 	/// Vertex type.
 	/// </summary>
 	struct Vertex final {
-		Vector3<> position = {};
-		Vector2<> uv = {};
-		Vector3<> normal = {};
-		Vector3<> tangent = {};
+		FixedVector3<> position = {};
+		FixedVector2<> uv = {};
+		FixedVector3<> normal = {};
+		FixedVector3<> tangent = {};
 	};
 
 	struct MeshMeta final : ISerializable {

@@ -24,7 +24,7 @@ namespace dce::renderer::shaders {
 		IShader::unload();
 	}
 
-	void BumpedDiffuse::per_frame(const Vector4<>& _sun_dir, const Color<>& _sun_color, const Color<>& _ambient_color) const {
+	void BumpedDiffuse::per_frame(const SimdVector4<>& _sun_dir, const Color<>& _sun_color, const Color<>& _ambient_color) const {
 		//this->gpu_.set_uniform(this->u_light_dir_, _sun_dir);
 		//->gpu_.set_uniform(this->u_light_color_, _sun_color);
 		//this->gpu_.set_uniform(this->u_ambient_color_, _ambient_color);

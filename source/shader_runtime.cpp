@@ -6,21 +6,21 @@
 #include "../include/dce/time_utils.hpp"
 
 namespace dce {
-	void Shader::set_uniform(const std::string_view _name, const Matrix3x3<>& _value) const noexcept {
+	void Shader::set_uniform(const std::string_view _name, const SimdMatrix3x3<>& _value) const noexcept {
 		assert(this->volatile_upload_data_.uniforms.contains(_name));
 		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
 		assert(bgfx::isValid(handle));
 		setUniform(handle, value_ptr(_value));
 	}
 
-	void Shader::set_uniform(const std::string_view _name, const Matrix4x4<>& _value) const noexcept {
+	void Shader::set_uniform(const std::string_view _name, const SimdMatrix4x4<>& _value) const noexcept {
 		assert(this->volatile_upload_data_.uniforms.contains(_name));
 		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
 		assert(bgfx::isValid(handle));
 		setUniform(handle, value_ptr(_value));
 	}
 
-	void Shader::set_uniform(const std::string_view _name, const Vector4<>& _value) const noexcept {
+	void Shader::set_uniform(const std::string_view _name, const SimdVector4<>& _value) const noexcept {
 		assert(this->volatile_upload_data_.uniforms.contains(_name));
 		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
 		assert(bgfx::isValid(handle));

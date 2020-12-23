@@ -73,7 +73,7 @@ namespace dce::renderer {
 		/// <param name="_proj"></param>
 		/// <param name="_view_id"></param>
 		/// <returns></returns>
-		void set_camera(const bgfx::ViewId _view_id, const Matrix4x4<>& _view, const Matrix4x4<>& _proj) const noexcept;
+		void set_camera(const bgfx::ViewId _view_id, const SimdMatrix4x4<>& _view, const SimdMatrix4x4<>& _proj) const noexcept;
 
 		/// <summary>
 		/// Set mesh world transform matrix.
@@ -136,7 +136,7 @@ namespace dce::renderer {
 		/// <param name="_wh"></param>
 		/// <param name="_view_id"></param>
 		/// <returns></returns>
-		void set_viewport(const Vector2<> _xy, const Vector2<> _wh, const bgfx::ViewId _view_id) const noexcept;
+		void set_viewport(const SimdVector2<> _xy, const SimdVector2<> _wh, const bgfx::ViewId _view_id) const noexcept;
 
 		/// <summary>
 		/// Set uniform.
@@ -144,7 +144,7 @@ namespace dce::renderer {
 		/// <param name="_handle"></param>
 		/// <param name="_value"></param>
 		/// <returns></returns>
-		void set_uniform(bgfx::UniformHandle _handle, const Vector4<>& _value) const noexcept;
+		void set_uniform(bgfx::UniformHandle _handle, const SimdVector4<>& _value) const noexcept;
 
 		/// <summary>
 		/// Set uniform.
@@ -152,7 +152,7 @@ namespace dce::renderer {
 		/// <param name="_handle"></param>
 		/// <param name="_value"></param>
 		/// <returns></returns>
-		void set_uniform(bgfx::UniformHandle _handle, const Matrix3x3<>& _value) const noexcept;
+		void set_uniform(bgfx::UniformHandle _handle, const SimdMatrix3x3<>& _value) const noexcept;
 
 		/// <summary>
 		/// Set uniform.
@@ -160,7 +160,7 @@ namespace dce::renderer {
 		/// <param name="_handle"></param>
 		/// <param name="_value"></param>
 		/// <returns></returns>
-		void set_uniform(bgfx::UniformHandle _handle, const Matrix4x4<>& _value) const noexcept;
+		void set_uniform(bgfx::UniformHandle _handle, const SimdMatrix4x4<>& _value) const noexcept;
 
 		/// <summary>
 		/// Set uniform.

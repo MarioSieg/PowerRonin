@@ -163,6 +163,6 @@ namespace dce {
 
 		[[nodiscard]] auto is_mouse_button_down(MouseButton _mb) const noexcept -> bool;
 
-		[[nodiscard]] auto get_mouse_position() const noexcept -> Vector2<>;
+		[[nodiscard]] auto get_mouse_position() const noexcept -> SimdVector2<>;
 	};
 }

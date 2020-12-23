@@ -86,7 +86,7 @@ namespace dce::gui::widgets {
 
 						DragFloat3("Position", value_ptr(transform.position));
 
-						Vector3<> euler_angles = eulerAngles(transform.rotation);
+						SimdVector3<> euler_angles = eulerAngles(transform.rotation);
 						euler_angles.x = math::degrees(euler_angles.x);
 						euler_angles.y = math::degrees(euler_angles.y);
 						euler_angles.z = math::degrees(euler_angles.z);
@@ -94,7 +94,7 @@ namespace dce::gui::widgets {
 							euler_angles.x = math::radians(euler_angles.x);
 							euler_angles.y = math::radians(euler_angles.y);
 							euler_angles.z = math::radians(euler_angles.z);
-							transform.rotation = Quaternion<>(euler_angles);
+							transform.rotation = SimdQuaternion<>(euler_angles);
 						}
 
 						DragFloat3("Scale ", value_ptr(transform.scale));

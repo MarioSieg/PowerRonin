@@ -10,7 +10,7 @@ namespace dce::renderer::shaders {
 		void load() override;
 		void unload() override;
 
-		void per_frame(const Vector4<>& _sun_dir, const Color<>& _sun_color, const Color<>& _ambient_color) const;
+		void per_frame(const SimdVector4<>& _sun_dir, const Color<>& _sun_color, const Color<>& _ambient_color) const;
 		void per_object(const Mesh& _mesh, const Material::Diffuse& _mat) const;
 
 	private:

@@ -46,9 +46,9 @@ namespace dce {
 		[[nodiscard]] auto get_uniforms() const noexcept -> const std::unordered_map<
 			std::string_view, std::tuple<UniformType, std::uint16_t>>&;
 
-		void set_uniform(std::string_view _name, const Vector4<>& _value) const noexcept;
-		void set_uniform(std::string_view _name, const Matrix3x3<>& _value) const noexcept;
-		void set_uniform(std::string_view _name, const Matrix4x4<>& _value) const noexcept;
+		void set_uniform(std::string_view _name, const SimdVector4<>& _value) const noexcept;
+		void set_uniform(std::string_view _name, const SimdMatrix3x3<>& _value) const noexcept;
+		void set_uniform(std::string_view _name, const SimdMatrix4x4<>& _value) const noexcept;
 		void set_uniform(std::string_view _name, const float (&_value)[4]) const noexcept;
 		void set_uniform(std::string_view _name, const float (&_value)[9]) const noexcept;
 		void set_uniform(std::string_view _name, const float (&_value)[16]) const noexcept;

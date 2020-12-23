@@ -3,23 +3,23 @@
 #include "gui/gui_headers.hpp"
 
 namespace dce {
-	auto FlyCam::get_projection_matrix() const noexcept -> const Matrix4x4<>& {
+	auto FlyCam::get_projection_matrix() const noexcept -> const SimdMatrix4x4<>& {
 		return this->proj_;
 	}
 
-	auto FlyCam::get_view_matrix() const noexcept -> const Matrix4x4<>& {
+	auto FlyCam::get_view_matrix() const noexcept -> const SimdMatrix4x4<>& {
 		return this->view_;
 	}
 
-	auto FlyCam::get_eye_vector() const noexcept -> const Vector3<>& {
+	auto FlyCam::get_eye_vector() const noexcept -> const SimdVector3<>& {
 		return this->eye_;
 	}
 
-	auto FlyCam::get_direction_vector() const noexcept -> const Vector3<>& {
+	auto FlyCam::get_direction_vector() const noexcept -> const SimdVector3<>& {
 		return this->at_;
 	}
 
-	void FlyCam::set_position(const Vector3<>& _position) noexcept {
+	void FlyCam::set_position(const SimdVector3<>& _position) noexcept {
 		this->eye_ = _position;
 	}
 
@@ -66,19 +66,19 @@ namespace dce {
 		this->left_ = normalize(cross(this->forward_, math::UP));
 
 		[[likely]] if (_input.is_key_down(Key::W)) {
-			this->eye_ += Vector3<>{speed * _delta_time} * this->forward_;
+			this->eye_ += SimdVector3<>{speed * _delta_time} * this->forward_;
 		}
 
 		[[likely]] if (_input.is_key_down(Key::A)) {
-			this->eye_ += Vector3<>{speed * _delta_time} * this->left_;
+			this->eye_ += SimdVector3<>{speed * _delta_time} * this->left_;
 		}
 
 		[[likely]] if (_input.is_key_down(Key::S)) {
-			this->eye_ -= Vector3<>{speed * _delta_time} * this->forward_;
+			this->eye_ -= SimdVector3<>{speed * _delta_time} * this->forward_;
 		}
 
 		[[likely]] if (_input.is_key_down(Key::D)) {
-			this->eye_ -= Vector3<>{speed * _delta_time} * this->left_;
+			this->eye_ -= SimdVector3<>{speed * _delta_time} * this->left_;
 		}
 
 		this->at_ = this->eye_ + dir_;
