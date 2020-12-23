@@ -287,7 +287,7 @@ namespace dce {
 
 	struct TextureMeta final : ISerializable {
 		SamplerFlags::Enum sampler_flags = SamplerFlags::NONE;
-		bool is_srgb = false;
+		bool is_srgb = true;
 
 		void serialize(JsonStream&) const override;
 		void deserialize(const JsonStream&) override;

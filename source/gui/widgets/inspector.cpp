@@ -208,9 +208,12 @@ namespace dce::gui::widgets {
 		auto matrix = _transform.calculate_matrix();
 		ImGuizmo::Enable(true);
 		ImGuizmo::BeginFrame();
-		const auto& io = GetIO();
-		ImGuizmo::SetRect(.0f, .0f, io.DisplaySize.x, io.DisplaySize.y);
-		[[unlikely]] if (Manipulate(&_data.view_matrix[0].x, &_data.projection_matrix[0].x, this->modifier_, ImGuizmo::WORLD, &matrix[0].x)) {
+		const float x = _data.scenery_viewport_position.x;
+		const float y = _data.scenery_viewport_position.y;
+		const float w = _data.scenery_viewport_size.x;
+		const float h = _data.scenery_viewport_size.y;
+		ImGuizmo::SetRect(x, y, w, h);
+		[[unlikely]] if (Manipulate(value_ptr(_data.view_matrix), value_ptr(_data.projection_matrix), ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::LOCAL, value_ptr(matrix))) {
 			glm::vec3 skew;
 			glm::vec4 perspective;
 			decompose(matrix, _transform.scale, _transform.rotation, _transform.position, skew, perspective);

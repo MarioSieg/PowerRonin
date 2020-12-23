@@ -26,11 +26,12 @@ namespace dce {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload texture!");
 		}
 
-		[[unlikely]] if (!isTextureValid(1, this->is_cubemap_, this->layer_count_, format, BGFX_TEXTURE_NONE)) {
+		const auto flags = this->meta_data_.is_srgb ? BGFX_TEXTURE_SRGB : BGFX_TEXTURE_NONE;
+
+		[[unlikely]] if (!isTextureValid(1, this->is_cubemap_, this->layer_count_, format, flags)) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload texture!");
 		}
 
-		constexpr auto flags = BGFX_TEXTURE_SRGB;
 		const bgfx::TextureHandle texture_handle = this->is_cubemap_
 			                                           ? createTextureCube(
 				                                           this->width_, false, this->layer_count_, format, flags

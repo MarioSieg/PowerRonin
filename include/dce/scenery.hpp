@@ -41,7 +41,7 @@ namespace dce {
 					/// <summary>
 					/// The sun hour. (Only if "sync_hour_with_env_time" == false)
 					/// </summary>
-					float hour = 0.f;
+					float hour = 12.f;
 
 					/// <summary>
 					/// If true, the scenery time will be used as sun hour too.
@@ -57,7 +57,7 @@ namespace dce {
 				/// <summary>
 				/// Basic constant ambient color.
 				/// </summary>
-				Color<> const_ambient_color = math::rgba_to_rgba_norm(0xAAAAAAAA);
+				Color<> const_ambient_color = math::rgba_to_rgba_norm(0x14141414);
 
 				/// <summary>
 				/// The type of the scenery skybox.

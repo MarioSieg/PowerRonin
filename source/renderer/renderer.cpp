@@ -82,6 +82,7 @@ namespace dce::renderer {
 	void Renderer::render_skybox(const Scenery::Configuration::Lighting& _lighting, RenderData& _data) const {
 		this->gpu_.clear_view(SKYBOX_VIEW, BGFX_CLEAR_NONE);
 		this->gpu_.set_viewport(_data.scenery_viewport_position, _data.scenery_viewport_size, SKYBOX_VIEW);
+		
 		// Create transform matrix:
 		auto skybox_matrix = math::identity<SimdMatrix4x4<>>();
 		skybox_matrix = scale(skybox_matrix, SimdVector3<>{10});
@@ -102,11 +103,10 @@ namespace dce::renderer {
 	}
 
 	void Renderer::set_per_frame_data(const Scenery::Configuration::Lighting& _lighting) const {
-		const float orbit = calculate_sun_orbit(6, math::radians(23.4f));
+		const float orbit = calculate_sun_orbit(5, math::radians(23.4f));
 		const float hour = _lighting.sun.hour;
 		const float latitude = _lighting.sun.latitude;
-		//const auto sun_dir = SimdVector4<>(calculate_sun_dir(hour, latitude, orbit, math::UP, math::NORTH), 1.f);
-		const auto sun_dir = SimdVector4<>{ 0, 1, 0, 0 };
+		const auto sun_dir = SimdVector4<>(calculate_sun_dir(hour, latitude, orbit, SimdVector3<>(.0f, 1.f, .0f), SimdVector3<>(1.f, .0f, .0f)), 1.f);
 		this->shader_bucket_.diffuse.per_frame(sun_dir, _lighting.sun.color, _lighting.const_ambient_color);
 		this->shader_bucket_.bumped_diffuse.per_frame(sun_dir, _lighting.sun.color, _lighting.const_ambient_color);
 	}

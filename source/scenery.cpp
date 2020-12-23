@@ -15,41 +15,27 @@ namespace dce {
 
 	void Scenery::new_default(ResourceManager& _resource_manager) {
 		// Create cube:
-		{
-			const auto cube = this->registry_.create();
+		for(auto i = 0; i < 1; ++i) {
+			for(auto j = 0; j < 1; ++j) {
+				const auto cube = this->registry_.create();
 
-			auto& meta = this->registry_.emplace<MetaData>(cube);
-			auto& transform = this->registry_.emplace<Transform>(cube);
-			auto& renderer = this->registry_.emplace<MeshRenderer>(cube);
-			auto& collider = this->registry_.emplace<Collider>(cube);
+				auto& meta = this->registry_.emplace<MetaData>(cube);
+				auto& transform = this->registry_.emplace<Transform>(cube);
+				transform.position.x = i * 3;
+				transform.position.z = j * 3;
+				auto& renderer = this->registry_.emplace<MeshRenderer>(cube);
+				auto& collider = this->registry_.emplace<Collider>(cube);
 
-			meta.name = "Cube";
-			Material::BumpedDiffuse lambert;
-			lambert.albedo = _resource_manager.system_resources.checkerboard;
-			lambert.normal = _resource_manager.load<Texture>("examples/snow_normal.dds");
-			renderer.material = Material::create_from_data(lambert, "cube", _resource_manager);
-			renderer.mesh = _resource_manager.system_resources.cube;
+				meta.name = "Cube " + std::to_string(i);
+				Material::BumpedDiffuse lambert;
+				lambert.albedo = _resource_manager.load<Texture>("examples/soil_albedo.dds");
+				TextureMeta tmeta = {};
+				tmeta.is_srgb = false;
+				lambert.normal = _resource_manager.load<Texture>("examples/soil_normal.dds", &tmeta);
+				renderer.material = Material::create_from_data(lambert, "cube", _resource_manager);
+				renderer.mesh = _resource_manager.load<Mesh>("meshes/common/platform.obj");
+			}
 		}
-
-		// Create platform:
-		{
-			const auto platform = this->registry_.create();
-
-			auto& meta = this->registry_.emplace<MetaData>(platform);
-			auto& transform = this->registry_.emplace<Transform>(platform);
-			auto& renderer = this->registry_.emplace<MeshRenderer>(platform);
-
-			meta.name = "Platform";
-			transform.position.y = -1.f;
-			transform.scale *= 3.f;
-			Material::Diffuse lambert;
-			lambert.albedo = _resource_manager.system_resources.checkerboard;
-			renderer.material = Material::create_from_data(lambert, "platform", _resource_manager);
-			renderer.mesh = _resource_manager.load<Mesh>("meshes/common/platform.obj");
-		}
-
-		TextureMeta skybox_cubemap_meta = {};
-		skybox_cubemap_meta.sampler_flags = SamplerFlags::UVW_CLAMP;
 
 		// Load skybox:
 		this->config.lighting.skybox_cubemap = _resource_manager.system_resources.skybox;

@@ -28,8 +28,8 @@ namespace dce {
 	// @formatter:off
 
 	constexpr auto ALIGNED_PRECISION = math::aligned_highp;
-	constexpr auto FIXED_PRECISION = math::highp;
-	
+	constexpr auto FIXED_PRECISION = math::mediump;
+
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
 	using SimdVector2 = math::vec<2, T, ALIGNED_PRECISION>;
 
