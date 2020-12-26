@@ -72,7 +72,7 @@ namespace dce::renderer {
 		/// <param name="_handle"></param>
 		/// <param name="_value"></param>
 		/// <returns></returns>
-		void set(bgfx::UniformHandle _handle, const Vector4<>& _value) const noexcept;
+		void set(bgfx::UniformHandle _handle, const SimdVector4<>& _value) const noexcept;
 
 		/// <summary>
 		/// Set uniform.
@@ -80,7 +80,7 @@ namespace dce::renderer {
 		/// <param name="_handle"></param>
 		/// <param name="_value"></param>
 		/// <returns></returns>
-		void set(bgfx::UniformHandle _handle, const Matrix3x3<>& _value) const noexcept;
+		void set(bgfx::UniformHandle _handle, const SimdMatrix3x3<>& _value) const noexcept;
 
 		/// <summary>
 		/// Set uniform.
@@ -88,7 +88,7 @@ namespace dce::renderer {
 		/// <param name="_handle"></param>
 		/// <param name="_value"></param>
 		/// <returns></returns>
-		void set(bgfx::UniformHandle _handle, const Matrix4x4<>& _value) const noexcept;
+		void set(bgfx::UniformHandle _handle, const SimdMatrix4x4<>& _value) const noexcept;
 
 		/// <summary>
 		/// Set uniform.
