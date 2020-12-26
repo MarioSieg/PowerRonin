@@ -9,15 +9,15 @@ namespace dce::scripting {
 		_target.display.vsync = _in.Display_VSync;
 		_target.display.max_framerate = _in.Display_MaxFrameRate;
 
-		_target.overlay.font_size = _in.Overlay_FontSize;
-		_target.overlay.theme = static_cast<SystemTheme>(std::clamp(_in.Overlay_Theme,
+		_target.editor.font_size = _in.Overlay_FontSize;
+		_target.editor.theme = static_cast<SystemTheme>(std::clamp(_in.Overlay_Theme,
 		                                                            static_cast<CS_byte>(SystemTheme::DARK)
 		                                                            , static_cast<CS_byte>(SystemTheme::GREEN)));
-		_target.overlay.enable_anti_aliasing = _in.Overlay_EnableFontAntialiasing;
-		_target.overlay.alpha = _in.Overlay_Alpha;
-		_target.overlay.rounding = _in.Overlay_Rounding;
-		_target.overlay.show_terminal = _in.Overlay_ShowTerminal;
-		_target.overlay.show_stats = _in.Overlay_ShowStats;
+		_target.editor.enable_anti_aliasing = _in.Overlay_EnableFontAntialiasing;
+		_target.editor.alpha = _in.Overlay_Alpha;
+		_target.editor.rounding = _in.Overlay_Rounding;
+		_target.editor.show_terminal = _in.Overlay_ShowTerminal;
+		_target.editor.show_stats = _in.Overlay_ShowStats;
 
 		_target.graphics.msaa_mode = static_cast<MsaaMode>(std::clamp(_in.Graphics_MSAAMode,
 		                                                              static_cast<CS_byte>(MsaaMode::OFF)

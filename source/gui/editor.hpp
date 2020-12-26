@@ -25,6 +25,7 @@ namespace dce {
 		private:
 			void default_layout() const;
 			void main_menu(Runtime& _rt, bool& _show_terminal);
+			void render_manipulator_gizmos(Transform& _transform, RenderData& _data, const Config& _config) const noexcept;
 
 			/* Widgets: */
 			widgets::ResourceViewer resource_viewer_ = {};
@@ -45,6 +46,8 @@ namespace dce {
 
 			bool first_use_ = true;
 			ImGuiID dockspace_id_ = 0;
+			ImGuizmo::MODE gizmo_mode_ = ImGuizmo::WORLD;
+			ImGuizmo::OPERATION gizmo_op_ = ImGuizmo::OPERATION::TRANSLATE;
 		};
 	}
 }

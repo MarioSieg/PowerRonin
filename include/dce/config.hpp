@@ -48,7 +48,11 @@ namespace dce {
 			float rounding = 4.F;
 			bool show_terminal = true;
 			bool show_stats = true;
-		} overlay;
+			bool show_grid = true;
+			float grid_size = 10.f;
+			bool show_view_cube = true;
+			bool enable_gizmos = true;
+		} editor;
 
 		struct {
 			GraphicsBackend backend_api = GraphicsBackend::AUTO;

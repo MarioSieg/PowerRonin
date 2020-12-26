@@ -31,7 +31,6 @@ namespace dce::renderer {
 			break;
 		case MsaaMode::X16: init.resolution.reset |= BGFX_RESET_MSAA_X16;
 			break;
-		default: case MsaaMode::OFF: ;
 		}
 
 		[[unlikely]] if (_config.graphics.enable_high_dpi_mode) {

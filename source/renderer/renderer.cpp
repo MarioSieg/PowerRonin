@@ -51,17 +51,17 @@ namespace dce::renderer {
 		this->gpu_.set_viewport(math::ZERO, {_rt.config().display.width, _rt.config().display.height}, FULLSCREEN_VIEW);
 		this->gpu_.clear_view(FULLSCREEN_VIEW, BGFX_CLEAR_DEPTH | BGFX_CLEAR_COLOR, 1.F, 0x040404FF);
 		this->gpu_.sort_draw_calls(FULLSCREEN_VIEW);
-		this->gpu_.set_viewport(_rt.render_data().scenery_viewport_position, _rt.render_data().scenery_viewport_size,
-		                        SCENERY_VIEW);
+		this->gpu_.set_viewport(_rt.render_data().scenery_viewport_position, _rt.render_data().scenery_viewport_size,SCENERY_VIEW);
 		return true;
 	}
 
 	/* End frame */
 	auto Renderer::on_post_tick(Runtime& _rt) -> bool {
+		this->update_camera(_rt);
 		this->render_scene(_rt);
 		this->render_skybox(_rt.scenery().config.lighting, _rt.render_data());
 
-		[[unlikely]] if (_rt.config().overlay.show_stats) {
+		[[unlikely]] if (_rt.config().editor.show_stats) {
 			render_stats(_rt);
 		}
 
@@ -70,9 +70,7 @@ namespace dce::renderer {
 	}
 
 	void Renderer::update_camera(Runtime& _rt) {
-		this->fly_cam_.update(_rt.input(), _rt.render_data().scenery_viewport_size.x,
-		                      _rt.render_data().scenery_viewport_size.y
-		                      , static_cast<float>(_rt.chrono().delta_time));
+		this->fly_cam_.update(_rt.input(), _rt.render_data().scenery_viewport_size.x,_rt.render_data().scenery_viewport_size.y, static_cast<float>(_rt.chrono().delta_time));
 		auto& data = _rt.render_data();
 		data.view_matrix = this->fly_cam_.get_view_matrix();
 		data.projection_matrix = this->fly_cam_.get_projection_matrix();
@@ -85,15 +83,16 @@ namespace dce::renderer {
 		
 		// Create transform matrix:
 		auto skybox_matrix = math::identity<SimdMatrix4x4<>>();
-		skybox_matrix = scale(skybox_matrix, SimdVector3<>{10});
 
+		_data.skybox_view_matrix = _data.view_matrix;
+		
 		// Remove translation:
-		_data.view_matrix[3][0] = .0F;
-		_data.view_matrix[3][1] = .0F;
-		_data.view_matrix[3][2] = .0F;
+		_data.skybox_view_matrix[3][0] = .0F;
+		_data.skybox_view_matrix[3][1] = .0F;
+		_data.skybox_view_matrix[3][2] = .0F;
 
 		// Set camera:
-		this->gpu_.set_camera(SKYBOX_VIEW, _data.view_matrix, _data.projection_matrix);
+		this->gpu_.set_camera(SKYBOX_VIEW, _data.skybox_view_matrix, _data.projection_matrix);
 
 		// Set transform:
 		this->gpu_.set_transform(value_ptr(skybox_matrix));
@@ -112,9 +111,6 @@ namespace dce::renderer {
 	}
 
 	void Renderer::render_scene(Runtime& _rt) {
-		// Update camera and set matrices:
-		this->update_camera(_rt);
-
 		// Set per frame data for all shaders:
 		this->set_per_frame_data(_rt.scenery().config.lighting);
 

@@ -68,21 +68,7 @@ namespace dce::gui::widgets {
 				}
 				[[likely]] if (registry.has<Transform>(_entity)) {
 					auto& transform = registry.get<Transform>(_entity);
-					this->render_manipulator_gizmos(transform, _rt.render_data());
-					[[likely]] if (CollapsingHeader(
-						ICON_FA_MAP_MARKER_ALT " Transform ", ImGuiTreeNodeFlags_DefaultOpen)) {
-						[[unlikely]] if (Button(ICON_FA_ARROWS)) {
-							this->modifier_ = ImGuizmo::TRANSLATE;
-						}
-						SameLine();
-						[[unlikely]] if (Button(ICON_FA_SYNC)) {
-							this->modifier_ = ImGuizmo::ROTATE;
-						}
-						SameLine();
-						[[unlikely]] if (Button(ICON_FA_EXPAND)) {
-							this->modifier_ = ImGuizmo::SCALE;
-						}
-						Separator();
+					[[likely]] if (CollapsingHeader(ICON_FA_MAP_MARKER_ALT " Transform ", ImGuiTreeNodeFlags_DefaultOpen)) {
 
 						DragFloat3("Position", value_ptr(transform.position));
 
@@ -201,22 +187,5 @@ namespace dce::gui::widgets {
 			}
 		}
 		End();
-	}
-
-	// Manipulator gizmos:
-	void Inspector::render_manipulator_gizmos(Transform& _transform, const RenderData& _data) const noexcept {
-		auto matrix = _transform.calculate_matrix();
-		ImGuizmo::Enable(true);
-		ImGuizmo::BeginFrame();
-		const float x = _data.scenery_viewport_position.x;
-		const float y = _data.scenery_viewport_position.y;
-		const float w = _data.scenery_viewport_size.x;
-		const float h = _data.scenery_viewport_size.y;
-		ImGuizmo::SetRect(x, y, w, h);
-		[[unlikely]] if (Manipulate(value_ptr(_data.view_matrix), value_ptr(_data.projection_matrix), ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::LOCAL, value_ptr(matrix))) {
-			glm::vec3 skew;
-			glm::vec4 perspective;
-			decompose(matrix, _transform.scale, _transform.rotation, _transform.position, skew, perspective);
-		}
 	}
 }

@@ -21,7 +21,7 @@ namespace dce::gui {
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 		//io.MouseDrawCursor = true;
 
-		auto& cfg = _rt.config().overlay;
+		auto& cfg = _rt.config().editor;
 		style_apply(cfg.theme);
 		style_antialiasing_apply(cfg.enable_anti_aliasing);
 		style_alpha_apply(cfg.alpha);
@@ -31,7 +31,7 @@ namespace dce::gui {
 			return false;
 		}
 
-		[[unlikely]] if (!this->gui_renderer_.initialize(_rt.config().overlay.font_size)) {
+		[[unlikely]] if (!this->gui_renderer_.initialize(_rt.config().editor.font_size)) {
 			return false;
 		}
 
@@ -49,12 +49,12 @@ namespace dce::gui {
 	}
 
 	auto Gui::on_post_tick(Runtime& _rt) -> bool {
-		this->editor_.update(_rt, _rt.config().overlay.show_terminal);
+		this->editor_.update(_rt, _rt.config().editor.show_terminal);
 		[[unlikely]] if (_rt.input().is_key_down(Key::GRAVE_ACCENT)) {
-			_rt.config().overlay.show_terminal = true;
+			_rt.config().editor.show_terminal = true;
 		}
-		[[unlikely]] if (_rt.config().overlay.show_terminal) {
-			this->terminal_.update(_rt.config().overlay.show_terminal, _rt);
+		[[unlikely]] if (_rt.config().editor.show_terminal) {
+			this->terminal_.update(_rt.config().editor.show_terminal, _rt);
 		}
 		this->end();
 

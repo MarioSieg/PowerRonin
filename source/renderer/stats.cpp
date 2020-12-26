@@ -87,7 +87,7 @@ namespace dce::renderer {
 		const auto left = SimdVector3<>(-view[1][1], -view[2][1], -view[3][1]);
 		const auto fov = math::degrees(atan(1.f / proj[1][1]) * 2.f);
 		const std::uint16_t pos_x = viewport_pos_x / 8 + 4;
-		std::uint16_t pos_y = viewport_pos_y / 16 + 4;
+		std::uint16_t pos_y = viewport_pos_y / 16 + 2;
 		bgfx::dbgTextClear();
 		bgfx::dbgTextPrintf(pos_x, pos_y, 0xF, "%s, DrawCalls: %u, ComputeCalls: %u, BlitCalls: %u", bgfx::getRendererName(bgfx::getRendererType()), stats->numDraw, stats->numCompute, stats->numBlit);
 		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0xF, "View x: %u y: %u w: %u h: %u", viewport_pos_x, viewport_pos_y, viewport_width, viewport_height);
