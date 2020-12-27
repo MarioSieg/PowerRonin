@@ -225,7 +225,7 @@ add_library(
     "source/renderer/shared_uniforms.cpp"
     "source/renderer/uniform.cpp" 
     "include/dce/aabb.hpp"
-     "include/dce/frustum.hpp")
+     "include/dce/frustum.hpp" "source/aabb.cpp" "source/frustum.cpp")
 
 include("extern/CMakeLists.txt")
 

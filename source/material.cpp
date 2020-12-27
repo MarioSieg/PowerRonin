@@ -27,7 +27,7 @@ namespace dce {
 			}
 		};
 		const auto id = HString(_name_path_alias.string().c_str());
-		return const_cast<ResourceCache<Material>&>(_rm.get_material_cache()).load<MaterialFactory>(
+		return const_cast<ResourceCache<Material>&>(_rm.material_cache()).load<MaterialFactory>(
 			id, std::move(_props), std::move(_name_path_alias));
 	}
 }

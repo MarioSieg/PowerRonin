@@ -31,7 +31,7 @@ namespace dce {
 
 	class Config final {
 	public:
-		struct {
+		struct Display final {
 			std::uint16_t width = 1920;
 			std::uint16_t height = 1080;
 			bool is_full_screen = false;
@@ -40,7 +40,7 @@ namespace dce {
 			std::uint16_t max_framerate = 300;
 		} display;
 
-		struct {
+		struct Editor final {
 			std::uint8_t font_size = 24;
 			SystemTheme theme = SystemTheme::DARK;
 			bool enable_anti_aliasing = true;
@@ -54,7 +54,7 @@ namespace dce {
 			bool enable_gizmos = true;
 		} editor;
 
-		struct {
+		struct Graphics final {
 			GraphicsBackend backend_api = GraphicsBackend::AUTO;
 			MsaaMode msaa_mode = MsaaMode::X2;
 			bool enable_high_dpi_mode = false;
@@ -63,12 +63,12 @@ namespace dce {
 			bool enable_max_anisotropy = true;
 		} graphics;
 
-		struct {
+		struct Scripting final {
 			std::filesystem::path config_dir = "runtime/etc";
 			std::filesystem::path library_dir = "runtime/lib";
 		} scripting;
 
-		struct {
+		struct App final {
 			std::string app_name = {};
 			std::string app_company = {};
 		} app;

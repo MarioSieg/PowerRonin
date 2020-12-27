@@ -7,27 +7,27 @@ namespace dce::core {
 		subscribed_events(_subscribed_events), id(xorshift32()) {
 	}
 
-	auto ISubsystem::get_pre_startup_time() const noexcept -> double {
+	auto ISubsystem::pre_startup_time() const noexcept -> double {
 		return this->pre_startup_time_;
 	}
 
-	auto ISubsystem::get_post_startup_time() const noexcept -> double {
+	auto ISubsystem::post_startup_time() const noexcept -> double {
 		return this->post_startup_time_;
 	}
 
-	auto ISubsystem::get_pre_tick_time() const noexcept -> double {
+	auto ISubsystem::pre_tick_time() const noexcept -> double {
 		return this->pre_tick_time_;
 	}
 
-	auto ISubsystem::get_post_tick_time() const noexcept -> double {
+	auto ISubsystem::post_tick_time() const noexcept -> double {
 		return this->post_tick_time_;
 	}
 
-	auto ISubsystem::get_pre_shutdown_time() const noexcept -> double {
+	auto ISubsystem::pre_shutdown_time() const noexcept -> double {
 		return this->pre_shutdown_time_;
 	}
 
-	auto ISubsystem::get_post_shutdown_time() const noexcept -> double {
+	auto ISubsystem::post_shutdown_time() const noexcept -> double {
 		return this->post_shutdown_time_;
 	}
 

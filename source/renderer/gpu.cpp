@@ -122,8 +122,8 @@ namespace dce::renderer {
 	void GPU::set_mesh_buffer(const Mesh& _mesh) const noexcept {
 		assert(_mesh.is_uploaded());
 
-		const auto vb_buffer = bgfx::VertexBufferHandle{_mesh.get_vertex_buffer_id()};
-		const auto ib_buffer = bgfx::IndexBufferHandle{_mesh.get_index_buffer_id()};
+		const auto vb_buffer = bgfx::VertexBufferHandle{_mesh.vertex_buffer_id()};
+		const auto ib_buffer = bgfx::IndexBufferHandle{_mesh.index_buffer_id()};
 
 		assert(bgfx::isValid(vb_buffer));
 		assert(bgfx::isValid(ib_buffer));
@@ -136,7 +136,7 @@ namespace dce::renderer {
 	                      const std::uint8_t _stage) const noexcept {
 		assert(_texture.is_uploaded());
 
-		const auto view = bgfx::TextureHandle{_texture.get_texel_buffer_id()};
+		const auto view = bgfx::TextureHandle{_texture.texel_buffer_id()};
 
 		assert(bgfx::isValid(view));
 

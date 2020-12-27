@@ -31,15 +31,15 @@ namespace dce {
 	ResourceManager::ResourceManager(AsyncProtocol& _proto) noexcept : proto_(_proto) {
 	}
 
-	auto ResourceManager::get_texture_cache() const noexcept -> const ResourceCache<Texture>& {
+	auto ResourceManager::texture_cache() const noexcept -> const ResourceCache<Texture>& {
 		return this->texture_cache_;
 	}
 
-	auto ResourceManager::get_mesh_cache() const noexcept -> const ResourceCache<Mesh>& {
+	auto ResourceManager::mesh_cache() const noexcept -> const ResourceCache<Mesh>& {
 		return this->mesh_cache_;
 	}
 
-	auto ResourceManager::get_material_cache() const noexcept -> const ResourceCache<Material>& {
+	auto ResourceManager::material_cache() const noexcept -> const ResourceCache<Material>& {
 		return this->material_cache_;
 	}
 

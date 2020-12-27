@@ -20,9 +20,9 @@ namespace dce {
 
 		[[nodiscard]] auto what() const noexcept -> const char* override;
 
-		[[nodiscard]] auto get_source_file() const noexcept -> const char*;
+		[[nodiscard]] auto source_file() const noexcept -> const char*;
 
-		[[nodiscard]] auto get_source_line() const noexcept -> int;
+		[[nodiscard]] auto source_line() const noexcept -> int;
 
 	private:
 		int line_ = 0;

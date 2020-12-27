@@ -304,29 +304,29 @@ namespace dce {
 			".pgm"
 		};
 
-		[[nodiscard]] auto get_texels() const noexcept -> const Blob&;
+		[[nodiscard]] auto texels() const noexcept -> const Blob&;
 
-		[[nodiscard]] auto get_storage_size() const noexcept -> std::size_t;
+		[[nodiscard]] auto storage_size() const noexcept -> std::size_t;
 
-		[[nodiscard]] auto get_width() const noexcept -> std::uint16_t;
+		[[nodiscard]] auto width() const noexcept -> std::uint16_t;
 
-		[[nodiscard]] auto get_height() const noexcept -> std::uint16_t;
+		[[nodiscard]] auto height() const noexcept -> std::uint16_t;
 
-		[[nodiscard]] auto get_texel_buffer_id() const noexcept -> std::uint16_t;
+		[[nodiscard]] auto texel_buffer_id() const noexcept -> std::uint16_t;
 
 		[[nodiscard]] auto is_hdr() const noexcept -> bool;
 
 		[[nodiscard]] auto has_mipmaps() const noexcept -> bool;
 
-		[[nodiscard]] auto get_format() const noexcept -> TextureFormat;
+		[[nodiscard]] auto format() const noexcept -> TextureFormat;
 
-		[[nodiscard]] auto get_bits_per_pixel() const noexcept -> std::uint8_t;
+		[[nodiscard]] auto bits_per_pixel() const noexcept -> std::uint8_t;
 
-		[[nodiscard]] auto get_mipmap_count() const noexcept -> std::uint8_t;
+		[[nodiscard]] auto mipmap_count() const noexcept -> std::uint8_t;
 
-		[[nodiscard]] auto is_cubemap() const noexcept -> bool;
+		[[nodiscard]] auto cubemap() const noexcept -> bool;
 
-		[[nodiscard]] auto get_layers_count() const noexcept -> std::uint16_t;
+		[[nodiscard]] auto layers_count() const noexcept -> std::uint16_t;
 
 		void upload() override;
 

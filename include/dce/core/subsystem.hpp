@@ -50,22 +50,22 @@ namespace dce {
 			virtual ~ISubsystem() = default;
 
 			/* Returns the kernel event time in ms. */
-			[[nodiscard]] auto get_pre_startup_time() const noexcept -> double;
+			[[nodiscard]] auto pre_startup_time() const noexcept -> double;
 
 			/* Returns the kernel event time in ms. */
-			[[nodiscard]] auto get_post_startup_time() const noexcept -> double;
+			[[nodiscard]] auto post_startup_time() const noexcept -> double;
 
 			/* Returns the kernel event time in ms. */
-			[[nodiscard]] auto get_pre_tick_time() const noexcept -> double;
+			[[nodiscard]] auto pre_tick_time() const noexcept -> double;
 
 			/* Returns the kernel event time in ms. */
-			[[nodiscard]] auto get_post_tick_time() const noexcept -> double;
+			[[nodiscard]] auto post_tick_time() const noexcept -> double;
 
 			/* Returns the kernel event time in ms. */
-			[[nodiscard]] auto get_pre_shutdown_time() const noexcept -> double;
+			[[nodiscard]] auto pre_shutdown_time() const noexcept -> double;
 
 			/* Returns the kernel event time in ms. */
-			[[nodiscard]] auto get_post_shutdown_time() const noexcept -> double;
+			[[nodiscard]] auto post_shutdown_time() const noexcept -> double;
 
 
 		protected:

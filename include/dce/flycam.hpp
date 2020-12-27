@@ -18,15 +18,15 @@ namespace dce {
 		float smoothness = 1.F;
 		float clamp_y = 80.F;
 
-		[[nodiscard]] auto get_projection_matrix() const noexcept -> const SimdMatrix4x4<>&;
+		[[nodiscard]] auto projection_matrix() const noexcept -> const SimdMatrix4x4<>&;
 
-		[[nodiscard]] auto get_view_matrix() const noexcept -> const SimdMatrix4x4<>&;
+		[[nodiscard]] auto view_matrix() const noexcept -> const SimdMatrix4x4<>&;
 
-		[[nodiscard]] auto get_eye_vector() const noexcept -> const SimdVector3<>&;
+		[[nodiscard]] auto position() const noexcept -> const SimdVector3<>&;
 
-		void set_position(const SimdVector3<>& _position) noexcept;
+		void position(const SimdVector3<>& _position) noexcept;
 
-		[[nodiscard]] auto get_direction_vector() const noexcept -> const SimdVector3<>&;
+		[[nodiscard]] auto direction_vector() const noexcept -> const SimdVector3<>&;
 
 		void update(const Input& _input, const float _viewport_x, const float _viewport_y, const float _delta_time);
 

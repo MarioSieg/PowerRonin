@@ -14,7 +14,7 @@ namespace dce {
 		SimdMatrix4x4<> view_matrix = {};
 		SimdMatrix4x4<> projection_matrix = {};
 		SimdMatrix4x4<> view_projection_matrix = {};
-		Frustum<> camera_frustum = {};
+		Frustum camera_frustum = {};
 		SimdMatrix4x4<> skybox_view_matrix = {};
 		bool enable_wireframe = false;
 	};

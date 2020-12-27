@@ -92,7 +92,7 @@ namespace dce::gui::widgets {
 						Checkbox("Visible", &renderer.is_visible);
 
 						{
-							const auto file_name = renderer.mesh->get_file_path().filename().string();
+							const auto file_name = renderer.mesh->file_path().filename().string();
 							PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
 							if (Button(file_name.c_str())) {
 								char* path = nullptr;
@@ -126,7 +126,7 @@ namespace dce::gui::widgets {
 
 						if (std::holds_alternative<Material::UnlitTextured>(renderer.material->properties)) {
 							auto& props = std::get<Material::UnlitTextured>(renderer.material->properties);
-							const auto file_name = props.albedo->get_file_path().filename().string();
+							const auto file_name = props.albedo->file_path().filename().string();
 							PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
 							[[unlikely]] if (Button(file_name.c_str())) {
 								char* path = nullptr;
@@ -141,7 +141,7 @@ namespace dce::gui::widgets {
 						}
 						else if (std::holds_alternative<Material::Diffuse>(renderer.material->properties)) {
 							auto& props = std::get<Material::Diffuse>(renderer.material->properties);
-							const auto file_name = props.albedo->get_file_path().filename().string();
+							const auto file_name = props.albedo->file_path().filename().string();
 							PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
 							[[unlikely]] if (Button(file_name.c_str())) {
 								char* path = nullptr;
@@ -154,8 +154,8 @@ namespace dce::gui::widgets {
 						}
 						else if (std::holds_alternative<Material::BumpedDiffuse>(renderer.material->properties)) {
 							auto& props = std::get<Material::BumpedDiffuse>(renderer.material->properties);
-							const auto albedo_file = props.albedo->get_file_path().filename().string();
-							const auto normal_file = props.normal->get_file_path().filename().string();
+							const auto albedo_file = props.albedo->file_path().filename().string();
+							const auto normal_file = props.normal->file_path().filename().string();
 							PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
 							[[unlikely]] if (Button(albedo_file.c_str())) {
 								char* path = nullptr;

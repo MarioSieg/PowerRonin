@@ -65,7 +65,7 @@ namespace dce::gui {
 	                  , const ImVec2& uv1 = ImVec2(1.0F, 1.0F)
 	                  , const ImVec4& tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f)
 	                  , const ImVec4& border_col = ImVec4(0.0f, 0.0f, 0.0f, 0.0f)) noexcept -> void {
-		image({texture->get_texel_buffer_id()}, UINT8_C(0x01), 0, size, uv0, uv1, tint_col, border_col);
+		image({texture->texel_buffer_id()}, UINT8_C(0x01), 0, size, uv0, uv1, tint_col, border_col);
 	}
 
 	inline auto image_button(const bgfx::TextureHandle handle
@@ -97,7 +97,7 @@ namespace dce::gui {
 	                         , const int frame_padding = -1
 	                         , const ImVec4& bg_col = ImVec4(0.0F, 0.0F, 0.0F, 0.0F)
 	                         , const ImVec4& tint_col = ImVec4(1.0F, 1.0F, 1.0F, 1.0F)) noexcept -> bool {
-		return image_button({texture->get_texel_buffer_id()}, UINT8_C(0x01), 0, size, uv0, uv1, frame_padding, bg_col,
+		return image_button({texture->texel_buffer_id()}, UINT8_C(0x01), 0, size, uv0, uv1, frame_padding, bg_col,
 		                    tint_col);
 	}
 

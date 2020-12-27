@@ -48,19 +48,19 @@ namespace dce {
 		/// 
 		/// </summary>
 		/// <returns>An immutable reference to the global texture cache.</returns>
-		[[nodiscard]] auto get_texture_cache() const noexcept -> const ResourceCache<Texture>&;
+		[[nodiscard]] auto texture_cache() const noexcept -> const ResourceCache<Texture>&;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns>An immutable reference to the global mesh cache.</returns>
-		[[nodiscard]] auto get_mesh_cache() const noexcept -> const ResourceCache<Mesh>&;
+		[[nodiscard]] auto mesh_cache() const noexcept -> const ResourceCache<Mesh>&;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns>An immutable reference to the global material cache.</returns>
-		[[nodiscard]] auto get_material_cache() const noexcept -> const ResourceCache<Material>&;
+		[[nodiscard]] auto material_cache() const noexcept -> const ResourceCache<Material>&;
 
 		/// <summary>
 		/// Loads a resource of type T from a file and stores it in the corresponding resource cache.
@@ -68,8 +68,8 @@ namespace dce {
 		/// <typeparam name="T">The type to load. For example Texture or Mesh.</typeparam>
 		/// <param name="_file">The file path to the file to be loaded.</param>
 		/// <returns>A resource reference to the newly loaded resource.</returns>
-		template <typename T> requires std::is_base_of_v<IResource<typename T::Meta>, T> [[nodiscard]] auto load(
-			std::filesystem::path&& _file) -> RRef<T>;
+		template <typename T> requires std::is_base_of_v<IResource<typename T::Meta>, T>
+		[[nodiscard]] auto load(std::filesystem::path&& _file) -> RRef<T>;
 
 		/// <summary>
 		/// Loads a resource of type T from a file and stores it in the corresponding resource cache but with metadata.
@@ -78,9 +78,8 @@ namespace dce {
 		/// <param name="_file">The file path to the file to be loaded.</param>
 		/// <param name="_meta">The metadata pointer. Pass nullptr to load it from file.</param>
 		/// <returns>A resource reference to the newly loaded resource.</returns>
-		template <typename T> requires std::is_base_of_v<IResource<typename T::Meta>, T> [[nodiscard]] auto load(
-			std::filesystem::path&& _file
-			, const typename T::Meta* const _meta) -> RRef<T>;
+		template <typename T> requires std::is_base_of_v<IResource<typename T::Meta>, T>
+		[[nodiscard]] auto load(std::filesystem::path&& _file, const typename T::Meta* const _meta) -> RRef<T>;
 
 		/// <summary>
 		/// Destroys all resources. (!DANGEROUS!)
@@ -90,9 +89,7 @@ namespace dce {
 	private:
 		[[nodiscard]] auto load_texture(std::filesystem::path&& _file, const TextureMeta* const _meta) -> RRef<Texture>;
 		[[nodiscard]] auto load_mesh(std::filesystem::path&& _file, const MeshMeta* const _meta) -> RRef<Mesh>;
-		[[nodiscard]] auto load_material(std::filesystem::path&& _file,
-		                                 const MaterialMeta* const _meta) -> RRef<Material>;
-
+		[[nodiscard]] auto load_material(std::filesystem::path&& _file, const MaterialMeta* const _meta) -> RRef<Material>;
 
 		AsyncProtocol& proto_;
 		ResourceCache<Texture> texture_cache_ = {};

@@ -245,7 +245,7 @@ namespace dce::core {
 		this->core_->subsystems.emplace_back(std::make_tuple(_subsystem->id, std::move(_subsystem)));
 	}
 
-	auto Kernel::get_runtime() const noexcept -> Runtime* {
+	auto Kernel::runtime() const noexcept -> Runtime* {
 		return this->core_->runtime;
 	}
 

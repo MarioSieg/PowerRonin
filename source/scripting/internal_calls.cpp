@@ -42,7 +42,7 @@ namespace dce::scripting {
 		})
 
 		REGISTER_CALL("InputGetCursorPosition", [](float* const _x, float* const _y) noexcept {
-			const auto cursor_pos = RUNTIME->input().get_mouse_position();
+			const auto cursor_pos = RUNTIME->input().mouse_pos();
 			*_x = cursor_pos.x; *_y = cursor_pos.y;
 		})
 

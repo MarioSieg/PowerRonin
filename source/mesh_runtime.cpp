@@ -26,7 +26,7 @@ namespace dce {
 		aiVector3D& _max,
 		aiMatrix4x4& _transformation
 	)  noexcept {
-		aiMatrix4x4 prev = _transformation;
+		const aiMatrix4x4 prev = _transformation;
 		aiMultiplyMatrix4(&_transformation, &_node.mTransformation);
 
 		for (unsigned i = 0; i < _node.mNumMeshes; ++i) {
@@ -196,7 +196,7 @@ namespace dce {
 		self->file_path_ = std::move(_path);
 		self->indices_ = std::move(indices);
 		self->vertices_ = std::move(vertices);
-		self->aabb_ = AABB<>{ {bound_min.x, bound_min.y, bound_min.z}, {bound_max.x, bound_max.y, bound_max.z} };
+		self->aabb_ = AABB{ {bound_min.x, bound_min.y, bound_min.z}, {bound_max.x, bound_max.y, bound_max.z} };
 		self->meta_data_ = _meta ? *_meta : IResource<MeshMeta>::load_meta_or_default(self->file_path_);
 
 		self->upload();

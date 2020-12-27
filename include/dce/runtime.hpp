@@ -52,7 +52,6 @@ namespace dce {
 		/// <returns>Returns the class database.</returns>
 		[[nodiscard]] auto class_db() const & noexcept -> const ClassDB&;
 
-
 		/// <summary>
 		/// 
 		/// </summary>
@@ -88,7 +87,6 @@ namespace dce {
 		/// </summary>
 		/// <returns>Returns the current scenery.</returns>
 		[[nodiscard]] auto scenery() & noexcept -> Scenery&;
-
 
 		/// <summary>
 		/// 

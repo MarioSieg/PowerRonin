@@ -24,7 +24,7 @@ namespace dce::renderer {
 		// Load all shared uniforms:
 		this->shared_uniforms_.load_all();
 
-		get_limits(const_cast<Diagnostics&>(_rt.diagnostics()));
+		poll_limits(const_cast<Diagnostics&>(_rt.diagnostics()));
 
 		auto& viewport = _rt.render_data().scenery_viewport_size;
 		[[likely]] if (viewport.x == .0F || viewport.y == .0F) {
@@ -49,13 +49,14 @@ namespace dce::renderer {
 		else {
 			bgfx::setDebug(BGFX_DEBUG_TEXT);
 		}
-		get_runtime_stats(const_cast<Diagnostics&>(_rt.diagnostics()));
+		poll_stats(const_cast<Diagnostics&>(_rt.diagnostics()));
 		this->tick_prev_ = update_clocks(const_cast<Chrono&>(_rt.chrono()), this->tick_prev_);
 		this->update_camera(_rt);
 		this->gpu_.set_viewport(math::ZERO, {_rt.config().display.width, _rt.config().display.height}, FULLSCREEN_VIEW);
 		this->gpu_.clear_view(FULLSCREEN_VIEW, BGFX_CLEAR_DEPTH | BGFX_CLEAR_COLOR, 1.F, 0x040404FF);
 		this->gpu_.sort_draw_calls(FULLSCREEN_VIEW);
-		this->gpu_.set_viewport(_rt.render_data().scenery_viewport_position, _rt.render_data().scenery_viewport_size, SCENERY_VIEW);
+		this->gpu_.set_viewport(_rt.render_data().scenery_viewport_position, _rt.render_data().scenery_viewport_size,
+		                        SCENERY_VIEW);
 		return true;
 	}
 
@@ -76,8 +77,8 @@ namespace dce::renderer {
 		this->fly_cam_.update(_rt.input(), _rt.render_data().scenery_viewport_size.x, _rt.render_data().scenery_viewport_size.y,
 		                      static_cast<float>(_rt.chrono().delta_time));
 		auto& data = _rt.render_data();
-		data.view_matrix = this->fly_cam_.get_view_matrix();
-		data.projection_matrix = this->fly_cam_.get_projection_matrix();
+		data.view_matrix = this->fly_cam_.view_matrix();
+		data.projection_matrix = this->fly_cam_.projection_matrix();
 		data.view_projection_matrix = data.projection_matrix * data.view_matrix;
 		data.camera_frustum.from_camera_matrix(data.view_projection_matrix);
 		this->gpu_.set_camera(SCENERY_VIEW, data.view_matrix, data.projection_matrix);
@@ -134,12 +135,12 @@ namespace dce::renderer {
 			}
 
 			// If the mesh renderer wants frustum culling and it is outside the frustum, skip it.
-			[[likely]] if(_mesh_renderer.perform_frustum_culling) {
+			[[likely]] if (_mesh_renderer.perform_frustum_culling) {
 
-				auto aabb_world_space = _mesh_renderer.mesh->get_aabb();
+				auto aabb_world_space = _mesh_renderer.mesh->aabb();
 				aabb_world_space.max += _transform.position;
 				aabb_world_space.min += _transform.position;
-				[[likely]] if(!frustum->is_aabb_visible(aabb_world_space)) {
+				[[likely]] if (!frustum->is_aabb_visible(aabb_world_space)) {
 					return;
 				}
 			}

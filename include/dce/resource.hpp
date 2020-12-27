@@ -40,17 +40,11 @@ namespace dce {
 		/// </summary>
 		virtual void offload() = 0;
 
-
-		/// <summary>
-		/// Calls .upload() if it is not uploaded, else it does nothing.
-		/// </summary>
-		void try_upload();
-
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns>The file path of the resource.</returns>
-		[[nodiscard]] auto get_file_path() const noexcept -> const std::filesystem::path&;
+		[[nodiscard]] auto file_path() const noexcept -> const std::filesystem::path&;
 
 		/// <summary>
 		/// 
@@ -62,7 +56,7 @@ namespace dce {
 		/// 
 		/// </summary>
 		/// <returns>The metadata of the resource.</returns>
-		[[nodiscard]] auto get_meta_data() const noexcept -> const Meta&;
+		[[nodiscard]] auto meta_data() const noexcept -> const Meta&;
 
 		/// <summary>
 		/// Allocate resource memory.
@@ -105,19 +99,12 @@ namespace dce {
 	}
 
 	template <typename M>
-	inline auto IResource<M>::get_meta_data() const noexcept -> const Meta& {
+	inline auto IResource<M>::meta_data() const noexcept -> const Meta& {
 		return this->meta_data_;
 	}
 
 	template <typename M>
-	inline void IResource<M>::try_upload() {
-		[[likely]] if (!this->is_uploaded_) {
-			this->upload();
-		}
-	}
-
-	template <typename M>
-	inline auto IResource<M>::get_file_path() const noexcept -> const std::filesystem::path& {
+	inline auto IResource<M>::file_path() const noexcept -> const std::filesystem::path& {
 		return this->file_path_;
 	}
 
