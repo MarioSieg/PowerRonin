@@ -67,7 +67,7 @@ namespace dce {
 				/// <summary>
 				/// The cubemap texture of the skybox (only used if "skybox_type" == SkyboxType::STATIC)!
 				/// </summary>
-				RRef<Texture> skybox_cubemap;
+				RRef<Material> skybox_material;
 
 				/// <summary>
 				/// The skydome cube or sphere mesh on which the skybox cubemap will be rendered on.

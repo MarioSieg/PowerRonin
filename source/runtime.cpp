@@ -18,18 +18,17 @@
 
 namespace dce {
 
-	Runtime::Runtime()
-		: protocol_("native"),
-		  scripting_protocol_("managed"),
-		  config_(),
-		  class_db_(),
-		  resource_manager_(this->protocol_),
-		  diagnostics_(),
-		  chrono_(),
-		  scenery_(),
-		  input_(),
-		  render_data_(),
-		  terminal_hook_(nullptr) {
+	Runtime::Runtime() : protocol_("native"),
+	                     scripting_protocol_("managed"),
+	                     config_(),
+	                     class_db_(),
+	                     resource_manager_(this->protocol_),
+	                     diagnostics_(),
+	                     chrono_(),
+	                     scenery_(),
+	                     input_(),
+	                     render_data_(),
+	                     terminal_hook_(nullptr) {
 	}
 
 	void Runtime::initialize() {

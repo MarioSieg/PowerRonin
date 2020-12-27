@@ -23,14 +23,14 @@ namespace dce::renderer {
 		init.profile = DEBUG_MODE;
 
 		switch (_config.graphics.msaa_mode) {
-		case MsaaMode::X2: init.resolution.reset |= BGFX_RESET_MSAA_X2;
-			break;
-		case MsaaMode::X4: init.resolution.reset |= BGFX_RESET_MSAA_X4;
-			break;
-		case MsaaMode::X8: init.resolution.reset |= BGFX_RESET_MSAA_X8;
-			break;
-		case MsaaMode::X16: init.resolution.reset |= BGFX_RESET_MSAA_X16;
-			break;
+			case MsaaMode::X2: init.resolution.reset |= BGFX_RESET_MSAA_X2;
+				break;
+			case MsaaMode::X4: init.resolution.reset |= BGFX_RESET_MSAA_X4;
+				break;
+			case MsaaMode::X8: init.resolution.reset |= BGFX_RESET_MSAA_X8;
+				break;
+			case MsaaMode::X16: init.resolution.reset |= BGFX_RESET_MSAA_X16;
+				break;
 		}
 
 		[[unlikely]] if (_config.graphics.enable_high_dpi_mode) {

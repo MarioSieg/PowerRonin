@@ -3,8 +3,8 @@
 
 namespace dce::core {
 	ISubsystem::ISubsystem(const std::string_view _name
-	                       , const std::underlying_type<ServiceEvents::Enum>::type _subscribed_events) noexcept
-		: name(_name), subscribed_events(_subscribed_events), id(xorshift32()) {
+	                       , const std::underlying_type<ServiceEvents::Enum>::type _subscribed_events) noexcept : name(_name),
+		subscribed_events(_subscribed_events), id(xorshift32()) {
 	}
 
 	auto ISubsystem::get_pre_startup_time() const noexcept -> double {

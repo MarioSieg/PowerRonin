@@ -17,8 +17,8 @@ namespace dce::core {
 		Runtime* runtime = nullptr;
 	};
 
-	Kernel::Kernel(const int _in_argc, const char* const * const _in_argv, const char* const * const _in_envp)
-		: argc(_in_argc), argv(_in_argv), envp(_in_envp), core_(std::make_unique<Core>()) {
+	Kernel::Kernel(const int _in_argc, const char* const * const _in_argv, const char* const * const _in_envp) : argc(_in_argc),
+		argv(_in_argv), envp(_in_envp), core_(std::make_unique<Core>()) {
 	}
 
 	auto Kernel::create(const int _in_argc

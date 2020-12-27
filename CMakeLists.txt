@@ -148,7 +148,7 @@ add_library(
     "source/time_utils.cpp" 
     "source/scripting/scripting.hpp"
     "source/scripting/scripting.cpp" 
-    "source/renderer/ishader.cpp" 
+     
     "include/dce/variant_visit_overloader.hpp" 
     "source/renderer/views.hpp" 
     "source/material_runtime.cpp"
@@ -221,7 +221,9 @@ add_library(
     "source/audio/audio_engine_core/Win32/AkFilePackageLowLevelIOBlocking.h" 
     "source/audio/audio_engine_core/Win32/AkFilePackageLowLevelIODeferred.h" 
     "source/renderer/uniform.hpp"
-    )
+    "source/renderer/shared_uniforms.hpp" 
+    "source/renderer/shared_uniforms.cpp"
+    "source/renderer/uniform.cpp")
 
 include("extern/CMakeLists.txt")
 

@@ -5,8 +5,15 @@
 #include "gl_headers.hpp"
 #include "gpu.hpp"
 #include "views.hpp"
+#include "program_loader.hpp"
 
 namespace dce::renderer {
+	/// <summary>
+	/// Base class for all shaders.
+	/// </summary>
+	/// <typeparam name="MatType">The type of material they draw.</typeparam>
+	/// <typeparam name="InputType">The type of input they need (mesh).</typeparam>
+	template <typename MatType, typename InputType = Mesh>
 	class IShader {
 	public:
 		explicit IShader(std::string_view _name, GPU& _gpu) noexcept;
@@ -23,7 +30,10 @@ namespace dce::renderer {
 		[[nodiscard]] auto get_path() const noexcept -> const std::filesystem::path&;
 
 		virtual void load();
+
 		virtual void unload();
+
+		virtual void draw(const MatType& _type, const InputType& _mesh) const = 0;
 
 	protected:
 		std::string_view name_ = {};
@@ -31,4 +41,28 @@ namespace dce::renderer {
 		GPU& gpu_;
 		bgfx::ProgramHandle program_ = {bgfx::kInvalidHandle};
 	};
+
+	template <typename MatType, typename Input>
+	inline IShader<MatType, Input>::IShader(const std::string_view _name, GPU& _gpu) noexcept : name_(_name), gpu_(_gpu) {
+	}
+
+	template <typename MatType, typename Input>
+	inline auto IShader<MatType, Input>::get_name() const noexcept -> std::string_view {
+		return this->name_;
+	}
+
+	template <typename MatType, typename Input>
+	inline auto IShader<MatType, Input>::get_path() const noexcept -> const std::filesystem::path& {
+		return this->path_;
+	}
+
+	template <typename MatType, typename Input>
+	inline void IShader<MatType, Input>::load() {
+		this->program_ = load_shader_program(this->name_);
+	}
+
+	template <typename MatType, typename Input>
+	inline void IShader<MatType, Input>::unload() {
+		destroy(this->program_);
+	}
 }

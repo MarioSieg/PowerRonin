@@ -3,8 +3,9 @@
 #include "../../include/dce/core/kernel.hpp"
 #include "../../include/dce/flycam.hpp"
 
-#include "shader_bucket.hpp"
 #include "gpu.hpp"
+#include "shader_bucket.hpp"
+#include "shared_uniforms.hpp"
 
 namespace dce {
 	class MeshRenderer;
@@ -33,7 +34,7 @@ namespace dce {
 			auto on_post_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
 
 			void render_skybox(const Scenery::Configuration::Lighting& _lighting, RenderData& _data) const;
-			void set_per_frame_data(const Scenery::Configuration::Lighting& _lighting) const;
+			void set_shared_uniforms(const Scenery::Configuration::Lighting& _lighting) const;
 			void render_scene(Runtime& _rt);
 			void update_camera(Runtime& _rt);
 
@@ -41,6 +42,7 @@ namespace dce {
 			std::uint64_t tick_prev_ = 0;
 			GPU gpu_ = {};
 			ShaderBucket shader_bucket_;
+			SharedUniforms shared_uniforms_;
 		};
 	} // namespace dce::renderer // namespace dce::renderer
 }

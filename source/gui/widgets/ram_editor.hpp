@@ -593,137 +593,137 @@ struct MemoryEditor {
 
 		out_buf[0] = 0;
 		switch (data_type) {
-		case ImGuiDataType_S8: {
-			int8_t int8 = 0;
-			EndianessCopy(&int8, buf, size);
-			if (data_format == DataFormat_Dec) {
-				ImSnprintf(out_buf, out_buf_size, "%hhd", int8);
-				return;
+			case ImGuiDataType_S8: {
+				int8_t int8 = 0;
+				EndianessCopy(&int8, buf, size);
+				if (data_format == DataFormat_Dec) {
+					ImSnprintf(out_buf, out_buf_size, "%hhd", int8);
+					return;
+				}
+				if (data_format == DataFormat_Hex) {
+					ImSnprintf(out_buf, out_buf_size, "0x%02x", int8 & 0xFF);
+					return;
+				}
+				break;
 			}
-			if (data_format == DataFormat_Hex) {
-				ImSnprintf(out_buf, out_buf_size, "0x%02x", int8 & 0xFF);
-				return;
+			case ImGuiDataType_U8: {
+				uint8_t uint8 = 0;
+				EndianessCopy(&uint8, buf, size);
+				if (data_format == DataFormat_Dec) {
+					ImSnprintf(out_buf, out_buf_size, "%hhu", uint8);
+					return;
+				}
+				if (data_format == DataFormat_Hex) {
+					ImSnprintf(out_buf, out_buf_size, "0x%02x", uint8 & 0XFF);
+					return;
+				}
+				break;
 			}
-			break;
-		}
-		case ImGuiDataType_U8: {
-			uint8_t uint8 = 0;
-			EndianessCopy(&uint8, buf, size);
-			if (data_format == DataFormat_Dec) {
-				ImSnprintf(out_buf, out_buf_size, "%hhu", uint8);
-				return;
+			case ImGuiDataType_S16: {
+				int16_t int16 = 0;
+				EndianessCopy(&int16, buf, size);
+				if (data_format == DataFormat_Dec) {
+					ImSnprintf(out_buf, out_buf_size, "%hd", int16);
+					return;
+				}
+				if (data_format == DataFormat_Hex) {
+					ImSnprintf(out_buf, out_buf_size, "0x%04x", int16 & 0xFFFF);
+					return;
+				}
+				break;
 			}
-			if (data_format == DataFormat_Hex) {
-				ImSnprintf(out_buf, out_buf_size, "0x%02x", uint8 & 0XFF);
-				return;
+			case ImGuiDataType_U16: {
+				uint16_t uint16 = 0;
+				EndianessCopy(&uint16, buf, size);
+				if (data_format == DataFormat_Dec) {
+					ImSnprintf(out_buf, out_buf_size, "%hu", uint16);
+					return;
+				}
+				if (data_format == DataFormat_Hex) {
+					ImSnprintf(out_buf, out_buf_size, "0x%04x", uint16 & 0xFFFF);
+					return;
+				}
+				break;
 			}
-			break;
-		}
-		case ImGuiDataType_S16: {
-			int16_t int16 = 0;
-			EndianessCopy(&int16, buf, size);
-			if (data_format == DataFormat_Dec) {
-				ImSnprintf(out_buf, out_buf_size, "%hd", int16);
-				return;
+			case ImGuiDataType_S32: {
+				int32_t int32 = 0;
+				EndianessCopy(&int32, buf, size);
+				if (data_format == DataFormat_Dec) {
+					ImSnprintf(out_buf, out_buf_size, "%d", int32);
+					return;
+				}
+				if (data_format == DataFormat_Hex) {
+					ImSnprintf(out_buf, out_buf_size, "0x%08x", int32);
+					return;
+				}
+				break;
 			}
-			if (data_format == DataFormat_Hex) {
-				ImSnprintf(out_buf, out_buf_size, "0x%04x", int16 & 0xFFFF);
-				return;
+			case ImGuiDataType_U32: {
+				uint32_t uint32 = 0;
+				EndianessCopy(&uint32, buf, size);
+				if (data_format == DataFormat_Dec) {
+					ImSnprintf(out_buf, out_buf_size, "%u", uint32);
+					return;
+				}
+				if (data_format == DataFormat_Hex) {
+					ImSnprintf(out_buf, out_buf_size, "0x%08x", uint32);
+					return;
+				}
+				break;
 			}
-			break;
-		}
-		case ImGuiDataType_U16: {
-			uint16_t uint16 = 0;
-			EndianessCopy(&uint16, buf, size);
-			if (data_format == DataFormat_Dec) {
-				ImSnprintf(out_buf, out_buf_size, "%hu", uint16);
-				return;
+			case ImGuiDataType_S64: {
+				int64_t int64 = 0;
+				EndianessCopy(&int64, buf, size);
+				if (data_format == DataFormat_Dec) {
+					ImSnprintf(out_buf, out_buf_size, "%lld", static_cast<long long>(int64));
+					return;
+				}
+				if (data_format == DataFormat_Hex) {
+					ImSnprintf(out_buf, out_buf_size, "0x%016llx", static_cast<long long>(int64));
+					return;
+				}
+				break;
 			}
-			if (data_format == DataFormat_Hex) {
-				ImSnprintf(out_buf, out_buf_size, "0x%04x", uint16 & 0xFFFF);
-				return;
+			case ImGuiDataType_U64: {
+				uint64_t uint64 = 0;
+				EndianessCopy(&uint64, buf, size);
+				if (data_format == DataFormat_Dec) {
+					ImSnprintf(out_buf, out_buf_size, "%llu", static_cast<long long>(uint64));
+					return;
+				}
+				if (data_format == DataFormat_Hex) {
+					ImSnprintf(out_buf, out_buf_size, "0x%016llx", static_cast<long long>(uint64));
+					return;
+				}
+				break;
 			}
-			break;
-		}
-		case ImGuiDataType_S32: {
-			int32_t int32 = 0;
-			EndianessCopy(&int32, buf, size);
-			if (data_format == DataFormat_Dec) {
-				ImSnprintf(out_buf, out_buf_size, "%d", int32);
-				return;
+			case ImGuiDataType_Float: {
+				float float32 = 0.0f;
+				EndianessCopy(&float32, buf, size);
+				if (data_format == DataFormat_Dec) {
+					ImSnprintf(out_buf, out_buf_size, "%f", static_cast<double>(float32));
+					return;
+				}
+				if (data_format == DataFormat_Hex) {
+					ImSnprintf(out_buf, out_buf_size, "%a", static_cast<double>(float32));
+					return;
+				}
+				break;
 			}
-			if (data_format == DataFormat_Hex) {
-				ImSnprintf(out_buf, out_buf_size, "0x%08x", int32);
-				return;
+			case ImGuiDataType_Double: {
+				double float64 = 0.0;
+				EndianessCopy(&float64, buf, size);
+				if (data_format == DataFormat_Dec) {
+					ImSnprintf(out_buf, out_buf_size, "%f", float64);
+					return;
+				}
+				if (data_format == DataFormat_Hex) {
+					ImSnprintf(out_buf, out_buf_size, "%a", float64);
+					return;
+				}
+				break;
 			}
-			break;
-		}
-		case ImGuiDataType_U32: {
-			uint32_t uint32 = 0;
-			EndianessCopy(&uint32, buf, size);
-			if (data_format == DataFormat_Dec) {
-				ImSnprintf(out_buf, out_buf_size, "%u", uint32);
-				return;
-			}
-			if (data_format == DataFormat_Hex) {
-				ImSnprintf(out_buf, out_buf_size, "0x%08x", uint32);
-				return;
-			}
-			break;
-		}
-		case ImGuiDataType_S64: {
-			int64_t int64 = 0;
-			EndianessCopy(&int64, buf, size);
-			if (data_format == DataFormat_Dec) {
-				ImSnprintf(out_buf, out_buf_size, "%lld", static_cast<long long>(int64));
-				return;
-			}
-			if (data_format == DataFormat_Hex) {
-				ImSnprintf(out_buf, out_buf_size, "0x%016llx", static_cast<long long>(int64));
-				return;
-			}
-			break;
-		}
-		case ImGuiDataType_U64: {
-			uint64_t uint64 = 0;
-			EndianessCopy(&uint64, buf, size);
-			if (data_format == DataFormat_Dec) {
-				ImSnprintf(out_buf, out_buf_size, "%llu", static_cast<long long>(uint64));
-				return;
-			}
-			if (data_format == DataFormat_Hex) {
-				ImSnprintf(out_buf, out_buf_size, "0x%016llx", static_cast<long long>(uint64));
-				return;
-			}
-			break;
-		}
-		case ImGuiDataType_Float: {
-			float float32 = 0.0f;
-			EndianessCopy(&float32, buf, size);
-			if (data_format == DataFormat_Dec) {
-				ImSnprintf(out_buf, out_buf_size, "%f", static_cast<double>(float32));
-				return;
-			}
-			if (data_format == DataFormat_Hex) {
-				ImSnprintf(out_buf, out_buf_size, "%a", static_cast<double>(float32));
-				return;
-			}
-			break;
-		}
-		case ImGuiDataType_Double: {
-			double float64 = 0.0;
-			EndianessCopy(&float64, buf, size);
-			if (data_format == DataFormat_Dec) {
-				ImSnprintf(out_buf, out_buf_size, "%f", float64);
-				return;
-			}
-			if (data_format == DataFormat_Hex) {
-				ImSnprintf(out_buf, out_buf_size, "%a", float64);
-				return;
-			}
-			break;
-		}
-		case ImGuiDataType_COUNT: break;
+			case ImGuiDataType_COUNT: break;
 		} // Switch
 		IM_ASSERT(0); // Shouldn't reach
 	}

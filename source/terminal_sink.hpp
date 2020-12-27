@@ -33,8 +33,8 @@ namespace dce {
 	};
 
 	template <typename Mutex>
-	TerminalSink<Mutex>::TerminalSink(std::string&& _file_name)
-		: spdlog::sinks::base_sink<Mutex>(), file_name_(std::move(_file_name)) {
+	TerminalSink<Mutex>::TerminalSink(std::string&& _file_name) : spdlog::sinks::base_sink<Mutex>(),
+	                                                              file_name_(std::move(_file_name)) {
 	}
 
 	template <typename Mutex>

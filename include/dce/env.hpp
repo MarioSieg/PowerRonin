@@ -63,10 +63,10 @@ enum class Compiler {
 /* Returns the short name of the current operating system. If you need the name, use the "SYSTEM_NAME" variable! */
 [[nodiscard]] constexpr auto determine_system_name() -> std::string_view {
 	switch (determine_system()) {
-	case System::LINUX: return "Linux";
-	case System::WINDOWS: return "Windows";
-	case System::MAC: return "Mac";
-	default: return "Unknown";
+		case System::LINUX: return "Linux";
+		case System::WINDOWS: return "Windows";
+		case System::MAC: return "Mac";
+		default: return "Unknown";
 	}
 }
 
@@ -92,9 +92,9 @@ enum class Compiler {
 /* Returns the short name of the current compiler. If you need the name, use the "COMPILER_NAME" variable! */
 [[nodiscard]] constexpr auto determine_compiler_name() -> std::string_view {
 	switch (determine_compiler()) {
-	case Compiler::GCC: return "GCC";
-	case Compiler::MSVC: return "MSVC";
-	case Compiler::CLANG: return "Clang";
+		case Compiler::GCC: return "GCC";
+		case Compiler::MSVC: return "MSVC";
+		case Compiler::CLANG: return "Clang";
 	}
 }
 

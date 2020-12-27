@@ -327,15 +327,15 @@ namespace dce::gui {
 
 	void style_apply(const SystemTheme _style) noexcept {
 		switch (_style) {
-		case SystemTheme::DARK: style_dark();
-			return;
-		case SystemTheme::BLUE: style_blue();
-			return;
-		case SystemTheme::GREEN: style_green();
-			return;
-		case SystemTheme::CHERRY: style_cherry();
-			return;
-		case SystemTheme::LIGHT: style_light();
+			case SystemTheme::DARK: style_dark();
+				return;
+			case SystemTheme::BLUE: style_blue();
+				return;
+			case SystemTheme::GREEN: style_green();
+				return;
+			case SystemTheme::CHERRY: style_cherry();
+				return;
+			case SystemTheme::LIGHT: style_light();
 		}
 	}
 } // namespace dce::gui // namespace dce::gui

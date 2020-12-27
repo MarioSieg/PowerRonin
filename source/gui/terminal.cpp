@@ -19,19 +19,19 @@ namespace dce::gui {
 			const auto print_sink = [this](const TerminalSink<>* const _sink) {
 				for (const auto& msg : _sink->string_buffer()) {
 					switch (std::get<1>(msg)) {
-						[[unlikely]] case LogLevel::ERROR: PushStyleColor(ImGuiCol_Text, COLOR_ERROR);
-						++this->error_messages_count_;
-						break;
-						[[likely]] case LogLevel::INFO: PushStyleColor(ImGuiCol_Text, COLOR_INFO);
-						break;
-						[[unlikely]] case LogLevel::DEBUG:
-					case LogLevel::TRACE: PushStyleColor(ImGuiCol_Text, COLOR_TRACE);
-						break;
-						[[unlikely]] case LogLevel::CRITICAL:
-					case LogLevel::WARN: PushStyleColor(ImGuiCol_Text, COLOR_WARN);
-						++this->warning_messages_count_;
-						break;
-					default: case LogLevel::OFF: ;
+							[[unlikely]] case LogLevel::ERROR: PushStyleColor(ImGuiCol_Text, COLOR_ERROR);
+							++this->error_messages_count_;
+							break;
+							[[likely]] case LogLevel::INFO: PushStyleColor(ImGuiCol_Text, COLOR_INFO);
+							break;
+							[[unlikely]] case LogLevel::DEBUG:
+						case LogLevel::TRACE: PushStyleColor(ImGuiCol_Text, COLOR_TRACE);
+							break;
+							[[unlikely]] case LogLevel::CRITICAL:
+						case LogLevel::WARN: PushStyleColor(ImGuiCol_Text, COLOR_WARN);
+							++this->warning_messages_count_;
+							break;
+						default: case LogLevel::OFF: ;
 					}
 					Spacing();
 					TextUnformatted(std::get<0>(msg).c_str());

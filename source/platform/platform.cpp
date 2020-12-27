@@ -57,38 +57,38 @@ namespace {
 
 	constexpr auto kernel_variant_name(const iware::system::kernel_t _variant) noexcept -> const char* {
 		switch (_variant) {
-		case iware::system::kernel_t::windows_nt: return "Windows NT";
-		case iware::system::kernel_t::linux: return "Linux";
-		case iware::system::kernel_t::darwin: return "Darwin";
-		case iware::system::kernel_t::unknown: default: return "Unknown";
+			case iware::system::kernel_t::windows_nt: return "Windows NT";
+			case iware::system::kernel_t::linux: return "Linux";
+			case iware::system::kernel_t::darwin: return "Darwin";
+			case iware::system::kernel_t::unknown: default: return "Unknown";
 		}
 	}
 
 	constexpr auto cache_type_name(const iware::cpu::cache_type_t cache_type) noexcept -> const char* {
 		switch (cache_type) {
-		case iware::cpu::cache_type_t::unified: return "Unified";
-		case iware::cpu::cache_type_t::instruction: return "Instruction";
-		case iware::cpu::cache_type_t::data: return "Data";
-		case iware::cpu::cache_type_t::trace: return "Trace";
-		default: return "Unknown";
+			case iware::cpu::cache_type_t::unified: return "Unified";
+			case iware::cpu::cache_type_t::instruction: return "Instruction";
+			case iware::cpu::cache_type_t::data: return "Data";
+			case iware::cpu::cache_type_t::trace: return "Trace";
+			default: return "Unknown";
 		}
 	}
 
 	constexpr auto architecture_name(const iware::cpu::architecture_t _architecture) noexcept -> const char* {
 		switch (_architecture) {
-		case iware::cpu::architecture_t::x64: return "x64";
-		case iware::cpu::architecture_t::arm: return "ARM";
-		case iware::cpu::architecture_t::itanium: return "Itanium";
-		case iware::cpu::architecture_t::x86: return "x86";
-		case iware::cpu::architecture_t::unknown: default: return "Unknown";
+			case iware::cpu::architecture_t::x64: return "x64";
+			case iware::cpu::architecture_t::arm: return "ARM";
+			case iware::cpu::architecture_t::itanium: return "Itanium";
+			case iware::cpu::architecture_t::x86: return "x86";
+			case iware::cpu::architecture_t::unknown: default: return "Unknown";
 		}
 	}
 
 	constexpr auto endianness_name(const iware::cpu::endianness_t _endianness) noexcept -> const char* {
 		switch (_endianness) {
-		case iware::cpu::endianness_t::little: return "Little-Endian";
-		case iware::cpu::endianness_t::big: return "Big-Endian";
-		default: return "Unknown";
+			case iware::cpu::endianness_t::little: return "Little-Endian";
+			case iware::cpu::endianness_t::big: return "Big-Endian";
+			default: return "Unknown";
 		}
 	}
 } // namespace // namespace

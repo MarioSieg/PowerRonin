@@ -15,8 +15,8 @@ namespace dce {
 
 	void Scenery::new_default(ResourceManager& _resource_manager) {
 		// Create cube:
-		for(auto i = 0; i < 128; ++i) {
-			for(auto j = 0; j < 128; ++j) {
+		for (auto i = 0; i < 128; ++i) {
+			for (auto j = 0; j < 128; ++j) {
 				const auto cube = this->registry_.create();
 
 				auto& meta = this->registry_.emplace<MetaData>(cube);
@@ -39,7 +39,8 @@ namespace dce {
 		}
 
 		// Load skybox:
-		this->config.lighting.skybox_cubemap = _resource_manager.system_resources.skybox;
+		this->config.lighting.skybox_material = Material::create_from_data(
+			Material::StaticSkybox{_resource_manager.system_resources.skybox}, "_skybox_", _resource_manager);
 		this->config.lighting.skydome = _resource_manager.system_resources.skydome;
 	}
 

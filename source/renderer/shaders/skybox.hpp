@@ -4,13 +4,13 @@
 
 namespace dce::renderer::shaders {
 
-	class Skybox final : public IShader {
+	class SkyboxShader final : public IShader<Material::StaticSkybox> {
 	public:
-		explicit Skybox(GPU& _gpu) noexcept;
+		explicit SkyboxShader(GPU& _gpu) noexcept;
 
 		void load() override;
 		void unload() override;
-		void per_frame(const Texture& _skybox, const Mesh& _skydome) const;
+		void draw(const Material::StaticSkybox& _mat, const Mesh& _mesh) const override;
 
 	private:
 		bgfx::UniformHandle u_s_tex_cube_ = {bgfx::kInvalidHandle};

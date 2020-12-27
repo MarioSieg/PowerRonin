@@ -3,14 +3,13 @@
 #include "../ishader.hpp"
 
 namespace dce::renderer::shaders {
-	class UnlitTextured final : public IShader {
+	class UnlitTexturedShader final : public IShader<Material::UnlitTextured> {
 	public:
-		explicit UnlitTextured(GPU& _gpu) noexcept;
+		explicit UnlitTexturedShader(GPU& _gpu) noexcept;
 
 		void load() override;
 		void unload() override;
-
-		void per_object(const Mesh& _mesh, const Material::UnlitTextured& _mat) const;
+		void draw(const Material::UnlitTextured& _mat, const Mesh& _mesh) const override;
 
 	private:
 		bgfx::UniformHandle u_s_tex_color_ = {bgfx::kInvalidHandle};

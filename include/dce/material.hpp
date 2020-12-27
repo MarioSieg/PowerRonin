@@ -34,10 +34,14 @@ namespace dce {
 			RRef<Texture> normal = {};
 		};
 
+		struct StaticSkybox final {
+			RRef<Texture> cubemap = {};
+		};
+
 		/// <summary>
 		/// Properties are saved inside a type safe union (variant) to safe memory.
 		/// </summary>
-		using Properties = std::variant<UnlitTextured, Diffuse, BumpedDiffuse>;
+		using Properties = std::variant<UnlitTextured, Diffuse, BumpedDiffuse, StaticSkybox>;
 
 		/// <summary>
 		/// All associated file types.

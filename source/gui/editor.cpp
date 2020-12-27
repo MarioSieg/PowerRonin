@@ -55,7 +55,7 @@ namespace dce::gui {
 
 		const auto selected_entity = this->hierarchy_.get_selected();
 		auto& registry = _rt.scenery().registry();
-		
+
 		[[likely]] if (registry.valid(selected_entity) && registry.has<Transform>(selected_entity)) {
 			auto& transform = registry.get<Transform>(selected_entity);
 			this->render_manipulator_gizmos(transform, _rt.render_data(), _rt.config());
@@ -112,7 +112,7 @@ namespace dce::gui {
 				this->gizmo_op_ = ImGuizmo::OPERATION::BOUNDS;
 			}
 
-			[[unlikely]] if(IsItemHovered()) {
+			[[unlikely]] if (IsItemHovered()) {
 				BeginTooltip();
 				TextUnformatted("Edit bounds of selected object");
 				EndTooltip();
@@ -223,9 +223,9 @@ namespace dce::gui {
 			DockBuilderFinish(this->dockspace_id_);
 		}
 	}
-	
+
 	void Editor::render_manipulator_gizmos(Transform& _transform, RenderData& _data, const Config& _config) const noexcept {
-		[[unlikely]] if(!_config.editor.enable_gizmos) {
+		[[unlikely]] if (!_config.editor.enable_gizmos) {
 			return;
 		}
 		auto matrix = _transform.calculate_matrix();
@@ -238,12 +238,14 @@ namespace dce::gui {
 		ImGuizmo::SetRect(x, y, w, h);
 		const auto grid_pos_matrix = math::identity<SimdMatrix4x4<>>();
 		[[likely]] if (_config.editor.show_grid) {
-			ImGuizmo::DrawGrid(value_ptr(_data.view_matrix), value_ptr(_data.projection_matrix), value_ptr(grid_pos_matrix), _config.editor.grid_size);
+			ImGuizmo::DrawGrid(value_ptr(_data.view_matrix), value_ptr(_data.projection_matrix), value_ptr(grid_pos_matrix),
+			                   _config.editor.grid_size);
 		}
 		[[likely]] if (_config.editor.show_view_cube) {
-			ImGuizmo::ViewManipulate(value_ptr(_data.view_matrix), 8.f, { x + w - 256.f, y }, { 256.f, 256.f }, 0);
+			ImGuizmo::ViewManipulate(value_ptr(_data.view_matrix), 8.f, {x + w - 256.f, y}, {256.f, 256.f}, 0x10101010);
 		}
-		[[unlikely]] if (Manipulate(value_ptr(_data.view_matrix), value_ptr(_data.projection_matrix), this->gizmo_op_, this->gizmo_mode_, value_ptr(matrix))) {
+		[[unlikely]] if (Manipulate(value_ptr(_data.view_matrix), value_ptr(_data.projection_matrix), this->gizmo_op_,
+		                            this->gizmo_mode_, value_ptr(matrix))) {
 			SimdVector3<> skew;
 			SimdVector4<> per;
 			math::decompose(matrix, _transform.scale, _transform.rotation, _transform.position, skew, per);

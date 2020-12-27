@@ -1,7 +1,8 @@
 #include "shader_bucket.hpp"
 
 namespace dce::renderer {
-	ShaderBucket::ShaderBucket(GPU& _gpu) noexcept : unlit_textured(_gpu), diffuse(_gpu), bumped_diffuse(_gpu), skybox(_gpu), gpu_(_gpu) {
+	ShaderBucket::ShaderBucket(GPU& _gpu) noexcept : unlit_textured(_gpu), diffuse(_gpu), bumped_diffuse(_gpu), skybox(_gpu),
+	                                                 gpu_(_gpu) {
 	}
 
 	void ShaderBucket::load_all() {

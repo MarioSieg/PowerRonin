@@ -18,10 +18,10 @@ namespace dce::renderer {
 		void load_all();
 		void unload_all();
 
-		shaders::UnlitTextured unlit_textured;
-		shaders::Diffuse diffuse;
-		shaders::BumpedDiffuse bumped_diffuse;
-		shaders::Skybox skybox;
+		shaders::UnlitTexturedShader unlit_textured;
+		shaders::DiffuseShader diffuse;
+		shaders::BumpedDiffuseShader bumped_diffuse;
+		shaders::SkyboxShader skybox;
 
 	private:
 		GPU& gpu_;

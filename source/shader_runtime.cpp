@@ -106,14 +106,14 @@ namespace dce {
 			}
 			bgfx::UniformType::Enum type = bgfx::UniformType::Sampler;
 			switch (std::get<0>(value)) {
-			case UniformType::SAMPLER: type = bgfx::UniformType::Sampler;
-				break;
-			case UniformType::VEC_4: type = bgfx::UniformType::Vec4;
-				break;
-			case UniformType::MATRIX_3x3: type = bgfx::UniformType::Mat3;
-				break;
-			case UniformType::MATRIX_4x4: type = bgfx::UniformType::Mat4;
-				break;
+				case UniformType::SAMPLER: type = bgfx::UniformType::Sampler;
+					break;
+				case UniformType::VEC_4: type = bgfx::UniformType::Vec4;
+					break;
+				case UniformType::MATRIX_3x3: type = bgfx::UniformType::Mat3;
+					break;
+				case UniformType::MATRIX_4x4: type = bgfx::UniformType::Mat4;
+					break;
 			}
 			const auto uniform_handle = createUniform(key.data(), type);
 			[[unlikely]] if (!isValid(uniform_handle)) {

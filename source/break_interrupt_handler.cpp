@@ -50,8 +50,7 @@ namespace dce {
 		return EXCEPTION_CONTINUE_EXECUTION;
 	}
 
-	ScopedVectoredExceptionHandler::ScopedVectoredExceptionHandler()
-		: handler_(&handler_) {
+	ScopedVectoredExceptionHandler::ScopedVectoredExceptionHandler() : handler_(&handler_) {
 		AddVectoredExceptionHandler(CALL_FIRST, &handler);
 	}
 

@@ -11,8 +11,8 @@ namespace dce::scripting {
 
 		_target.editor.font_size = _in.Overlay_FontSize;
 		_target.editor.theme = static_cast<SystemTheme>(std::clamp(_in.Overlay_Theme,
-		                                                            static_cast<CS_byte>(SystemTheme::DARK)
-		                                                            , static_cast<CS_byte>(SystemTheme::GREEN)));
+		                                                           static_cast<CS_byte>(SystemTheme::DARK)
+		                                                           , static_cast<CS_byte>(SystemTheme::GREEN)));
 		_target.editor.enable_anti_aliasing = _in.Overlay_EnableFontAntialiasing;
 		_target.editor.alpha = _in.Overlay_Alpha;
 		_target.editor.rounding = _in.Overlay_Rounding;

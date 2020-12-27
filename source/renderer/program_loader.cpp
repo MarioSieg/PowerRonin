@@ -11,16 +11,16 @@ namespace dce::renderer {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load shader program!");
 		}
 		switch (bgfx::getRendererType()) {
-		case bgfx::RendererType::Direct3D11:
-		case bgfx::RendererType::Direct3D12: file.append("dx11");
-			break;
-		case bgfx::RendererType::OpenGL: file.append("glsl");
-			break;
-		case bgfx::RendererType::Vulkan: file.append("spirv");
-			break;
-		case bgfx::RendererType::Metal: file.append("metal");
-			break;
-		default: throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load shader program!");
+			case bgfx::RendererType::Direct3D11:
+			case bgfx::RendererType::Direct3D12: file.append("dx11");
+				break;
+			case bgfx::RendererType::OpenGL: file.append("glsl");
+				break;
+			case bgfx::RendererType::Vulkan: file.append("spirv");
+				break;
+			case bgfx::RendererType::Metal: file.append("metal");
+				break;
+			default: throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load shader program!");
 		}
 		file.append("vertex.shc");
 		if (!is_regular_file(file)) {

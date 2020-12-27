@@ -5,7 +5,7 @@
 namespace dce {
 	[[nodiscard]] extern auto calculate_sun_dir(const float _hour
 	                                            , const float _latitude
-	                                            , const  float _delta
+	                                            , const float _delta
 	                                            , const SimdVector3<>& _up
 	                                            , const SimdVector3<>& _north) noexcept -> SimdVector3<>;
 

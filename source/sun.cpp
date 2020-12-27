@@ -37,9 +37,9 @@ namespace dce {
 			bx::sin(latitude) * bx::sin(_delta) + bx::cos(latitude) * bx::cos(_delta) * bx::cos(hh)
 		);
 
-		const bx::Quaternion rot0 = bx::rotateAxis({ .0f, 1.f, .0f }, -azimuth);
-		const bx::Vec3 dir = bx::mul(bx::Vec3{ 1.f, .0f, .0f }, rot0);
-		const bx::Vec3 uxd = bx::cross(bx::Vec3{ .0f, 1.f, .0f }, dir);
+		const bx::Quaternion rot0 = bx::rotateAxis({.0f, 1.f, .0f}, -azimuth);
+		const bx::Vec3 dir = bx::mul(bx::Vec3{1.f, .0f, .0f}, rot0);
+		const bx::Vec3 uxd = bx::cross(bx::Vec3{.0f, 1.f, .0f}, dir);
 
 		const bx::Quaternion rot1 = bx::rotateAxis(uxd, altitude);
 		const auto dir2 = bx::mul(dir, rot1);

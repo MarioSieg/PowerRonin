@@ -22,7 +22,7 @@ namespace dce {
 
 		virtual void deserialize(const JsonStream&) = 0;
 
-		virtual auto serialize_to_file(const std::filesystem::path& _path) const -> bool;
+		[[nodiscard]] virtual auto serialize_to_file(const std::filesystem::path& _path) const -> bool;
 
 		virtual auto deserialize_from_file(const std::filesystem::path& _path) -> bool;
 	};
