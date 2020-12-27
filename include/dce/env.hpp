@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #pragma once
 
 #include <string_view>
@@ -26,9 +11,9 @@
 
 /* Contains all supported operating systems. */
 enum class System {
-	LINUX
-	, WINDOWS
-	, MAC
+	LINUX,
+	WINDOWS,
+	MAC
 };
 
 #define SYS_LINUX false
@@ -38,12 +23,10 @@ enum class System {
 /* Contains all supported compiler. */
 enum class Compiler {
 	/* GNU compiler collection. */
-	GCC
-	,
+	GCC,
 
 	/* Microsoft Visual C++ */
-	MSVC
-	,
+	MSVC,
 
 	/* LLVM Clang */
 	CLANG
@@ -80,10 +63,10 @@ enum class Compiler {
 /* Returns the short name of the current operating system. If you need the name, use the "SYSTEM_NAME" variable! */
 [[nodiscard]] constexpr auto determine_system_name() -> std::string_view {
 	switch (determine_system()) {
-	case System::LINUX: return "Linux";
-	case System::WINDOWS: return "Windows";
-	case System::MAC: return "Mac";
-	default: return "Unknown";
+		case System::LINUX: return "Linux";
+		case System::WINDOWS: return "Windows";
+		case System::MAC: return "Mac";
+		default: return "Unknown";
 	}
 }
 
@@ -109,9 +92,9 @@ enum class Compiler {
 /* Returns the short name of the current compiler. If you need the name, use the "COMPILER_NAME" variable! */
 [[nodiscard]] constexpr auto determine_compiler_name() -> std::string_view {
 	switch (determine_compiler()) {
-	case Compiler::GCC: return "GCC";
-	case Compiler::MSVC: return "MSVC";
-	case Compiler::CLANG: return "Clang";
+		case Compiler::GCC: return "GCC";
+		case Compiler::MSVC: return "MSVC";
+		case Compiler::CLANG: return "Clang";
 	}
 }
 
@@ -138,7 +121,7 @@ constexpr auto MEMORY_KEY = '&';
 #define CPU_MIPS  false
 #define CPU_PPC   false
 #define CPU_RISCV false
-#define CPU_X86   false
+#define CPU_X86_64   false
 
 #if defined(__arm__)     \
  || defined(__aarch64__) \
@@ -164,8 +147,8 @@ constexpr auto MEMORY_KEY = '&';
  ||   defined(_M_X64)     \
  ||   defined(__i386__)   \
  ||   defined(__x86_64__)
-#	undef  CPU_X86
-#	define CPU_X86 true
+#	undef  CPU_X86_64
+#	define CPU_X86_64 true
 #else
 #	undef  CPU_JIT
 #	define CPU_JIT true

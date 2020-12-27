@@ -1,24 +1,8 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #pragma once
 
 #include "mesh.hpp"
 #include "texture.hpp"
 #include "material.hpp"
-#include "audio_clip.hpp"
 
 namespace dce {
 	class AsyncProtocol;
@@ -79,12 +63,6 @@ namespace dce {
 		[[nodiscard]] auto get_material_cache() const noexcept -> const ResourceCache<Material>&;
 
 		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns>An immutable reference to the global audio clip cache.</returns>
-		[[nodiscard]] auto get_audio_clip_cache() const noexcept -> const ResourceCache<AudioClip>&;
-
-		/// <summary>
 		/// Loads a resource of type T from a file and stores it in the corresponding resource cache.
 		/// </summary>
 		/// <typeparam name="T">The type to load. For example Texture or Mesh.</typeparam>
@@ -112,14 +90,14 @@ namespace dce {
 	private:
 		[[nodiscard]] auto load_texture(std::filesystem::path&& _file, const TextureMeta* const _meta) -> RRef<Texture>;
 		[[nodiscard]] auto load_mesh(std::filesystem::path&& _file, const MeshMeta* const _meta) -> RRef<Mesh>;
-		[[nodiscard]] auto load_material(std::filesystem::path&& _file, const MaterialMeta* const _meta) -> RRef<Material>;
-		[[nodiscard]] auto load_audio_clip(std::filesystem::path&& _file, const AudioClipMeta* const _meta) -> RRef<AudioClip>;
+		[[nodiscard]] auto load_material(std::filesystem::path&& _file,
+		                                 const MaterialMeta* const _meta) -> RRef<Material>;
+
 
 		AsyncProtocol& proto_;
 		ResourceCache<Texture> texture_cache_ = {};
 		ResourceCache<Mesh> mesh_cache_ = {};
 		ResourceCache<Material> material_cache_ = {};
-		ResourceCache<AudioClip> audio_clip_cache_ = {};
 	};
 
 	template <>
@@ -138,11 +116,6 @@ namespace dce {
 	}
 
 	template <>
-	inline auto ResourceManager::load(std::filesystem::path&& _file) -> RRef<AudioClip> {
-		return this->load_audio_clip(std::move(_file), nullptr);
-	}
-
-	template <>
 	inline auto ResourceManager::load(std::filesystem::path&& _file, const TextureMeta* const _meta) -> RRef<Texture> {
 		return this->load_texture(std::move(_file), _meta);
 	}
@@ -153,12 +126,8 @@ namespace dce {
 	}
 
 	template <>
-	inline auto ResourceManager::load(std::filesystem::path&& _file, const MaterialMeta* const _meta) -> RRef<Material> {
+	inline auto ResourceManager::load(std::filesystem::path&& _file,
+	                                  const MaterialMeta* const _meta) -> RRef<Material> {
 		return this->load_material(std::move(_file), _meta);
-	}
-
-	template <>
-	inline auto ResourceManager::load(std::filesystem::path&& _file, const AudioClipMeta* const _meta) -> RRef<AudioClip> {
-		return this->load_audio_clip(std::move(_file), _meta);
 	}
 } // namespace dce // namespace dce

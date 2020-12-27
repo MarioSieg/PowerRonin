@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #pragma once
 
 #include "../../extern/json/include/nlohmann/json_fwd.hpp"
@@ -33,12 +18,12 @@ namespace dce {
 		auto operator=(ISerializable&&) noexcept -> ISerializable& = default;
 		virtual ~ISerializable() = default;
 
-		[[nodiscard]] virtual void serialize(JsonStream&) const = 0;
+		virtual void serialize(JsonStream&) const = 0;
 
-		[[nodiscard]] virtual void deserialize(const JsonStream&) = 0;
+		virtual void deserialize(const JsonStream&) = 0;
 
 		[[nodiscard]] virtual auto serialize_to_file(const std::filesystem::path& _path) const -> bool;
 
-		[[nodiscard]] virtual auto deserialize_from_file(const std::filesystem::path& _path) -> bool;
+		virtual auto deserialize_from_file(const std::filesystem::path& _path) -> bool;
 	};
 } // namespace dce // namespace dce

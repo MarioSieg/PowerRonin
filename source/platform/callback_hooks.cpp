@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "callback_hooks.hpp"
 #include "platform_headers.hpp"
 #include "../../include/dce/env.hpp"
@@ -26,7 +11,8 @@ namespace dce::platform {
 	                           , [[maybe_unused]] const int _action
 	                           , [[maybe_unused]] const int _mods) noexcept {
 		assert(MOUSE_STATES);
-		[[likely]] if (_action == GLFW_PRESS && _button >= 0 && _button < static_cast<int>(sizeof *MOUSE_STATES / sizeof **
+		[[likely]] if (_action == GLFW_PRESS && _button >= 0 && _button < static_cast<int>(sizeof *MOUSE_STATES / sizeof
+			**
 			MOUSE_STATES)) {
 			*MOUSE_STATES[_button] = true;
 		}

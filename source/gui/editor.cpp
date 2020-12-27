@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "editor.hpp"
 #include "gui_headers.hpp"
 #include "font_headers.hpp"
@@ -53,8 +38,7 @@ namespace dce::gui {
 		}
 
 		[[likely]] if (this->show_inspector_) {
-			this->inspector_.update(this->show_inspector_, _rt.scenery().registry(), _rt.resource_manager()
-			                        , this->hierarchy_.get_selected());
+			this->inspector_.update(this->show_inspector_, this->hierarchy_.get_selected(), _rt);
 		}
 
 		[[unlikely]] if (this->memory_editor_.Open) {
@@ -68,15 +52,27 @@ namespace dce::gui {
 		[[likely]] if (this->show_scenery_viewer_) {
 			this->scenery_viewer_.update(this->show_scenery_viewer_, _rt.render_data());
 		}
+
+		const auto selected_entity = this->hierarchy_.get_selected();
+		auto& registry = _rt.scenery().registry();
+
+		[[likely]] if (registry.valid(selected_entity) && registry.has<Transform>(selected_entity)) {
+			auto& transform = registry.get<Transform>(selected_entity);
+			this->render_manipulator_gizmos(transform, _rt.render_data(), _rt.config());
+		}
 	}
 
 	void Editor::main_menu(Runtime& _rt, bool& _show_terminal) {
 		[[likely]] if (BeginMainMenuBar()) {
 			[[unlikely]] if (BeginMenu("File")) {
-				if (MenuItem("New")) { }
-				if (MenuItem("Open")) { }
-				if (MenuItem("Save")) { }
-				if (MenuItem("Exit")) { }
+				if (MenuItem("New")) {
+				}
+				if (MenuItem("Open")) {
+				}
+				if (MenuItem("Save")) {
+				}
+				if (MenuItem("Exit")) {
+				}
 				EndMenu();
 			}
 			[[unlikely]] if (BeginMenu("Tools")) {
@@ -112,39 +108,91 @@ namespace dce::gui {
 			PushStyleColor(ImGuiCol_Button, 0x00000000);
 			Separator();
 
-			[[unlikely]] if (Button(ICON_FA_HAND_ROCK)) { }
+			[[unlikely]] if (Button(ICON_FA_HAND_ROCK)) {
+				this->gizmo_op_ = ImGuizmo::OPERATION::BOUNDS;
+			}
 
-			[[unlikely]] if (Button(ICON_FA_ARROWS)) { }
+			[[unlikely]] if (IsItemHovered()) {
+				BeginTooltip();
+				TextUnformatted("Edit bounds of selected object");
+				EndTooltip();
+			}
 
-			[[unlikely]] if (Button(ICON_FA_SYNC)) { }
+			[[unlikely]] if (Button(ICON_FA_ARROWS)) {
+				this->gizmo_op_ = ImGuizmo::OPERATION::TRANSLATE;
+			}
 
-			[[unlikely]] if (Button(ICON_FA_EXPAND)) { }
+			[[unlikely]] if (IsItemHovered()) {
+				BeginTooltip();
+				TextUnformatted("Edit position of selected object");
+				EndTooltip();
+			}
+
+			[[unlikely]] if (Button(ICON_FA_SYNC)) {
+				this->gizmo_op_ = ImGuizmo::OPERATION::ROTATE;
+			}
+
+			[[unlikely]] if (IsItemHovered()) {
+				BeginTooltip();
+				TextUnformatted("Edit rotation of selected object");
+				EndTooltip();
+			}
+
+			[[unlikely]] if (Button(ICON_FA_EXPAND)) {
+				this->gizmo_op_ = ImGuizmo::OPERATION::SCALE;
+			}
+
+			[[unlikely]] if (IsItemHovered()) {
+				BeginTooltip();
+				TextUnformatted("Edit scale of selected object");
+				EndTooltip();
+			}
+
+			[[unlikely]] if (Button(this->gizmo_mode_ == ImGuizmo::MODE::WORLD ? ICON_FA_GLOBE_STAND : ICON_FA_COMPASS)) {
+				this->gizmo_mode_ = this->gizmo_mode_ == ImGuizmo::MODE::WORLD ? ImGuizmo::MODE::LOCAL : ImGuizmo::MODE::WORLD;
+			}
+
+			[[unlikely]] if (IsItemHovered()) {
+				BeginTooltip();
+				TextUnformatted(this->gizmo_mode_ == ImGuizmo::MODE::WORLD ? "Edit in world space" : "Edit in local space");
+				EndTooltip();
+			}
 
 			Separator();
 
-			[[unlikely]] if (Button(ICON_FA_CUBES)) { }
+			[[unlikely]] if (Button(ICON_FA_CUBES)) {
+			}
 
-			[[unlikely]] if (Button(ICON_FA_LIGHTBULB_ON)) { }
+			[[unlikely]] if (Button(ICON_FA_LIGHTBULB_ON)) {
+			}
 
-			[[unlikely]] if (Button(ICON_FA_VOLUME_UP)) { }
+			[[unlikely]] if (Button(ICON_FA_VOLUME_UP)) {
+			}
 
 			[[unlikely]] if (Button(ICON_FA_TH)) {
 				_rt.render_data().enable_wireframe = !_rt.render_data().enable_wireframe;
 			}
 
-			[[unlikely]] if (Button(ICON_FA_MAP_MARKER_SMILE)) { }
+			[[unlikely]] if (Button(ICON_FA_MAP_MARKER_SMILE)) {
+			}
 
-			[[unlikely]] if (Button(ICON_FA_FUNCTION)) { }
+			[[unlikely]] if (Button(ICON_FA_FUNCTION)) {
+			}
 
-			[[unlikely]] if (Button(ICON_FA_SMILE)) { }
+			[[unlikely]] if (Button(ICON_FA_SMILE)) {
+			}
 
-			[[unlikely]] if (Button(ICON_FA_CAMERA)) { }
+			[[unlikely]] if (Button(ICON_FA_CAMERA)) {
+			}
 
 			Separator();
 
-			[[unlikely]] if (Button(ICON_FA_PLAY)) { }
-			[[unlikely]] if (Button(ICON_FA_PAUSE)) { }
-			[[unlikely]] if (Button(ICON_FA_STOP)) { }
+			[[unlikely]] if (Button(ICON_FA_PLAY)) {
+			}
+			[[unlikely]] if (Button(ICON_FA_PAUSE)) {
+			}
+			[[unlikely]] if (Button(ICON_FA_STOP)) {
+			}
 			PopStyleColor();
 			EndMainMenuBar();
 		}
@@ -173,6 +221,34 @@ namespace dce::gui {
 			DockBuilderDockWindow(SCENERY_VIEWER_NAME, main_id);
 
 			DockBuilderFinish(this->dockspace_id_);
+		}
+	}
+
+	void Editor::render_manipulator_gizmos(Transform& _transform, RenderData& _data, const Config& _config) const noexcept {
+		[[unlikely]] if (!_config.editor.enable_gizmos) {
+			return;
+		}
+		auto matrix = _transform.calculate_matrix();
+		ImGuizmo::Enable(true);
+		ImGuizmo::BeginFrame();
+		const float x = _data.scenery_viewport_position.x;
+		const float y = _data.scenery_viewport_position.y;
+		const float w = _data.scenery_viewport_size.x;
+		const float h = _data.scenery_viewport_size.y;
+		ImGuizmo::SetRect(x, y, w, h);
+		const auto grid_pos_matrix = math::identity<SimdMatrix4x4<>>();
+		[[likely]] if (_config.editor.show_grid) {
+			ImGuizmo::DrawGrid(value_ptr(_data.view_matrix), value_ptr(_data.projection_matrix), value_ptr(grid_pos_matrix),
+			                   _config.editor.grid_size);
+		}
+		[[likely]] if (_config.editor.show_view_cube) {
+			ImGuizmo::ViewManipulate(value_ptr(_data.view_matrix), 8.f, {x + w - 256.f, y}, {256.f, 256.f}, 0x10101010);
+		}
+		[[unlikely]] if (Manipulate(value_ptr(_data.view_matrix), value_ptr(_data.projection_matrix), this->gizmo_op_,
+		                            this->gizmo_mode_, value_ptr(matrix))) {
+			SimdVector3<> skew;
+			SimdVector4<> per;
+			math::decompose(matrix, _transform.scale, _transform.rotation, _transform.position, skew, per);
 		}
 	}
 }

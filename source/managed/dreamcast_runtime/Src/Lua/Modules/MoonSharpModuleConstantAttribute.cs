@@ -1,0 +1,17 @@
+﻿using System;
+
+namespace Dreamcast.Lua.Interpreter
+{
+    /// <summary>
+    ///     In a module type, mark fields with this attribute to have them exposed as a module constant.
+    ///     See <see cref="LuaModuleAttribute" /> for more information about modules.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Field)]
+    public sealed class LuaModuleConstantAttribute : Attribute
+    {
+        /// <summary>
+        ///     Gets or sets the name of the constant - if different from the name of the field itself
+        /// </summary>
+        public string Name { get; set; }
+    }
+}

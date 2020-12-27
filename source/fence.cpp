@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "../include/dce/fence.hpp"
 #include "../include/dce/env.hpp"
 
@@ -31,10 +16,9 @@ extern "C" void _ReadWriteBarrier();
 #else
 #include <winnt.h>
 #endif
-
+#else
+#define MEM_BARRIER() asm volatile("":::"memory");
 #endif
-
-#define MEM_BARRIER() asm volatile("":::"memory")
 
 namespace dce {
 
@@ -42,7 +26,7 @@ namespace dce {
 #if COM_MSVC
 		_ReadBarrier();
 #else
-		MEM_BARRIER();
+		MEM_BARRIER()
 #endif
 	}
 
@@ -50,7 +34,7 @@ namespace dce {
 #if COM_MSVC
 		_WriteBarrier();
 #else
-		MEM_BARRIER();
+		MEM_BARRIER()
 #endif
 	}
 
@@ -58,7 +42,7 @@ namespace dce {
 #if COM_MSVC
 		_ReadWriteBarrier();
 #else
-		MEM_BARRIER();
+		MEM_BARRIER()
 #endif
 	}
 

@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "../include/dce/scenery.hpp"
 #include "../include/dce/resource_manager.hpp"
 
@@ -25,54 +10,37 @@ namespace dce {
 		return this->registry_;
 	}
 
-	void Scenery::initialize() { }
+	void Scenery::initialize() {
+	}
 
 	void Scenery::new_default(ResourceManager& _resource_manager) {
 		// Create cube:
-		{
-			const auto cube = this->registry_.create();
+		for (auto i = 0; i < 128; ++i) {
+			for (auto j = 0; j < 128; ++j) {
+				const auto cube = this->registry_.create();
 
-			auto& meta = this->registry_.emplace<MetaData>(cube);
-			auto& transform = this->registry_.emplace<Transform>(cube);
-			auto& audio = this->registry_.emplace<AudioSource>(cube);
-			auto& renderer = this->registry_.emplace<MeshRenderer>(cube);
-			auto& collider = this->registry_.emplace<Collider>(cube);
+				auto& meta = this->registry_.emplace<MetaData>(cube);
+				auto& transform = this->registry_.emplace<Transform>(cube);
+				transform.position.x = i * 0.05F;
+				transform.position.z = j * 0.05F;
+				transform.scale = math::ONE * 30.f;
+				auto& renderer = this->registry_.emplace<MeshRenderer>(cube);
+				auto& collider = this->registry_.emplace<Collider>(cube);
 
-			meta.name = "Cube";
-			Material::Lambert lambert;
-			lambert.albedo = _resource_manager.system_resources.checkerboard;
-			renderer.material = Material::create_from_data(lambert, "cube", _resource_manager);
-			renderer.mesh = _resource_manager.system_resources.cube;
-			AudioClipMeta aumeta = {};
-			aumeta.enable_3d_sound = false;
-			aumeta.is_stream = true;
-			audio.clip = _resource_manager.load<AudioClip>("audio/music/scifi_ambience.ogg", &aumeta);
-			//audio.play();
-			audio.set_volume(0.1F);
+				meta.name = "Solider " + std::to_string(i + j);
+				Material::BumpedDiffuse lambert;
+				lambert.albedo = _resource_manager.load<Texture>("examples/soldier_albedo.dds");
+				TextureMeta tmeta = {};
+				tmeta.is_srgb = false;
+				lambert.normal = _resource_manager.load<Texture>("examples/soldier_normal.dds", &tmeta);
+				renderer.material = Material::create_from_data(lambert, "soldier", _resource_manager);
+				renderer.mesh = _resource_manager.load<Mesh>("examples/soldier.obj");
+			}
 		}
-
-		// Create platform:
-		{
-			const auto platform = this->registry_.create();
-
-			auto& meta = this->registry_.emplace<MetaData>(platform);
-			auto& transform = this->registry_.emplace<Transform>(platform);
-			auto& renderer = this->registry_.emplace<MeshRenderer>(platform);
-
-			meta.name = "Platform";
-			transform.position.y = -1.f;
-			transform.scale *= 3.f;
-			Material::Lambert lambert;
-			lambert.albedo = _resource_manager.system_resources.checkerboard;
-			renderer.material = Material::create_from_data(lambert, "platform", _resource_manager);
-			renderer.mesh = _resource_manager.load<Mesh>("meshes/common/platform.obj");
-		}
-
-		TextureMeta skybox_cubemap_meta = {};
-		skybox_cubemap_meta.sampler_flags = SamplerFlags::UVW_CLAMP;
 
 		// Load skybox:
-		this->config.lighting.skybox_cubemap = _resource_manager.system_resources.skybox;
+		this->config.lighting.skybox_material = Material::create_from_data(
+			Material::StaticSkybox{_resource_manager.system_resources.skybox}, "_skybox_", _resource_manager);
 		this->config.lighting.skydome = _resource_manager.system_resources.skydome;
 	}
 

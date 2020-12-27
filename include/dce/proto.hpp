@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #pragma once
 
 #include "../../extern/spdlog/include/spdlog/spdlog.h"
@@ -22,13 +7,13 @@
 
 namespace dce {
 	enum class LogLevel : std::uint8_t {
-		TRACE = 0
-		, DEBUG = 1
-		, INFO = 2
-		, WARN = 3
-		, ERROR = 4
-		, CRITICAL = 5
-		, OFF = 6
+		TRACE = 0,
+		DEBUG = 1,
+		INFO = 2,
+		WARN = 3,
+		ERROR = 4,
+		CRITICAL = 5,
+		OFF = 6
 	};
 
 	class AsyncProtocol final {
@@ -80,7 +65,7 @@ namespace dce {
 		template <typename T, typename ...Q>
 		auto critical(T&& _msg, Q&&... _args) -> AsyncProtocol&;
 
-		auto get_logger() const noexcept -> const std::shared_ptr<spdlog::logger>&;
+		[[nodiscard]] auto get_logger() const noexcept -> const std::shared_ptr<spdlog::logger>&;
 
 		AsyncProtocol();
 		explicit AsyncProtocol(const std::string& _name);

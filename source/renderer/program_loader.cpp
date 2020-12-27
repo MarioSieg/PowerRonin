@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "program_loader.hpp"
 #include "../../include/dce/blob.hpp"
 #include "../../include/dce/except.hpp"
@@ -26,16 +11,16 @@ namespace dce::renderer {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load shader program!");
 		}
 		switch (bgfx::getRendererType()) {
-		case bgfx::RendererType::Direct3D11:
-		case bgfx::RendererType::Direct3D12: file.append("dx11");
-			break;
-		case bgfx::RendererType::OpenGL: file.append("glsl");
-			break;
-		case bgfx::RendererType::Vulkan: file.append("spirv");
-			break;
-		case bgfx::RendererType::Metal: file.append("metal");
-			break;
-		default: throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load shader program!");
+			case bgfx::RendererType::Direct3D11:
+			case bgfx::RendererType::Direct3D12: file.append("dx11");
+				break;
+			case bgfx::RendererType::OpenGL: file.append("glsl");
+				break;
+			case bgfx::RendererType::Vulkan: file.append("spirv");
+				break;
+			case bgfx::RendererType::Metal: file.append("metal");
+				break;
+			default: throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load shader program!");
 		}
 		file.append("vertex.shc");
 		if (!is_regular_file(file)) {

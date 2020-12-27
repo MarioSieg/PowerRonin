@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #pragma once
 
 #include "gui_headers.hpp"
@@ -40,6 +25,7 @@ namespace dce {
 		private:
 			void default_layout() const;
 			void main_menu(Runtime& _rt, bool& _show_terminal);
+			void render_manipulator_gizmos(Transform& _transform, RenderData& _data, const Config& _config) const noexcept;
 
 			/* Widgets: */
 			widgets::ResourceViewer resource_viewer_ = {};
@@ -60,6 +46,8 @@ namespace dce {
 
 			bool first_use_ = true;
 			ImGuiID dockspace_id_ = 0;
+			ImGuizmo::MODE gizmo_mode_ = ImGuizmo::WORLD;
+			ImGuizmo::OPERATION gizmo_op_ = ImGuizmo::OPERATION::TRANSLATE;
 		};
 	}
 }

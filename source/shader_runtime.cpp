@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "../include/dce/shader.hpp"
 #include "../include/dce/blob.hpp"
 #include "renderer/gl_headers.hpp"
@@ -21,21 +6,21 @@
 #include "../include/dce/time_utils.hpp"
 
 namespace dce {
-	void Shader::set_uniform(const std::string_view _name, const Matrix3x3<>& _value) const noexcept {
+	void Shader::set_uniform(const std::string_view _name, const SimdMatrix3x3<>& _value) const noexcept {
 		assert(this->volatile_upload_data_.uniforms.contains(_name));
 		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
 		assert(bgfx::isValid(handle));
 		setUniform(handle, value_ptr(_value));
 	}
 
-	void Shader::set_uniform(const std::string_view _name, const Matrix4x4<>& _value) const noexcept {
+	void Shader::set_uniform(const std::string_view _name, const SimdMatrix4x4<>& _value) const noexcept {
 		assert(this->volatile_upload_data_.uniforms.contains(_name));
 		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
 		assert(bgfx::isValid(handle));
 		setUniform(handle, value_ptr(_value));
 	}
 
-	void Shader::set_uniform(const std::string_view _name, const Vector4<>& _value) const noexcept {
+	void Shader::set_uniform(const std::string_view _name, const SimdVector4<>& _value) const noexcept {
 		assert(this->volatile_upload_data_.uniforms.contains(_name));
 		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
 		assert(bgfx::isValid(handle));
@@ -79,8 +64,9 @@ namespace dce {
 		}
 
 		const auto* const vs_mem = bgfx::makeRef(this->vertex_shader_bytecode_.data()
-		                                         , static_cast<std::uint32_t>(this->vertex_shader_bytecode_.size() * sizeof(
-			                                         std::byte)), nullptr, nullptr);
+		                                         , static_cast<std::uint32_t>(this->vertex_shader_bytecode_.size() *
+			                                         sizeof(
+				                                         std::byte)), nullptr, nullptr);
 
 		[[unlikely]] if (!vs_mem) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload shader!");
@@ -95,7 +81,8 @@ namespace dce {
 
 		[[likely]] if (this->fragment_shader_bytecode_) {
 			const auto* const fs_mem = bgfx::makeRef((*this->fragment_shader_bytecode_).data()
-			                                         , static_cast<std::uint32_t>((*this->fragment_shader_bytecode_).size() * sizeof
+			                                         , static_cast<std::uint32_t>((*this->fragment_shader_bytecode_).
+				                                         size() * sizeof
 				                                         (std::byte)), nullptr, nullptr);
 
 			[[unlikely]] if (!fs_mem) {
@@ -119,14 +106,14 @@ namespace dce {
 			}
 			bgfx::UniformType::Enum type = bgfx::UniformType::Sampler;
 			switch (std::get<0>(value)) {
-			case UniformType::SAMPLER: type = bgfx::UniformType::Sampler;
-				break;
-			case UniformType::VEC_4: type = bgfx::UniformType::Vec4;
-				break;
-			case UniformType::MATRIX_3x3: type = bgfx::UniformType::Mat3;
-				break;
-			case UniformType::MATRIX_4x4: type = bgfx::UniformType::Mat4;
-				break;
+				case UniformType::SAMPLER: type = bgfx::UniformType::Sampler;
+					break;
+				case UniformType::VEC_4: type = bgfx::UniformType::Vec4;
+					break;
+				case UniformType::MATRIX_3x3: type = bgfx::UniformType::Mat3;
+					break;
+				case UniformType::MATRIX_4x4: type = bgfx::UniformType::Mat4;
+					break;
 			}
 			const auto uniform_handle = createUniform(key.data(), type);
 			[[unlikely]] if (!isValid(uniform_handle)) {
@@ -158,7 +145,8 @@ namespace dce {
 	}
 
 	auto ShaderImporteur::load(std::filesystem::path&& _path
-	                           , std::unordered_map<std::string_view, std::tuple<UniformType, std::uint16_t>>&& _uniforms
+	                           , std::unordered_map<std::string_view, std::tuple<UniformType, std::uint16_t>>&&
+	                           _uniforms
 	                           , const ShaderMeta* const _meta) const -> std::shared_ptr<Shader> {
 		[[unlikely]] if (_path.extension() != Shader::FILE_EXTENSIONS[0]) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load shader from file!");
@@ -193,7 +181,8 @@ namespace dce {
 		return self;
 	}
 
-	auto ShaderCompiler::load(std::filesystem::path&& _path, const ShaderMeta* const _meta) const -> std::shared_ptr<Shader> {
+	auto ShaderCompiler::load(std::filesystem::path&& _path,
+	                          const ShaderMeta* const _meta) const -> std::shared_ptr<Shader> {
 		auto self = IResource<ShaderMeta>::allocate<Shader>();
 
 		self->file_path_ = std::move(_path);

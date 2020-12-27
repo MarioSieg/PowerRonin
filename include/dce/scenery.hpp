@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #pragma once
 
 #include "ecs.hpp"
@@ -28,8 +13,7 @@ namespace dce {
 		/// <summary>
 		/// Dynamic skybox (based on scenery daytime, weather)
 		/// </summary>
-		DYNAMIC
-		,
+		DYNAMIC,
 
 		/// <summary>
 		/// Static skybox (cubemap image).
@@ -57,7 +41,7 @@ namespace dce {
 					/// <summary>
 					/// The sun hour. (Only if "sync_hour_with_env_time" == false)
 					/// </summary>
-					float hour = 0.f;
+					float hour = 12.f;
 
 					/// <summary>
 					/// If true, the scenery time will be used as sun hour too.
@@ -73,7 +57,7 @@ namespace dce {
 				/// <summary>
 				/// Basic constant ambient color.
 				/// </summary>
-				Color<> const_ambient_color = math::rgba_to_rgba_norm(0xAAAAAAAA);
+				Color<> const_ambient_color = math::rgba_to_rgba_norm(0x14141414);
 
 				/// <summary>
 				/// The type of the scenery skybox.
@@ -83,7 +67,7 @@ namespace dce {
 				/// <summary>
 				/// The cubemap texture of the skybox (only used if "skybox_type" == SkyboxType::STATIC)!
 				/// </summary>
-				RRef<Texture> skybox_cubemap;
+				RRef<Material> skybox_material;
 
 				/// <summary>
 				/// The skydome cube or sphere mesh on which the skybox cubemap will be rendered on.

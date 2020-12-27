@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "../../include/dce/core/kernel.hpp"
 #include "../../include/dce/env.hpp"
 #include "../../include/dce/time_utils.hpp"
@@ -21,9 +6,9 @@
 
 namespace dce::core {
 	enum class KernelState : std::int_fast32_t {
-		OFFLINE = 0
-		, ONLINE = 1
-		, RUNNING = -1
+		OFFLINE = 0,
+		ONLINE = 1,
+		RUNNING = -1
 	};
 
 	struct Kernel::Core final {
@@ -32,14 +17,17 @@ namespace dce::core {
 		Runtime* runtime = nullptr;
 	};
 
-	Kernel::Kernel(const int _in_argc, const char* const * const _in_argv, const char* const * const _in_envp)
-		: argc(_in_argc), argv(_in_argv), envp(_in_envp), core_(std::make_unique<Core>()) { }
+	Kernel::Kernel(const int _in_argc, const char* const * const _in_argv, const char* const * const _in_envp) : argc(_in_argc),
+		argv(_in_argv), envp(_in_envp), core_(std::make_unique<Core>()) {
+	}
 
 	auto Kernel::create(const int _in_argc
 	                    , const char* const* const _in_argv
 	                    , const char* const* const _in_envp) -> std::unique_ptr<Kernel> {
 		struct Factory final : Kernel {
-			explicit Factory(const int _a, const char* const* const _b, const char* const* const _c) : Kernel(_a, _b, _c) { }
+			explicit Factory(const int _a, const char* const* const _b, const char* const* const _c) : Kernel(
+				_a, _b, _c) {
+			}
 		};
 		return std::make_unique<Factory>(_in_argc, _in_argv, _in_envp);
 	}
@@ -107,7 +95,8 @@ namespace dce::core {
 			std::chrono::high_resolution_clock::now() - state_clock).count()) / 1000000.0;
 		proto.critical("State online! Required {}s!", dur);
 		this->core_->kernel_state = KernelState::ONLINE;
-		const auto duration = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik)
+		const auto duration = std::chrono::duration_cast<std::chrono::microseconds>(
+				std::chrono::high_resolution_clock::now() - tik)
 			.count();
 
 		/* Invoke "on_post_startup()" on all subsystems, which have this event registered. */
@@ -125,12 +114,7 @@ namespace dce::core {
 		}
 
 		proto.separator();
-
 		proto.info("OK! System online! Boot took {}s!", static_cast<double>(duration) / 1000000.0);
-
-		[[unlikely]] if (this->hook_startup != nullptr && !this->hook_startup()) {
-			throw MAKE_FATAL_ENGINE_EXCEPTION("\"hook_startup\" returned false!");
-		}
 
 		return duration;
 	}
@@ -153,10 +137,12 @@ namespace dce::core {
 			++cycles;
 
 			/* Invoke "on_pre_tick()" on all subsystems, which have this event registered. */
-			for (auto sys = this->core_->subsystems.begin(); sys != this->core_->subsystems.end(); std::advance(sys, 1)) {
+			for (auto sys = this->core_->subsystems.begin(); sys != this->core_->subsystems.end(); std::advance(sys, 1)
+			) {
 				const auto tik2 = std::chrono::high_resolution_clock::now();
-				[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::PRE_TICK && !std::get<1>(*sys)->on_pre_tick(
-					*this->core_->runtime)) {
+				[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::PRE_TICK && !std::get<1>(*sys)->
+					on_pre_tick(
+						*this->core_->runtime)) {
 					return false;
 				}
 				const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(
@@ -165,7 +151,8 @@ namespace dce::core {
 			}
 
 			/* Invoke "on_post_tick()" on all subsystems, which have this event registered. */
-			for (auto sys = this->core_->subsystems.rbegin(); sys != this->core_->subsystems.rend(); std::advance(sys, 1)) {
+			for (auto sys = this->core_->subsystems.rbegin(); sys != this->core_->subsystems.rend();
+			     std::advance(sys, 1)) {
 				const auto tik2 = std::chrono::high_resolution_clock::now();
 				[[unlikely]] if (std::get<1>(*sys)->subscribed_events & ServiceEvents::POST_TICK && !std::get<1>(*sys)->
 					on_post_tick(*this->core_->runtime)) {
@@ -174,11 +161,6 @@ namespace dce::core {
 				const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(
 					std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
 				std::get<1>(*sys)->post_tick_time_ = dur;
-			}
-
-			/* Update hook. */
-			[[unlikely]] if (this->hook_tick != nullptr && !this->hook_tick(cycles)) {
-				return false;
 			}
 
 			return true;
@@ -243,13 +225,11 @@ namespace dce::core {
 		const auto tok = std::chrono::high_resolution_clock::now();
 		const auto duration = std::chrono::duration_cast<std::chrono::microseconds>(tok - tik).count();
 
-		[[unlikely]] if (this->hook_shutdown != nullptr && !this->hook_shutdown()) {
-			throw MAKE_FATAL_ENGINE_EXCEPTION("\"hook_shutdown\" returned false!");
-		}
 		return duration;
 	}
 
-	auto Kernel::installed_subsystems() const noexcept -> const std::vector<std::tuple<std::uint32_t, std::unique_ptr<ISubsystem>>
+	auto Kernel::installed_subsystems() const noexcept -> const std::vector<std::tuple<
+			std::uint32_t, std::unique_ptr<ISubsystem>>
 	>& {
 		return this->core_->subsystems;
 	}

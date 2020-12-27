@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "inspector.hpp"
 #include "../gui_headers.hpp"
 #include "../font_headers.hpp"
@@ -21,6 +6,8 @@
 #include "../../include/dce/resource_manager.hpp"
 #include "../file_dialog_tool.hpp"
 #include "../window_names.hpp"
+#include "../../../include/dce/renderer_data.hpp"
+#include "../../../include/dce/runtime.hpp"
 
 using namespace ImGui;
 
@@ -42,21 +29,21 @@ namespace dce::gui::widgets {
 
 		build_filter_extensions(this->mesh_filer_, Mesh::FILE_EXTENSIONS);
 		build_filter_extensions(this->texture_filer_, Texture::FILE_EXTENSIONS);
-		build_filter_extensions(this->audio_filter_, AudioClip::FILE_EXTENSIONS);
 	}
 
-	void Inspector::update(bool& _show, Registry& _registry, ResourceManager& _resource_manager, const ERef _entity) {
+	void Inspector::update(bool& _show, const ERef _entity, Runtime& _rt) {
+		auto& registry = _rt.scenery().registry();
 		SetNextWindowSize({300, 800}, ImGuiCond_FirstUseEver);
 		[[likely]] if (Begin(INSPECTOR_NAME, &_show)) {
-			[[unlikely]] if (!_registry.valid(_entity)) {
+			[[unlikely]] if (!registry.valid(_entity)) {
 				TextUnformatted("No entity selected!");
 				End();
 				return;
 			}
 			const auto footer_height_to_reserve = GetStyle().ItemSpacing.y + GetFrameHeightWithSpacing();
 			[[likely]] if (BeginChild("", {.0, -footer_height_to_reserve}, false)) {
-				[[likely]] if (_registry.has<MetaData>(_entity)) {
-					auto& meta = _registry.get<MetaData>(_entity);
+				[[likely]] if (registry.has<MetaData>(_entity)) {
+					auto& meta = registry.get<MetaData>(_entity);
 					[[likely]] if (CollapsingHeader(ICON_FA_COGS " Metadata", ImGuiTreeNodeFlags_DefaultOpen)) {
 						std::strncpy(this->string_buffer_.data(), meta.name.data(), BUFFER_SIZE);
 						[[unlikely]] if (InputText("Name", this->string_buffer_.data(), BUFFER_SIZE)) {
@@ -79,25 +66,13 @@ namespace dce::gui::widgets {
 						}
 					}
 				}
-				[[likely]] if (_registry.has<Transform>(_entity)) {
-					auto& transform = _registry.get<Transform>(_entity);
+				[[likely]] if (registry.has<Transform>(_entity)) {
+					auto& transform = registry.get<Transform>(_entity);
 					[[likely]] if (CollapsingHeader(ICON_FA_MAP_MARKER_ALT " Transform ", ImGuiTreeNodeFlags_DefaultOpen)) {
-						[[unlikely]] if (Button(ICON_FA_ARROWS)) {
-							this->modifier_ = ImGuizmo::TRANSLATE;
-						}
-						SameLine();
-						[[unlikely]] if (Button(ICON_FA_SYNC)) {
-							this->modifier_ = ImGuizmo::ROTATE;
-						}
-						SameLine();
-						[[unlikely]] if (Button(ICON_FA_EXPAND)) {
-							this->modifier_ = ImGuizmo::SCALE;
-						}
-						Separator();
 
 						DragFloat3("Position", value_ptr(transform.position));
 
-						Vector3<> euler_angles = eulerAngles(transform.rotation);
+						SimdVector3<> euler_angles = eulerAngles(transform.rotation);
 						euler_angles.x = math::degrees(euler_angles.x);
 						euler_angles.y = math::degrees(euler_angles.y);
 						euler_angles.z = math::degrees(euler_angles.z);
@@ -105,26 +80,14 @@ namespace dce::gui::widgets {
 							euler_angles.x = math::radians(euler_angles.x);
 							euler_angles.y = math::radians(euler_angles.y);
 							euler_angles.z = math::radians(euler_angles.z);
-							transform.rotation = Quaternion<>(euler_angles);
+							transform.rotation = SimdQuaternion<>(euler_angles);
 						}
 
 						DragFloat3("Scale ", value_ptr(transform.scale));
-						/*
-						auto matrix = transform.calculate_matrix();
-						ImGuizmo::Enable(true);
-						ImGuizmo::BeginFrame();
-						auto& io = GetIO();
-						ImGuizmo::SetRect(.0f, .0f, io.DisplaySize.x, io.DisplaySize.y);
-						[[unlikely]] if (Manipulate(VIEW, PROJ, this->modifier_, ImGuizmo::WORLD, value_ptr(matrix))) {
-							glm::vec3 skew;
-							glm::vec4 perspective;
-							decompose(matrix, transform.scale, transform.rotation, transform.position, skew, perspective);
-						}
-						*/
 					}
 				}
-				[[likely]] if (_registry.has<MeshRenderer>(_entity)) {
-					auto& renderer = _registry.get<MeshRenderer>(_entity);
+				[[likely]] if (registry.has<MeshRenderer>(_entity)) {
+					auto& renderer = registry.get<MeshRenderer>(_entity);
 					[[likely]] if (CollapsingHeader(ICON_FA_CUBE " Mesh Renderer", ImGuiTreeNodeFlags_DefaultOpen)) {
 						Checkbox("Visible", &renderer.is_visible);
 
@@ -135,7 +98,7 @@ namespace dce::gui::widgets {
 								char* path = nullptr;
 								open_file_dialog(path, this->mesh_filer_.c_str(), this->current_path_.c_str());
 								[[likely]] if (path) {
-									renderer.mesh = _resource_manager.load<Mesh>(path);
+									renderer.mesh = _rt.resource_manager().load<Mesh>(path);
 								}
 							}
 							PopStyleColor();
@@ -161,30 +124,51 @@ namespace dce::gui::widgets {
 						}
 						*/
 
-						if (std::holds_alternative<Material::Unlit>(renderer.material->properties)) {
-							auto& props = std::get<Material::Unlit>(renderer.material->properties);
+						if (std::holds_alternative<Material::UnlitTextured>(renderer.material->properties)) {
+							auto& props = std::get<Material::UnlitTextured>(renderer.material->properties);
 							const auto file_name = props.albedo->get_file_path().filename().string();
 							PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
-							if (Button(file_name.c_str())) {
+							[[unlikely]] if (Button(file_name.c_str())) {
 								char* path = nullptr;
 								open_file_dialog(path, this->texture_filer_.c_str(), this->current_path_.c_str());
 								[[likely]] if (path) {
-									props.albedo = _resource_manager.load<Texture>(path);
+									props.albedo = _rt.resource_manager().load<Texture>(path);
 								}
 							}
 							PopStyleColor();
 							SameLine();
 							TextUnformatted("Albedo");
 						}
-						else if (std::holds_alternative<Material::Lambert>(renderer.material->properties)) {
-							auto& props = std::get<Material::Lambert>(renderer.material->properties);
+						else if (std::holds_alternative<Material::Diffuse>(renderer.material->properties)) {
+							auto& props = std::get<Material::Diffuse>(renderer.material->properties);
 							const auto file_name = props.albedo->get_file_path().filename().string();
 							PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
-							if (Button(file_name.c_str())) {
+							[[unlikely]] if (Button(file_name.c_str())) {
 								char* path = nullptr;
 								open_file_dialog(path, this->texture_filer_.c_str(), this->current_path_.c_str());
 								[[likely]] if (path) {
-									props.albedo = _resource_manager.load<Texture>(path);
+									props.albedo = _rt.resource_manager().load<Texture>(path);
+								}
+							}
+							PopStyleColor();
+						}
+						else if (std::holds_alternative<Material::BumpedDiffuse>(renderer.material->properties)) {
+							auto& props = std::get<Material::BumpedDiffuse>(renderer.material->properties);
+							const auto albedo_file = props.albedo->get_file_path().filename().string();
+							const auto normal_file = props.normal->get_file_path().filename().string();
+							PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
+							[[unlikely]] if (Button(albedo_file.c_str())) {
+								char* path = nullptr;
+								open_file_dialog(path, this->texture_filer_.c_str(), this->current_path_.c_str());
+								[[likely]] if (path) {
+									props.albedo = _rt.resource_manager().load<Texture>(path);
+								}
+							}
+							[[unlikely]] if (Button(normal_file.c_str())) {
+								char* path = nullptr;
+								open_file_dialog(path, this->texture_filer_.c_str(), this->current_path_.c_str());
+								[[likely]] if (path) {
+									props.normal = _rt.resource_manager().load<Texture>(path);
 								}
 							}
 							PopStyleColor();
@@ -192,37 +176,11 @@ namespace dce::gui::widgets {
 					}
 				}
 
-				[[unlikely]] if (_registry.has<Rigidbody>(_entity)) {
-					auto& rigidbody = _registry.get<Rigidbody>(_entity);
+				[[unlikely]] if (registry.has<Rigidbody>(_entity)) {
+					auto& rigidbody = registry.get<Rigidbody>(_entity);
 					[[likely]] if (CollapsingHeader(ICON_FA_GLOBE " Rigidbody", ImGuiTreeNodeFlags_DefaultOpen)) {
 						DragFloat("Mass", &rigidbody.mass);
 						Checkbox("Is Kinematic", &rigidbody.is_kinematic);
-					}
-				}
-
-				[[unlikely]] if (_registry.has<AudioSource>(_entity)) {
-					auto& audio_source = _registry.get<AudioSource>(_entity);
-					[[likely]] if (CollapsingHeader(ICON_FA_VOLUME " Audio Source", ImGuiTreeNodeFlags_DefaultOpen)) {
-						[[unlikely]] if (Button(ICON_FA_PLAY_CIRCLE)) {
-							audio_source.play();
-						}
-						SameLine();
-						[[unlikely]] if (Button(ICON_FA_STOP_CIRCLE)) {
-							audio_source.stop();
-						}
-						const auto file_name = audio_source.clip->get_file_path().filename().string();
-
-						PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
-						if (Button(file_name.c_str())) {
-							char* path = nullptr;
-							open_file_dialog(path, this->audio_filter_.c_str(), this->current_path_.c_str());
-							[[likely]] if (path) {
-								audio_source.clip = _resource_manager.load<AudioClip>(path);
-							}
-						}
-						PopStyleColor();
-						SameLine();
-						TextUnformatted("Clip");
 					}
 				}
 				EndChild();

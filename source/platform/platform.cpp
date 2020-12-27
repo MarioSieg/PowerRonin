@@ -1,18 +1,3 @@
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
 #include "platform.hpp"
 #include "util.hpp"
 #include "../../include/dce/config.hpp"
@@ -62,7 +47,8 @@ namespace {
 		using namespace dce;
 
 		_logger.info("\t\tResolution: ({}, {})", _current->width, _current->height);
-		_logger.info("\t\tAspect ratio: {}", static_cast<float>(_current->width) / static_cast<float>(_current->height));
+		_logger.info("\t\tAspect ratio: {}",
+		             static_cast<float>(_current->width) / static_cast<float>(_current->height));
 		_logger.info("\t\tRefresh rate: {}Hz", _current->refreshRate);
 		_logger.info("\t\tR bits: {}", _current->redBits);
 		_logger.info("\t\tG bits: {}", _current->greenBits);
@@ -71,38 +57,38 @@ namespace {
 
 	constexpr auto kernel_variant_name(const iware::system::kernel_t _variant) noexcept -> const char* {
 		switch (_variant) {
-		case iware::system::kernel_t::windows_nt: return "Windows NT";
-		case iware::system::kernel_t::linux: return "Linux";
-		case iware::system::kernel_t::darwin: return "Darwin";
-		case iware::system::kernel_t::unknown: default: return "Unknown";
+			case iware::system::kernel_t::windows_nt: return "Windows NT";
+			case iware::system::kernel_t::linux: return "Linux";
+			case iware::system::kernel_t::darwin: return "Darwin";
+			case iware::system::kernel_t::unknown: default: return "Unknown";
 		}
 	}
 
 	constexpr auto cache_type_name(const iware::cpu::cache_type_t cache_type) noexcept -> const char* {
 		switch (cache_type) {
-		case iware::cpu::cache_type_t::unified: return "Unified";
-		case iware::cpu::cache_type_t::instruction: return "Instruction";
-		case iware::cpu::cache_type_t::data: return "Data";
-		case iware::cpu::cache_type_t::trace: return "Trace";
-		default: return "Unknown";
+			case iware::cpu::cache_type_t::unified: return "Unified";
+			case iware::cpu::cache_type_t::instruction: return "Instruction";
+			case iware::cpu::cache_type_t::data: return "Data";
+			case iware::cpu::cache_type_t::trace: return "Trace";
+			default: return "Unknown";
 		}
 	}
 
 	constexpr auto architecture_name(const iware::cpu::architecture_t _architecture) noexcept -> const char* {
 		switch (_architecture) {
-		case iware::cpu::architecture_t::x64: return "x64";
-		case iware::cpu::architecture_t::arm: return "ARM";
-		case iware::cpu::architecture_t::itanium: return "Itanium";
-		case iware::cpu::architecture_t::x86: return "x86";
-		case iware::cpu::architecture_t::unknown: default: return "Unknown";
+			case iware::cpu::architecture_t::x64: return "x64";
+			case iware::cpu::architecture_t::arm: return "ARM";
+			case iware::cpu::architecture_t::itanium: return "Itanium";
+			case iware::cpu::architecture_t::x86: return "x86";
+			case iware::cpu::architecture_t::unknown: default: return "Unknown";
 		}
 	}
 
 	constexpr auto endianness_name(const iware::cpu::endianness_t _endianness) noexcept -> const char* {
 		switch (_endianness) {
-		case iware::cpu::endianness_t::little: return "Little-Endian";
-		case iware::cpu::endianness_t::big: return "Big-Endian";
-		default: return "Unknown";
+			case iware::cpu::endianness_t::little: return "Little-Endian";
+			case iware::cpu::endianness_t::big: return "Big-Endian";
+			default: return "Unknown";
 		}
 	}
 } // namespace // namespace
@@ -111,7 +97,8 @@ namespace dce::platform {
 	void* NATIVE_WINDOW_HANDLE = nullptr;
 	void* WINDOW_HANDLE = nullptr;
 
-	Platform::Platform() : ISubsystem("Platform", EVENTS) { }
+	Platform::Platform() : ISubsystem("Platform", EVENTS) {
+	}
 
 	auto Platform::on_pre_startup(Runtime& _rt) -> bool {
 		auto& proto = _rt.protocol();
@@ -175,9 +162,8 @@ namespace dce::platform {
 
 		/* Disable any GLFW side API: */
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 		glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_FALSE);
-		glfwSwapInterval(0);
+		glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
 		proto.separator();
 		proto.info("Initializing window...");
@@ -192,9 +178,6 @@ namespace dce::platform {
 		}
 
 		[[likely]] if (display_settings.is_full_screen || display_settings.is_maximized) {
-			[[likely]] if (display_settings.is_maximized) {
-				glfwMaximizeWindow(this->window_);
-			}
 			int w = 0;
 			int h = 0;
 			glfwGetFramebufferSize(this->window_, &w, &h);
@@ -202,9 +185,11 @@ namespace dce::platform {
 				display_settings.width = static_cast<std::uint16_t>(w);
 				display_settings.height = static_cast<std::uint16_t>(h);
 			}
+			glfwFocusWindow(this->window_);
 		}
 
-		[[unlikely]] if (!display_settings.is_full_screen) {
+
+		[[unlikely]] if (!display_settings.is_full_screen && !display_settings.is_maximized) {
 			center_window(this->window_, primary_monitor);
 		}
 
@@ -219,7 +204,7 @@ namespace dce::platform {
 		nat_handle = reinterpret_cast<void*>(glfwGetCocoaWindow(this->window_));
 #endif
 
-		[[unlikely]] if (nat_handle == nullptr) {
+		[[unlikely]] if (!nat_handle) {
 			proto.error("Failed to retrieve native window handle!");
 			return false;
 		}
@@ -243,10 +228,12 @@ namespace dce::platform {
 			const auto os_info = iware::system::OS_info();
 			const auto quantities = iware::cpu::quantities();
 
-			proto.info("RAM physical: {}B -> {}GB, available: {}B -> {}GB", memory.physical_total, memory.physical_available
+			proto.info("RAM physical: {}B -> {}GB, available: {}B -> {}GB", memory.physical_total,
+			           memory.physical_available
 			           , static_cast<float>(memory.physical_total) / (1024.F * 1024.F * 1024.F)
 			           , static_cast<float>(memory.physical_available) / (1024.F * 1024.F * 1024.F));
-			proto.info("RAM virtual: {}B -> {}GB, available: {}B -> {}GB", memory.virtual_available, memory.virtual_total
+			proto.info("RAM virtual: {}B -> {}GB, available: {}B -> {}GB", memory.virtual_available,
+			           memory.virtual_total
 			           , static_cast<float>(memory.virtual_available) / (1024.F * 1024.F * 1024.F)
 			           , static_cast<float>(memory.virtual_total) / (1024.F * 1024.F * 1024.F));
 			proto.info("Kernel: {}, version: {}.{}.{}.{}", kernel_variant_name(kernel_info.variant), kernel_info.major
@@ -258,11 +245,13 @@ namespace dce::platform {
 			proto.info("CPU frequency: {}Hz", iware::cpu::frequency());
 			proto.info("CPU endianness: {}", endianness_name(iware::cpu::endianness()));
 			proto.info("CPU vendor: {}", iware::cpu::vendor_id());
-			proto.info("CPU cores: {}, logical: {}, sockets: {}", quantities.physical, quantities.logical, quantities.packages);
+			proto.info("CPU cores: {}, logical: {}, sockets: {}", quantities.physical, quantities.logical,
+			           quantities.packages);
 
 			for (auto i = 1U; i <= 3; ++i) {
 				const auto cache = iware::cpu::cache(i);
-				proto.info("CPU cache L{} size: {}B, line size: {}B, associativity: {}, type: {}", i, cache.size, cache.line_size
+				proto.info("CPU cache L{} size: {}B, line size: {}B, associativity: {}, type: {}", i, cache.size,
+				           cache.line_size
 				           , cache.associativity, cache_type_name(cache.type));
 			}
 
@@ -316,10 +305,6 @@ namespace dce::platform {
 
 	auto Platform::on_post_startup(Runtime& _rt) -> bool {
 		glfwFocusWindow(this->window_);
-		[[likely]] if (_rt.config().display.is_maximized) {
-			glfwMaximizeWindow(this->window_);
-		}
-		glfwShowWindow(this->window_);
 		return true;
 	}
 
