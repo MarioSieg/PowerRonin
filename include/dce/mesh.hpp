@@ -2,6 +2,7 @@
 
 #include "resource.hpp"
 #include "mathlib.hpp"
+#include "aabb.hpp"
 
 namespace dce {
 	/// <summary>
@@ -63,6 +64,12 @@ namespace dce {
 		[[nodiscard]] auto get_vertex_buffer_id() const noexcept -> std::uint16_t;
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>The axis aligned bounding box of this mesh.</returns>
+		auto get_aabb() const noexcept -> const AABB<>&;
+
+		/// <summary>
 		/// Upload mesh data to VRAM. (Still stays in RAM).
 		/// </summary>
 		void upload() override;
@@ -75,6 +82,7 @@ namespace dce {
 	private:
 		std::vector<std::uint16_t> indices_ = {};
 		std::vector<Vertex> vertices_ = {};
+		AABB<> aabb_ = {};
 
 		struct {
 			std::uint16_t index_buffer_id = 0;

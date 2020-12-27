@@ -17,4 +17,8 @@ namespace dce {
 	auto Mesh::get_vertex_buffer_id() const noexcept -> std::uint16_t {
 		return this->volatile_upload_data_.vertex_buffer_id;
 	}
+
+	auto Mesh::get_aabb() const noexcept -> const AABB<>& {
+		return this->aabb_;
+	}
 } // namespace dce // namespace dce

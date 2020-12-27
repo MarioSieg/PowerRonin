@@ -20,5 +20,6 @@ namespace dce {
 		RRef<Mesh> mesh = {};
 		RRef<Material> material = {};
 		bool is_visible = true;
+		bool perform_frustum_culling = true;
 	};
 }

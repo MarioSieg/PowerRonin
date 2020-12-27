@@ -94,8 +94,7 @@ namespace dce::renderer {
 		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "View x: %u y: %u w: %u h: %u", viewport_pos_x, viewport_pos_y,
 		                    viewport_width, viewport_height);
 		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "Tick: %u, Time: %.2f", chrono.cycles, chrono.time);
-		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "FrameTime: %.3fms, DeltaTime: %f, FPS: %.2f", chrono.frame_time,
-		                    chrono.delta_time, chrono.fps);
+		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "FPS: %.2f, DeltaTime: %f, FrameTime: %.3fms", chrono.fps, chrono.frame_time, chrono.delta_time);
 		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "Forward: %.2f %.2f %.2f, Left: %.2f %.2f %.2f, FOV: %.1f", forward.x,
 		                    forward.y, forward.z, left.x, left.y, left.z, fov);
 		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "VRAM %.2fGB/%.2fGB, TexMEM: %.2fGB", stats->gpuMemoryUsed / byte_2_gb,

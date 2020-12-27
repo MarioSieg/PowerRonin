@@ -1,26 +1,66 @@
 #include "../include/dce/mesh.hpp"
+#include "renderer/gl_headers.hpp"
 #include "../extern/assimp/include/assimp/Importer.hpp"
 #include "../extern/assimp/include/assimp/postprocess.h"
 #include "../extern/assimp/include/assimp/scene.h"
-#include "../include/dce/time_utils.hpp"
-#include "renderer/gl_headers.hpp"
+#include "../extern/assimp/include/assimp/cimport.h"
 
-namespace {
-	auto create_vertex_layout() -> bgfx::VertexLayout {
+namespace dce {
+	static auto create_vertex_layout() -> bgfx::VertexLayout {
 		bgfx::VertexLayout layout;
 		// @formatter:off
 		layout.begin()
-		.add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float)
-		.add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float)
-		.add(bgfx::Attrib::Normal, 3, bgfx::AttribType::Float)
-		.add(bgfx::Attrib::Tangent, 3, bgfx::AttribType::Float)
-		.end();
+			.add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float)
+			.add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float)
+			.add(bgfx::Attrib::Normal, 3, bgfx::AttribType::Float)
+			.add(bgfx::Attrib::Tangent, 3, bgfx::AttribType::Float)
+			.end();
 		// @formatter:one
 		return layout;
 	}
-} // namespace
 
-namespace dce {
+	static void get_bounding_box_for_node(
+		const aiScene& _scene,
+		const aiNode& _node,
+		aiVector3D& _min,
+		aiVector3D& _max,
+		aiMatrix4x4& _transformation
+	)  noexcept {
+		aiMatrix4x4 prev = _transformation;
+		aiMultiplyMatrix4(&_transformation, &_node.mTransformation);
+
+		for (unsigned i = 0; i < _node.mNumMeshes; ++i) {
+			const auto& mesh = _scene.mMeshes[_node.mMeshes[i]];
+
+			for (unsigned t = 0; t < mesh->mNumVertices; ++t) {
+
+				aiVector3D tmp = mesh->mVertices[t];
+				aiTransformVecByMatrix4(&tmp, &_transformation);
+
+				_min.x = std::min(_min.x, tmp.x);
+				_min.y = std::min(_min.y, tmp.y);
+				_min.z = std::min(_min.z, tmp.z);
+
+				_max.x = std::max(_max.x, tmp.x);
+				_max.y = std::max(_max.y, tmp.y);
+				_max.z = std::max(_max.z, tmp.z);
+			}
+		}
+
+		for (unsigned i = 0; i < _node.mNumChildren; ++i) {
+			get_bounding_box_for_node(_scene, *_node.mChildren[i], _min, _max, _transformation);
+		}
+		_transformation = prev;
+	}
+
+	static void get_bounding_box(const aiScene& _scene, aiVector3D& _min, aiVector3D& _max) noexcept {
+		aiMatrix4x4 trafo;
+		aiIdentityMatrix4(&trafo);
+		_min.x = _min.y = _min.z = 1e10f;
+		_max.x = _max.y = _max.z = -1e10f;
+		get_bounding_box_for_node(_scene, *_scene.mRootNode, _min, _max, trafo);
+	}
+	
 	void Mesh::upload() {
 		[[unlikely]] if (this->is_uploaded_) {
 			this->offload();
@@ -90,9 +130,10 @@ namespace dce {
 	                         const MeshMeta* const _meta) const -> std::shared_ptr<Mesh> {
 		Assimp::Importer importer;
 
-		constexpr unsigned flags = aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace | aiProcess_Triangulate
-			|
-			aiProcess_GenUVCoords | aiProcess_GenSmoothNormals | aiProcess_ConvertToLeftHanded;
+		unsigned flags = aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_ConvertToLeftHanded;
+		flags |= aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace;
+		flags |= aiProcess_Triangulate | aiProcess_GenUVCoords;
+		flags |= aiProcess_GenSmoothNormals | aiProcess_GenBoundingBoxes;
 
 		//importer.SetPropertyFloat(AI_CONFIG_GLOBAL_SCALE_FACTOR_KEY, .1f);
 
@@ -147,10 +188,15 @@ namespace dce {
 
 		vertices.shrink_to_fit();
 
+		aiVector3D bound_min;
+		aiVector3D bound_max;
+		get_bounding_box(*scene, bound_min, bound_max);
+
 		auto self = IResource<MeshMeta>::allocate<Mesh>();
 		self->file_path_ = std::move(_path);
 		self->indices_ = std::move(indices);
 		self->vertices_ = std::move(vertices);
+		self->aabb_ = AABB<>{ {bound_min.x, bound_min.y, bound_min.z}, {bound_max.x, bound_max.y, bound_max.z} };
 		self->meta_data_ = _meta ? *_meta : IResource<MeshMeta>::load_meta_or_default(self->file_path_);
 
 		self->upload();

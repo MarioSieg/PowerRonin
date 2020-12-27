@@ -51,17 +51,16 @@ namespace dce::renderer {
 		}
 		get_runtime_stats(const_cast<Diagnostics&>(_rt.diagnostics()));
 		this->tick_prev_ = update_clocks(const_cast<Chrono&>(_rt.chrono()), this->tick_prev_);
+		this->update_camera(_rt);
 		this->gpu_.set_viewport(math::ZERO, {_rt.config().display.width, _rt.config().display.height}, FULLSCREEN_VIEW);
 		this->gpu_.clear_view(FULLSCREEN_VIEW, BGFX_CLEAR_DEPTH | BGFX_CLEAR_COLOR, 1.F, 0x040404FF);
 		this->gpu_.sort_draw_calls(FULLSCREEN_VIEW);
-		this->gpu_.set_viewport(_rt.render_data().scenery_viewport_position, _rt.render_data().scenery_viewport_size,
-		                        SCENERY_VIEW);
+		this->gpu_.set_viewport(_rt.render_data().scenery_viewport_position, _rt.render_data().scenery_viewport_size, SCENERY_VIEW);
 		return true;
 	}
 
 	/* End frame */
 	auto Renderer::on_post_tick(Runtime& _rt) -> bool {
-		this->update_camera(_rt);
 		this->render_scene(_rt);
 		this->render_skybox(_rt.scenery().config.lighting, _rt.render_data());
 
@@ -79,6 +78,8 @@ namespace dce::renderer {
 		auto& data = _rt.render_data();
 		data.view_matrix = this->fly_cam_.get_view_matrix();
 		data.projection_matrix = this->fly_cam_.get_projection_matrix();
+		data.view_projection_matrix = data.projection_matrix * data.view_matrix;
+		data.camera_frustum.from_camera_matrix(data.view_projection_matrix);
 		this->gpu_.set_camera(SCENERY_VIEW, data.view_matrix, data.projection_matrix);
 	}
 
@@ -125,11 +126,22 @@ namespace dce::renderer {
 		this->set_shared_uniforms(_rt.scenery().config.lighting);
 
 		// Draw lambda function which render_stats an object:
-		auto draw = [this](Transform& _transform, MeshRenderer& _mesh_renderer) {
+		auto draw = [this, frustum = &_rt.render_data().camera_frustum](Transform& _transform, MeshRenderer& _mesh_renderer) {
 
 			// If the mesh renderer is not visible, skip it.
 			[[unlikely]] if (!_mesh_renderer.is_visible) {
 				return;
+			}
+
+			// If the mesh renderer wants frustum culling and it is outside the frustum, skip it.
+			[[likely]] if(_mesh_renderer.perform_frustum_culling) {
+
+				auto aabb_world_space = _mesh_renderer.mesh->get_aabb();
+				aabb_world_space.max += _transform.position;
+				aabb_world_space.min += _transform.position;
+				[[likely]] if(!frustum->is_aabb_visible(aabb_world_space)) {
+					return;
+				}
 			}
 
 			// Set world transform matrix:
