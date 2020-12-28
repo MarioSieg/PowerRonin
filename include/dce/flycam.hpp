@@ -14,7 +14,7 @@ namespace dce {
 		float sensitivity = 0.5F;
 		float fov = 80.F;
 		float near_clip = 0.01F;
-		float far_clip = 2000.F;
+		float far_clip = 1000.F;
 		float smoothness = 1.F;
 		float clamp_y = 80.F;
 

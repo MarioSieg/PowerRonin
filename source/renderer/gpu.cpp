@@ -152,6 +152,12 @@ namespace dce::renderer {
 		submit(_view_id, _shader, _depth);
 	}
 
+	void GPU::draw(const bgfx::ProgramHandle _shader, const bgfx::ViewId _view_id, const bgfx::OcclusionQueryHandle _oqh, const std::uint64_t _state_flags, const std::uint8_t _depth) const noexcept {
+		assert(bgfx::isValid(_shader));
+		bgfx::setState(_state_flags);
+		submit(_view_id, _shader, _oqh, _depth);
+	}
+
 	void GPU::set_viewport(const SimdVector2<> _xy, const SimdVector2<> _wh, const bgfx::ViewId _view_id) const noexcept {
 		bgfx::setViewRect(_view_id, _xy.x, _xy.y, _wh.x, _wh.y);
 	}

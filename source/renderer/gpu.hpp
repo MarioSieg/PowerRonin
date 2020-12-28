@@ -130,6 +130,20 @@ namespace dce::renderer {
 		          , std::uint8_t _depth = 0) const noexcept;
 
 		/// <summary>
+		/// Draw mesh with occlusion query.
+		/// </summary>
+		/// <param name="_shader"></param>
+		/// <param name="_view_id"></param>
+		/// <param name="_state_flags"></param>
+		/// <param name="_depth"></param>
+		/// <returns></returns>
+		void draw(bgfx::ProgramHandle _shader
+			, const bgfx::ViewId _view_id
+			, const bgfx::OcclusionQueryHandle _oqh
+			, const std::uint64_t _state_flags = DEFAULT_STATE_FLAGS
+			, const std::uint8_t _depth = 0) const noexcept;
+
+		/// <summary>
 		/// Set the set_viewport.
 		/// </summary>
 		/// <param name="_xy"></param>

@@ -33,8 +33,6 @@ namespace dce::renderer {
 
 		virtual void unload();
 
-		virtual void draw(const MatType& _type, const InputType& _mesh) const = 0;
-
 	protected:
 		std::string_view name_ = {};
 		std::filesystem::path path_ = {};
