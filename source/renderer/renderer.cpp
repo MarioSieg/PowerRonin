@@ -126,8 +126,13 @@ namespace dce::renderer {
 		// Set per frame data for all shaders:
 		this->set_shared_uniforms(_rt.scenery().config.lighting);
 
+		auto& diagnostics = const_cast<Diagnostics&>(_rt.diagnostics());
+		
+		diagnostics.graphics.scenery_mesh_drawcalls = 0;
+		
+
 		// Draw lambda function which render_stats an object:
-		auto draw = [this, frustum = &_rt.render_data().camera_frustum](Transform& _transform, MeshRenderer& _mesh_renderer) {
+		auto draw = [this, frustum = &_rt.render_data().camera_frustum, &diagnostics](Transform& _transform, MeshRenderer& _mesh_renderer) {
 
 			// If the mesh renderer is not visible, skip it.
 			[[unlikely]] if (!_mesh_renderer.is_visible) {
@@ -167,6 +172,7 @@ namespace dce::renderer {
 				this->shader_bucket_.bumped_diffuse.draw(properties, mesh);
 			}
 
+			++diagnostics.graphics.scenery_mesh_drawcalls;
 		};
 
 		// Iterate and draw:

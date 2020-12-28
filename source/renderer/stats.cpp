@@ -74,7 +74,9 @@ namespace dce::renderer {
 	}
 
 	void render_stats(const Runtime& _runtime) {
+		//@formatter:off
 		const auto& chrono = _runtime.chrono();
+		const auto& diag = _runtime.diagnostics();
 		const auto* const stats = bgfx::getStats();
 		const auto& view = _runtime.render_data().view_matrix;
 		const auto& proj = _runtime.render_data().projection_matrix;
@@ -89,17 +91,12 @@ namespace dce::renderer {
 		const std::uint16_t pos_x = viewport_pos_x / 8 + 4;
 		std::uint16_t pos_y = viewport_pos_y / 16 + 2;
 		bgfx::dbgTextClear();
-		bgfx::dbgTextPrintf(pos_x, pos_y, 0x8F, "%s, DrawCalls: %u, ComputeCalls: %u, BlitCalls: %u",
-		                    bgfx::getRendererName(bgfx::getRendererType()), stats->numDraw, stats->numCompute, stats->numBlit);
-		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "View x: %u y: %u w: %u h: %u", viewport_pos_x, viewport_pos_y,
-		                    viewport_width, viewport_height);
+		bgfx::dbgTextPrintf(pos_x, pos_y, 0x8F, "%s, DrawCalls: %u, SceneryDrawCalls: %u, ComputeCalls: %u, BlitCalls: %u", bgfx::getRendererName(bgfx::getRendererType()), stats->numDraw, diag.graphics.scenery_mesh_drawcalls, stats->numCompute, stats->numBlit);
+		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "View x: %u y: %u w: %u h: %u", viewport_pos_x, viewport_pos_y,viewport_width, viewport_height);
 		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "Tick: %u, Time: %.2f", chrono.cycles, chrono.time);
-		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "FPS: %.2f, DeltaTime: %f, FrameTime: %.3fms", chrono.fps, chrono.frame_time,
-		                    chrono.delta_time);
-		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "Forward: %.2f %.2f %.2f, Left: %.2f %.2f %.2f, FOV: %.1f", forward.x,
-		                    forward.y, forward.z, left.x, left.y, left.z, fov);
-		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "VRAM %.2fGB/%.2fGB, TexMEM: %.2fGB", stats->gpuMemoryUsed / byte_2_gb,
-		                    stats->gpuMemoryMax / byte_2_gb, stats->textureMemoryUsed / byte_2_gb);
-
+		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "FPS: %.2f, DeltaTime: %f, FrameTime: %.3fms", chrono.fps, chrono.frame_time,chrono.delta_time);
+		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "Forward: %.2f %.2f %.2f, Left: %.2f %.2f %.2f, FOV: %.1f", forward.x, forward.y, forward.z, left.x, left.y, left.z, fov);
+		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "VRAM %.2fGB/%.2fGB, TexMEM: %.2fGB", stats->gpuMemoryUsed / byte_2_gb,stats->gpuMemoryMax / byte_2_gb, stats->textureMemoryUsed / byte_2_gb);
+		//@formatter:on
 	}
 }

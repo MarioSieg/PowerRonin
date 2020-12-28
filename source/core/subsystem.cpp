@@ -15,14 +15,6 @@ namespace dce::core {
 		return this->post_startup_time_;
 	}
 
-	auto ISubsystem::pre_tick_time() const noexcept -> double {
-		return this->pre_tick_time_;
-	}
-
-	auto ISubsystem::post_tick_time() const noexcept -> double {
-		return this->post_tick_time_;
-	}
-
 	auto ISubsystem::pre_shutdown_time() const noexcept -> double {
 		return this->pre_shutdown_time_;
 	}
