@@ -1,14 +1,3 @@
-/*
- * Copyright 2013-2014 Dario Manesku. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-
-void main()
-{
-	// Vulkan does not like shader writing to a target that is not attached
-#ifndef BGFX_SHADER_LANGUAGE_SPIRV
-	gl_FragColor = vec4_splat(0.0);
-#endif
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:7a36439c53df023450d8e8637f4d188ccecc4d00542c0bcfba91be460d978c6d
+size 330

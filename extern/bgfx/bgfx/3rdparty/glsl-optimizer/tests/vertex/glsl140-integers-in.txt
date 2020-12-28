@@ -1,26 +1,3 @@
-#version 140
-
-uniform vec2 p;
-
-in vec4 position;
-in vec4 icol;
-
-out vec4 col;
-flat out ivec4 colint;
-
-void main (void)
-{
-    gl_Position = vec4(p, 0.0, 0.0) + position;
-
-    // integers & vertex ID & instance ID
-    colint.x = gl_VertexID;
-    colint.y = gl_InstanceID ^ gl_InstanceID;
-    colint.z = gl_InstanceID << 2;
-    colint.w = colint.x + colint.y;
-
-    // new built-ins
-    col.x = trunc(position.x);
-    col.y = round(position.y);
-    col.z = roundEven(position.y);
-    col.w = cosh(position.w);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:af15bba3fa60dcd971d9438c0b4ac1c42633965f34818963fc7cb237aaa87499
+size 508

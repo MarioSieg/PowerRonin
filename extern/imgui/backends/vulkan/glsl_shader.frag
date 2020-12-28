@@ -1,14 +1,3 @@
-#version 450 core
-layout(location = 0) out vec4 fColor;
-
-layout(set=0, binding=0) uniform sampler2D sTexture;
-
-layout(location = 0) in struct {
-    vec4 Color;
-    vec2 UV;
-} In;
-
-void main()
-{
-    fColor = In.Color * texture(sTexture, In.UV.st);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:77ae928b0eb30858ba2ea90f896c1c505d74dbdcd223df87e628898c28038836
+size 249

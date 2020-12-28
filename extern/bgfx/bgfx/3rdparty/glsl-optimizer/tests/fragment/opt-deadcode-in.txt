@@ -1,24 +1,3 @@
-struct v2f {
-    vec4 pos;
-    float unusedmember;
-};
-void main() {
-	float f = gl_FragCoord.x;
-	
-    v2f sused;
-	sused.pos = vec4(f);
-	sused.unusedmember = f*6.0;
-    v2f sunused;
-	sunused.pos = vec4(f);
-	sunused.unusedmember = f*7.0;
-	
-	float fused = f*2.0;
-	float funused = f*3.0;
-	
-	float arrused[3];
-	arrused[0] = f*4.0;
-	float arrunused[3];
-	arrunused[0] = f*5.0;
-	
-    gl_FragColor = vec4(fused+sused.pos.x+arrused[0]);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:e653c49ac2edd6dad9eac35a3f0d4f213019e648d0e610647572fc82a070cbca
+size 428

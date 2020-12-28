@@ -1,16 +1,3 @@
-$input a_position, a_texcoord0
-$output v_texcoord0
-
-/*
- * Copyright 2018 Attila Kocsis. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-
-void main()
-{
-	gl_Position = mul(u_modelViewProj, vec4(a_position.xyz, 1.0) );
-	v_texcoord0 = a_texcoord0; 
-}
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:59f87c48cfb5951c98b09ddc5be222265dac9aafc1a8791edda2a09fb4fc2653
+size 324

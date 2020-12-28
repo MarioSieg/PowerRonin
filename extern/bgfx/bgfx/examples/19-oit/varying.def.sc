@@ -1,5 +1,3 @@
-vec2 v_texcoord0 : TEXCOORD0 = vec2(0.0, 0.0);
-vec4 v_pos       : TEXCOORD4 = vec4(0.0, 0.0, 0.0, 0.0);
-
-vec3 a_position  : POSITION;
-vec2 a_texcoord0 : TEXCOORD0;
+version https://git-lfs.github.com/spec/v1
+oid sha256:28cce8b23eab98e5f72645c45554f58d9506b31bc2cbb51d13ec8370765260cd
+size 164

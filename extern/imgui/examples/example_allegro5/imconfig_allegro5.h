@@ -1,11 +1,3 @@
-//-----------------------------------------------------------------------------
-// COMPILE-TIME OPTIONS FOR DEAR IMGUI ALLEGRO 5 EXAMPLE
-// See imconfig.h for the full template
-// Because Allegro doesn't support 16-bit vertex indices, we enable the compile-time option of imgui to use 32-bit indices
-//-----------------------------------------------------------------------------
-
-#pragma once
-
-// Use 32-bit vertex indices because Allegro doesn't support 16-bit ones
-// This allows us to avoid converting vertices format at runtime
-#define ImDrawIdx  int
+version https://git-lfs.github.com/spec/v1
+oid sha256:0c3bf7813a06eaf40c89653c66a322826eeab17032677c5f6e1fb7e52792f335
+size 556

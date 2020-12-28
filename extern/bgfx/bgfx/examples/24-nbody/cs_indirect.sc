@@ -1,16 +1,3 @@
-/*
- * Copyright 2014 Stanlo Slasinski. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "bgfx_compute.sh"
-#include "uniforms.sh"
-
-BUFFER_WR(indirectBuffer, uvec4, 0);
-
-NUM_THREADS(1, 1, 1)
-void main()
-{
-	drawIndexedIndirect(indirectBuffer, 0, 6, u_dispatchSize * threadGroupUpdateSize, 0, 0, 0);
-	dispatchIndirect(indirectBuffer, 1, u_dispatchSize, 1, 1);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:46288e2e6a2b3b5454d2258af2f5f3806062ebd4f4bf8dcc85d3fc07ccaf9f71
+size 411

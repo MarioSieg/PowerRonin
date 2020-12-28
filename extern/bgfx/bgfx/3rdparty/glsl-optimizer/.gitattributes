@@ -1,4 +1,3 @@
-*.dsp -crlf
-*.dsw -crlf
-*.sln -crlf
-*.vcproj -crlf
+version https://git-lfs.github.com/spec/v1
+oid sha256:afea31f700a93f8f52ed6d82d2b471f74dad3ddfb28f0460ccc8f00755ea8b34
+size 51

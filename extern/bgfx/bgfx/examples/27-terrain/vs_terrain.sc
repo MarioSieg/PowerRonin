@@ -1,17 +1,3 @@
-$input a_position, a_texcoord0
-$output v_position, v_texcoord0
-
-/*
- * Copyright 2015 Andrew Mac. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-
-void main()
-{
-	v_position = a_position.xyz;
-	v_texcoord0 = a_texcoord0;
-
-	gl_Position = mul(u_modelViewProj, vec4(v_position.xyz, 1.0));
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c5f6ce1536ec1c3da8aa23c6daf8848ca08f400fa17332ba2611111fa3fb4565
+size 361

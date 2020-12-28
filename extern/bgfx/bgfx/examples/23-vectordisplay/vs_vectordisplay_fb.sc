@@ -1,10 +1,3 @@
-$input a_position, a_texcoord0, a_color0
-$output v_texcoord0, v_color0
-
-#include <bgfx_shader.sh>
-
-void main() {
-  gl_Position = mul(u_modelViewProj, vec4(a_position, 1.0) );
-  v_color0    = a_color0;
-  v_texcoord0 = a_texcoord0;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:18d353d303ca8401ba0478b7e1b5af26932238c30e6817cbf40e3dbdd256b863
+size 232

@@ -1,6 +1,3 @@
-#!/bin/bash
-## -V: create SPIR-V binary
-## -x: save binary output as text-based 32-bit hexadecimal numbers
-## -o: output file
-glslangValidator -V -x -o glsl_shader.frag.u32 glsl_shader.frag
-glslangValidator -V -x -o glsl_shader.vert.u32 glsl_shader.vert
+version https://git-lfs.github.com/spec/v1
+oid sha256:c3abb9fe51a4c033003ddabfd97c79583c89675572225b2d7b615619b58ee798
+size 254

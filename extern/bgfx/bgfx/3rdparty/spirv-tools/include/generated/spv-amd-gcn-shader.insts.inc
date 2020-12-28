@@ -1,7 +1,3 @@
-
-
-static const spv_ext_inst_desc_t spv_amd_gcn_shader_entries[] = {
-  {"CubeFaceIndexAMD", 1, 0, nullptr, {SPV_OPERAND_TYPE_ID, SPV_OPERAND_TYPE_NONE}},
-  {"CubeFaceCoordAMD", 2, 0, nullptr, {SPV_OPERAND_TYPE_ID, SPV_OPERAND_TYPE_NONE}},
-  {"TimeAMD", 3, 0, nullptr, {SPV_OPERAND_TYPE_NONE}}
-};
+version https://git-lfs.github.com/spec/v1
+oid sha256:c11e857cd79c4446df326723d2de1c5839a013d8a5b25356ab7bce81c8e71944
+size 294

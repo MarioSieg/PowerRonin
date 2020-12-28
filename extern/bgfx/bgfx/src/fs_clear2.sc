@@ -1,15 +1,3 @@
-/*
- * Copyright 2011-2020 Branimir Karadzic. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "bgfx_shader.sh"
-
-uniform vec4 bgfx_clear_color[8];
-
-void main()
-{
-	gl_FragData[0] = bgfx_clear_color[0];
-	gl_FragData[1] = bgfx_clear_color[1];
-	gl_FragData[2] = bgfx_clear_color[2];
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:35aae0a02124da7c8ed9e1e3c9327ed699afc43285e5bf6c19c88f5b0415ab41
+size 333

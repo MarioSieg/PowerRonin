@@ -1,4 +1,3 @@
-*.dll
-*.so
-*.pdb
-imgui*
+version https://git-lfs.github.com/spec/v1
+oid sha256:842512f96426c1b46236e216cbedb2b8789e71e96ab15c9888d4815f420f558e
+size 24

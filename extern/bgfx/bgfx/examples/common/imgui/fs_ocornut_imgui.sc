@@ -1,11 +1,3 @@
-$input v_color0, v_texcoord0
-
-#include "../common.sh"
-
-SAMPLER2D(s_tex, 0);
-
-void main()
-{
-	vec4 texel = texture2D(s_tex, v_texcoord0);
-	gl_FragColor = texel * v_color0; 
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:4b02b37dd0ecc48a9b321ae4c3016dc8ce368cc83ad6af92cafe3eed54270704
+size 173

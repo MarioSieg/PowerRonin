@@ -1,18 +1,3 @@
-/*
- * Copyright 2010-2020 Branimir Karadzic. All rights reserved.
- * License: https://github.com/bkaradzic/bx#license-bsd-2-clause
- */
-
-#ifndef BX_H_HEADER_GUARD
-#	error "Must be included from bx/os.h!"
-#endif // BX_H_HEADER_GUARD
-
-namespace bx
-{
-	template<typename ProtoT>
-	inline ProtoT dlsym(void* _handle, const StringView& _symbol)
-	{
-		return reinterpret_cast<ProtoT>(dlsym(_handle, _symbol) );
-	}
-
-} // namespace bx
+version https://git-lfs.github.com/spec/v1
+oid sha256:b192e158d604a6ad484089b15ee423d6c6090f0e14370025f7850b7094cd4ad2
+size 423

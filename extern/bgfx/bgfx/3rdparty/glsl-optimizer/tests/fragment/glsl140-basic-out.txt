@@ -1,12 +1,3 @@
-#version 140
-in vec4 col;
-out vec4 fragCol;
-void main ()
-{
-  fragCol = col;
-}
-
-
-// stats: 0 alu 0 tex 0 flow
-// inputs: 1
-//  #0: col (high float) 4x1 [-1]
+version https://git-lfs.github.com/spec/v1
+oid sha256:b9472642ffecfec60cc35c709bea86db19596e54056cd15c68c655c064dec907
+size 156

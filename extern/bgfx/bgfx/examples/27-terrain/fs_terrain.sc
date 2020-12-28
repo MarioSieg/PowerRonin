@@ -1,13 +1,3 @@
-$input v_position, v_texcoord0
-
-/*
- * Copyright 2015 Andrew Mac. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-
-void main()
-{
-	gl_FragColor = vec4(v_texcoord0.x, v_texcoord0.y, v_position.y / 50.0, 1.0);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:d0cb0016ca625f0346186f0b106599299200a16e1eda85982180b4c8aa5660d8
+size 284

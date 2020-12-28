@@ -1,21 +1,3 @@
-#extension GL_EXT_shader_texture_lod : enable
-#extension GL_OES_standard_derivatives : enable
-uniform sampler2D tex;
-uniform lowp samplerCube cub;
-varying highp vec3 uv;
-void main ()
-{
-  lowp vec4 tmpvar_1;
-  tmpvar_1 = texture2DGradEXT (tex, uv.xy, dFdx(uv.xy), dFdy(uv.xy));
-  lowp vec4 tmpvar_2;
-  tmpvar_2 = textureCubeGradEXT (cub, uv, dFdx(uv), dFdy(uv));
-  gl_FragColor = (tmpvar_1 + tmpvar_2);
-}
-
-
-// stats: 5 alu 2 tex 0 flow
-// inputs: 1
-//  #0: uv (high float) 3x1 [-1]
-// textures: 2
-//  #0: tex (low 2d) 0x0 [-1]
-//  #1: cub (low cube) 0x0 [-1]
+version https://git-lfs.github.com/spec/v1
+oid sha256:e5cd5493d31a0ce8add0c687f0c6d50b93283e325fe47b1af3b31540a842b4c9
+size 558

@@ -1,10 +1,3 @@
-#
-# Copyright 2011-2020 Branimir Karadzic. All rights reserved.
-# License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
-#
-
-BGFX_DIR=../..
-RUNTIME_DIR=$(BGFX_DIR)/examples/runtime
-BUILD_DIR=../../.build
-
-include $(BGFX_DIR)/scripts/shader.mk
+version https://git-lfs.github.com/spec/v1
+oid sha256:7415936185141fafef37223fa1de7ac798e7646ccefa1cc8f1828281fccbc1aa
+size 251

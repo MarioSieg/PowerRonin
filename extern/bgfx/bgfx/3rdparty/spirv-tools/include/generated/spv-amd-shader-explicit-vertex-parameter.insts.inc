@@ -1,5 +1,3 @@
-
-
-static const spv_ext_inst_desc_t spv_amd_shader_explicit_vertex_parameter_entries[] = {
-  {"InterpolateAtVertexAMD", 1, 0, nullptr, {SPV_OPERAND_TYPE_ID, SPV_OPERAND_TYPE_ID, SPV_OPERAND_TYPE_NONE}}
-};
+version https://git-lfs.github.com/spec/v1
+oid sha256:24ec21c4f5010bf1e13aea8eb747f8f2145ddd16e6322ca9dae38f78cd6c1698
+size 203

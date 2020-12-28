@@ -1,9 +1,3 @@
-MESA_UTIL_FILES :=	\
-	hash_table.c	\
-	ralloc.c \
-	register_allocate.c \
-	register_allocate.h \
-	rgtc.c
-
-MESA_UTIL_GENERATED_FILES = \
-	format_srgb.c
+version https://git-lfs.github.com/spec/v1
+oid sha256:88dae2639b767094d819388ef21824fd26144fa865684ce0813e89e06952d2bf
+size 149

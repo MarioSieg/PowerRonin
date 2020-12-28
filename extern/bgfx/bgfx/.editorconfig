@@ -1,20 +1,3 @@
-root = true
-
-[*]
-charset      = utf-8
-indent_style = tab
-indent_size  = 4
-end_of_line  = lf
-max_line_length = 100
-insert_final_newline     = true
-trim_trailing_whitespace = true
-
-[include/bgfx/c99/*.h]
-indent_style = space
-
-[*.ninja]
-indent_style = space
-
-[*.md]
-trim_trailing_whitespace = false
-max_line_length = 80
+version https://git-lfs.github.com/spec/v1
+oid sha256:d09b69e83722942b39817f3c0ea8448c4d7faba1a0a24c5b7905e64757055b63
+size 317

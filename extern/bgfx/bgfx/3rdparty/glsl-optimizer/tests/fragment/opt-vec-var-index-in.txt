@@ -1,7 +1,3 @@
-void main() {
-	vec2 c = vec2(0.0);
-	for (int j = 0; j < 2; ++j) {
-		c += abs (vec2(vec2(0.0)[j]));
-	}
-	gl_FragColor = vec4(c,0.0,0.0);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:37da30f17cb5386a34acc9f79d398877352fbc620066e79bfdf6b05840734ce6
+size 137

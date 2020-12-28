@@ -1,16 +1,3 @@
-$input v_normal, v_color0
-
-/*
- * Copyright 2011-2020 Branimir Karadzic. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-
-void main()
-{
-	vec3 lightDir = vec3(0.0, 0.0, -1.0);
-	float ndotl = dot(normalize(v_normal), lightDir);
-	float spec = pow(ndotl, 30.0);
-	gl_FragColor = vec4(pow(pow(v_color0.xyz, vec3_splat(2.2) ) * ndotl + spec, vec3_splat(1.0/2.2) ), 1.0);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:6eb17f6d30f6303a3fd24d1431bbe3c0fd4bf57c83094bafb0b5e11f1ff0bee1
+size 441

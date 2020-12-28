@@ -1,7 +1,3 @@
-void main() {
-    int i = 0;
-    float f = 0.0;
-    for (; i < 32; (++i))
-        f += gl_FragCoord.x * float(i);
-    gl_FragColor = vec4(f);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:8b22bdf32f5ad71b61f376d7d4367ac8bc8aa19534ef732df7caccf0d0f7f569
+size 144

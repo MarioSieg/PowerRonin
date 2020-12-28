@@ -1,8 +1,3 @@
-uniform float value;
-uniform float otherValue;
-void main()
-{
-	float invValue = 1.0 / value;
-	float result = otherValue / invValue;
-	gl_FragColor = vec4(result);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:3687d267e2012b88c87a37d4dd81a95c45e433ddb05b98494e24541d2f2e2be4
+size 163

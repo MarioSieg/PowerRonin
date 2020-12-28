@@ -1,16 +1,3 @@
-$input v_position
-
-/*
- * Copyright 2013-2014 Dario Manesku. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-
-void main()
-{
-	float depth = v_position.z/v_position.w * 0.5 + 0.5;
-	float depthSq = depth*depth;
-
-	gl_FragColor = vec4(packHalfFloat(depth), packHalfFloat(depthSq));
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:46943afaa39445904777bebd3120fe4950a4462ea68828402867ff823614ec99
+size 354

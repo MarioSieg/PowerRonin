@@ -1,13 +1,3 @@
-$input a_position
-
-/*
- * Copyright 2013-2014 Dario Manesku. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-
-void main()
-{
-	gl_Position = mul(u_modelViewProj, vec4(a_position, 1.0));
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:ae07aa5ee3b93ee6a026dac0a4c66a63382d34550e02c42211a256433f662224
+size 261

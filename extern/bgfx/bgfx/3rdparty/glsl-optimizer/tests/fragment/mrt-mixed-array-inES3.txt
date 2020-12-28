@@ -1,13 +1,3 @@
-#version 300 es
-
-// Defines output as an array (uses only 1st index),
-// and two vectors (1st unused).
-layout(location = 0) out mediump vec4 _colArr[2];
-layout(location = 2) out mediump vec4 _colVecUnused;
-layout(location = 3) out mediump vec4 _colVec;
-
-void main()
-{
-	_colArr[0] = vec4(0.0);
-	_colVec = vec4(1.0);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:3232dcbb96eb084c0a176f73d9ebfdf3849a8d3795446f107031c53b4323a972
+size 317

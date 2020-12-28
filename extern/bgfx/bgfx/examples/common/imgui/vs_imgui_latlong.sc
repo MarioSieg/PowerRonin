@@ -1,15 +1,3 @@
-$input a_position, a_texcoord0
-$output v_texcoord0
-
-/*
- * Copyright 2015 Dario Manesku. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include <bgfx_shader.sh>
-
-void main()
-{
-	gl_Position = mul(u_modelViewProj, vec4(a_position, 1.0) );
-	v_texcoord0 = a_texcoord0;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:2706cbc32ba159a681b6025742f3fa314e70606ef15883c25d7073243c14ad83
+size 313

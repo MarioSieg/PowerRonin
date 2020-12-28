@@ -1,15 +1,3 @@
-$input a_position
-$output v_depth
-
-/*
- * Copyright 2013-2014 Dario Manesku. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-
-void main()
-{
-	gl_Position = mul(u_modelViewProj, vec4(a_position, 1.0) );
-	v_depth = gl_Position.z * 0.5 + 0.5;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:f70381cbc7160aee763c77e0eb9225cfb8e470ba598756e65e7db079d0607718
+size 316

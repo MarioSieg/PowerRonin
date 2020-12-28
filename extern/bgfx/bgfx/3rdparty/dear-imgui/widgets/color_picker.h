@@ -1,24 +1,3 @@
-namespace ImGui
-{
-	bool ColorPicker4(float* col, bool show_alpha);
-	bool ColorPicker3(float col[3]);
-
-	inline bool ColorEdit4(const char* label, uint32_t* _rgba, bool show_alpha = true)
-	{
-		uint8_t* rgba = (uint8_t*)_rgba;
-		float col[4] =
-		{
-			rgba[0]/255.0f,
-			rgba[1]/255.0f,
-			rgba[2]/255.0f,
-			rgba[3]/255.0f,
-		};
-		bool result = ColorEdit4(label, col, show_alpha);
-		rgba[0] = uint8_t(col[0]*255.0f);
-		rgba[1] = uint8_t(col[1]*255.0f);
-		rgba[2] = uint8_t(col[2]*255.0f);
-		rgba[3] = uint8_t(col[3]*255.0f);
-		return result;
-	}
-
-} // namespace ImGui
+version https://git-lfs.github.com/spec/v1
+oid sha256:fd7824e5b0f0bae2adb39cc9cd6b03306101fd88a418a5efaa7cf949f009e151
+size 564

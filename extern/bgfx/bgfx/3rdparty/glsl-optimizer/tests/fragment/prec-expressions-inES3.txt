@@ -1,17 +1,3 @@
-#version 300 es
-out lowp vec4 _fragData;
-
-uniform mediump mat4 _LightMatrix;
-uniform highp vec3 _WorldPos;
-
-void main()
-{
-    // Used to expose bug in Metal output where it was inserting cast in the wrong place,
-    // i.e. it was doing a v3 = (float4)(mat * vec).xyz
-    mediump vec3 lightCoord = vec3 ( (_LightMatrix * vec4(_WorldPos, 1.0)) );
-
-    mediump vec4 r;
-    r.xyz = lightCoord;
-    r.w = 1.0;
-    _fragData = r;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:061cbcd14c477b9be89bdbcc1931f72b89bdf39b21994f2784d185b471aec641
+size 427

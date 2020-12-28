@@ -1,17 +1,3 @@
-$input a_position, a_indices
-$output v_view, v_world
-
-/*
- * Copyright 2011-2020 Branimir Karadzic. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include <bgfx_shader.sh>
-
-void main()
-{
-	vec4 world = mul(u_model[int(a_indices.x)], vec4(a_position, 1.0) );
-	gl_Position = mul(u_viewProj, world);
-	v_view  = mul(u_view, world).xyz;
-	v_world = world.xyz;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:1af01c64afa4dd5d63f238a6bb90f02aa30031ec60700df2f4289084e3858333
+size 401

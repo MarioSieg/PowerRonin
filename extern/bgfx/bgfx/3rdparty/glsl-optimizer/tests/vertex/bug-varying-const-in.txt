@@ -1,10 +1,3 @@
-varying vec4 var4;
-varying float var1;
-varying vec4 var4ok;
-
-void main()
-{
-	var4 = vec4(0.0);
-	var1 = 0.5;
-	var4ok = gl_Vertex;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:8dbf0cacae8edf5465e4da4472edb200e7309b11eb4a75fc4189b6e6fbc8a803
+size 130

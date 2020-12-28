@@ -1,9 +1,3 @@
-void main ()
-{
-  gl_FragData[0] = gl_Color;
-}
-
-
-// stats: 0 alu 0 tex 0 flow
-// inputs: 1
-//  #0: gl_Color (high float) 4x1 [-1] loc 1
+version https://git-lfs.github.com/spec/v1
+oid sha256:182cd710f3ee5a437b5653046bb3d9b8e81c4dfd4d2f215e3d3bc268e2c1ae11
+size 135

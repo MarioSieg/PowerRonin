@@ -1,27 +1,3 @@
-namespace ImGui
-{
-    struct MemoryEditor
-    {
-        bool    AllowEdits;
-        bool    HexII;
-        int     Rows;
-        int     DataEditingAddr;
-        bool    DataEditingTakeFocus;
-        char    DataInput[32];
-        char    AddrInput[32];
-
-        MemoryEditor()
-        {
-            AllowEdits = true;
-            HexII = true;
-            Rows = 16;
-            DataEditingAddr = -1;
-            DataEditingTakeFocus = false;
-            strcpy(DataInput, "");
-            strcpy(AddrInput, "");
-        }
-
-        void Draw(void* mem_data, int mem_size, int base_display_addr = 0);
-        void Draw(const void* mem_data, int mem_size, int base_display_addr = 0);
-    };
-} // namespace ImGui
+version https://git-lfs.github.com/spec/v1
+oid sha256:31b96ec7496f38f0a610086a9b01f7965355f3dc4512e45b95bd577ccc002ae3
+size 711

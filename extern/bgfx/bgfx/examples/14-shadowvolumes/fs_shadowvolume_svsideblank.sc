@@ -1,13 +1,3 @@
-$input v_k
-
-/*
- * Copyright 2013-2014 Dario Manesku. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-
-void main()
-{
-	gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:894e5d62d09c3000a72d792903b5d3aa64e219bc61a847be2f1cf813f8ce6935
+size 236

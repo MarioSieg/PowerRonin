@@ -1,22 +1,3 @@
-#include <node.h>
-#include <nan.h>
-#include "shader.h"
-#include <glsl_optimizer.h>
-
-using namespace v8;
-
-void InitAll(Handle<Object> exports)
-{
-	// Export constants
-	exports->Set(String::NewSymbol("VERTEX_SHADER"), Int32::New(kGlslOptShaderVertex), ReadOnly);
-	exports->Set(String::NewSymbol("FRAGMENT_SHADER"), Int32::New(kGlslOptShaderFragment), ReadOnly);
-	exports->Set(String::NewSymbol("TARGET_OPENGL"), Int32::New(kGlslTargetOpenGL), ReadOnly);
-	exports->Set(String::NewSymbol("TARGET_OPENGLES20"), Int32::New(kGlslTargetOpenGLES20), ReadOnly);
-	exports->Set(String::NewSymbol("TARGET_OPENGLES30"), Int32::New(kGlslTargetOpenGLES30), ReadOnly);
-	
-	// Export classes
-	Compiler::Init(exports);
-	Shader::Init(exports);
-}
-
-NODE_MODULE(glslOptimizer, InitAll);
+version https://git-lfs.github.com/spec/v1
+oid sha256:5ac3049c1c7a3817f62f08b8b9995c670e97d0f16181d4148ea2588f34658e6e
+size 762

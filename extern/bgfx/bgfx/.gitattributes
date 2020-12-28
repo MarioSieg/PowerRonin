@@ -1,11 +1,3 @@
-*.c   eol=lf
-*.cpp eol=lf
-*.h   eol=lf
-*.sc  eol=lf
-*.sh  eol=lf
-*.m   eol=lf
-*.mm  eol=lf
-*.md  eol=lf
-*.lua eol=lf
-*.mk  eol=lf
-makefile eol=lf
+version https://git-lfs.github.com/spec/v1
+oid sha256:d764f4913bc8072a51606a6e810650ab6dfe576443ecc699be116ce3d7ff31c2
+size 146

@@ -1,14 +1,3 @@
-root = true
-
-[*]
-charset      = utf-8
-indent_style = tab
-indent_size  = 4
-end_of_line  = lf
-max_line_length = 100
-insert_final_newline     = true
-trim_trailing_whitespace = true
-
-[*.md]
-trim_trailing_whitespace = false
-max_line_length = 80
+version https://git-lfs.github.com/spec/v1
+oid sha256:be3225444ed06435ece14f09f51ff5f69e9b9b993259ce7f590b487e23b3678d
+size 240

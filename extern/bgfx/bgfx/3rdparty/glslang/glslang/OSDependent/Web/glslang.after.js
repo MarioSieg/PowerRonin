@@ -1,26 +1,3 @@
-export default (() => {
-    const initialize = () => {
-        return new Promise(resolve => {
-            Module({
-                locateFile() {
-                    const i = import.meta.url.lastIndexOf('/')
-                    return import.meta.url.substring(0, i) + '/glslang.wasm';
-                },
-                onRuntimeInitialized() {
-                    resolve({
-                        compileGLSLZeroCopy: this.compileGLSLZeroCopy,
-                        compileGLSL: this.compileGLSL,
-                    });
-                },
-            });
-        });
-    };
-
-    let instance;
-    return () => {
-        if (!instance) {
-            instance = initialize();
-        }
-        return instance;
-    };
-})();
+version https://git-lfs.github.com/spec/v1
+oid sha256:cbbbee5889f3cd4fe9e31c898baee565bcde73f7bb9be0445a96903f481c2542
+size 730

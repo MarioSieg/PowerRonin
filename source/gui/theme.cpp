@@ -145,7 +145,7 @@ namespace dce::gui {
 		style.Colors[ImGuiCol_PlotHistogram] = ImVec4(0.73F, 0.60F, 0.15F, 1.00F);
 		style.Colors[ImGuiCol_PlotHistogramHovered] = ImVec4(1.00F, 0.60F, 0.00F, 1.00F);
 		style.Colors[ImGuiCol_TextSelectedBg] = ImVec4(0.87F, 0.87F, 0.87F, 0.35F);
-		style.Colors[ImGuiCol_ModalWindowDarkening] = ImVec4(0.80F, 0.80F, 0.80F, 0.35F);
+		style.Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.80F, 0.80F, 0.80F, 0.35F);
 		style.Colors[ImGuiCol_DragDropTarget] = ImVec4(1.00F, 1.00F, 0.00F, 0.90F);
 		style.Colors[ImGuiCol_NavHighlight] = ImVec4(0.60F, 0.60F, 0.60F, 1.00F);
 		style.Colors[ImGuiCol_NavWindowingHighlight] = ImVec4(1.00F, 1.00F, 1.00F, 0.70F);
@@ -201,7 +201,7 @@ namespace dce::gui {
 		style.Colors[ImGuiCol_PlotHistogram] = ImVec4(0.90F, 0.70F, 0.00F, 1.00F);
 		style.Colors[ImGuiCol_PlotHistogramHovered] = ImVec4(1.00F, 0.60F, 0.00F, 1.00F);
 		style.Colors[ImGuiCol_TextSelectedBg] = ImVec4(0.26F, 0.59F, 0.98F, 0.35F);
-		style.Colors[ImGuiCol_ModalWindowDarkening] = ImVec4(0.20F, 0.20F, 0.20F, 0.35F);
+		style.Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.20F, 0.20F, 0.20F, 0.35F);
 	}
 
 	void style_cherry() noexcept {
@@ -244,7 +244,7 @@ namespace dce::gui {
 		style.Colors[ImGuiCol_PlotHistogram] = ImVec4(0.860F, 0.930F, 0.890F, 0.63F);
 		style.Colors[ImGuiCol_PlotHistogramHovered] = ImVec4(0.455F, 0.198F, 0.301F, 1.00F);
 		style.Colors[ImGuiCol_TextSelectedBg] = ImVec4(0.455F, 0.198F, 0.301F, 0.43F);
-		style.Colors[ImGuiCol_ModalWindowDarkening] = ImVec4(0.200F, 0.220F, 0.270F, 0.73F);
+		style.Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.200F, 0.220F, 0.270F, 0.73F);
 		style.Colors[ImGuiCol_Border] = ImVec4(0.539F, 0.479F, 0.255F, 0.162F);
 	}
 

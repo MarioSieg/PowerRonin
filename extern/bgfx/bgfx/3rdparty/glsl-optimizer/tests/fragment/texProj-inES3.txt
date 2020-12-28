@@ -1,20 +1,3 @@
-#version 300 es
-out mediump vec4 _fragData;
-
-uniform sampler2D tex;
-uniform sampler2DShadow shadowmap;
-
-in highp vec4 uv;
-
-void main() {
-	lowp vec4 c;
-	c = textureProj(tex, uv);
-	c += textureProj(tex, uv.xyz);
-	c += textureProjLod(tex, uv, 1.0);
-	c += textureProjLod(tex, uv.xyz, 1.0);
-
-	c += vec4(texture(shadowmap, uv.xyz));
-	c += vec4(textureProj(shadowmap, uv));
-
-	_fragData = c;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:d8c5f71f28dece02c848aa8b2c802fe6f1d4e6378f5e959a4649504adacfe292
+size 386

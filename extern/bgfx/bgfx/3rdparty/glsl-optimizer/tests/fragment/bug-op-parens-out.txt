@@ -1,12 +1,3 @@
-uniform float value;
-uniform float otherValue;
-void main ()
-{
-  gl_FragColor = vec4((otherValue / (1.0/(value))));
-}
-
-
-// stats: 2 alu 0 tex 0 flow
-// uniforms: 2 (total size: 0)
-//  #0: value (high float) 1x1 [-1]
-//  #1: otherValue (high float) 1x1 [-1]
+version https://git-lfs.github.com/spec/v1
+oid sha256:a3890ab2638ee52e0910068eaa24124447b22bebeb07fa0053497c8473c3fc3b
+size 256

@@ -1,6 +1,3 @@
-vec4 v_color0    : COLOR0    = vec4(1.0, 1.0, 1.0, 1.0);
-vec3 v_texcoord0 : TEXCOORD0 = vec3(0.0, 0.0, 0.0);
-
-vec3 a_position  : POSITION;
-vec4 a_color0    : COLOR0;
-vec3 a_texcoord0 : TEXCOORD0;
+version https://git-lfs.github.com/spec/v1
+oid sha256:38168e08670e4cff331c459c12f93aa50c8ddb1849bc958f50fb6026dc85d9a7
+size 196

@@ -1,12 +1,3 @@
-$input a_position, a_texcoord0, a_color0
-$output v_color0, v_texcoord0
-
-#include "../common.sh"
-
-void main()
-{
-	vec2 pos = 2.0*a_position.xy*u_viewTexel.xy;
-	gl_Position = vec4(pos.x - 1.0, 1.0 - pos.y, 0.0, 1.0);
-	v_texcoord0 = a_texcoord0;
-	v_color0    = a_color0;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:6389a79f8cfae0eca7f4094836ade4d1e42ac7a07c33a4afe8ea48d4826e8189
+size 269

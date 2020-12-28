@@ -1,11 +1,3 @@
-void main() {
-	vec4 c = vec4(0.0);
-
-	// nested ifs
-	if (gl_FragCoord.x > 0.5) {
-		if (gl_FragCoord.y > 0.5) {
-			c = vec4(0.5);
-		}
-	}
-    gl_FragColor = c;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:87ad1b69f3c89929112d5ad3d24fe61fa162eee1cd0a5eef1236cddcfec38ab6
+size 159

@@ -1,14 +1,3 @@
-$input v_texcoord0
-
-/*
- * Copyright 2013-2014 Dario Manesku. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-SAMPLER2D(s_texColor, 0);
-
-void main()
-{
-	gl_FragColor = texture2D(s_texColor, v_texcoord0);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:63894f38208a32a745c32d2c01a3557a5393454698dc75a465a61a058f361a31
+size 280

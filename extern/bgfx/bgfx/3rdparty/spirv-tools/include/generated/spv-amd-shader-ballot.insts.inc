@@ -1,8 +1,3 @@
-
-
-static const spv_ext_inst_desc_t spv_amd_shader_ballot_entries[] = {
-  {"SwizzleInvocationsAMD", 1, 0, nullptr, {SPV_OPERAND_TYPE_ID, SPV_OPERAND_TYPE_ID, SPV_OPERAND_TYPE_NONE}},
-  {"SwizzleInvocationsMaskedAMD", 2, 0, nullptr, {SPV_OPERAND_TYPE_ID, SPV_OPERAND_TYPE_ID, SPV_OPERAND_TYPE_NONE}},
-  {"WriteInvocationAMD", 3, 0, nullptr, {SPV_OPERAND_TYPE_ID, SPV_OPERAND_TYPE_ID, SPV_OPERAND_TYPE_ID, SPV_OPERAND_TYPE_NONE}},
-  {"MbcntAMD", 4, 0, nullptr, {SPV_OPERAND_TYPE_ID, SPV_OPERAND_TYPE_NONE}}
-};
+version https://git-lfs.github.com/spec/v1
+oid sha256:7750616f8e4837c9089c1c515dce84c492f62e4c6bb0a0efde50fa571cb5d560
+size 506

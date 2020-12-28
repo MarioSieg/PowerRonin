@@ -1,22 +1,3 @@
-$input v_normal
-
-/*
- * Copyright 2016 Joseph Cherlin. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-
-uniform vec4 u_tint;
-
-void main()
-{
-#if BGFX_SHADER_LANGUAGE_HLSL && (BGFX_SHADER_LANGUAGE_HLSL < 4)
-	vec2 texCoord = gl_FragCoord.xy * u_viewTexel.xy + u_viewTexel.xy * vec2_splat(0.5);
-#else
-	vec2 texCoord = gl_FragCoord.xy * u_viewTexel.xy;
-#endif
-
-	gl_FragData[0].xyz = u_tint.xyz;  // Color of light sphere
-	gl_FragData[0].w = -v_normal.z;   // Radius of light sphere
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:796a0a17832adb9ff991ce4fac3f25b7ad0de941ba59b6efaba40536402c546d
+size 556

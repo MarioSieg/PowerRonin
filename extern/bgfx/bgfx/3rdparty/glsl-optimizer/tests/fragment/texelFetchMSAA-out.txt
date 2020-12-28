@@ -1,15 +1,3 @@
-#version 150
-uniform sampler2DMS tex;
-in vec2 uv;
-out vec4 color;
-void main ()
-{
-  color = texelFetch (tex, ivec2(uv), 3);
-}
-
-
-// stats: 1 alu 1 tex 0 flow
-// inputs: 1
-//  #0: uv (high float) 2x1 [-1]
-// textures: 1
-//  #0: tex (high other) 0x0 [-1]
+version https://git-lfs.github.com/spec/v1
+oid sha256:ce655e3ee72374f4a88907412a67ae5ad4b2e051fb3013b9dc2bdf56b5027668
+size 251

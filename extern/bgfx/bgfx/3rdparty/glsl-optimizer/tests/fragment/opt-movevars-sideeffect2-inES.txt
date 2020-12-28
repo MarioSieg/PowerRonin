@@ -1,16 +1,3 @@
-varying lowp float xx;
-
-void main()
-{
-	int x;
-
-    int i = (x=(xx>0.5?2:4)); // side effects!
-    
-    if (x < 2)
-        discard;
-
-    lowp float c = 0.0;
-    for (; i < 4; ++i)
-        c += xx;
-    gl_FragColor = vec4(c);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:73809a87cdf89a585fc783082eccd65d00e4fc5778f1bb92508314375b006c2e
+size 226

@@ -1,15 +1,3 @@
-#version 300 es
-out lowp vec4 _fragData;
-in lowp vec3 normal;
-in lowp vec3 halfDir;
-uniform mediump float specPower;
-
-void main()
-{
-	lowp float nh = dot (normal, halfDir);
-	mediump float spec = pow (nh, specPower);
-	
-	lowp vec4 c;
-	c = vec4(spec);
-	_fragData = c;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:4f0a228aae08a13be7e9085e28fa78c717bb865605bba958f73e005aa7ffc085
+size 266

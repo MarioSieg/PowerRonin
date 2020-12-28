@@ -1,13 +1,3 @@
-varying vec2 xlv_VPOS;
-void main ()
-{
-  vec4 tmpvar_1;
-  tmpvar_1.zw = vec2(0.0, 0.0);
-  tmpvar_1.xy = xlv_VPOS;
-  gl_FragData[0] = tmpvar_1;
-}
-
-
-// stats: 1 alu 0 tex 0 flow
-// inputs: 1
-//  #0: xlv_VPOS (high float) 2x1 [-1]
+version https://git-lfs.github.com/spec/v1
+oid sha256:00e383172f19bcb989e214dd397937a5d2b2471a8a3c946f3d90bf08f4943de0
+size 227

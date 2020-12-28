@@ -1,18 +1,3 @@
-$input v_color0, v_stipple
-
-/*
- * Copyright 2011-2020 Branimir Karadzic. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include <bgfx_shader.sh>
-
-void main()
-{
-	if (0.125 < mod(v_stipple, 0.25) )
-	{
-		discard;
-	}
-
-	gl_FragColor = v_color0;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:22b690541e8661c41acba7d624cfa44f152f0b71c964135baf32ff759439f588
+size 289

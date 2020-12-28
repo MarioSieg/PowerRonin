@@ -1,16 +1,3 @@
-$input v_pos, v_view, v_normal, v_color0
-
-/*
- * Copyright 2011-2020 Branimir Karadzic. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-
-uniform vec4 u_id;
-
-void main()
-{
-	gl_FragColor.xyz = u_id.xyz; // This is dumb, should use u8 texture
-	gl_FragColor.w = 1.0;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:768b715a4facd8655b34227a2197c62e22a7871db534948d051473615a9bd84e
+size 340

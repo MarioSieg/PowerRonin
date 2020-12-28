@@ -1,23 +1,3 @@
-#include "bgfx_compute.sh"
-#include "uniforms.sh"
-
-BUFFER_RW(indirectBuffer, uvec4, 3);
-BUFFER_RW(atomicCounterBuffer, uint, 4);
-
-NUM_THREADS(1u, 1u, 1u)
-void main()
-{
-	uint counter;
-	uint counter2;
-
-	atomicFetchAndExchange(atomicCounterBuffer[0], 0u, counter);
-	atomicFetchAndExchange(atomicCounterBuffer[1], 0u, counter2);
-
-	uint cnt = (counter / 2u) / UPDATE_INDIRECT_VALUE_DIVIDE + 1u;
-
-	uint tmp;
-
-	atomicFetchAndExchange(atomicCounterBuffer[2], (counter / 2), tmp);
-
-	dispatchIndirect(indirectBuffer, 1u, cnt, 1u, 1u);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:392910abfe28ef899c21bc255d0db59fd331b7eadfa9f94cf6962a7df7e5ce09
+size 527

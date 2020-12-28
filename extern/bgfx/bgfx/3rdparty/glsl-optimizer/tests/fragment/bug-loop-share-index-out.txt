@@ -1,33 +1,3 @@
-uniform int loopNum;
-void main ()
-{
-  vec4 r_1;
-  int myIdx_2;
-  r_1 = vec4(0.0, 0.0, 0.0, 0.0);
-  myIdx_2 = 1;
-  while (true) {
-    if ((myIdx_2 >= loopNum)) {
-      break;
-    };
-    r_1.x = (r_1.x + 1.0);
-    r_1.y = (r_1.y + 2.0);
-    r_1.z = (r_1.z + 3.0);
-    myIdx_2++;
-  };
-  myIdx_2 = 2;
-  while (true) {
-    if ((myIdx_2 >= loopNum)) {
-      break;
-    };
-    r_1.x = (r_1.x + 1.0);
-    r_1.y = (r_1.y + 2.0);
-    r_1.z = (r_1.z + 3.0);
-    myIdx_2++;
-  };
-  gl_FragColor = r_1;
-}
-
-
-// stats: 13 alu 0 tex 4 flow
-// uniforms: 1 (total size: 0)
-//  #0: loopNum (high int) 1x1 [-1]
+version https://git-lfs.github.com/spec/v1
+oid sha256:69e119d92d300f1c454eeb7d224df51267bd577e2eceb3cc66ac01ff573e6889
+size 590
