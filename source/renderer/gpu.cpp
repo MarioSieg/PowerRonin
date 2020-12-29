@@ -1,5 +1,6 @@
 #include "gpu.hpp"
 #include "stats.hpp"
+#include "../../extern/bullet3/examples/ThirdPartyLibs/imgui/imgui.h"
 
 #include "../../include/dce/proto.hpp"
 #include "../../include/dce/env.hpp"
@@ -98,8 +99,9 @@ namespace dce::renderer {
 		bgfx::touch(_view);
 	}
 
-	void GPU::end_frame() const noexcept {
+	void GPU::end_frame() noexcept {
 		bgfx::frame();
+		++this->frame_;
 	}
 
 	void GPU::set_camera(const bgfx::ViewId _view_id, const SimdMatrix4x4<>& _view,
@@ -132,15 +134,15 @@ namespace dce::renderer {
 		setVertexBuffer(0, vb_buffer);
 	}
 
-	void GPU::set_texture(const Texture& _texture, const bgfx::UniformHandle _sampler,
-	                      const std::uint8_t _stage) const noexcept {
+	void GPU::set_texture(const Texture& _texture, const Uniform& _sampler, const std::uint8_t _stage) const noexcept {
 		assert(_texture.is_uploaded());
 
 		const auto view = bgfx::TextureHandle{_texture.texel_buffer_id()};
 
 		assert(bgfx::isValid(view));
+		assert(bgfx::isValid(_sampler.handle()));
 
-		setTexture(_stage, _sampler, view);
+		setTexture(_stage, _sampler.handle(), view);
 	}
 
 	void GPU::draw(const bgfx::ProgramHandle _shader
@@ -150,12 +152,6 @@ namespace dce::renderer {
 		assert(bgfx::isValid(_shader));
 		bgfx::setState(_state_flags);
 		submit(_view_id, _shader, _depth);
-	}
-
-	void GPU::draw(const bgfx::ProgramHandle _shader, const bgfx::ViewId _view_id, const bgfx::OcclusionQueryHandle _oqh, const std::uint64_t _state_flags, const std::uint8_t _depth) const noexcept {
-		assert(bgfx::isValid(_shader));
-		bgfx::setState(_state_flags);
-		submit(_view_id, _shader, _oqh, _depth);
 	}
 
 	void GPU::set_viewport(const SimdVector2<> _xy, const SimdVector2<> _wh, const bgfx::ViewId _view_id) const noexcept {

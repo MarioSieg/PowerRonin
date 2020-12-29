@@ -18,14 +18,10 @@ namespace dce::renderer {
 			return false;
 		}
 
-		// Load all shaders:
 		this->shader_bucket_.load_all();
-
-		// Load all shared uniforms:
 		this->shared_uniforms_.load_all();
 
 		poll_limits(const_cast<Diagnostics&>(_rt.diagnostics()));
-
 		auto& viewport = _rt.render_data().scenery_viewport_size;
 		[[likely]] if (viewport.x == .0F || viewport.y == .0F) {
 			viewport.x = _rt.config().display.width;
@@ -34,21 +30,9 @@ namespace dce::renderer {
 				return false;
 			}
 		}
-
 		const auto& caps = *bgfx::getCaps();
-		this->is_occlusion_query_supported = !!(caps.supported & BGFX_CAPS_OCCLUSION_QUERY);
-		this->is_instancing_supported = !!(caps.supported & BGFX_CAPS_INSTANCING);
 
-		[[likely]] if(this->is_occlusion_query_supported) {
-			this->occlusion_queries_.resize(caps.limits.maxOcclusionQueries);
-			for(auto& oq : this->occlusion_queries_) {
-				oq = bgfx::createOcclusionQuery();
-				[[unlikely]] if(!isValid(oq)) {
-					return false;
-				}
-			}
-		}
-		
+		this->is_instancing_supported_ = !!(caps.supported & BGFX_CAPS_INSTANCING);
 		this->tick_prev_ = get_high_precision_counter();
 
 		return true;
@@ -140,9 +124,9 @@ namespace dce::renderer {
 		this->set_shared_uniforms(_rt.scenery().config.lighting);
 
 		auto& diagnostics = const_cast<Diagnostics&>(_rt.diagnostics());
-		
+
 		diagnostics.graphics.scenery_mesh_drawcalls = 0;
-		
+
 
 		// Draw lambda function which render_stats an object:
 		auto draw = [this, frustum = &_rt.render_data().camera_frustum, &diagnostics](Transform& _transform, MeshRenderer& _mesh_renderer) {
@@ -181,16 +165,7 @@ namespace dce::renderer {
 			}
 			else [[likely]] if (std::holds_alternative<Material::BumpedDiffuse>(mat)) {
 				const auto& properties = std::get<Material::BumpedDiffuse>(mat);
-				
-				[[likely]]
-				if (this->is_occlusion_query_supported && diagnostics.graphics.scenery_mesh_drawcalls < this->occlusion_queries_.size()) {
-					const auto query = this->occlusion_queries_[diagnostics.graphics.scenery_mesh_drawcalls];
-					bgfx::setCondition(query, true);
-					this->shader_bucket_.bumped_diffuse.draw(properties, mesh, query);
-	
-				} else {
-					this->shader_bucket_.bumped_diffuse.draw(properties, mesh);
-				}
+				this->shader_bucket_.bumped_diffuse.draw(properties, mesh);
 			}
 
 			++diagnostics.graphics.scenery_mesh_drawcalls;
@@ -202,11 +177,6 @@ namespace dce::renderer {
 	}
 
 	auto Renderer::on_post_shutdown(Runtime& _rt) -> bool {
-		for(auto& oq : this->occlusion_queries_) {
-			bgfx::destroy(oq);
-		}
-		this->occlusion_queries_.clear();
-		this->occlusion_queries_.resize(0);
 		this->shared_uniforms_.unload_all();
 		this->shader_bucket_.unload_all();
 		this->gpu_.shutdown_drivers();

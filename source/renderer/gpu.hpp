@@ -8,6 +8,7 @@
 #include "../../include/dce/mesh_renderer.hpp"
 
 #include "gl_headers.hpp"
+#include "uniform.hpp"
 
 namespace dce {
 	class Transform;
@@ -64,7 +65,7 @@ namespace dce::renderer {
 		/// End frame and kick render thread.
 		/// </summary>
 		/// <returns></returns>
-		void end_frame() const noexcept;
+		void end_frame() noexcept;
 
 		/// <summary>
 		/// Set camera matrices.
@@ -109,12 +110,9 @@ namespace dce::renderer {
 		/// <param name="_texture"></param>
 		/// <param name="_sampler"></param>
 		/// <returns></returns>
-		void set_texture(const Texture& _texture, bgfx::UniformHandle _sampler,
-		                 const std::uint8_t _stage) const noexcept;
+		void set_texture(const Texture& _texture, const Uniform& _sampler, const std::uint8_t _stage) const noexcept;
 
-		static constexpr auto DEFAULT_STATE_FLAGS = BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_Z |
-			BGFX_STATE_DEPTH_TEST_LESS |
-			BGFX_STATE_MSAA | BGFX_STATE_CULL_CCW;
+		static constexpr auto DEFAULT_STATE_FLAGS = BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_Z | BGFX_STATE_DEPTH_TEST_LESS | BGFX_STATE_MSAA | BGFX_STATE_CULL_CCW;
 
 		/// <summary>
 		/// Draw mesh
@@ -128,20 +126,6 @@ namespace dce::renderer {
 		          , bgfx::ViewId _view_id
 		          , const std::uint64_t _state_flags = DEFAULT_STATE_FLAGS
 		          , std::uint8_t _depth = 0) const noexcept;
-
-		/// <summary>
-		/// Draw mesh with occlusion query.
-		/// </summary>
-		/// <param name="_shader"></param>
-		/// <param name="_view_id"></param>
-		/// <param name="_state_flags"></param>
-		/// <param name="_depth"></param>
-		/// <returns></returns>
-		void draw(bgfx::ProgramHandle _shader
-			, const bgfx::ViewId _view_id
-			, const bgfx::OcclusionQueryHandle _oqh
-			, const std::uint64_t _state_flags = DEFAULT_STATE_FLAGS
-			, const std::uint8_t _depth = 0) const noexcept;
 
 		/// <summary>
 		/// Set the set_viewport.
@@ -199,5 +183,8 @@ namespace dce::renderer {
 		/// <param name="_value"></param>
 		/// <returns></returns>
 		void set_uniform(bgfx::UniformHandle _handle, const float (&_value)[16]) const noexcept;
+
+	private:
+		std::uint32_t frame_ = 0;
 	};
 }

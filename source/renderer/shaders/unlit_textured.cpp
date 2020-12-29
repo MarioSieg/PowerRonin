@@ -6,17 +6,17 @@ namespace dce::renderer::shaders {
 
 	void UnlitTexturedShader::load() {
 		IShader::load();
-		this->u_s_tex_color_ = createUniform("s_tex_color", bgfx::UniformType::Sampler);
+		this->texture_sampler_.load();
 	}
 
 	void UnlitTexturedShader::unload() {
-		destroy(this->u_s_tex_color_);
+		this->texture_sampler_.unload();
 		IShader::unload();
 	}
 
 	void UnlitTexturedShader::draw(const Material::UnlitTextured& _mat, const Mesh& _mesh) const {
 		this->gpu_.set_mesh_buffer(_mesh);
-		this->gpu_.set_texture(_mat.albedo, this->u_s_tex_color_, 0);
+		this->gpu_.set_texture(_mat.albedo, this->texture_sampler_, 0);
 		this->gpu_.draw(this->program_, SCENERY_VIEW);
 	}
 }

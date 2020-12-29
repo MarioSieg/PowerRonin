@@ -10,11 +10,10 @@ namespace dce::renderer::shaders {
 		void load() override;
 		void unload() override;
 		void draw(const Material::BumpedDiffuse& _mat, const Mesh& _mesh) const;
-		void draw(const Material::BumpedDiffuse& _mat, const Mesh& _mesh, const bgfx::OcclusionQueryHandle _oqh) const;
 
 	private:
-		bgfx::UniformHandle u_s_tex_color_ = {bgfx::kInvalidHandle};
-		bgfx::UniformHandle u_s_normal_map_ = {bgfx::kInvalidHandle};
-		bgfx::UniformHandle u_mat_color_ = {bgfx::kInvalidHandle};
+		Uniform diffuse_texture_sampler_ = {"s_tex_color", bgfx::UniformType::Sampler};
+		Uniform normal_map_sampler_ = {"s_normal_map", bgfx::UniformType::Sampler};
+		Uniform diffuse_color_ = {"u_mat_color", bgfx::UniformType::Vec4};
 	};
 }

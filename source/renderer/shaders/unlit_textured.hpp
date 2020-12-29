@@ -12,6 +12,6 @@ namespace dce::renderer::shaders {
 		void draw(const Material::UnlitTextured& _mat, const Mesh& _mesh) const;
 
 	private:
-		bgfx::UniformHandle u_s_tex_color_ = {bgfx::kInvalidHandle};
+		Uniform texture_sampler_ = {"s_tex_color", bgfx::UniformType::Sampler};
 	};
 }

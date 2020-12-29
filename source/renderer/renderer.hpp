@@ -43,9 +43,7 @@ namespace dce {
 			GPU gpu_ = {};
 			ShaderBucket shader_bucket_ = ShaderBucket{gpu_};
 			SharedUniforms shared_uniforms_ = {};
-			std::vector<bgfx::OcclusionQueryHandle> occlusion_queries_ = {};
-			bool is_occlusion_query_supported = false;
-			bool is_instancing_supported = false;
+			bool is_instancing_supported_ = false;
 		};
 	} // namespace dce::renderer // namespace dce::renderer
 }

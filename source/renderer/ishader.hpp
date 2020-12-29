@@ -5,6 +5,7 @@
 #include "gl_headers.hpp"
 #include "gpu.hpp"
 #include "views.hpp"
+#include "uniform.hpp"
 #include "program_loader.hpp"
 
 namespace dce::renderer {
