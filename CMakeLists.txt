@@ -9,8 +9,9 @@ project ("DreamcastSDK" CXX C ASM)
 
 message("Com: ${CMAKE_CXX_COMPILER_ID}")
 
+# -march=native
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    SET(COVERAGE_COMPILE_FLAGS "-march=native -Ofast")
+    SET(COVERAGE_COMPILE_FLAGS "-msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mavx -Ofast")
     SET(COVERAGE_LINK_FLAGS    "-flto")
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COVERAGE_COMPILE_FLAGS}")
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COVERAGE_COMPILE_FLAGS}")
