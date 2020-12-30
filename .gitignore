@@ -5,9 +5,7 @@
 /crashes/
 /config/
 /extern/assimp/out/
-source/managed/dreamcast_runtime/.vs
-source/managed/dreamcast_runtime/bin
-source/managed/dreamcast_runtime/obj
-retail/config
-retail/crashes
-retail/proto
+/source/managed/dreamcast_runtime/.vs
+/source/managed/dreamcast_runtime/bin
+/source/managed/dreamcast_runtime/obj
+/retail/
