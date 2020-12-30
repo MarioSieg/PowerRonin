@@ -51,7 +51,7 @@ namespace dce::renderer {
 		}
 
 		[[likely]] if (_config.display.vsync) {
-			//init.resolution.reset |= BGFX_RESET_VSYNC;
+			init.resolution.reset |= BGFX_RESET_VSYNC;
 		}
 
 		init.resolution.width = _config.display.width;
