@@ -138,7 +138,7 @@ namespace Dreamcast.Core
 
             public Size2 Resolution { get; set; } = new(1920, 1080);
 
-            public bool VSync { get; set; } = true;
+            public bool VSync { get; set; } = false;
 
             public ushort MaxFrameRate { get; set; } = 300;
         }
