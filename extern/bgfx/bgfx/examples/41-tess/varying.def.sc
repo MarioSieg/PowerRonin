@@ -1,13 +1,3 @@
-vec2 v_texcoord0 : TEXCOORD0 = vec2(0.0, 0.0);
-vec3 v_position  : TEXCOORD1 = vec3(0.0, 0.0, 0.0);
-vec3 v_view      : TEXCOORD2 = vec3(0.0, 0.0, 0.0);
-vec3 v_normal    : NORMAL    = vec3(0.0, 0.0, 1.0);
-vec3 v_tangent   : TANGENT   = vec3(1.0, 0.0, 0.0);
-vec3 v_bitangent : BINORMAL  = vec3(0.0, 1.0, 0.0);
-vec4 v_color0    : COLOR     = vec4(1.0, 0.0, 0.0, 1.0);
-
-vec3 a_position  : POSITION;
-vec4 a_normal    : NORMAL;
-vec4 a_tangent   : TANGENT;
-vec2 a_texcoord0 : TEXCOORD0;
-vec4 a_color0    : COLOR0;
+version https://git-lfs.github.com/spec/v1
+oid sha256:96f3c377081117ba284479beb3f79d3d491ef221d76f802143cfa0b405c1d809
+size 506

@@ -1,5 +1,3 @@
-namespace ImGui
-{
-	IMGUI_API bool RangeSliderFloat(const char* label, float* v1, float* v2, float v_min, float v_max, const char* display_format = "(%.3f, %.3f)", float power = 1.0f);
-
-} // namespace ImGui
+version https://git-lfs.github.com/spec/v1
+oid sha256:4575d55326639a5d1c09ff7185bb355cf9197c56aa9ea36e48551456ec74f78e
+size 206

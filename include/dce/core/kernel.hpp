@@ -17,7 +17,8 @@ namespace dce {
 		class Kernel;
 		class ISubsystem;
 
-		template <typename... T> concept Subsystem = std::is_base_of<ISubsystem, T...>::value;
+		template <typename... T>
+		concept Subsystem = std::is_base_of<ISubsystem, T...>::value;
 
 		/// <summary>
 		/// Represents an engine kernel, containing all subsystems.
@@ -101,7 +102,7 @@ namespace dce {
 			/// 
 			/// </summary>
 			/// <returns>Returns the current runtime instance.</returns>
-			[[nodiscard]] auto get_runtime() const noexcept -> Runtime*;
+			[[nodiscard]] auto runtime() const noexcept -> Runtime*;
 
 			/// <summary>
 			/// Allocates and installs the subsystem T.
@@ -110,8 +111,8 @@ namespace dce {
 			/// <typeparam name="...Q"></typeparam>
 			/// <param name="_args"></param>
 			/// <returns></returns>
-			template <typename T, typename... Q> requires Subsystem<T> auto create_install_subsystem(
-				Q&&..._args) -> Kernel&;
+			template <typename T, typename... Q> requires Subsystem<T>
+			auto create_install_subsystem(Q&&..._args) -> Kernel&;
 
 			/// <summary>
 			/// Uninstalls a subsystem and removes all hooks

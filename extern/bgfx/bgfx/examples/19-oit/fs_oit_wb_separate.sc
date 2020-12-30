@@ -1,21 +1,3 @@
-$input v_pos
-
-/*
- * Copyright 2011-2020 Branimir Karadzic. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-
-uniform vec4 u_color;
-
-void main()
-{
-	vec4 color = u_color;
-
-	float depth = v_pos.z/v_pos.w;
-
-	float weight = color.w * clamp(0.03 / (1e-5 + pow(depth / 200.0, 5.0) ), 0.01, 3000.0);
-	gl_FragData[0] = color * weight;
-	gl_FragData[1] = vec4_splat(weight);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:7f7087fdd9d4c1180138f1f8b9097f5d8f15c81ea8487de2ab07085de71df6f3
+size 441

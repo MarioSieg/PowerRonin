@@ -1,12 +1,3 @@
-#version 300 es
-out lowp vec4 _fragData[4];
-void main ()
-{
-  _fragData[0] = vec4(0.0, 0.0, 0.0, 0.0);
-  _fragData[1] = vec4(0.1, 0.1, 0.1, 0.1);
-  _fragData[2] = vec4(0.2, 0.2, 0.2, 0.2);
-  _fragData[3] = vec4(0.3, 0.3, 0.3, 0.3);
-}
-
-
-// stats: 4 alu 0 tex 0 flow
+version https://git-lfs.github.com/spec/v1
+oid sha256:0f211370b22737b1160b58d9be231f06484b1b5aae5ebebc23f5b5f33ac8dc35
+size 264

@@ -1,16 +1,3 @@
-$input a_position, a_color0
-$output v_world, v_color0
-
-/*
- * Copyright 2011-2020 Branimir Karadzic. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-
-void main()
-{
-	gl_Position = mul(u_modelViewProj, vec4(a_position, 1.0) );
-	v_world = mul(u_model[0], vec4(a_position, 1.0) ).xyz;
-	v_color0 = a_color0;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:7327a97de8f2ac9b9e3ff148ea0ece816e0c1570427c5b8524e9b4b25a45217a
+size 380

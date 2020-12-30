@@ -18,14 +18,10 @@ namespace dce::renderer {
 			return false;
 		}
 
-		// Load all shaders:
 		this->shader_bucket_.load_all();
-
-		// Load all shared uniforms:
 		this->shared_uniforms_.load_all();
 
-		get_limits(const_cast<Diagnostics&>(_rt.diagnostics()));
-
+		poll_limits(const_cast<Diagnostics&>(_rt.diagnostics()));
 		auto& viewport = _rt.render_data().scenery_viewport_size;
 		[[likely]] if (viewport.x == .0F || viewport.y == .0F) {
 			viewport.x = _rt.config().display.width;
@@ -34,7 +30,9 @@ namespace dce::renderer {
 				return false;
 			}
 		}
+		const auto& caps = *bgfx::getCaps();
 
+		this->is_instancing_supported_ = !!(caps.supported & BGFX_CAPS_INSTANCING);
 		this->tick_prev_ = get_high_precision_counter();
 
 		return true;
@@ -49,8 +47,9 @@ namespace dce::renderer {
 		else {
 			bgfx::setDebug(BGFX_DEBUG_TEXT);
 		}
-		get_runtime_stats(const_cast<Diagnostics&>(_rt.diagnostics()));
+		poll_stats(const_cast<Diagnostics&>(_rt.diagnostics()));
 		this->tick_prev_ = update_clocks(const_cast<Chrono&>(_rt.chrono()), this->tick_prev_);
+		this->update_camera(_rt);
 		this->gpu_.set_viewport(math::ZERO, {_rt.config().display.width, _rt.config().display.height}, FULLSCREEN_VIEW);
 		this->gpu_.clear_view(FULLSCREEN_VIEW, BGFX_CLEAR_DEPTH | BGFX_CLEAR_COLOR, 1.F, 0x040404FF);
 		this->gpu_.sort_draw_calls(FULLSCREEN_VIEW);
@@ -61,7 +60,6 @@ namespace dce::renderer {
 
 	/* End frame */
 	auto Renderer::on_post_tick(Runtime& _rt) -> bool {
-		this->update_camera(_rt);
 		this->render_scene(_rt);
 		this->render_skybox(_rt.scenery().config.lighting, _rt.render_data());
 
@@ -77,8 +75,10 @@ namespace dce::renderer {
 		this->fly_cam_.update(_rt.input(), _rt.render_data().scenery_viewport_size.x, _rt.render_data().scenery_viewport_size.y,
 		                      static_cast<float>(_rt.chrono().delta_time));
 		auto& data = _rt.render_data();
-		data.view_matrix = this->fly_cam_.get_view_matrix();
-		data.projection_matrix = this->fly_cam_.get_projection_matrix();
+		data.view_matrix = this->fly_cam_.view_matrix();
+		data.projection_matrix = this->fly_cam_.projection_matrix();
+		data.view_projection_matrix = data.projection_matrix * data.view_matrix;
+		data.camera_frustum.from_camera_matrix(data.view_projection_matrix);
 		this->gpu_.set_camera(SCENERY_VIEW, data.view_matrix, data.projection_matrix);
 	}
 
@@ -104,8 +104,7 @@ namespace dce::renderer {
 		this->gpu_.set_transform(value_ptr(skybox_matrix));
 
 		// Draw skybox:
-		this->shader_bucket_.skybox.draw(std::get<Material::StaticSkybox>(_lighting.skybox_material->properties),
-		                                 _lighting.skydome);
+		this->shader_bucket_.skybox.draw(std::get<Material::StaticSkybox>(_lighting.skybox_material->properties), _lighting.skydome);
 	}
 
 	void Renderer::set_shared_uniforms(const Scenery::Configuration::Lighting& _lighting) const {
@@ -124,12 +123,28 @@ namespace dce::renderer {
 		// Set per frame data for all shaders:
 		this->set_shared_uniforms(_rt.scenery().config.lighting);
 
+		auto& diagnostics = const_cast<Diagnostics&>(_rt.diagnostics());
+
+		diagnostics.graphics.scenery_mesh_drawcalls = 0;
+
+
 		// Draw lambda function which render_stats an object:
-		auto draw = [this](Transform& _transform, MeshRenderer& _mesh_renderer) {
+		auto draw = [this, frustum = &_rt.render_data().camera_frustum, &diagnostics](Transform& _transform, MeshRenderer& _mesh_renderer) {
 
 			// If the mesh renderer is not visible, skip it.
 			[[unlikely]] if (!_mesh_renderer.is_visible) {
 				return;
+			}
+
+			// If the mesh renderer wants frustum culling and it is outside the frustum, skip it.
+			[[likely]] if (_mesh_renderer.perform_frustum_culling) {
+
+				auto aabb_world_space = _mesh_renderer.mesh->aabb();
+				aabb_world_space.max += _transform.position;
+				aabb_world_space.min += _transform.position;
+				[[likely]] if (!frustum->is_aabb_visible(aabb_world_space)) {
+					return;
+				}
 			}
 
 			// Set world transform matrix:
@@ -137,7 +152,6 @@ namespace dce::renderer {
 
 			const auto& mesh = _mesh_renderer.mesh;
 			const auto& mat = _mesh_renderer.material->properties;
-
 
 			// Render each material with the corresponding shader:
 
@@ -154,6 +168,7 @@ namespace dce::renderer {
 				this->shader_bucket_.bumped_diffuse.draw(properties, mesh);
 			}
 
+			++diagnostics.graphics.scenery_mesh_drawcalls;
 		};
 
 		// Iterate and draw:

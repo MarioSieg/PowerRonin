@@ -1,28 +1,3 @@
-{
-  'includes': [
-    'target_defaults.gypi',
-  ],
-  'targets': [
-    {
-      "include_dirs" : [
-          "<!(node -e \"require('nan')\")"
-      ],
-      'target_name': 'glslOptimizer',
-      'dependencies': [
-        'src/glsl_optimizer_lib.gyp:*',
-      ],
-      'sources': [
-        'src/node/binding.cpp',
-        'src/node/shader.h',
-        'src/node/shader.cpp',
-        'src/node/compiler.h',
-        'src/node/compiler.cpp'
-      ],
-      'conditions': [
-        ['OS=="win"', {
-          'msvs_disabled_warnings': [4506],
-        }],
-      ],              
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:502f1813e9132eae423d8fe0b0521907acf232c7d087717b5124c278340a4b97
+size 580

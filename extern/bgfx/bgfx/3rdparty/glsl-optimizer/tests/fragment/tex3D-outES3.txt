@@ -1,16 +1,3 @@
-#version 300 es
-precision mediump float;
-uniform lowp sampler3D tex;
-in vec3 uv;
-out lowp vec4 _fragColor;
-void main ()
-{
-  _fragColor = texture (tex, uv);
-}
-
-
-// stats: 0 alu 1 tex 0 flow
-// inputs: 1
-//  #0: uv (high float) 3x1 [-1]
-// textures: 1
-//  #0: tex (low 3d) 0x0 [-1]
+version https://git-lfs.github.com/spec/v1
+oid sha256:01dbd067480a01f499e5679cf5d39aec6c66fac417f90046fb0f668b35cf3870
+size 280

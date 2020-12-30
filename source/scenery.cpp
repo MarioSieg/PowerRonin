@@ -15,15 +15,14 @@ namespace dce {
 
 	void Scenery::new_default(ResourceManager& _resource_manager) {
 		// Create cube:
-		for (auto i = 0; i < 128; ++i) {
-			for (auto j = 0; j < 128; ++j) {
+		for (auto i = 0; i < 8; ++i) {
+			for (auto j = 0; j < 8; ++j) {
 				const auto cube = this->registry_.create();
 
 				auto& meta = this->registry_.emplace<MetaData>(cube);
 				auto& transform = this->registry_.emplace<Transform>(cube);
-				transform.position.x = i * 0.05F;
-				transform.position.z = j * 0.05F;
-				transform.scale = math::ONE * 30.f;
+				transform.position.x = i * 5.F;
+				transform.position.z = j * 5.F;
 				auto& renderer = this->registry_.emplace<MeshRenderer>(cube);
 				auto& collider = this->registry_.emplace<Collider>(cube);
 

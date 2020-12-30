@@ -1,15 +1,3 @@
-#version 300 es
-#extension GL_EXT_shader_framebuffer_fetch : enable
-layout(location=0) inout mediump vec4 _glesFragData[4];
-in highp vec2 inUV;
-void main ()
-{
-  highp vec4 tmpvar_1;
-  tmpvar_1 = inUV.xxxx;
-  _glesFragData[0] = tmpvar_1;
-}
-
-
-// stats: 0 alu 0 tex 0 flow
-// inputs: 1
-//  #0: inUV (high float) 2x1 [-1]
+version https://git-lfs.github.com/spec/v1
+oid sha256:92226291e08d5781c6523938665f5b41a58e79e29d85a05ce80d6592c706b25a
+size 318

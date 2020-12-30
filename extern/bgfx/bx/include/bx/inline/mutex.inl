@@ -1,23 +1,3 @@
-/*
- * Copyright 2010-2020 Branimir Karadzic. All rights reserved.
- * License: https://github.com/bkaradzic/bx#license-bsd-2-clause
- */
-
-#ifndef BX_MUTEX_H_HEADER_GUARD
-#	error "Must be included from bx/mutex.h!"
-#endif // BX_MUTEX_H_HEADER_GUARD
-
-namespace bx
-{
-	inline MutexScope::MutexScope(Mutex& _mutex)
-		: m_mutex(_mutex)
-	{
-		m_mutex.lock();
-	}
-
-	inline MutexScope::~MutexScope()
-	{
-		m_mutex.unlock();
-	}
-
-} // namespace bx
+version https://git-lfs.github.com/spec/v1
+oid sha256:f1e2a2171586f89a50274ad1d5b320a02625063cf97dcdd523759f4cffb6a2ba
+size 432

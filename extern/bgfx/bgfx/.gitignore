@@ -1,9 +1,3 @@
-.build
-.debug
-.DS_Store
-.git
-.svn
-tags
-.gdb_history
-.vscode
-*.TMP
+version https://git-lfs.github.com/spec/v1
+oid sha256:cea3485dc744c9a2f36555056562133aff36af42cff5da1ac86d341bac9c040e
+size 66

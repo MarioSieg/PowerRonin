@@ -1,8 +1,3 @@
-
-uSynergy client -- Implementation for the embedded Synergy client library
-version 1.0.0, July 7th, 2012
-Copyright (c) 2012 Alex Evans
-
-This is a copy of the files once found at:
-  https://github.com/symless/synergy-core/tree/790d108a56ada9caad8e56ff777d444485a69da9/src/micro
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:98740c2d17218ed0e567e2b54d9342957544217c3a8e6f610b6247cd938d8904
+size 278

@@ -1,14 +1,3 @@
-varying highp float xlv_VFACE;
-void main ()
-{
-  mediump vec4 tmpvar_1;
-  highp vec4 tmpvar_2;
-  tmpvar_2 = vec4(xlv_VFACE);
-  tmpvar_1 = tmpvar_2;
-  gl_FragData[0] = tmpvar_1;
-}
-
-
-// stats: 0 alu 0 tex 0 flow
-// inputs: 1
-//  #0: xlv_VFACE (high float) 1x1 [-1]
+version https://git-lfs.github.com/spec/v1
+oid sha256:cf8480bcc5a256deaccc0b1ab038459eaee3e77479355f2874dfbe341a4ea6f3
+size 262

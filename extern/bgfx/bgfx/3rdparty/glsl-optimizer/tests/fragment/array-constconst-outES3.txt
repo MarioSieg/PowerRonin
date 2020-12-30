@@ -1,12 +1,3 @@
-#version 300 es
-out mediump vec4 _fragData;
-void main ()
-{
-  mediump vec4 c_1;
-  c_1.zw = vec2(0.0, 0.0);
-  c_1.xy = vec2(-0.3441301, 0.05004501);
-  _fragData = c_1;
-}
-
-
-// stats: 2 alu 0 tex 0 flow
+version https://git-lfs.github.com/spec/v1
+oid sha256:2753f406be38466bb6e4ef484df76a325d4129bd9b8fe246d338bff530d18fae
+size 199

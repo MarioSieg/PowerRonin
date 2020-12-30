@@ -1,26 +1,3 @@
-add_library("imgui" STATIC 
-"imconfig.h" 
-"imgui.cpp" 
-"imgui.h" 
-"imgui_demo.cpp" 
-"imgui_draw.cpp" 
-"imgui_internal.h" 
-"imgui_widgets.cpp" 
-"imstb_rectpack.h" 
-"imstb_textedit.h" 
-"imstb_truetype.h"
-"implot.h"
-"implot.cpp"
-"implot_demo.cpp"
-"implot_internal.h"
-"implot_items.cpp"
-"TextEditor.cpp"
-"TextEditor.h"
-"ImCurveEdit.cpp"
-"ImCurveEdit.h"
-"ImGradient.cpp"
-"ImGradient.h"
-"ImGuizmo.cpp"
-"ImGuizmo.h"
-"ImSequencer.cpp"
-"ImSequencer.h")
+version https://git-lfs.github.com/spec/v1
+oid sha256:5ed0c5ba3b22ee917ac992112abc2debfaa4598455a50648feef3f3adbf0f564
+size 490

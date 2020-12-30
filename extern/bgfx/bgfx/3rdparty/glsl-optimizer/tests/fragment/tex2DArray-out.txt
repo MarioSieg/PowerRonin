@@ -1,14 +1,3 @@
-#extension GL_EXT_texture_array : enable
-uniform sampler2DArray myarr;
-varying vec4 uv;
-void main ()
-{
-  gl_FragData[0] = ((texture2DArray (myarr, uv.xyz) + texture2DArray (myarr, uv.xyw)) + texture2DArray (myarr, uv.xyz, 1.5));
-}
-
-
-// stats: 2 alu 3 tex 0 flow
-// inputs: 1
-//  #0: uv (high float) 4x1 [-1]
-// textures: 1
-//  #0: myarr (high 2darray) 0x0 [-1]
+version https://git-lfs.github.com/spec/v1
+oid sha256:2a2d4b935d63da3ba33ac8256d15e72e21876117a564976f86f3ea598bffa0d7
+size 361

@@ -1,15 +1,3 @@
-$input v_normal, v_view, v_shadowcoord
-
-/*
- * Copyright 2013-2014 Dario Manesku. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#define SM_PCF 1
-
-#include "fs_shadowmaps_color_lighting.sh"
-
-void main()
-{
-#include "fs_shadowmaps_color_lighting_main.sh"
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:7ee741e517bdac995044379b7e55e2e579c4d6336cd26a0c09b128bec04da1ea
+size 300

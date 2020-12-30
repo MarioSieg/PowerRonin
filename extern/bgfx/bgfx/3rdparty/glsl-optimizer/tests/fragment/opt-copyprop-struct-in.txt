@@ -1,10 +1,3 @@
-struct v2f {
-    float f;
-};
-varying float var;
-void main() {
-    v2f i;
-    i.f = var;
-	v2f i2 = i;
-    gl_FragColor = vec4(abs(i2.f));
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:dd2a6f69165f04ef6b489e8dd611f559c684fe517c30d7e713ae4f1662f7cbd8
+size 139

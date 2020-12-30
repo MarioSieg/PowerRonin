@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props"
-          Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -286,11 +284,9 @@
     <Compile Include="Src\Lua\Interop\StandardDescriptors\ReflectionMemberDescriptors\EventMemberDescriptor.cs" />
     <Compile Include="Src\Lua\Interop\StandardDescriptors\ReflectionMemberDescriptors\FieldMemberDescriptor.cs" />
     <Compile Include="Src\Lua\Interop\StandardDescriptors\ReflectionMemberDescriptors\MethodMemberDescriptor.cs" />
-    <Compile
-      Include="Src\Lua\Interop\StandardDescriptors\ReflectionMemberDescriptors\OverloadedMethodMemberDescriptor.cs" />
+    <Compile Include="Src\Lua\Interop\StandardDescriptors\ReflectionMemberDescriptors\OverloadedMethodMemberDescriptor.cs" />
     <Compile Include="Src\Lua\Interop\StandardDescriptors\ReflectionMemberDescriptors\PropertyMemberDescriptor.cs" />
-    <Compile
-      Include="Src\Lua\Interop\StandardDescriptors\ReflectionMemberDescriptors\ValueTypeDefaultCtorMemberDescriptor.cs" />
+    <Compile Include="Src\Lua\Interop\StandardDescriptors\ReflectionMemberDescriptors\ValueTypeDefaultCtorMemberDescriptor.cs" />
     <Compile Include="Src\Lua\Interop\StandardDescriptors\StandardEnumUserDataDescriptor.cs" />
     <Compile Include="Src\Lua\Interop\StandardDescriptors\StandardGenericsUserDataDescriptor.cs" />
     <Compile Include="Src\Lua\Interop\StandardDescriptors\StandardUserDataDescriptor.cs" />
@@ -389,23 +385,23 @@
     <Compile Include="Src\Mathematics\HalfUtils.cs" />
     <Compile Include="Src\Mathematics\MathUtil.cs" />
     <Compile Include="Src\Mathematics\Matrix3x2.cs" />
-    <Compile Include="Src\Mathematics\SimdMatrix3x3.cs" />
-    <Compile Include="Src\Mathematics\SimdMatrix4x4.cs" />
+    <Compile Include="Src\Mathematics\Matrix3x3.cs" />
+    <Compile Include="Src\Mathematics\Matrix4x4.cs" />
     <Compile Include="Src\Mathematics\Matrix5x4.cs" />
     <Compile Include="Src\Mathematics\OrientedBoundingBox.cs" />
     <Compile Include="Src\Mathematics\Plane.cs" />
     <Compile Include="Src\Mathematics\PlaneIntersectionType.cs" />
     <Compile Include="Src\Mathematics\Point.cs" />
-    <Compile Include="Src\Mathematics\SimdQuaternion.cs" />
+    <Compile Include="Src\Mathematics\Quaternion.cs" />
     <Compile Include="Src\Mathematics\Ray.cs" />
     <Compile Include="Src\Mathematics\Rectangle.cs" />
     <Compile Include="Src\Mathematics\RectangleF.cs" />
     <Compile Include="Src\Mathematics\Size2.cs" />
     <Compile Include="Src\Mathematics\Size2F.cs" />
-    <Compile Include="Src\Mathematics\SimdVector2.cs" />
-    <Compile Include="Src\Mathematics\SimdVector3.cs" />
+    <Compile Include="Src\Mathematics\Vector2.cs" />
+    <Compile Include="Src\Mathematics\Vector3.cs" />
     <Compile Include="Src\Mathematics\Vector3I.cs" />
-    <Compile Include="Src\Mathematics\SimdVector4.cs" />
+    <Compile Include="Src\Mathematics\Vector4.cs" />
     <Compile Include="Src\Mathematics\Vector4I.cs" />
     <Compile Include="Src\Mathematics\Viewport.cs" />
     <Compile Include="Src\Mathematics\ViewportF.cs" />

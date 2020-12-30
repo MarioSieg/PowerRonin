@@ -1,18 +1,3 @@
-$input v_texcoord0
-
-/*
- * Copyright 2011-2020 Branimir Karadzic. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-
-SAMPLER2D(s_texColor0, 0);
-SAMPLER2D(s_texColor1, 1);
-
-void main()
-{
-	vec4  accum   = texture2D(s_texColor0, v_texcoord0);
-	float opacity = texture2D(s_texColor1, v_texcoord0).x;
-	gl_FragColor  = vec4(accum.xyz / clamp(accum.w, 1e-4, 5e4), opacity);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:2a72b28ccf93e552c31bf97dfd095135da7e3c60a718a46803be02416d5509e3
+size 442

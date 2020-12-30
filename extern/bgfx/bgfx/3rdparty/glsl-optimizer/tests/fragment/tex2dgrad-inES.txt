@@ -1,8 +1,3 @@
-#extension GL_EXT_shader_texture_lod : require
-#extension GL_OES_standard_derivatives : require
-uniform sampler2D tex;
-uniform samplerCube cub;
-varying vec3 uv;
-void main() {
-	gl_FragColor = texture2DGradEXT(tex,uv.xy,dFdx(uv.xy),dFdy(uv.xy)) + textureCubeGradEXT(cub,uv,dFdx(uv),dFdy(uv));
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:3e67f437879059403c434cebde064e6b24924463a7ae3ce66ca231eb20c02f9b
+size 293

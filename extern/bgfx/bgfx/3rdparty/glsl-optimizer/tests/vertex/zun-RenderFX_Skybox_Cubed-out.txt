@@ -1,16 +1,3 @@
-void main ()
-{
-  gl_Position = (gl_ModelViewProjectionMatrix * gl_Vertex);
-  vec4 tmpvar_1;
-  tmpvar_1.w = 0.0;
-  tmpvar_1.xyz = gl_MultiTexCoord0.xyz;
-  gl_TexCoord[0] = tmpvar_1;
-}
-
-
-// stats: 2 alu 0 tex 0 flow
-// inputs: 2
-//  #0: gl_MultiTexCoord0 (high float) 4x1 [-1] loc 8
-//  #1: gl_Vertex (high float) 4x1 [-1] loc 0
-// uniforms: 1 (total size: 0)
-//  #0: gl_ModelViewProjectionMatrix (high float) 4x4 [-1]
+version https://git-lfs.github.com/spec/v1
+oid sha256:ebc9508be288812cf1ae976980906d14c2894d05f56c4f92ad4dc8e4a1582b4d
+size 417

@@ -1,15 +1,3 @@
-#version 300 es
-uniform highp sampler2D map;
-layout(location=0) out mediump vec4 out_color;
-void main ()
-{
-  highp vec4 tmpvar_1;
-  tmpvar_1.zw = vec2(0.0, 0.0);
-  tmpvar_1.xy = vec2(textureSize (map, 0));
-  out_color = tmpvar_1;
-}
-
-
-// stats: 2 alu 1 tex 0 flow
-// textures: 1
-//  #0: map (high 2d) 0x0 [-1]
+version https://git-lfs.github.com/spec/v1
+oid sha256:553299dc9c7279333f44b137d387582231ed8abc1d9d936f6683d0cee9b8d90f
+size 309

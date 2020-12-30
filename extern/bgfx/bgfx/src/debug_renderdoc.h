@@ -1,17 +1,3 @@
-/*
- * Copyright 2011-2020 Branimir Karadzic. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#ifndef BGFX_RENDERDOC_H_HEADER_GUARD
-#define BGFX_RENDERDOC_H_HEADER_GUARD
-
-namespace bgfx
-{
-	void* loadRenderDoc();
-	void unloadRenderDoc(void*);
-	void renderDocTriggerCapture();
-
-} // namespace bgfx
-
-#endif // BGFX_RENDERDOC_H_HEADER_GUARD
+version https://git-lfs.github.com/spec/v1
+oid sha256:4c779a8d652c638b27fa1b28778a3061caacc182462877768a91979ffc545b0d
+size 381

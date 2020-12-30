@@ -1,10 +1,3 @@
-uniform float inFloat;
-void main ()
-{
-  gl_FragColor = vec4((inFloat * 4.36e-06));
-}
-
-
-// stats: 1 alu 0 tex 0 flow
-// uniforms: 1 (total size: 0)
-//  #0: inFloat (high float) 1x1 [-1]
+version https://git-lfs.github.com/spec/v1
+oid sha256:8cb88d1a5fd3e73e72c955b2fa4324efbf2d537d87cdadff1bb964f6c1f7d879
+size 185

@@ -1,15 +1,3 @@
-#! /bin/sh
-git rm -rf bin
-git rm -rf docs
-git rm -rf m4
-git rm -rf src/egl
-git rm -rf src/glsl/glcpp/tests
-git rm -rf src/loader
-git rm -rf src/mapi
-git rm -rf src/mesa/drivers
-git rm -rf src/mesa/main/tests
-git rm -rf src/mesa/state_tracker
-git rm -rf src/gallium
-git rm -rf src/glx
-git rm -rf src/gtest
-git rm -rf $(git status --porcelain | awk '/^DU/ {print $NF}')
+version https://git-lfs.github.com/spec/v1
+oid sha256:0dfe89a3aba308e20071ffc407b15b96aa7379601a1a4116303c2b9033ec1d33
+size 368

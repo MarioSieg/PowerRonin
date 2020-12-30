@@ -1,10 +1,3 @@
-# iOS / OSX Metal example
-
-## Introduction
-
-This example shows how to integrate Dear ImGui with Metal. It is based on the "cross-platform" game template provided with Xcode as of Xcode 9.
-
-Consider basing your work off the example_glfw_metal/ or example_sdl_metal/ examples. They are better supported and will be portable unlike this one.
-
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:be99fc25b709f635dd01923a83720f015cd780f21a6548205c7a89bc4bdc2105
+size 342

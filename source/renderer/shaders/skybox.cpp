@@ -7,17 +7,17 @@ namespace dce::renderer::shaders {
 
 	void SkyboxShader::load() {
 		IShader::load();
-		this->u_s_tex_cube_ = createUniform("s_tex_cube", bgfx::UniformType::Sampler);
+		this->cubemap_sampler_.load();
 	}
 
 	void SkyboxShader::unload() {
-		destroy(this->u_s_tex_cube_);
+		this->cubemap_sampler_.unload();
 		IShader::unload();
 	}
 
 	void SkyboxShader::draw(const Material::StaticSkybox& _mat, const Mesh& _mesh) const {
 		this->gpu_.set_mesh_buffer(_mesh);
-		this->gpu_.set_texture(_mat.cubemap, this->u_s_tex_cube_, 0);
+		this->gpu_.set_texture(_mat.cubemap, this->cubemap_sampler_, 0);
 		this->gpu_.draw(this->program_, SKYBOX_VIEW, BGFX_STATE_WRITE_RGB | BGFX_STATE_DEPTH_TEST_LESS);
 	}
 }

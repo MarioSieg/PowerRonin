@@ -18,11 +18,11 @@ namespace dce {
 		return std::runtime_error::what();
 	}
 
-	auto FatalEngineException::get_source_file() const noexcept -> const char* {
+	auto FatalEngineException::source_file() const noexcept -> const char* {
 		return this->file_;
 	}
 
-	auto FatalEngineException::get_source_line() const noexcept -> int {
+	auto FatalEngineException::source_line() const noexcept -> int {
 		return this->line_;
 	}
 

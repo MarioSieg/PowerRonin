@@ -1,27 +1,3 @@
-$input a_position, a_texcoord0
-$output v_k
-
-/*
- * Copyright 2013-2014 Dario Manesku. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-
-uniform vec4 u_virtualLightPos_extrusionDist;
-
-#define u_virtualLightPos   u_virtualLightPos_extrusionDist.xyz
-#define u_extrusionDistance u_virtualLightPos_extrusionDist.w
-
-void main()
-{
-	vec3 pos = a_position;
-	if (a_texcoord0.x == 1.0)
-	{
-		vec3 toLight = pos - u_virtualLightPos;
-		pos += normalize(toLight) * u_extrusionDistance;
-	}
-	gl_Position = mul(u_modelViewProj, vec4(pos, 1.0));
-
-	v_k = a_texcoord0.y;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:95f6b5a49fb4c19af83909985370877958889f19ca6308f79607ee55717da972
+size 626

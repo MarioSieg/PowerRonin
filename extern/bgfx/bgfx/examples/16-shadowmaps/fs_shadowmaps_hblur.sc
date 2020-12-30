@@ -1,20 +1,3 @@
-$input v_texcoord0, v_texcoord1, v_texcoord2, v_texcoord3, v_texcoord4
-
-/*
- * Copyright 2013-2014 Dario Manesku. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "common.sh"
-SAMPLER2D(s_shadowMap0, 4);
-
-void main()
-{
-	gl_FragColor = blur9(s_shadowMap0
-						, v_texcoord0
-						, v_texcoord1
-						, v_texcoord2
-						, v_texcoord3
-						, v_texcoord4
-						);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:160ac3f5ca6a875c7764fec0280c39b7241bb552da8155987bb13b8970a9ff44
+size 416

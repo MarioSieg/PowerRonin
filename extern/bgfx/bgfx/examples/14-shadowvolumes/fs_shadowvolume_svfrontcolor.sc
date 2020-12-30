@@ -1,13 +1,3 @@
-/*
- * Copyright 2013-2014 Dario Manesku. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-uniform vec4 u_color;
- 
-void main()
-{
-	gl_FragColor.xyz = u_color.xyz;
-	gl_FragColor.w = 0.98;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:40dd6b4285a4a2e8da7ff265b3fe676dc7af0292a7c5db3f670540e45e362027
+size 262

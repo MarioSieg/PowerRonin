@@ -9,10 +9,13 @@ project ("DreamcastSDK" CXX C ASM)
 
 message("Com: ${CMAKE_CXX_COMPILER_ID}")
 
+# -march=native
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    SET(COVERAGE_COMPILE_FLAGS "-march=native -Ofast")
-    SET(COVERAGE_LINK_FLAGS    "-flto")
-    SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${COVERAGE_COMPILE_FLAGS}")
+    SET(COVERAGE_COMPILE_FLAGS "-msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mavx -Ofast -MT")
+    SET(COVERAGE_LINK_FLAGS    "-flto -MT")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COVERAGE_COMPILE_FLAGS}")
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COVERAGE_COMPILE_FLAGS}")
+    SET(CMAKE_STATIC_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${COVERAGE_LINK_FLAGS}")
     SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${COVERAGE_LINK_FLAGS}")
 endif()
 
@@ -223,7 +226,9 @@ add_library(
     "source/renderer/uniform.hpp"
     "source/renderer/shared_uniforms.hpp" 
     "source/renderer/shared_uniforms.cpp"
-    "source/renderer/uniform.cpp")
+    "source/renderer/uniform.cpp" 
+    "include/dce/aabb.hpp"
+     "include/dce/frustum.hpp" "source/aabb.cpp" "source/frustum.cpp")
 
 include("extern/CMakeLists.txt")
 

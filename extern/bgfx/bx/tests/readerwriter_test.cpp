@@ -1,31 +1,3 @@
-/*
- * Copyright 2010-2020 Branimir Karadzic. All rights reserved.
- * License: https://github.com/bkaradzic/bx#license-bsd-2-clause
- */
-
-#include "test.h"
-#include <bx/readerwriter.h>
-
-TEST_CASE("writeLE", "")
-{
-	bx::SizerWriter writer;
-
-	bx::Error err;
-
-	int32_t total = bx::writeLE(&writer, 1.0f, &err);
-
-	REQUIRE(err.isOk() );
-	REQUIRE(total == 4);
-}
-
-TEST_CASE("writeBE", "")
-{
-	bx::SizerWriter writer;
-
-	bx::Error err;
-
-	int32_t total = bx::writeBE(&writer, 1.0f, &err);
-
-	REQUIRE(err.isOk() );
-	REQUIRE(total == 4);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:43e693258a9b39d1817077c4f20a75274c7a46357f47f5e458526ab8322a0793
+size 523

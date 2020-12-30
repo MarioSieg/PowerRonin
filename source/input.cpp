@@ -10,7 +10,7 @@ namespace dce {
 		return ImGui::IsMouseDown(static_cast<ImGuiMouseButton>(_mb));
 	}
 
-	auto Input::get_mouse_position() const noexcept -> SimdVector2<> {
+	auto Input::mouse_pos() const noexcept -> SimdVector2<> {
 		const auto position = ImGui::GetMousePos();
 		return {position.x, position.y};
 	}

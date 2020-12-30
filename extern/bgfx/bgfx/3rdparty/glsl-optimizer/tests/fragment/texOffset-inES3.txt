@@ -1,23 +1,3 @@
-#version 300 es
-in mediump vec3 uv;
-out lowp vec4 outColor;
-uniform sampler2D tex;
-uniform sampler3D vol;
-void main()
-{
-	lowp vec4 c;
-
-	// texture offset forms
-	c = textureOffset (tex, uv.xy, ivec2(-2,-3));
-	c += textureOffset (tex, uv.xy, ivec2(4,5), 0.5);
-	c += textureOffset (vol, uv.xyz, ivec3(-2,-3,-4));
-	c += textureOffset (vol, uv.xyz, ivec3(4,5,6), -0.5);
-
-	// texelFetch forms
-	c += texelFetch (tex, ivec2(1,2), 1);
-	c += texelFetch (vol, ivec3(1,2,3), 2);
-	c += texelFetchOffset (tex, ivec2(1,2), 3, ivec2(-2,-3));
-	c += texelFetchOffset (vol, ivec3(1,2,3), 0, ivec3(-2,-3,-4));
-
-	outColor = c;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:f05b5b5201afdb78edb78d18b7c44366cccd360ea743794989baf99de78a7bf1
+size 608

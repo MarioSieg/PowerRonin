@@ -1,26 +1,3 @@
-{
-  "revision" : 2,
-  "instructions" : [
-    {
-      "opname" : "CubeFaceIndexAMD",
-      "opcode" : 1,
-      "operands" : [
-        { "kind" : "IdRef", "name" : "'P'" }
-      ],
-      "extensions" : [ "SPV_AMD_gcn_shader" ]
-    },
-    {
-      "opname" : "CubeFaceCoordAMD",
-      "opcode" : 2,
-      "operands" : [
-        { "kind" : "IdRef", "name" : "'P'" }
-      ],
-      "extensions" : [ "SPV_AMD_gcn_shader" ]
-    },
-    {
-      "opname" : "TimeAMD",
-      "opcode" : 3,
-      "extensions" : [ "SPV_AMD_gcn_shader" ]
-    }
-  ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:7b972dba987f7c1fbe45576b6c8519e44ceca376e72149cce6ced715036ea931
+size 535

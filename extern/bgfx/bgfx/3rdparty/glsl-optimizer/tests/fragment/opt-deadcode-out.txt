@@ -1,9 +1,3 @@
-void main ()
-{
-  gl_FragColor = vec4((((gl_FragCoord.x * 2.0) + gl_FragCoord.x) + (gl_FragCoord.x * 4.0)));
-}
-
-
-// stats: 4 alu 0 tex 0 flow
-// inputs: 1
-//  #0: gl_FragCoord (high float) 4x1 [-1] loc 0
+version https://git-lfs.github.com/spec/v1
+oid sha256:d55bd8a1ccd711111fc60c9940b8a95bece76a0502215f43195eac81d339ead0
+size 203

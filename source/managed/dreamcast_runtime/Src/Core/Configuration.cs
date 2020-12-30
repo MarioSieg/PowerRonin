@@ -138,7 +138,7 @@ namespace Dreamcast.Core
 
             public Size2 Resolution { get; set; } = new(1920, 1080);
 
-            public bool VSync { get; set; } = false;
+            public bool VSync { get; set; } = true;
 
             public ushort MaxFrameRate { get; set; } = 300;
         }
@@ -151,7 +151,7 @@ namespace Dreamcast.Core
 
             public SystemOverlayTheme Theme { get; set; } = SystemOverlayTheme.Dark;
 
-            public bool EnableFontAntialiasing { get; set; } = true;
+            public bool EnableFontAntialiasing { get; set; } = false;
 
             public float Alpha { get; set; } = 1.0f;
 
@@ -176,7 +176,7 @@ namespace Dreamcast.Core
                 {BuildTarget.StandaloneMac, new[] {GraphicsAPI.Metal, GraphicsAPI.OpenGL}}
             };
 
-            public MsaaMode MSAAMode { get; set; } = MsaaMode.X16;
+            public MsaaMode MSAAMode { get; set; } = MsaaMode.Off;
 
             public bool EnableHighDPIMode { get; set; } = false;
 
@@ -184,7 +184,7 @@ namespace Dreamcast.Core
 
             public bool EnableHDR10 { get; set; } = false;
 
-            public bool EnableMaxAnisotropy { get; set; } = true;
+            public bool EnableMaxAnisotropy { get; set; } = false;
         }
     }
 }

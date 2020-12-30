@@ -1,10 +1,3 @@
-void main ()
-{
-  vec4 c_1;
-  c_1.xyz = vec3(0.0, 0.0, 0.0);
-  c_1.w = 0.0;
-  gl_FragData[0] = c_1;
-}
-
-
-// stats: 2 alu 0 tex 0 flow
+version https://git-lfs.github.com/spec/v1
+oid sha256:dfeb487e7ac4ab86141ca757e8e91aa364c2d9ec8cd3766957edf43614219864
+size 132

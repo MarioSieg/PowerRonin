@@ -1,9 +1,3 @@
-varying vec4 texcoord;
-void main()
-{
-	gl_Position.zw = gl_Vertex.xy*2.0;
-	gl_Position.xy = gl_Vertex.xy;
-	texcoord.x = gl_Vertex.z;
-	texcoord.yz = gl_Vertex.zw;
-	texcoord.w = gl_Vertex.x;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:0abec4b80b8182e59687913868f6f60a6b548690388a3d8a55771fc2da975664
+size 190

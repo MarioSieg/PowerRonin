@@ -1,14 +1,3 @@
-#extension GL_EXT_draw_instanced : require
-
-attribute highp vec3 _inPos;
-attribute highp vec3 _inNor;
-
-void main()
-{
-	highp vec3 p;
-	p = _inPos;
-	p.y += float(gl_InstanceIDEXT);
-	p += _inNor;
-	gl_Position = vec4(p,1.0);
-	gl_PointSize = p.x;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:27869815d116ff992b33c5e06028e4adfb792445e13048dca13a18120ded11fa
+size 243

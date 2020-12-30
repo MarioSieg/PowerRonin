@@ -1,1 +1,3 @@
-"v2020.6", "SPIRV-Tools v2020.6 e4fdbb82647a417e30b6da25c632bddf5cf79a58"
+version https://git-lfs.github.com/spec/v1
+oid sha256:54726294e4a3430215f6f1261076de02d69a4755d515f1fa5589a7eedf45f9bd
+size 82

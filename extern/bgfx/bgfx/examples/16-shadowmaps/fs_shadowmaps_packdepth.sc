@@ -1,14 +1,3 @@
-$input v_position
-
-/*
- * Copyright 2013-2014 Dario Manesku. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-
-void main()
-{
-	float depth = v_position.z/v_position.w * 0.5 + 0.5;
-	gl_FragColor = packFloatToRgba(depth);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:18cde4731639894d88b1f23befd3b44173145c5f42d3891115c18669eb41dbe5
+size 295

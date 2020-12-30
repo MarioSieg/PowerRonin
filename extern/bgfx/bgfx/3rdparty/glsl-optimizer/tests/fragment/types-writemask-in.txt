@@ -1,6 +1,3 @@
-void main () {
-	vec4 c;
-    c.x  = gl_FragCoord.y;
-	c.yzw = vec3(4.0,5.0,6.0);
-	gl_FragColor = c;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:715d6febd7ec6fbb5c1f5a90cf39e93ad42446fec971464689c52de39c27724d
+size 100

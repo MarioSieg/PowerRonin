@@ -1,5 +1,3 @@
-uniform sampler3D tex;
-varying vec3 uv;
-void main() {
-	gl_FragColor = texture3D(tex, uv);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:9be1122f97cc9d9b4698d67c45057d9b77a4a3558366bd0e2032ae4abd563b25
+size 92

@@ -1,3 +1,3 @@
-@REM Build for Visual Studio compiler. Run your copy of vcvars32.bat or vcvarsall.bat to setup command-line compiler.
-mkdir Debug
-cl /nologo /Zi /MD /I .. /I ..\.. /I "%DXSDK_DIR%/Include" /D UNICODE /D _UNICODE *.cpp ..\..\backends\imgui_impl_dx9.cpp ..\..\backends\imgui_impl_win32.cpp ..\..\imgui*.cpp /FeDebug/example_win32_directx9.exe /FoDebug/ /link /LIBPATH:"%DXSDK_DIR%/Lib/x86" d3d9.lib
+version https://git-lfs.github.com/spec/v1
+oid sha256:79d8a01f47551dfdec9e00bb01c2f4936b687ffebbdff479ef52335c98be9eda
+size 529

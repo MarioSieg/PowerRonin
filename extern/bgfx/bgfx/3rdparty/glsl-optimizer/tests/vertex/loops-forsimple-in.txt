@@ -1,9 +1,3 @@
-uniform vec4 uniColors[4];
-varying vec4 varColor;
-void main() {
-	gl_Position = gl_Vertex;
-	vec4 col = vec4(0.0);
-	for (int i = 0; i < 4; ++i)
-		col += uniColors[i];
-	varColor = col;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:6e2a0d66f8bca74b3b2b048ca322e2f54f89a7caa626af01aa9b1ecb4702bbd8
+size 184

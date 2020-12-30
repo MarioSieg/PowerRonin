@@ -1,12 +1,3 @@
-uniform samplerCube _MainTex;
-void main ()
-{
-  gl_FragData[0] = textureCube (_MainTex, gl_TexCoord[0].xyz);
-}
-
-
-// stats: 0 alu 1 tex 0 flow
-// inputs: 1
-//  #0: gl_TexCoord (high float) 4x1 [1] loc 4
-// textures: 1
-//  #0: _MainTex (high cube) 0x0 [-1]
+version https://git-lfs.github.com/spec/v1
+oid sha256:2f5e64738730d38ed152b7c12d9d75f4b8e021d1467812fb97d60a8ea061a203
+size 254

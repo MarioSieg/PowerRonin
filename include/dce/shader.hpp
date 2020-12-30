@@ -33,27 +33,15 @@ namespace dce {
 		/* All associated file types. */
 		static constexpr std::array<std::string_view, 4> FILE_EXTENSIONS = {".shc", ".shb"};
 
-		[[nodiscard]] auto get_vertex_shader_bytecode() const noexcept -> const Blob&;
+		[[nodiscard]] auto vertex_shader_bytecode() const noexcept -> const Blob&;
 
-		[[nodiscard]] auto get_fragment_shader_bytecode() const noexcept -> const std::optional<Blob>&;
+		[[nodiscard]] auto fragment_shader_bytecode() const noexcept -> const std::optional<Blob>&;
 
-		[[nodiscard]] auto get_vertex_shader_textcode() const noexcept -> const std::optional<std::string>&;
+		[[nodiscard]] auto vertex_shader_textcode() const noexcept -> const std::optional<std::string>&;
 
-		[[nodiscard]] auto get_fragment_shader_textcode() const noexcept -> const std::optional<std::string>&;
+		[[nodiscard]] auto fragment_shader_textcode() const noexcept -> const std::optional<std::string>&;
 
-		[[nodiscard]] auto get_program_id() const noexcept -> std::uint16_t;
-
-		[[nodiscard]] auto get_uniforms() const noexcept -> const std::unordered_map<
-			std::string_view, std::tuple<UniformType, std::uint16_t>>&;
-
-		void set_uniform(std::string_view _name, const SimdVector4<>& _value) const noexcept;
-		void set_uniform(std::string_view _name, const SimdMatrix3x3<>& _value) const noexcept;
-		void set_uniform(std::string_view _name, const SimdMatrix4x4<>& _value) const noexcept;
-		void set_uniform(std::string_view _name, const float (&_value)[4]) const noexcept;
-		void set_uniform(std::string_view _name, const float (&_value)[9]) const noexcept;
-		void set_uniform(std::string_view _name, const float (&_value)[16]) const noexcept;
-
-		[[nodiscard]] auto get_uniform_handle(std::string_view _name) const noexcept -> std::uint16_t;
+		[[nodiscard]] auto program_id() const noexcept -> std::uint16_t;
 
 		void upload() override;
 
@@ -67,14 +55,12 @@ namespace dce {
 
 		struct {
 			std::uint16_t program_id = 0;
-			std::unordered_map<std::string_view, std::tuple<UniformType, std::uint16_t>> uniforms = {};
 		} volatile_upload_data_;
 	};
 
 	class ShaderImporteur final : public ResourceImporteur<ShaderImporteur, Shader> {
 	public:
 		auto load(std::filesystem::path&& _path
-		          , std::unordered_map<std::string_view, std::tuple<UniformType, std::uint16_t>>&& _uniforms
 		          , const ShaderMeta* const _meta = nullptr) const -> std::shared_ptr<Shader>;
 	};
 

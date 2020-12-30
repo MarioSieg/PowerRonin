@@ -1,3 +1,3 @@
-@REM Build for Visual Studio compiler. Run your copy of vcvars32.bat or vcvarsall.bat to setup command-line compiler.
-mkdir Debug
-cl /nologo /Zi /MD /I ..\.. %* *.cpp ..\..\*.cpp /FeDebug/example_null.exe /FoDebug/ /link gdi32.lib shell32.lib
+version https://git-lfs.github.com/spec/v1
+oid sha256:45bb8ea52428bc66c17ed047530826d8b8de8f6e4724c8558ffe1c0ec3366603
+size 243

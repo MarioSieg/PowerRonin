@@ -1,22 +1,3 @@
-$input v_texcoord0
-
-/*
- * Copyright 2013-2014 Dario Manesku. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-uniform vec4 u_color;
-SAMPLER2D(s_texColor, 0);
-
-void main()
-{
-	vec4 tcolor = toLinear(texture2D(s_texColor, v_texcoord0));
-
-	if (tcolor.x < 0.1)
-	{
-		discard;
-	}
-
-	gl_FragColor = toGamma(tcolor + u_color);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:4dc1e655a652a96148746e55b6ff8f6f5842d42f3b124045a87dbcf7eb916b0d
+size 394

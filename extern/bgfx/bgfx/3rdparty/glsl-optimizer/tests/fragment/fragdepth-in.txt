@@ -1,11 +1,3 @@
-void xlat_main( out vec4 ocol, out float oz ) {
-    ocol = vec4( 0.5);
-    oz = 0.9;
-}
-void main() {
-    vec4 xlt_ocol;
-    float xlt_oz;
-    xlat_main( xlt_ocol, xlt_oz);
-    gl_FragData[0] = vec4(xlt_ocol);
-    gl_FragDepth = float(xlt_oz);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:ac5d3720db85d5c04fda30878d4b00665efbf88ae91ee7df1cb85031ea9c04b4
+size 245

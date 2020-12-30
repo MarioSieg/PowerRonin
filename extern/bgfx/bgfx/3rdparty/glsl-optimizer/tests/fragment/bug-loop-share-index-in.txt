@@ -1,21 +1,3 @@
-// https://github.com/aras-p/glsl-optimizer/issues/49
-
-uniform int loopNum;
-
-void main() {
-	int myIdx;
-	vec4 r = vec4(0.0);
-	myIdx = 1;
-	for ( ; myIdx < loopNum; ++myIdx) {
-		r.x += 1.0;
-		r.y += 2.0;
-		r.z += 3.0;
-	}
-	myIdx = 2;
-	for ( ; myIdx < loopNum; ++myIdx) {
-		r.x += 1.0;
-		r.y += 2.0;
-		r.z += 3.0;
-	}
-	gl_FragColor = r;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:31a6baf95cc6badc71ad14f24a3bd913033ba1bef2ada568eed0ab376d53b085
+size 333

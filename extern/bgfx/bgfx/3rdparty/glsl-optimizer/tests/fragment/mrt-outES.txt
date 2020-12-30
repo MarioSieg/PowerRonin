@@ -1,11 +1,3 @@
-#extension GL_EXT_draw_buffers : enable
-void main ()
-{
-  gl_FragData[0] = vec4(0.0, 0.0, 0.0, 0.0);
-  gl_FragData[1] = vec4(0.1, 0.1, 0.1, 0.1);
-  gl_FragData[2] = vec4(0.2, 0.2, 0.2, 0.2);
-  gl_FragData[3] = vec4(0.3, 0.3, 0.3, 0.3);
-}
-
-
-// stats: 4 alu 0 tex 0 flow
+version https://git-lfs.github.com/spec/v1
+oid sha256:31d5832e9b89766947f019f133903c753364d109d7dfd26d7db7739e032f9ffe
+size 268

@@ -1,8 +1,3 @@
-vec3 v_normal    : NORMAL    = vec3(0.0, 0.0, 1.0);
-vec2 v_texcoord0 : TEXCOORD0 = vec2(0.0, 0.0);
-vec3 v_pos       : TEXCOORD1 = vec3(0.0, 0.0, 0.0);
-vec3 v_view      : TEXCOORD2 = vec3(0.0, 0.0, 0.0);
-
-vec3 a_position  : POSITION;
-vec2 a_texcoord0 : TEXCOORD0;
-vec3 a_normal    : NORMAL;
+version https://git-lfs.github.com/spec/v1
+oid sha256:dbbeaad789e4bb899f92fc312cc388c5900e9982401847cc06a1e3749d29a6e2
+size 290

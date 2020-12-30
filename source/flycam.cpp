@@ -3,23 +3,23 @@
 #include "gui/gui_headers.hpp"
 
 namespace dce {
-	auto FlyCam::get_projection_matrix() const noexcept -> const SimdMatrix4x4<>& {
+	auto FlyCam::projection_matrix() const noexcept -> const SimdMatrix4x4<>& {
 		return this->proj_;
 	}
 
-	auto FlyCam::get_view_matrix() const noexcept -> const SimdMatrix4x4<>& {
+	auto FlyCam::view_matrix() const noexcept -> const SimdMatrix4x4<>& {
 		return this->view_;
 	}
 
-	auto FlyCam::get_eye_vector() const noexcept -> const SimdVector3<>& {
+	auto FlyCam::position() const noexcept -> const SimdVector3<>& {
 		return this->eye_;
 	}
 
-	auto FlyCam::get_direction_vector() const noexcept -> const SimdVector3<>& {
+	auto FlyCam::direction_vector() const noexcept -> const SimdVector3<>& {
 		return this->at_;
 	}
 
-	void FlyCam::set_position(const SimdVector3<>& _position) noexcept {
+	void FlyCam::position(const SimdVector3<>& _position) noexcept {
 		this->eye_ = _position;
 	}
 
@@ -28,7 +28,7 @@ namespace dce {
 		/*[[unlikely]] if (ImGui::IsAnyItemHovered() || ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow)) {
 			return;
 		}*/
-		auto mouse = _input.get_mouse_position();
+		auto mouse = _input.mouse_pos();
 		const float speed = this->move_speed;
 
 		[[unlikely]] if (_input.is_mouse_button_down(MouseButton::RIGHT)) {

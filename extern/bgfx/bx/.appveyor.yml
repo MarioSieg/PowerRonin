@@ -1,19 +1,3 @@
-shallow_clone: true
-
-os:
-  - Visual Studio 2019
-
-environment:
-  matrix:
-  - TOOLSET: vs2017
-#  - TOOLSET: vs2019
-
-configuration:
-  - Debug
-  - Release
-
-install:
-  tools\bin\windows\genie %TOOLSET%
-
-build:
-  project: .build/projects/$(TOOLSET)/bx.sln
+version https://git-lfs.github.com/spec/v1
+oid sha256:de48195b88ba1ce4c361208273461cf1632188d15135ca331635db227cbb5da2
+size 250

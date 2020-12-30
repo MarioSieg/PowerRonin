@@ -1,5 +1,6 @@
 #include "gpu.hpp"
 #include "stats.hpp"
+#include "../../extern/bullet3/examples/ThirdPartyLibs/imgui/imgui.h"
 
 #include "../../include/dce/proto.hpp"
 #include "../../include/dce/env.hpp"
@@ -98,8 +99,9 @@ namespace dce::renderer {
 		bgfx::touch(_view);
 	}
 
-	void GPU::end_frame() const noexcept {
+	void GPU::end_frame() noexcept {
 		bgfx::frame();
+		++this->frame_;
 	}
 
 	void GPU::set_camera(const bgfx::ViewId _view_id, const SimdMatrix4x4<>& _view,
@@ -122,8 +124,8 @@ namespace dce::renderer {
 	void GPU::set_mesh_buffer(const Mesh& _mesh) const noexcept {
 		assert(_mesh.is_uploaded());
 
-		const auto vb_buffer = bgfx::VertexBufferHandle{_mesh.get_vertex_buffer_id()};
-		const auto ib_buffer = bgfx::IndexBufferHandle{_mesh.get_index_buffer_id()};
+		const auto vb_buffer = bgfx::VertexBufferHandle{_mesh.vertex_buffer_id()};
+		const auto ib_buffer = bgfx::IndexBufferHandle{_mesh.index_buffer_id()};
 
 		assert(bgfx::isValid(vb_buffer));
 		assert(bgfx::isValid(ib_buffer));
@@ -132,15 +134,15 @@ namespace dce::renderer {
 		setVertexBuffer(0, vb_buffer);
 	}
 
-	void GPU::set_texture(const Texture& _texture, const bgfx::UniformHandle _sampler,
-	                      const std::uint8_t _stage) const noexcept {
+	void GPU::set_texture(const Texture& _texture, const Uniform& _sampler, const std::uint8_t _stage) const noexcept {
 		assert(_texture.is_uploaded());
 
-		const auto view = bgfx::TextureHandle{_texture.get_texel_buffer_id()};
+		const auto view = bgfx::TextureHandle{_texture.texel_buffer_id()};
 
 		assert(bgfx::isValid(view));
+		assert(bgfx::isValid(_sampler.handle()));
 
-		setTexture(_stage, _sampler, view);
+		setTexture(_stage, _sampler.handle(), view);
 	}
 
 	void GPU::draw(const bgfx::ProgramHandle _shader

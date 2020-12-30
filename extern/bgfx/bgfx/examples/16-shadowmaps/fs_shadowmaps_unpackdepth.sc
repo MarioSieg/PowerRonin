@@ -1,19 +1,3 @@
-$input v_texcoord0
-
-/*
- * Copyright 2013-2014 Dario Manesku. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-SAMPLER2D(s_shadowMap0, 4);
-
-uniform vec4 u_params2;
-#define u_depthValuePow u_params2.x
-
-void main()
-{
-	float depth = unpackRgbaToFloat(texture2D(s_shadowMap0, v_texcoord0) );
-	vec3 rgba = pow(vec3_splat(depth), vec3_splat(u_depthValuePow) );
-	gl_FragColor = vec4(rgba, 1.0);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:48f0440ea7a8d5f7ac4ec9846196503a64f2d43fa9eba14ffb8853125211aad7
+size 464

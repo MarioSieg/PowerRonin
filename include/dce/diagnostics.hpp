@@ -41,6 +41,8 @@ namespace dce {
 
 			std::size_t max_frame_buffers = 0;
 			std::size_t used_frame_buffers = 0;
+
+			std::size_t scenery_mesh_drawcalls = 0;
 		} graphics;
 	};
 } // namespace dce // namespace dce

@@ -1,15 +1,3 @@
-#version 300 es
-
-// Defines output as an array of 4 colors,
-// but writes to only one.
-#define gl_FragColor _glesFragData[0]
-#define gl_FragData _glesFragData
-layout(location = 0) out mediump vec4 _glesFragData[4];
-
-uniform highp vec4 _Color;
-in lowp vec4 xlv_COLOR0;
-
-void main() {
-    lowp vec4 c = xlv_COLOR0 * _Color;
-    gl_FragData[0] = c;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:82806573d2238e9a2f352bb33c79dc491eb0d7f09713b8f77c49eb1a46d50efe
+size 348

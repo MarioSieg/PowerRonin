@@ -1,24 +1,3 @@
-/*
- * Copyright 2010-2020 Branimir Karadzic. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#ifndef CMD_H_HEADER_GUARD
-#define CMD_H_HEADER_GUARD
-
-struct CmdContext;
-typedef int (*ConsoleFn)(CmdContext* _context, void* _userData, int _argc, char const* const* _argv);
-
-///
-void cmdInit();
-
-///
-void cmdShutdown();
-
-///
-void cmdAdd(const char* _name, ConsoleFn _fn, void* _userData = NULL);
-
-///
-void cmdExec(const char* _format, ...);
-
-#endif // CMD_H_HEADER_GUARD
+version https://git-lfs.github.com/spec/v1
+oid sha256:ccb79e72bcc5156bf9f359e1339269b7d0d1bac40ba1c380042b6377a4c80e2a
+size 511

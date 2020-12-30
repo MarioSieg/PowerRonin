@@ -1,9 +1,3 @@
-/*
- * Copyright 2018 Attila Kocsis. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#define ASSAO_QUALITY 1
-#define ASSAO_ADAPTIVE_BASE false
-
-#include "cs_assao_generate_q.sh" 
+version https://git-lfs.github.com/spec/v1
+oid sha256:cd1c2cbbc95d53274a735614ec0a3b10d725d8407fc1c923a46d287ddb96eab8
+size 222

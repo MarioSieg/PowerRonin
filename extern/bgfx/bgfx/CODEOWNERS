@@ -1,10 +1,3 @@
-*                            @bkaradzic
-
-# Metal
-src/renderer_mtl.*           @attilaz
-
-# Vulkan
-src/renderer_vk.*            @rinthel @pezcode
-
-# WebGPU
-src/renderer_webgpu.*        @hugoam
+version https://git-lfs.github.com/spec/v1
+oid sha256:4596c7918bee73ad76ebb4c5a6785ac4b9844c9c44163b95cb69b94053784f04
+size 191

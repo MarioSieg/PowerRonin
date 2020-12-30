@@ -1,19 +1,3 @@
-local doxygen = {}
-
-function doxygen.load(filename)
-	local lines = {}
-	for line in io.lines(filename) do
-		local code, comment = line:match "(.-)%-%-%-[ \t](.*)"
-		if code then
-			if code == "" then
-				line = string.format("comment [[%s]]", comment)
-			else
-				line = string.format("%s [[%s]]", code, comment)
-			end
-		end
-		lines[#lines+1] = line
-	end
-	return table.concat(lines, "\n")
-end
-
-return doxygen
+version https://git-lfs.github.com/spec/v1
+oid sha256:a4f49f48b1c90c4213dc5d24684a42c78768ca5c287462c06abb43bc972c0b6f
+size 409

@@ -5,6 +5,7 @@
 #include "gl_headers.hpp"
 #include "gpu.hpp"
 #include "views.hpp"
+#include "uniform.hpp"
 #include "program_loader.hpp"
 
 namespace dce::renderer {
@@ -32,8 +33,6 @@ namespace dce::renderer {
 		virtual void load();
 
 		virtual void unload();
-
-		virtual void draw(const MatType& _type, const InputType& _mesh) const = 0;
 
 	protected:
 		std::string_view name_ = {};

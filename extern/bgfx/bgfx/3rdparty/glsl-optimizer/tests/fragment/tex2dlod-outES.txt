@@ -1,27 +1,3 @@
-#extension GL_EXT_shader_texture_lod : enable
-lowp vec4 impl_low_texture2DLodEXT(lowp sampler2D sampler, highp vec2 coord, mediump float lod)
-{
-#if defined(GL_EXT_shader_texture_lod)
-	return texture2DLodEXT(sampler, coord, lod);
-#else
-	return texture2D(sampler, coord, lod);
-#endif
-}
-
-uniform sampler2D tex;
-varying highp vec4 xlv_TEXCOORD0;
-void main ()
-{
-  mediump vec4 tmpvar_1;
-  lowp vec4 tmpvar_2;
-  tmpvar_2 = impl_low_texture2DLodEXT (tex, xlv_TEXCOORD0.xy, 0.0);
-  tmpvar_1 = tmpvar_2;
-  gl_FragData[0] = tmpvar_1;
-}
-
-
-// stats: 0 alu 1 tex 0 flow
-// inputs: 1
-//  #0: xlv_TEXCOORD0 (high float) 4x1 [-1]
-// textures: 1
-//  #0: tex (low 2d) 0x0 [-1]
+version https://git-lfs.github.com/spec/v1
+oid sha256:64222b7c5ba190a849e916c8de0a21726477e9976e6dc1cc44ba10fee6be742c
+size 659

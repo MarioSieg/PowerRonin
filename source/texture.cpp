@@ -24,23 +24,23 @@ namespace dce {
 		return NAMES[static_cast<std::size_t>(_format)];
 	}
 
-	auto Texture::get_texels() const noexcept -> const Blob& {
+	auto Texture::texels() const noexcept -> const Blob& {
 		return this->texels_;
 	}
 
-	auto Texture::get_storage_size() const noexcept -> std::size_t {
+	auto Texture::storage_size() const noexcept -> std::size_t {
 		return this->size_;
 	}
 
-	auto Texture::get_width() const noexcept -> std::uint16_t {
+	auto Texture::width() const noexcept -> std::uint16_t {
 		return this->width_;
 	}
 
-	auto Texture::get_height() const noexcept -> std::uint16_t {
+	auto Texture::height() const noexcept -> std::uint16_t {
 		return this->height_;
 	}
 
-	auto Texture::get_texel_buffer_id() const noexcept -> std::uint16_t {
+	auto Texture::texel_buffer_id() const noexcept -> std::uint16_t {
 		return this->volatile_upload_data_.gpu_buffer_id;
 	}
 
@@ -52,23 +52,23 @@ namespace dce {
 		return this->mipmap_count_ > 1;
 	}
 
-	auto Texture::get_format() const noexcept -> TextureFormat {
+	auto Texture::format() const noexcept -> TextureFormat {
 		return this->format_;
 	}
 
-	auto Texture::get_bits_per_pixel() const noexcept -> std::uint8_t {
+	auto Texture::bits_per_pixel() const noexcept -> std::uint8_t {
 		return this->bits_per_pel_;
 	}
 
-	auto Texture::get_mipmap_count() const noexcept -> std::uint8_t {
+	auto Texture::mipmap_count() const noexcept -> std::uint8_t {
 		return this->mipmap_count_;
 	}
 
-	auto Texture::is_cubemap() const noexcept -> bool {
+	auto Texture::cubemap() const noexcept -> bool {
 		return this->is_cubemap_;
 	}
 
-	auto Texture::get_layers_count() const noexcept -> std::uint16_t {
+	auto Texture::layers_count() const noexcept -> std::uint16_t {
 		return this->layer_count_;
 	}
 

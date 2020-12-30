@@ -1,10 +1,3 @@
-#version 140
-
-in vec4 col;
-
-out vec4 fragCol;
-
-void main(void)
-{
-    fragCol = col;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:10b9c29f6af7546bf0e6f7d1da3272f6c0c4eef75309c8a5b57149f397736c79
+size 86

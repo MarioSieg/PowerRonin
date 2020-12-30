@@ -10,7 +10,7 @@
 
 
 namespace dce {
-	auto get_executable_name() -> std::string {
+	auto executable_name() -> std::string {
 #if SYS_WINDOWS
 		char buf[MAX_PATH];
 		GetModuleFileNameA(nullptr, buf, MAX_PATH);
@@ -22,7 +22,7 @@ namespace dce {
 #endif
 	}
 
-	auto get_process_memory_usage() -> std::size_t {
+	auto process_memory_usage() -> std::size_t {
 		return 0;
 	}
 }

@@ -1,26 +1,3 @@
-/*
- * Copyright 2013-2014 Dario Manesku. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-
-vec4 stencilColor(float _k)
-{
-	return vec4(float(abs(_k - 1.0) < 0.0001)/255.0
-			  , float(abs(_k + 1.0) < 0.0001)/255.0
-			  , float(abs(_k - 2.0) < 0.0001)/255.0
-			  , float(abs(_k + 2.0) < 0.0001)/255.0
-			  );
-}
-
-void main()
-{
-	float k = -1.0;
-	if (gl_FrontFacing)
-	{
-		k = -k;
-	}
-
-	gl_FragColor = stencilColor(k);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:713253b8e96bf7f8d109d5e16053ab9441d4183cd2047dcfe14fd49f9f17abd4
+size 489

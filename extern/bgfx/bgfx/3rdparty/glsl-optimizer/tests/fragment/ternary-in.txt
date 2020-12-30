@@ -1,17 +1,3 @@
-vec4 xlat_main( in vec4 uv );
-vec4 xlat_main( in vec4 uv ) {
-    vec4 c;
-    c = vec4( 0.000000);
-    c += ( (uv.x  > 0.500000) ) ? ( 0.900000 ) : ( 0.100000 );
-    c += ( (uv.x  > 0.500000) ) ? ( vec4( 0.900000, 0.900000, 0.900000, 0.900000) ) : ( vec4( 0.100000, 0.100000, 0.100000, 0.100000) );
-    c.xyz  += ( (uv.x  > 0.500000) ) ? ( vec3( 0.900000, 0.900000, 0.900000) ) : ( vec3( 0.100000, 0.100000, 0.100000) );
-    c.xy  += ( (uv.x  > 0.500000) ) ? ( vec2( 0.900000, 0.900000) ) : ( vec2( 0.100000, 0.100000) );
-    c.x  += ( bool( fract( uv.x  ) ) ) ? ( 0.900000 ) : ( 0.100000 );
-    return c;
-}
-varying vec4 xlv_TEXCOORD0;
-void main() {
-    vec4 xl_retval;
-    xl_retval = xlat_main( vec4(xlv_TEXCOORD0));
-    gl_FragData[0] = vec4( xl_retval);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:78d4b4612c751b413f9b51bc958329029ea6854030b7cd651b7a0096f4a286a6
+size 759

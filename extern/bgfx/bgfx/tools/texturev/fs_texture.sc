@@ -1,19 +1,3 @@
-$input v_texcoord0, v_color0
-
-/*
- * Copyright 2011-2020 Branimir Karadzic. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "common.sh"
-
-SAMPLER2D(s_texColor, 0);
-
-void main()
-{
-	vec4 color = texture2DLod(s_texColor, v_texcoord0.xy, u_textureLod);
-	color.xyz = applyExposure(color.xyz);
-	color *= v_color0;
-
-	gl_FragColor = toOutput(color, u_outputFormat, u_sdrWhiteNits);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:2a13f693152e4b876c6af18cd127e60836c4323ec78888c16c2925bbfa4e35ea
+size 428

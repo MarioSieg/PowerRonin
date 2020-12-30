@@ -53,8 +53,8 @@ namespace dce {
 		std::ofstream file(ss.str());
 		ss.str("");
 		ss << "MSG: " << _ex.what();
-		ss << "\nFile: " << _ex.get_source_file();
-		ss << "\nLine: " << _ex.get_source_line();
+		ss << "\nFile: " << _ex.source_file();
+		ss << "\nLine: " << _ex.source_line();
 		[[likely]] if (file) {
 			file << ss.str();
 		}

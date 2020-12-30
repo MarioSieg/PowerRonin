@@ -1,16 +1,3 @@
-float foo (float a, float b, float c) {
-	return a+b+c;
-}
-float bar (float a, float b) {
-	float c = a*b;
-	return foo (a, b, c);
-}
-float har (float a) {
-	float b = sqrt(a);
-	float c = sqrt(b);
-	return bar (a, b) + c;
-}
-void main ()
-{
-	gl_Position = vec4(har(gl_Vertex.x));
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:9a1939352b053a4d044435f29450009321575d35b745da69ea2e163a93c87150
+size 273

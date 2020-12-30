@@ -27,8 +27,7 @@ namespace dce {
 			friend class Kernel;
 
 		protected:
-			ISubsystem(const std::string_view _name
-			           , const std::underlying_type<ServiceEvents::Enum>::type _subscribed_events) noexcept;
+			ISubsystem(const std::string_view _name, const std::underlying_type<ServiceEvents::Enum>::type _subscribed_events) noexcept;
 
 		public:
 			/* Name of the subsystem */
@@ -50,22 +49,16 @@ namespace dce {
 			virtual ~ISubsystem() = default;
 
 			/* Returns the kernel event time in ms. */
-			[[nodiscard]] auto get_pre_startup_time() const noexcept -> double;
+			[[nodiscard]] auto pre_startup_time() const noexcept -> double;
 
 			/* Returns the kernel event time in ms. */
-			[[nodiscard]] auto get_post_startup_time() const noexcept -> double;
+			[[nodiscard]] auto post_startup_time() const noexcept -> double;
 
 			/* Returns the kernel event time in ms. */
-			[[nodiscard]] auto get_pre_tick_time() const noexcept -> double;
+			[[nodiscard]] auto pre_shutdown_time() const noexcept -> double;
 
 			/* Returns the kernel event time in ms. */
-			[[nodiscard]] auto get_post_tick_time() const noexcept -> double;
-
-			/* Returns the kernel event time in ms. */
-			[[nodiscard]] auto get_pre_shutdown_time() const noexcept -> double;
-
-			/* Returns the kernel event time in ms. */
-			[[nodiscard]] auto get_post_shutdown_time() const noexcept -> double;
+			[[nodiscard]] auto post_shutdown_time() const noexcept -> double;
 
 
 		protected:
@@ -86,8 +79,6 @@ namespace dce {
 		private:
 			double pre_startup_time_ = 0.;
 			double post_startup_time_ = 0.;
-			double pre_tick_time_ = 0.;
-			double post_tick_time_ = 0.;
 			double pre_shutdown_time_ = 0.;
 			double post_shutdown_time_ = 0.;
 		};

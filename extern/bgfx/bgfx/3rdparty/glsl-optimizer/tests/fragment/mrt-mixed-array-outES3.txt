@@ -1,11 +1,3 @@
-#version 300 es
-layout(location=0) out mediump vec4 _colArr[2];
-layout(location=3) out mediump vec4 _colVec;
-void main ()
-{
-  _colArr[0] = vec4(0.0, 0.0, 0.0, 0.0);
-  _colVec = vec4(1.0, 1.0, 1.0, 1.0);
-}
-
-
-// stats: 2 alu 0 tex 0 flow
+version https://git-lfs.github.com/spec/v1
+oid sha256:af6bd8f4e94a64447459873cdc9ca01cd9ef3229f44ff409a70e223aea7afd53
+size 236

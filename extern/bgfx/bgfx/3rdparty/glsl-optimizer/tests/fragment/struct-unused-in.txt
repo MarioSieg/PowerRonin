@@ -1,7 +1,3 @@
-struct SurfaceOutput {
-	vec4 color;
-};
-void main() {
-    SurfaceOutput o;
-	gl_FragColor = vec4(0.0);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:dbc7abe97520c86b96fc8c21f13696ed129d8c5cf70187304aa49dc592e09ac1
+size 103

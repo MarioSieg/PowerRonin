@@ -1,13 +1,3 @@
-$input v_color0
-
-/*
- * Copyright 2011-2020 Branimir Karadzic. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-
-void main()
-{
-	gl_FragColor = v_color0;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:50e466773ef03d790865e7d9d69ab6844c222f6dd2402815cbbc7290ee57bd1d
+size 229

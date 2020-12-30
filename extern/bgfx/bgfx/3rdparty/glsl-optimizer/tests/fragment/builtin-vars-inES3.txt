@@ -1,14 +1,3 @@
-#version 300 es
-out mediump vec4 _fragData;
-
-in mediump vec4 uv;
-
-void main()
-{
-	mediump vec4 c;
-	c = uv;
-	c += gl_FragCoord;
-	c.x += gl_FrontFacing ? 1.0 : 0.0;
-	c.xy += gl_PointCoord;
-	_fragData = c;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:182cbd0395df199b120871c4efd2cdc68064939441080dcfeee5c49203893d13
+size 204

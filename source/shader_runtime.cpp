@@ -1,58 +1,8 @@
 #include "../include/dce/shader.hpp"
 #include "../include/dce/blob.hpp"
 #include "renderer/gl_headers.hpp"
-#include <fstream>
-
-#include "../include/dce/time_utils.hpp"
 
 namespace dce {
-	void Shader::set_uniform(const std::string_view _name, const SimdMatrix3x3<>& _value) const noexcept {
-		assert(this->volatile_upload_data_.uniforms.contains(_name));
-		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
-		assert(bgfx::isValid(handle));
-		setUniform(handle, value_ptr(_value));
-	}
-
-	void Shader::set_uniform(const std::string_view _name, const SimdMatrix4x4<>& _value) const noexcept {
-		assert(this->volatile_upload_data_.uniforms.contains(_name));
-		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
-		assert(bgfx::isValid(handle));
-		setUniform(handle, value_ptr(_value));
-	}
-
-	void Shader::set_uniform(const std::string_view _name, const SimdVector4<>& _value) const noexcept {
-		assert(this->volatile_upload_data_.uniforms.contains(_name));
-		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
-		assert(bgfx::isValid(handle));
-		setUniform(handle, value_ptr(_value));
-	}
-
-	void Shader::set_uniform(const std::string_view _name, const float ( &_value)[4]) const noexcept {
-		assert(this->volatile_upload_data_.uniforms.contains(_name));
-		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
-		assert(bgfx::isValid(handle));
-		setUniform(handle, &*_value);
-	}
-
-	void Shader::set_uniform(const std::string_view _name, const float ( &_value)[9]) const noexcept {
-		assert(this->volatile_upload_data_.uniforms.contains(_name));
-		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
-		assert(bgfx::isValid(handle));
-		setUniform(handle, &*_value);
-	}
-
-	void Shader::set_uniform(const std::string_view _name, const float ( &_value)[16]) const noexcept {
-		assert(this->volatile_upload_data_.uniforms.contains(_name));
-		const auto handle = bgfx::UniformHandle{std::get<1>(this->volatile_upload_data_.uniforms.at(_name))};
-		assert(bgfx::isValid(handle));
-		setUniform(handle, &*_value);
-	}
-
-	auto Shader::get_uniform_handle(const std::string_view _name) const noexcept -> std::uint16_t {
-		assert(this->volatile_upload_data_.uniforms.contains(_name));
-		return std::get<1>(this->volatile_upload_data_.uniforms.at(_name));
-	}
-
 	void Shader::upload() {
 		[[unlikely]] if (this->is_uploaded_) {
 			this->offload();
@@ -100,28 +50,6 @@ namespace dce {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload shader!");
 		}
 
-		for (auto& [key, value] : this->volatile_upload_data_.uniforms) {
-			[[unlikely]] if (key.empty()) {
-				throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload shader!");
-			}
-			bgfx::UniformType::Enum type = bgfx::UniformType::Sampler;
-			switch (std::get<0>(value)) {
-				case UniformType::SAMPLER: type = bgfx::UniformType::Sampler;
-					break;
-				case UniformType::VEC_4: type = bgfx::UniformType::Vec4;
-					break;
-				case UniformType::MATRIX_3x3: type = bgfx::UniformType::Mat3;
-					break;
-				case UniformType::MATRIX_4x4: type = bgfx::UniformType::Mat4;
-					break;
-			}
-			const auto uniform_handle = createUniform(key.data(), type);
-			[[unlikely]] if (!isValid(uniform_handle)) {
-				throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload shader!");
-			}
-			std::get<1>(value) = uniform_handle.idx;
-		}
-
 		this->volatile_upload_data_.program_id = shader.idx;
 
 		this->is_uploaded_ = true;
@@ -133,20 +61,10 @@ namespace dce {
 			destroy(program_handle);
 		}
 		this->volatile_upload_data_.program_id = bgfx::kInvalidHandle;
-
-		for (auto& uniform : this->volatile_upload_data_.uniforms) {
-			const auto uniform_handle = bgfx::UniformHandle{std::get<1>(uniform.second)};
-			[[likely]] if (isValid(uniform_handle)) {
-				destroy(uniform_handle);
-				std::get<1>(uniform.second) = bgfx::kInvalidHandle;
-			}
-		}
 		this->is_uploaded_ = false;
 	}
 
 	auto ShaderImporteur::load(std::filesystem::path&& _path
-	                           , std::unordered_map<std::string_view, std::tuple<UniformType, std::uint16_t>>&&
-	                           _uniforms
 	                           , const ShaderMeta* const _meta) const -> std::shared_ptr<Shader> {
 		[[unlikely]] if (_path.extension() != Shader::FILE_EXTENSIONS[0]) {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load shader from file!");
@@ -167,7 +85,6 @@ namespace dce {
 		auto self = IResource<ShaderMeta>::allocate<Shader>();
 		self->file_path_ = std::move(_path);
 		self->vertex_shader_bytecode_ = std::move(vs_bytecode);
-		self->volatile_upload_data_.uniforms = std::move(_uniforms);
 		self->vertex_shader_textcode_ = std::nullopt;
 		self->fragment_shader_bytecode_ = std::nullopt;
 		[[likely]] if (!fs_bytecode.empty()) {

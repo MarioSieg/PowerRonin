@@ -38,11 +38,12 @@ namespace dce {
 			void render_scene(Runtime& _rt);
 			void update_camera(Runtime& _rt);
 
-			FlyCam fly_cam_ = {};
 			std::uint64_t tick_prev_ = 0;
+			FlyCam fly_cam_ = {};
 			GPU gpu_ = {};
-			ShaderBucket shader_bucket_;
-			SharedUniforms shared_uniforms_;
+			ShaderBucket shader_bucket_ = ShaderBucket{gpu_};
+			SharedUniforms shared_uniforms_ = {};
+			bool is_instancing_supported_ = false;
 		};
 	} // namespace dce::renderer // namespace dce::renderer
 }

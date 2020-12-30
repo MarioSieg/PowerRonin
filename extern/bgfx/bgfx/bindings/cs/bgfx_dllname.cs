@@ -1,26 +1,3 @@
-/*
- * Copyright 2011-2020 Branimir Karadzic. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx/blob/master/LICENSE
- */
-
-/*
- *
- * AUTO GENERATED! DO NOT EDIT!
- *
- * Include this file in your build if you want to use the default DllImport
- * names of bgfx.dll and bgfx_debug.dll.  Otherwise, define your own
- * partial class like the below with a const DllName for your use.
- *
- */
-
-namespace Bgfx
-{
-public static partial class bgfx
-{
-#if DEBUG
-       const string DllName = "bgfx_debug.dll";
-#else
-       const string DllName = "bgfx.dll";
-#endif
-}
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:b5bb8ed5d1d55a89e04e0aca9a2312e6a47a784d5550a30c852663b2c41d3a3d
+size 567

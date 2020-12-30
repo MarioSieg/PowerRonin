@@ -11,46 +11,46 @@ namespace dce::gui::widgets {
 	void ResourceViewer::update(bool& _show, ResourceManager& _rm) {
 		SetNextWindowSize({800, 600}, ImGuiCond_FirstUseEver);
 		[[likely]] if (Begin(RESOURCE_VIEWER_NAME, &_show)) {
-			Text("Textures: %u", static_cast<unsigned>(_rm.get_texture_cache().size()));
+			Text("Textures: %u", static_cast<unsigned>(_rm.texture_cache().size()));
 			SameLine();
-			Text("Meshes: %u", static_cast<unsigned>(_rm.get_mesh_cache().size()));
+			Text("Meshes: %u", static_cast<unsigned>(_rm.mesh_cache().size()));
 			Separator();
 			Spacing();
 			if (CollapsingHeader(ICON_FA_IMAGES " Textures", ImGuiTreeNodeFlags_DefaultOpen)) {
-				_rm.get_texture_cache().each([&](const RRef<Texture>& _texture) {
+				_rm.texture_cache().each([&](const RRef<Texture>& _texture) {
 					TextUnformatted(ICON_FA_IMAGE);
 					SameLine();
-					TextUnformatted(_texture->get_file_path().filename().string().c_str());
+					TextUnformatted(_texture->file_path().filename().string().c_str());
 					if (IsItemHovered()) {
 						BeginTooltip();
 						if (_texture->is_uploaded()) {
 							image(_texture, {128.f, 128.f}, {.0f, .0f}, {1.0f, 1.0f});
 						}
 						TextUnformatted(_texture->is_uploaded() ? "Uploaded: yes" : "Uploaded: no");
-						Text("Width: %u", _texture->get_width());
-						Text("Height: %u", _texture->get_height());
-						Text("Size: %zuB", _texture->get_storage_size());
-						Text("Format: %s", get_format_name(_texture->get_format()).data());
-						Text("Mipmaps: %u", _texture->get_mipmap_count());
-						Text("BPS: %u", _texture->get_bits_per_pixel());
+						Text("Width: %u", _texture->width());
+						Text("Height: %u", _texture->height());
+						Text("Size: %zuB", _texture->storage_size());
+						Text("Format: %s", get_format_name(_texture->format()).data());
+						Text("Mipmaps: %u", _texture->mipmap_count());
+						Text("BPS: %u", _texture->bits_per_pixel());
 						EndTooltip();
 					}
 					Separator();
 				});
 			}
 			[[likely]] if (CollapsingHeader(ICON_FA_CUBES " Meshes", ImGuiTreeNodeFlags_DefaultOpen)) {
-				_rm.get_mesh_cache().each([](const RRef<Mesh>& _mesh) {
+				_rm.mesh_cache().each([](const RRef<Mesh>& _mesh) {
 					TextUnformatted(ICON_FA_CUBE);
 					SameLine();
-					TextUnformatted(_mesh->get_file_path().filename().string().c_str());
+					TextUnformatted(_mesh->file_path().filename().string().c_str());
 					if (IsItemHovered()) {
-						const auto size = _mesh->get_vertices().size() * sizeof(Vertex) + _mesh->get_indices().size() *
+						const auto size = _mesh->vertices().size() * sizeof(Vertex) + _mesh->indices().size() *
 							sizeof(
 								std::uint16_t);
 						BeginTooltip();
 						TextUnformatted(_mesh->is_uploaded() ? "Uploaded: yes" : "Uploaded: no");
-						Text("Vertices: %zu", _mesh->get_vertices().size());
-						Text("Indices: %zu", _mesh->get_indices().size());
+						Text("Vertices: %zu", _mesh->vertices().size());
+						Text("Indices: %zu", _mesh->indices().size());
 						Text("Size: %zuB", size);
 						EndTooltip();
 					}

@@ -2,6 +2,7 @@
 
 #include "resource.hpp"
 #include "mathlib.hpp"
+#include "aabb.hpp"
 
 namespace dce {
 	/// <summary>
@@ -42,25 +43,31 @@ namespace dce {
 		/// 
 		/// </summary>
 		/// <returns>The vector containing all indices.</returns>
-		[[nodiscard]] auto get_indices() const noexcept -> const std::vector<std::uint16_t>&;
+		[[nodiscard]] auto indices() const noexcept -> const std::vector<std::uint16_t>&;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns>The index buffer id.</returns>
-		[[nodiscard]] auto get_index_buffer_id() const noexcept -> std::uint16_t;
+		[[nodiscard]] auto index_buffer_id() const noexcept -> std::uint16_t;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns>The vector containing all vertices.</returns>
-		[[nodiscard]] auto get_vertices() const noexcept -> const std::vector<Vertex>&;
+		[[nodiscard]] auto vertices() const noexcept -> const std::vector<Vertex>&;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns>The vertex buffer id.</returns>
-		[[nodiscard]] auto get_vertex_buffer_id() const noexcept -> std::uint16_t;
+		[[nodiscard]] auto vertex_buffer_id() const noexcept -> std::uint16_t;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>The axis aligned bounding box of this mesh.</returns>
+		[[nodiscard]] auto aabb() const noexcept -> const AABB&;
 
 		/// <summary>
 		/// Upload mesh data to VRAM. (Still stays in RAM).
@@ -75,6 +82,7 @@ namespace dce {
 	private:
 		std::vector<std::uint16_t> indices_ = {};
 		std::vector<Vertex> vertices_ = {};
+		AABB aabb_ = {};
 
 		struct {
 			std::uint16_t index_buffer_id = 0;

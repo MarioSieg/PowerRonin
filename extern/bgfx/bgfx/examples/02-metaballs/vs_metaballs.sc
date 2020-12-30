@@ -1,16 +1,3 @@
-$input a_position, a_normal, a_color0
-$output v_normal, v_color0
-
-/*
- * Copyright 2011-2020 Branimir Karadzic. All rights reserved.
- * License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
- */
-
-#include "../common/common.sh"
-
-void main()
-{
-	gl_Position = mul(u_modelViewProj, vec4(a_position, 1.0) );
-	v_normal = mul(u_model[0], vec4(a_normal, 0.0) ).xyz;
-	v_color0 = a_color0;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:e53dba9d31d82a3bf3ade723c5c06d63b07cb5646090d1f77810b1775a5ceaf5
+size 390

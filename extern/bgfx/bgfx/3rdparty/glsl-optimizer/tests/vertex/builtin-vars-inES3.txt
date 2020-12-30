@@ -1,15 +1,3 @@
-#version 300 es
-
-in highp vec3 _inPos;
-in highp vec3 _inNor;
-
-void main()
-{
-	highp vec3 p;
-	p = _inPos;
-	p.x += float(gl_VertexID);
-	p.y += float(gl_InstanceID);
-	p += _inNor;
-	gl_Position = vec4(p,1.0);
-	gl_PointSize = p.x;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:cea23dc0b284793cdb288106d7643b80bdc82a4437bdd0f3de2a0f0225496df1
+size 227
