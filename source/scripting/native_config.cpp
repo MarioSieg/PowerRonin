@@ -13,7 +13,7 @@ namespace dce::scripting {
 		_target.editor.theme = static_cast<SystemTheme>(std::clamp(_in.Overlay_Theme,
 		                                                           static_cast<CS_byte>(SystemTheme::DARK)
 		                                                           , static_cast<CS_byte>(SystemTheme::GREEN)));
-		_target.editor.enable_anti_aliasing = _in.Overlay_EnableFontAntialiasing;
+		_target.editor.enable_font_anti_aliasing = _in.Overlay_EnableFontAntialiasing;
 		_target.editor.alpha = _in.Overlay_Alpha;
 		_target.editor.rounding = _in.Overlay_Rounding;
 		_target.editor.show_terminal = _in.Overlay_ShowTerminal;

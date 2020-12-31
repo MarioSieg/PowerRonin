@@ -102,6 +102,10 @@ namespace dce::renderer {
 		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "Position: %.2f %.2f %.2f, Forward: %.2f %.2f %.2f, Left: %.2f %.2f %.2f, FOV: %.1f", pos.x, pos.y, pos.z, forward.x, forward.y, forward.z, left.x,
 		                    left.y, left.z, fov);
 		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "VRAM %.2fGB/%.2fGB, TexMEM: %.2fGB", stats->gpuMemoryUsed / byte_2_gb, stats->gpuMemoryMax / byte_2_gb, stats->textureMemoryUsed / byte_2_gb);
+		const auto& view_matrix = _runtime.render_data().view_matrix;
+		const auto& projection_matrix = _runtime.render_data().view_matrix;
+		const auto& view_projection_matrix = _runtime.render_data().view_projection_matrix;
+		
 		//@formatter:on
 	}
 }

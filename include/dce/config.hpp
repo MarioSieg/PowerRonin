@@ -42,8 +42,12 @@ namespace dce {
 
 		struct Editor final {
 			std::uint8_t font_size = 24;
+			std::uint8_t auto_font_size_fhd = 14;
+			std::uint8_t auto_font_size_whqh = 18;
+			std::uint8_t auto_font_size_uhd = 22;
+			bool auto_font_size = true;
 			SystemTheme theme = SystemTheme::DARK;
-			bool enable_anti_aliasing = true;
+			bool enable_font_anti_aliasing = true;
 			float alpha = 1.F;
 			float rounding = 4.F;
 			bool show_terminal = true;
@@ -55,7 +59,7 @@ namespace dce {
 
 		struct Graphics final {
 			GraphicsBackend backend_api = GraphicsBackend::AUTO;
-			MsaaMode msaa_mode = MsaaMode::X2;
+			MsaaMode msaa_mode = MsaaMode::OFF;
 			bool enable_high_dpi_mode = false;
 			bool enable_srgb_backbuffer = true;
 			bool enable_hdr10 = false;

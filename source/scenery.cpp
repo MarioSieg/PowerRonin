@@ -15,8 +15,8 @@ namespace dce {
 
 	void Scenery::new_default(ResourceManager& _resource_manager) {
 		// Create cube:
-		for (auto i = 0; i < 8; ++i) {
-			for (auto j = 0; j < 8; ++j) {
+		for (auto i = 0; i < 128; ++i) {
+			for (auto j = 0; j < 128; ++j) {
 				const auto cube = this->registry_.create();
 
 				auto& meta = this->registry_.emplace<MetaData>(cube);

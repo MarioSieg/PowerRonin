@@ -23,9 +23,21 @@ namespace dce::gui {
 
 		auto& cfg = _rt.config().editor;
 		style_apply(cfg.theme);
-		style_antialiasing_apply(cfg.enable_anti_aliasing);
+		style_antialiasing_apply(cfg.enable_font_anti_aliasing);
 		style_alpha_apply(cfg.alpha);
 		style_rounding_apply(cfg.rounding);
+		
+		[[likely]] if(cfg.auto_font_size) {
+			const auto w = _rt.config().display.width;
+			const auto h = _rt.config().display.height;
+			if(w <= 2560 && h <= 1440) {
+				cfg.font_size = cfg.auto_font_size_whqh;
+			} else if(w <= 3840 && h <= 2160) {
+				cfg.font_size = cfg.auto_font_size_uhd;
+			} else {
+				cfg.font_size = cfg.auto_font_size_fhd;
+			}
+		}
 
 		[[unlikely]] if (!this->gui_input_.initialize()) {
 			return false;

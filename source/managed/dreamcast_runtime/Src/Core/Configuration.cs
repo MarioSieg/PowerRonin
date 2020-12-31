@@ -151,7 +151,7 @@ namespace Dreamcast.Core
 
             public SystemOverlayTheme Theme { get; set; } = SystemOverlayTheme.Dark;
 
-            public bool EnableFontAntialiasing { get; set; } = false;
+            public bool EnableFontAntialiasing { get; set; } = true;
 
             public float Alpha { get; set; } = 1.0f;
 
@@ -173,10 +173,10 @@ namespace Dreamcast.Core
                     new[] {GraphicsAPI.Direct3D11, GraphicsAPI.Direct3D12, GraphicsAPI.Vulkan, GraphicsAPI.OpenGL}
                 },
                 {BuildTarget.StandaloneLinux, new[] {GraphicsAPI.OpenGL, GraphicsAPI.Vulkan}},
-                {BuildTarget.StandaloneMac, new[] {GraphicsAPI.Metal, GraphicsAPI.OpenGL}}
+                {BuildTarget.StandaloneMac, new[] {GraphicsAPI.Metal, GraphicsAPI.OpenGL, GraphicsAPI.Vulkan} }
             };
 
-            public MsaaMode MSAAMode { get; set; } = MsaaMode.Off;
+            public MsaaMode MSAAMode { get; set; } = MsaaMode.X4;
 
             public bool EnableHighDPIMode { get; set; } = false;
 

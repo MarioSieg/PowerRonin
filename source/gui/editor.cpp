@@ -253,17 +253,17 @@ namespace dce::gui {
 		*/
 		float tmp_matrix[16];
 		auto eulers = math::eulerAngles(_transform.rotation);
-		const float degree_eulers[3] = {
+		float mat_rotation[3] = {
 			math::degrees(eulers.x),
 			math::degrees(eulers.y),
 			math::degrees(eulers.z),
 		};
-		ImGuizmo::RecomposeMatrixFromComponents(value_ptr(_transform.position), &*degree_eulers, value_ptr(_transform.scale), &*tmp_matrix);
-		Manipulate(value_ptr(_data.view_matrix), value_ptr(_data.projection_matrix), this->gizmo_op_, this->gizmo_mode_, &*tmp_matrix);
+		ImGuizmo::RecomposeMatrixFromComponents(value_ptr(_transform.position), mat_rotation, value_ptr(_transform.scale), tmp_matrix);
+		Manipulate(value_ptr(_data.view_matrix), value_ptr(_data.projection_matrix), this->gizmo_op_, this->gizmo_mode_, tmp_matrix);
+		static int i = 0;
 		[[unlikely]] if (ImGuizmo::IsUsing()) {
-			float mat_translation[3], mat_rotation[3], mat_scale[3];
-			ImGuizmo::DecomposeMatrixToComponents(&*tmp_matrix, &*mat_translation, &*mat_rotation, &*mat_scale);
-			
+			float mat_translation[3], mat_scale[3];
+			ImGuizmo::DecomposeMatrixToComponents(tmp_matrix, mat_translation, mat_rotation, mat_scale);
 			switch(this->gizmo_op_) {
 				case ImGuizmo::OPERATION::TRANSLATE:
 					_transform.position.x = mat_translation[0];
@@ -274,6 +274,10 @@ namespace dce::gui {
 				case ImGuizmo::OPERATION::ROTATE:
 					eulers = SimdVector3<>{ math::radians(mat_rotation[0]), math::radians(mat_rotation[1]), math::radians(mat_rotation[2]) };
 					_transform.rotation = SimdQuaternion<>(eulers);
+					++i;
+					if (i > 100) {
+						int noel = i;
+					}
 				break;
 
 				case ImGuizmo::OPERATION::SCALE:
