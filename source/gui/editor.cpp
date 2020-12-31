@@ -202,9 +202,9 @@ namespace dce::gui {
 			DockBuilderSetNodeSize(this->dockspace_id_, GetMainViewport()->Size);
 			auto main_id = this->dockspace_id_;
 
-			const auto dock_id_left = DockBuilderSplitNode(main_id, ImGuiDir_Left, .20f, nullptr, &main_id);
-			const auto dock_id_right = DockBuilderSplitNode(main_id, ImGuiDir_Right, .20f, nullptr, &main_id);
-			const auto dock_id_bottom = DockBuilderSplitNode(main_id, ImGuiDir_Down, .20f, nullptr, &main_id);
+			const auto dock_id_left = DockBuilderSplitNode(main_id, ImGuiDir_Left, .1f, nullptr, &main_id);
+			const auto dock_id_right = DockBuilderSplitNode(main_id, ImGuiDir_Right, .15f, nullptr, &main_id);
+			const auto dock_id_bottom = DockBuilderSplitNode(main_id, ImGuiDir_Down, .2f, nullptr, &main_id);
 
 			DockBuilderDockWindow(HIERARCHY_NAME, dock_id_left);
 			DockBuilderDockWindow(RESOURCE_VIEWER_NAME, dock_id_left);
