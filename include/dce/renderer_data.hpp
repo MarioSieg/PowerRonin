@@ -2,6 +2,7 @@
 
 #include "mathlib.hpp"
 #include "frustum.hpp"
+#include "flycam.hpp"
 
 namespace dce {
 	/// <summary>
@@ -16,6 +17,7 @@ namespace dce {
 		SimdMatrix4x4<> view_projection_matrix = {};
 		Frustum camera_frustum = {};
 		SimdMatrix4x4<> skybox_view_matrix = {};
+		EditorCamera editor_camera = {};
 		bool enable_wireframe = false;
 	};
 }

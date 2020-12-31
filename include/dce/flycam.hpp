@@ -8,7 +8,7 @@ namespace dce {
 	/// <summary>
 	/// Helper class for a flying editor camera.
 	/// </summary>
-	class FlyCam final {
+	class EditorCamera final {
 	public:
 		float move_speed = 8.F;
 		float sensitivity = 0.5F;
@@ -26,7 +26,13 @@ namespace dce {
 
 		void position(const SimdVector3<>& _position) noexcept;
 
-		[[nodiscard]] auto direction_vector() const noexcept -> const SimdVector3<>&;
+		[[nodiscard]] auto look_at() const noexcept -> const SimdVector3<>&;
+
+		void look_at(const SimdVector3<>&) noexcept;
+
+		auto look_at_dir() const noexcept -> const SimdVector3<>&;
+
+		void look_at_dir(const SimdVector3<>& _dir) noexcept;
 
 		void update(const Input& _input, const float _viewport_x, const float _viewport_y, const float _delta_time);
 

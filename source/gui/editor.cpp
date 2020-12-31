@@ -228,7 +228,6 @@ namespace dce::gui {
 		[[unlikely]] if (!_config.editor.enable_gizmos) {
 			return;
 		}
-		auto matrix = _transform.calculate_matrix();
 		ImGuizmo::Enable(true);
 		ImGuizmo::BeginFrame();
 		const float x = _data.scenery_viewport_position.x;
@@ -241,14 +240,48 @@ namespace dce::gui {
 			ImGuizmo::DrawGrid(value_ptr(_data.view_matrix), value_ptr(_data.projection_matrix), value_ptr(grid_pos_matrix),
 			                   _config.editor.grid_size);
 		}
+		/*
 		[[likely]] if (_config.editor.show_view_cube) {
-			ImGuizmo::ViewManipulate(value_ptr(_data.view_matrix), 8.f, {x + w - 256.f, y}, {256.f, 256.f}, 0x10101010);
+			auto view = _data.view_matrix;
+			ImGuizmo::ViewManipulate(value_ptr(view), 8.f, {x + w - 256.f, y}, {256.f, 256.f}, 0x10101010);
+			const auto forward = normalize(SimdVector3<>(view[2]));
+			view = math::inverse(view);
+			const auto pos = SimdVector3<>(view[3][0], view[3][1], view[3][2]);
+			_data.editor_camera.look_at_dir(forward);
+			_data.editor_camera.position(pos);
 		}
-		[[unlikely]] if (Manipulate(value_ptr(_data.view_matrix), value_ptr(_data.projection_matrix), this->gizmo_op_,
-		                            this->gizmo_mode_, value_ptr(matrix))) {
-			SimdVector3<> skew;
-			SimdVector4<> per;
-			math::decompose(matrix, _transform.scale, _transform.rotation, _transform.position, skew, per);
+		*/
+		float tmp_matrix[16];
+		auto eulers = math::eulerAngles(_transform.rotation);
+		const float degree_eulers[3] = {
+			math::degrees(eulers.x),
+			math::degrees(eulers.y),
+			math::degrees(eulers.z),
+		};
+		ImGuizmo::RecomposeMatrixFromComponents(value_ptr(_transform.position), &*degree_eulers, value_ptr(_transform.scale), &*tmp_matrix);
+		Manipulate(value_ptr(_data.view_matrix), value_ptr(_data.projection_matrix), this->gizmo_op_, this->gizmo_mode_, &*tmp_matrix);
+		[[unlikely]] if (ImGuizmo::IsUsing()) {
+			float mat_translation[3], mat_rotation[3], mat_scale[3];
+			ImGuizmo::DecomposeMatrixToComponents(&*tmp_matrix, &*mat_translation, &*mat_rotation, &*mat_scale);
+			
+			switch(this->gizmo_op_) {
+				case ImGuizmo::OPERATION::TRANSLATE:
+					_transform.position.x = mat_translation[0];
+					_transform.position.y = mat_translation[1];
+					_transform.position.z = mat_translation[2];
+				break;
+
+				case ImGuizmo::OPERATION::ROTATE:
+					eulers = SimdVector3<>{ math::radians(mat_rotation[0]), math::radians(mat_rotation[1]), math::radians(mat_rotation[2]) };
+					_transform.rotation = SimdQuaternion<>(eulers);
+				break;
+
+				case ImGuizmo::OPERATION::SCALE:
+					_transform.scale.x = mat_scale[0];
+					_transform.scale.y = mat_scale[1];
+					_transform.scale.z = mat_scale[2];
+				break;
+			}
 		}
 	}
 }

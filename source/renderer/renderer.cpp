@@ -72,11 +72,11 @@ namespace dce::renderer {
 	}
 
 	void Renderer::update_camera(Runtime& _rt) {
-		this->fly_cam_.update(_rt.input(), _rt.render_data().scenery_viewport_size.x, _rt.render_data().scenery_viewport_size.y,
+		_rt.render_data().editor_camera.update(_rt.input(), _rt.render_data().scenery_viewport_size.x, _rt.render_data().scenery_viewport_size.y,
 		                      static_cast<float>(_rt.chrono().delta_time));
 		auto& data = _rt.render_data();
-		data.view_matrix = this->fly_cam_.view_matrix();
-		data.projection_matrix = this->fly_cam_.projection_matrix();
+		data.view_matrix = _rt.render_data().editor_camera.view_matrix();
+		data.projection_matrix = _rt.render_data().editor_camera.projection_matrix();
 		data.view_projection_matrix = data.projection_matrix * data.view_matrix;
 		data.camera_frustum.from_camera_matrix(data.view_projection_matrix);
 		this->gpu_.set_camera(SCENERY_VIEW, data.view_matrix, data.projection_matrix);

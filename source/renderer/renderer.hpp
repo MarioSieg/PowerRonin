@@ -39,7 +39,6 @@ namespace dce {
 			void update_camera(Runtime& _rt);
 
 			std::uint64_t tick_prev_ = 0;
-			FlyCam fly_cam_ = {};
 			GPU gpu_ = {};
 			ShaderBucket shader_bucket_ = ShaderBucket{gpu_};
 			SharedUniforms shared_uniforms_ = {};

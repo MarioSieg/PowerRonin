@@ -3,27 +3,39 @@
 #include "gui/gui_headers.hpp"
 
 namespace dce {
-	auto FlyCam::projection_matrix() const noexcept -> const SimdMatrix4x4<>& {
+	auto EditorCamera::projection_matrix() const noexcept -> const SimdMatrix4x4<>& {
 		return this->proj_;
 	}
 
-	auto FlyCam::view_matrix() const noexcept -> const SimdMatrix4x4<>& {
+	auto EditorCamera::view_matrix() const noexcept -> const SimdMatrix4x4<>& {
 		return this->view_;
 	}
 
-	auto FlyCam::position() const noexcept -> const SimdVector3<>& {
+	auto EditorCamera::position() const noexcept -> const SimdVector3<>& {
 		return this->eye_;
 	}
 
-	auto FlyCam::direction_vector() const noexcept -> const SimdVector3<>& {
+	auto EditorCamera::look_at() const noexcept -> const SimdVector3<>& {
 		return this->at_;
 	}
 
-	void FlyCam::position(const SimdVector3<>& _position) noexcept {
+	void EditorCamera::look_at(const SimdVector3<>& _at) noexcept {
+		this->at_ = _at;
+	}
+
+	auto EditorCamera::look_at_dir() const noexcept -> const SimdVector3<>& {
+		return this->dir_;
+	}
+
+	void EditorCamera::look_at_dir(const SimdVector3<>& _dir) noexcept {
+		this->dir_ = _dir;
+	}
+
+	void EditorCamera::position(const SimdVector3<>& _position) noexcept {
 		this->eye_ = _position;
 	}
 
-	void FlyCam::update(const Input& _input, const float _viewport_x, const float _viewport_y,
+	void EditorCamera::update(const Input& _input, const float _viewport_x, const float _viewport_y,
 	                    const float _delta_time) {
 		/*[[unlikely]] if (ImGui::IsAnyItemHovered() || ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow)) {
 			return;
@@ -52,7 +64,7 @@ namespace dce {
 			const auto dir_z = math::cos(math::radians(this->mouse_angles_.y)) * math::cos(
 				math::radians(this->mouse_angles_.x));
 
-			this->dir_ = {dir_x, dir_y, dir_z};
+			this->dir_ = SimdVector3<>{dir_x, dir_y, dir_z};
 
 			this->mouse_prev_.x = mouse.x;
 			this->mouse_prev_.y = mouse.y;

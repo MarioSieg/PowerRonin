@@ -12,9 +12,11 @@ namespace dce::gui::widgets {
 			const auto footer_height_to_reserve = GetStyle().ItemSpacing.y + GetFrameHeightWithSpacing();
 			if (BeginChild("", {.0, -footer_height_to_reserve}, false)) {
 				_registry.view<MetaData>().each([this](const ERef _ref, MetaData& _meta) {
+					PushID(&_meta.layer);
 					[[unlikely]] if (Button(_meta.name.c_str())) {
 						this->selected_ = _ref;
 					}
+					PopID();
 				});
 				EndChild();
 			}

@@ -50,7 +50,6 @@ namespace dce {
 			bool show_stats = true;
 			bool show_grid = true;
 			float grid_size = 10.f;
-			bool show_view_cube = true;
 			bool enable_gizmos = true;
 		} editor;
 
