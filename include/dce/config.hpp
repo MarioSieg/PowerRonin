@@ -3,6 +3,8 @@
 #include "serial.hpp"
 #include <cstdint>
 
+#include "mathtypes.hpp"
+
 namespace dce {
 	enum class SystemTheme {
 		DARK = 0,
@@ -54,6 +56,7 @@ namespace dce {
 			bool show_stats = true;
 			bool show_grid = true;
 			float grid_size = 10.f;
+			SimdVector3<> grid_origin = { 0, 0, 0 };
 			bool enable_gizmos = true;
 		} editor;
 

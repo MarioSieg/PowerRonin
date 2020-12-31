@@ -10,5 +10,6 @@ namespace dce::gui::widgets {
 
 	private:
 		ERef selected_ = {};
+		std::size_t entity_counter_ = 0;
 	};
 }

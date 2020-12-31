@@ -15,8 +15,8 @@ namespace dce {
 
 	void Scenery::new_default(ResourceManager& _resource_manager) {
 		// Create cube:
-		for (auto i = 0; i < 128; ++i) {
-			for (auto j = 0; j < 128; ++j) {
+		for (auto i = 0, z = 1; i < 8; ++i) {
+			for (auto j = 0; j < 8; ++j, ++z) {
 				const auto cube = this->registry_.create();
 
 				auto& meta = this->registry_.emplace<MetaData>(cube);
@@ -26,7 +26,7 @@ namespace dce {
 				auto& renderer = this->registry_.emplace<MeshRenderer>(cube);
 				auto& collider = this->registry_.emplace<Collider>(cube);
 
-				meta.name = "Solider " + std::to_string(i + j);
+				meta.name = "Solider " + std::to_string(z);
 				Material::BumpedDiffuse lambert;
 				lambert.albedo = _resource_manager.load<Texture>("examples/soldier_albedo.dds");
 				TextureMeta tmeta = {};

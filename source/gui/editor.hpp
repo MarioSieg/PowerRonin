@@ -25,7 +25,7 @@ namespace dce {
 		private:
 			void default_layout() const;
 			void main_menu(Runtime& _rt, bool& _show_terminal);
-			void render_manipulator_gizmos(Transform& _transform, RenderData& _data, const Config& _config) const noexcept;
+			void render_manipulator_gizmos(Transform* const _transform, RenderData& _data, const Config& _config) const noexcept;
 
 			/* Widgets: */
 			widgets::ResourceViewer resource_viewer_ = {};
