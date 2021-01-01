@@ -38,7 +38,7 @@ namespace dce::gui {
 		}
 
 		[[likely]] if (this->show_inspector_) {
-			this->inspector_.update(this->show_inspector_, this->hierarchy_.get_selected(), _rt);
+			this->inspector_.update(this->show_inspector_, this->hierarchy_.selected, _rt);
 		}
 
 		[[unlikely]] if (this->memory_editor_.Open) {
@@ -53,7 +53,7 @@ namespace dce::gui {
 			this->scenery_viewer_.update(this->show_scenery_viewer_, _rt.render_data());
 		}
 
-		const auto selected_entity = this->hierarchy_.get_selected();
+		const auto selected_entity = this->hierarchy_.selected;
 		auto& registry = _rt.scenery().registry();
 
 		this->render_manipulator_gizmos(registry.valid(selected_entity) && registry.has<Transform>(selected_entity) ? &registry.get<Transform>(selected_entity) : nullptr, _rt.render_data(), _rt.config());
@@ -69,6 +69,29 @@ namespace dce::gui {
 				if (MenuItem("Save")) {
 				}
 				if (MenuItem("Exit")) {
+				}
+				EndMenu();
+			}
+			[[unlikely]] if (BeginMenu("Entity")) {
+				auto& reg = _rt.scenery().registry();
+				if (MenuItem("Create New")) {
+					const auto new_entity = reg.create();
+					reg.emplace<MetaData>(new_entity).name = "New Entity " + std::to_string(++this->hierarchy_.entity_counter);
+					reg.emplace<Transform>(new_entity);
+					this->hierarchy_.selected = new_entity;
+				}
+				if (MenuItem("Create Container")) {
+					const auto new_entity = reg.create();
+					reg.emplace<MetaData>(new_entity).name = "New Entity " + std::to_string(++this->hierarchy_.entity_counter);
+				}
+				if (MenuItem("Delete Selected")) {
+					reg.destroy(this->hierarchy_.selected);
+					if (reg.valid(static_cast<ERef>(static_cast<std::uint64_t>(this->hierarchy_.selected) + 1))) {
+						this->hierarchy_.selected = static_cast<ERef>(static_cast<std::uint64_t>(this->hierarchy_.selected) + 1);
+					}
+				}
+				if(MenuItem("Delete All")) {
+					reg.clear();
 				}
 				EndMenu();
 			}

@@ -106,7 +106,7 @@
                 Display config.
             </summary>
         </member>
-        <member name="P:Dreamcast.Core.Configuration.Overlay">
+        <member name="P:Dreamcast.Core.Configuration.Editor">
             <summary>
                 System overlay config.
             </summary>
@@ -1081,6 +1081,11 @@
             </summary>
             <param name="path">The file to serialize from.</param>
             <returns>The deserialized object.</returns>
+        </member>
+        <member name="T:Dreamcast.Core.Theme">
+            <summary>
+            Contains all colors for the editor theme.
+            </summary>
         </member>
         <member name="M:Dreamcast.Mathematics.Fast.Core.IMemoizedMethod.Calculate(System.Single)">
             <summary>

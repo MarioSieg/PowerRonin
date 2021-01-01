@@ -32,7 +32,7 @@ namespace Dreamcast.Core
         /// <summary>
         ///     System overlay config.
         /// </summary>
-        public OverlayConfiguration Overlay { get; set; } = new();
+        public EditorConfiguration Editor { get; set; } = new();
 
         /// <summary>
         ///     Graphics config.
@@ -54,7 +54,7 @@ namespace Dreamcast.Core
                 if (!Directory.Exists(ConfigDirectory))
                     Directory.CreateDirectory(ConfigDirectory);
                 Serializer.SerializeToJsonFile(Current.Display, DisplayConfiguration.FilePath);
-                Serializer.SerializeToJsonFile(Current.Overlay, OverlayConfiguration.FilePath);
+                Serializer.SerializeToJsonFile(Current.Editor, EditorConfiguration.FilePath);
                 Serializer.SerializeToJsonFile(Current.Graphics, GraphicsConfiguration.FilePath);
             }
             catch (Exception ex)
@@ -78,8 +78,8 @@ namespace Dreamcast.Core
             {
                 Current.Display =
                     Serializer.DeserializeFromJsonFile<DisplayConfiguration>(DisplayConfiguration.FilePath);
-                Current.Overlay =
-                    Serializer.DeserializeFromJsonFile<OverlayConfiguration>(OverlayConfiguration.FilePath);
+                Current.Editor =
+                    Serializer.DeserializeFromJsonFile<EditorConfiguration>(EditorConfiguration.FilePath);
                 Current.Graphics =
                     Serializer.DeserializeFromJsonFile<GraphicsConfiguration>(GraphicsConfiguration.FilePath);
             }
@@ -106,13 +106,12 @@ namespace Dreamcast.Core
                 Display_WindowHeight = (ushort) Current.Display.Resolution.Height,
                 Display_VSync = Current.Display.VSync,
                 Display_MaxFrameRate = Current.Display.MaxFrameRate,
-                Overlay_FontSize = Current.Overlay.FontSize,
-                Overlay_Theme = (byte) Current.Overlay.Theme,
-                Overlay_EnableFontAntialiasing = Current.Overlay.EnableFontAntialiasing,
-                Overlay_Alpha = Current.Overlay.Alpha,
-                Overlay_Rounding = Current.Overlay.Rounding,
-                Overlay_ShowTerminal = Current.Overlay.ShowTerminal,
-                Overlay_ShowStats = Current.Overlay.ShowStats,
+                Overlay_FontSize = Current.Editor.FontSize,
+                Overlay_EnableFontAntialiasing = Current.Editor.EnableFontAntialiasing,
+                Overlay_Alpha = Current.Editor.Alpha,
+                Overlay_Rounding = Current.Editor.Rounding,
+                Overlay_ShowTerminal = Current.Editor.ShowTerminal,
+                Overlay_ShowStats = Current.Editor.ShowStats,
                 Graphics_MSAAMode = (byte) Current.Graphics.MSAAMode,
                 Graphics_EnableHighDPIMode = Current.Graphics.EnableHighDPIMode,
                 Graphics_EnableSRGBBackbuffer = Current.Graphics.EnableSRGBBackbuffer,
@@ -138,18 +137,24 @@ namespace Dreamcast.Core
 
             public Size2 Resolution { get; set; } = new(1920, 1080);
 
-            public bool VSync { get; set; } = false;
+            public bool VSync { get; set; } = true;
 
             public ushort MaxFrameRate { get; set; } = 300;
         }
 
-        public sealed class OverlayConfiguration
+        public sealed class EditorConfiguration
         {
-            public static string FilePath { get; set; } = Path.Combine(ConfigDirectory, "overlay.ini");
+            public static string FilePath { get; set; } = Path.Combine(ConfigDirectory, "editor.ini");
 
             public byte FontSize { get; set; } = 24;
 
-            public SystemOverlayTheme Theme { get; set; } = SystemOverlayTheme.Dark;
+            public byte AutoFontSizeForFHD { get; set; } = 14;
+
+            public byte AutoFontSizeForWQHD { get; set; } = 18;
+
+            public byte AutoFontSizeForUHD4K { get; set; } = 22;
+            
+            public bool AutoSetFontSize { get; set; } = true;
 
             public bool EnableFontAntialiasing { get; set; } = true;
 
@@ -160,6 +165,14 @@ namespace Dreamcast.Core
             public bool ShowTerminal { get; set; } = true;
 
             public bool ShowStats { get; set; } = true;
+
+            public float GridSize { get; set; } = 10.0f;
+
+            public Vector3 GridOriginCenter { get; set; } = Vector3.Zero;
+
+            public bool EnableGizmos { get; set; } = true;
+
+            public Theme CurrentTheme { get; set; } = new Theme();
         }
 
         public sealed class GraphicsConfiguration
@@ -176,7 +189,7 @@ namespace Dreamcast.Core
                 {BuildTarget.StandaloneMac, new[] {GraphicsAPI.Metal, GraphicsAPI.OpenGL, GraphicsAPI.Vulkan} }
             };
 
-            public MsaaMode MSAAMode { get; set; } = MsaaMode.X4;
+            public MsaaMode MSAAMode { get; set; } = MsaaMode.Off;
 
             public bool EnableHighDPIMode { get; set; } = false;
 

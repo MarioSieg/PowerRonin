@@ -39,7 +39,7 @@ namespace Dreamcast.Core
         /// <returns>The deserialized object.</returns>
         public static T DeserializeFromJsonString<T>(string data) where T : new()
         {
-            return (T) (JsonConvert.DeserializeObject(data) ?? new T());
+            return JsonConvert.DeserializeObject<T>(data) ?? new T();
         }
 
         /// <summary>
@@ -49,8 +49,7 @@ namespace Dreamcast.Core
         /// <param name="path">The file to serialize into.</param>
         public static void SerializeToJsonFile<T>(in T instance, string path) where T : new()
         {
-            File.WriteAllText(path,
-                JsonConvert.SerializeObject(instance));
+            File.WriteAllText(path, JsonConvert.SerializeObject(instance));
         }
 
         /// <summary>
@@ -60,7 +59,7 @@ namespace Dreamcast.Core
         /// <returns>The deserialized object.</returns>
         public static T DeserializeFromJsonFile<T>(string path) where T : new()
         {
-            return (T) (JsonConvert.DeserializeObject(File.ReadAllText(path)) ?? new T());
+            return JsonConvert.DeserializeObject<T>(File.ReadAllText(path)) ?? new T();
         }
 
         /// <summary>

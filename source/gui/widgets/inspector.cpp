@@ -36,7 +36,7 @@ namespace dce::gui::widgets {
 		SetNextWindowSize({300, 800}, ImGuiCond_FirstUseEver);
 		[[likely]] if (Begin(INSPECTOR_NAME, &_show)) {
 			[[unlikely]] if (!registry.valid(_entity)) {
-				TextUnformatted("No entity selected!");
+				TextUnformatted("Select an entity in the hierarchy");
 				End();
 				return;
 			}

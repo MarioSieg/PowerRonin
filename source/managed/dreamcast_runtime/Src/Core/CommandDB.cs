@@ -303,7 +303,7 @@ namespace Dreamcast.Core
                     Executor = delegate
                     {
                         Protocol.Info(Serializer.SerializeToJsonString(Configuration.Current.Display));
-                        Protocol.Info(Serializer.SerializeToJsonString(Configuration.Current.Overlay));
+                        Protocol.Info(Serializer.SerializeToJsonString(Configuration.Current.Editor));
                         Protocol.Info(Serializer.SerializeToJsonString(Configuration.Current.Graphics));
                     }
                 },
@@ -317,8 +317,8 @@ namespace Dreamcast.Core
                     {
                         Protocol.Info(Configuration.DisplayConfiguration.FilePath + ":\n" +
                                       File.ReadAllText(Configuration.DisplayConfiguration.FilePath));
-                        Protocol.Info(Configuration.OverlayConfiguration.FilePath + ":\n" +
-                                      File.ReadAllText(Configuration.OverlayConfiguration.FilePath));
+                        Protocol.Info(Configuration.EditorConfiguration.FilePath + ":\n" +
+                                      File.ReadAllText(Configuration.EditorConfiguration.FilePath));
                         Protocol.Info(Configuration.GraphicsConfiguration.FilePath + ":\n" +
                                       File.ReadAllText(Configuration.GraphicsConfiguration.FilePath));
                     }

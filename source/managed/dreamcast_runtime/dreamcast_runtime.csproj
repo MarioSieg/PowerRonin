@@ -93,7 +93,7 @@
     <Compile Include="Src\Core\NativeRuntime.cs" />
     <Compile Include="Src\Core\Protocol.cs" />
     <Compile Include="Src\Core\Serializer.cs" />
-    <Compile Include="Src\Core\SystemOverlayTheme.cs" />
+    <Compile Include="Src\Core\Theme.cs" />
     <Compile Include="Src\Mathematics\FastMath\Core\IMemoizedMethod.cs" />
     <Compile Include="Src\Mathematics\FastMath\Core\IUnboundMethod.cs" />
     <Compile Include="Src\Mathematics\FastMath\Core\Utils.cs" />
