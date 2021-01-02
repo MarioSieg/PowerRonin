@@ -1,10 +1,12 @@
 #pragma once
 
-namespace std {
+namespace std
+{
 	class exception;
 }
 
-namespace dce {
+namespace dce
+{
 	class FatalEngineException;
 	/// <summary>
 /// (ERROR ROUTINE) Creates error dump to std::cerr and a file.

@@ -1,7 +1,9 @@
 #include "native_config.hpp"
 
-namespace dce::scripting {
-	void map_to_sys_config(Config& _target, const NativeConfig& _in) noexcept {
+namespace dce::scripting
+{
+	void map_to_sys_config(Config& _target, const NativeConfig& _in) noexcept
+	{
 		_target.display.is_full_screen = _in.Display_IsWindowFullscreen;
 		_target.display.is_maximized = _in.Display_IsWindowMaximized;
 		_target.display.width = _in.Display_WindowWidth;

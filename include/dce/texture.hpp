@@ -3,8 +3,10 @@
 #include "blob.hpp"
 #include "resource.hpp"
 
-namespace dce {
-	enum class TextureFormat : std::uint8_t {
+namespace dce
+{
+	enum class TextureFormat : std::uint8_t
+	{
 		/// <summary>
 		/// DXT1 R5G6B5A1
 		/// </summary>
@@ -205,8 +207,10 @@ namespace dce {
 	/// <summary>
 	/// Texture sampler flags.
 	/// </summary>
-	struct SamplerFlags final {
-		enum Enum : std::uint32_t {
+	struct SamplerFlags final
+	{
+		enum Enum : std::uint32_t
+		{
 			NONE = 0x00000000,
 
 			/// <summary>
@@ -285,7 +289,8 @@ namespace dce {
 		};
 	};
 
-	struct TextureMeta final : ISerializable {
+	struct TextureMeta final : ISerializable
+	{
 		SamplerFlags::Enum sampler_flags = SamplerFlags::NONE;
 		bool is_srgb = true;
 
@@ -294,7 +299,8 @@ namespace dce {
 	};
 
 	/* Represents a 2D texture.*/
-	class Texture final : public IResource<TextureMeta> {
+	class Texture final : public IResource<TextureMeta>
+	{
 		friend class TextureImporteur;
 
 	public:
@@ -344,12 +350,14 @@ namespace dce {
 		bool is_cubemap_ = false;
 		std::uint16_t layer_count_ = 0;
 
-		struct {
+		struct
+		{
 			std::uint16_t gpu_buffer_id = 0;
 		} volatile_upload_data_;
 	};
 
-	class TextureImporteur final : public ResourceImporteur<TextureImporteur, Texture> {
+	class TextureImporteur final : public ResourceImporteur<TextureImporteur, Texture>
+	{
 	public:
 		auto load(std::filesystem::path&& _path,
 		          const TextureMeta* const _meta = nullptr) const -> std::shared_ptr<Texture>;

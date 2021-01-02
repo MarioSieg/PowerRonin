@@ -3,7 +3,8 @@
 #include <ctime>
 #include <string>
 
-namespace dce {
+namespace dce
+{
 	/// <summary>
 	/// Safe alternative for std::localtime
 	/// </summary>

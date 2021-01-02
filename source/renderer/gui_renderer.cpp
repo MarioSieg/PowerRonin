@@ -8,26 +8,31 @@
 
 #include <algorithm>
 
-namespace dce::renderer {
-	auto GuiRenderer::initialize(const std::uint8_t _font_size) -> bool {
+namespace dce::renderer
+{
+	auto GuiRenderer::initialize(const std::uint8_t _font_size) -> bool
+	{
 		auto& io = ImGui::GetIO();
 		const auto type = bgfx::getRendererType();
 
 		this->gui_program_ = load_shader_program("gui_color");
 
-		[[unlikely]] if (this->gui_program_.idx == bgfx::kInvalidHandle) {
+		if (this->gui_program_.idx == bgfx::kInvalidHandle) [[unlikely]]
+		{
 			return false;
 		}
 
 		this->image_lod_enabled_ = createUniform("u_imageLodEnabled", bgfx::UniformType::Vec4);
 
-		[[unlikely]] if (this->image_lod_enabled_.idx == bgfx::kInvalidHandle) {
+		if (this->image_lod_enabled_.idx == bgfx::kInvalidHandle) [[unlikely]]
+		{
 			return false;
 		}
 
 		this->gui_image_program_ = load_shader_program("gui_image");
 
-		[[unlikely]] if (this->gui_image_program_.idx == bgfx::kInvalidHandle) {
+		if (this->gui_image_program_.idx == bgfx::kInvalidHandle) [[unlikely]]
+		{
 			return false;
 		}
 
@@ -37,7 +42,8 @@ namespace dce::renderer {
 		       end();
 
 		this->texture_uniform_ = createUniform("s_tex", bgfx::UniformType::Sampler);
-		[[unlikely]] if (this->texture_uniform_.idx == bgfx::kInvalidHandle) {
+		if (this->texture_uniform_.idx == bgfx::kInvalidHandle) [[unlikely]]
+		{
 			return false;
 		}
 
@@ -50,9 +56,10 @@ namespace dce::renderer {
 			config.FontDataOwnedByAtlas = false;
 			config.MergeMode = false;
 
-			[[unlikely]] if (io.Fonts->AddFontFromFileTTF("fonts/jet_brains_mono_regular.ttf",
-			                                              static_cast<float>(_font_size) - 3.F
-			                                              , &config, ranges) == nullptr) {
+			if (io.Fonts->AddFontFromFileTTF("fonts/jet_brains_mono_regular.ttf",
+			                                 static_cast<float>(_font_size) - 3.F
+			                                 , &config, ranges) == nullptr) [[unlikely]]
+			{
 				return false;
 			}
 
@@ -70,9 +77,10 @@ namespace dce::renderer {
 			        return false;
 			}
 			*/
-			[[unlikely]] if (!io.Fonts->AddFontFromFileTTF("fonts/font_awesome_pro_regular.ttf"
-			                                               , static_cast<float>(_font_size) - 3.F, &config,
-			                                               glyph_ranges)) {
+			if (!io.Fonts->AddFontFromFileTTF("fonts/font_awesome_pro_regular.ttf"
+			                                  , static_cast<float>(_font_size) - 3.F, &config,
+			                                  glyph_ranges)) [[unlikely]]
+			{
 				return false;
 			}
 
@@ -87,7 +95,8 @@ namespace dce::renderer {
 		return this->texture_.idx != bgfx::kInvalidHandle;
 	}
 
-	void GuiRenderer::render(const ImDrawData* const _data) const {
+	void GuiRenderer::render(const ImDrawData* const _data) const
+	{
 		const auto& io = ImGui::GetIO();
 		const auto width = static_cast<std::uint16_t>(io.DisplaySize.x);
 		const auto height = static_cast<std::uint16_t>(io.DisplaySize.y);
@@ -99,12 +108,14 @@ namespace dce::renderer {
 			bgfx::setViewRect(GUI_VIEW, 0, 0, width, height);
 		}
 
-		for (auto i = 0; i < _data->CmdListsCount; ++i) {
+		for (auto i = 0; i < _data->CmdListsCount; ++i)
+		{
 			const auto* draw_list = _data->CmdLists[i];
 			const auto vertex_count = draw_list->VtxBuffer.size();
 			const auto index_count = draw_list->IdxBuffer.size();
 
-			[[unlikely]] if (!check_available_transient_buffers(vertex_count, index_count, &layout)) {
+			if (!check_available_transient_buffers(vertex_count, index_count, &layout)) [[unlikely]]
+			{
 				break;
 			}
 
@@ -121,20 +132,26 @@ namespace dce::renderer {
 			memcpy(&indices, draw_list->IdxBuffer.begin(), index_count * sizeof(ImDrawIdx));
 
 			std::uint32_t offset = 0;
-			for (const auto *cmd = draw_list->CmdBuffer.begin(), *end = draw_list->CmdBuffer.end(); cmd != end; ++cmd) {
-				[[unlikely]] if (cmd->UserCallback != nullptr) {
+			for (const auto *cmd = draw_list->CmdBuffer.begin(), *end = draw_list->CmdBuffer.end(); cmd != end; ++cmd)
+			{
+				if (cmd->UserCallback) [[unlikely]]
+				{
 					cmd->UserCallback(draw_list, cmd);
 				}
-				else if (cmd->ElemCount != 0u) {
+				else if (cmd->ElemCount != 0u)
+				{
 					auto state = BGFX_STATE_WRITE_RGB | BGFX_STATE_WRITE_A | BGFX_STATE_MSAA;
 
 					auto textureHandle = this->texture_;
 					auto program = this->gui_program_;
-					[[likely]] if (cmd->TextureId != nullptr) {
-						const union {
+					if (cmd->TextureId != nullptr) [[likely]]
+					{
+						const union
+						{
 							ImTextureID ptr;
 
-							struct {
+							struct
+							{
 								bgfx::TextureHandle handle;
 								std::uint8_t flags;
 								std::uint8_t mip;
@@ -144,13 +161,15 @@ namespace dce::renderer {
 							         ? BGFX_STATE_BLEND_FUNC(BGFX_STATE_BLEND_SRC_ALPHA, BGFX_STATE_BLEND_INV_SRC_ALPHA)
 							         : BGFX_STATE_NONE;
 						textureHandle = texture1.data.handle;
-						[[unlikely]] if (texture1.data.mip != 0u) {
+						if (texture1.data.mip != 0u) [[unlikely]]
+						{
 							const float lod_enabled[4] = {static_cast<float>(texture1.data.mip), 1.F, .0F, .0F};
 							setUniform(this->image_lod_enabled_, lod_enabled);
 							program = this->gui_image_program_;
 						}
 					}
-					else {
+					else
+					{
 						state |= BGFX_STATE_BLEND_FUNC(BGFX_STATE_BLEND_SRC_ALPHA, BGFX_STATE_BLEND_INV_SRC_ALPHA);
 					}
 
@@ -170,7 +189,8 @@ namespace dce::renderer {
 		}
 	}
 
-	void GuiRenderer::shutdown() const {
+	void GuiRenderer::shutdown() const
+	{
 		destroy(this->texture_uniform_);
 		destroy(this->image_lod_enabled_);
 		destroy(this->gui_program_);

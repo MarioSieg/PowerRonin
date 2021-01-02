@@ -4,13 +4,17 @@
 #include <limits>
 #include <string_view>
 
-namespace dce {
+namespace dce
+{
 	class Runtime;
 
-	namespace core {
+	namespace core
+	{
 		// Bitmask to subscribe to subsystem events
-		struct ServiceEvents {
-			enum Enum : std::uint8_t {
+		struct ServiceEvents
+		{
+			enum Enum : std::uint8_t
+			{
 				NONE = 0,
 				PRE_STARTUP = 1 << 0,
 				POST_STARTUP = 1 << 1,
@@ -23,7 +27,8 @@ namespace dce {
 		};
 
 		/* Represents an engine subsystem (base interface) */
-		class ISubsystem {
+		class ISubsystem
+		{
 			friend class Kernel;
 
 		protected:

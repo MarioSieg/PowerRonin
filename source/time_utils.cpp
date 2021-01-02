@@ -2,8 +2,10 @@
 #include "../../include/dce/env.hpp"
 #include <mutex>
 
-namespace dce {
-	auto safe_localtime(const std::time_t& _time) -> std::tm {
+namespace dce
+{
+	auto safe_localtime(const std::time_t& _time) -> std::tm
+	{
 		std::tm buffer = {};
 #if COM_GCC
 		localtime_r(&_time, &buffer);
@@ -17,15 +19,16 @@ namespace dce {
 		return buffer;
 	}
 
-	auto time_stamp() -> std::string {
+	auto time_stamp() -> std::string
+	{
 		auto bt = safe_localtime(std::time(nullptr));
 		char buf[64];
 		return {buf, std::strftime(buf, sizeof buf, "%F %T", &bt)};
 	}
 
-	void time_stamp(char ( &_buffer)[32]) {
+	void time_stamp(char ( &_buffer)[32])
+	{
 		auto bt = safe_localtime(std::time(nullptr));
 		std::strftime(_buffer, sizeof _buffer, "%F %T", &bt);
 	}
-
 }

@@ -2,7 +2,8 @@
 
 #include "../../include/dce/config.hpp"
 
-namespace dce::gui {
+namespace dce::gui
+{
 	extern void style_dark() noexcept;
 	extern void style_light() noexcept;
 	extern void style_cherry() noexcept;

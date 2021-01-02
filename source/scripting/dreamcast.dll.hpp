@@ -2,7 +2,8 @@
 
 #include <string_view>
 
-namespace dce::scripting {
+namespace dce::scripting
+{
 	constexpr std::string_view ASSEMBLY_NAME_ID = "dreamcast";
 	constexpr std::string_view ASSEMBLY_NAMESPACE_ID = "Dreamcast.Core";
 

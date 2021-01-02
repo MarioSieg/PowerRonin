@@ -7,8 +7,10 @@
 #include "static_class.hpp"
 #include "static_method.hpp"
 
-namespace dce::scripting {
-	class Scripting final : public core::ISubsystem {
+namespace dce::scripting
+{
+	class Scripting final : public core::ISubsystem
+	{
 	public:
 		/* Constructors, assignment operators, destructor */
 		Scripting();
@@ -38,7 +40,8 @@ namespace dce::scripting {
 		/// <summary>
 		/// Core class.
 		/// </summary>
-		struct {
+		struct
+		{
 			StaticClass klass = {};
 
 			StaticMethod on_pre_startup = {};
@@ -54,7 +57,8 @@ namespace dce::scripting {
 		/// <summary>
 		/// Command database class.
 		/// </summary>
-		struct {
+		struct
+		{
 			StaticClass klass = {};
 			StaticMethod on_command_enter = {}; // Called when command is enter to terminal.
 		} command_db_;

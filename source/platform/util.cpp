@@ -1,15 +1,18 @@
 #include "util.hpp"
 #include "platform_headers.hpp"
 
-namespace dce::platform {
-
-	void center_window(GLFWwindow* const _win, GLFWmonitor* const _monitor) {
-		[[unlikely]] if (!_monitor || !_win) {
+namespace dce::platform
+{
+	void center_window(GLFWwindow* const _win, GLFWmonitor* const _monitor)
+	{
+		if (!_monitor || !_win) [[unlikely]]
+		{
 			return;
 		}
 
 		const auto* const video_mode = glfwGetVideoMode(_monitor);
-		[[unlikely]] if (!video_mode) {
+		if (!video_mode) [[unlikely]]
+		{
 			return;
 		}
 

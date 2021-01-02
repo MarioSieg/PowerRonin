@@ -1,10 +1,13 @@
 #pragma once
 
-namespace dce {
+namespace dce
+{
 	class ResourceManager;
 
-	namespace gui::widgets {
-		class ResourceViewer final {
+	namespace gui::widgets
+	{
+		class ResourceViewer final
+		{
 		public:
 			void update(bool& _show, ResourceManager& _rm);
 		};

@@ -13,14 +13,16 @@
 #include <Windows.h>
 #endif
 
-namespace dce {
-
+namespace dce
+{
 #if SYS_WINDOWS
 #define CALL_FIRST 1
 #define CALL_LAST 0
 
-	auto WINAPI handler(struct _EXCEPTION_POINTERS* const _info) -> LONG {
-		if (_info->ExceptionRecord->ExceptionCode != EXCEPTION_BREAKPOINT) {
+	auto WINAPI handler(struct _EXCEPTION_POINTERS* const _info) -> LONG
+	{
+		if (_info->ExceptionRecord->ExceptionCode != EXCEPTION_BREAKPOINT)
+		{
 			return EXCEPTION_CONTINUE_SEARCH;
 		}
 		PCONTEXT context = _info->ContextRecord;
@@ -32,7 +34,8 @@ namespace dce {
 		++context->Eip;
 #endif
 
-		if (!std::filesystem::is_directory("crashes")) {
+		if (!std::filesystem::is_directory("crashes"))
+		{
 			std::filesystem::create_directory("crashes");
 		}
 		std::stringstream ss;
@@ -42,7 +45,8 @@ namespace dce {
 		std::ofstream file(ss.str());
 		ss.str("");
 		ss << "MSG: Fatal breakpoint at @" << std::hex << _info->ExceptionRecord->ExceptionAddress;
-		[[likely]] if (file) {
+		if (file) [[likely]]
+		{
 			file << ss.str();
 		}
 		std::cerr << ss.str();
@@ -50,11 +54,13 @@ namespace dce {
 		return EXCEPTION_CONTINUE_EXECUTION;
 	}
 
-	ScopedVectoredExceptionHandler::ScopedVectoredExceptionHandler() : handler_(&handler_) {
+	ScopedVectoredExceptionHandler::ScopedVectoredExceptionHandler() : handler_(&handler_)
+	{
 		AddVectoredExceptionHandler(CALL_FIRST, &handler);
 	}
 
-	ScopedVectoredExceptionHandler::~ScopedVectoredExceptionHandler() {
+	ScopedVectoredExceptionHandler::~ScopedVectoredExceptionHandler()
+	{
 		RemoveVectoredExceptionHandler(this->handler_);
 	}
 

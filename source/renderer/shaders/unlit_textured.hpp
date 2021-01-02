@@ -2,8 +2,10 @@
 
 #include "../ishader.hpp"
 
-namespace dce::renderer::shaders {
-	class UnlitTexturedShader final : public IShader<Material::UnlitTextured> {
+namespace dce::renderer::shaders
+{
+	class UnlitTexturedShader final : public IShader<Material::UnlitTextured>
+	{
 	public:
 		explicit UnlitTexturedShader(GPU& _gpu) noexcept;
 
@@ -13,5 +15,6 @@ namespace dce::renderer::shaders {
 
 	private:
 		Uniform texture_sampler_ = {"s_tex_color", bgfx::UniformType::Sampler};
+		Uniform tiling_offset_ = {"u_tiling_offset", bgfx::UniformType::Vec4};
 	};
 }

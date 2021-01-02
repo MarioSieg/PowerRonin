@@ -6,11 +6,15 @@
 #include <unordered_map>
 #include <string_view>
 
-namespace dce {
+namespace dce
+{
 	/* Describes a type in the ClassDB. */
-	union ClassDescriptor final {
-		struct BaseDescriptor {
-			struct {
+	union ClassDescriptor final
+	{
+		struct BaseDescriptor
+		{
+			struct
+			{
 				std::string_view name;
 				/* Type name of the type (manual) or typeid(T).name() */
 				std::string_view description;
@@ -24,7 +28,8 @@ namespace dce {
 				bool is_custom; /* True if this is a user created class. */
 			};
 
-			struct SourceInfo {
+			struct SourceInfo
+			{
 				std::uint_least32_t line; /* Class register call line in source file. */
 				std::uint_least32_t column;
 				/* Class register call column in source file. */
@@ -38,7 +43,8 @@ namespace dce {
 	};
 
 	/* Contains all registered types. */
-	class ClassDB final {
+	class ClassDB final
+	{
 	public:
 		/* Registers a new class descriptor into the commands. */
 		void register_class(std::string_view name
@@ -52,7 +58,8 @@ namespace dce {
 		template <typename T> requires std::is_class<T>::value void auto_register_class(
 			const ClassDescriptor::BaseDescriptor::SourceInfo& src_info
 			, const std::string_view description = ""
-			, const bool is_custom = false) {
+			, const bool is_custom = false)
+		{
 			const auto& info = typeid(T);
 			this->register_class(info.name(), sizeof(T), info.hash_code(), src_info, description, is_custom);
 		}

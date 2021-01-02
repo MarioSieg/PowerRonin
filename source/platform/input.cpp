@@ -8,13 +8,17 @@
 #define MAP_BUTTON(NAV_NO, BUTTON_NO)       { if (buttons_count > (BUTTON_NO) && buttons[BUTTON_NO] == GLFW_PRESS) io.NavInputs[NAV_NO] = 1.0f; }
 #define MAP_ANALOG(NAV_NO, AXIS_NO, V0, V1) { float v = (axes_count > (AXIS_NO)) ? axes[AXIS_NO] : (V0); v = (v - (V0)) / ((V1) - (V0)); if (v > 1.0f) v = 1.0f; if (io.NavInputs[NAV_NO] < v) io.NavInputs[NAV_NO] = v; }
 
-namespace dce::platform {
+namespace dce::platform
+{
 	extern void* WINDOW_HANDLE;
 } // namespace dce::platform
 
-namespace dce::platform {
-	auto GuiInput::initialize() -> bool {
-		if (WINDOW_HANDLE == nullptr) {
+namespace dce::platform
+{
+	auto GuiInput::initialize() -> bool
+	{
+		if (WINDOW_HANDLE == nullptr) [[unlikely]]
+		{
 			return false;
 		}
 
@@ -80,7 +84,8 @@ namespace dce::platform {
 		return true;
 	}
 
-	void GuiInput::update() {
+	void GuiInput::update()
+	{
 		int w = 0;
 		int h = 0;
 		int display_w = 0;
@@ -100,11 +105,13 @@ namespace dce::platform {
 		update_gamepads();
 	}
 
-	void GuiInput::update_mouse() {
+	void GuiInput::update_mouse()
+	{
 		auto* const win = static_cast<GLFWwindow*>(this->window);
 		auto& io = ImGui::GetIO();
 
-		for (int i = 0; i < sizeof io.MouseDown / sizeof *io.MouseDown; i++) {
+		for (int i = 0; i < sizeof io.MouseDown / sizeof *io.MouseDown; i++)
+		{
 			io.MouseDown[i] = this->mouse_buttons[i] || glfwGetMouseButton(win, i) != 0;
 			this->mouse_buttons[i] = false;
 		}
@@ -115,33 +122,39 @@ namespace dce::platform {
 		io.MousePos = ImVec2(static_cast<float>(mouse_x), static_cast<float>(mouse_y));
 	}
 
-	void GuiInput::update_cursor() {
+	void GuiInput::update_cursor()
+	{
 		auto* const win = static_cast<GLFWwindow*>(this->window);
 		auto& io = ImGui::GetIO();
-		[[unlikely]] if ((io.ConfigFlags & ImGuiConfigFlags_NoMouseCursorChange) != 0 || glfwGetInputMode(
+		if ((io.ConfigFlags & ImGuiConfigFlags_NoMouseCursorChange) != 0 || glfwGetInputMode(
 				win, GLFW_CURSOR) ==
-			GLFW_CURSOR_DISABLED) {
+			GLFW_CURSOR_DISABLED) [[unlikely]]
+		{
 			return;
 		}
 
 		const auto gui_mouse_cursor = ImGui::GetMouseCursor();
-		[[likely]] if (gui_mouse_cursor != ImGuiMouseCursor_None && !io.MouseDrawCursor) {
+		if (gui_mouse_cursor != ImGuiMouseCursor_None && !io.MouseDrawCursor) [[likely]]
+		{
 			// Show OS mouse cursor:
 			glfwSetCursor(win, this->cursors[gui_mouse_cursor] != nullptr
 				                   ? this->cursors[gui_mouse_cursor]
 				                   : this->cursors[ImGuiMouseCursor_Arrow]);
 			glfwSetInputMode(win, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 		}
-		else {
+		else
+		{
 			// Hide OS mouse cursor if imgui is drawing it or if it wants no cursor:
 			glfwSetInputMode(win, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 		}
 	}
 
-	void GuiInput::update_gamepads() {
+	void GuiInput::update_gamepads()
+	{
 		ImGuiIO& io = ImGui::GetIO();
 
-		[[likely]] if ((io.ConfigFlags & ImGuiConfigFlags_NavEnableGamepad) != 0) {
+		if (!(io.ConfigFlags & ImGuiConfigFlags_NavEnableGamepad)) [[likely]]
+		{
 			return;
 		}
 
@@ -168,15 +181,18 @@ namespace dce::platform {
 		MAP_ANALOG(ImGuiNavInput_LStickUp, 1, +0.3F, +0.9F)
 		MAP_ANALOG(ImGuiNavInput_LStickDown, 1, -0.3F, -0.9F)
 
-		[[likely]] if (axes_count > 0 && buttons_count > 0) {
+		if (axes_count > 0 && buttons_count > 0) [[likely]]
+		{
 			io.BackendFlags |= ImGuiBackendFlags_HasGamepad;
 		}
-		else {
+		else
+		{
 			io.BackendFlags &= ~ImGuiBackendFlags_HasGamepad;
 		}
 	}
 
-	void GuiInput::install_callback_procedures() const {
+	void GuiInput::install_callback_procedures() const
+	{
 		auto* const win = static_cast<GLFWwindow*>(this->window);
 		glfwSetMouseButtonCallback(win, &mouse_button_callback);
 		glfwSetScrollCallback(win, &scroll_callback);
@@ -184,10 +200,13 @@ namespace dce::platform {
 		glfwSetCharCallback(win, &char_callback);
 	}
 
-	void GuiInput::shutdown() {
+	void GuiInput::shutdown()
+	{
 		MOUSE_STATES = nullptr;
-		for (auto*& cur : this->cursors) {
-			[[unlikely]] if (cur == nullptr) {
+		for (auto*& cur : this->cursors)
+		{
+			if (cur == nullptr) [[unlikely]]
+			{
 				continue;
 			}
 			glfwDestroyCursor(cur);

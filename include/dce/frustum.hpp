@@ -2,12 +2,15 @@
 
 #include "aabb.hpp"
 
-namespace dce {
+namespace dce
+{
 	/// <summary>
 	/// Represents a view frustum (camera pyramid)
 	/// </summary>
-	struct Frustum final {
-		enum Planes {
+	struct Frustum final
+	{
+		enum Planes
+		{
 			LEFT = 0,
 			RIGHT,
 			BOTTOM,

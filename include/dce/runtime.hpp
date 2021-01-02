@@ -10,11 +10,13 @@
 #include "input.hpp"
 #include "renderer_data.hpp"
 
-namespace dce {
+namespace dce
+{
 	/// <summary>
 	/// Runtime system state.
 	/// </summary>
-	class Runtime final {
+	class Runtime final
+	{
 	public:
 		/// <summary>
 		/// 

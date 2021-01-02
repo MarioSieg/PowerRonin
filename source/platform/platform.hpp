@@ -6,7 +6,8 @@ struct GLFWwindow;
 struct GLFWmonitor;
 struct GLFWvidmode;
 
-namespace dce::platform {
+namespace dce::platform
+{
 	/// <summary>
 	/// GLFW window handle.
 	/// </summary>
@@ -20,7 +21,8 @@ namespace dce::platform {
 	/// <summary>
 	/// Manages window and input 
 	/// </summary>
-	class Platform final : public core::ISubsystem {
+	class Platform final : public core::ISubsystem
+	{
 	public:
 		/* Constructors, assignment operators, destructor */
 		Platform();

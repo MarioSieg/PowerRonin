@@ -3,12 +3,14 @@
 
 #include "bx/math.h"
 
-namespace dce {
+namespace dce
+{
 	auto calculate_sun_dir(float _hour
 	                       , float _latitude
 	                       , const float _delta
 	                       , const SimdVector3<>& _up
-	                       , const SimdVector3<>& _north) noexcept -> SimdVector3<> {
+	                       , const SimdVector3<>& _north) noexcept -> SimdVector3<>
+	{
 		/*
 		_latitude = math::radians(_latitude);
 		_hour *= math::pi<float>() / 12.f;
@@ -44,10 +46,10 @@ namespace dce {
 		const bx::Quaternion rot1 = bx::rotateAxis(uxd, altitude);
 		const auto dir2 = bx::mul(dir, rot1);
 		return {dir2.x, dir2.y, dir2.z};
-
 	}
 
-	auto calculate_sun_orbit(const float _month, const float _ecliptic_obliquity) noexcept -> float {
+	auto calculate_sun_orbit(const float _month, const float _ecliptic_obliquity) noexcept -> float
+	{
 		const auto day = 30.f * _month + 15.f;
 		const auto lambda = math::radians(280.46f + 0.9856474f * day);
 		return std::asin(std::sin(_ecliptic_obliquity) * std::sin(lambda));

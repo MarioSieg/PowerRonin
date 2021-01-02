@@ -8,12 +8,14 @@
 #include <iomanip>
 #include <sstream>
 
-namespace dce {
-	AsyncProtocol::AsyncProtocol() : AsyncProtocol("engine") {
-	}
+namespace dce
+{
+	AsyncProtocol::AsyncProtocol() : AsyncProtocol("engine") { }
 
-	AsyncProtocol::AsyncProtocol(const std::string& _name) {
-		[[unlikely]] if (!spdlog::thread_pool()) {
+	AsyncProtocol::AsyncProtocol(const std::string& _name)
+	{
+		if (!spdlog::thread_pool()) [[unlikely]]
+		{
 			spdlog::init_thread_pool(QUEUE_SIZE, THREAD_COUNT);
 		}
 		const auto thread_pool = spdlog::thread_pool();

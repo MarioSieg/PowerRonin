@@ -7,14 +7,17 @@
 #include <array>
 #include <filesystem>
 
-namespace dce {
+namespace dce
+{
 	class Runtime;
 	class RenderData;
 	class Transform;
 }
 
-namespace dce::gui::widgets {
-	class Inspector final {
+namespace dce::gui::widgets
+{
+	class Inspector final
+	{
 	public:
 		static constexpr auto BUFFER_SIZE = 256;
 

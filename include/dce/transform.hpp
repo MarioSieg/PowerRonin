@@ -2,8 +2,10 @@
 
 #include "mathlib.hpp"
 
-namespace dce {
-	class Transform final {
+namespace dce
+{
+	class Transform final
+	{
 	public:
 		Transform() noexcept = default;
 		Transform(const Transform&) noexcept = delete;

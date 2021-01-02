@@ -3,6 +3,7 @@
 struct GLFWwindow;
 struct GLFWmonitor;
 
-namespace dce::platform {
+namespace dce::platform
+{
 	extern void center_window(GLFWwindow* const _win, GLFWmonitor* const _monitor);
 }

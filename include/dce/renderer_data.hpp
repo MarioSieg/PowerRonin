@@ -4,11 +4,13 @@
 #include "frustum.hpp"
 #include "flycam.hpp"
 
-namespace dce {
+namespace dce
+{
 	/// <summary>
 	/// Contains states and data for the renderer.
 	/// </summary>
-	class RenderData final {
+	class RenderData final
+	{
 	public:
 		SimdVector2<> scenery_viewport_size = {.0f, .0f};
 		SimdVector2<> scenery_viewport_position = {.0f, .0f};

@@ -4,11 +4,13 @@
 #include <chrono>
 #include <array>
 
-namespace dce {
+namespace dce
+{
 	/// <summary>
 	/// Contains time info about an kernel subsystem.
 	/// </summary>
-	struct SubsystemTimeInfo final {
+	struct SubsystemTimeInfo final
+	{
 		double pre_startup = .0;
 		double post_startup = .0;
 		double pre_tick = .0;
@@ -18,7 +20,8 @@ namespace dce {
 	/// <summary>
 	/// Contains time info and clocks.
 	/// </summary>
-	class Chrono final {
+	class Chrono final
+	{
 	public:
 		/// <summary>
 		/// Number of time samples to take.

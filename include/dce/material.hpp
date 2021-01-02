@@ -1,40 +1,49 @@
 #pragma once
 
+#include "mathlib.hpp"
 #include "texture.hpp"
 #include <variant>
 
-namespace dce {
+namespace dce
+{
 	class ResourceManager;
 
-	struct MaterialMeta final : ISerializable {
-		inline void serialize(JsonStream&) const override {
-		}
+	struct MaterialMeta final : ISerializable
+	{
+		inline void serialize(JsonStream&) const override { }
 
-		inline void deserialize(const JsonStream&) override {
-		}
+		inline void deserialize(const JsonStream&) override { }
 	};
 
 	/// <summary>
 	/// Represents a material which contains properties to draw some surface.
 	/// </summary>
-	class Material final : public IResource<MaterialMeta> {
+	class Material final : public IResource<MaterialMeta>
+	{
 		friend class MaterialImporteur;
 
 	public:
-		struct UnlitTextured final {
+		struct UnlitTextured final
+		{
 			RRef<Texture> albedo = {};
+			SimdVector4<> tiling_offset = {1.f, 1.f, .0f, .0f};
 		};
 
-		struct Diffuse final {
+		struct Diffuse final
+		{
 			RRef<Texture> albedo = {};
+			SimdVector4<> tiling_offset = {1.f, 1.f, .0f, .0f};
 		};
 
-		struct BumpedDiffuse final {
+		struct BumpedDiffuse final
+		{
 			RRef<Texture> albedo = {};
 			RRef<Texture> normal = {};
+			SimdVector4<> tiling_offset = {1.f, 1.f, .0f, .0f};
 		};
 
-		struct StaticSkybox final {
+		struct StaticSkybox final
+		{
 			RRef<Texture> cubemap = {};
 		};
 
@@ -79,7 +88,8 @@ namespace dce {
 	/// Material loader class.
 	/// Materials are de/serialized into JSON text files.
 	/// </summary>
-	class MaterialImporteur final : public ResourceImporteur<MaterialImporteur, Material> {
+	class MaterialImporteur final : public ResourceImporteur<MaterialImporteur, Material>
+	{
 	public:
 		auto load(std::filesystem::path&& _path,
 		          const MaterialMeta* const _meta = nullptr) const -> std::shared_ptr<Material>;

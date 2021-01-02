@@ -3,8 +3,10 @@
 #include "../../include/dce/core/kernel.hpp"
 #include "physics_headers.hpp"
 
-namespace dce::physics {
-	class Physics final : public core::ISubsystem {
+namespace dce::physics
+{
+	class Physics final : public core::ISubsystem
+	{
 	public:
 		/* Constructors, assignment operators, destructor */
 		Physics();

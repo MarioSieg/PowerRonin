@@ -7,18 +7,25 @@
 
 using namespace ImGui;
 
-namespace dce {
+namespace dce
+{
 	void (*TERMINAL_UPDATE)() = nullptr;
 }
 
-namespace dce::gui {
-	void Terminal::update(bool& _show, Runtime& _rt) {
+namespace dce::gui
+{
+	void Terminal::update(bool& _show, Runtime& _rt)
+	{
 		SetNextWindowSize({800, 600}, ImGuiCond_FirstUseEver);
-		[[likely]] if (Begin(TERMINAL_NAME, &_show, ImGuiWindowFlags_NoScrollbar)) {
+		if (Begin(TERMINAL_NAME, &_show, ImGuiWindowFlags_NoScrollbar)) [[likely]]
+		{
 			const auto footer_height_to_reserve = GetStyle().ItemSpacing.y + GetFrameHeightWithSpacing();
-			const auto print_sink = [this](const TerminalSink<>* const _sink) {
-				for (const auto& msg : _sink->string_buffer()) {
-					switch (std::get<1>(msg)) {
+			const auto print_sink = [this](const TerminalSink<>* const _sink)
+			{
+				for (const auto& msg : _sink->string_buffer())
+				{
+					switch (std::get<1>(msg))
+					{
 							[[unlikely]] case LogLevel::ERROR: PushStyleColor(ImGuiCol_Text, COLOR_ERROR);
 							++this->error_messages_count_;
 							break;
@@ -38,19 +45,23 @@ namespace dce::gui {
 					PopStyleColor();
 				}
 			};
-			if (BeginChild("", {.0, -footer_height_to_reserve}, false)) {
+			if (BeginChild("", {.0, -footer_height_to_reserve}, false)) [[likely]]
+			{
 				PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 1));
 
-				[[likely]] if (this->show_scripting_protocol_) {
+				if (this->show_scripting_protocol_) [[likely]]
+				{
 					print_sink(this->scripting_protocol_);
 				}
-				else {
+				else
+				{
 					print_sink(this->system_protocol_);
 				}
 
 				PopStyleVar();
 			}
-			[[unlikely]] if (this->scroll_) {
+			if (this->scroll_) [[unlikely]]
+			{
 				SetScrollHereY(1.F);
 			}
 
@@ -62,7 +73,8 @@ namespace dce::gui {
 			{
 				PushStyleColor(ImGuiCol_Text, COLOR_WARN);
 				Text(ICON_FA_EXCLAMATION_TRIANGLE " %zu", this->warning_messages_count_);
-				[[unlikely]] if (IsItemHovered()) {
+				if (IsItemHovered()) [[unlikely]]
+				{
 					BeginTooltip();
 					Text("%zu warning messages", this->warning_messages_count_);
 					EndTooltip();
@@ -77,7 +89,8 @@ namespace dce::gui {
 			{
 				PushStyleColor(ImGuiCol_Text, COLOR_ERROR);
 				Text(ICON_FA_BOMB " %zu", this->error_messages_count_);
-				[[unlikely]] if (IsItemHovered()) {
+				if (IsItemHovered()) [[unlikely]]
+				{
 					BeginTooltip();
 					Text("%zu error messages", this->error_messages_count_);
 					EndTooltip();
@@ -91,7 +104,8 @@ namespace dce::gui {
 			/* Show scripting output. */
 			{
 				Checkbox("##out", &this->show_scripting_protocol_);
-				[[unlikely]] if (IsItemHovered()) {
+				if (IsItemHovered()) [[unlikely]]
+				{
 					BeginTooltip();
 					TextUnformatted("Show scripting protocol instead of system protocol");
 					EndTooltip();
@@ -107,20 +121,24 @@ namespace dce::gui {
 				const auto get_input_ok = InputText("##in", this->buffer_, sizeof this->buffer_, flags);
 				const auto is_input_valid = *this->buffer_ != '\0';
 
-				[[unlikely]] if (this->scroll_) {
+				if (this->scroll_) [[unlikely]]
+				{
 					SetKeyboardFocusHere(-1);
 					this->scroll_ = false;
 				}
 
-				[[unlikely]] if (get_input_ok) {
-					[[likely]] if (is_input_valid) {
+				if (get_input_ok) [[unlikely]]
+				{
+					if (is_input_valid) [[likely]]
+					{
 						_rt.terminal_hook()(this->buffer_);
 						memset(this->buffer_, 0, sizeof this->buffer_);
 						this->scroll_ = true;
 						this->history_index_ = 0;
 						SetScrollHere(1.F);
 					}
-					else {
+					else
+					{
 						_rt.protocol().error("Invalid input! Type \"help\"!");
 					}
 				}
@@ -131,9 +149,11 @@ namespace dce::gui {
 	}
 
 	auto Terminal::initialize(const AsyncProtocol& _system_protocol,
-	                          const AsyncProtocol& _scripting_protocol) noexcept -> bool {
-		[[unlikely]] if (_system_protocol.get_logger()->sinks().empty() || _scripting_protocol.get_logger()->sinks().
-			empty()) {
+	                          const AsyncProtocol& _scripting_protocol) noexcept -> bool
+	{
+		if (_system_protocol.get_logger()->sinks().empty() || _scripting_protocol.get_logger()->sinks().
+		                                                                          empty()) [[unlikely]]
+		{
 			return false;
 		}
 		this->system_protocol_ = dynamic_cast<const TerminalSink<>*>(&*_system_protocol.get_logger()->sinks()[0]);

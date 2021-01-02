@@ -2,11 +2,13 @@
 
 #include "uniform.hpp"
 
-namespace dce::renderer {
+namespace dce::renderer
+{
 	/// <summary>
 	/// Contains per frame shared uniforms which can be used by all shaders.
 	/// </summary>
-	class SharedUniforms final {
+	class SharedUniforms final
+	{
 	public:
 		SharedUniforms() = default;
 		SharedUniforms(const SharedUniforms&) = delete;

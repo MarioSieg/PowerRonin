@@ -2,9 +2,11 @@
 
 #include "mathlib.hpp"
 
-namespace dce {
+namespace dce
+{
 	/* Represents a physical collider. */
-	class Collider final {
+	class Collider final
+	{
 	public:
 		Collider() noexcept = default;
 		Collider(const Collider&) noexcept = delete;
@@ -13,20 +15,24 @@ namespace dce {
 		auto operator=(Collider&&) noexcept -> Collider& = default;
 		~Collider() = default;
 
-		union ColliderData {
+		union ColliderData
+		{
 			/* Box collider data. */
-			struct {
+			struct
+			{
 				SimdVector3<> half_extents;
 			} box = {};
 
 			/* Sphere collider data. */
-			struct {
+			struct
+			{
 				float radius = 10.f;
 			} sphere;
 		} data = {.box = {.half_extents = {20.f, 20.f, 20.f}}};
 
 		/* Discriminator */
-		enum class Type : std::uint8_t {
+		enum class Type : std::uint8_t
+		{
 			BOX,
 			SPHERE
 		} type = Type::BOX;

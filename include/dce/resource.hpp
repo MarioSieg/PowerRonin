@@ -6,13 +6,15 @@
 
 #include "except.hpp"
 
-namespace dce {
+namespace dce
+{
 	/// <summary>
 	/// Base class for all runtime resources.
 	/// </summary>
 	/// <typeparam name="M">Metadata type.</typeparam>
 	template <typename M>
-	class IResource {
+	class IResource
+	{
 		static_assert(std::is_move_assignable_v<M>, "Resource metadata must be at least move assignable!");
 		static_assert(std::is_base_of_v<ISerializable, M>, "Resource metadata must be serializable!");
 		static_assert(std::is_default_constructible_v<M>, "Resource metadata must be default constructible!");
@@ -65,13 +67,16 @@ namespace dce {
 		/// <typeparam name="...Q">The constructor arguments.</typeparam>
 		/// <param name="_x">The constructor arguments.</param>
 		/// <returns>The shared_ptr with the allocated resource.</returns>
-		template <typename T, typename... Q> requires requires {
+		template <typename T, typename... Q> requires requires
+		{
 			requires std::is_base_of_v<IResource<M>, T>; requires std::is_constructible_v<T, Q...>;
-		} [[nodiscard]] inline static auto allocate(Q&&... _x) -> std::shared_ptr<T> {
+		} [[nodiscard]] inline static auto allocate(Q&&... _x) -> std::shared_ptr<T>
+		{
 			auto* const mem = new(std::nothrow) T(_x...);
-			[[unlikely]] if (!mem) throw MAKE_FATAL_ENGINE_EXCEPTION("Bad allocation!");
-			return std::shared_ptr<T>(mem, [](T*& _y) mutable {
-				[[likely]] if (_y) _y->offload();
+			if (!mem) [[unlikely]] throw MAKE_FATAL_ENGINE_EXCEPTION("Bad allocation!");
+			return std::shared_ptr<T>(mem, [](T*& _y) mutable
+			{
+				if (_y) [[likely]] _y->offload();
 				delete _y, _y = nullptr;
 			});
 		}
@@ -94,33 +99,40 @@ namespace dce {
 	};
 
 	template <typename M>
-	inline auto IResource<M>::is_uploaded() const noexcept -> bool {
+	inline auto IResource<M>::is_uploaded() const noexcept -> bool
+	{
 		return this->is_uploaded_;
 	}
 
 	template <typename M>
-	inline auto IResource<M>::meta_data() const noexcept -> const Meta& {
+	inline auto IResource<M>::meta_data() const noexcept -> const Meta&
+	{
 		return this->meta_data_;
 	}
 
 	template <typename M>
-	inline auto IResource<M>::file_path() const noexcept -> const std::filesystem::path& {
+	inline auto IResource<M>::file_path() const noexcept -> const std::filesystem::path&
+	{
 		return this->file_path_;
 	}
 
 	template <typename M>
-	inline auto IResource<M>::load_meta_or_default(std::filesystem::path _res) -> Meta try {
+	inline auto IResource<M>::load_meta_or_default(std::filesystem::path _res) -> Meta try
+	{
 		_res.replace_extension(METADATA_FILE_EXTENSION);
 		Meta meta = {};
 		auto* const ser = &meta;
-		[[unlikely]] if (!ser->deserialize_from_file(_res)) {
-			auto _ = ser->serialize_to_file(_res); // Create metadata file if it does not exist.
+		if (!ser->deserialize_from_file(_res)) [[unlikely]]
+		{
+			//auto _ = ser->serialize_to_file(_res); // Create metadata file if it does not exist.
 		}
 		return meta;
 	}
-	catch (...) { return {}; }
+	catch (...)
+	{
+		return {};
+	}
 
 	template <typename M>
-	inline IResource<M>::IResource(Meta&& _meta) noexcept : meta_data_(std::forward(_meta)) {
-	}
+	inline IResource<M>::IResource(Meta&& _meta) noexcept : meta_data_(std::forward(_meta)) { }
 } // namespace dce // namespace dce

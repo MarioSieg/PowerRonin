@@ -1,7 +1,9 @@
 #pragma once
 
-namespace dce {
-	class IEventBehaviour {
+namespace dce
+{
+	class IEventBehaviour
+	{
 	public:
 		IEventBehaviour() noexcept = default;
 		IEventBehaviour(const IEventBehaviour&) noexcept = default;

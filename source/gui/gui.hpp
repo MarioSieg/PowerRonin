@@ -8,8 +8,10 @@
 #include "terminal.hpp"
 #include "editor.hpp"
 
-namespace dce::gui {
-	class Gui final : public core::ISubsystem {
+namespace dce::gui
+{
+	class Gui final : public core::ISubsystem
+	{
 	public:
 		/* Constructors, assignment operators, destructor */
 		Gui();

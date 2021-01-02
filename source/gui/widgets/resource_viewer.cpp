@@ -7,23 +7,30 @@
 
 using namespace ImGui;
 
-namespace dce::gui::widgets {
-	void ResourceViewer::update(bool& _show, ResourceManager& _rm) {
+namespace dce::gui::widgets
+{
+	void ResourceViewer::update(bool& _show, ResourceManager& _rm)
+	{
 		SetNextWindowSize({800, 600}, ImGuiCond_FirstUseEver);
-		[[likely]] if (Begin(RESOURCE_VIEWER_NAME, &_show)) {
+		if (Begin(RESOURCE_VIEWER_NAME, &_show)) [[likely]]
+		{
 			Text("Textures: %u", static_cast<unsigned>(_rm.texture_cache().size()));
 			SameLine();
 			Text("Meshes: %u", static_cast<unsigned>(_rm.mesh_cache().size()));
 			Separator();
 			Spacing();
-			if (CollapsingHeader(ICON_FA_IMAGES " Textures", ImGuiTreeNodeFlags_DefaultOpen)) {
-				_rm.texture_cache().each([&](const RRef<Texture>& _texture) {
+			if (CollapsingHeader(ICON_FA_IMAGES " Textures", ImGuiTreeNodeFlags_DefaultOpen))
+			{
+				_rm.texture_cache().each([&](const RRef<Texture>& _texture)
+				{
 					TextUnformatted(ICON_FA_IMAGE);
 					SameLine();
 					TextUnformatted(_texture->file_path().filename().string().c_str());
-					if (IsItemHovered()) {
+					if (IsItemHovered())
+					{
 						BeginTooltip();
-						if (_texture->is_uploaded()) {
+						if (_texture->is_uploaded())
+						{
 							image(_texture, {128.f, 128.f}, {.0f, .0f}, {1.0f, 1.0f});
 						}
 						TextUnformatted(_texture->is_uploaded() ? "Uploaded: yes" : "Uploaded: no");
@@ -38,12 +45,15 @@ namespace dce::gui::widgets {
 					Separator();
 				});
 			}
-			[[likely]] if (CollapsingHeader(ICON_FA_CUBES " Meshes", ImGuiTreeNodeFlags_DefaultOpen)) {
-				_rm.mesh_cache().each([](const RRef<Mesh>& _mesh) {
+			if (CollapsingHeader(ICON_FA_CUBES " Meshes", ImGuiTreeNodeFlags_DefaultOpen)) [[likely]]
+			{
+				_rm.mesh_cache().each([](const RRef<Mesh>& _mesh)
+				{
 					TextUnformatted(ICON_FA_CUBE);
 					SameLine();
 					TextUnformatted(_mesh->file_path().filename().string().c_str());
-					if (IsItemHovered()) {
+					if (IsItemHovered())
+					{
 						const auto size = _mesh->vertices().size() * sizeof(Vertex) + _mesh->indices().size() *
 							sizeof(
 								std::uint16_t);

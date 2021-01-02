@@ -3,13 +3,15 @@
 #include "ecs.hpp"
 #include "comcollections.hpp"
 
-namespace dce {
+namespace dce
+{
 	class ResourceManager;
 
 	/// <summary>
 	/// Types of Skyboxes.
 	/// </summary>
-	enum class SkyboxType {
+	enum class SkyboxType
+	{
 		/// <summary>
 		/// Dynamic skybox (based on scenery daytime, weather)
 		/// </summary>
@@ -24,15 +26,19 @@ namespace dce {
 	/// <summary>
 	/// Represents a scenery environment.
 	/// </summary>
-	class Scenery final {
+	class Scenery final
+	{
 		friend class Runtime;
 	public:
 		/// <summary>
 		/// Contains per scenery settings.
 		/// </summary>
-		struct Configuration final {
-			struct Lighting final {
-				struct {
+		struct Configuration final
+		{
+			struct Lighting final
+			{
+				struct
+				{
 					/// <summary>
 					/// The sun latitude.
 					/// </summary>

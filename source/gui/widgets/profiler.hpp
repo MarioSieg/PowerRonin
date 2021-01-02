@@ -1,11 +1,14 @@
 #pragma once
 
-namespace dce {
+namespace dce
+{
 	class Chrono;
 	class Diagnostics;
 
-	namespace gui::widgets {
-		class Profiler final {
+	namespace gui::widgets
+	{
+		class Profiler final
+		{
 		public:
 			void update(bool& _show, const Diagnostics& _diag, const Chrono& _chrono) const;
 		};

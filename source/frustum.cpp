@@ -1,14 +1,17 @@
 #include "../include/dce/frustum.hpp"
 
-namespace dce {
+namespace dce
+{
 	template <Frustum::Planes I, Frustum::Planes J>
-	struct IJ2K {
+	struct IJ2K
+	{
 		enum { K = I * (9 - I) / 2 + J - 1 };
 	};
 
 	template <Frustum::Planes A, Frustum::Planes B, Frustum::Planes C>
 	[[nodiscard]] static auto intersection(const Frustum& _frustum,
-	                                       const SimdVector3<>* const _crosses) noexcept -> SimdVector3<> {
+	                                       const SimdVector3<>* const _crosses) noexcept -> SimdVector3<>
+	{
 		const auto& planes = _frustum.planes();
 		const auto D = math::dot(SimdVector3<>(planes[A]), _crosses[IJ2K<B, C>::K]);
 		SimdVector3<> res = glm::mat3(_crosses[IJ2K<B, C>::K], -_crosses[IJ2K<A, C>::K], _crosses[IJ2K<A, B>::K])
@@ -16,15 +19,18 @@ namespace dce {
 		return res * (-1.0f / D);
 	}
 
-	auto Frustum::planes() const noexcept -> const SimdVector4<>(&)[COUNT] {
+	auto Frustum::planes() const noexcept -> const SimdVector4<>(&)[COUNT]
+	{
 		return this->planes_;
 	}
 
-	auto Frustum::points() const noexcept -> const SimdVector3<>(&)[8] {
+	auto Frustum::points() const noexcept -> const SimdVector3<>(&)[8]
+	{
 		return this->points_;
 	}
 
-	void Frustum::from_camera_matrix(const SimdMatrix4x4<>& _view_proj) noexcept {
+	void Frustum::from_camera_matrix(const SimdMatrix4x4<>& _view_proj) noexcept
+	{
 		auto matrix = math::transpose(_view_proj);
 		this->planes_[LEFT] = matrix[3] + matrix[0];
 		this->planes_[RIGHT] = matrix[3] - matrix[0];
@@ -61,11 +67,11 @@ namespace dce {
 		this->points_[7] = intersection<RIGHT, TOP, FAR>(*this, crosses);
 	}
 
-	auto Frustum::is_aabb_visible(const AABB& _in) const noexcept -> bool {
+	auto Frustum::is_aabb_visible(const AABB& _in) const noexcept -> bool
+	{
 		const auto& minp = _in.min;
 		const auto& maxp = _in.max;
 
-		[[likely]]
 		if (math::dot(this->planes_[0], SimdVector4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[0], SimdVector4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[0], SimdVector4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
@@ -73,11 +79,11 @@ namespace dce {
 			math::dot(this->planes_[0], SimdVector4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[0], SimdVector4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[0], SimdVector4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[0], SimdVector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) {
+			math::dot(this->planes_[0], SimdVector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
+		{
 			return false;
 		}
 
-		[[likely]]
 		if (math::dot(this->planes_[1], SimdVector4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[1], SimdVector4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[1], SimdVector4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
@@ -85,11 +91,11 @@ namespace dce {
 			math::dot(this->planes_[1], SimdVector4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[1], SimdVector4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[1], SimdVector4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[1], SimdVector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) {
+			math::dot(this->planes_[1], SimdVector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
+		{
 			return false;
 		}
 
-		[[likely]]
 		if (math::dot(this->planes_[2], SimdVector4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[2], SimdVector4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[2], SimdVector4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
@@ -97,11 +103,11 @@ namespace dce {
 			math::dot(this->planes_[2], SimdVector4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[2], SimdVector4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[2], SimdVector4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[2], SimdVector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) {
+			math::dot(this->planes_[2], SimdVector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
+		{
 			return false;
 		}
 
-		[[likely]]
 		if (math::dot(this->planes_[3], SimdVector4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[3], SimdVector4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[3], SimdVector4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
@@ -109,11 +115,11 @@ namespace dce {
 			math::dot(this->planes_[3], SimdVector4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[3], SimdVector4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[3], SimdVector4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[3], SimdVector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) {
+			math::dot(this->planes_[3], SimdVector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
+		{
 			return false;
 		}
 
-		[[likely]]
 		if (math::dot(this->planes_[4], SimdVector4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[4], SimdVector4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[4], SimdVector4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
@@ -121,11 +127,11 @@ namespace dce {
 			math::dot(this->planes_[4], SimdVector4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[4], SimdVector4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[4], SimdVector4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[4], SimdVector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) {
+			math::dot(this->planes_[4], SimdVector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
+		{
 			return false;
 		}
 
-		[[likely]]
 		if (math::dot(this->planes_[5], SimdVector4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[5], SimdVector4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[5], SimdVector4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
@@ -133,7 +139,8 @@ namespace dce {
 			math::dot(this->planes_[5], SimdVector4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[5], SimdVector4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
 			math::dot(this->planes_[5], SimdVector4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[5], SimdVector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) {
+			math::dot(this->planes_[5], SimdVector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
+		{
 			return false;
 		}
 
@@ -148,7 +155,8 @@ namespace dce {
 		out += this->points_[6].x > maxp.x;
 		out += this->points_[7].x > maxp.x;
 
-		[[likely]] if (out == 8) {
+		if (out == 8) [[likely]]
+		{
 			return false;
 		}
 
@@ -163,7 +171,8 @@ namespace dce {
 		out += this->points_[6].x < minp.x;
 		out += this->points_[7].x < minp.x;
 
-		[[likely]] if (out == 8) {
+		if (out == 8) [[likely]]
+		{
 			return false;
 		}
 
@@ -178,7 +187,8 @@ namespace dce {
 		out += this->points_[6].y > maxp.y;
 		out += this->points_[7].y > maxp.y;
 
-		[[likely]] if (out == 8) {
+		if (out == 8) [[likely]]
+		{
 			return false;
 		}
 
@@ -193,7 +203,8 @@ namespace dce {
 		out += this->points_[6].y < minp.y;
 		out += this->points_[7].y < minp.y;
 
-		[[likely]] if (out == 8) {
+		if (out == 8) [[likely]]
+		{
 			return false;
 		}
 
@@ -208,7 +219,8 @@ namespace dce {
 		out += this->points_[6].z > maxp.z;
 		out += this->points_[7].z > maxp.z;
 
-		[[likely]] if (out == 8) {
+		if (out == 8) [[likely]]
+		{
 			return false;
 		}
 
@@ -223,7 +235,8 @@ namespace dce {
 		out += this->points_[6].z < minp.z;
 		out += this->points_[7].z < minp.z;
 
-		[[likely]] if (out == 8) {
+		if (out == 8) [[likely]]
+		{
 			return false;
 		}
 

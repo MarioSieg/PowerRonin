@@ -2,8 +2,8 @@
 
 #include "gl_headers.hpp"
 
-namespace dce::renderer {
-
+namespace dce::renderer
+{
 	/// <summary>
 	/// Fullscreen view for effects and clearing.
 	/// </summary>

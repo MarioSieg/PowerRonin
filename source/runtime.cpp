@@ -16,8 +16,8 @@
 
 #include "../include/dce/runtime.hpp"
 
-namespace dce {
-
+namespace dce
+{
 	Runtime::Runtime() : protocol_("native"),
 	                     scripting_protocol_("managed"),
 	                     config_(),
@@ -28,95 +28,115 @@ namespace dce {
 	                     scenery_(),
 	                     input_(),
 	                     render_data_(),
-	                     terminal_hook_(nullptr) {
-	}
+	                     terminal_hook_(nullptr) { }
 
-	void Runtime::initialize() {
+	void Runtime::initialize()
+	{
 		this->resource_manager_.system_resources.load_all(this->resource_manager_);
 		this->scenery_.initialize();
 		this->scenery_.new_default(this->resource_manager_);
 	}
 
-	void Runtime::shutdown() {
+	void Runtime::shutdown()
+	{
 		this->scenery_.unload_all_entities();
 		this->resource_manager_.unload_all_resources();
 		this->protocol_.get_logger()->flush();
 		this->scripting_protocol_.get_logger()->flush();
 	}
 
-	auto Runtime::protocol() & noexcept -> AsyncProtocol& {
+	auto Runtime::protocol() & noexcept -> AsyncProtocol&
+	{
 		return this->protocol_;
 	}
 
-	auto Runtime::protocol() const & noexcept -> const AsyncProtocol& {
+	auto Runtime::protocol() const & noexcept -> const AsyncProtocol&
+	{
 		return this->protocol_;
 	}
 
-	auto Runtime::config() & noexcept -> Config& {
+	auto Runtime::config() & noexcept -> Config&
+	{
 		return this->config_;
 	}
 
-	auto Runtime::config() const & noexcept -> const Config& {
+	auto Runtime::config() const & noexcept -> const Config&
+	{
 		return this->config_;
 	}
 
-	auto Runtime::class_db() & noexcept -> ClassDB& {
+	auto Runtime::class_db() & noexcept -> ClassDB&
+	{
 		return this->class_db_;
 	}
 
-	auto Runtime::class_db() const & noexcept -> const ClassDB& {
+	auto Runtime::class_db() const & noexcept -> const ClassDB&
+	{
 		return this->class_db_;
 	}
 
-	auto Runtime::resource_manager() & noexcept -> ResourceManager& {
+	auto Runtime::resource_manager() & noexcept -> ResourceManager&
+	{
 		return this->resource_manager_;
 	}
 
-	auto Runtime::resource_manager() const & noexcept -> const ResourceManager& {
+	auto Runtime::resource_manager() const & noexcept -> const ResourceManager&
+	{
 		return this->resource_manager_;
 	}
 
-	auto Runtime::diagnostics() const & noexcept -> const Diagnostics& {
+	auto Runtime::diagnostics() const & noexcept -> const Diagnostics&
+	{
 		return this->diagnostics_;
 	}
 
-	auto Runtime::chrono() const & noexcept -> const Chrono& {
+	auto Runtime::chrono() const & noexcept -> const Chrono&
+	{
 		return this->chrono_;
 	}
 
-	auto Runtime::scenery() const & noexcept -> const Scenery& {
+	auto Runtime::scenery() const & noexcept -> const Scenery&
+	{
 		return this->scenery_;
 	}
 
-	auto Runtime::scenery() & noexcept -> Scenery& {
+	auto Runtime::scenery() & noexcept -> Scenery&
+	{
 		return this->scenery_;
 	}
 
-	auto Runtime::input() const & noexcept -> const Input& {
+	auto Runtime::input() const & noexcept -> const Input&
+	{
 		return this->input_;
 	}
 
-	auto Runtime::render_data() const & noexcept -> const RenderData& {
+	auto Runtime::render_data() const & noexcept -> const RenderData&
+	{
 		return this->render_data_;
 	}
 
-	auto Runtime::render_data() & noexcept -> RenderData& {
+	auto Runtime::render_data() & noexcept -> RenderData&
+	{
 		return this->render_data_;
 	}
 
-	auto Runtime::scripting_protocol() const & noexcept -> const AsyncProtocol& {
+	auto Runtime::scripting_protocol() const & noexcept -> const AsyncProtocol&
+	{
 		return this->scripting_protocol_;
 	}
 
-	auto Runtime::scripting_protocol() & noexcept -> AsyncProtocol& {
+	auto Runtime::scripting_protocol() & noexcept -> AsyncProtocol&
+	{
 		return this->scripting_protocol_;
 	}
 
-	auto Runtime::terminal_hook() const & noexcept -> const std::function<void(char*)>& {
+	auto Runtime::terminal_hook() const & noexcept -> const std::function<void(char*)>&
+	{
 		return this->terminal_hook_;
 	}
 
-	auto Runtime::terminal_hook() & noexcept -> std::function<void(char*)>& {
+	auto Runtime::terminal_hook() & noexcept -> std::function<void(char*)>&
+	{
 		return this->terminal_hook_;
 	}
 } // namespace dce // namespace dce

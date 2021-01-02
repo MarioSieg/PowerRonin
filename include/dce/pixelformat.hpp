@@ -2,7 +2,8 @@
 
 #include<cstdint>
 
-namespace dce {
+namespace dce
+{
 	extern auto to_unorm(float value, float scale) noexcept -> std::uint32_t;
 
 	extern auto from_unorm(std::uint32_t value, float scale) noexcept -> float;

@@ -20,8 +20,10 @@
 #include "../../extern/glm/glm/gtx/matrix_decompose.hpp"
 #include <cstdint>
 
-namespace dce {
-	namespace math {
+namespace dce
+{
+	namespace math
+	{
 		using namespace glm;
 	}
 

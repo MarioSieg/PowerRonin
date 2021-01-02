@@ -3,7 +3,8 @@
 #include "../../extern/entt/single_include/entt/entt.hpp"
 #include <type_traits>
 
-namespace dce {
+namespace dce
+{
 	using ID = entt::id_type;
 
 	using HString = entt::hashed_string;

@@ -3,7 +3,8 @@
 #include <filesystem>
 #include <vector>
 
-namespace dce {
+namespace dce
+{
 	/// <summary>
 	/// Represents a binary large object. (Byte array buffer).
 	/// </summary>

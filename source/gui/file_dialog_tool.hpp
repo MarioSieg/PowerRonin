@@ -1,6 +1,7 @@
 #pragma once
 
-namespace dce::gui {
+namespace dce::gui
+{
 	extern void open_file_dialog(char*& _out, const char* _filter = nullptr, const char* _default_path = nullptr);
 
 	extern void open_files_dialog(void (&_callback)(const char*)

@@ -1,8 +1,11 @@
 #include "../include/dce/half.hpp"
 
-namespace dce {
-	auto half_from_float(const float x) noexcept -> std::uint16_t {
-		const union {
+namespace dce
+{
+	auto half_from_float(const float x) noexcept -> std::uint16_t
+	{
+		const union
+		{
 			std::uint32_t ui;
 			float flt;
 		} ftou{.flt = x};
@@ -69,7 +72,8 @@ namespace dce {
 		return static_cast<uint16_t>(h_result);
 	}
 
-	auto half_to_float(const uint16_t x) noexcept -> float {
+	auto half_to_float(const uint16_t x) noexcept -> float
+	{
 		const std::uint32_t h_e_mask = 0x00007c00;
 		const std::uint32_t h_m_mask = 0x000003ff;
 		const std::uint32_t h_s_mask = 0x00008000;
@@ -112,7 +116,8 @@ namespace dce {
 		const std::uint32_t f_nan_result = uint32_sels(is_nan_msb, f_em_nan, f_inf_result);
 		const std::uint32_t f_result = f_s | f_nan_result;
 
-		const union {
+		const union
+		{
 			std::uint32_t ui;
 			float flt;
 		} utof{.ui = f_result};

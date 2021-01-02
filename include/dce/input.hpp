@@ -3,9 +3,11 @@
 #include <cstdint>
 #include "mathlib.hpp"
 
-namespace dce {
+namespace dce
+{
 	/* Represents a keyboard key. */
-	enum class Key : std::int16_t {
+	enum class Key : std::int16_t
+	{
 		UNKNOWN = - 1
 
 		/* Printable keys */
@@ -150,14 +152,16 @@ namespace dce {
 	};
 
 	/* Represents a mouse button. */
-	enum class MouseButton : std::uint8_t {
+	enum class MouseButton : std::uint8_t
+	{
 		LEFT = 0,
 		RIGHT = 1,
 		MIDDLE = 2,
 	};
 
 	/* Contains input methods and helpers. */
-	class Input final {
+	class Input final
+	{
 	public:
 		[[nodiscard]] auto is_key_down(Key _key) const noexcept -> bool;
 

@@ -9,12 +9,14 @@
 #include "../../include/dce/variant_visit_overloader.hpp"
 #include "../../include/dce/sun.hpp"
 
-namespace dce::renderer {
-	Renderer::Renderer() : ISubsystem("Renderer", EVENTS), shader_bucket_(this->gpu_) {
-	}
+namespace dce::renderer
+{
+	Renderer::Renderer() : ISubsystem("Renderer", EVENTS), shader_bucket_(this->gpu_) { }
 
-	auto Renderer::on_pre_startup(Runtime& _rt) -> bool {
-		if (!this->gpu_.initialize_drivers(_rt.config(), _rt.protocol())) {
+	auto Renderer::on_pre_startup(Runtime& _rt) -> bool
+	{
+		if (!this->gpu_.initialize_drivers(_rt.config(), _rt.protocol()))
+		{
 			return false;
 		}
 
@@ -23,10 +25,12 @@ namespace dce::renderer {
 
 		poll_limits(const_cast<Diagnostics&>(_rt.diagnostics()));
 		auto& viewport = _rt.render_data().scenery_viewport_size;
-		[[likely]] if (viewport.x == .0F || viewport.y == .0F) {
+		if (viewport.x == .0F || viewport.y == .0F) [[likely]]
+		{
 			viewport.x = _rt.config().display.width;
 			viewport.y = _rt.config().display.height;
-			[[likely]] if (viewport.x == .0F || viewport.y == .0F) {
+			if (viewport.x == .0F || viewport.y == .0F) [[likely]]
+			{
 				return false;
 			}
 		}
@@ -36,15 +40,17 @@ namespace dce::renderer {
 		this->tick_prev_ = get_high_precision_counter();
 
 		return true;
-
 	}
 
 	/* Prepare frame */
-	auto Renderer::on_pre_tick(Runtime& _rt) -> bool {
-		[[unlikely]] if (_rt.render_data().enable_wireframe) {
+	auto Renderer::on_pre_tick(Runtime& _rt) -> bool
+	{
+		if (_rt.render_data().enable_wireframe) [[unlikely]]
+		{
 			bgfx::setDebug(BGFX_DEBUG_TEXT | BGFX_DEBUG_WIREFRAME);
 		}
-		else {
+		else
+		{
 			bgfx::setDebug(BGFX_DEBUG_TEXT);
 		}
 		poll_stats(const_cast<Diagnostics&>(_rt.diagnostics()));
@@ -59,11 +65,13 @@ namespace dce::renderer {
 	}
 
 	/* End frame */
-	auto Renderer::on_post_tick(Runtime& _rt) -> bool {
+	auto Renderer::on_post_tick(Runtime& _rt) -> bool
+	{
 		this->render_scene(_rt);
 		this->render_skybox(_rt.scenery().config.lighting, _rt.render_data());
 
-		[[unlikely]] if (_rt.config().editor.show_stats) {
+		if (_rt.config().editor.show_stats) [[likely]]
+		{
 			render_stats(_rt);
 		}
 
@@ -71,9 +79,10 @@ namespace dce::renderer {
 		return true;
 	}
 
-	void Renderer::update_camera(Runtime& _rt) {
+	void Renderer::update_camera(Runtime& _rt) const
+	{
 		_rt.render_data().editor_camera.update(_rt.input(), _rt.render_data().scenery_viewport_size.x, _rt.render_data().scenery_viewport_size.y,
-		                      static_cast<float>(_rt.chrono().delta_time));
+		                                       static_cast<float>(_rt.chrono().delta_time));
 		auto& data = _rt.render_data();
 		data.view_matrix = _rt.render_data().editor_camera.view_matrix();
 		data.projection_matrix = _rt.render_data().editor_camera.projection_matrix();
@@ -82,7 +91,8 @@ namespace dce::renderer {
 		this->gpu_.set_camera(SCENERY_VIEW, data.view_matrix, data.projection_matrix);
 	}
 
-	void Renderer::render_skybox(const Scenery::Configuration::Lighting& _lighting, RenderData& _data) const {
+	void Renderer::render_skybox(const Scenery::Configuration::Lighting& _lighting, RenderData& _data) const
+	{
 		this->gpu_.clear_view(SKYBOX_VIEW, BGFX_CLEAR_NONE);
 		this->gpu_.set_viewport(_data.scenery_viewport_position, _data.scenery_viewport_size, SKYBOX_VIEW);
 
@@ -107,7 +117,8 @@ namespace dce::renderer {
 		this->shader_bucket_.skybox.draw(std::get<Material::StaticSkybox>(_lighting.skybox_material->properties), _lighting.skydome);
 	}
 
-	void Renderer::set_shared_uniforms(const Scenery::Configuration::Lighting& _lighting) const {
+	void Renderer::set_shared_uniforms(const Scenery::Configuration::Lighting& _lighting) const
+	{
 		const float orbit = calculate_sun_orbit(5, math::radians(23.4f));
 		const float hour = _lighting.sun.hour;
 		const float latitude = _lighting.sun.latitude;
@@ -119,7 +130,8 @@ namespace dce::renderer {
 		this->shared_uniforms_.ambient_color.set(_lighting.const_ambient_color);
 	}
 
-	void Renderer::render_scene(Runtime& _rt) {
+	void Renderer::render_scene(Runtime& _rt)
+	{
 		// Set per frame data for all shaders:
 		this->set_shared_uniforms(_rt.scenery().config.lighting);
 
@@ -129,20 +141,23 @@ namespace dce::renderer {
 
 
 		// Draw lambda function which render_stats an object:
-		auto draw = [this, frustum = &_rt.render_data().camera_frustum, &diagnostics](Transform& _transform, MeshRenderer& _mesh_renderer) {
-
+		auto draw = [this, frustum = &_rt.render_data().camera_frustum, &diagnostics](Transform& _transform, MeshRenderer& _mesh_renderer)
+		{
 			// If the mesh renderer is not visible, skip it.
-			[[unlikely]] if (!_mesh_renderer.is_visible) {
+			if (!_mesh_renderer.is_visible) [[unlikely]]
+			{
 				return;
 			}
 
 			// If the mesh renderer wants frustum culling and it is outside the frustum, skip it.
-			[[likely]] if (_mesh_renderer.perform_frustum_culling) {
+			if (_mesh_renderer.perform_frustum_culling) [[likely]]
+			{
 
 				auto aabb_world_space = _mesh_renderer.mesh->aabb();
 				aabb_world_space.max += _transform.position;
 				aabb_world_space.min += _transform.position;
-				[[likely]] if (!frustum->is_aabb_visible(aabb_world_space)) {
+				if (!frustum->is_aabb_visible(aabb_world_space)) [[likely]]
+				{
 					return;
 				}
 			}
@@ -155,15 +170,18 @@ namespace dce::renderer {
 
 			// Render each material with the corresponding shader:
 
-			[[unlikely]] if (std::holds_alternative<Material::UnlitTextured>(mat)) {
+			if (std::holds_alternative<Material::UnlitTextured>(mat)) [[unlikely]]
+			{
 				const auto& properties = std::get<Material::UnlitTextured>(mat);
 				this->shader_bucket_.unlit_textured.draw(properties, mesh);
 			}
-			else [[likely]] if (std::holds_alternative<Material::Diffuse>(mat)) {
+			else if (std::holds_alternative<Material::Diffuse>(mat)) [[likely]]
+			{
 				const auto& properties = std::get<Material::Diffuse>(mat);
 				this->shader_bucket_.diffuse.draw(properties, mesh);
 			}
-			else [[likely]] if (std::holds_alternative<Material::BumpedDiffuse>(mat)) {
+			else if (std::holds_alternative<Material::BumpedDiffuse>(mat)) [[likely]]
+			{
 				const auto& properties = std::get<Material::BumpedDiffuse>(mat);
 				this->shader_bucket_.bumped_diffuse.draw(properties, mesh);
 			}
@@ -176,7 +194,8 @@ namespace dce::renderer {
 		registry.view<Transform, MeshRenderer>().each(draw);
 	}
 
-	auto Renderer::on_post_shutdown(Runtime& _rt) -> bool {
+	auto Renderer::on_post_shutdown(Runtime& _rt) -> bool
+	{
 		this->shared_uniforms_.unload_all();
 		this->shader_bucket_.unload_all();
 		this->gpu_.shutdown_drivers();

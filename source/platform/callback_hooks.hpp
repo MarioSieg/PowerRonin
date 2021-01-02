@@ -2,7 +2,8 @@
 
 struct GLFWwindow;
 
-namespace dce::platform {
+namespace dce::platform
+{
 	/* Mouse button callback hook. */
 	void mouse_button_callback([[maybe_unused]] GLFWwindow* _win
 	                           , [[maybe_unused]] int _button

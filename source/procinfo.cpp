@@ -9,8 +9,10 @@
 #endif
 
 
-namespace dce {
-	auto executable_name() -> std::string {
+namespace dce
+{
+	auto executable_name() -> std::string
+	{
 #if SYS_WINDOWS
 		char buf[MAX_PATH];
 		GetModuleFileNameA(nullptr, buf, MAX_PATH);
@@ -22,7 +24,8 @@ namespace dce {
 #endif
 	}
 
-	auto process_memory_usage() -> std::size_t {
+	auto process_memory_usage() -> std::size_t
+	{
 		return 0;
 	}
 }

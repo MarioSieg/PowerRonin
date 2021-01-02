@@ -1,6 +1,7 @@
 #pragma once
 
-namespace dce::core {
+namespace dce::core
+{
 	class Kernel;
 
 	extern auto install_minimal(Kernel& _kernel) -> bool;

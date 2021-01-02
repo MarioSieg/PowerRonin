@@ -3,12 +3,14 @@
 #include "mathtypes.hpp"
 #include <vector>
 
-namespace dce {
+namespace dce
+{
 	/// <summary>
 	/// Represents an axis aligned bounding box.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	struct AABB final {
+	struct AABB final
+	{
 		constexpr AABB() noexcept = default;
 		AABB(const SimdVector3<>& _min, const SimdVector3<>& _max) noexcept;
 		explicit AABB(const std::vector<SimdVector3<>>& _points) noexcept;

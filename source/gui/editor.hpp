@@ -9,15 +9,19 @@
 #include "widgets/config_editor.hpp"
 #include "widgets/scenery_viewer.hpp"
 
-namespace dce::gui::widgets {
+namespace dce::gui::widgets
+{
 #include "widgets/ram_editor.hpp"
 }
 
-namespace dce {
+namespace dce
+{
 	class Runtime;
 
-	namespace gui {
-		class Editor final {
+	namespace gui
+	{
+		class Editor final
+		{
 		public:
 			void initialize(Runtime& _rt);
 			void update(Runtime& _rt, bool& _show_terminal);

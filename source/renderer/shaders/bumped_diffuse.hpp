@@ -2,8 +2,10 @@
 
 #include "../ishader.hpp"
 
-namespace dce::renderer::shaders {
-	class BumpedDiffuseShader final : public IShader<Material::BumpedDiffuse> {
+namespace dce::renderer::shaders
+{
+	class BumpedDiffuseShader final : public IShader<Material::BumpedDiffuse>
+	{
 	public:
 		explicit BumpedDiffuseShader(GPU& _gpu) noexcept;
 
@@ -14,6 +16,6 @@ namespace dce::renderer::shaders {
 	private:
 		Uniform diffuse_texture_sampler_ = {"s_tex_color", bgfx::UniformType::Sampler};
 		Uniform normal_map_sampler_ = {"s_normal_map", bgfx::UniformType::Sampler};
-		Uniform diffuse_color_ = {"u_mat_color", bgfx::UniformType::Vec4};
+		Uniform tiling_offset_ = {"u_tiling_offset", bgfx::UniformType::Vec4};
 	};
 }

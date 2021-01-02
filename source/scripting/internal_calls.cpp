@@ -14,10 +14,10 @@
 			mono_add_internal_call("Dreamcast.Core.NativeRuntime::" _name, NATIVE_PROC);	\
 		}
 
-namespace dce::scripting {
-
-	void register_basic_internal_calls(Runtime& _rt) {
-
+namespace dce::scripting
+{
+	void register_basic_internal_calls(Runtime& _rt)
+	{
 		// @formatter:off
 		
 		static auto* const RUNTIME = &_rt;

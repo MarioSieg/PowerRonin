@@ -16,14 +16,16 @@
 	
  */
 
-namespace dce {
+namespace dce
+{
 	/// <summary>
 	/// std::visit helper to implement the overload pattern on std::variant
 	/// 
 	/// </summary>
 	/// <typeparam name="...Ts"></typeparam>
 	template <class... Ts>
-	struct overload : Ts... {
+	struct overload : Ts...
+	{
 		using Ts::operator()...;
 	};
 

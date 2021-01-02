@@ -5,8 +5,10 @@
 
 #include "mathtypes.hpp"
 
-namespace dce {
-	enum class SystemTheme {
+namespace dce
+{
+	enum class SystemTheme
+	{
 		DARK = 0,
 		LIGHT = 1,
 		CHERRY = 2,
@@ -14,7 +16,8 @@ namespace dce {
 		GREEN = 4,
 	};
 
-	enum class GraphicsBackend {
+	enum class GraphicsBackend
+	{
 		AUTO,
 		DIRECT_3D11,
 		DIRECT_3D12,
@@ -23,7 +26,8 @@ namespace dce {
 		VULKAN
 	};
 
-	enum class MsaaMode: std::uint8_t {
+	enum class MsaaMode: std::uint8_t
+	{
 		OFF = 1,
 		X2 = 2,
 		X4 = 4,
@@ -31,9 +35,11 @@ namespace dce {
 		X16 = 16
 	};
 
-	class Config final {
+	class Config final
+	{
 	public:
-		struct Display final {
+		struct Display final
+		{
 			std::uint16_t width = 1920;
 			std::uint16_t height = 1080;
 			bool is_full_screen = false;
@@ -42,7 +48,8 @@ namespace dce {
 			std::uint16_t max_framerate = 300;
 		} display;
 
-		struct Editor final {
+		struct Editor final
+		{
 			std::uint8_t font_size = 24;
 			std::uint8_t auto_font_size_fhd = 14;
 			std::uint8_t auto_font_size_whqh = 18;
@@ -54,13 +61,17 @@ namespace dce {
 			float rounding = 4.F;
 			bool show_terminal = true;
 			bool show_stats = true;
+			bool show_stats_matrices = true;
+			std::uint8_t stats_text_color = 0xF;
+			bool show_big_stats = false;
 			bool show_grid = true;
 			float grid_size = 10.f;
-			SimdVector3<> grid_origin = { 0, 0, 0 };
+			SimdVector3<> grid_origin = {0, 0, 0};
 			bool enable_gizmos = true;
 		} editor;
 
-		struct Graphics final {
+		struct Graphics final
+		{
 			GraphicsBackend backend_api = GraphicsBackend::AUTO;
 			MsaaMode msaa_mode = MsaaMode::OFF;
 			bool enable_high_dpi_mode = false;
@@ -69,12 +80,14 @@ namespace dce {
 			bool enable_max_anisotropy = true;
 		} graphics;
 
-		struct Scripting final {
+		struct Scripting final
+		{
 			std::filesystem::path config_dir = "runtime/etc";
 			std::filesystem::path library_dir = "runtime/lib";
 		} scripting;
 
-		struct App final {
+		struct App final
+		{
 			std::string app_name = {};
 			std::string app_company = {};
 		} app;

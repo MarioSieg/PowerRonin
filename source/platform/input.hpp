@@ -2,8 +2,10 @@
 
 struct GLFWcursor;
 
-namespace dce::platform {
-	class GuiInput final {
+namespace dce::platform
+{
+	class GuiInput final
+	{
 	public:
 		auto initialize() -> bool;
 		void update();

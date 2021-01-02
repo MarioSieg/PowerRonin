@@ -4,14 +4,16 @@
 #include "texture.hpp"
 #include "material.hpp"
 
-namespace dce {
+namespace dce
+{
 	class AsyncProtocol;
 	class ResourceManager;
 
 	/// <summary>
 	/// Contains all resources needed by the engine.
 	/// </summary>
-	struct SystemResources final {
+	struct SystemResources final
+	{
 		RRef<Texture> empty_black_1x1 = {};
 		RRef<Texture> empty_white_1x1 = {};
 		RRef<Texture> empty_normal_1x1 = {};
@@ -29,7 +31,8 @@ namespace dce {
 	/// <summary>
 	/// Manager of all resources like textures or meshes.
 	/// </summary>
-	class ResourceManager final {
+	class ResourceManager final
+	{
 		friend SystemResources;
 	public:
 		explicit ResourceManager(AsyncProtocol& _proto) noexcept;
@@ -98,33 +101,39 @@ namespace dce {
 	};
 
 	template <>
-	inline auto ResourceManager::load(std::filesystem::path&& _file) -> RRef<Texture> {
+	inline auto ResourceManager::load(std::filesystem::path&& _file) -> RRef<Texture>
+	{
 		return this->load_texture(std::move(_file), nullptr);
 	}
 
 	template <>
-	inline auto ResourceManager::load(std::filesystem::path&& _file) -> RRef<Mesh> {
+	inline auto ResourceManager::load(std::filesystem::path&& _file) -> RRef<Mesh>
+	{
 		return this->load_mesh(std::move(_file), nullptr);
 	}
 
 	template <>
-	inline auto ResourceManager::load(std::filesystem::path&& _file) -> RRef<Material> {
+	inline auto ResourceManager::load(std::filesystem::path&& _file) -> RRef<Material>
+	{
 		return this->load_material(std::move(_file), nullptr);
 	}
 
 	template <>
-	inline auto ResourceManager::load(std::filesystem::path&& _file, const TextureMeta* const _meta) -> RRef<Texture> {
+	inline auto ResourceManager::load(std::filesystem::path&& _file, const TextureMeta* const _meta) -> RRef<Texture>
+	{
 		return this->load_texture(std::move(_file), _meta);
 	}
 
 	template <>
-	inline auto ResourceManager::load(std::filesystem::path&& _file, const MeshMeta* const _meta) -> RRef<Mesh> {
+	inline auto ResourceManager::load(std::filesystem::path&& _file, const MeshMeta* const _meta) -> RRef<Mesh>
+	{
 		return this->load_mesh(std::move(_file), _meta);
 	}
 
 	template <>
 	inline auto ResourceManager::load(std::filesystem::path&& _file,
-	                                  const MaterialMeta* const _meta) -> RRef<Material> {
+	                                  const MaterialMeta* const _meta) -> RRef<Material>
+	{
 		return this->load_material(std::move(_file), _meta);
 	}
 } // namespace dce // namespace dce

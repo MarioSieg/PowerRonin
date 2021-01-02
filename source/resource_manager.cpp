@@ -1,8 +1,10 @@
 #include "../include/dce/resource_manager.hpp"
 #include "../include/dce/proto.hpp"
 
-namespace dce {
-	void SystemResources::load_all(ResourceManager& _rm) {
+namespace dce
+{
+	void SystemResources::load_all(ResourceManager& _rm)
+	{
 		_rm.proto_.info("Loading system resources...");
 
 		auto texture_meta = TextureMeta{};
@@ -28,28 +30,32 @@ namespace dce {
 		_rm.proto_.info("System resources loaded!");
 	}
 
-	ResourceManager::ResourceManager(AsyncProtocol& _proto) noexcept : proto_(_proto) {
-	}
+	ResourceManager::ResourceManager(AsyncProtocol& _proto) noexcept : proto_(_proto) { }
 
-	auto ResourceManager::texture_cache() const noexcept -> const ResourceCache<Texture>& {
+	auto ResourceManager::texture_cache() const noexcept -> const ResourceCache<Texture>&
+	{
 		return this->texture_cache_;
 	}
 
-	auto ResourceManager::mesh_cache() const noexcept -> const ResourceCache<Mesh>& {
+	auto ResourceManager::mesh_cache() const noexcept -> const ResourceCache<Mesh>&
+	{
 		return this->mesh_cache_;
 	}
 
-	auto ResourceManager::material_cache() const noexcept -> const ResourceCache<Material>& {
+	auto ResourceManager::material_cache() const noexcept -> const ResourceCache<Material>&
+	{
 		return this->material_cache_;
 	}
 
-	void ResourceManager::unload_all_resources() {
+	void ResourceManager::unload_all_resources()
+	{
 		this->texture_cache_.clear();
 		this->mesh_cache_.clear();
 		this->material_cache_.clear();
 	}
 
-	auto ResourceManager::load_texture(std::filesystem::path&& _file, const TextureMeta* const _meta) -> RRef<Texture> {
+	auto ResourceManager::load_texture(std::filesystem::path&& _file, const TextureMeta* const _meta) -> RRef<Texture>
+	{
 		const auto state_clock = std::chrono::high_resolution_clock::now();
 		const auto id = HString(_file.string().c_str());
 		const auto file = _file.filename().string();
@@ -60,7 +66,8 @@ namespace dce {
 		return ptr;
 	}
 
-	auto ResourceManager::load_mesh(std::filesystem::path&& _file, const MeshMeta* const _meta) -> RRef<Mesh> {
+	auto ResourceManager::load_mesh(std::filesystem::path&& _file, const MeshMeta* const _meta) -> RRef<Mesh>
+	{
 		const auto state_clock = std::chrono::high_resolution_clock::now();
 		const auto id = HString(_file.string().c_str());
 		const auto file = _file.filename().string();
@@ -72,7 +79,8 @@ namespace dce {
 	}
 
 	auto ResourceManager::load_material(std::filesystem::path&& _file,
-	                                    const MaterialMeta* const _meta) -> RRef<Material> {
+	                                    const MaterialMeta* const _meta) -> RRef<Material>
+	{
 		const auto state_clock = std::chrono::high_resolution_clock::now();
 		const auto id = HString(_file.string().c_str());
 		const auto file = _file.filename().string();

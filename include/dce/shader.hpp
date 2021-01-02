@@ -8,24 +8,26 @@
 
 #include "blob.hpp"
 
-namespace dce {
-	enum class UniformType {
+namespace dce
+{
+	enum class UniformType
+	{
 		SAMPLER,
 		VEC_4,
 		MATRIX_3x3,
 		MATRIX_4x4,
 	};
 
-	struct ShaderMeta final : ISerializable {
-		inline void serialize(JsonStream&) const override {
-		}
+	struct ShaderMeta final : ISerializable
+	{
+		inline void serialize(JsonStream&) const override { }
 
-		inline void deserialize(const JsonStream&) override {
-		}
+		inline void deserialize(const JsonStream&) override { }
 	};
 
 	/* Represents a shader program with vertex and fragmet shader. */
-	class Shader final : public IResource<ShaderMeta> {
+	class Shader final : public IResource<ShaderMeta>
+	{
 		friend class ShaderImporteur;
 		friend class ShaderCompiler;
 
@@ -53,18 +55,21 @@ namespace dce {
 		std::optional<std::string> vertex_shader_textcode_ = {};
 		std::optional<std::string> fragment_shader_textcode_ = {};
 
-		struct {
+		struct
+		{
 			std::uint16_t program_id = 0;
 		} volatile_upload_data_;
 	};
 
-	class ShaderImporteur final : public ResourceImporteur<ShaderImporteur, Shader> {
+	class ShaderImporteur final : public ResourceImporteur<ShaderImporteur, Shader>
+	{
 	public:
 		auto load(std::filesystem::path&& _path
 		          , const ShaderMeta* const _meta = nullptr) const -> std::shared_ptr<Shader>;
 	};
 
-	class ShaderCompiler final : public ResourceImporteur<ShaderCompiler, Shader> {
+	class ShaderCompiler final : public ResourceImporteur<ShaderCompiler, Shader>
+	{
 	public:
 		auto load(std::filesystem::path&& _path,
 		          const ShaderMeta* const _meta = nullptr) const -> std::shared_ptr<Shader>;

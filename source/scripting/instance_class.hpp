@@ -3,11 +3,13 @@
 #include "mono_headers.hpp"
 #include <string_view>
 
-namespace dce::scripting {
+namespace dce::scripting
+{
 	class Assembly;
 	class RuntimeEnvironment;
 
-	class ClassInstance final {
+	class ClassInstance final
+	{
 	public:
 		ClassInstance() noexcept = default;
 		ClassInstance(const ClassInstance&) = delete;

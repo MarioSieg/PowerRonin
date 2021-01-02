@@ -7,7 +7,8 @@
 #include "../../include/dce/proto.hpp"
 #include "../../include/dce/except.hpp"
 
-namespace dce::scripting {
+namespace dce::scripting
+{
 	/// <summary>
 	/// Exception hook.
 	/// </summary>
@@ -21,7 +22,8 @@ namespace dce::scripting {
 	/// <summary>
 	/// Represents a mono runtime environment.
 	/// </summary>
-	class RuntimeEnvironment final {
+	class RuntimeEnvironment final
+	{
 	public:
 		RuntimeEnvironment() noexcept = default;
 		RuntimeEnvironment(const RuntimeEnvironment&) = delete;
@@ -58,7 +60,8 @@ namespace dce::scripting {
 		MonoDomain* domain_ = nullptr;
 	};
 
-	inline auto RuntimeEnvironment::get_domain() const noexcept -> MonoDomain* {
+	inline auto RuntimeEnvironment::get_domain() const noexcept -> MonoDomain*
+	{
 		return this->domain_;
 	}
 }

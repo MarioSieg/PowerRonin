@@ -2,8 +2,10 @@
 #include "../include/dce/env.hpp"
 #include "../include/dce/except.hpp"
 
-namespace dce {
-	void blob_from_disk(const std::filesystem::path& _file, Blob& _blob) {
+namespace dce
+{
+	void blob_from_disk(const std::filesystem::path& _file, Blob& _blob)
+	{
 		const auto path = _file.string();
 		FILE* file;
 #if COM_MSVC
@@ -11,18 +13,21 @@ namespace dce {
 #else
 		file = fopen(_file.string().data(), "rb");
 #endif
-		[[unlikely]] if (!file) {
+		if (!file) [[unlikely]]
+		{
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Binary blob read failed!");
 		}
 		fseek(file, 0, SEEK_END);
 		const long size = ftell(file);
-		[[unlikely]] if (!size) {
+		if (!size) [[unlikely]]
+		{
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Binary blob read failed!");
 		}
 		rewind(file);
 		_blob.resize(size);
 		const auto read = fread(_blob.data(), sizeof(std::byte), size, file);
-		[[unlikely]] if (static_cast<unsigned long long>(size) != read) {
+		if (static_cast<unsigned long long>(size) != read) [[unlikely]]
+		{
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Binary blob read failed!");
 		}
 	}

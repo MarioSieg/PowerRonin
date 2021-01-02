@@ -3,7 +3,8 @@
 #include <cstddef>
 #include <cstdint>
 
-namespace dce::scripting {
+namespace dce::scripting
+{
 	/// <summary>
 	/// Maps to C# type.
 	/// </summary>

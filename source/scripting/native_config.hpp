@@ -3,8 +3,10 @@
 #include "../../include/dce/config.hpp"
 #include "cstypes.hpp"
 
-namespace dce::scripting {
-	enum class NativeConfigApplyFlags: std::uint8_t {
+namespace dce::scripting
+{
+	enum class NativeConfigApplyFlags: std::uint8_t
+	{
 		NONE = 0,
 		DISPLAY= 1 << 0,
 		OVERLAY = 1 << 1,
@@ -14,7 +16,8 @@ namespace dce::scripting {
 	/// <summary>
 	/// !! Maps to NativeConfig in NativeConfig.cs !!
 	/// </summary>
-	struct NativeConfig final {
+	struct NativeConfig final
+	{
 		CS_bool Display_IsWindowFullscreen;
 		CS_bool Display_IsWindowMaximized;
 		CS_ushort Display_WindowWidth;

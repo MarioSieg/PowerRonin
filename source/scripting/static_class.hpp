@@ -3,10 +3,12 @@
 #include "mono_headers.hpp"
 #include <string_view>
 
-namespace dce::scripting {
+namespace dce::scripting
+{
 	class Assembly;
 
-	class StaticClass final {
+	class StaticClass final
+	{
 	public:
 		StaticClass() noexcept = default;
 		StaticClass(const StaticClass&) = delete;

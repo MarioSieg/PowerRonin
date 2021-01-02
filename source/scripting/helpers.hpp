@@ -1,4 +1,3 @@
 #pragma once
 
-namespace dce::scripting {
-}
+namespace dce::scripting {}

@@ -8,13 +8,17 @@
 #include "../extern/stb/stb_image.h"
 #include "../include/dce/time_utils.hpp"
 
-namespace dce {
-	void Texture::upload() {
-		[[unlikely]] if (this->is_uploaded_) {
+namespace dce
+{
+	void Texture::upload()
+	{
+		if (this->is_uploaded_) [[unlikely]]
+		{
 			this->offload();
 		}
 
-		[[unlikely]] if (this->texels_.empty() || this->width_ == 0u || this->height_ == 0u) {
+		if (this->texels_.empty() || this->width_ == 0u || this->height_ == 0u) [[unlikely]]
+		{
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload texture!");
 		}
 
@@ -22,13 +26,15 @@ namespace dce {
 
 		const auto* const mem = bgfx::makeRef(this->texels_.data(), static_cast<std::uint32_t>(this->size_), nullptr,
 		                                      nullptr);
-		[[unlikely]] if (mem == nullptr) {
+		if (mem == nullptr) [[unlikely]]
+		{
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload texture!");
 		}
 
 		const auto flags = this->meta_data_.is_srgb ? BGFX_TEXTURE_SRGB : BGFX_TEXTURE_NONE;
 
-		[[unlikely]] if (!isTextureValid(1, this->is_cubemap_, this->layer_count_, format, flags)) {
+		if (!isTextureValid(1, this->is_cubemap_, this->layer_count_, format, flags)) [[unlikely]]
+		{
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload texture!");
 		}
 
@@ -39,7 +45,8 @@ namespace dce {
 			                                           : createTexture2D(
 				                                           this->width_, this->height_, this->mipmap_count_ > 1
 				                                           , this->layer_count_, format, flags, mem);
-		[[unlikely]] if (!isValid(texture_handle)) {
+		if (!isValid(texture_handle)) [[unlikely]]
+		{
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload texture!");
 		}
 
@@ -48,12 +55,15 @@ namespace dce {
 		this->is_uploaded_ = true;
 	}
 
-	void Texture::offload() {
-		[[unlikely]] if (!this->is_uploaded_) {
+	void Texture::offload()
+	{
+		if (!this->is_uploaded_) [[unlikely]]
+		{
 			return;
 		}
 		const auto texture_handle = bgfx::TextureHandle{this->volatile_upload_data_.gpu_buffer_id};
-		[[likely]] if (isValid(texture_handle)) {
+		if (isValid(texture_handle)) [[likely]]
+		{
 			destroy(texture_handle);
 			this->volatile_upload_data_.gpu_buffer_id = bgfx::kInvalidHandle;
 		}
@@ -61,14 +71,17 @@ namespace dce {
 	}
 
 	auto TextureImporteur::load(std::filesystem::path&& _path,
-	                            const TextureMeta* const _meta) const -> std::shared_ptr<Texture> {
+	                            const TextureMeta* const _meta) const -> std::shared_ptr<Texture>
+	{
 		auto self = IResource<TextureMeta>::allocate<Texture>();
 
 		const auto ext = _path.extension();
-		[[likely]] if (ext == ".dds" || ext == ".ktx") {
+		if (ext == ".dds" || ext == ".ktx") [[likely]]
+		{
 			Blob blob = {};
 			blob_from_disk(_path, blob);
-			[[unlikely]] if (blob.empty()) {
+			if (blob.empty()) [[unlikely]]
+			{
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load texture from file!");
 			}
 
@@ -79,7 +92,8 @@ namespace dce {
 				                    : bimg::imageParseKtx(&allocator, blob.data(),
 				                                          static_cast<std::uint32_t>(blob.size())
 				                                          , nullptr);
-			[[unlikely]] if (!image) {
+			if (!image) [[unlikely]]
+			{
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load texture from file!");
 			}
 
@@ -91,7 +105,8 @@ namespace dce {
 			self->layer_count_ = image->m_numLayers;
 
 			self->texels_.reserve(image->m_size);
-			for (std::size_t i = 0; i < image->m_size; ++i) {
+			for (std::size_t i = 0; i < image->m_size; ++i)
+			{
 				self->texels_.push_back(static_cast<std::byte*>(image->m_data)[i]);
 			}
 			imageFree(image);
@@ -104,7 +119,8 @@ namespace dce {
 			self->size_ = info.storageSize;
 			self->bits_per_pel_ = info.bitsPerPixel;
 		}
-		else {
+		else
+		{
 			int width = 0;
 			int height = 0;
 			int channels = 0;
@@ -112,7 +128,8 @@ namespace dce {
 			//stbi_set_flip_vertically_on_load_thread(true);
 			unsigned char* image_data = stbi_load(_path.string().c_str(), &width, &height, &channels, STBI_rgb_alpha);
 
-			[[unlikely]] if (image_data == nullptr || width == 0 || height == 0) {
+			if (image_data == nullptr || width == 0 || height == 0) [[unlikely]]
+			{
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load texture from file!");
 			}
 

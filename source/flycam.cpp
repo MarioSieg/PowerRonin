@@ -2,48 +2,59 @@
 #include "../../include/dce/runtime.hpp"
 #include "gui/gui_headers.hpp"
 
-namespace dce {
-	auto EditorCamera::projection_matrix() const noexcept -> const SimdMatrix4x4<>& {
+namespace dce
+{
+	auto EditorCamera::projection_matrix() const noexcept -> const SimdMatrix4x4<>&
+	{
 		return this->proj_;
 	}
 
-	auto EditorCamera::view_matrix() const noexcept -> const SimdMatrix4x4<>& {
+	auto EditorCamera::view_matrix() const noexcept -> const SimdMatrix4x4<>&
+	{
 		return this->view_;
 	}
 
-	auto EditorCamera::position() const noexcept -> const SimdVector3<>& {
+	auto EditorCamera::position() const noexcept -> const SimdVector3<>&
+	{
 		return this->eye_;
 	}
 
-	auto EditorCamera::look_at() const noexcept -> const SimdVector3<>& {
+	auto EditorCamera::look_at() const noexcept -> const SimdVector3<>&
+	{
 		return this->at_;
 	}
 
-	void EditorCamera::look_at(const SimdVector3<>& _at) noexcept {
+	void EditorCamera::look_at(const SimdVector3<>& _at) noexcept
+	{
 		this->at_ = _at;
 	}
 
-	auto EditorCamera::look_at_dir() const noexcept -> const SimdVector3<>& {
+	auto EditorCamera::look_at_dir() const noexcept -> const SimdVector3<>&
+	{
 		return this->dir_;
 	}
 
-	void EditorCamera::look_at_dir(const SimdVector3<>& _dir) noexcept {
+	void EditorCamera::look_at_dir(const SimdVector3<>& _dir) noexcept
+	{
 		this->dir_ = _dir;
 	}
 
-	void EditorCamera::position(const SimdVector3<>& _position) noexcept {
+	void EditorCamera::position(const SimdVector3<>& _position) noexcept
+	{
 		this->eye_ = _position;
 	}
 
 	void EditorCamera::update(const Input& _input, const float _viewport_x, const float _viewport_y,
-	                    const float _delta_time) {
+	                          const float _delta_time)
+	{
 		/*[[unlikely]] if (ImGui::IsAnyItemHovered() || ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow)) {
 			return;
 		}*/
 		auto mouse = _input.mouse_pos();
 		const float speed = this->move_speed;
 
-		[[unlikely]] if (_input.is_mouse_button_down(MouseButton::RIGHT)) {
+		if (_input.is_mouse_button_down(MouseButton::RIGHT)) [[unlikely]]
+		{
 			auto delta_x = mouse.x - this->mouse_prev_.x;
 			auto delta_y = mouse.y - this->mouse_prev_.y;
 
@@ -69,7 +80,8 @@ namespace dce {
 			this->mouse_prev_.x = mouse.x;
 			this->mouse_prev_.y = mouse.y;
 		}
-		else {
+		else
+		{
 			this->mouse_prev_.x = mouse.x;
 			this->mouse_prev_.y = mouse.y;
 		}
@@ -77,19 +89,23 @@ namespace dce {
 		this->forward_ = normalize(this->dir_);
 		this->left_ = normalize(cross(this->forward_, math::UP));
 
-		[[likely]] if (_input.is_key_down(Key::W)) {
+		if (_input.is_key_down(Key::W)) [[likely]]
+		{
 			this->eye_ += SimdVector3<>{speed * _delta_time} * this->forward_;
 		}
 
-		[[likely]] if (_input.is_key_down(Key::A)) {
+		if (_input.is_key_down(Key::A)) [[likely]]
+		{
 			this->eye_ += SimdVector3<>{speed * _delta_time} * this->left_;
 		}
 
-		[[likely]] if (_input.is_key_down(Key::S)) {
+		if (_input.is_key_down(Key::S)) [[likely]]
+		{
 			this->eye_ -= SimdVector3<>{speed * _delta_time} * this->forward_;
 		}
 
-		[[likely]] if (_input.is_key_down(Key::D)) {
+		if (_input.is_key_down(Key::D)) [[likely]]
+		{
 			this->eye_ -= SimdVector3<>{speed * _delta_time} * this->left_;
 		}
 

@@ -2,14 +2,18 @@
 #include "../include/dce/blob.hpp"
 #include "renderer/gl_headers.hpp"
 
-namespace dce {
-	void Shader::upload() {
-		[[unlikely]] if (this->is_uploaded_) {
+namespace dce
+{
+	void Shader::upload()
+	{
+		if (this->is_uploaded_) [[unlikely]]
+		{
 			this->offload();
 		}
 
-		[[unlikely]] if (this->vertex_shader_bytecode_.empty() || this->fragment_shader_bytecode_ && (*this->
-			fragment_shader_bytecode_).empty()) {
+		if (this->vertex_shader_bytecode_.empty() || this->fragment_shader_bytecode_ && (*this->
+			fragment_shader_bytecode_).empty()) [[unlikely]]
+		{
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload shader!");
 		}
 
@@ -18,35 +22,41 @@ namespace dce {
 			                                         sizeof(
 				                                         std::byte)), nullptr, nullptr);
 
-		[[unlikely]] if (!vs_mem) {
+		if (!vs_mem) [[unlikely]]
+		{
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload shader!");
 		}
 
 		const bgfx::ShaderHandle vs = createShader(vs_mem);
-		[[unlikely]] if (!isValid(vs)) {
+		if (!isValid(vs)) [[unlikely]]
+		{
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload shader!");
 		}
 
 		auto fs = bgfx::ShaderHandle{bgfx::kInvalidHandle};
 
-		[[likely]] if (this->fragment_shader_bytecode_) {
+		if (this->fragment_shader_bytecode_) [[likely]]
+		{
 			const auto* const fs_mem = bgfx::makeRef((*this->fragment_shader_bytecode_).data()
 			                                         , static_cast<std::uint32_t>((*this->fragment_shader_bytecode_).
 				                                         size() * sizeof
 				                                         (std::byte)), nullptr, nullptr);
 
-			[[unlikely]] if (!fs_mem) {
+			if (!fs_mem) [[unlikely]]
+			{
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload shader!");
 			}
 
 			fs = createShader(fs_mem);
-			[[unlikely]] if (!isValid(fs)) {
+			if (!isValid(fs)) [[unlikely]]
+			{
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload shader!");
 			}
 		}
 
 		const bgfx::ProgramHandle shader = createProgram(vs, fs, true);
-		[[unlikely]] if (!isValid(shader)) {
+		if (!isValid(shader)) [[unlikely]]
+		{
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload shader!");
 		}
 
@@ -55,9 +65,11 @@ namespace dce {
 		this->is_uploaded_ = true;
 	}
 
-	void Shader::offload() {
+	void Shader::offload()
+	{
 		const auto program_handle = bgfx::ProgramHandle{this->volatile_upload_data_.program_id};
-		[[likely]] if (isValid(program_handle)) {
+		if (isValid(program_handle)) [[likely]]
+		{
 			destroy(program_handle);
 		}
 		this->volatile_upload_data_.program_id = bgfx::kInvalidHandle;
@@ -65,20 +77,24 @@ namespace dce {
 	}
 
 	auto ShaderImporteur::load(std::filesystem::path&& _path
-	                           , const ShaderMeta* const _meta) const -> std::shared_ptr<Shader> {
-		[[unlikely]] if (_path.extension() != Shader::FILE_EXTENSIONS[0]) {
+	                           , const ShaderMeta* const _meta) const -> std::shared_ptr<Shader>
+	{
+		if (_path.extension() != Shader::FILE_EXTENSIONS[0]) [[unlikely]]
+		{
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load shader from file!");
 		}
 
 		Blob vs_bytecode = {};
 		blob_from_disk(_path, vs_bytecode);
-		[[unlikely]] if (vs_bytecode.empty()) {
+		if (vs_bytecode.empty()) [[unlikely]]
+		{
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load shader from file!");
 		}
 
 		Blob fs_bytecode = {};
 		const auto fragment_file = _path.replace_filename("fragment.shc");
-		[[likely]] if (is_regular_file(fragment_file)) {
+		if (is_regular_file(fragment_file)) [[likely]]
+		{
 			blob_from_disk(fragment_file, fs_bytecode);
 		}
 
@@ -87,7 +103,8 @@ namespace dce {
 		self->vertex_shader_bytecode_ = std::move(vs_bytecode);
 		self->vertex_shader_textcode_ = std::nullopt;
 		self->fragment_shader_bytecode_ = std::nullopt;
-		[[likely]] if (!fs_bytecode.empty()) {
+		if (!fs_bytecode.empty()) [[likely]]
+		{
 			self->fragment_shader_bytecode_ = std::move(fs_bytecode);
 		}
 		self->fragment_shader_textcode_ = std::nullopt;
@@ -99,7 +116,8 @@ namespace dce {
 	}
 
 	auto ShaderCompiler::load(std::filesystem::path&& _path,
-	                          const ShaderMeta* const _meta) const -> std::shared_ptr<Shader> {
+	                          const ShaderMeta* const _meta) const -> std::shared_ptr<Shader>
+	{
 		auto self = IResource<ShaderMeta>::allocate<Shader>();
 
 		self->file_path_ = std::move(_path);

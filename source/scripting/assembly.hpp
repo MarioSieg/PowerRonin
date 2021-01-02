@@ -5,11 +5,13 @@
 
 #include <string_view>
 
-namespace dce::scripting {
+namespace dce::scripting
+{
 	/// <summary>
 	/// Represents a managed mono assembly.
 	/// </summary>
-	class Assembly final {
+	class Assembly final
+	{
 		friend class RuntimeEnvironment;
 
 	public:
@@ -55,11 +57,13 @@ namespace dce::scripting {
 		MonoImage* image_ = nullptr;
 	};
 
-	inline auto Assembly::get_assembly() const noexcept -> MonoAssembly* {
+	inline auto Assembly::get_assembly() const noexcept -> MonoAssembly*
+	{
 		return this->assembly_;
 	}
 
-	inline auto Assembly::get_image() const noexcept -> MonoImage* {
+	inline auto Assembly::get_image() const noexcept -> MonoImage*
+	{
 		return this->image_;
 	}
 }

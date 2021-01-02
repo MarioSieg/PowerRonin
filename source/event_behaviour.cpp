@@ -1,12 +1,10 @@
 #include "../include/dce/event_behaviour.hpp"
 
-namespace dce {
-	void IEventBehaviour::start() {
-	}
+namespace dce
+{
+	void IEventBehaviour::start() { }
 
-	void IEventBehaviour::update() {
-	}
+	void IEventBehaviour::update() { }
 
-	void IEventBehaviour::end() {
-	}
+	void IEventBehaviour::end() { }
 } // namespace dce

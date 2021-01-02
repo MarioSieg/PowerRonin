@@ -1,18 +1,21 @@
 #include "gui.hpp"
 #include "theme.hpp"
 
-namespace dce::gui {
-	Gui::Gui() : ISubsystem("OverlayGui", EVENTS) {
-	}
+namespace dce::gui
+{
+	Gui::Gui() : ISubsystem("OverlayGui", EVENTS) { }
 
-	auto Gui::on_pre_startup(Runtime& _rt) -> bool {
+	auto Gui::on_pre_startup(Runtime& _rt) -> bool
+	{
 		this->gui_context_ = ImGui::CreateContext();
-		[[unlikely]] if (this->gui_context_ == nullptr) {
+		if (this->gui_context_ == nullptr) [[unlikely]]
+		{
 			return false;
 		}
 
 		this->plot_context_ = ImPlot::CreateContext();
-		[[unlikely]] if (this->plot_context_ == nullptr) {
+		if (this->plot_context_ == nullptr) [[unlikely]]
+		{
 			return false;
 		}
 
@@ -26,24 +29,32 @@ namespace dce::gui {
 		style_antialiasing_apply(cfg.enable_font_anti_aliasing);
 		style_alpha_apply(cfg.alpha);
 		style_rounding_apply(cfg.rounding);
-		
-		[[likely]] if(cfg.auto_font_size) {
+
+		if (cfg.auto_font_size) [[likely]]
+		{
 			const auto w = _rt.config().display.width;
 			const auto h = _rt.config().display.height;
-			if(w <= 2560 && h <= 1440) {
+			if (w <= 2560 && h <= 1440) [[unlikely]]
+			{
 				cfg.font_size = cfg.auto_font_size_whqh;
-			} else if(w <= 3840 && h <= 2160) {
+			}
+			else if (w <= 3840 && h <= 2160) [[unlikely]]
+			{
 				cfg.font_size = cfg.auto_font_size_uhd;
-			} else {
+			}
+			else
+			{
 				cfg.font_size = cfg.auto_font_size_fhd;
 			}
 		}
 
-		[[unlikely]] if (!this->gui_input_.initialize()) {
+		if (!this->gui_input_.initialize()) [[unlikely]]
+		{
 			return false;
 		}
 
-		[[unlikely]] if (!this->gui_renderer_.initialize(_rt.config().editor.font_size)) {
+		if (!this->gui_renderer_.initialize(_rt.config().editor.font_size)) [[unlikely]]
+		{
 			return false;
 		}
 
@@ -53,19 +64,23 @@ namespace dce::gui {
 		return true;
 	}
 
-	auto Gui::on_pre_tick(Runtime& _rt) -> bool {
+	auto Gui::on_pre_tick(Runtime& _rt) -> bool
+	{
 		const auto width = _rt.config().display.width;
 		const auto height = _rt.config().display.height;
 		this->begin(width, height);
 		return true;
 	}
 
-	auto Gui::on_post_tick(Runtime& _rt) -> bool {
+	auto Gui::on_post_tick(Runtime& _rt) -> bool
+	{
 		this->editor_.update(_rt, _rt.config().editor.show_terminal);
-		[[unlikely]] if (_rt.input().is_key_down(Key::GRAVE_ACCENT)) {
+		if (_rt.input().is_key_down(Key::GRAVE_ACCENT)) [[unlikely]]
+		{
 			_rt.config().editor.show_terminal = true;
 		}
-		[[unlikely]] if (_rt.config().editor.show_terminal) {
+		if (_rt.config().editor.show_terminal) [[unlikely]]
+		{
 			this->terminal_.update(_rt.config().editor.show_terminal, _rt);
 		}
 		this->end();
@@ -73,22 +88,25 @@ namespace dce::gui {
 		return true;
 	}
 
-	auto Gui::on_pre_shutdown([[maybe_unused]] Runtime&) -> bool {
+	auto Gui::on_pre_shutdown([[maybe_unused]] Runtime&) -> bool
+	{
 		this->gui_input_.shutdown();
 		this->gui_renderer_.shutdown();
 		return true;
 	}
 
-	void Gui::begin(const std::uint16_t _width, const std::uint16_t _height) {
+	void Gui::begin(const std::uint16_t _width, const std::uint16_t _height)
+	{
 		this->gui_input_.update();
 		ImGui::NewFrame();
 	}
 
-	void Gui::end() const {
+	void Gui::end() const
+	{
 		ImGui::EndFrame();
 		ImGui::Render();
-		const ImDrawData* const data = ImGui::GetDrawData();
-		[[unlikely]] if (data != nullptr) {
+		if (const ImDrawData* const data = ImGui::GetDrawData(); data) [[likely]]
+		{
 			this->gui_renderer_.render(data);
 		}
 	}

@@ -1,8 +1,10 @@
 #include "../include/dce/interrupt.hpp"
 #include "../include/dce/env.hpp"
 
-namespace dce {
-	void interrupt() {
+namespace dce
+{
+	void interrupt()
+	{
 #if COM_MSVC
 		__debugbreak();
 #elif CPU_ARM

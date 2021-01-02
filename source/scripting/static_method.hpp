@@ -4,8 +4,10 @@
 #include "static_class.hpp"
 #include "environment.hpp"
 
-namespace dce::scripting {
-	class StaticMethod final {
+namespace dce::scripting
+{
+	class StaticMethod final
+	{
 	public:
 		StaticMethod() noexcept = default;
 		StaticMethod(const StaticMethod&) noexcept = default;

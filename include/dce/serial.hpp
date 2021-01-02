@@ -3,13 +3,15 @@
 #include "../../extern/json/include/nlohmann/json_fwd.hpp"
 #include <filesystem>
 
-namespace dce {
+namespace dce
+{
 	using JsonStream = nlohmann::basic_json<>;
 
 	/// <summary>
 	/// Base interface for all serializable objects.
 	/// </summary>
-	class ISerializable {
+	class ISerializable
+	{
 	public:
 		ISerializable() noexcept = default;
 		ISerializable(const ISerializable&) noexcept = default;

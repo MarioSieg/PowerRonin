@@ -4,8 +4,10 @@
 #include "instance_class.hpp"
 #include "environment.hpp"
 
-namespace dce::scripting {
-	class MemberMethod final {
+namespace dce::scripting
+{
+	class MemberMethod final
+	{
 	public:
 		MemberMethod() noexcept = default;
 		MemberMethod(const MemberMethod&) noexcept = default;

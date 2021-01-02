@@ -5,8 +5,10 @@
 #include "shaders/bumped_diffuse.hpp"
 #include "shaders/skybox.hpp"
 
-namespace dce::renderer {
-	class ShaderBucket final {
+namespace dce::renderer
+{
+	class ShaderBucket final
+	{
 	public:
 		explicit ShaderBucket(GPU& _gpu) noexcept;
 		ShaderBucket(const ShaderBucket&) = delete;

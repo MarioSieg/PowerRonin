@@ -1,22 +1,27 @@
 #include "../include/dce/scenery.hpp"
 #include "../include/dce/resource_manager.hpp"
 
-namespace dce {
-	auto Scenery::registry() const noexcept -> const Registry& {
+namespace dce
+{
+	auto Scenery::registry() const noexcept -> const Registry&
+	{
 		return this->registry_;
 	}
 
-	auto Scenery::registry() noexcept -> Registry& {
+	auto Scenery::registry() noexcept -> Registry&
+	{
 		return this->registry_;
 	}
 
-	void Scenery::initialize() {
-	}
+	void Scenery::initialize() { }
 
-	void Scenery::new_default(ResourceManager& _resource_manager) {
+	void Scenery::new_default(ResourceManager& _resource_manager)
+	{
 		// Create cube:
-		for (auto i = 0, z = 1; i < 8; ++i) {
-			for (auto j = 0; j < 8; ++j, ++z) {
+		for (auto i = 0, z = 1; i < 8; ++i)
+		{
+			for (auto j = 0; j < 8; ++j, ++z)
+			{
 				const auto cube = this->registry_.create();
 
 				auto& meta = this->registry_.emplace<MetaData>(cube);
@@ -43,7 +48,8 @@ namespace dce {
 		this->config.lighting.skydome = _resource_manager.system_resources.skydome;
 	}
 
-	void Scenery::unload_all_entities() {
+	void Scenery::unload_all_entities()
+	{
 		this->registry_.clear();
 	}
 } // namespace dce

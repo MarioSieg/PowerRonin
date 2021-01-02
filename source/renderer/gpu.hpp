@@ -10,7 +10,8 @@
 #include "gl_headers.hpp"
 #include "uniform.hpp"
 
-namespace dce {
+namespace dce
+{
 	class Transform;
 	class MeshRenderer;
 	class Diagnostics;
@@ -18,11 +19,13 @@ namespace dce {
 	class AsyncProtocol;
 }
 
-namespace dce::renderer {
+namespace dce::renderer
+{
 	/// <summary>
 	/// Represents a high level GPU which can draw stuff.
 	/// </summary>
-	class GPU final {
+	class GPU final
+	{
 	public:
 		GPU() noexcept = default;
 		GPU(const GPU&) = delete;
@@ -135,56 +138,5 @@ namespace dce::renderer {
 		/// <param name="_view_id"></param>
 		/// <returns></returns>
 		void set_viewport(const SimdVector2<> _xy, const SimdVector2<> _wh, const bgfx::ViewId _view_id) const noexcept;
-
-		/// <summary>
-		/// Set uniform.
-		/// </summary>
-		/// <param name="_handle"></param>
-		/// <param name="_value"></param>
-		/// <returns></returns>
-		void set_uniform(bgfx::UniformHandle _handle, const SimdVector4<>& _value) const noexcept;
-
-		/// <summary>
-		/// Set uniform.
-		/// </summary>
-		/// <param name="_handle"></param>
-		/// <param name="_value"></param>
-		/// <returns></returns>
-		void set_uniform(bgfx::UniformHandle _handle, const SimdMatrix3x3<>& _value) const noexcept;
-
-		/// <summary>
-		/// Set uniform.
-		/// </summary>
-		/// <param name="_handle"></param>
-		/// <param name="_value"></param>
-		/// <returns></returns>
-		void set_uniform(bgfx::UniformHandle _handle, const SimdMatrix4x4<>& _value) const noexcept;
-
-		/// <summary>
-		/// Set uniform.
-		/// </summary>
-		/// <param name="_handle"></param>
-		/// <param name="_value"></param>
-		/// <returns></returns>
-		void set_uniform(bgfx::UniformHandle _handle, const float (&_value)[4]) const noexcept;
-
-		/// <summary>
-		/// Set uniform.
-		/// </summary>
-		/// <param name="_handle"></param>
-		/// <param name="_value"></param>
-		/// <returns></returns>
-		void set_uniform(bgfx::UniformHandle _handle, const float (&_value)[9]) const noexcept;
-
-		/// <summary>
-		/// Set uniform.
-		/// </summary>
-		/// <param name="_handle"></param>
-		/// <param name="_value"></param>
-		/// <returns></returns>
-		void set_uniform(bgfx::UniformHandle _handle, const float (&_value)[16]) const noexcept;
-
-	private:
-		std::uint32_t frame_ = 0;
 	};
 }

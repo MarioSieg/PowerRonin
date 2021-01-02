@@ -2,11 +2,13 @@
 
 #include "mathlib.hpp"
 
-namespace dce {
+namespace dce
+{
 	/// <summary>
 	/// Represents a light.
 	/// </summary>
-	class Light final {
+	class Light final
+	{
 	public:
 		Light() noexcept = default;
 		Light(const Light&) noexcept = delete;
@@ -18,7 +20,8 @@ namespace dce {
 		/// <summary>
 		/// The type of the light.
 		/// </summary>
-		enum class Type {
+		enum class Type
+		{
 			DIRECTIONAL,
 			SPOT,
 			POINT

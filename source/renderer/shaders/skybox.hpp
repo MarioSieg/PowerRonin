@@ -2,9 +2,10 @@
 
 #include "../ishader.hpp"
 
-namespace dce::renderer::shaders {
-
-	class SkyboxShader final : public IShader<Material::StaticSkybox> {
+namespace dce::renderer::shaders
+{
+	class SkyboxShader final : public IShader<Material::StaticSkybox>
+	{
 	public:
 		explicit SkyboxShader(GPU& _gpu) noexcept;
 

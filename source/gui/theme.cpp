@@ -2,8 +2,10 @@
 #include "gui_headers.hpp"
 #include "utils.hpp"
 
-namespace dce::gui {
-	void style_blue() noexcept {
+namespace dce::gui
+{
+	void style_blue() noexcept
+	{
 		auto& style = ImGui::GetStyle();
 		style.Colors[ImGuiCol_Text] = imgui_rgba_to_norm_vec4(131 + 40, 148 + 40, 150 + 40);
 		style.Colors[ImGuiCol_TextDisabled] = imgui_rgba_to_norm_vec4(53, 117, 123);
@@ -105,7 +107,8 @@ namespace dce::gui {
 		*/
 	}
 
-	void style_dark() noexcept {
+	void style_dark() noexcept
+	{
 		auto& style = ImGui::GetStyle();
 		style.Colors[ImGuiCol_Text] = ImVec4(1.00F, 1.00F, 1.00F, 1.00F);
 		style.Colors[ImGuiCol_TextDisabled] = ImVec4(0.50F, 0.50F, 0.50F, 1.00F);
@@ -156,7 +159,8 @@ namespace dce::gui {
 		style.Colors[ImGuiCol_TabUnfocusedActive] = ImVec4(.15F, .15F, .15F, 1.F);
 	}
 
-	void style_light() noexcept {
+	void style_light() noexcept
+	{
 		auto& style = ImGui::GetStyle();
 		style.FrameRounding = 3.0F;
 		style.Colors[ImGuiCol_Text] = ImVec4(0.00F, 0.00F, 0.00F, 1.00F);
@@ -204,7 +208,8 @@ namespace dce::gui {
 		style.Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.20F, 0.20F, 0.20F, 0.35F);
 	}
 
-	void style_cherry() noexcept {
+	void style_cherry() noexcept
+	{
 		auto& style = ImGui::GetStyle();
 		style.Colors[ImGuiCol_Text] = ImVec4(0.860F, 0.930F, 0.890F, 0.78F);
 		style.Colors[ImGuiCol_TextDisabled] = ImVec4(0.860F, 0.930F, 0.890F, 0.28F);
@@ -248,7 +253,8 @@ namespace dce::gui {
 		style.Colors[ImGuiCol_Border] = ImVec4(0.539F, 0.479F, 0.255F, 0.162F);
 	}
 
-	void style_green() noexcept {
+	void style_green() noexcept
+	{
 		auto& style = ImGui::GetStyle();
 		style.Colors[ImGuiCol_Text] = ImVec4(1.00F, 1.00F, 1.00F, 1.00F);
 		style.Colors[ImGuiCol_TextDisabled] = ImVec4(0.50F, 0.50F, 0.50F, 1.00F);
@@ -302,19 +308,22 @@ namespace dce::gui {
 		style.Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.80F, 0.80F, 0.80F, 0.35F);
 	}
 
-	void style_alpha_apply(const float _alpha) noexcept {
+	void style_alpha_apply(const float _alpha) noexcept
+	{
 		auto& style = ImGui::GetStyle();
 		style.Alpha = std::clamp(_alpha, 0.1f, 1.0f);
 	}
 
-	void style_antialiasing_apply(const bool _enable_aa) noexcept {
+	void style_antialiasing_apply(const bool _enable_aa) noexcept
+	{
 		auto& style = ImGui::GetStyle();
 		style.AntiAliasedFill = _enable_aa;
 		style.AntiAliasedLines = _enable_aa;
 		style.AntiAliasedLinesUseTex = _enable_aa;
 	}
 
-	void style_rounding_apply(const float _rounding) noexcept {
+	void style_rounding_apply(const float _rounding) noexcept
+	{
 		auto& style = ImGui::GetStyle();
 		style.ChildRounding = _rounding;
 		style.FrameRounding = _rounding;
@@ -325,8 +334,10 @@ namespace dce::gui {
 		style.WindowRounding = _rounding;
 	}
 
-	void style_apply(const SystemTheme _style) noexcept {
-		switch (_style) {
+	void style_apply(const SystemTheme _style) noexcept
+	{
+		switch (_style)
+		{
 			case SystemTheme::DARK: style_dark();
 				return;
 			case SystemTheme::BLUE: style_blue();

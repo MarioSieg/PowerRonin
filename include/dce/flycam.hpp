@@ -2,13 +2,15 @@
 
 #include "mathlib.hpp"
 
-namespace dce {
+namespace dce
+{
 	class Input;
 
 	/// <summary>
 	/// Helper class for a flying editor camera.
 	/// </summary>
-	class EditorCamera final {
+	class EditorCamera final
+	{
 	public:
 		float move_speed = 8.F;
 		float sensitivity = 0.5F;
@@ -30,7 +32,7 @@ namespace dce {
 
 		void look_at(const SimdVector3<>&) noexcept;
 
-		auto look_at_dir() const noexcept -> const SimdVector3<>&;
+		[[nodiscard]] auto look_at_dir() const noexcept -> const SimdVector3<>&;
 
 		void look_at_dir(const SimdVector3<>& _dir) noexcept;
 

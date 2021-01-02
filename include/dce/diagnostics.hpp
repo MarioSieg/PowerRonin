@@ -2,10 +2,13 @@
 
 #include <cstddef>
 
-namespace dce {
-	class Diagnostics final {
+namespace dce
+{
+	class Diagnostics final
+	{
 	public:
-		struct {
+		struct
+		{
 			std::size_t max_vram = 0;
 			std::size_t used_vram = 0;
 

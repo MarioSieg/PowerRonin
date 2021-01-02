@@ -2,7 +2,8 @@
 
 #include "mathlib.hpp"
 
-namespace dce {
+namespace dce
+{
 	[[nodiscard]] extern auto calculate_sun_dir(const float _hour
 	                                            , const float _latitude
 	                                            , const float _delta

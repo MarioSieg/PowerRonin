@@ -1,8 +1,10 @@
 #pragma once
 
-namespace dce {
+namespace dce
+{
 	/* 3D physics rigidbody */
-	class Rigidbody final {
+	class Rigidbody final
+	{
 	public:
 		Rigidbody() noexcept = default;
 		Rigidbody(const Rigidbody&) noexcept = delete;

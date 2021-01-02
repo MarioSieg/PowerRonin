@@ -7,10 +7,12 @@
 #include <tuple>
 #include <vector>
 
-namespace dce {
+namespace dce
+{
 	class Runtime;
 
-	namespace core {
+	namespace core
+	{
 		constexpr std::string_view ENGINE_NAME = "Dreamcast-Engine";
 		constexpr float ENGINE_VERSION = 0.01f;
 
@@ -23,7 +25,8 @@ namespace dce {
 		/// <summary>
 		/// Represents an engine kernel, containing all subsystems.
 		/// </summary>
-		class Kernel {
+		class Kernel
+		{
 		public:
 			[[nodiscard]] static auto create(const int _in_argc
 			                                 , const char* const* const _in_argv
@@ -152,7 +155,8 @@ namespace dce {
 		};
 
 		template <typename T, typename... Q> requires Subsystem<T> auto Kernel::create_install_subsystem(
-			Q&&... _args) -> Kernel& {
+			Q&&... _args) -> Kernel&
+		{
 			auto x = std::make_unique<T>(_args...);
 			x->kernel_ = this;
 			this->install_subsystem(std::move(x));

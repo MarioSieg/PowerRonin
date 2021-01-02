@@ -2,9 +2,11 @@
 
 #include "gui_headers.hpp"
 
-namespace dce::gui {
+namespace dce::gui
+{
 	// utility structure for realtime plot
-	struct ScrollingBuffer final {
+	struct ScrollingBuffer final
+	{
 		int max_size;
 		int offset;
 		ImVector<ImVec2> data;
@@ -16,7 +18,8 @@ namespace dce::gui {
 	};
 
 	// Utility structure for realtime plot.
-	struct RollingBuffer {
+	struct RollingBuffer
+	{
 		float span;
 		ImVector<ImVec2> data;
 

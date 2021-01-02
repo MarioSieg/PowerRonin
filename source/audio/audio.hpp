@@ -3,8 +3,10 @@
 #include "../../include/dce/core/kernel.hpp"
 #include "audio_headers.hpp"
 
-namespace dce::audio {
-	class Audio final : public core::ISubsystem {
+namespace dce::audio
+{
+	class Audio final : public core::ISubsystem
+	{
 	public:
 		Audio();
 		Audio(const Audio&) = delete;

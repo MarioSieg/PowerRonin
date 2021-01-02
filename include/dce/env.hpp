@@ -10,7 +10,8 @@
 #endif
 
 /* Contains all supported operating systems. */
-enum class System {
+enum class System
+{
 	LINUX,
 	WINDOWS,
 	MAC
@@ -21,7 +22,8 @@ enum class System {
 #define SYS_MAC false
 
 /* Contains all supported compiler. */
-enum class Compiler {
+enum class Compiler
+{
 	/* GNU compiler collection. */
 	GCC,
 
@@ -42,7 +44,8 @@ enum class Compiler {
 #define COM_CLANG false
 
 /* Returns the current operating system. For checks use the "SYSTEM" variable! */
-[[nodiscard]] constexpr auto determine_system() -> System {
+[[nodiscard]] constexpr auto determine_system() -> System
+{
 #if defined(__linux__) && !defined(__ANDROID__)
 #undef SYS_LINUX
 #define SYS_LINUX true
@@ -61,8 +64,10 @@ enum class Compiler {
 }
 
 /* Returns the short name of the current operating system. If you need the name, use the "SYSTEM_NAME" variable! */
-[[nodiscard]] constexpr auto determine_system_name() -> std::string_view {
-	switch (determine_system()) {
+[[nodiscard]] constexpr auto determine_system_name() -> std::string_view
+{
+	switch (determine_system())
+	{
 		case System::LINUX: return "Linux";
 		case System::WINDOWS: return "Windows";
 		case System::MAC: return "Mac";
@@ -71,7 +76,8 @@ enum class Compiler {
 }
 
 /* Returns the current compiler. For checks use the "COMPILER" variable! */
-[[nodiscard]] constexpr auto determine_compiler() -> Compiler {
+[[nodiscard]] constexpr auto determine_compiler() -> Compiler
+{
 #ifdef __GNUC__
 #undef COM_GCC
 #define COM_GCC true
@@ -90,8 +96,10 @@ enum class Compiler {
 }
 
 /* Returns the short name of the current compiler. If you need the name, use the "COMPILER_NAME" variable! */
-[[nodiscard]] constexpr auto determine_compiler_name() -> std::string_view {
-	switch (determine_compiler()) {
+[[nodiscard]] constexpr auto determine_compiler_name() -> std::string_view
+{
+	switch (determine_compiler())
+	{
 		case Compiler::GCC: return "GCC";
 		case Compiler::MSVC: return "MSVC";
 		case Compiler::CLANG: return "Clang";

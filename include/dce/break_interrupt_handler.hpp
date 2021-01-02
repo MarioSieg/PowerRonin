@@ -1,7 +1,9 @@
 #pragma once
 
-namespace dce {
-	struct ScopedVectoredExceptionHandler final {
+namespace dce
+{
+	struct ScopedVectoredExceptionHandler final
+	{
 		ScopedVectoredExceptionHandler();
 		ScopedVectoredExceptionHandler(const ScopedVectoredExceptionHandler&) = delete;
 		ScopedVectoredExceptionHandler(ScopedVectoredExceptionHandler&&) = delete;

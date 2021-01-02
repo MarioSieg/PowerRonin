@@ -4,15 +4,18 @@
 
 #include <array>
 
-namespace dce {
+namespace dce
+{
 	class Runtime;
 	class CmdDB;
 	class AsyncProtocol;
 
 	extern void (*TERMINAL_UPDATE)();
 
-	namespace gui {
-		class Terminal final {
+	namespace gui
+	{
+		class Terminal final
+		{
 		public:
 			static constexpr auto COLOR_CRITICAL = 0xFF'88'BB'FF;
 			static constexpr auto COLOR_ERROR = 0xFF'36'36'C9;

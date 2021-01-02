@@ -4,11 +4,13 @@
 #include "shader.hpp"
 #include "material.hpp"
 
-namespace dce {
+namespace dce
+{
 	/// <summary>
 	/// A mesh renderer component.
 	/// </summary>
-	class MeshRenderer final {
+	class MeshRenderer final
+	{
 	public:
 		MeshRenderer() noexcept = default;
 		MeshRenderer(const MeshRenderer&) noexcept = delete;

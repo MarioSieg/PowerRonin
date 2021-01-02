@@ -1,8 +1,10 @@
 #include "../include/dce/texture.hpp"
 #include "../include/dce/json_impl.hpp"
 
-namespace dce {
-	auto get_format_name(const TextureFormat _format) noexcept -> std::string_view {
+namespace dce
+{
+	auto get_format_name(const TextureFormat _format) noexcept -> std::string_view
+	{
 		static constexpr std::string_view NAMES[static_cast<std::size_t>(TextureFormat::COUNT)] = {
 			"BC1 DXT1 R5G6B5A1", "BC2 DXT3 R5G6B5A4", "BC3 DXT5 R5G6B5A8", "BC4 LATC1/ATI1 R8", "BC5 LATC2/ATI2 RG8",
 			"BC6H BC6H RGB16F", "BC7 BC7 RGB 4-7B RGB, 0-8B A", "ETC1 RGB8", "ETC2 RGB8", "ETC2A ETC2 RGBA8",
@@ -24,60 +26,74 @@ namespace dce {
 		return NAMES[static_cast<std::size_t>(_format)];
 	}
 
-	auto Texture::texels() const noexcept -> const Blob& {
+	auto Texture::texels() const noexcept -> const Blob&
+	{
 		return this->texels_;
 	}
 
-	auto Texture::storage_size() const noexcept -> std::size_t {
+	auto Texture::storage_size() const noexcept -> std::size_t
+	{
 		return this->size_;
 	}
 
-	auto Texture::width() const noexcept -> std::uint16_t {
+	auto Texture::width() const noexcept -> std::uint16_t
+	{
 		return this->width_;
 	}
 
-	auto Texture::height() const noexcept -> std::uint16_t {
+	auto Texture::height() const noexcept -> std::uint16_t
+	{
 		return this->height_;
 	}
 
-	auto Texture::texel_buffer_id() const noexcept -> std::uint16_t {
+	auto Texture::texel_buffer_id() const noexcept -> std::uint16_t
+	{
 		return this->volatile_upload_data_.gpu_buffer_id;
 	}
 
-	auto Texture::is_hdr() const noexcept -> bool {
+	auto Texture::is_hdr() const noexcept -> bool
+	{
 		return this->is_hdr_;
 	}
 
-	auto Texture::has_mipmaps() const noexcept -> bool {
+	auto Texture::has_mipmaps() const noexcept -> bool
+	{
 		return this->mipmap_count_ > 1;
 	}
 
-	auto Texture::format() const noexcept -> TextureFormat {
+	auto Texture::format() const noexcept -> TextureFormat
+	{
 		return this->format_;
 	}
 
-	auto Texture::bits_per_pixel() const noexcept -> std::uint8_t {
+	auto Texture::bits_per_pixel() const noexcept -> std::uint8_t
+	{
 		return this->bits_per_pel_;
 	}
 
-	auto Texture::mipmap_count() const noexcept -> std::uint8_t {
+	auto Texture::mipmap_count() const noexcept -> std::uint8_t
+	{
 		return this->mipmap_count_;
 	}
 
-	auto Texture::cubemap() const noexcept -> bool {
+	auto Texture::cubemap() const noexcept -> bool
+	{
 		return this->is_cubemap_;
 	}
 
-	auto Texture::layers_count() const noexcept -> std::uint16_t {
+	auto Texture::layers_count() const noexcept -> std::uint16_t
+	{
 		return this->layer_count_;
 	}
 
-	void TextureMeta::serialize(JsonStream& _j) const {
+	void TextureMeta::serialize(JsonStream& _j) const
+	{
 		_j["sampler_flags"] = this->sampler_flags;
 		_j["is_srgb"] = this->is_srgb;
 	}
 
-	void TextureMeta::deserialize(const JsonStream& _j) {
+	void TextureMeta::deserialize(const JsonStream& _j)
+	{
 		this->sampler_flags = _j["sampler_flags"];
 		this->is_srgb = _j["is_srgb"];
 	}

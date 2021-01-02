@@ -5,9 +5,12 @@
 
 using namespace ImGui;
 
-namespace dce::gui::widgets {
-	void SceneryViewer::update(bool& _show, RenderData& _data) const {
-		[[likely]] if (Begin(SCENERY_VIEWER_NAME, &_show, ImGuiWindowFlags_NoBackground)) {
+namespace dce::gui::widgets
+{
+	void SceneryViewer::update(bool& _show, RenderData& _data) const
+	{
+		if (Begin(SCENERY_VIEWER_NAME, &_show, ImGuiWindowFlags_NoBackground)) [[likely]]
+		{
 			const auto window_size = GetWindowSize();
 			const auto window_pos = GetWindowPos();
 			constexpr auto title_offset = 25;

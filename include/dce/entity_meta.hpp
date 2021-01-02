@@ -3,9 +3,11 @@
 #include <string>
 #include <cstdint>
 
-namespace dce {
+namespace dce
+{
 	/* Base metadata component for entities. */
-	class MetaData final {
+	class MetaData final
+	{
 	public:
 		MetaData() noexcept = default;
 		MetaData(const MetaData&) = delete;

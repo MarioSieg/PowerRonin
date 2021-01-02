@@ -3,8 +3,10 @@
 #include "../sysclock.hpp"
 #include "../../extern/bgfx/bgfx/include/bgfx/bgfx.h"
 
-namespace dce::renderer {
-	auto update_clocks(Chrono& _chrono, const std::uint64_t _prev) noexcept -> std::uint64_t {
+namespace dce::renderer
+{
+	auto update_clocks(Chrono& _chrono, const std::uint64_t _prev) noexcept -> std::uint64_t
+	{
 		const auto& stats = *bgfx::getStats();
 		const auto now = get_high_precision_counter();
 
@@ -22,7 +24,8 @@ namespace dce::renderer {
 		_chrono.min_frame_time = std::numeric_limits<double>::min();
 		_chrono.max_frame_time = std::numeric_limits<double>::max();
 		_chrono.avg_frame_time = .0;
-		for (const auto x : _chrono.samples) {
+		for (const auto x : _chrono.samples)
+		{
 			_chrono.min_frame_time = std::min(_chrono.min_frame_time, x);
 			_chrono.max_frame_time = std::max(_chrono.max_frame_time, x);
 			_chrono.avg_frame_time += x;

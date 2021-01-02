@@ -7,12 +7,15 @@
 #include "shader_bucket.hpp"
 #include "shared_uniforms.hpp"
 
-namespace dce {
+namespace dce
+{
 	class MeshRenderer;
 	class Transform;
 
-	namespace renderer {
-		class Renderer final : public core::ISubsystem {
+	namespace renderer
+	{
+		class Renderer final : public core::ISubsystem
+		{
 		public:
 			/* Constructors, assignment operators, destructor */
 			Renderer();
@@ -36,7 +39,7 @@ namespace dce {
 			void render_skybox(const Scenery::Configuration::Lighting& _lighting, RenderData& _data) const;
 			void set_shared_uniforms(const Scenery::Configuration::Lighting& _lighting) const;
 			void render_scene(Runtime& _rt);
-			void update_camera(Runtime& _rt);
+			void update_camera(Runtime& _rt) const;
 
 			std::uint64_t tick_prev_ = 0;
 			GPU gpu_ = {};

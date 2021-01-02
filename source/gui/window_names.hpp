@@ -2,7 +2,8 @@
 
 #include "font_headers.hpp"
 
-namespace dce::gui {
+namespace dce::gui
+{
 	// Names for all windows.
 
 	constexpr const char* const CONFIG_EDITOR_NAME = ICON_FA_COGS " Configuration";

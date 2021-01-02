@@ -7,12 +7,15 @@
 #include "../scripting/scripting.hpp"
 #include "../audio/audio.hpp"
 
-namespace dce::core {
-	auto install_minimal(Kernel& _kernel) -> bool {
+namespace dce::core
+{
+	auto install_minimal(Kernel& _kernel) -> bool
+	{
 		return install_common(_kernel);
 	}
 
-	auto install_common(Kernel& _kernel) -> bool {
+	auto install_common(Kernel& _kernel) -> bool
+	{
 		_kernel.create_install_subsystem<scripting::Scripting>();
 		_kernel.create_install_subsystem<platform::Platform>();
 		_kernel.create_install_subsystem<renderer::Renderer>();

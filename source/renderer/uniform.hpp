@@ -4,11 +4,13 @@
 #include "gl_headers.hpp"
 #include <string_view>
 
-namespace dce::renderer {
+namespace dce::renderer
+{
 	/// <summary>
 	/// Represents a uniform.
 	/// </summary>
-	class Uniform final {
+	class Uniform final
+	{
 	public:
 		/// <summary>
 		/// Constructor.

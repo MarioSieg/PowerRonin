@@ -1,4 +1,3 @@
 #include "helpers.hpp"
 
-namespace dce::scripting {
-}
+namespace dce::scripting {}

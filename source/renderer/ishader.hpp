@@ -8,14 +8,16 @@
 #include "uniform.hpp"
 #include "program_loader.hpp"
 
-namespace dce::renderer {
+namespace dce::renderer
+{
 	/// <summary>
 	/// Base class for all shaders.
 	/// </summary>
 	/// <typeparam name="MatType">The type of material they draw.</typeparam>
 	/// <typeparam name="InputType">The type of input they need (mesh).</typeparam>
 	template <typename MatType, typename InputType = Mesh>
-	class IShader {
+	class IShader
+	{
 	public:
 		explicit IShader(std::string_view _name, GPU& _gpu) noexcept;
 		IShader(const IShader&) = delete;
@@ -42,26 +44,29 @@ namespace dce::renderer {
 	};
 
 	template <typename MatType, typename Input>
-	inline IShader<MatType, Input>::IShader(const std::string_view _name, GPU& _gpu) noexcept : name_(_name), gpu_(_gpu) {
-	}
+	inline IShader<MatType, Input>::IShader(const std::string_view _name, GPU& _gpu) noexcept : name_(_name), gpu_(_gpu) { }
 
 	template <typename MatType, typename Input>
-	inline auto IShader<MatType, Input>::get_name() const noexcept -> std::string_view {
+	inline auto IShader<MatType, Input>::get_name() const noexcept -> std::string_view
+	{
 		return this->name_;
 	}
 
 	template <typename MatType, typename Input>
-	inline auto IShader<MatType, Input>::get_path() const noexcept -> const std::filesystem::path& {
+	inline auto IShader<MatType, Input>::get_path() const noexcept -> const std::filesystem::path&
+	{
 		return this->path_;
 	}
 
 	template <typename MatType, typename Input>
-	inline void IShader<MatType, Input>::load() {
+	inline void IShader<MatType, Input>::load()
+	{
 		this->program_ = load_shader_program(this->name_);
 	}
 
 	template <typename MatType, typename Input>
-	inline void IShader<MatType, Input>::unload() {
+	inline void IShader<MatType, Input>::unload()
+	{
 		destroy(this->program_);
 	}
 }

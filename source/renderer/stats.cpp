@@ -3,8 +3,10 @@
 #include "../../include/dce/runtime.hpp"
 #include "../../extern/bgfx/bgfx/include/bgfx/bgfx.h"
 
-namespace dce::renderer {
-	void poll_limits(Diagnostics& _diag) noexcept {
+namespace dce::renderer
+{
+	void poll_limits(Diagnostics& _diag) noexcept
+	{
 		const auto& limits = bgfx::getCaps()->limits;
 		_diag.graphics.max_vram = bgfx::getStats()->gpuMemoryMax;
 		_diag.graphics.max_draw_calls = limits.maxDrawCalls;
@@ -20,7 +22,8 @@ namespace dce::renderer {
 		_diag.graphics.max_frame_buffers = limits.maxFrameBuffers;
 	}
 
-	void dump_limits(AsyncProtocol& _proto) {
+	void dump_limits(AsyncProtocol& _proto)
+	{
 		const auto* const caps = bgfx::getCaps();
 		_proto.info("Supported flags: {:B}", caps->supported);
 		_proto.info("Vendor ID: {}", caps->vendorId);
@@ -57,7 +60,8 @@ namespace dce::renderer {
 		_proto.info("Max transient index buffer size: {}", caps->limits.transientIbSize);
 	}
 
-	void poll_stats(Diagnostics& _diag) noexcept {
+	void poll_stats(Diagnostics& _diag) noexcept
+	{
 		const auto* const stats = bgfx::getStats();
 		_diag.graphics.used_vram = stats->gpuMemoryUsed;
 		_diag.graphics.used_draw_calls = stats->numDraw;
@@ -73,14 +77,21 @@ namespace dce::renderer {
 		_diag.graphics.used_frame_buffers = stats->numFrameBuffers;
 	}
 
-	void render_stats(const Runtime& _runtime) {
+	void render_stats(const Runtime& _runtime)
+	{
 		//@formatter:off
+		const auto& cfg = _runtime.config();
+		if (!cfg.editor.show_stats) [[unlikely]]
+		{
+			return;
+		}
 		const auto& chrono = _runtime.chrono();
 		const auto& diag = _runtime.diagnostics();
 		const auto* const stats = bgfx::getStats();
 		const auto* const caps = bgfx::getCaps();
-		auto view = _runtime.render_data().view_matrix;
+		const auto* const api_name = bgfx::getRendererName(bgfx::getRendererType());
 		const auto& proj = _runtime.render_data().projection_matrix;
+		auto view = _runtime.render_data().view_matrix;
 		constexpr auto byte_2_gb = 1024.f * 1024.f * 1024.f;
 		const auto viewport_pos_x = static_cast<std::uint16_t>(_runtime.render_data().scenery_viewport_position.x);
 		const auto viewport_pos_y = static_cast<std::uint16_t>(_runtime.render_data().scenery_viewport_position.y);
@@ -90,22 +101,44 @@ namespace dce::renderer {
 		const auto left = SimdVector3<>(-view[1][1], -view[2][1], -view[3][1]);
 		view = math::inverse(view);
 		const auto pos = SimdVector3<>(view[3][0], view[3][1], view[3][2]);
-		const auto fov = math::degrees(atan(1.f / proj[1][1]) * 2.f);
+		const auto fov = math::degrees(std::atan(1.f / proj[1][1]) * 2.f);
+
 		const std::uint16_t pos_x = viewport_pos_x / 8 + 4;
-		std::uint16_t pos_y = viewport_pos_y / 16 + 2;
-		bgfx::dbgTextClear();
-		bgfx::dbgTextPrintf(pos_x, pos_y, 0x8F, "%s, DrawCalls: %u, SceneryDrawCalls: %u, ComputeCalls: %u, BlitCalls: %u", bgfx::getRendererName(bgfx::getRendererType()), stats->numDraw,
+		std::uint16_t pos_y = viewport_pos_y / (cfg.editor.show_big_stats ? 16 : 8) + 2;
+
+		bgfx::dbgTextClear(0, !cfg.editor.show_big_stats);
+		bgfx::dbgTextPrintf(pos_x, pos_y, cfg.editor.stats_text_color, "%s, DrawCalls: %u, SceneryDrawCalls: %u, ComputeCalls: %u, BlitCalls: %u", api_name, stats->numDraw,
 		                    diag.graphics.scenery_mesh_drawcalls, stats->numCompute, stats->numBlit);
-		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "View x: %u y: %u w: %u h: %u", viewport_pos_x, viewport_pos_y, viewport_width, viewport_height);
-		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "Tick: %u, Time: %.2f", chrono.cycles, chrono.time);
-		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "FPS: %.2f, DeltaTime: %f, FrameTime: %.3fms", chrono.fps, chrono.frame_time, chrono.delta_time);
-		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "Position: %.2f %.2f %.2f, Forward: %.2f %.2f %.2f, Left: %.2f %.2f %.2f, FOV: %.1f", pos.x, pos.y, pos.z, forward.x, forward.y, forward.z, left.x,
-		                    left.y, left.z, fov);
-		bgfx::dbgTextPrintf(pos_x, ++pos_y, 0x8F, "VRAM %.2fGB/%.2fGB, TexMEM: %.2fGB", stats->gpuMemoryUsed / byte_2_gb, stats->gpuMemoryMax / byte_2_gb, stats->textureMemoryUsed / byte_2_gb);
+		bgfx::dbgTextPrintf(pos_x, ++pos_y, cfg.editor.stats_text_color, "View x: %u y: %u w: %u h: %u", viewport_pos_x, viewport_pos_y, viewport_width, viewport_height);
+		bgfx::dbgTextPrintf(pos_x, ++pos_y, cfg.editor.stats_text_color, "Tick: %u, Time: %.2f", chrono.cycles, chrono.time);
+		bgfx::dbgTextPrintf(pos_x, ++pos_y, cfg.editor.stats_text_color, "FPS: %.2f, DeltaTime: %f, FrameTime: %.3fms", chrono.fps, chrono.frame_time, chrono.delta_time);
+		bgfx::dbgTextPrintf(pos_x, ++pos_y, cfg.editor.stats_text_color, "Position: %.2f %.2f %.2f, Forward: %.2f %.2f %.2f, Left: %.2f %.2f %.2f, FOV: %.1f", pos.x, pos.y, pos.z, forward.x,
+		                    forward.y, forward.z, left.x, left.y, left.z, fov);
+		bgfx::dbgTextPrintf(pos_x, ++pos_y, cfg.editor.stats_text_color, "VRAM %.2fGB/%.2fGB, TexMEM: %.2fGB", stats->gpuMemoryUsed / byte_2_gb, stats->gpuMemoryMax / byte_2_gb,
+		                    stats->textureMemoryUsed / byte_2_gb);
+
 		const auto& view_matrix = _runtime.render_data().view_matrix;
 		const auto& projection_matrix = _runtime.render_data().view_matrix;
 		const auto& view_projection_matrix = _runtime.render_data().view_projection_matrix;
-		
+
+		if (!cfg.editor.show_stats_matrices) [[unlikely]]
+		{
+			return;
+		}
+
+		auto print_matrix = [pos_x, &pos_y, color = cfg.editor.stats_text_color](const auto& _mtx, const auto* const _name) noexcept
+		{
+			bgfx::dbgTextPrintf(pos_x, ++pos_y, color, _name);
+			bgfx::dbgTextPrintf(pos_x, ++pos_y, color, "[%.3f %.3f %.3f %.3f]", _mtx[0][0], _mtx[0][1], _mtx[0][2], _mtx[0][3]);
+			bgfx::dbgTextPrintf(pos_x, ++pos_y, color, "[%.3f %.3f %.3f %.3f]", _mtx[1][0], _mtx[1][1], _mtx[1][2], _mtx[1][3]);
+			bgfx::dbgTextPrintf(pos_x, ++pos_y, color, "[%.3f %.3f %.3f %.3f]", _mtx[2][0], _mtx[2][1], _mtx[2][2], _mtx[2][3]);
+			bgfx::dbgTextPrintf(pos_x, ++pos_y, color, "[%.3f %.3f %.3f %.3f]", _mtx[3][0], _mtx[3][1], _mtx[3][2], _mtx[3][3]);
+		};
+
+		print_matrix(view_matrix, "View Matrix (4x4)");
+		print_matrix(projection_matrix, "Projection Matrix (4x4)");
+		print_matrix(view_projection_matrix, "View Projection Matrix (4x4)");
+
 		//@formatter:on
 	}
 }

@@ -2,9 +2,11 @@
 #include "../../include/dce/json_impl.hpp"
 #include "../../include/dce/resource_manager.hpp"
 
-namespace dce {
+namespace dce
+{
 	auto MaterialImporteur::load(std::filesystem::path&& _path
-	                             , const MaterialMeta* const _meta) const -> std::shared_ptr<Material> {
+	                             , const MaterialMeta* const _meta) const -> std::shared_ptr<Material>
+	{
 		auto self = IResource<MaterialMeta>::allocate<Material>();
 		// TODO
 		self->file_path_ = std::move(_path);
@@ -14,11 +16,14 @@ namespace dce {
 
 	auto Material::create_from_data(Properties&& _props
 	                                , std::filesystem::path&& _name_path_alias
-	                                , ResourceManager& _rm) -> IRef<Material> {
-		class MaterialFactory final : public ResourceImporteur<MaterialFactory, Material> {
+	                                , ResourceManager& _rm) -> IRef<Material>
+	{
+		class MaterialFactory final : public ResourceImporteur<MaterialFactory, Material>
+		{
 		public:
 			auto load(Properties&& _props,
-			          std::filesystem::path&& _name_path_alias) const -> std::shared_ptr<Material> {
+			          std::filesystem::path&& _name_path_alias) const -> std::shared_ptr<Material>
+			{
 				auto self = allocate<Material>();
 				self->properties = std::move(_props);
 				self->file_path_ = std::move(_name_path_alias);

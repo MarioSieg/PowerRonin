@@ -1,6 +1,7 @@
 #pragma once
 
-namespace dce {
+namespace dce
+{
 	/// <summary>
 	/// Cross platform debug break (int $3)
 	/// </summary>

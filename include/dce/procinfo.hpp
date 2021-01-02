@@ -3,7 +3,8 @@
 #include <string>
 #include <cstddef>
 
-namespace dce {
+namespace dce
+{
 	/// <summary>
 	/// Returns the name of the executable.
 	/// </summary>

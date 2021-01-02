@@ -1,11 +1,13 @@
 #pragma once
 
-namespace dce {
+namespace dce
+{
 	class Runtime;
 	class Diagnostics;
 	class AsyncProtocol;
 
-	namespace renderer {
+	namespace renderer
+	{
 		extern void poll_limits(Diagnostics& _diag) noexcept;
 		extern void dump_limits(AsyncProtocol& _proto);
 		extern void poll_stats(Diagnostics& _diag) noexcept;

@@ -4,29 +4,31 @@
 #include "mathlib.hpp"
 #include "aabb.hpp"
 
-namespace dce {
+namespace dce
+{
 	/// <summary>
 	/// Vertex type.
 	/// </summary>
-	struct Vertex final {
+	struct Vertex final
+	{
 		FixedVector3<> position = {};
 		FixedVector2<> uv = {};
 		FixedVector3<> normal = {};
 		FixedVector3<> tangent = {};
 	};
 
-	struct MeshMeta final : ISerializable {
-		inline void serialize(JsonStream&) const override {
-		}
+	struct MeshMeta final : ISerializable
+	{
+		inline void serialize(JsonStream&) const override { }
 
-		inline void deserialize(const JsonStream&) override {
-		}
+		inline void deserialize(const JsonStream&) override { }
 	};
 
 	/// <summary>
 	/// Represents a 3D mesh.
 	/// </summary>
-	class Mesh final : public IResource<MeshMeta> {
+	class Mesh final : public IResource<MeshMeta>
+	{
 		friend class MeshImporteur;
 
 	public:
@@ -84,7 +86,8 @@ namespace dce {
 		std::vector<Vertex> vertices_ = {};
 		AABB aabb_ = {};
 
-		struct {
+		struct
+		{
 			std::uint16_t index_buffer_id = 0;
 			std::uint16_t vertex_buffer_id = 0;
 		} volatile_upload_data_;
@@ -93,7 +96,8 @@ namespace dce {
 	/// <summary>
 	/// Loader class for meshes.
 	/// </summary>
-	class MeshImporteur final : public ResourceImporteur<MeshImporteur, Mesh> {
+	class MeshImporteur final : public ResourceImporteur<MeshImporteur, Mesh>
+	{
 	public:
 		auto load(std::filesystem::path&& _path, const MeshMeta* const _meta = nullptr) const -> std::shared_ptr<Mesh>;
 	};

@@ -3,15 +3,18 @@
 #include "gl_headers.hpp"
 #include <cstdint>
 
-namespace dce {
+namespace dce
+{
 	class RenderData;
 }
 
 struct ImDrawData;
 struct ImFont;
 
-namespace dce::renderer {
-	class GuiRenderer final {
+namespace dce::renderer
+{
+	class GuiRenderer final
+	{
 	public:
 		auto initialize(std::uint8_t _font_size) -> bool;
 		void render(const ImDrawData* _data) const;

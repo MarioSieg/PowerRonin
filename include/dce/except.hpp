@@ -2,11 +2,13 @@
 
 #include <stdexcept>
 
-namespace dce {
+namespace dce
+{
 	/// <summary>
 	/// Thrown when a fatal error happens, where the engine cannot continue working.
 	/// </summary>
-	class FatalEngineException final : std::runtime_error {
+	class FatalEngineException final : std::runtime_error
+	{
 	public:
 		FatalEngineException();
 		explicit FatalEngineException(const std::string& _msg);

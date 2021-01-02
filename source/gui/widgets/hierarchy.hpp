@@ -2,8 +2,10 @@
 
 #include "../../../include/dce/ecs.hpp"
 
-namespace dce::gui::widgets {
-	class Hierarchy final {
+namespace dce::gui::widgets
+{
+	class Hierarchy final
+	{
 	public:
 		void update(bool& _show, Registry& _registry);
 

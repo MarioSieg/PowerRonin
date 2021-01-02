@@ -1,13 +1,15 @@
 #include "../include/dce/classdb.hpp"
 #include "../include/dce/xorshift.hpp"
 
-namespace dce {
+namespace dce
+{
 	void ClassDB::register_class(const std::string_view name
 	                             , const std::size_t size
 	                             , const std::size_t hash_code
 	                             , const ClassDescriptor::BaseDescriptor::SourceInfo& src_info
 	                             , const std::string_view description
-	                             , const bool is_custom) {
+	                             , const bool is_custom)
+	{
 		const auto desc = ClassDescriptor{
 			ClassDescriptor::BaseDescriptor{
 				{

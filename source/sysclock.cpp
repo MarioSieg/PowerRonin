@@ -8,8 +8,10 @@
 #include <sys/time.h>
 #endif
 
-namespace dce {
-	auto get_high_precision_counter() noexcept -> std::uint64_t {
+namespace dce
+{
+	auto get_high_precision_counter() noexcept -> std::uint64_t
+	{
 #if SYS_WINDOWS
 		LARGE_INTEGER li;
 		QueryPerformanceCounter(&li);
@@ -21,7 +23,8 @@ namespace dce {
 #endif
 	}
 
-	auto get_high_precision_frequency() noexcept -> std::uint64_t {
+	auto get_high_precision_frequency() noexcept -> std::uint64_t
+	{
 #if SYS_WINDOWS
 		LARGE_INTEGER li;
 		QueryPerformanceFrequency(&li);

@@ -7,9 +7,12 @@
 #include <fstream>
 #include <filesystem>
 
-namespace dce {
-	void create_fatal_dump() {
-		[[unlikely]] if (!std::filesystem::is_directory("crashes")) {
+namespace dce
+{
+	void create_fatal_dump()
+	{
+		if (!std::filesystem::is_directory("crashes")) [[unlikely]]
+		{
 			std::filesystem::create_directory("crashes");
 		}
 		std::stringstream ss;
@@ -19,14 +22,17 @@ namespace dce {
 		std::ofstream file(ss.str());
 		ss.str("");
 		ss << "MSG: Fatal unknown error!";
-		[[likely]] if (file) {
+		if (file) [[likely]]
+		{
 			file << ss.str();
 		}
 		std::cerr << ss.str();
 	}
 
-	void create_fatal_dump(const std::exception& _ex) {
-		[[unlikely]] if (!std::filesystem::is_directory("crashes")) {
+	void create_fatal_dump(const std::exception& _ex) [[unlikely]]
+	{
+		if (!std::filesystem::is_directory("crashes"))
+		{
 			std::filesystem::create_directory("crashes");
 		}
 		std::stringstream ss;
@@ -36,14 +42,17 @@ namespace dce {
 		std::ofstream file(ss.str());
 		ss.str("");
 		ss << "MSG: " << _ex.what();
-		[[likely]] if (file) {
+		if (file) [[likely]]
+		{
 			file << ss.str();
 		}
 		std::cerr << ss.str();
 	}
 
-	void create_fatal_dump(const FatalEngineException& _ex) {
-		[[unlikely]] if (!std::filesystem::is_directory("crashes")) {
+	void create_fatal_dump(const FatalEngineException& _ex)
+	{
+		if (!std::filesystem::is_directory("crashes")) [[unlikely]]
+		{
 			std::filesystem::create_directory("crashes");
 		}
 		std::stringstream ss;
@@ -55,7 +64,8 @@ namespace dce {
 		ss << "MSG: " << _ex.what();
 		ss << "\nFile: " << _ex.source_file();
 		ss << "\nLine: " << _ex.source_line();
-		[[likely]] if (file) {
+		if (file) [[likely]]
+		{
 			file << ss.str();
 		}
 		std::cerr << ss.str();

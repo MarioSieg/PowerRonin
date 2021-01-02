@@ -1,7 +1,9 @@
 #include "../include/dce/xorshift.hpp"
 
-namespace dce {
-	auto xorshift32() noexcept -> std::uint32_t {
+namespace dce
+{
+	auto xorshift32() noexcept -> std::uint32_t
+	{
 		static auto x32 = UINT32_C(0x12B9B0A1);
 
 		x32 ^= x32 << UINT32_C(0xD);
@@ -10,7 +12,8 @@ namespace dce {
 		return x32;
 	}
 
-	auto xorshift64() noexcept -> std::uint64_t {
+	auto xorshift64() noexcept -> std::uint64_t
+	{
 		static auto x64 = UINT64_C(0x139408DCBBF7A44);
 
 		x64 ^= x64 << UINT64_C(0xD);
@@ -19,7 +22,8 @@ namespace dce {
 		return x64;
 	}
 
-	auto xorshift128() noexcept -> std::uint32_t {
+	auto xorshift128() noexcept -> std::uint32_t
+	{
 		static auto x = UINT32_C(0x75BCD15);
 		static auto y = UINT32_C(0x159A55E5);
 		static auto z = UINT32_C(0x1F123BB5);

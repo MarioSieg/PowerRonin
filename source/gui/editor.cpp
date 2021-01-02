@@ -6,121 +6,149 @@
 
 using namespace ImGui;
 
-namespace dce::gui {
-	void Editor::initialize([[maybe_unused]] Runtime& _rt) {
+namespace dce::gui
+{
+	void Editor::initialize([[maybe_unused]] Runtime& _rt)
+	{
 		this->inspector_.initialize();
 		this->memory_editor_.OptShowDataPreview = true;
 	}
 
-	void Editor::update(Runtime& _rt, bool& _show_terminal) {
+	void Editor::update(Runtime& _rt, bool& _show_terminal)
+	{
 		SetNextWindowBgAlpha(.0F);
 		this->dockspace_id_ = DockSpaceOverViewport(nullptr);
 
-		[[unlikely]] if (this->first_use_) {
+		if (this->first_use_) [[unlikely]]
+		{
 			this->default_layout();
 			this->first_use_ = false;
 		}
 
-		[[likely]] if (this->show_menu_) {
+		if (this->show_menu_) [[likely]]
+		{
 			this->main_menu(_rt, _show_terminal);
 		}
 
-		[[likely]] if (this->show_hierarchy_viewer_) {
+		if (this->show_hierarchy_viewer_) [[likely]]
+		{
 			this->hierarchy_.update(this->show_hierarchy_viewer_, _rt.scenery().registry());
 		}
 
-		[[unlikely]] if (this->show_resource_viewer_) {
+		if (this->show_resource_viewer_) [[unlikely]]
+		{
 			this->resource_viewer_.update(this->show_resource_viewer_, _rt.resource_manager());
 		}
 
-		[[unlikely]] if (this->show_profiler_) {
+		if (this->show_profiler_) [[unlikely]]
+		{
 			this->profiler_.update(this->show_profiler_, _rt.diagnostics(), _rt.chrono());
 		}
 
-		[[likely]] if (this->show_inspector_) {
+		if (this->show_inspector_) [[likely]]
+		{
 			this->inspector_.update(this->show_inspector_, this->hierarchy_.selected, _rt);
 		}
 
-		[[unlikely]] if (this->memory_editor_.Open) {
+		if (this->memory_editor_.Open) [[unlikely]]
+		{
 			this->memory_editor_.DrawWindow(MEMORY_EDITOR_NAME, &_rt, sizeof(Runtime));
 		}
 
-		[[unlikely]] if (this->show_config_editor_) {
+		if (this->show_config_editor_) [[unlikely]]
+		{
 			this->config_editor_.update(this->show_config_editor_, _rt.config(), _rt.scenery().config);
 		}
 
-		[[likely]] if (this->show_scenery_viewer_) {
+		if (this->show_scenery_viewer_) [[likely]]
+		{
 			this->scenery_viewer_.update(this->show_scenery_viewer_, _rt.render_data());
 		}
 
 		const auto selected_entity = this->hierarchy_.selected;
 		auto& registry = _rt.scenery().registry();
 
-		this->render_manipulator_gizmos(registry.valid(selected_entity) && registry.has<Transform>(selected_entity) ? &registry.get<Transform>(selected_entity) : nullptr, _rt.render_data(), _rt.config());
+		this->render_manipulator_gizmos(registry.valid(selected_entity) && registry.has<Transform>(selected_entity) ? &registry.get<Transform>(selected_entity) : nullptr, _rt.render_data(),
+		                                _rt.config());
 	}
 
-	void Editor::main_menu(Runtime& _rt, bool& _show_terminal) {
-		[[likely]] if (BeginMainMenuBar()) {
-			[[unlikely]] if (BeginMenu("File")) {
-				if (MenuItem("New")) {
-				}
-				if (MenuItem("Open")) {
-				}
-				if (MenuItem("Save")) {
-				}
-				if (MenuItem("Exit")) {
-				}
+	void Editor::main_menu(Runtime& _rt, bool& _show_terminal)
+	{
+		if (BeginMainMenuBar()) [[likely]]
+		{
+			if (BeginMenu("File")) [[unlikely]]
+			{
+				if (MenuItem("New")) { }
+				if (MenuItem("Open")) { }
+				if (MenuItem("Save")) { }
+				if (MenuItem("Exit")) { }
 				EndMenu();
 			}
-			[[unlikely]] if (BeginMenu("Entity")) {
+			if (BeginMenu("Entity")) [[unlikely]]
+			{
 				auto& reg = _rt.scenery().registry();
-				if (MenuItem("Create New")) {
+				if (MenuItem("Create New"))
+				{
 					const auto new_entity = reg.create();
 					reg.emplace<MetaData>(new_entity).name = "New Entity " + std::to_string(++this->hierarchy_.entity_counter);
 					reg.emplace<Transform>(new_entity);
 					this->hierarchy_.selected = new_entity;
 				}
-				if (MenuItem("Create Container")) {
+				if (MenuItem("Create Container"))
+				{
 					const auto new_entity = reg.create();
 					reg.emplace<MetaData>(new_entity).name = "New Entity " + std::to_string(++this->hierarchy_.entity_counter);
 				}
-				if (MenuItem("Delete Selected")) {
+				if (MenuItem("Delete Selected"))
+				{
 					reg.destroy(this->hierarchy_.selected);
-					if (reg.valid(static_cast<ERef>(static_cast<std::uint64_t>(this->hierarchy_.selected) + 1))) {
+					if (reg.valid(static_cast<ERef>(static_cast<std::uint64_t>(this->hierarchy_.selected) + 1)))
+					{
 						this->hierarchy_.selected = static_cast<ERef>(static_cast<std::uint64_t>(this->hierarchy_.selected) + 1);
 					}
 				}
-				if(MenuItem("Delete All")) {
+				if (MenuItem("Delete All"))
+				{
 					reg.clear();
 				}
 				EndMenu();
 			}
-			[[unlikely]] if (BeginMenu("Tools")) {
-				if (MenuItem(ICON_FA_TERMINAL " Terminal")) {
+			if (BeginMenu("Tools")) [[unlikely]]
+			{
+				if (MenuItem(ICON_FA_TERMINAL " Terminal"))
+				{
 					_show_terminal = true;
 				}
-				if (MenuItem(HIERARCHY_NAME)) {
+				if (MenuItem(HIERARCHY_NAME))
+				{
 					this->show_hierarchy_viewer_ = true;
 				}
-				if (MenuItem(INSPECTOR_NAME)) {
+				if (MenuItem(INSPECTOR_NAME))
+				{
 					this->show_inspector_ = true;
 				}
-				if (MenuItem(SCENERY_VIEWER_NAME)) {
+				if (MenuItem(SCENERY_VIEWER_NAME))
+				{
 					this->show_scenery_viewer_ = true;
 				}
-				if (MenuItem(CONFIG_EDITOR_NAME)) {
+				if (MenuItem(CONFIG_EDITOR_NAME))
+				{
 					this->show_config_editor_ = true;
 				}
-				if (MenuItem(RESOURCE_VIEWER_NAME)) {
+				if (MenuItem(RESOURCE_VIEWER_NAME))
+				{
 					this->show_resource_viewer_ = true;
 				}
-				if (MenuItem(PROFILER_NAME)) {
+				if (MenuItem(PROFILER_NAME))
+				{
 					this->show_profiler_ = true;
 				}
-				if (MenuItem(HIERARCHY_NAME)) {
+				if (MenuItem(HIERARCHY_NAME))
+				{
 					this->show_hierarchy_viewer_ = true;
 				}
-				if (MenuItem(MEMORY_EDITOR_NAME)) {
+				if (MenuItem(MEMORY_EDITOR_NAME))
+				{
 					this->memory_editor_.Open = true;
 				}
 				EndMenu();
@@ -128,51 +156,61 @@ namespace dce::gui {
 			PushStyleColor(ImGuiCol_Button, 0x00000000);
 			Separator();
 
-			[[unlikely]] if (Button(ICON_FA_HAND_ROCK)) {
+			if (Button(ICON_FA_HAND_ROCK)) [[unlikely]]
+			{
 				this->gizmo_op_ = ImGuizmo::OPERATION::BOUNDS;
 			}
 
-			[[unlikely]] if (IsItemHovered()) {
+			if (IsItemHovered()) [[unlikely]]
+			{
 				BeginTooltip();
 				TextUnformatted("Edit bounds of selected object");
 				EndTooltip();
 			}
 
-			[[unlikely]] if (Button(ICON_FA_ARROWS)) {
+			if (Button(ICON_FA_ARROWS)) [[unlikely]]
+			{
 				this->gizmo_op_ = ImGuizmo::OPERATION::TRANSLATE;
 			}
 
-			[[unlikely]] if (IsItemHovered()) {
+			if (IsItemHovered()) [[unlikely]]
+			{
 				BeginTooltip();
 				TextUnformatted("Edit position of selected object");
 				EndTooltip();
 			}
 
-			[[unlikely]] if (Button(ICON_FA_SYNC)) {
+			if (Button(ICON_FA_SYNC)) [[unlikely]]
+			{
 				this->gizmo_op_ = ImGuizmo::OPERATION::ROTATE;
 			}
 
-			[[unlikely]] if (IsItemHovered()) {
+			if (IsItemHovered()) [[unlikely]]
+			{
 				BeginTooltip();
 				TextUnformatted("Edit rotation of selected object");
 				EndTooltip();
 			}
 
-			[[unlikely]] if (Button(ICON_FA_EXPAND)) {
+			if (Button(ICON_FA_EXPAND)) [[unlikely]]
+			{
 				this->gizmo_op_ = ImGuizmo::OPERATION::SCALE;
 			}
 
-			[[unlikely]] if (IsItemHovered()) {
+			if (IsItemHovered()) [[unlikely]]
+			{
 				BeginTooltip();
 				TextUnformatted("Edit scale of selected object");
 				EndTooltip();
 			}
 
-			[[unlikely]] if (Button(this->gizmo_mode_ == ImGuizmo::MODE::WORLD ? ICON_FA_GLOBE_STAND : ICON_FA_COMPASS)) {
+			if (Button(this->gizmo_mode_ == ImGuizmo::MODE::WORLD ? ICON_FA_GLOBE_STAND : ICON_FA_COMPASS)) [[unlikely]]
+			{
 				this->gizmo_mode_ = this->gizmo_mode_ == ImGuizmo::MODE::WORLD ? ImGuizmo::MODE::LOCAL : ImGuizmo::MODE::WORLD;
 			}
 
-			[[unlikely]] if (IsItemHovered()) {
+			if (IsItemHovered()) [[unlikely]]
+			{
 				BeginTooltip();
 				TextUnformatted(this->gizmo_mode_ == ImGuizmo::MODE::WORLD ? "Edit in world space" : "Edit in local space");
 				EndTooltip();
@@ -180,46 +218,49 @@ namespace dce::gui {
 
 			Separator();
 
-			[[unlikely]] if (Button(ICON_FA_CUBES)) {
-			}
+			if (Button(ICON_FA_CUBES)) [[unlikely]]
+			{ }
 
-			[[unlikely]] if (Button(ICON_FA_LIGHTBULB_ON)) {
-			}
+			if (Button(ICON_FA_LIGHTBULB_ON)) [[unlikely]]
+			{ }
 
-			[[unlikely]] if (Button(ICON_FA_VOLUME_UP)) {
-			}
+			if (Button(ICON_FA_VOLUME_UP)) [[unlikely]]
+			{ }
 
-			[[unlikely]] if (Button(ICON_FA_TH)) {
+			if (Button(ICON_FA_TH)) [[unlikely]]
+			{
 				_rt.render_data().enable_wireframe = !_rt.render_data().enable_wireframe;
 			}
 
-			[[unlikely]] if (Button(ICON_FA_MAP_MARKER_SMILE)) {
-			}
+			if (Button(ICON_FA_MAP_MARKER_SMILE)) [[unlikely]]
+			{ }
 
-			[[unlikely]] if (Button(ICON_FA_FUNCTION)) {
-			}
+			if (Button(ICON_FA_FUNCTION)) [[unlikely]]
+			{ }
 
-			[[unlikely]] if (Button(ICON_FA_SMILE)) {
-			}
+			if (Button(ICON_FA_SMILE)) [[unlikely]]
+			{ }
 
-			[[unlikely]] if (Button(ICON_FA_CAMERA)) {
-			}
+			if (Button(ICON_FA_CAMERA)) [[unlikely]]
+			{ }
 
 			Separator();
 
-			[[unlikely]] if (Button(ICON_FA_PLAY)) {
-			}
-			[[unlikely]] if (Button(ICON_FA_PAUSE)) {
-			}
-			[[unlikely]] if (Button(ICON_FA_STOP)) {
-			}
+			if (Button(ICON_FA_PLAY)) [[unlikely]]
+			{ }
+			if (Button(ICON_FA_PAUSE)) [[unlikely]]
+			{ }
+			if (Button(ICON_FA_STOP)) [[unlikely]]
+			{ }
 			PopStyleColor();
 			EndMainMenuBar();
 		}
 	}
 
-	void Editor::default_layout() const {
-		[[likely]] if (this->dockspace_id_) {
+	void Editor::default_layout() const
+	{
+		if (this->dockspace_id_) [[likely]]
+		{
 			DockBuilderRemoveNode(this->dockspace_id_);
 			DockBuilderAddNode(this->dockspace_id_, ImGuiDockNodeFlags_DockSpace);
 			DockBuilderSetNodeSize(this->dockspace_id_, GetMainViewport()->Size);
@@ -244,8 +285,10 @@ namespace dce::gui {
 		}
 	}
 
-	void Editor::render_manipulator_gizmos(Transform* const _transform, RenderData& _data, const Config& _config) const noexcept {
-		[[unlikely]] if (!_config.editor.enable_gizmos) {
+	void Editor::render_manipulator_gizmos(Transform* const _transform, RenderData& _data, const Config& _config) const noexcept
+	{
+		if (!_config.editor.enable_gizmos) [[unlikely]]
+		{
 			return;
 		}
 		ImGuizmo::Enable(true);
@@ -255,16 +298,18 @@ namespace dce::gui {
 		const float w = _data.scenery_viewport_size.x;
 		const float h = _data.scenery_viewport_size.y;
 		ImGuizmo::SetRect(x, y, w, h);
-		[[likely]] if (_config.editor.show_grid) {
+		if (_config.editor.show_grid) [[likely]]
+		{
 			auto grid_pos_matrix = math::identity<SimdMatrix4x4<>>();
 			grid_pos_matrix = math::translate(grid_pos_matrix, _config.editor.grid_origin);
 			ImGuizmo::DrawGrid(value_ptr(_data.view_matrix), value_ptr(_data.projection_matrix), value_ptr(grid_pos_matrix), _config.editor.grid_size);
 		}
-		
-		[[unlikely]] if(!_transform) {
+
+		if (!_transform) [[unlikely]]
+		{
 			return;
 		}
-		
+
 		float tmp_matrix[16];
 		auto eulers = math::eulerAngles(_transform->rotation);
 		float mat_rotation[3] = {
@@ -274,26 +319,28 @@ namespace dce::gui {
 		};
 		ImGuizmo::RecomposeMatrixFromComponents(value_ptr(_transform->position), mat_rotation, value_ptr(_transform->scale), tmp_matrix);
 		Manipulate(value_ptr(_data.view_matrix), value_ptr(_data.projection_matrix), this->gizmo_op_, this->gizmo_mode_, tmp_matrix);
-		[[unlikely]] if (ImGuizmo::IsUsing()) {
+		if (ImGuizmo::IsUsing()) [[unlikely]]
+		{
 			float mat_translation[3], mat_scale[3];
 			ImGuizmo::DecomposeMatrixToComponents(tmp_matrix, mat_translation, mat_rotation, mat_scale);
-			switch(this->gizmo_op_) {
+			switch (this->gizmo_op_)
+			{
 				case ImGuizmo::OPERATION::TRANSLATE:
 					_transform->position.x = mat_translation[0];
 					_transform->position.y = mat_translation[1];
 					_transform->position.z = mat_translation[2];
-				break;
+					break;
 
 				case ImGuizmo::OPERATION::ROTATE:
-					eulers = SimdVector3<>{ math::radians(mat_rotation[0]), math::radians(mat_rotation[1]), math::radians(mat_rotation[2]) };
+					eulers = SimdVector3<>{math::radians(mat_rotation[0]), math::radians(mat_rotation[1]), math::radians(mat_rotation[2])};
 					_transform->rotation = SimdQuaternion<>(eulers);
-				break;
+					break;
 
 				case ImGuizmo::OPERATION::SCALE:
 					_transform->scale.x = mat_scale[0];
 					_transform->scale.y = mat_scale[1];
 					_transform->scale.z = mat_scale[2];
-				break;
+					break;
 
 				default: break;
 			}

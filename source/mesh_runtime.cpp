@@ -5,8 +5,10 @@
 #include "../extern/assimp/include/assimp/scene.h"
 #include "../extern/assimp/include/assimp/cimport.h"
 
-namespace dce {
-	static auto create_vertex_layout() -> bgfx::VertexLayout {
+namespace dce
+{
+	static auto create_vertex_layout() -> bgfx::VertexLayout
+	{
 		bgfx::VertexLayout layout;
 		// @formatter:off
 		layout.begin()
@@ -62,11 +64,11 @@ namespace dce {
 	}
 	
 	void Mesh::upload() {
-		[[unlikely]] if (this->is_uploaded_) {
+		if (this->is_uploaded_) [[unlikely]] {
 			this->offload();
 		}
 
-		[[unlikely]] if (this->indices_.empty() || this->vertices_.empty()) {
+		if (this->indices_.empty() || this->vertices_.empty()) [[unlikely]] {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload mesh!");
 		}
 
@@ -77,13 +79,13 @@ namespace dce {
 			                                                   indices_.
 			                                                   size()), nullptr, nullptr);
 
-		[[unlikely]] if (index_buffer_mem == nullptr) {
+		if (index_buffer_mem == nullptr) [[unlikely]] {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload mesh!");
 		}
 
 		const auto index_buffer_handle = createIndexBuffer(index_buffer_mem);
 
-		[[unlikely]] if (!isValid(index_buffer_handle)) {
+		if (!isValid(index_buffer_handle)) [[unlikely]] {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload mesh!");
 		}
 
@@ -91,13 +93,13 @@ namespace dce {
 		                                                    , static_cast<std::uint32_t>(this->vertices_.size() *
 			                                                    VERTEX_LAYOUT.
 			                                                    getStride()), nullptr, nullptr);
-		[[unlikely]] if (vertex_buffer_mem == nullptr) {
+		if (vertex_buffer_mem == nullptr) [[unlikely]] {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload mesh!");
 		}
 
 		const auto vertex_buffer_handle = createVertexBuffer(vertex_buffer_mem, VERTEX_LAYOUT);
 
-		[[unlikely]] if (!isValid(vertex_buffer_handle)) {
+		if (!isValid(vertex_buffer_handle)) [[unlikely]] {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload mesh!");
 		}
 
@@ -108,17 +110,17 @@ namespace dce {
 	}
 
 	void Mesh::offload() {
-		[[unlikely]] if (!this->is_uploaded_) {
+	if (!this->is_uploaded_) [[unlikely]] {
 			return;
 		}
 		const auto vb_handle = bgfx::VertexBufferHandle{this->volatile_upload_data_.vertex_buffer_id};
-		[[likely]] if (isValid(vb_handle)) {
+		if (isValid(vb_handle)) [[likely]] {
 			destroy(vb_handle);
 			this->volatile_upload_data_.vertex_buffer_id = bgfx::kInvalidHandle;
 		}
 
 		const auto ib_handle = bgfx::IndexBufferHandle{this->volatile_upload_data_.index_buffer_id};
-		[[likely]] if (isValid(ib_handle)) {
+		if (isValid(ib_handle)) [[likely]] {
 			destroy(ib_handle);
 			this->volatile_upload_data_.index_buffer_id = bgfx::kInvalidHandle;
 		}
@@ -140,7 +142,7 @@ namespace dce {
 		/* We should add some flags here! */
 		const aiScene* const scene = importer.ReadFile(_path.string().c_str(), flags);
 
-		[[unlikely]] if (scene == nullptr || !scene->HasMeshes()) {
+		if (scene == nullptr || !scene->HasMeshes()) [[unlikely]] {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load mesh from file!");
 		}
 
@@ -151,7 +153,7 @@ namespace dce {
 		indices.reserve(static_cast<std::size_t>(mesh->mNumFaces) * 3);
 
 		for (auto* i = mesh->mFaces; i < mesh->mFaces + mesh->mNumFaces; ++i) {
-			[[likely]] if (i->mNumIndices == 3) {
+			if (i->mNumIndices == 3) [[likely]] {
 				for (auto* j = i->mIndices; j < i->mIndices + 3; ++j) {
 					indices.push_back(static_cast<std::uint16_t>(*j));
 				}
@@ -168,17 +170,17 @@ namespace dce {
 
 			auto o_vertex = Vertex{Vertex{.position = {vertex.x, vertex.y, vertex.z}}};
 
-			[[likely]] if (mesh->mTextureCoords[0]) {
+			if (mesh->mTextureCoords[0]) [[likely]] {
 				const auto& uv = mesh->mTextureCoords[0][i];
 				o_vertex.uv = {uv.x, uv.y};
 			}
 
-			[[likely]] if (mesh->mNormals) {
+			if (mesh->mNormals) [[likely]] {
 				const auto& normal = mesh->mNormals[i];
 				o_vertex.normal = {normal.x, normal.y, normal.z};
 			}
 
-			[[likely]] if (mesh->mTangents) {
+			if (mesh->mTangents) [[likely]] {
 				const auto& tangent = mesh->mTangents[i];
 				o_vertex.tangent = {tangent.x, tangent.y, tangent.z};
 			}
