@@ -1,9 +1,10 @@
 #pragma once
 
 #include "serial.hpp"
-#include <cstdint>
-
 #include "mathtypes.hpp"
+#include "csinterop.hpp"
+
+#include <cstdint>
 
 namespace dce
 {
@@ -35,61 +36,72 @@ namespace dce
 		X16 = 16
 	};
 
+	CS_HYBRID_INTEROP("Dreamcast.Core.Configuration.DisplayConfiguration")
+	struct DisplayConfiguration final
+	{
+		CS_ushort width;
+		CS_ushort height;
+		CS_bool is_full_screen;
+		CS_bool is_maximized;
+		CS_bool vsync;
+		CS_ushort max_framerate;
+	};
+
+	CS_HYBRID_INTEROP("Dreamcast.Core.Configuration.EditorConfiguration")
+	struct EditorConfiguration final
+	{
+		CS_byte font_size;
+		CS_byte auto_font_size_fhd;
+		CS_byte auto_font_size_whqh;
+		CS_byte auto_font_size_uhd;
+		CS_bool auto_font_size;
+		CS_bool enable_font_anti_aliasing;
+		CS_float alpha;
+		CS_float rounding;
+		CS_bool show_terminal;
+		CS_bool show_stats;
+		CS_bool show_matrix_stats;
+		CS_byte stats_text_color;
+		CS_bool show_big_stats;
+		CS_bool show_grid;
+		CS_float grid_size;
+		CS_Vector3 grid_origin_center;
+		CS_bool enable_gizmos;
+	};
+
+	struct Graphics final
+	{
+		GraphicsBackend backend_api = GraphicsBackend::AUTO;
+		MsaaMode msaa_mode = MsaaMode::OFF;
+		bool enable_high_dpi_mode = false;
+		bool enable_srgb_backbuffer = true;
+		bool enable_hdr10 = false;
+		bool enable_max_anisotropy = true;
+	};
+
+	struct Scripting final
+	{
+		std::filesystem::path config_dir = "runtime/etc";
+		std::filesystem::path library_dir = "runtime/lib";
+	};
+
+	struct App final
+	{
+		std::string app_name = {};
+		std::string app_company = {};
+	};
+
 	class Config final
 	{
 	public:
-		struct Display final
-		{
-			std::uint16_t width = 1920;
-			std::uint16_t height = 1080;
-			bool is_full_screen = false;
-			bool is_maximized = true;
-			bool vsync = false;
-			std::uint16_t max_framerate = 300;
-		} display;
+		DisplayConfiguration display;
 
-		struct Editor final
-		{
-			std::uint8_t font_size = 24;
-			std::uint8_t auto_font_size_fhd = 14;
-			std::uint8_t auto_font_size_whqh = 18;
-			std::uint8_t auto_font_size_uhd = 22;
-			bool auto_font_size = true;
-			SystemTheme theme = SystemTheme::DARK;
-			bool enable_font_anti_aliasing = true;
-			float alpha = 1.F;
-			float rounding = 4.F;
-			bool show_terminal = true;
-			bool show_stats = true;
-			bool show_stats_matrices = true;
-			std::uint8_t stats_text_color = 0xF;
-			bool show_big_stats = false;
-			bool show_grid = true;
-			float grid_size = 10.f;
-			SimdVector3<> grid_origin = {0, 0, 0};
-			bool enable_gizmos = true;
-		} editor;
+		EditorConfiguration editor;
 
-		struct Graphics final
-		{
-			GraphicsBackend backend_api = GraphicsBackend::AUTO;
-			MsaaMode msaa_mode = MsaaMode::OFF;
-			bool enable_high_dpi_mode = false;
-			bool enable_srgb_backbuffer = true;
-			bool enable_hdr10 = false;
-			bool enable_max_anisotropy = true;
-		} graphics;
+		Graphics graphics;
 
-		struct Scripting final
-		{
-			std::filesystem::path config_dir = "runtime/etc";
-			std::filesystem::path library_dir = "runtime/lib";
-		} scripting;
+		Scripting scripting;
 
-		struct App final
-		{
-			std::string app_name = {};
-			std::string app_company = {};
-		} app;
+		App app;
 	};
 } // namespace dce // namespace dce

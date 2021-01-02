@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../include/dce/config.hpp"
-#include "cstypes.hpp"
+#include "../../include/dce/csinterop.hpp"
 
 namespace dce::scripting
 {

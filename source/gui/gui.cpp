@@ -25,7 +25,7 @@ namespace dce::gui
 		//io.MouseDrawCursor = true;
 
 		auto& cfg = _rt.config().editor;
-		style_apply(cfg.theme);
+		style_apply(SystemTheme::DARK);
 		style_antialiasing_apply(cfg.enable_font_anti_aliasing);
 		style_alpha_apply(cfg.alpha);
 		style_rounding_apply(cfg.rounding);

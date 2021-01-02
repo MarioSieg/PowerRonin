@@ -121,7 +121,7 @@ namespace dce::renderer
 		const auto& projection_matrix = _runtime.render_data().view_matrix;
 		const auto& view_projection_matrix = _runtime.render_data().view_projection_matrix;
 
-		if (!cfg.editor.show_stats_matrices) [[unlikely]]
+		if (!cfg.editor.show_matrix_stats) [[unlikely]]
 		{
 			return;
 		}

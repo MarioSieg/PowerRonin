@@ -301,7 +301,7 @@ namespace dce::gui
 		if (_config.editor.show_grid) [[likely]]
 		{
 			auto grid_pos_matrix = math::identity<SimdMatrix4x4<>>();
-			grid_pos_matrix = math::translate(grid_pos_matrix, _config.editor.grid_origin);
+			grid_pos_matrix = math::translate(grid_pos_matrix, static_cast<SimdVector3<>>(_config.editor.grid_origin_center));
 			ImGuizmo::DrawGrid(value_ptr(_data.view_matrix), value_ptr(_data.projection_matrix), value_ptr(grid_pos_matrix), _config.editor.grid_size);
 		}
 

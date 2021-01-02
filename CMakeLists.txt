@@ -151,7 +151,6 @@ add_library(
     "source/time_utils.cpp" 
     "source/scripting/scripting.hpp"
     "source/scripting/scripting.cpp" 
-     
     "include/dce/variant_visit_overloader.hpp" 
     "source/renderer/views.hpp" 
     "source/material_runtime.cpp"
@@ -196,7 +195,7 @@ add_library(
     "source/scripting/instance_class.hpp"
     "source/scripting/instance_class.cpp" 
     "source/scripting/native_config.hpp" 
-    "source/scripting/cstypes.hpp" 
+    "include/dce/csinterop.hpp" 
     "source/scripting/native_config.cpp"  
     "source/audio/audio_engine_core/Common/AkDefaultLowLevelIODispatcher.cpp" 
     "source/audio/audio_engine_core/Common/AkDefaultLowLevelIODispatcher.h" 

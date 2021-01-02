@@ -166,13 +166,17 @@ namespace Dreamcast.Core
 
             public bool ShowStats { get; set; } = true;
 
+            public bool ShowMatrixStats { get; set; } = true;
+
+            public byte StatsTextColor { get; set; } = 0xF;
+
+            public bool ShowBigStats { get; set; } = false;
+
             public float GridSize { get; set; } = 10.0f;
 
             public Vector3 GridOriginCenter { get; set; } = Vector3.Zero;
 
             public bool EnableGizmos { get; set; } = true;
-
-            public Theme CurrentTheme { get; set; } = new Theme();
         }
 
         public sealed class GraphicsConfiguration
