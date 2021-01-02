@@ -22,7 +22,7 @@ namespace dce
 	{
 	public:
 		static constexpr auto QUEUE_SIZE = 0xFFFF;
-		static constexpr auto THREAD_COUNT = 4;
+		static constexpr auto THREAD_COUNT = 1;
 
 		auto separator() -> AsyncProtocol&;
 

@@ -91,61 +91,49 @@
             </summary>
             <param name="commandText">The command text to execute.</param>
         </member>
-        <member name="T:Dreamcast.Core.Configuration">
+        <member name="T:Dreamcast.Core.Config">
             <summary>
                 Contains all configuration variables.
             </summary>
         </member>
-        <member name="F:Dreamcast.Core.Configuration.ConfigDirectory">
+        <member name="F:Dreamcast.Core.Config.ConfigDirectory">
             <summary>
                 The name of the directory where configs are saved in.
             </summary>
         </member>
-        <member name="P:Dreamcast.Core.Configuration.Display">
+        <member name="P:Dreamcast.Core.Config.Display">
             <summary>
                 Display config.
             </summary>
         </member>
-        <member name="P:Dreamcast.Core.Configuration.Editor">
+        <member name="P:Dreamcast.Core.Config.Editor">
             <summary>
                 System overlay config.
             </summary>
         </member>
-        <member name="P:Dreamcast.Core.Configuration.Graphics">
+        <member name="P:Dreamcast.Core.Config.Graphics">
             <summary>
                 Graphics config.
             </summary>
         </member>
-        <member name="P:Dreamcast.Core.Configuration.Current">
-            <summary>
-                Current global system config.
-            </summary>
-        </member>
-        <member name="M:Dreamcast.Core.Configuration.Serialize">
+        <member name="M:Dreamcast.Core.Config.Serialize">
             <summary>
                 Serializes all configs into their files.
             </summary>
         </member>
-        <member name="M:Dreamcast.Core.Configuration.Deserialize">
+        <member name="M:Dreamcast.Core.Config.Deserialize">
             <summary>
                 Deserializes all configs from their files.
             </summary>
         </member>
-        <member name="M:Dreamcast.Core.Configuration.Apply(Dreamcast.Core.ConfigApplyFlags)">
+        <member name="M:Dreamcast.Core.Config.ApplyAll">
             <summary>
-                Applies all configs.
-                This might take some time as some settings
-                require some internal reloads.
+                Apply all settings to take effect.
             </summary>
         </member>
-        <member name="T:Dreamcast.Core.Configuration.DisplayConfiguration">
+        <member name="P:Dreamcast.Core.Config.Current">
             <summary>
-                Contains display config.
-            </summary>
-        </member>
-        <member name="P:Dreamcast.Core.Configuration.DisplayConfiguration.FilePath">
-            <summary>
-                The config file path.
+                Current global system config.
             </summary>
         </member>
         <member name="T:Dreamcast.Core.CopyDir">
@@ -158,34 +146,59 @@
                 Engine core class.
             </summary>
         </member>
-        <member name="T:Dreamcast.Core.GraphicsAPI">
+        <member name="T:Dreamcast.Core.DisplayConfig">
+            <summary>
+                Contains display config.
+            </summary>
+        </member>
+        <member name="P:Dreamcast.Core.DisplayConfig.FilePath">
+            <summary>
+                The config file path.
+            </summary>
+        </member>
+        <member name="M:Dreamcast.Core.DisplayConfig.Apply">
+            <summary>
+                Applies the instance.
+            </summary>
+        </member>
+        <member name="M:Dreamcast.Core.EditorConfig.Apply">
+            <summary>
+                Applies the instance.
+            </summary>
+        </member>
+        <member name="T:Dreamcast.Core.GraphicsApi">
             <summary>
                 Contains all supported graphics APIs.
             </summary>
         </member>
-        <member name="F:Dreamcast.Core.GraphicsAPI.Direct3D11">
+        <member name="F:Dreamcast.Core.GraphicsApi.Direct3D11">
             <summary>
                 Windows only.
             </summary>
         </member>
-        <member name="F:Dreamcast.Core.GraphicsAPI.Direct3D12">
+        <member name="F:Dreamcast.Core.GraphicsApi.Direct3D12">
             <summary>
                 Windows only.
             </summary>
         </member>
-        <member name="F:Dreamcast.Core.GraphicsAPI.Metal">
+        <member name="F:Dreamcast.Core.GraphicsApi.Metal">
             <summary>
                 Mac only.
             </summary>
         </member>
-        <member name="F:Dreamcast.Core.GraphicsAPI.Vulkan">
+        <member name="F:Dreamcast.Core.GraphicsApi.Vulkan">
             <summary>
                 Cross platform.
             </summary>
         </member>
-        <member name="F:Dreamcast.Core.GraphicsAPI.OpenGL">
+        <member name="F:Dreamcast.Core.GraphicsApi.OpenGl">
             <summary>
                 Cross platform.
+            </summary>
+        </member>
+        <member name="M:Dreamcast.Core.GraphicsConfig.Apply">
+            <summary>
+                Applies the instance.
             </summary>
         </member>
         <member name="T:Dreamcast.Core.Input">
@@ -947,17 +960,31 @@
                 Middle mouse button.
             </summary>
         </member>
-        <member name="T:Dreamcast.Core.NativeConfig">
-            <summary>
-                !! Maps to NativeConfig in source/scripting/native_config.hpp !!
-                !! Warning! None of these methods should be changed because are mapped to native functions !!
-            </summary>
-        </member>
         <member name="T:Dreamcast.Core.NativeRuntime">
             <summary>
                 Contains all internal calls.
                 Warning! None of these methods should be changed because
                 they are mapped to native functions.
+            </summary>
+        </member>
+        <member name="T:Dreamcast.Core.Platform">
+            <summary>
+                Represents a platform OS.
+            </summary>
+        </member>
+        <member name="F:Dreamcast.Core.Platform.Windows">
+            <summary>
+                Windows 7/8/10
+            </summary>
+        </member>
+        <member name="F:Dreamcast.Core.Platform.Linux">
+            <summary>
+                Linux
+            </summary>
+        </member>
+        <member name="F:Dreamcast.Core.Platform.Mac">
+            <summary>
+                Mac OS
             </summary>
         </member>
         <member name="T:Dreamcast.Core.Protocol">
@@ -1054,6 +1081,14 @@
             <param name="data">The XML string.</param>
             <returns>The deserialized object.</returns>
         </member>
+        <member name="M:Dreamcast.Core.Serializer.DeserializeFromJsonString``1(System.String,``0@)">
+            <summary>
+                Deserializes the object from a XML string.
+            </summary>
+            <param name="data">The XML string.</param>
+            <param name="opt">Returned instead of null.</param>
+            <returns>The deserialized object or opt if failed.</returns>
+        </member>
         <member name="M:Dreamcast.Core.Serializer.SerializeToJsonFile``1(``0@,System.String)">
             <summary>
                 Serializes T into a XML file.
@@ -1067,6 +1102,15 @@
             </summary>
             <param name="path">The file to serialize from.</param>
             <returns>The deserialized object.</returns>
+        </member>
+        <member name="M:Dreamcast.Core.Serializer.DeserializeFromJsonFile``1(System.String,``0@)">
+            <summary>
+                Deserializes the object from a XML file.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="path">The file to serialize from.</param>
+            <param name="opt">Returned instead of null.</param>
+            <returns>The deserialized object or opt if failed.</returns>
         </member>
         <member name="M:Dreamcast.Core.Serializer.SerializeToBinaryFile``1(``0@,System.String)">
             <summary>
@@ -1082,9 +1126,18 @@
             <param name="path">The file to serialize from.</param>
             <returns>The deserialized object.</returns>
         </member>
-        <member name="T:Dreamcast.Core.Theme">
+        <member name="T:Dreamcast.Core.Helper">
             <summary>
-            Contains all colors for the editor theme.
+                Utils and helper class.
+            </summary>
+        </member>
+        <member name="F:Dreamcast.Core.Helper.CurrentPlatform">
+            <summary>
+                The current platform.
+            </summary>
+        </member>
+        <member name="M:Dreamcast.Core.Helper.SmartDetermineGraphicsApi(System.Boolean)">
+            <summary>
             </summary>
         </member>
         <member name="M:Dreamcast.Mathematics.Fast.Core.IMemoizedMethod.Calculate(System.Single)">

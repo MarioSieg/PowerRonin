@@ -43,7 +43,7 @@ namespace dce::renderer
 			init.resolution.reset |= BGFX_RESET_HIDPI;
 		}
 
-		if (_config.graphics.enable_srgb_backbuffer) [[likely]]
+		if (_config.graphics.enable_srgb_mode) [[likely]]
 		{
 			init.resolution.reset |= BGFX_RESET_SRGB_BACKBUFFER;
 		}
@@ -63,8 +63,8 @@ namespace dce::renderer
 			init.resolution.reset |= BGFX_RESET_VSYNC;
 		}
 
-		init.resolution.width = _config.display.width;
-		init.resolution.height = _config.display.height;
+		init.resolution.width = _config.display.resolution.width;
+		init.resolution.height = _config.display.resolution.height;
 
 		if (!bgfx::init(init))
 		{

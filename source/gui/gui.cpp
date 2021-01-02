@@ -30,30 +30,32 @@ namespace dce::gui
 		style_alpha_apply(cfg.alpha);
 		style_rounding_apply(cfg.rounding);
 
-		if (cfg.auto_font_size) [[likely]]
+		if (cfg.enable_auto_font_size) [[likely]]
 		{
-			const auto w = _rt.config().display.width;
-			const auto h = _rt.config().display.height;
+			const auto w = _rt.config().display.resolution.width;
+			const auto h = _rt.config().display.resolution.height;
 			if (w <= 2560 && h <= 1440) [[unlikely]]
 			{
-				cfg.font_size = cfg.auto_font_size_whqh;
+				cfg.custom_font_size = cfg.auto_font_size_whqh;
 			}
 			else if (w <= 3840 && h <= 2160) [[unlikely]]
 			{
-				cfg.font_size = cfg.auto_font_size_uhd;
+				cfg.custom_font_size = cfg.auto_font_size_uhd;
 			}
 			else
 			{
-				cfg.font_size = cfg.auto_font_size_fhd;
+				cfg.custom_font_size = cfg.auto_font_size_fhd;
 			}
 		}
+
+		cfg.custom_font_size = std::clamp<decltype(cfg.custom_font_size)>(cfg.custom_font_size, 10, 28);
 
 		if (!this->gui_input_.initialize()) [[unlikely]]
 		{
 			return false;
 		}
 
-		if (!this->gui_renderer_.initialize(_rt.config().editor.font_size)) [[unlikely]]
+		if (!this->gui_renderer_.initialize(_rt.config().editor.custom_font_size)) [[unlikely]]
 		{
 			return false;
 		}
@@ -66,8 +68,8 @@ namespace dce::gui
 
 	auto Gui::on_pre_tick(Runtime& _rt) -> bool
 	{
-		const auto width = _rt.config().display.width;
-		const auto height = _rt.config().display.height;
+		const auto width = _rt.config().display.resolution.width;
+		const auto height = _rt.config().display.resolution.height;
 		this->begin(width, height);
 		return true;
 	}

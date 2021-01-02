@@ -3,7 +3,7 @@
     /// <summary>
     ///     Contains all supported graphics APIs.
     /// </summary>
-    public enum GraphicsAPI
+    public enum GraphicsApi : byte
     {
         /// <summary>
         ///     Windows only.
@@ -28,6 +28,6 @@
         /// <summary>
         ///     Cross platform.
         /// </summary>
-        OpenGL
+        OpenGl
     }
 }

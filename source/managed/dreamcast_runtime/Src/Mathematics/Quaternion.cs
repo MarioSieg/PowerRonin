@@ -163,7 +163,7 @@ namespace Dreamcast.Mathematics
                 if (MathUtil.IsZero(length))
                     return 0.0f;
 
-                return (float)(2.0 * Math.Acos(MathUtil.Clamp(W, -1f, 1f)));
+                return (float) (2.0 * Math.Acos(MathUtil.Clamp(W, -1f, 1f)));
             }
         }
 
@@ -179,7 +179,7 @@ namespace Dreamcast.Mathematics
                 if (MathUtil.IsZero(length))
                     return Vector3.UnitX;
 
-                var inv = 1.0f / (float)Math.Sqrt(length);
+                var inv = 1.0f / (float) Math.Sqrt(length);
                 return new Vector3(X * inv, Y * inv, Z * inv);
             }
         }
@@ -272,7 +272,7 @@ namespace Dreamcast.Mathematics
         /// </remarks>
         public float Length()
         {
-            return (float)Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
+            return (float) Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Dreamcast.Mathematics
         /// <returns>A four-element array containing the components of the quaternion.</returns>
         public float[] ToArray()
         {
-            return new[] { X, Y, Z, W };
+            return new[] {X, Y, Z, W};
         }
 
         /// <summary>
@@ -556,8 +556,8 @@ namespace Dreamcast.Mathematics
         /// <param name="result">When the method completes, contains the exponentiated quaternion.</param>
         public static void Exponential(ref Quaternion value, out Quaternion result)
         {
-            var angle = (float)Math.Sqrt(value.X * value.X + value.Y * value.Y + value.Z * value.Z);
-            var sin = (float)Math.Sin(angle);
+            var angle = (float) Math.Sqrt(value.X * value.X + value.Y * value.Y + value.Z * value.Z);
+            var sin = (float) Math.Sin(angle);
 
             if (!MathUtil.IsZero(sin))
             {
@@ -571,7 +571,7 @@ namespace Dreamcast.Mathematics
                 result = value;
             }
 
-            result.W = (float)Math.Cos(angle);
+            result.W = (float) Math.Cos(angle);
         }
 
         /// <summary>
@@ -670,8 +670,8 @@ namespace Dreamcast.Mathematics
         {
             if (Math.Abs(value.W) < 1.0)
             {
-                var angle = (float)Math.Acos(value.W);
-                var sin = (float)Math.Sin(angle);
+                var angle = (float) Math.Acos(value.W);
+                var sin = (float) Math.Sin(angle);
 
                 if (!MathUtil.IsZero(sin))
                 {
@@ -738,8 +738,8 @@ namespace Dreamcast.Mathematics
             Vector3.Normalize(ref axis, out var normalized);
 
             var half = angle * 0.5f;
-            var sin = (float)Math.Sin(half);
-            var cos = (float)Math.Cos(half);
+            var sin = (float) Math.Sin(half);
+            var cos = (float) Math.Cos(half);
 
             result.X = normalized.X * sin;
             result.Y = normalized.Y * sin;
@@ -772,7 +772,7 @@ namespace Dreamcast.Mathematics
 
             if (scale > 0.0f)
             {
-                sqrt = (float)Math.Sqrt(scale + 1.0f);
+                sqrt = (float) Math.Sqrt(scale + 1.0f);
                 result.W = sqrt * 0.5f;
                 sqrt = 0.5f / sqrt;
 
@@ -782,7 +782,7 @@ namespace Dreamcast.Mathematics
             }
             else if (matrix.M11 >= matrix.M22 && matrix.M11 >= matrix.M33)
             {
-                sqrt = (float)Math.Sqrt(1.0f + matrix.M11 - matrix.M22 - matrix.M33);
+                sqrt = (float) Math.Sqrt(1.0f + matrix.M11 - matrix.M22 - matrix.M33);
                 half = 0.5f / sqrt;
 
                 result.X = 0.5f * sqrt;
@@ -792,7 +792,7 @@ namespace Dreamcast.Mathematics
             }
             else if (matrix.M22 > matrix.M33)
             {
-                sqrt = (float)Math.Sqrt(1.0f + matrix.M22 - matrix.M11 - matrix.M33);
+                sqrt = (float) Math.Sqrt(1.0f + matrix.M22 - matrix.M11 - matrix.M33);
                 half = 0.5f / sqrt;
 
                 result.X = (matrix.M21 + matrix.M12) * half;
@@ -802,7 +802,7 @@ namespace Dreamcast.Mathematics
             }
             else
             {
-                sqrt = (float)Math.Sqrt(1.0f + matrix.M33 - matrix.M11 - matrix.M22);
+                sqrt = (float) Math.Sqrt(1.0f + matrix.M33 - matrix.M11 - matrix.M22);
                 half = 0.5f / sqrt;
 
                 result.X = (matrix.M31 + matrix.M13) * half;
@@ -825,7 +825,7 @@ namespace Dreamcast.Mathematics
 
             if (scale > 0.0f)
             {
-                sqrt = (float)Math.Sqrt(scale + 1.0f);
+                sqrt = (float) Math.Sqrt(scale + 1.0f);
                 result.W = sqrt * 0.5f;
                 sqrt = 0.5f / sqrt;
 
@@ -835,7 +835,7 @@ namespace Dreamcast.Mathematics
             }
             else if (matrix.M11 >= matrix.M22 && matrix.M11 >= matrix.M33)
             {
-                sqrt = (float)Math.Sqrt(1.0f + matrix.M11 - matrix.M22 - matrix.M33);
+                sqrt = (float) Math.Sqrt(1.0f + matrix.M11 - matrix.M22 - matrix.M33);
                 half = 0.5f / sqrt;
 
                 result.X = 0.5f * sqrt;
@@ -845,7 +845,7 @@ namespace Dreamcast.Mathematics
             }
             else if (matrix.M22 > matrix.M33)
             {
-                sqrt = (float)Math.Sqrt(1.0f + matrix.M22 - matrix.M11 - matrix.M33);
+                sqrt = (float) Math.Sqrt(1.0f + matrix.M22 - matrix.M11 - matrix.M33);
                 half = 0.5f / sqrt;
 
                 result.X = (matrix.M21 + matrix.M12) * half;
@@ -855,7 +855,7 @@ namespace Dreamcast.Mathematics
             }
             else
             {
-                sqrt = (float)Math.Sqrt(1.0f + matrix.M33 - matrix.M11 - matrix.M22);
+                sqrt = (float) Math.Sqrt(1.0f + matrix.M33 - matrix.M11 - matrix.M22);
                 half = 0.5f / sqrt;
 
                 result.X = (matrix.M31 + matrix.M13) * half;
@@ -1059,12 +1059,12 @@ namespace Dreamcast.Mathematics
             var halfPitch = pitch * 0.5f;
             var halfYaw = yaw * 0.5f;
 
-            var sinRoll = (float)Math.Sin(halfRoll);
-            var cosRoll = (float)Math.Cos(halfRoll);
-            var sinPitch = (float)Math.Sin(halfPitch);
-            var cosPitch = (float)Math.Cos(halfPitch);
-            var sinYaw = (float)Math.Sin(halfYaw);
-            var cosYaw = (float)Math.Cos(halfYaw);
+            var sinRoll = (float) Math.Sin(halfRoll);
+            var cosRoll = (float) Math.Cos(halfRoll);
+            var sinPitch = (float) Math.Sin(halfPitch);
+            var cosPitch = (float) Math.Cos(halfPitch);
+            var sinYaw = (float) Math.Sin(halfYaw);
+            var cosYaw = (float) Math.Cos(halfYaw);
 
             result.X = cosYaw * sinPitch * cosRoll + sinYaw * cosPitch * sinRoll;
             result.Y = sinYaw * cosPitch * cosRoll - cosYaw * sinPitch * sinRoll;
@@ -1105,11 +1105,11 @@ namespace Dreamcast.Mathematics
             }
             else
             {
-                var acos = (float)Math.Acos(Math.Abs(dot));
-                var invSin = (float)(1.0 / Math.Sin(acos));
+                var acos = (float) Math.Acos(Math.Abs(dot));
+                var invSin = (float) (1.0 / Math.Sin(acos));
 
-                inverse = (float)Math.Sin((1.0f - amount) * acos) * invSin;
-                opposite = (float)Math.Sin(amount * acos) * invSin * Math.Sign(dot);
+                inverse = (float) Math.Sin((1.0f - amount) * acos) * invSin;
+                opposite = (float) Math.Sin(amount * acos) * invSin * Math.Sign(dot);
             }
 
             result.X = inverse * start.X + opposite * end.X;
@@ -1412,7 +1412,7 @@ namespace Dreamcast.Mathematics
             if (!(value is Quaternion))
                 return false;
 
-            var strongValue = (Quaternion)value;
+            var strongValue = (Quaternion) value;
             return Equals(ref strongValue);
         }
     }

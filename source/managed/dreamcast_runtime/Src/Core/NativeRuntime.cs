@@ -11,15 +11,7 @@ namespace Dreamcast.Core
     {
         [CallToNativeRuntime]
         [MethodImpl(MethodImplOptions.InternalCall)]
-        internal static extern bool InputIsKeyDown(Key key);
-
-        [CallToNativeRuntime]
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        internal static extern bool InputIsMouseDown(MouseButton mouseButton);
-
-        [CallToNativeRuntime]
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        internal static extern void InputGetCursorPosition(out float x, out float y);
+        internal static extern void ProtocolLog(LogLevel level, string message);
 
         [CallToNativeRuntime]
         [MethodImpl(MethodImplOptions.InternalCall)]
@@ -31,10 +23,26 @@ namespace Dreamcast.Core
 
         [CallToNativeRuntime]
         [MethodImpl(MethodImplOptions.InternalCall)]
-        internal static extern void ProtocolLog(LogLevel level, string message);
+        internal static extern bool InputIsKeyDown(Key key);
 
         [CallToNativeRuntime]
         [MethodImpl(MethodImplOptions.InternalCall)]
-        internal static extern void CfgSetNative(in NativeConfig cfg, ConfigApplyFlags flags);
+        internal static extern void InputGetCursorPosition(out float x, out float y);
+
+        [CallToNativeRuntime]
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        internal static extern bool InputIsMouseDown(MouseButton mouseButton);
+
+        [CallToNativeRuntime]
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        internal static extern void CfgApplyDisplay(in DisplayConfig cfg);
+
+        [CallToNativeRuntime]
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        internal static extern void CfgApplyEditor(in EditorConfig cfg);
+
+        [CallToNativeRuntime]
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        internal static extern void CfgApplyGraphics(in GraphicsConfig cfg);
     }
 }

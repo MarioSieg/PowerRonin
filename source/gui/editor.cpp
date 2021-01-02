@@ -267,7 +267,7 @@ namespace dce::gui
 			auto main_id = this->dockspace_id_;
 
 			const auto dock_id_left = DockBuilderSplitNode(main_id, ImGuiDir_Left, .1f, nullptr, &main_id);
-			const auto dock_id_right = DockBuilderSplitNode(main_id, ImGuiDir_Right, .15f, nullptr, &main_id);
+			const auto dock_id_right = DockBuilderSplitNode(main_id, ImGuiDir_Right, .25f, nullptr, &main_id);
 			const auto dock_id_bottom = DockBuilderSplitNode(main_id, ImGuiDir_Down, .2f, nullptr, &main_id);
 
 			DockBuilderDockWindow(HIERARCHY_NAME, dock_id_left);
@@ -287,7 +287,7 @@ namespace dce::gui
 
 	void Editor::render_manipulator_gizmos(Transform* const _transform, RenderData& _data, const Config& _config) const noexcept
 	{
-		if (!_config.editor.enable_gizmos) [[unlikely]]
+		if (!_config.editor.show_gizmos) [[unlikely]]
 		{
 			return;
 		}

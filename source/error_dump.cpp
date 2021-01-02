@@ -29,9 +29,9 @@ namespace dce
 		std::cerr << ss.str();
 	}
 
-	void create_fatal_dump(const std::exception& _ex) [[unlikely]]
+	void create_fatal_dump(const std::exception& _ex)
 	{
-		if (!std::filesystem::is_directory("crashes"))
+		if (!std::filesystem::is_directory("crashes")) [[unlikely]]
 		{
 			std::filesystem::create_directory("crashes");
 		}

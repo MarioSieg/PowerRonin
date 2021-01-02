@@ -189,7 +189,7 @@ namespace dce::platform
 		proto.info("Initializing window...");
 
 		/* Create window: */
-		this->window_ = glfwCreateWindow(display_settings.width, display_settings.height, "Dreamcast Engine"
+		this->window_ = glfwCreateWindow(display_settings.resolution.width, display_settings.resolution.height, "Dreamcast Engine"
 		                                 , display_settings.is_full_screen ? primary_monitor : nullptr, nullptr);
 
 		if (this->window_ == nullptr) [[unlikely]]
@@ -205,8 +205,8 @@ namespace dce::platform
 			glfwGetFramebufferSize(this->window_, &w, &h);
 			if (w != 0 && h != 0)
 			{
-				display_settings.width = static_cast<std::uint16_t>(w);
-				display_settings.height = static_cast<std::uint16_t>(h);
+				display_settings.resolution.width = static_cast<std::uint16_t>(w);
+				display_settings.resolution.height = static_cast<std::uint16_t>(h);
 			}
 			glfwFocusWindow(this->window_);
 		}

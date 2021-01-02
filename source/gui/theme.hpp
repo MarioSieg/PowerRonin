@@ -4,6 +4,15 @@
 
 namespace dce::gui
 {
+	enum class SystemTheme
+	{
+		DARK,
+		LIGHT,
+		BLUE,
+		GREEN,
+		CHERRY,
+	};
+	
 	extern void style_dark() noexcept;
 	extern void style_light() noexcept;
 	extern void style_cherry() noexcept;

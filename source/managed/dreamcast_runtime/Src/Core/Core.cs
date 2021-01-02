@@ -13,8 +13,8 @@ namespace Dreamcast.Core
             CommandDB.Execute("info");
             InstallationValidation.Run(Directory.GetCurrentDirectory());
             Serializer.SetupFormatter();
-            Configuration.Deserialize();
-            Configuration.Current.Apply();
+            Config.Current.Deserialize();
+            Config.Current.ApplyAll();
         }
 
         private static void OnPostStartup()

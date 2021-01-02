@@ -6,12 +6,12 @@ namespace dce::scripting
 	{
 		_target.display.is_full_screen = _in.Display_IsWindowFullscreen;
 		_target.display.is_maximized = _in.Display_IsWindowMaximized;
-		_target.display.width = _in.Display_WindowWidth;
-		_target.display.height = _in.Display_WindowHeight;
+		_target.display.resolution.width = _in.Display_WindowWidth;
+		_target.display.resolution.height = _in.Display_WindowHeight;
 		_target.display.vsync = _in.Display_VSync;
 		_target.display.max_framerate = _in.Display_MaxFrameRate;
 
-		_target.editor.font_size = _in.Overlay_FontSize;
+		_target.editor.custom_font_size = _in.Overlay_FontSize;
 		_target.editor.enable_font_anti_aliasing = _in.Overlay_EnableFontAntialiasing;
 		_target.editor.alpha = _in.Overlay_Alpha;
 		_target.editor.rounding = _in.Overlay_Rounding;
@@ -22,7 +22,7 @@ namespace dce::scripting
 		                                                              static_cast<CS_byte>(MsaaMode::OFF)
 		                                                              , static_cast<CS_byte>(MsaaMode::X16)));
 		_target.graphics.enable_high_dpi_mode = _in.Graphics_EnableHighDPIMode;
-		_target.graphics.enable_srgb_backbuffer = _in.Graphics_EnableSRGBBackbuffer;
+		_target.graphics.enable_srgb_mode = _in.Graphics_EnableSRGBBackbuffer;
 		_target.graphics.enable_hdr10 = _in.Graphics_EnableHDR10;
 		_target.graphics.enable_max_anisotropy = _in.Graphics_EnableMaxAnisotropy;
 	}

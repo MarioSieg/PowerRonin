@@ -27,7 +27,7 @@ namespace Dreamcast.Core
         /// </summary>
         /// <param name="instance">The instance to serialize.</param>
         /// <returns></returns>
-        public static string SerializeToJsonString<T>(in T instance) where T : new()
+        public static string SerializeToJsonString<T>(in T instance)
         {
             return JsonConvert.SerializeObject(instance);
         }
@@ -43,11 +43,22 @@ namespace Dreamcast.Core
         }
 
         /// <summary>
+        ///     Deserializes the object from a XML string.
+        /// </summary>
+        /// <param name="data">The XML string.</param>
+        /// <param name="opt">Returned instead of null.</param>
+        /// <returns>The deserialized object or opt if failed.</returns>
+        public static T DeserializeFromJsonString<T>(string data, in T opt)
+        {
+            return JsonConvert.DeserializeObject<T>(data) ?? opt;
+        }
+
+        /// <summary>
         ///     Serializes T into a XML file.
         /// </summary>
         /// <param name="instance">The instance to serialize.</param>
         /// <param name="path">The file to serialize into.</param>
-        public static void SerializeToJsonFile<T>(in T instance, string path) where T : new()
+        public static void SerializeToJsonFile<T>(in T instance, string path)
         {
             File.WriteAllText(path, JsonConvert.SerializeObject(instance));
         }
@@ -63,11 +74,23 @@ namespace Dreamcast.Core
         }
 
         /// <summary>
+        ///     Deserializes the object from a XML file.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path">The file to serialize from.</param>
+        /// <param name="opt">Returned instead of null.</param>
+        /// <returns>The deserialized object or opt if failed.</returns>
+        public static T DeserializeFromJsonFile<T>(string path, in T opt)
+        {
+            return JsonConvert.DeserializeObject<T>(File.ReadAllText(path)) ?? opt;
+        }
+
+        /// <summary>
         ///     Serializes T into a binary file.
         /// </summary>
         /// <param name="instance">The instance to serialize.</param>
         /// <param name="path">The file to serialize into.</param>
-        public static void SerializeToBinaryFile<T>(in T instance, string path) where T : new()
+        public static void SerializeToBinaryFile<T>(in T instance, string path)
         {
             if (instance == null) throw new ArgumentNullException(nameof(instance));
             var formatter = new BinaryFormatter();
@@ -81,7 +104,7 @@ namespace Dreamcast.Core
         /// </summary>
         /// <param name="path">The file to serialize from.</param>
         /// <returns>The deserialized object.</returns>
-        public static T DeserializeFromBinaryFile<T>(string path) where T : new()
+        public static T DeserializeFromBinaryFile<T>(string path)
         {
             var formatter = new BinaryFormatter();
             using var stream = new FileStream(path, FileMode.Open);

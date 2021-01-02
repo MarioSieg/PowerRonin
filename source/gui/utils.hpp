@@ -125,4 +125,20 @@ namespace dce::gui
 		ImGui::PopStyleColor();
 		return result;
 	}
+
+	template<typename T> requires std::is_convertible<T, int>::value && std::is_standard_layout_v<T>
+	inline void input_integer(const char* const _label, T& _val, const int _step = 1, const int _step_fast = 100, const ImGuiInputTextFlags _flags = 0)
+	{
+		auto x = static_cast<int>(_val);
+		ImGui::InputInt(_label, &x, _step, _step_fast, _flags);
+		_val = static_cast<T>(x);
+	}
+
+	template<typename T> requires std::is_convertible<T, int>::value&& std::is_standard_layout_v<T>
+	inline void slider_integer(const char* const _label, T& _val, const int _min , const int _max, const ImGuiSliderFlags _flags = 0)
+	{
+		auto x = static_cast<int>(_val);
+		ImGui::SliderInt(_label, &x, _min, _max, "%d", _flags);
+		_val = static_cast<T>(x);
+	}
 } // namespace dce::gui // namespace dce::gui

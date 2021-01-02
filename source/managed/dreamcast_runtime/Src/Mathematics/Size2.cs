@@ -33,12 +33,12 @@ namespace Dreamcast.Mathematics
         /// <summary>
         ///     Width.
         /// </summary>
-        public uint Width;
+        [MarshalAs(UnmanagedType.U2)] public uint Width;
 
         /// <summary>
         ///     Height.
         /// </summary>
-        public uint Height;
+        [MarshalAs(UnmanagedType.U2)] public uint Height;
 
         /// <summary>
         ///     Determines whether the specified <see cref="System.Object" /> is equal to this instance.

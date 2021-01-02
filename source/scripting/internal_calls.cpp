@@ -22,10 +22,10 @@ namespace dce::scripting
 		
 		static auto* const RUNTIME = &_rt;
 
-		REGISTER_CALL(
-			"ProtocolLog", [](const LogLevel _level, MonoString* const _message) {
+		REGISTER_CALL("ProtocolLog", [](const LogLevel _level, MonoString* const _message) {
 				auto* const str = mono_string_to_utf8(_message);
-				RUNTIME->scripting_protocol().log(_level, std::string(str)); mono_free(str);
+				RUNTIME->scripting_protocol().log(_level, std::string(str));
+				mono_free(str);
 		})
 
 		REGISTER_CALL("ProtocolFlush", []() {
@@ -46,16 +46,20 @@ namespace dce::scripting
 			*_x = cursor_pos.x; *_y = cursor_pos.y;
 		})
 
-		REGISTER_CALL("InputIsMouseDown", [](const std::uint16_t _mouse_button) noexcept {
+		REGISTER_CALL("InputIsMouseDown", [](const std::uint16_t _mouse_button) noexcept -> bool {
 			return RUNTIME->input().is_mouse_button_down(static_cast<MouseButton>(_mouse_button));
 		})
 
-		REGISTER_CALL("CfgSetWindowFullscreen", [](const bool _full_screen) noexcept {
-			RUNTIME->config().display.is_full_screen = _full_screen;
-			})
+		REGISTER_CALL("CfgApplyDisplay", [](const DisplayConfig& _cfg) {
+			RUNTIME->config().display = _cfg;
+		})
 
-		REGISTER_CALL("CfgSetNative", [](const NativeConfig& _cfg, const NativeConfigApplyFlags _flags) noexcept {
-				map_to_sys_config(RUNTIME->config(), _cfg);
+		REGISTER_CALL("CfgApplyEditor", [](const EditorConfig& _cfg) {
+			RUNTIME->config().editor = _cfg;
+		})
+
+		REGISTER_CALL("CfgApplyGraphics", [](const GraphicsConfig& _cfg) {
+			RUNTIME->config().graphics = _cfg;
 		})
 
 		// @formatter:on

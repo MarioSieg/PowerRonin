@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props"
-          Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -58,7 +56,7 @@
     <LangVersion>9.0</LangVersion>
     <ErrorReport>none</ErrorReport>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
-    <DocumentationFile>..\..\..\runtime\dreamcast.xml</DocumentationFile>
+    <DocumentationFile>C:\Mario\Projects\DreamcastSDK\runtime\dreamcast.xml</DocumentationFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
@@ -79,11 +77,14 @@
     <Compile Include="Src\Core\Chrono.cs" />
     <Compile Include="Src\Core\Command.cs" />
     <Compile Include="Src\Core\CommandDB.cs" />
-    <Compile Include="Src\Core\Configuration.cs" />
+    <Compile Include="Src\Core\Config.cs" />
     <Compile Include="Src\Core\CopyDir.cs" />
     <Compile Include="Src\Core\Core.cs" />
+    <Compile Include="Src\Core\DisplayConfig.cs" />
+    <Compile Include="Src\Core\EditorConfig.cs" />
     <Compile Include="Src\Core\Entry.cs" />
     <Compile Include="Src\Core\GraphicsAPI.cs" />
+    <Compile Include="Src\Core\GraphicsConfig.cs" />
     <Compile Include="Src\Core\Input.cs" />
     <Compile Include="Src\Core\InstallationValidation.cs" />
     <Compile Include="Src\Core\Key.cs" />
@@ -91,11 +92,12 @@
     <Compile Include="Src\Core\Lua.cs" />
     <Compile Include="Src\Core\MouseButton.cs" />
     <Compile Include="Src\Core\MsaaMode.cs" />
-    <Compile Include="Src\Core\NativeConfig.cs" />
+    <Compile Include="Src\Core\NativeHybridMapping.cs" />
     <Compile Include="Src\Core\NativeRuntime.cs" />
+    <Compile Include="Src\Core\Platform.cs" />
     <Compile Include="Src\Core\Protocol.cs" />
     <Compile Include="Src\Core\Serializer.cs" />
-    <Compile Include="Src\Core\Theme.cs" />
+    <Compile Include="Src\Core\Helper.cs" />
     <Compile Include="Src\Mathematics\FastMath\Core\IMemoizedMethod.cs" />
     <Compile Include="Src\Mathematics\FastMath\Core\IUnboundMethod.cs" />
     <Compile Include="Src\Mathematics\FastMath\Core\Utils.cs" />
@@ -289,11 +291,9 @@
     <Compile Include="Src\Lua\Interop\StandardDescriptors\ReflectionMemberDescriptors\EventMemberDescriptor.cs" />
     <Compile Include="Src\Lua\Interop\StandardDescriptors\ReflectionMemberDescriptors\FieldMemberDescriptor.cs" />
     <Compile Include="Src\Lua\Interop\StandardDescriptors\ReflectionMemberDescriptors\MethodMemberDescriptor.cs" />
-    <Compile
-      Include="Src\Lua\Interop\StandardDescriptors\ReflectionMemberDescriptors\OverloadedMethodMemberDescriptor.cs" />
+    <Compile Include="Src\Lua\Interop\StandardDescriptors\ReflectionMemberDescriptors\OverloadedMethodMemberDescriptor.cs" />
     <Compile Include="Src\Lua\Interop\StandardDescriptors\ReflectionMemberDescriptors\PropertyMemberDescriptor.cs" />
-    <Compile
-      Include="Src\Lua\Interop\StandardDescriptors\ReflectionMemberDescriptors\ValueTypeDefaultCtorMemberDescriptor.cs" />
+    <Compile Include="Src\Lua\Interop\StandardDescriptors\ReflectionMemberDescriptors\ValueTypeDefaultCtorMemberDescriptor.cs" />
     <Compile Include="Src\Lua\Interop\StandardDescriptors\StandardEnumUserDataDescriptor.cs" />
     <Compile Include="Src\Lua\Interop\StandardDescriptors\StandardGenericsUserDataDescriptor.cs" />
     <Compile Include="Src\Lua\Interop\StandardDescriptors\StandardUserDataDescriptor.cs" />
@@ -681,6 +681,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Src\Core\Config.Defaults.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

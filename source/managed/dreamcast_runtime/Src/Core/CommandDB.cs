@@ -302,25 +302,9 @@ namespace Dreamcast.Core
                     RequiresRootPrivileges = false,
                     Executor = delegate
                     {
-                        Protocol.Info(Serializer.SerializeToJsonString(Configuration.Current.Display));
-                        Protocol.Info(Serializer.SerializeToJsonString(Configuration.Current.Editor));
-                        Protocol.Info(Serializer.SerializeToJsonString(Configuration.Current.Graphics));
-                    }
-                },
-                new Command
-                {
-                    Name = "config_files",
-                    Brief = "Prints the current config saved in the config files.",
-                    ParameterCount = 0,
-                    RequiresRootPrivileges = false,
-                    Executor = delegate
-                    {
-                        Protocol.Info(Configuration.DisplayConfiguration.FilePath + ":\n" +
-                                      File.ReadAllText(Configuration.DisplayConfiguration.FilePath));
-                        Protocol.Info(Configuration.EditorConfiguration.FilePath + ":\n" +
-                                      File.ReadAllText(Configuration.EditorConfiguration.FilePath));
-                        Protocol.Info(Configuration.GraphicsConfiguration.FilePath + ":\n" +
-                                      File.ReadAllText(Configuration.GraphicsConfiguration.FilePath));
+                        Protocol.Info(Serializer.SerializeToJsonString(Config.Current.Display));
+                        Protocol.Info(Serializer.SerializeToJsonString(Config.Current.Editor));
+                        Protocol.Info(Serializer.SerializeToJsonString(Config.Current.Graphics));
                     }
                 },
                 new Command
@@ -329,7 +313,7 @@ namespace Dreamcast.Core
                     Brief = "Applies the whole config to all systems.",
                     ParameterCount = 0,
                     RequiresRootPrivileges = false,
-                    Executor = delegate { Configuration.Current.Apply(); }
+                    Executor = delegate { Config.Current.ApplyAll(); }
                 },
                 new Command
                 {
@@ -337,7 +321,7 @@ namespace Dreamcast.Core
                     Brief = "Loads the current config from the config file.",
                     ParameterCount = 0,
                     RequiresRootPrivileges = false,
-                    Executor = delegate { Configuration.Deserialize(); }
+                    Executor = delegate { Config.Current.Deserialize(); }
                 },
                 new Command
                 {
@@ -345,7 +329,7 @@ namespace Dreamcast.Core
                     Brief = "Saves the current config to the config file.",
                     ParameterCount = 0,
                     RequiresRootPrivileges = false,
-                    Executor = delegate { Configuration.Serialize(); }
+                    Executor = delegate { Config.Current.Serialize(); }
                 },
                 new Command
                 {
@@ -353,7 +337,7 @@ namespace Dreamcast.Core
                     Brief = "Deletes the config files.",
                     ParameterCount = 0,
                     RequiresRootPrivileges = false,
-                    Executor = delegate { Directory.Delete(Configuration.ConfigDirectory, true); }
+                    Executor = delegate { Directory.Delete(Config.ConfigDirectory, true); }
                 },
                 new Command
                 {

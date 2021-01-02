@@ -27,8 +27,8 @@ namespace dce::renderer
 		auto& viewport = _rt.render_data().scenery_viewport_size;
 		if (viewport.x == .0F || viewport.y == .0F) [[likely]]
 		{
-			viewport.x = _rt.config().display.width;
-			viewport.y = _rt.config().display.height;
+			viewport.x = _rt.config().display.resolution.width;
+			viewport.y = _rt.config().display.resolution.height;
 			if (viewport.x == .0F || viewport.y == .0F) [[likely]]
 			{
 				return false;
@@ -56,7 +56,7 @@ namespace dce::renderer
 		poll_stats(const_cast<Diagnostics&>(_rt.diagnostics()));
 		this->tick_prev_ = update_clocks(const_cast<Chrono&>(_rt.chrono()), this->tick_prev_);
 		this->update_camera(_rt);
-		this->gpu_.set_viewport(math::ZERO, {_rt.config().display.width, _rt.config().display.height}, FULLSCREEN_VIEW);
+		this->gpu_.set_viewport(math::ZERO, {_rt.config().display.resolution.width, _rt.config().display.resolution.height}, FULLSCREEN_VIEW);
 		this->gpu_.clear_view(FULLSCREEN_VIEW, BGFX_CLEAR_DEPTH | BGFX_CLEAR_COLOR, 1.F, 0x040404FF);
 		this->gpu_.sort_draw_calls(FULLSCREEN_VIEW);
 		this->gpu_.set_viewport(_rt.render_data().scenery_viewport_position, _rt.render_data().scenery_viewport_size,
