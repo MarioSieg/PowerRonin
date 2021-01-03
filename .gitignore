@@ -4,6 +4,7 @@
 /cache/
 /crashes/
 /config/
+extern/out/
 /extern/assimp/out/
 /source/managed/dreamcast_runtime/.vs
 /source/managed/dreamcast_runtime/bin

@@ -194,9 +194,9 @@ add_library(
     "source/scripting/member_method.cpp"
     "source/scripting/instance_class.hpp"
     "source/scripting/instance_class.cpp" 
-    "source/scripting/native_config.hpp" 
+     
     "include/dce/csinterop.hpp" 
-    "source/scripting/native_config.cpp"  
+      
     "source/audio/audio_engine_core/Common/AkDefaultLowLevelIODispatcher.cpp" 
     "source/audio/audio_engine_core/Common/AkDefaultLowLevelIODispatcher.h" 
     "source/audio/audio_engine_core/Common/AkFileLocationBase.cpp" 
