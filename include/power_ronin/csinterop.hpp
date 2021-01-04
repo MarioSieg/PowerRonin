@@ -1,3 +1,18 @@
+// // *******************************************************************************
+// // The content of this file includes portions of the KerboGames Power Ronin Technology
+// // released in source code form as part of the SDK package.
+// // 
+// // Commercial License Usage
+// // 
+// // Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// // may use this file in accordance with the end user license agreement provided 
+// // with the software or, alternatively, in accordance with the terms contained in a
+// // written agreement between you and KerboGames.
+// // 
+// // Copyright (c) 2013-2021 KerboGames, MarioSieg.
+// // support@kerbogames.com
+// // *******************************************************************************
+
 #pragma once
 
 #include "mathtypes.hpp"
@@ -84,6 +99,7 @@ namespace power_ronin
 			return SimdVector2<CS_float>(x, y);
 		}
 	};
+
 	static_assert(sizeof(CS_Vector2) == sizeof(CS_float) * 2);
 
 	/// <summary>
@@ -101,6 +117,7 @@ namespace power_ronin
 			return SimdVector3<CS_float>(x, y, z);
 		}
 	};
+
 	static_assert(sizeof(CS_Vector3) == sizeof(CS_float) * 3);
 
 	/// <summary>
@@ -119,6 +136,7 @@ namespace power_ronin
 			return SimdVector4<CS_float>(x, y, z, w);
 		}
 	};
+
 	static_assert(sizeof(CS_Vector4) == sizeof(CS_float) * 4);
 
 	using CS_Quaternion = CS_Vector4;
@@ -128,6 +146,7 @@ namespace power_ronin
 		CS_uint width;
 		CS_uint height;
 	};
+
 	static_assert(sizeof(CS_Size2) == sizeof(CS_uint) * 2);
 
 	using CS_Size2F = CS_Vector2;

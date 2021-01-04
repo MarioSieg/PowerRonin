@@ -9,6 +9,8 @@ project ("PowerRoninSDK" CXX C ASM)
 
 message("Com: ${CMAKE_CXX_COMPILER_ID}")
 
+# set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+
 # -march=native -mavx
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     SET(COVERAGE_COMPILE_FLAGS "-msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -Ofast -MT")
@@ -181,7 +183,7 @@ add_library(
     "source/scripting/internal_calls.cpp" 
     "source/scripting/helpers.hpp" 
     "source/scripting/helpers.cpp" 
-    "source/scripting/dreamcast.dll.hpp" 
+    "source/scripting/power_ronin.dll.hpp" 
     "source/scripting/assembly.hpp" 
     "source/scripting/assembly.cpp" 
     "source/scripting/environment.hpp" 

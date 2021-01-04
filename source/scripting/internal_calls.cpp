@@ -10,7 +10,7 @@
 #define REGISTER_CALL(_name, _proc)															\
 		{																					\
 			static constexpr void* NATIVE_PROC = static_cast<void*>(+(_proc));				\
-			mono_add_internal_call("Dreamcast.Core.NativeRuntime::" _name, NATIVE_PROC);	\
+			mono_add_internal_call("PowerRonin.Core.NativeRuntime::" _name, NATIVE_PROC);	\
 		}
 
 namespace power_ronin::scripting

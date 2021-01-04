@@ -1,6 +1,6 @@
 #include "scripting.hpp"
 #include "internal_calls.hpp"
-#include "dreamcast.dll.hpp"
+#include "power_ronin.dll.hpp"
 
 namespace power_ronin::scripting
 {
