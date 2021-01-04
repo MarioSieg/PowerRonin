@@ -5,22 +5,22 @@
 
 namespace dce
 {
-	template<typename RepresentatorMapping>
+	template <typename RepresentatorMapping>
 	concept HybridCapable = std::is_standard_layout_v<RepresentatorMapping>;
-	
+
 	/// <summary>
 	/// Represents an object which can be used in C++ and C# but the memory is bound to C++.
 	/// </summary>
 	/// <typeparam name="Representator"></typeparam>
-	template<typename RepresentatorMapping> requires HybridCapable<RepresentatorMapping>
+	template <typename RepresentatorMapping> requires HybridCapable<RepresentatorMapping>
 	class Hybrid final
 	{
 	public:
 		Hybrid() = default;
 		Hybrid(const Hybrid&) = delete;
 		Hybrid(Hybrid&&) noexcept;
-		auto operator=(const Hybrid&)->Hybrid & = delete;
-		auto operator=(Hybrid&&) noexcept ->Hybrid &;
+		auto operator=(const Hybrid&) -> Hybrid& = delete;
+		auto operator=(Hybrid&&) noexcept -> Hybrid&;
 		~Hybrid();
 
 		/// <summary>
@@ -57,7 +57,7 @@ namespace dce
 		/// <returns>Same as unbox().</returns>
 		[[nodiscard]]
 		auto operator*() const noexcept -> RepresentatorMapping&;
-	
+
 	private:
 		std::uint32_t handle_ = 0;
 		bool is_pinned_ = false;
@@ -95,7 +95,7 @@ namespace dce
 		_rhs.handle_ = 0;
 		_rhs.is_pinned_ = false;
 	}
-	
+
 	template <typename RepresentatorMapping> requires HybridCapable<RepresentatorMapping>
 	inline auto Hybrid<RepresentatorMapping>::operator=(Hybrid&& _rhs) noexcept -> Hybrid&
 	{
@@ -108,7 +108,7 @@ namespace dce
 		{
 			mo_dealloc(this->handle_);
 		}
-		
+
 		this->handle_ = _rhs.handle_;
 		this->is_pinned_ = _rhs.is_pinned_;
 

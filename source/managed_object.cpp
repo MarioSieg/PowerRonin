@@ -18,14 +18,14 @@ namespace dce
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to create managed object!");
 		}
 
-			if (!_ctor && !_ctor_args) [[unlikely]]
-			{
-				mono_runtime_object_init(instance);
-			}
-			else
-			{
-				mono_runtime_invoke(static_cast<MonoMethod*>(_ctor), instance, _ctor_args, nullptr);
-			}
+		if (!_ctor && !_ctor_args) [[unlikely]]
+		{
+			mono_runtime_object_init(instance);
+		}
+		else
+		{
+			mono_runtime_invoke(static_cast<MonoMethod*>(_ctor), instance, _ctor_args, nullptr);
+		}
 
 		return mono_gchandle_new(instance, _is_pinned);
 	}
