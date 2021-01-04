@@ -29,6 +29,7 @@ namespace power_ronin
 		explicit FatalEngineException(const std::string& _msg);
 		explicit FatalEngineException(const char* _msg);
 		FatalEngineException(const char* _msg, int _line, const char* _file);
+		FatalEngineException(const std::string& _msg, int _line, const char* _file);
 		FatalEngineException(const FatalEngineException&) = default;
 		FatalEngineException(FatalEngineException&&) noexcept = default;
 		auto operator=(const FatalEngineException&) = delete;

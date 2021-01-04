@@ -30,20 +30,20 @@ namespace power_ronin
 #endif
 		if (!file) [[unlikely]]
 		{
-			throw MAKE_FATAL_ENGINE_EXCEPTION("Binary blob read failed!");
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Binary blob read failed: " + _file.string());
 		}
 		fseek(file, 0, SEEK_END);
 		const long size = ftell(file);
 		if (!size) [[unlikely]]
 		{
-			throw MAKE_FATAL_ENGINE_EXCEPTION("Binary blob read failed!");
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Binary blob read failed: " + _file.string());
 		}
 		rewind(file);
 		_blob.resize(size);
 		const auto read = fread(_blob.data(), sizeof(std::byte), size, file);
 		if (static_cast<unsigned long long>(size) != read) [[unlikely]]
 		{
-			throw MAKE_FATAL_ENGINE_EXCEPTION("Binary blob read failed!");
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Binary blob read failed: " + _file.string());
 		}
 	}
 }
