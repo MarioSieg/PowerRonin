@@ -227,7 +227,7 @@ add_library(
     "source/renderer/shared_uniforms.cpp"
     "source/renderer/uniform.cpp" 
     "include/dce/aabb.hpp"
-     "include/dce/frustum.hpp" "source/aabb.cpp" "source/frustum.cpp")
+     "include/dce/frustum.hpp" "source/aabb.cpp" "source/frustum.cpp" "include/dce/hybrid.hpp"  "source/hybrid.cpp" "include/dce/managed_object.hpp" "source/managed_object.cpp")
 
 include("extern/CMakeLists.txt")
 
