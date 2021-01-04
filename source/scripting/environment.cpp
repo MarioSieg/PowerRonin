@@ -21,6 +21,31 @@ namespace dce::scripting
 	{
 		mono_set_dirs(_lib_dir.data(), _cfg_dir.data());
 		mono_config_parse(nullptr);
+		constexpr const char* jit_options[] = 
+		{
+			"--optimize=peephole",
+			"--optimize=branch",
+			"--optimize=inline",
+			"--optimize=cfold",
+			"--optimize=consprop",
+			"--optimize=copyprop",
+			"--optimize=deadce",
+			"--optimize=linears",
+			"--optimize=cmov",
+			"--optimize=sched",
+			"--optimize=intrins",
+			"--optimize=tailc",
+			"--optimize=loop",
+			"--optimize=fcmov",
+			"--optimize=leaf",
+			"--optimize=aot",
+			"--optimize=precomp",
+			"--optimize=float32",
+			"--optimize=sse2",
+			"--optimize=simd",
+			"--optimize=alias-analysis",
+		};
+		mono_jit_parse_options(sizeof jit_options / sizeof *jit_options, const_cast<char**>(jit_options));
 		const auto exe_name = executable_name();
 		this->domain_ = mono_jit_init(exe_name.c_str());
 		if (!this->domain_) [[unlikely]]
