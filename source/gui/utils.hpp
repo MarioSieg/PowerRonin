@@ -1,3 +1,18 @@
+// // *******************************************************************************
+// // The content of this file includes portions of the KerboGames Power Ronin Technology
+// // released in source code form as part of the SDK package.
+// // 
+// // Commercial License Usage
+// // 
+// // Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// // may use this file in accordance with the end user license agreement provided 
+// // with the software or, alternatively, in accordance with the terms contained in a
+// // written agreement between you and KerboGames.
+// // 
+// // Copyright (c) 2013-2021 KerboGames, MarioSieg.
+// // support@kerbogames.com
+// // *******************************************************************************
+
 #pragma once
 
 #include "gui_headers.hpp"
@@ -126,7 +141,7 @@ namespace power_ronin::gui
 		return result;
 	}
 
-	template<typename T> requires std::is_convertible<T, int>::value && std::is_standard_layout_v<T>
+	template <typename T> requires std::is_convertible<T, int>::value && std::is_standard_layout_v<T>
 	inline void input_integer(const char* const _label, T& _val, const int _step = 1, const int _step_fast = 100, const ImGuiInputTextFlags _flags = 0)
 	{
 		auto x = static_cast<int>(_val);
@@ -134,8 +149,8 @@ namespace power_ronin::gui
 		_val = static_cast<T>(x);
 	}
 
-	template<typename T> requires std::is_convertible<T, int>::value&& std::is_standard_layout_v<T>
-	inline void slider_integer(const char* const _label, T& _val, const int _min , const int _max, const ImGuiSliderFlags _flags = 0)
+	template <typename T> requires std::is_convertible<T, int>::value && std::is_standard_layout_v<T>
+	inline void slider_integer(const char* const _label, T& _val, const int _min, const int _max, const ImGuiSliderFlags _flags = 0)
 	{
 		auto x = static_cast<int>(_val);
 		ImGui::SliderInt(_label, &x, _min, _max, "%d", _flags);

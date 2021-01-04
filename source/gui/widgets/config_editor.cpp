@@ -1,3 +1,18 @@
+// // *******************************************************************************
+// // The content of this file includes portions of the KerboGames Power Ronin Technology
+// // released in source code form as part of the SDK package.
+// // 
+// // Commercial License Usage
+// // 
+// // Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// // may use this file in accordance with the end user license agreement provided 
+// // with the software or, alternatively, in accordance with the terms contained in a
+// // written agreement between you and KerboGames.
+// // 
+// // Copyright (c) 2013-2021 KerboGames, MarioSieg.
+// // support@kerbogames.com
+// // *******************************************************************************
+
 #include "config_editor.hpp"
 #include "../gui_headers.hpp"
 #include "../font_headers.hpp"
@@ -24,7 +39,7 @@ namespace power_ronin::gui::widgets
 				Checkbox("Use Scenery Time", &_scenery_config.lighting.sun.sync_hour_with_env_time);
 				ColorEdit3("Sunlight Color", value_ptr(_scenery_config.lighting.sun.color), ImGuiColorEditFlags_PickerHueWheel | ImGuiColorEditFlags_NoInputs);
 			}
-			if (CollapsingHeader(ICON_FA_TV_ALT " Display", ImGuiTreeNodeFlags_DefaultOpen)) [[likely]]
+			if (CollapsingHeader(ICON_FA_TV " Display", ImGuiTreeNodeFlags_DefaultOpen)) [[likely]]
 			{
 				Checkbox("Full Screen", &_cfg.display.is_full_screen);
 				Checkbox("Maximized", &_cfg.display.is_maximized);
@@ -42,7 +57,8 @@ namespace power_ronin::gui::widgets
 			{
 				slider_integer("Custom Font Size", _cfg.editor.custom_font_size, 10, 28);
 				Checkbox("User Auto Font Size", &_cfg.editor.enable_auto_font_size);
-				if (_cfg.editor.enable_auto_font_size) [[likely]] {
+				if (_cfg.editor.enable_auto_font_size) [[likely]]
+				{
 					slider_integer("Auto Font Size Full HD", _cfg.editor.auto_font_size_fhd, 10, 28);
 					slider_integer("Auto Font Size Wide Quad HD", _cfg.editor.auto_font_size_whqh, 10, 28);
 					slider_integer("Auto Font Size Ultra HD 4K", _cfg.editor.auto_font_size_uhd, 10, 28);

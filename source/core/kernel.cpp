@@ -1,8 +1,24 @@
+// // *******************************************************************************
+// // The content of this file includes portions of the KerboGames Power Ronin Technology
+// // released in source code form as part of the SDK package.
+// // 
+// // Commercial License Usage
+// // 
+// // Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
+// // may use this file in accordance with the end user license agreement provided 
+// // with the software or, alternatively, in accordance with the terms contained in a
+// // written agreement between you and KerboGames.
+// // 
+// // Copyright (c) 2013-2021 KerboGames, MarioSieg.
+// // support@kerbogames.com
+// // *******************************************************************************
+
 #include "../../include/power_ronin/core/kernel.hpp"
+#include "../../include/power_ronin/core/installer.hpp"
 #include "../../include/power_ronin/env.hpp"
 #include "../../include/power_ronin/time_utils.hpp"
-
-#include <chrono>
+#include "../../include/power_ronin/break_interrupt_handler.hpp"
+#include "../../include/power_ronin/panic_routine.hpp"
 
 namespace power_ronin::core
 {
@@ -22,15 +38,13 @@ namespace power_ronin::core
 		Runtime* runtime = nullptr;
 	};
 
-	Kernel::Kernel(const int _in_argc, const char* const * const _in_argv, const char* const * const _in_envp) : argc(_in_argc),
-	                                                                                                             argv(_in_argv), envp(_in_envp), core_(std::make_unique<Core>()) { }
+	Kernel::Kernel(const int _in_argc, const char** _in_argv, const char** _in_envp) : argc(_in_argc), argv(_in_argv), envp(_in_envp), core_(std::make_unique<Core>()) { }
 
-	auto Kernel::create(const int _in_argc, const char* const* const _in_argv, const char* const* const _in_envp) -> std::unique_ptr<Kernel>
+	auto Kernel::create(const int _in_argc, const char** _in_argv, const char** _in_envp) -> std::unique_ptr<Kernel>
 	{
 		struct Factory final : Kernel
 		{
-			explicit Factory(const int _a, const char* const* const _b, const char* const* const _c) : Kernel(
-				_a, _b, _c) { }
+			Factory(const int _in_argc, const char** _in_argv, const char** _in_envp) : Kernel(_in_argc, _in_argv, _in_envp) {}
 		};
 		return std::make_unique<Factory>(_in_argc, _in_argv, _in_envp);
 	}

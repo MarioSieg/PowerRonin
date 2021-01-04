@@ -15,12 +15,15 @@
 
 #pragma once
 
-#include "subsystem.hpp"
-#include "../../../include/power_ronin/runtime.hpp"
 #include <cstdint>
 #include <memory>
 #include <tuple>
 #include <vector>
+#include <chrono>
+#include <string_view>
+
+#include "subsystem.hpp"
+#include "../runtime.hpp"
 
 namespace power_ronin
 {
@@ -43,9 +46,7 @@ namespace power_ronin
 		class Kernel
 		{
 		public:
-			[[nodiscard]] static auto create(const int _in_argc
-			                                 , const char* const* const _in_argv
-			                                 , const char* const* const _in_envp) -> std::unique_ptr<Kernel>;
+			[[nodiscard]] static auto create(const int _in_argc, const char** _in_argv, const char** _in_envp) -> std::unique_ptr<Kernel>;
 
 			/// <summary>
 			/// Argument count.
@@ -163,7 +164,7 @@ namespace power_ronin
 			/// <summary>
 			/// Create a new kernel instance.
 			/// </summary>
-			explicit Kernel(int _in_argc, const char* const* _in_argv, const char* const* _in_envp);
+			explicit Kernel(const int _in_argc, const char** _in_argv, const char** _in_envp);
 
 			struct Core;
 			const std::unique_ptr<Core> core_;

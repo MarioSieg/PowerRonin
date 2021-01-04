@@ -22,3 +22,5 @@
 #else
 #define DREAM_ENTRY main
 #endif
+
+extern auto default_power_ronin_entry(int _argc, const char** _argv, const char** _envp = nullptr) -> int;

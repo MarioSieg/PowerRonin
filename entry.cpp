@@ -13,39 +13,9 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-#include "include/power_ronin/core/kernel.hpp"
-#include "include/power_ronin/core/installer.hpp"
 #include "include/power_ronin/core/entry.hpp"
-#include "include/power_ronin/break_interrupt_handler.hpp"
-#include "include/power_ronin/error_dump.hpp"
-
-using namespace power_ronin;
-using namespace core;
 
 /* Main function where the dream starts and ends. */
-auto DREAM_ENTRY(const int _argc, const char* const* const _argv, const char* const* const _envp) -> int {
-#if !IS_DEBUG
-	try {
-#endif
-		ScopedVectoredExceptionHandler _ = {};
-
-		auto kernel = Kernel::create(_argc, _argv, _envp);
-		kernel->install_subsystems(&install_common);
-		kernel->startup();
-		kernel->execute();
-		kernel->shutdown();
-		return 0;
-#if !IS_DEBUG
-	}
-	catch (const FatalEngineException& ex) {
-		create_fatal_dump(ex);
-		return -1;
-	} catch (const std::runtime_error& ex) {
-		create_fatal_dump(ex);
-		return -1;
-	} catch (...) {
-		create_fatal_dump();
-		return -1;
-	}
-#endif
+auto DREAM_ENTRY(const int _argc, const char** _argv, const char** _envp) -> int {
+	return ::default_power_ronin_entry(_argc, _argv, _envp);
 }

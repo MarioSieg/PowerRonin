@@ -15,26 +15,9 @@
 
 #pragma once
 
-namespace std
-{
-	class exception;
-}
+#include <string_view>
 
 namespace power_ronin
 {
-	class FatalEngineException;
-	/// <summary>
-/// (ERROR ROUTINE) Creates error dump to std::cerr and a file.
-/// </summary>
-	extern void create_fatal_dump();
-
-	/// <summary>
-	/// (ERROR ROUTINE) Creates error dump to std::cerr and a file.
-	/// </summary>
-	extern void create_fatal_dump(const std::exception& _ex);
-
-	/// <summary>
-	/// (ERROR ROUTINE) Creates error dump to std::cerr and a file.
-	/// </summary>
-	extern void create_fatal_dump(const FatalEngineException& _ex);
+	extern void global_panic_routine(const std::string_view _msg, const std::size_t _line = 0, const std::string_view _file = "Unknown");
 }

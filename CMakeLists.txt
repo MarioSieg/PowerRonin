@@ -171,8 +171,8 @@ add_library(
     "source/procinfo.cpp" 
     "include/power_ronin/interrupt.hpp"
     "source/interrupt.cpp" 
-    "include/power_ronin/error_dump.hpp"
-    "source/error_dump.cpp" 
+    "include/power_ronin/panic_routine.hpp"
+    "source/panic_routine.cpp" 
     "include/power_ronin/break_interrupt_handler.hpp" 
     "source/break_interrupt_handler.cpp" 
     "include/power_ronin/renderer_data.hpp" 
@@ -235,7 +235,7 @@ add_library(
     "include/power_ronin/hybrid.hpp"  
     "source/hybrid.cpp" 
     "include/power_ronin/managed_object.hpp" 
-    "source/managed_object.cpp")
+    "source/managed_object.cpp" "include/power_ronin/msgbox.hpp" "source/msgbox.cpp" "source/core/entry.cpp")
 
 include("extern/CMakeLists.txt")
 
