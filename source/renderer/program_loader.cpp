@@ -1,9 +1,9 @@
 #include "program_loader.hpp"
-#include "../../include/dce/blob.hpp"
-#include "../../include/dce/except.hpp"
+#include "../../include/power_ronin/blob.hpp"
+#include "../../include/power_ronin/except.hpp"
 #include <filesystem>
 
-namespace dce::renderer
+namespace power_ronin::renderer
 {
 	auto load_shader_program(const std::string_view _name) -> bgfx::ProgramHandle
 	{

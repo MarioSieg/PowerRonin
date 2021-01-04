@@ -1,8 +1,8 @@
-#include "../../include/dce/managed_object.hpp"
-#include "../../include/dce/except.hpp"
+#include "../../include/power_ronin/managed_object.hpp"
+#include "../../include/power_ronin/except.hpp"
 #include "scripting/mono_headers.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	auto mo_alloc(void* const _domain, void* const _class, void* const _ctor, void** const _ctor_args, const bool _is_pinned) -> std::uint32_t
 	{

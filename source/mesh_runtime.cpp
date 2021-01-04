@@ -1,11 +1,11 @@
-#include "../include/dce/mesh.hpp"
+#include "../include/power_ronin/mesh.hpp"
 #include "renderer/gl_headers.hpp"
 #include "../extern/assimp/include/assimp/Importer.hpp"
 #include "../extern/assimp/include/assimp/postprocess.h"
 #include "../extern/assimp/include/assimp/scene.h"
 #include "../extern/assimp/include/assimp/cimport.h"
 
-namespace dce
+namespace power_ronin
 {
 	static auto create_vertex_layout() -> bgfx::VertexLayout
 	{

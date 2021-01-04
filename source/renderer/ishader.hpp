@@ -8,7 +8,7 @@
 #include "uniform.hpp"
 #include "program_loader.hpp"
 
-namespace dce::renderer
+namespace power_ronin::renderer
 {
 	/// <summary>
 	/// Base class for all shaders.

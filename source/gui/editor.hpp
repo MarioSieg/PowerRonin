@@ -9,12 +9,12 @@
 #include "widgets/config_editor.hpp"
 #include "widgets/scenery_viewer.hpp"
 
-namespace dce::gui::widgets
+namespace power_ronin::gui::widgets
 {
 #include "widgets/ram_editor.hpp"
 }
 
-namespace dce
+namespace power_ronin
 {
 	class Runtime;
 

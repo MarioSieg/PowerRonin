@@ -2,7 +2,7 @@
 #include "internal_calls.hpp"
 #include "dreamcast.dll.hpp"
 
-namespace dce::scripting
+namespace power_ronin::scripting
 {
 	Scripting::Scripting() : ISubsystem("Scripting", EVENTS), runtime_environment_() { }
 

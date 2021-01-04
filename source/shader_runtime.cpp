@@ -1,8 +1,8 @@
-#include "../include/dce/shader.hpp"
-#include "../include/dce/blob.hpp"
+#include "../include/power_ronin/shader.hpp"
+#include "../include/power_ronin/blob.hpp"
 #include "renderer/gl_headers.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	void Shader::upload()
 	{

@@ -1,8 +1,8 @@
-#include "../include/dce/time_utils.hpp"
-#include "../../include/dce/env.hpp"
+#include "../include/power_ronin/time_utils.hpp"
+#include "../../include/power_ronin/env.hpp"
 #include <mutex>
 
-namespace dce
+namespace power_ronin
 {
 	auto safe_localtime(const std::time_t& _time) -> std::tm
 	{

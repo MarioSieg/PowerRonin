@@ -2,7 +2,7 @@
 
 #include "gui_headers.hpp"
 
-namespace dce::gui
+namespace power_ronin::gui
 {
 	// utility structure for realtime plot
 	struct ScrollingBuffer final
@@ -27,4 +27,4 @@ namespace dce::gui
 
 		void add_point(float _x, float _y);
 	};
-} // namespace dce::gui::widgets // namespace dce::gui::widgets
+} // namespace power_ronin::gui::widgets // namespace power_ronin::gui::widgets

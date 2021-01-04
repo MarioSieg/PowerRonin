@@ -1,8 +1,8 @@
-#include "../../include/dce/flycam.hpp"
-#include "../../include/dce/runtime.hpp"
+#include "../../include/power_ronin/flycam.hpp"
+#include "../../include/power_ronin/runtime.hpp"
 #include "gui/gui_headers.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	auto EditorCamera::projection_matrix() const noexcept -> const SimdMatrix4x4<>&
 	{

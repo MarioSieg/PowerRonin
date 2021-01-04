@@ -1,7 +1,7 @@
-#include "../include/dce/resource_manager.hpp"
-#include "../include/dce/proto.hpp"
+#include "../include/power_ronin/resource_manager.hpp"
+#include "../include/power_ronin/proto.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	void SystemResources::load_all(ResourceManager& _rm)
 	{
@@ -90,4 +90,4 @@ namespace dce
 		this->proto_.critical("Loaded material {} in {}s!", file, dur);
 		return ptr;
 	}
-} // namespace dce // namespace dce
+} // namespace power_ronin // namespace power_ronin

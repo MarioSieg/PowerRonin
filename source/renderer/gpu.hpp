@@ -2,15 +2,15 @@
 
 #include <cstdint>
 
-#include "../../include/dce/mathlib.hpp"
-#include "../../include/dce/mesh.hpp"
-#include "../../include/dce/texture.hpp"
-#include "../../include/dce/mesh_renderer.hpp"
+#include "../../include/power_ronin/mathlib.hpp"
+#include "../../include/power_ronin/mesh.hpp"
+#include "../../include/power_ronin/texture.hpp"
+#include "../../include/power_ronin/mesh_renderer.hpp"
 
 #include "gl_headers.hpp"
 #include "uniform.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	class Transform;
 	class MeshRenderer;
@@ -19,7 +19,7 @@ namespace dce
 	class AsyncProtocol;
 }
 
-namespace dce::renderer
+namespace power_ronin::renderer
 {
 	/// <summary>
 	/// Represents a high level GPU which can draw stuff.

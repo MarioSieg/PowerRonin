@@ -2,14 +2,14 @@
 #include "stats.hpp"
 #include "../../extern/bullet3/examples/ThirdPartyLibs/imgui/imgui.h"
 
-#include "../../include/dce/proto.hpp"
-#include "../../include/dce/env.hpp"
-#include "../../include/dce/config.hpp"
-#include "../../include/dce/transform.hpp"
-#include "../../include/dce/mesh_renderer.hpp"
+#include "../../include/power_ronin/proto.hpp"
+#include "../../include/power_ronin/env.hpp"
+#include "../../include/power_ronin/config.hpp"
+#include "../../include/power_ronin/transform.hpp"
+#include "../../include/power_ronin/mesh_renderer.hpp"
 #include "../platform/platform.hpp"
 
-namespace dce::renderer
+namespace power_ronin::renderer
 {
 	auto GPU::initialize_drivers(const Config& _config, AsyncProtocol& _proto) const -> bool
 	{

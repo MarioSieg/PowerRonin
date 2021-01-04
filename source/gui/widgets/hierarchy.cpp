@@ -1,11 +1,11 @@
 #include "hierarchy.hpp"
 #include "../gui_headers.hpp"
 #include "../window_names.hpp"
-#include "../../../include/dce/comcollections.hpp"
+#include "../../../include/power_ronin/comcollections.hpp"
 
 using namespace ImGui;
 
-namespace dce::gui::widgets
+namespace power_ronin::gui::widgets
 {
 	void Hierarchy::update(bool& _show, Registry& _registry)
 	{

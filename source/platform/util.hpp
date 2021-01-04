@@ -3,7 +3,7 @@
 struct GLFWwindow;
 struct GLFWmonitor;
 
-namespace dce::platform
+namespace power_ronin::platform
 {
 	extern void center_window(GLFWwindow* const _win, GLFWmonitor* const _monitor);
 }

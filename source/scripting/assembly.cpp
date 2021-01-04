@@ -1,8 +1,8 @@
 #include "assembly.hpp"
 #include <filesystem>
-#include "../../include/dce/except.hpp"
+#include "../../include/power_ronin/except.hpp"
 
-namespace dce::scripting
+namespace power_ronin::scripting
 {
 	void Assembly::load(std::string&& _name, RuntimeEnvironment& _env, const int _argc, char** const _argv)
 	{

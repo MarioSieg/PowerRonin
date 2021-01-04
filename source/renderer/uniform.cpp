@@ -1,7 +1,7 @@
 #include "uniform.hpp"
-#include "../../include/dce/except.hpp"
+#include "../../include/power_ronin/except.hpp"
 
-namespace dce::renderer
+namespace power_ronin::renderer
 {
 	Uniform::Uniform(const std::string_view _name, const bgfx::UniformType::Enum _type) noexcept : type_(_type), name_(_name) { }
 

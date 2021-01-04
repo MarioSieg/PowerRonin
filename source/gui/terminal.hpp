@@ -4,7 +4,7 @@
 
 #include <array>
 
-namespace dce
+namespace power_ronin
 {
 	class Runtime;
 	class CmdDB;
@@ -38,4 +38,4 @@ namespace dce
 			char buffer_[128] = {};
 		};
 	} // namespace gui::widgets // namespace gui::widgets
-} // namespace dce // namespace dce
+} // namespace power_ronin // namespace power_ronin

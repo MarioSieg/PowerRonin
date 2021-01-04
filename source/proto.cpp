@@ -1,5 +1,5 @@
-#include "../include/dce/proto.hpp"
-#include "../include/dce/time_utils.hpp"
+#include "../include/power_ronin/proto.hpp"
+#include "../include/power_ronin/time_utils.hpp"
 #include "../extern/spdlog/include/spdlog/async.h"
 #include "../extern/spdlog/include/spdlog/sinks/basic_file_sink.h"
 #include "terminal_sink.hpp"
@@ -8,7 +8,7 @@
 #include <iomanip>
 #include <sstream>
 
-namespace dce
+namespace power_ronin
 {
 	AsyncProtocol::AsyncProtocol() : AsyncProtocol("engine") { }
 
@@ -23,4 +23,4 @@ namespace dce
 		this->core_ = std::make_shared<spdlog::async_logger>(_name, std::make_shared<TerminalSink<>>(std::move(name)),
 		                                                     thread_pool);
 	}
-} // namespace dce // namespace dce
+} // namespace power_ronin // namespace power_ronin

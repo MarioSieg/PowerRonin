@@ -1,6 +1,6 @@
 #include "audio.hpp"
 
-namespace dce::audio
+namespace power_ronin::audio
 {
 	Audio::Audio() : ISubsystem("Audio", EVENTS) { }
 

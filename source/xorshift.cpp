@@ -1,6 +1,6 @@
-#include "../include/dce/xorshift.hpp"
+#include "../include/power_ronin/xorshift.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	auto xorshift32() noexcept -> std::uint32_t
 	{
@@ -36,4 +36,4 @@ namespace dce
 		w ^= w >> UINT32_C(13) ^ t ^ t >> UINT32_C(0x8);
 		return w;
 	}
-} // namespace dce // namespace dce
+} // namespace power_ronin // namespace power_ronin

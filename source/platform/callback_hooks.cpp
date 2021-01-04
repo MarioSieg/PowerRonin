@@ -1,9 +1,9 @@
 #include "callback_hooks.hpp"
 #include "platform_headers.hpp"
-#include "../../include/dce/env.hpp"
+#include "../../include/power_ronin/env.hpp"
 #include "../gui/gui_headers.hpp"
 
-namespace dce::platform
+namespace power_ronin::platform
 {
 	bool (*MOUSE_STATES)[5] = nullptr;
 
@@ -59,4 +59,4 @@ namespace dce::platform
 	{
 		ImGui::GetIO().AddInputCharacter(_c);
 	}
-} // namespace dce::platform // namespace dce::platform
+} // namespace power_ronin::platform // namespace power_ronin::platform

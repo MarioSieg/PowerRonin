@@ -1,6 +1,6 @@
-#include "../include/dce/half.hpp"
+#include "../include/power_ronin/half.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	auto half_from_float(const float x) noexcept -> std::uint16_t
 	{
@@ -123,4 +123,4 @@ namespace dce
 		} utof{.ui = f_result};
 		return utof.flt;
 	}
-} // namespace dce // namespace dce
+} // namespace power_ronin // namespace power_ronin

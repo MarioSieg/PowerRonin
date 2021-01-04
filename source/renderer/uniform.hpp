@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../../include/dce/mathlib.hpp"
+#include "../../include/power_ronin/mathlib.hpp"
 #include "gl_headers.hpp"
 #include <string_view>
 
-namespace dce::renderer
+namespace power_ronin::renderer
 {
 	/// <summary>
 	/// Represents a uniform.

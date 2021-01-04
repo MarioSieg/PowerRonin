@@ -1,5 +1,5 @@
-#include "../include/dce/fence.hpp"
-#include "../include/dce/env.hpp"
+#include "../include/power_ronin/fence.hpp"
+#include "../include/power_ronin/env.hpp"
 
 #if COM_MSVC
 extern "C" void _ReadBarrier();
@@ -20,7 +20,7 @@ extern "C" void _ReadWriteBarrier();
 #define MEM_BARRIER() asm volatile("":::"memory");
 #endif
 
-namespace dce
+namespace power_ronin
 {
 	void read_fence() noexcept
 	{

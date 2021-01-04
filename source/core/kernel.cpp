@@ -1,10 +1,10 @@
-#include "../../include/dce/core/kernel.hpp"
-#include "../../include/dce/env.hpp"
-#include "../../include/dce/time_utils.hpp"
+#include "../../include/power_ronin/core/kernel.hpp"
+#include "../../include/power_ronin/env.hpp"
+#include "../../include/power_ronin/time_utils.hpp"
 
 #include <chrono>
 
-namespace dce::core
+namespace power_ronin::core
 {
 	//@formatter:off
 
@@ -297,4 +297,4 @@ namespace dce::core
 	}
 
 	//@formatter:on
-} // namespace dce::core // namespace dce::core
+} // namespace power_ronin::core // namespace power_ronin::core

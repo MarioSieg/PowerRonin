@@ -2,7 +2,7 @@
 #include "gui_headers.hpp"
 #include "utils.hpp"
 
-namespace dce::gui
+namespace power_ronin::gui
 {
 	void style_blue() noexcept
 	{
@@ -349,4 +349,4 @@ namespace dce::gui
 			case SystemTheme::LIGHT: style_light();
 		}
 	}
-} // namespace dce::gui // namespace dce::gui
+} // namespace power_ronin::gui // namespace power_ronin::gui

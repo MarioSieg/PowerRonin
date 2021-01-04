@@ -1,6 +1,6 @@
-#include "../include/dce/aabb.hpp"
+#include "../include/power_ronin/aabb.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	AABB::AABB(const SimdVector3<>& _min, const SimdVector3<>& _max) noexcept : min(_min), max(_max) { }
 

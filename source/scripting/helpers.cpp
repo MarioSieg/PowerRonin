@@ -1,3 +1,3 @@
 #include "helpers.hpp"
 
-namespace dce::scripting {}
+namespace power_ronin::scripting {}

@@ -3,13 +3,13 @@
 #include "stats.hpp"
 #include "../sysclock.hpp"
 #include "../platform/platform.hpp"
-#include "../../include/dce/mathlib.hpp"
-#include "../../include/dce/transform.hpp"
-#include "../../include/dce/mesh_renderer.hpp"
-#include "../../include/dce/variant_visit_overloader.hpp"
-#include "../../include/dce/sun.hpp"
+#include "../../include/power_ronin/mathlib.hpp"
+#include "../../include/power_ronin/transform.hpp"
+#include "../../include/power_ronin/mesh_renderer.hpp"
+#include "../../include/power_ronin/variant_visit_overloader.hpp"
+#include "../../include/power_ronin/sun.hpp"
 
-namespace dce::renderer
+namespace power_ronin::renderer
 {
 	Renderer::Renderer() : ISubsystem("Renderer", EVENTS), shader_bucket_(this->gpu_) { }
 
@@ -201,4 +201,4 @@ namespace dce::renderer
 		this->gpu_.shutdown_drivers();
 		return true;
 	}
-} // namespace dce::renderer // namespace dce::renderer
+} // namespace power_ronin::renderer // namespace power_ronin::renderer

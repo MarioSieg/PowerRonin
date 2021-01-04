@@ -2,7 +2,7 @@
 
 #include "uniform.hpp"
 
-namespace dce::renderer
+namespace power_ronin::renderer
 {
 	/// <summary>
 	/// Contains per frame shared uniforms which can be used by all shaders.

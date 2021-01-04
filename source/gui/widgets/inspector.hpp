@@ -1,20 +1,20 @@
 #pragma once
 
-#include "../../../include/dce/ecs.hpp"
+#include "../../../include/power_ronin/ecs.hpp"
 // ReSharper disable once CppUnusedIncludeDirective
 #include "../gui_headers.hpp"
 #include "../../extern/imgui/ImGuizmo.h"
 #include <array>
 #include <filesystem>
 
-namespace dce
+namespace power_ronin
 {
 	class Runtime;
 	class RenderData;
 	class Transform;
 }
 
-namespace dce::gui::widgets
+namespace power_ronin::gui::widgets
 {
 	class Inspector final
 	{

@@ -2,11 +2,11 @@
 #include "gui_headers.hpp"
 #include "font_headers.hpp"
 #include "window_names.hpp"
-#include "../../include/dce/runtime.hpp"
+#include "../../include/power_ronin/runtime.hpp"
 
 using namespace ImGui;
 
-namespace dce::gui
+namespace power_ronin::gui
 {
 	void Editor::initialize([[maybe_unused]] Runtime& _rt)
 	{

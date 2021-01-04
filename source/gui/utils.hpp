@@ -1,11 +1,11 @@
 #pragma once
 
 #include "gui_headers.hpp"
-#include "../../include/dce/texture.hpp"
+#include "../../include/power_ronin/texture.hpp"
 #include "../renderer/gl_headers.hpp"
 #include <cstdint>
 
-namespace dce::gui
+namespace power_ronin::gui
 {
 	constexpr auto imgui_rgba(const std::uint8_t _r
 	                          , const std::uint8_t _g
@@ -141,4 +141,4 @@ namespace dce::gui
 		ImGui::SliderInt(_label, &x, _min, _max, "%d", _flags);
 		_val = static_cast<T>(x);
 	}
-} // namespace dce::gui // namespace dce::gui
+} // namespace power_ronin::gui // namespace power_ronin::gui

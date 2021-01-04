@@ -6,7 +6,7 @@
 
 using namespace ImGui;
 
-namespace dce::gui::widgets
+namespace power_ronin::gui::widgets
 {
 	void ConfigEditor::update(bool& _show, Config& _cfg, Scenery::Configuration& _scenery_config) const
 	{

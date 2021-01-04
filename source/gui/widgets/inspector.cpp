@@ -2,19 +2,19 @@
 #include "../gui_headers.hpp"
 #include "../font_headers.hpp"
 #include "../utils.hpp"
-#include "../../include/dce/comcollections.hpp"
-#include "../../include/dce/resource_manager.hpp"
+#include "../../include/power_ronin/comcollections.hpp"
+#include "../../include/power_ronin/resource_manager.hpp"
 #include "../file_dialog_tool.hpp"
 #include "../window_names.hpp"
-#include "../../../include/dce/renderer_data.hpp"
-#include "../../../include/dce/runtime.hpp"
+#include "../../../include/power_ronin/renderer_data.hpp"
+#include "../../../include/power_ronin/runtime.hpp"
 
 using namespace ImGui;
 
 // Pls fix :'(
 extern const float *VIEW, *PROJ;
 
-namespace dce::gui::widgets
+namespace power_ronin::gui::widgets
 {
 	void Inspector::initialize()
 	{

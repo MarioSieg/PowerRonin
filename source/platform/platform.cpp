@@ -1,7 +1,7 @@
 #include "platform.hpp"
 #include "util.hpp"
-#include "../../include/dce/config.hpp"
-#include "../../include/dce/env.hpp"
+#include "../../include/power_ronin/config.hpp"
+#include "../../include/power_ronin/env.hpp"
 #include <cmath>
 #include <iostream>
 
@@ -15,9 +15,9 @@ namespace
 		std::cerr << "Fatal platform error! Code: " << _error << " Message: " << _info << 'n';
 	}
 
-	void print_monitor_info(GLFWmonitor* const _current, dce::AsyncProtocol& _logger)
+	void print_monitor_info(GLFWmonitor* const _current, power_ronin::AsyncProtocol& _logger)
 	{
-		using namespace dce;
+		using namespace power_ronin;
 
 		float scale_x = NAN;
 		float scale_y = NAN;
@@ -46,9 +46,9 @@ namespace
 		_logger.info("\t\tWorking area: ({}, {}, {}, {})", wx, wy, ww, wh);
 	}
 
-	void print_video_mode_info(const GLFWvidmode* const _current, dce::AsyncProtocol& _logger)
+	void print_video_mode_info(const GLFWvidmode* const _current, power_ronin::AsyncProtocol& _logger)
 	{
-		using namespace dce;
+		using namespace power_ronin;
 
 		_logger.info("\t\tResolution: ({}, {})", _current->width, _current->height);
 		_logger.info("\t\tAspect ratio: {}",
@@ -105,7 +105,7 @@ namespace
 	}
 } // namespace // namespace
 
-namespace dce::platform
+namespace power_ronin::platform
 {
 	void* NATIVE_WINDOW_HANDLE = nullptr;
 	void* WINDOW_HANDLE = nullptr;
@@ -189,7 +189,7 @@ namespace dce::platform
 		proto.info("Initializing window...");
 
 		/* Create window: */
-		this->window_ = glfwCreateWindow(display_settings.resolution.width, display_settings.resolution.height, "Dreamcast Engine"
+		this->window_ = glfwCreateWindow(display_settings.resolution.width, display_settings.resolution.height, core::ENGINE_NAME.data()
 		                                 , display_settings.is_full_screen ? primary_monitor : nullptr, nullptr);
 
 		if (this->window_ == nullptr) [[unlikely]]
@@ -373,4 +373,4 @@ namespace dce::platform
 
 		return true;
 	}
-} // namespace dce::platform // namespace dce::platform
+} // namespace power_ronin::platform // namespace power_ronin::platform

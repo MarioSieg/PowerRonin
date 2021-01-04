@@ -1,6 +1,6 @@
-#include "../include/dce/frustum.hpp"
+#include "../include/power_ronin/frustum.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	template <Frustum::Planes I, Frustum::Planes J>
 	struct IJ2K

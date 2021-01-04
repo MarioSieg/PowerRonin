@@ -1,14 +1,14 @@
 #include "gui_renderer.hpp"
 #include "renderer.hpp"
 #include "utils.hpp"
-#include "../../include/dce/mathlib.hpp"
+#include "../../include/power_ronin/mathlib.hpp"
 #include "../gui/font_headers.hpp"
 #include "../gui/gui_headers.hpp"
 #include "../renderer/program_loader.hpp"
 
 #include <algorithm>
 
-namespace dce::renderer
+namespace power_ronin::renderer
 {
 	auto GuiRenderer::initialize(const std::uint8_t _font_size) -> bool
 	{
@@ -196,4 +196,4 @@ namespace dce::renderer
 		destroy(this->gui_program_);
 		destroy(this->gui_image_program_);
 	}
-} // namespace dce::renderer // namespace dce::renderer
+} // namespace power_ronin::renderer // namespace power_ronin::renderer

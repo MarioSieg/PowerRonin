@@ -1,11 +1,11 @@
-#include "../include/dce/pixelformat.hpp"
-#include "../include/dce/half.hpp"
+#include "../include/power_ronin/pixelformat.hpp"
+#include "../include/power_ronin/half.hpp"
 
 #include <algorithm>
 #include <cmath>
 #include <memory>
 
-namespace dce
+namespace power_ronin
 {
 	auto to_unorm(float _value, float _scale) noexcept -> std::uint32_t
 	{
@@ -944,4 +944,4 @@ namespace dce
 		dst1[2] = half_to_float(pack_ed >> 17 & 0x7fe0);
 		dst1[3] = 1.0F;
 	}
-} // namespace dce // namespace dce
+} // namespace power_ronin // namespace power_ronin

@@ -1,6 +1,6 @@
-#include "../include/dce/break_interrupt_handler.hpp"
-#include "../include/dce/env.hpp"
-#include "../include/dce/time_utils.hpp"
+#include "../include/power_ronin/break_interrupt_handler.hpp"
+#include "../include/power_ronin/env.hpp"
+#include "../include/power_ronin/time_utils.hpp"
 
 #include <filesystem>
 #include <iomanip>
@@ -13,7 +13,7 @@
 #include <Windows.h>
 #endif
 
-namespace dce
+namespace power_ronin
 {
 #if SYS_WINDOWS
 #define CALL_FIRST 1

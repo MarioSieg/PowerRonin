@@ -1,6 +1,6 @@
 #pragma error disable 418
 
-#include "../../include/dce/runtime.hpp"
+#include "../../include/power_ronin/runtime.hpp"
 
 #include "internal_calls.hpp"
 #include "mono_headers.hpp"
@@ -13,7 +13,7 @@
 			mono_add_internal_call("Dreamcast.Core.NativeRuntime::" _name, NATIVE_PROC);	\
 		}
 
-namespace dce::scripting
+namespace power_ronin::scripting
 {
 	void register_basic_internal_calls(Runtime& _rt)
 	{

@@ -1,3 +1,3 @@
 #pragma once
 
-namespace dce::scripting {}
+namespace power_ronin::scripting {}

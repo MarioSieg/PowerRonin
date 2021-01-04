@@ -1,13 +1,13 @@
-#include "../include/dce/error_dump.hpp"
-#include "../include/dce/except.hpp"
-#include "../include/dce/time_utils.hpp"
+#include "../include/power_ronin/error_dump.hpp"
+#include "../include/power_ronin/except.hpp"
+#include "../include/power_ronin/time_utils.hpp"
 
 #include <iostream>
 #include <sstream>
 #include <fstream>
 #include <filesystem>
 
-namespace dce
+namespace power_ronin
 {
 	void create_fatal_dump()
 	{

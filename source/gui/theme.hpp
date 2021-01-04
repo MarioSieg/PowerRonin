@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../../include/dce/config.hpp"
+#include "../../include/power_ronin/config.hpp"
 
-namespace dce::gui
+namespace power_ronin::gui
 {
 	enum class SystemTheme
 	{
@@ -22,4 +22,4 @@ namespace dce::gui
 	extern void style_antialiasing_apply(bool _enable_aa = true) noexcept;
 	extern void style_rounding_apply(float _rounding = .0F) noexcept;
 	extern void style_apply(SystemTheme _style) noexcept;
-} // namespace dce::gui // namespace dce::gui
+} // namespace power_ronin::gui // namespace power_ronin::gui

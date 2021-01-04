@@ -1,9 +1,9 @@
-#include "../../include/dce/procinfo.hpp"
-#include "../../include/dce/except.hpp"
+#include "../../include/power_ronin/procinfo.hpp"
+#include "../../include/power_ronin/except.hpp"
 #include "environment.hpp"
 #include <filesystem>
 
-namespace dce::scripting
+namespace power_ronin::scripting
 {
 	void default_exception_handler(AsyncProtocol& _proto, MonoObject* const _ex)
 	{

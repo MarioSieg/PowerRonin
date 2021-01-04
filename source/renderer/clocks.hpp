@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace dce
+namespace power_ronin
 {
 	class Chrono;
 

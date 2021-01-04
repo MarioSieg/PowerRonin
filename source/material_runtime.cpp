@@ -1,6 +1,6 @@
-#include "../../include/dce/material.hpp"
+#include "../../include/power_ronin/material.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	void Material::upload() { }
 

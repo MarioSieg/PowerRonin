@@ -1,7 +1,7 @@
 #include "gui.hpp"
 #include "theme.hpp"
 
-namespace dce::gui
+namespace power_ronin::gui
 {
 	Gui::Gui() : ISubsystem("OverlayGui", EVENTS) { }
 
@@ -112,4 +112,4 @@ namespace dce::gui
 			this->gui_renderer_.render(data);
 		}
 	}
-} // namespace dce::gui // namespace dce::gui
+} // namespace power_ronin::gui // namespace power_ronin::gui

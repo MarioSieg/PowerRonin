@@ -1,7 +1,7 @@
 #include "scroll_roll_buffer.hpp"
 #include <cmath>
 
-namespace dce::gui
+namespace power_ronin::gui
 {
 	ScrollingBuffer::ScrollingBuffer()
 	{

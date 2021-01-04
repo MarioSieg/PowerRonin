@@ -1,5 +1,5 @@
-#include "../include/dce/procinfo.hpp"
-#include "../include/dce/env.hpp"
+#include "../include/power_ronin/procinfo.hpp"
+#include "../include/power_ronin/env.hpp"
 
 #if SYS_WINDOWS
 #define WIN32_LEAN_AND_MEAN
@@ -9,7 +9,7 @@
 #endif
 
 
-namespace dce
+namespace power_ronin
 {
 	auto executable_name() -> std::string
 	{

@@ -1,14 +1,14 @@
-#include "../include/dce/texture.hpp"
-#include "../include/dce/resource_manager.hpp"
-#include "../include/dce/blob.hpp"
+#include "../include/power_ronin/texture.hpp"
+#include "../include/power_ronin/resource_manager.hpp"
+#include "../include/power_ronin/blob.hpp"
 
 #include "../extern/bgfx/bgfx/include/bgfx/bgfx.h"
 #include "../extern/bgfx/bimg/include/bimg/bimg.h"
 #include "../extern/bgfx/bx/include/bx/allocator.h"
 #include "../extern/stb/stb_image.h"
-#include "../include/dce/time_utils.hpp"
+#include "../include/power_ronin/time_utils.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	void Texture::upload()
 	{

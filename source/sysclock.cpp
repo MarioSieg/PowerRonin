@@ -1,5 +1,5 @@
 #include "sysclock.hpp"
-#include "../include/dce/env.hpp"
+#include "../include/power_ronin/env.hpp"
 
 #if SYS_WINDOWS
 #define WIN32_LEAN_AND_MEAN
@@ -8,7 +8,7 @@
 #include <sys/time.h>
 #endif
 
-namespace dce
+namespace power_ronin
 {
 	auto get_high_precision_counter() noexcept -> std::uint64_t
 	{

@@ -2,12 +2,12 @@
 #include "../font_headers.hpp"
 #include "../gui_headers.hpp"
 #include "../utils.hpp"
-#include "../../../include/dce/resource_manager.hpp"
+#include "../../../include/power_ronin/resource_manager.hpp"
 #include "../window_names.hpp"
 
 using namespace ImGui;
 
-namespace dce::gui::widgets
+namespace power_ronin::gui::widgets
 {
 	void ResourceViewer::update(bool& _show, ResourceManager& _rm)
 	{
@@ -111,4 +111,4 @@ namespace dce::gui::widgets
 		}
 		End();
 	}
-} // namespace dce::gui::widgets // namespace dce::gui::widgets
+} // namespace power_ronin::gui::widgets // namespace power_ronin::gui::widgets

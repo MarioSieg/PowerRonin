@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../include/dce/core/kernel.hpp"
+#include "../../include/power_ronin/core/kernel.hpp"
 #include "../platform/input.hpp"
 #include "../renderer/gui_renderer.hpp"
 
@@ -8,7 +8,7 @@
 #include "terminal.hpp"
 #include "editor.hpp"
 
-namespace dce::gui
+namespace power_ronin::gui
 {
 	class Gui final : public core::ISubsystem
 	{
@@ -42,4 +42,4 @@ namespace dce::gui
 		Editor editor_ = {};
 		Terminal terminal_ = {};
 	};
-} // namespace dce::gui // namespace dce::gui
+} // namespace power_ronin::gui // namespace power_ronin::gui

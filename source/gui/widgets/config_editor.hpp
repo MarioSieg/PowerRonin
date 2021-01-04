@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../../../include/dce/config.hpp"
-#include "../../../include/dce/scenery.hpp"
+#include "../../../include/power_ronin/config.hpp"
+#include "../../../include/power_ronin/scenery.hpp"
 
-namespace dce::gui::widgets
+namespace power_ronin::gui::widgets
 {
 	class ConfigEditor final
 	{

@@ -1,6 +1,6 @@
-#include "../include/dce/mesh.hpp"
+#include "../include/power_ronin/mesh.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	auto Mesh::indices() const noexcept -> const std::vector<std::uint16_t>&
 	{
@@ -26,4 +26,4 @@ namespace dce
 	{
 		return this->aabb_;
 	}
-} // namespace dce // namespace dce
+} // namespace power_ronin // namespace power_ronin

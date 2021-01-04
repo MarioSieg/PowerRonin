@@ -13,13 +13,13 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-#include "include/dce/core/kernel.hpp"
-#include "include/dce/core/installer.hpp"
-#include "include/dce/core/entry.hpp"
-#include "include/dce/break_interrupt_handler.hpp"
-#include "include/dce/error_dump.hpp"
+#include "include/power_ronin/core/kernel.hpp"
+#include "include/power_ronin/core/installer.hpp"
+#include "include/power_ronin/core/entry.hpp"
+#include "include/power_ronin/break_interrupt_handler.hpp"
+#include "include/power_ronin/error_dump.hpp"
 
-using namespace dce;
+using namespace power_ronin;
 using namespace core;
 
 /* Main function where the dream starts and ends. */

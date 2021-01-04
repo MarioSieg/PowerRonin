@@ -1,10 +1,10 @@
-#include "../include/dce/event_behaviour.hpp"
+#include "../include/power_ronin/event_behaviour.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	void IEventBehaviour::start() { }
 
 	void IEventBehaviour::update() { }
 
 	void IEventBehaviour::end() { }
-} // namespace dce
+} // namespace power_ronin

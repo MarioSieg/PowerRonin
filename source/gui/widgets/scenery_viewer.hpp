@@ -1,11 +1,11 @@
 #pragma once
 
-namespace dce
+namespace power_ronin
 {
 	class RenderData;
 }
 
-namespace dce::gui::widgets
+namespace power_ronin::gui::widgets
 {
 	class SceneryViewer final
 	{

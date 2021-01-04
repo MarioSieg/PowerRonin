@@ -2,7 +2,7 @@
 
 struct GLFWcursor;
 
-namespace dce::platform
+namespace power_ronin::platform
 {
 	class GuiInput final
 	{
@@ -21,4 +21,4 @@ namespace dce::platform
 		double timer = .0;
 		void* window = nullptr;
 	};
-} // namespace dce::platform // namespace dce::platform
+} // namespace power_ronin::platform // namespace power_ronin::platform

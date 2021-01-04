@@ -1,6 +1,6 @@
-#include "../../include/dce/hybrid.hpp"
+#include "../../include/power_ronin/hybrid.hpp"
 
-namespace dce
+namespace power_ronin
 {
 
 }

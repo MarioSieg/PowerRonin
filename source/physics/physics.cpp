@@ -1,6 +1,6 @@
 #include "physics.hpp"
 
-namespace dce::physics
+namespace power_ronin::physics
 {
 	Physics::Physics() : ISubsystem("Physics", EVENTS) { }
 

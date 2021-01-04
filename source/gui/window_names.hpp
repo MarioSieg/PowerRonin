@@ -2,7 +2,7 @@
 
 #include "font_headers.hpp"
 
-namespace dce::gui
+namespace power_ronin::gui
 {
 	// Names for all windows.
 

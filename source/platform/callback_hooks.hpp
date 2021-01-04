@@ -2,7 +2,7 @@
 
 struct GLFWwindow;
 
-namespace dce::platform
+namespace power_ronin::platform
 {
 	/* Mouse button callback hook. */
 	void mouse_button_callback([[maybe_unused]] GLFWwindow* _win
@@ -26,4 +26,4 @@ namespace dce::platform
 
 	/* Ugly and hacky way to get the mouse states into a global function. */
 	extern bool (*MOUSE_STATES)[5];
-} // namespace dce::platform // namespace dce::platform
+} // namespace power_ronin::platform // namespace power_ronin::platform

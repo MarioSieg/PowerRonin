@@ -5,7 +5,7 @@
 #include "shaders/bumped_diffuse.hpp"
 #include "shaders/skybox.hpp"
 
-namespace dce::renderer
+namespace power_ronin::renderer
 {
 	class ShaderBucket final
 	{

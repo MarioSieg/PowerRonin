@@ -2,7 +2,7 @@
 #include "../../extern/nativefiledialog/src/include/nfd.h"
 #include <cstddef>
 
-namespace dce::gui
+namespace power_ronin::gui
 {
 	void open_file_dialog(char*& _out, const char* const _filter, const char* const _default_path)
 	{

@@ -4,10 +4,10 @@
 #include <string_view>
 
 #include "mono_headers.hpp"
-#include "../../include/dce/proto.hpp"
-#include "../../include/dce/except.hpp"
+#include "../../include/power_ronin/proto.hpp"
+#include "../../include/power_ronin/except.hpp"
 
-namespace dce::scripting
+namespace power_ronin::scripting
 {
 	/// <summary>
 	/// Exception hook.

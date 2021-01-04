@@ -1,13 +1,13 @@
 #pragma once
 
-#include "../../include/dce/core/kernel.hpp"
-#include "../../include/dce/flycam.hpp"
+#include "../../include/power_ronin/core/kernel.hpp"
+#include "../../include/power_ronin/flycam.hpp"
 
 #include "gpu.hpp"
 #include "shader_bucket.hpp"
 #include "shared_uniforms.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	class MeshRenderer;
 	class Transform;
@@ -47,5 +47,5 @@ namespace dce
 			SharedUniforms shared_uniforms_ = {};
 			bool is_instancing_supported_ = false;
 		};
-	} // namespace dce::renderer // namespace dce::renderer
+	} // namespace power_ronin::renderer // namespace power_ronin::renderer
 }

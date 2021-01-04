@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../../include/dce/core/kernel.hpp"
+#include "../../include/power_ronin/core/kernel.hpp"
 #include "audio_headers.hpp"
 
-namespace dce::audio
+namespace power_ronin::audio
 {
 	class Audio final : public core::ISubsystem
 	{

@@ -1,4 +1,4 @@
-#include "../../include/dce/runtime.hpp"
+#include "../../include/power_ronin/runtime.hpp"
 
 #include "terminal.hpp"
 #include "font_headers.hpp"
@@ -7,12 +7,12 @@
 
 using namespace ImGui;
 
-namespace dce
+namespace power_ronin
 {
 	void (*TERMINAL_UPDATE)() = nullptr;
 }
 
-namespace dce::gui
+namespace power_ronin::gui
 {
 	void Terminal::update(bool& _show, Runtime& _rt)
 	{
@@ -160,4 +160,4 @@ namespace dce::gui
 		this->scripting_protocol_ = dynamic_cast<const TerminalSink<>*>(&*_scripting_protocol.get_logger()->sinks()[0]);
 		return this->system_protocol_ && this->scripting_protocol_;
 	}
-} // namespace dce::gui::widgets // namespace dce::gui::widgets
+} // namespace power_ronin::gui::widgets // namespace power_ronin::gui::widgets

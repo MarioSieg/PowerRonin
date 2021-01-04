@@ -1,7 +1,7 @@
-#include "../include/dce/scenery.hpp"
-#include "../include/dce/resource_manager.hpp"
+#include "../include/power_ronin/scenery.hpp"
+#include "../include/power_ronin/resource_manager.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	auto Scenery::registry() const noexcept -> const Registry&
 	{
@@ -52,4 +52,4 @@ namespace dce
 	{
 		this->registry_.clear();
 	}
-} // namespace dce
+} // namespace power_ronin

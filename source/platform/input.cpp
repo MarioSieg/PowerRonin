@@ -8,12 +8,12 @@
 #define MAP_BUTTON(NAV_NO, BUTTON_NO)       { if (buttons_count > (BUTTON_NO) && buttons[BUTTON_NO] == GLFW_PRESS) io.NavInputs[NAV_NO] = 1.0f; }
 #define MAP_ANALOG(NAV_NO, AXIS_NO, V0, V1) { float v = (axes_count > (AXIS_NO)) ? axes[AXIS_NO] : (V0); v = (v - (V0)) / ((V1) - (V0)); if (v > 1.0f) v = 1.0f; if (io.NavInputs[NAV_NO] < v) io.NavInputs[NAV_NO] = v; }
 
-namespace dce::platform
+namespace power_ronin::platform
 {
 	extern void* WINDOW_HANDLE;
-} // namespace dce::platform
+} // namespace power_ronin::platform
 
-namespace dce::platform
+namespace power_ronin::platform
 {
 	auto GuiInput::initialize() -> bool
 	{
@@ -213,4 +213,4 @@ namespace dce::platform
 			cur = nullptr;
 		}
 	}
-} // namespace dce::platform // namespace dce::platform
+} // namespace power_ronin::platform // namespace power_ronin::platform

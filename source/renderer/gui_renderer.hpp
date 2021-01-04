@@ -3,7 +3,7 @@
 #include "gl_headers.hpp"
 #include <cstdint>
 
-namespace dce
+namespace power_ronin
 {
 	class RenderData;
 }
@@ -11,7 +11,7 @@ namespace dce
 struct ImDrawData;
 struct ImFont;
 
-namespace dce::renderer
+namespace power_ronin::renderer
 {
 	class GuiRenderer final
 	{
@@ -29,4 +29,4 @@ namespace dce::renderer
 		bgfx::TextureHandle texture_ = {bgfx::kInvalidHandle};
 		bgfx::UniformHandle image_lod_enabled_ = {bgfx::kInvalidHandle};
 	};
-} // namespace dce::renderer // namespace dce::renderer
+} // namespace power_ronin::renderer // namespace power_ronin::renderer

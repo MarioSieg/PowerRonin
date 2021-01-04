@@ -4,7 +4,7 @@
 #include "instance_class.hpp"
 #include "environment.hpp"
 
-namespace dce::scripting
+namespace power_ronin::scripting
 {
 	class MemberMethod final
 	{

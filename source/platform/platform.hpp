@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../../include/dce/core/kernel.hpp"
+#include "../../include/power_ronin/core/kernel.hpp"
 
 struct GLFWwindow;
 struct GLFWmonitor;
 struct GLFWvidmode;
 
-namespace dce::platform
+namespace power_ronin::platform
 {
 	/// <summary>
 	/// GLFW window handle.
@@ -83,4 +83,4 @@ namespace dce::platform
 		/// </summary>
 		const GLFWvidmode* all_vidmodes_ = nullptr;
 	};
-} // namespace dce::platform // namespace dce::platform
+} // namespace power_ronin::platform // namespace power_ronin::platform

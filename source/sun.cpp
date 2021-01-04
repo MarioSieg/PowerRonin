@@ -1,9 +1,9 @@
-#include "../../include/dce/sun.hpp"
+#include "../../include/power_ronin/sun.hpp"
 #include <cmath>
 
 #include "bx/math.h"
 
-namespace dce
+namespace power_ronin
 {
 	auto calculate_sun_dir(float _hour
 	                       , float _latitude

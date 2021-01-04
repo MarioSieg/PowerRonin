@@ -1,8 +1,8 @@
-#include "../include/dce/blob.hpp"
-#include "../include/dce/env.hpp"
-#include "../include/dce/except.hpp"
+#include "../include/power_ronin/blob.hpp"
+#include "../include/power_ronin/env.hpp"
+#include "../include/power_ronin/except.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	void blob_from_disk(const std::filesystem::path& _file, Blob& _blob)
 	{

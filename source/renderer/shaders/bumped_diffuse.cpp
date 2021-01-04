@@ -1,6 +1,6 @@
 #include "bumped_diffuse.hpp"
 
-namespace dce::renderer::shaders
+namespace power_ronin::renderer::shaders
 {
 	BumpedDiffuseShader::BumpedDiffuseShader(GPU& _gpu) noexcept : IShader("bumped_diffuse", _gpu) { }
 

@@ -1,7 +1,7 @@
 #include "static_method.hpp"
-#include "../../include/dce/except.hpp"
+#include "../../include/power_ronin/except.hpp"
 
-namespace dce::scripting
+namespace power_ronin::scripting
 {
 	auto StaticMethod::get_handle() const noexcept -> MonoMethod*
 	{

@@ -5,7 +5,7 @@
 
 #include <string_view>
 
-namespace dce::scripting
+namespace power_ronin::scripting
 {
 	/// <summary>
 	/// Represents a managed mono assembly.

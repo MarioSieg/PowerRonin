@@ -1,6 +1,6 @@
 #pragma once
 
-namespace dce
+namespace power_ronin
 {
 	class ResourceManager;
 
@@ -12,4 +12,4 @@ namespace dce
 			void update(bool& _show, ResourceManager& _rm);
 		};
 	} // namespace gui::widgets
-} // namespace dce // namespace dce
+} // namespace power_ronin // namespace power_ronin

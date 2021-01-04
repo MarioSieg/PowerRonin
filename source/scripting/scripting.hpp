@@ -1,13 +1,13 @@
 #pragma once
 
-#include "../../include/dce/core/kernel.hpp"
+#include "../../include/power_ronin/core/kernel.hpp"
 
 #include "assembly.hpp"
 #include "environment.hpp"
 #include "static_class.hpp"
 #include "static_method.hpp"
 
-namespace dce::scripting
+namespace power_ronin::scripting
 {
 	class Scripting final : public core::ISubsystem
 	{

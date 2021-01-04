@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../../../include/dce/ecs.hpp"
+#include "../../../include/power_ronin/ecs.hpp"
 
-namespace dce::gui::widgets
+namespace power_ronin::gui::widgets
 {
 	class Hierarchy final
 	{

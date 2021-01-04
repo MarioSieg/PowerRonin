@@ -1,4 +1,4 @@
-#include "../include/dce/runtime.hpp"
+#include "../include/power_ronin/runtime.hpp"
 // *******************************************************************************
 // The content of this file includes portions of the KerboGames Dreamcast Technology
 // released in source code form as part of the SDK package.
@@ -14,9 +14,9 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-#include "../include/dce/runtime.hpp"
+#include "../include/power_ronin/runtime.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	Runtime::Runtime() : protocol_("native"),
 	                     scripting_protocol_("managed"),
@@ -139,4 +139,4 @@ namespace dce
 	{
 		return this->terminal_hook_;
 	}
-} // namespace dce // namespace dce
+} // namespace power_ronin // namespace power_ronin

@@ -1,7 +1,7 @@
-#include "../include/dce/texture.hpp"
-#include "../include/dce/json_impl.hpp"
+#include "../include/power_ronin/texture.hpp"
+#include "../include/power_ronin/json_impl.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	auto get_format_name(const TextureFormat _format) noexcept -> std::string_view
 	{
@@ -97,4 +97,4 @@ namespace dce
 		this->sampler_flags = _j["sampler_flags"];
 		this->is_srgb = _j["is_srgb"];
 	}
-} // namespace dce // namespace dce
+} // namespace power_ronin // namespace power_ronin

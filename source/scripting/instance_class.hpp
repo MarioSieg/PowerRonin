@@ -3,7 +3,7 @@
 #include "mono_headers.hpp"
 #include <string_view>
 
-namespace dce::scripting
+namespace power_ronin::scripting
 {
 	class Assembly;
 	class RuntimeEnvironment;

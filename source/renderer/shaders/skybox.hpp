@@ -2,7 +2,7 @@
 
 #include "../ishader.hpp"
 
-namespace dce::renderer::shaders
+namespace power_ronin::renderer::shaders
 {
 	class SkyboxShader final : public IShader<Material::StaticSkybox>
 	{

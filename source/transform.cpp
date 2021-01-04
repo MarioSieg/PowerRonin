@@ -1,6 +1,6 @@
-#include "../../include/dce/transform.hpp"
+#include "../../include/power_ronin/transform.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	auto Transform::calculate_matrix() const noexcept -> SimdMatrix4x4<>
 	{

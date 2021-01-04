@@ -1,6 +1,6 @@
 #pragma once
 
-namespace dce
+namespace power_ronin
 {
 	class Runtime;
 	class Diagnostics;

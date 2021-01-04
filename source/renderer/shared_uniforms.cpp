@@ -1,6 +1,6 @@
 #include "shared_uniforms.hpp"
 
-namespace dce::renderer
+namespace power_ronin::renderer
 {
 	void SharedUniforms::load_all()
 	{

@@ -1,9 +1,9 @@
 #include "clocks.hpp"
-#include "../../include/dce/chrono.hpp"
+#include "../../include/power_ronin/chrono.hpp"
 #include "../sysclock.hpp"
 #include "../../extern/bgfx/bgfx/include/bgfx/bgfx.h"
 
-namespace dce::renderer
+namespace power_ronin::renderer
 {
 	auto update_clocks(Chrono& _chrono, const std::uint64_t _prev) noexcept -> std::uint64_t
 	{

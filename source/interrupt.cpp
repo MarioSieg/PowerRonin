@@ -1,7 +1,7 @@
-#include "../include/dce/interrupt.hpp"
-#include "../include/dce/env.hpp"
+#include "../include/power_ronin/interrupt.hpp"
+#include "../include/power_ronin/env.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	void interrupt()
 	{

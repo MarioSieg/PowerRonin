@@ -1,6 +1,6 @@
-#include "../include/dce/shader.hpp"
+#include "../include/power_ronin/shader.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	auto Shader::vertex_shader_bytecode() const noexcept -> const Blob&
 	{

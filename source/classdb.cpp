@@ -1,7 +1,7 @@
-#include "../include/dce/classdb.hpp"
-#include "../include/dce/xorshift.hpp"
+#include "../include/power_ronin/classdb.hpp"
+#include "../include/power_ronin/xorshift.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	void ClassDB::register_class(const std::string_view name
 	                             , const std::size_t size
@@ -21,4 +21,4 @@ namespace dce
 		};
 		this->registry_.insert({id_counter_++, desc});
 	}
-} // namespace dce // namespace dce
+} // namespace power_ronin // namespace power_ronin

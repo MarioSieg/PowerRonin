@@ -1,8 +1,8 @@
-#include "../include/dce/serial.hpp"
-#include "../include/dce/json_impl.hpp"
+#include "../include/power_ronin/serial.hpp"
+#include "../include/power_ronin/json_impl.hpp"
 #include <fstream>
 
-namespace dce
+namespace power_ronin
 {
 	auto ISerializable::serialize_to_file(const std::filesystem::path& _path) const -> bool
 	{
@@ -33,4 +33,4 @@ namespace dce
 		this->deserialize(stream);
 		return true;
 	}
-} // namespace dce // namespace dce
+} // namespace power_ronin // namespace power_ronin

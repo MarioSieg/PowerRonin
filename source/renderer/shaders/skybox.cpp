@@ -1,6 +1,6 @@
 #include "skybox.hpp"
 
-namespace dce::renderer::shaders
+namespace power_ronin::renderer::shaders
 {
 	SkyboxShader::SkyboxShader(GPU& _gpu) noexcept : IShader("skybox", _gpu) { }
 

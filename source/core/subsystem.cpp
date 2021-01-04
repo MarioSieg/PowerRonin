@@ -1,7 +1,7 @@
-#include "../../include/dce/core/subsystem.hpp"
-#include "../../include/dce/xorshift.hpp"
+#include "../../include/power_ronin/core/subsystem.hpp"
+#include "../../include/power_ronin/xorshift.hpp"
 
-namespace dce::core
+namespace power_ronin::core
 {
 	ISubsystem::ISubsystem(const std::string_view _name
 	                       , const std::underlying_type<ServiceEvents::Enum>::type _subscribed_events) noexcept : name(_name),
@@ -56,4 +56,4 @@ namespace dce::core
 	{
 		return true;
 	}
-} // namespace dce::core // namespace dce::core
+} // namespace power_ronin::core // namespace power_ronin::core

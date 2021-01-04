@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../../include/dce/core/kernel.hpp"
+#include "../../include/power_ronin/core/kernel.hpp"
 #include "physics_headers.hpp"
 
-namespace dce::physics
+namespace power_ronin::physics
 {
 	class Physics final : public core::ISubsystem
 	{

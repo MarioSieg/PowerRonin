@@ -1,9 +1,9 @@
 #include "stats.hpp"
 
-#include "../../include/dce/runtime.hpp"
+#include "../../include/power_ronin/runtime.hpp"
 #include "../../extern/bgfx/bgfx/include/bgfx/bgfx.h"
 
-namespace dce::renderer
+namespace power_ronin::renderer
 {
 	void poll_limits(Diagnostics& _diag) noexcept
 	{

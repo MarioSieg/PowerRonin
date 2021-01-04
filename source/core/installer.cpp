@@ -1,4 +1,4 @@
-#include "../../include/dce/core/installer.hpp"
+#include "../../include/power_ronin/core/installer.hpp"
 
 #include "../gui/gui.hpp"
 #include "../platform/platform.hpp"
@@ -7,7 +7,7 @@
 #include "../scripting/scripting.hpp"
 #include "../audio/audio.hpp"
 
-namespace dce::core
+namespace power_ronin::core
 {
 	auto install_minimal(Kernel& _kernel) -> bool
 	{
@@ -24,4 +24,4 @@ namespace dce::core
 		_kernel.create_install_subsystem<gui::Gui>();
 		return true;
 	}
-} // namespace dce::core // namespace dce::core
+} // namespace power_ronin::core // namespace power_ronin::core

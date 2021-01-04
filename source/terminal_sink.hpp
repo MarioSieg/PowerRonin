@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../extern/spdlog/include/spdlog/sinks/base_sink.h"
-#include "../include/dce/proto.hpp"
-#include "../include/dce/time_utils.hpp"
+#include "../include/power_ronin/proto.hpp"
+#include "../include/power_ronin/time_utils.hpp"
 #include <mutex>
 #include <string>
 #include <tuple>
@@ -12,7 +12,7 @@
 #include <iomanip>
 #include <string>
 
-namespace dce
+namespace power_ronin
 {
 	template <typename Mutex = std::mutex>
 	class TerminalSink final : public spdlog::sinks::base_sink<Mutex>
@@ -72,4 +72,4 @@ namespace dce
 		}
 		this->buffer_.clear();
 	}
-} // namespace dce // namespace dce
+} // namespace power_ronin // namespace power_ronin

@@ -4,7 +4,7 @@
 #include "static_class.hpp"
 #include "environment.hpp"
 
-namespace dce::scripting
+namespace power_ronin::scripting
 {
 	class StaticMethod final
 	{

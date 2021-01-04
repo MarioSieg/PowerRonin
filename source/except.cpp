@@ -1,6 +1,6 @@
-#include "../include/dce/except.hpp"
+#include "../include/power_ronin/except.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	FatalEngineException::FatalEngineException() : std::runtime_error("Fatal engine system error!") { }
 

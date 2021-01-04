@@ -2,8 +2,8 @@
 
 #include "../font_headers.hpp"
 #include "../gui_headers.hpp"
-#include "../../include/dce/diagnostics.hpp"
-#include "../../include/dce/chrono.hpp"
+#include "../../include/power_ronin/diagnostics.hpp"
+#include "../../include/power_ronin/chrono.hpp"
 #include "../window_names.hpp"
 #include <chrono>
 #include <cinttypes>
@@ -12,7 +12,7 @@
 using namespace ImGui;
 using namespace ImPlot;
 
-namespace dce::gui::widgets
+namespace power_ronin::gui::widgets
 {
 	void Profiler::update(bool& _show, const Diagnostics& _diag, const Chrono& _chrono) const
 	{
@@ -276,4 +276,4 @@ namespace dce::gui::widgets
 		}
 		End();
 	}
-} // namespace dce::gui::widgets // namespace dce::gui::widgets
+} // namespace power_ronin::gui::widgets // namespace power_ronin::gui::widgets

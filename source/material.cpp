@@ -1,8 +1,8 @@
-#include "../../include/dce/material.hpp"
-#include "../../include/dce/json_impl.hpp"
-#include "../../include/dce/resource_manager.hpp"
+#include "../../include/power_ronin/material.hpp"
+#include "../../include/power_ronin/json_impl.hpp"
+#include "../../include/power_ronin/resource_manager.hpp"
 
-namespace dce
+namespace power_ronin
 {
 	auto MaterialImporteur::load(std::filesystem::path&& _path
 	                             , const MaterialMeta* const _meta) const -> std::shared_ptr<Material>

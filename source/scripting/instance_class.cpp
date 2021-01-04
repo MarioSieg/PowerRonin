@@ -2,7 +2,7 @@
 #include "assembly.hpp"
 #include "environment.hpp"
 
-namespace dce::scripting
+namespace power_ronin::scripting
 {
 	auto ClassInstance::get_handle() const noexcept -> MonoClass*
 	{
