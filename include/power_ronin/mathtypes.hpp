@@ -15,13 +15,44 @@
 
 #pragma once
 
-#define GLM_HAS_CONSTEXPR
+#include "env.hpp"
+
+#if SIMD_SSE
+#define GLM_FORCE_SSE
+#endif
+
+#if SIMD_SSE2
+#define GLM_FORCE_SSE2
+#endif
+
+#if SIMD_SSE3
+#define GLM_FORCE_SSE3
+#endif
+
+#if SIMD_SSSE3
+#define GLM_FORCE_SSSE3
+#endif
+
+#if SIMD_SSE4_1 || defined(SIMD_SSE4_2)
+#define GLM_FORCE_SSE4
+#endif
+
+#if SIMD_AVX
+#define GLM_FORCE_AVX
+#endif
+
+#if SIMD_AVX2
+#define GLM_FORCE_AVX2
+#endif
+
+#if SIMD_AVX512
+#define GLM_FORCE_AVX512
+#endif
+
 #define GLM_FORCE_INLINE
-#define GLM_FORCE_INTRINSICS
 #define GLM_FORCE_SWIZZLE
 #define GLM_FORCE_LEFT_HANDED
 #define GLM_FORCE_SIZE_T_LENGTH
-#define GLM_CONSTEXPR_SIMD
 #define GLM_FORCE_ALIGNED
 
 #include "../../extern/glm/glm/geometric.hpp"
@@ -48,43 +79,43 @@ namespace power_ronin
 	constexpr auto FIXED_PRECISION = math::mediump;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using SimdVector2 = math::vec<2, T, ALIGNED_PRECISION>;
+	using SVec2 = math::vec<2, T, ALIGNED_PRECISION>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using SimdVector3 = math::vec<3, T, ALIGNED_PRECISION>;
+	using SVec3 = math::vec<3, T, ALIGNED_PRECISION>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using SimdVector4 = math::vec<4, T, ALIGNED_PRECISION>;
+	using SVec4 = math::vec<4, T, ALIGNED_PRECISION>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using SimdQuaternion = math::qua<T, ALIGNED_PRECISION>;
+	using SQua = math::qua<T, ALIGNED_PRECISION>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using SimdMatrix3x3 = math::mat<3, 3, T, ALIGNED_PRECISION>;
+	using SMat3x3 = math::mat<3, 3, T, ALIGNED_PRECISION>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using SimdMatrix4x4 = math::mat<4, 4, T, ALIGNED_PRECISION>;
+	using SMat4x4 = math::mat<4, 4, T, ALIGNED_PRECISION>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using FixedVector2 = math::vec<2, T, FIXED_PRECISION>;
+	using FVec2 = math::vec<2, T, FIXED_PRECISION>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using FixedVector3 = math::vec<3, T, FIXED_PRECISION>;
+	using FVec3 = math::vec<3, T, FIXED_PRECISION>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using FixedVector4 = math::vec<4, T, FIXED_PRECISION>;
+	using FVec4 = math::vec<4, T, FIXED_PRECISION>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using FixedQuaternion = math::qua<T, FIXED_PRECISION>;
+	using FQua = math::qua<T, FIXED_PRECISION>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using FixedMatrix3x3 = math::mat<3, 3, T, FIXED_PRECISION>;
+	using FMat3x3 = math::mat<3, 3, T, FIXED_PRECISION>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using FixedMatrix4x4 = math::mat<4, 4, T, FIXED_PRECISION>;
+	using FMat4x4 = math::mat<4, 4, T, FIXED_PRECISION>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using Color = SimdVector4<T>;
+	using Color = SVec4<T>;
 
 	// @formatter:on
 } // namespace power_ronin

@@ -11,10 +11,12 @@ message("Com: ${CMAKE_CXX_COMPILER_ID}")
 
 # set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 
-# -march=native -mavx
+# -march=native
+# -march=skylake-avx512
+# -msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mavx -mavx2
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    SET(COVERAGE_COMPILE_FLAGS "-msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -Ofast -MT")
-    SET(COVERAGE_LINK_FLAGS    "-flto -MT")
+    SET(COVERAGE_COMPILE_FLAGS "-msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mavx -mavx2 -Ofast -MT")
+    SET(COVERAGE_LINK_FLAGS "-flto -MT")
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COVERAGE_COMPILE_FLAGS}")
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COVERAGE_COMPILE_FLAGS}")
     SET(CMAKE_STATIC_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${COVERAGE_LINK_FLAGS}")
@@ -196,9 +198,7 @@ add_library(
     "source/scripting/member_method.cpp"
     "source/scripting/instance_class.hpp"
     "source/scripting/instance_class.cpp" 
-     
-    "include/power_ronin/csinterop.hpp" 
-      
+    "include/power_ronin/csinterop.hpp"  
     "source/audio/audio_engine_core/Common/AkDefaultLowLevelIODispatcher.cpp" 
     "source/audio/audio_engine_core/Common/AkDefaultLowLevelIODispatcher.h" 
     "source/audio/audio_engine_core/Common/AkFileLocationBase.cpp" 
@@ -235,7 +235,12 @@ add_library(
     "include/power_ronin/hybrid.hpp"  
     "source/hybrid.cpp" 
     "include/power_ronin/managed_object.hpp" 
-    "source/managed_object.cpp" "include/power_ronin/msgbox.hpp" "source/msgbox.cpp" "source/core/entry.cpp")
+    "source/managed_object.cpp" 
+    "include/power_ronin/msgbox.hpp" 
+    "source/msgbox.cpp" 
+    "source/core/entry.cpp" 
+    "source/renderer/camera_matrices.hpp" 
+    "source/renderer/camera_matrices.cpp")
 
 include("extern/CMakeLists.txt")
 

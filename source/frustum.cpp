@@ -25,26 +25,26 @@ namespace power_ronin
 
 	template <Frustum::Planes A, Frustum::Planes B, Frustum::Planes C>
 	[[nodiscard]] static auto intersection(const Frustum& _frustum,
-	                                       const SimdVector3<>* const _crosses) noexcept -> SimdVector3<>
+	                                       const SVec3<>* const _crosses) noexcept -> SVec3<>
 	{
 		const auto& planes = _frustum.planes();
-		const auto D = math::dot(SimdVector3<>(planes[A]), _crosses[IJ2K<B, C>::K]);
-		SimdVector3<> res = glm::mat3(_crosses[IJ2K<B, C>::K], -_crosses[IJ2K<A, C>::K], _crosses[IJ2K<A, B>::K])
-			* SimdVector3<>(planes[A].w, planes[B].w, planes[C].w);
+		const auto D = math::dot(SVec3<>(planes[A]), _crosses[IJ2K<B, C>::K]);
+		SVec3<> res = glm::mat3(_crosses[IJ2K<B, C>::K], -_crosses[IJ2K<A, C>::K], _crosses[IJ2K<A, B>::K])
+			* SVec3<>(planes[A].w, planes[B].w, planes[C].w);
 		return res * (-1.0f / D);
 	}
 
-	auto Frustum::planes() const noexcept -> const SimdVector4<>(&)[COUNT]
+	auto Frustum::planes() const noexcept -> const SVec4<>(&)[COUNT]
 	{
 		return this->planes_;
 	}
 
-	auto Frustum::points() const noexcept -> const SimdVector3<>(&)[8]
+	auto Frustum::points() const noexcept -> const SVec3<>(&)[8]
 	{
 		return this->points_;
 	}
 
-	void Frustum::from_camera_matrix(const SimdMatrix4x4<>& _view_proj) noexcept
+	void Frustum::from_camera_matrix(const SMat4x4<>& _view_proj) noexcept
 	{
 		auto matrix = math::transpose(_view_proj);
 		this->planes_[LEFT] = matrix[3] + matrix[0];
@@ -54,22 +54,22 @@ namespace power_ronin
 		this->planes_[NEAR] = matrix[3] + matrix[2];
 		this->planes_[FAR] = matrix[3] - matrix[2];
 
-		SimdVector3<> crosses[COMBO] = {
-			math::cross(SimdVector3<>(this->planes_[LEFT]), SimdVector3<>(this->planes_[RIGHT])),
-			math::cross(SimdVector3<>(this->planes_[LEFT]), SimdVector3<>(this->planes_[BOTTOM])),
-			math::cross(SimdVector3<>(this->planes_[LEFT]), SimdVector3<>(this->planes_[TOP])),
-			math::cross(SimdVector3<>(this->planes_[LEFT]), SimdVector3<>(this->planes_[NEAR])),
-			math::cross(SimdVector3<>(this->planes_[LEFT]), SimdVector3<>(this->planes_[FAR])),
-			math::cross(SimdVector3<>(this->planes_[RIGHT]), SimdVector3<>(this->planes_[BOTTOM])),
-			math::cross(SimdVector3<>(this->planes_[RIGHT]), SimdVector3<>(this->planes_[TOP])),
-			math::cross(SimdVector3<>(this->planes_[RIGHT]), SimdVector3<>(this->planes_[NEAR])),
-			math::cross(SimdVector3<>(this->planes_[RIGHT]), SimdVector3<>(this->planes_[FAR])),
-			math::cross(SimdVector3<>(this->planes_[BOTTOM]), SimdVector3<>(this->planes_[TOP])),
-			math::cross(SimdVector3<>(this->planes_[BOTTOM]), SimdVector3<>(this->planes_[NEAR])),
-			math::cross(SimdVector3<>(this->planes_[BOTTOM]), SimdVector3<>(this->planes_[FAR])),
-			math::cross(SimdVector3<>(this->planes_[TOP]), SimdVector3<>(this->planes_[NEAR])),
-			math::cross(SimdVector3<>(this->planes_[TOP]), SimdVector3<>(this->planes_[FAR])),
-			math::cross(SimdVector3<>(this->planes_[NEAR]), SimdVector3<>(this->planes_[FAR]))
+		SVec3<> crosses[COMBO] = {
+			math::cross(SVec3<>(this->planes_[LEFT]), SVec3<>(this->planes_[RIGHT])),
+			math::cross(SVec3<>(this->planes_[LEFT]), SVec3<>(this->planes_[BOTTOM])),
+			math::cross(SVec3<>(this->planes_[LEFT]), SVec3<>(this->planes_[TOP])),
+			math::cross(SVec3<>(this->planes_[LEFT]), SVec3<>(this->planes_[NEAR])),
+			math::cross(SVec3<>(this->planes_[LEFT]), SVec3<>(this->planes_[FAR])),
+			math::cross(SVec3<>(this->planes_[RIGHT]), SVec3<>(this->planes_[BOTTOM])),
+			math::cross(SVec3<>(this->planes_[RIGHT]), SVec3<>(this->planes_[TOP])),
+			math::cross(SVec3<>(this->planes_[RIGHT]), SVec3<>(this->planes_[NEAR])),
+			math::cross(SVec3<>(this->planes_[RIGHT]), SVec3<>(this->planes_[FAR])),
+			math::cross(SVec3<>(this->planes_[BOTTOM]), SVec3<>(this->planes_[TOP])),
+			math::cross(SVec3<>(this->planes_[BOTTOM]), SVec3<>(this->planes_[NEAR])),
+			math::cross(SVec3<>(this->planes_[BOTTOM]), SVec3<>(this->planes_[FAR])),
+			math::cross(SVec3<>(this->planes_[TOP]), SVec3<>(this->planes_[NEAR])),
+			math::cross(SVec3<>(this->planes_[TOP]), SVec3<>(this->planes_[FAR])),
+			math::cross(SVec3<>(this->planes_[NEAR]), SVec3<>(this->planes_[FAR]))
 		};
 
 		this->points_[0] = intersection<LEFT, BOTTOM, NEAR>(*this, crosses);
@@ -87,74 +87,74 @@ namespace power_ronin
 		const auto& minp = _in.min;
 		const auto& maxp = _in.max;
 
-		if (math::dot(this->planes_[0], SimdVector4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[0], SimdVector4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[0], SimdVector4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[0], SimdVector4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[0], SimdVector4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[0], SimdVector4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[0], SimdVector4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[0], SimdVector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
+		if (math::dot(this->planes_[0], SVec4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[0], SVec4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[0], SVec4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[0], SVec4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[0], SVec4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[0], SVec4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[0], SVec4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[0], SVec4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
 		{
 			return false;
 		}
 
-		if (math::dot(this->planes_[1], SimdVector4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[1], SimdVector4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[1], SimdVector4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[1], SimdVector4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[1], SimdVector4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[1], SimdVector4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[1], SimdVector4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[1], SimdVector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
+		if (math::dot(this->planes_[1], SVec4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[1], SVec4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[1], SVec4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[1], SVec4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[1], SVec4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[1], SVec4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[1], SVec4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[1], SVec4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
 		{
 			return false;
 		}
 
-		if (math::dot(this->planes_[2], SimdVector4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[2], SimdVector4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[2], SimdVector4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[2], SimdVector4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[2], SimdVector4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[2], SimdVector4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[2], SimdVector4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[2], SimdVector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
+		if (math::dot(this->planes_[2], SVec4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[2], SVec4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[2], SVec4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[2], SVec4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[2], SVec4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[2], SVec4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[2], SVec4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[2], SVec4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
 		{
 			return false;
 		}
 
-		if (math::dot(this->planes_[3], SimdVector4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[3], SimdVector4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[3], SimdVector4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[3], SimdVector4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[3], SimdVector4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[3], SimdVector4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[3], SimdVector4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[3], SimdVector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
+		if (math::dot(this->planes_[3], SVec4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[3], SVec4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[3], SVec4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[3], SVec4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[3], SVec4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[3], SVec4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[3], SVec4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[3], SVec4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
 		{
 			return false;
 		}
 
-		if (math::dot(this->planes_[4], SimdVector4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[4], SimdVector4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[4], SimdVector4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[4], SimdVector4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[4], SimdVector4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[4], SimdVector4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[4], SimdVector4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[4], SimdVector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
+		if (math::dot(this->planes_[4], SVec4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[4], SVec4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[4], SVec4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[4], SVec4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[4], SVec4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[4], SVec4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[4], SVec4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[4], SVec4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
 		{
 			return false;
 		}
 
-		if (math::dot(this->planes_[5], SimdVector4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[5], SimdVector4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[5], SimdVector4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[5], SimdVector4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[5], SimdVector4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[5], SimdVector4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[5], SimdVector4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[5], SimdVector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
+		if (math::dot(this->planes_[5], SVec4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[5], SVec4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[5], SVec4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[5], SVec4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[5], SVec4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[5], SVec4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[5], SVec4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
+			math::dot(this->planes_[5], SVec4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
 		{
 			return false;
 		}

@@ -23,8 +23,8 @@ namespace power_ronin
 	auto calculate_sun_dir(float _hour
 	                       , float _latitude
 	                       , const float _delta
-	                       , const SimdVector3<>& _up
-	                       , const SimdVector3<>& _north) noexcept -> SimdVector3<>
+	                       , const SVec3<>& _up
+	                       , const SVec3<>& _north) noexcept -> SVec3<>
 	{
 		/*
 		_latitude = math::radians(_latitude);
@@ -34,11 +34,11 @@ namespace power_ronin
 		                                std::cos(_latitude));
 		const auto altitude = std::asin(
 			std::sin(_latitude) * std::sin(_delta) + std::cos(_latitude) * std::cos(_delta) * std::cos(_hour));
-		auto rotation = math::identity<SimdQuaternion<>>();
+		auto rotation = math::identity<SQua<>>();
 		rotation = rotate(rotation, -azimuth, _up);
-		const SimdVector3<> dir = _north * rotation;
-		const SimdVector3<> udx = cross(_up, dir);
-		rotation = math::identity<SimdQuaternion<>>();
+		const SVec3<> dir = _north * rotation;
+		const SVec3<> udx = cross(_up, dir);
+		rotation = math::identity<SQua<>>();
 		rotate(rotation, altitude, udx);
 		return dir * rotation;
 		*/

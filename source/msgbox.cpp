@@ -16,7 +16,7 @@
 #include "../../include/power_ronin/msgbox.hpp"
 #include "../../include/power_ronin/env.hpp"
 
-#if SYS_WINDOWS
+#if OS_WINDOWS
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
@@ -84,7 +84,7 @@ namespace power_ronin
 
 #endif
 
-#if SYS_LINUX
+#if OS_LINUX
 #include <gtk/gtk.h>
 
 namespace power_ronin

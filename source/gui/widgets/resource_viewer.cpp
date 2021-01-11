@@ -108,11 +108,11 @@ namespace power_ronin::gui::widgets
 			                                switch (std::get<0>(uniform.second)) {
 			                                default: case UniformType::SAMPLER: type = ": Sampler";
 			                                        break;
-			                                case UniformType::MATRIX_3x3: type = ": SimdMatrix3x3";
+			                                case UniformType::MATRIX_3x3: type = ": SMat3x3";
 			                                        break;
 			                                case UniformType::MATRIX_4x4: type = ": SimdMatrix4x4";
 			                                        break;
-			                                case UniformType::VEC_4: type = ": SimdVector4";
+			                                case UniformType::VEC_4: type = ": SVec4";
 			                                        break;
 			                                }
 			                                TextUnformatted(type);

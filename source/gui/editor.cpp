@@ -315,8 +315,8 @@ namespace power_ronin::gui
 		ImGuizmo::SetRect(x, y, w, h);
 		if (_config.editor.show_grid) [[likely]]
 		{
-			auto grid_pos_matrix = math::identity<SimdMatrix4x4<>>();
-			grid_pos_matrix = math::translate(grid_pos_matrix, static_cast<SimdVector3<>>(_config.editor.grid_origin_center));
+			auto grid_pos_matrix = math::identity<SMat4x4<>>();
+			grid_pos_matrix = math::translate(grid_pos_matrix, static_cast<SVec3<>>(_config.editor.grid_origin_center));
 			ImGuizmo::DrawGrid(value_ptr(_data.view_matrix), value_ptr(_data.projection_matrix), value_ptr(grid_pos_matrix), _config.editor.grid_size);
 		}
 
@@ -347,8 +347,8 @@ namespace power_ronin::gui
 					break;
 
 				case ImGuizmo::OPERATION::ROTATE:
-					eulers = SimdVector3<>{math::radians(mat_rotation[0]), math::radians(mat_rotation[1]), math::radians(mat_rotation[2])};
-					_transform->rotation = SimdQuaternion<>(eulers);
+					eulers = SVec3<>{math::radians(mat_rotation[0]), math::radians(mat_rotation[1]), math::radians(mat_rotation[2])};
+					_transform->rotation = SQua<>(eulers);
 					break;
 
 				case ImGuizmo::OPERATION::SCALE:

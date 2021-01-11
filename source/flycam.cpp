@@ -19,42 +19,42 @@
 
 namespace power_ronin
 {
-	auto EditorCamera::projection_matrix() const noexcept -> const SimdMatrix4x4<>&
+	auto EditorCamera::projection_matrix() const noexcept -> const SMat4x4<>&
 	{
 		return this->proj_;
 	}
 
-	auto EditorCamera::view_matrix() const noexcept -> const SimdMatrix4x4<>&
+	auto EditorCamera::view_matrix() const noexcept -> const SMat4x4<>&
 	{
 		return this->view_;
 	}
 
-	auto EditorCamera::position() const noexcept -> const SimdVector3<>&
+	auto EditorCamera::position() const noexcept -> const SVec3<>&
 	{
 		return this->eye_;
 	}
 
-	auto EditorCamera::look_at() const noexcept -> const SimdVector3<>&
+	auto EditorCamera::look_at() const noexcept -> const SVec3<>&
 	{
 		return this->at_;
 	}
 
-	void EditorCamera::look_at(const SimdVector3<>& _at) noexcept
+	void EditorCamera::look_at(const SVec3<>& _at) noexcept
 	{
 		this->at_ = _at;
 	}
 
-	auto EditorCamera::look_at_dir() const noexcept -> const SimdVector3<>&
+	auto EditorCamera::look_at_dir() const noexcept -> const SVec3<>&
 	{
 		return this->dir_;
 	}
 
-	void EditorCamera::look_at_dir(const SimdVector3<>& _dir) noexcept
+	void EditorCamera::look_at_dir(const SVec3<>& _dir) noexcept
 	{
 		this->dir_ = _dir;
 	}
 
-	void EditorCamera::position(const SimdVector3<>& _position) noexcept
+	void EditorCamera::position(const SVec3<>& _position) noexcept
 	{
 		this->eye_ = _position;
 	}
@@ -90,7 +90,7 @@ namespace power_ronin
 			const auto dir_z = math::cos(math::radians(this->mouse_angles_.y)) * math::cos(
 				math::radians(this->mouse_angles_.x));
 
-			this->dir_ = SimdVector3<>{dir_x, dir_y, dir_z};
+			this->dir_ = SVec3<>{dir_x, dir_y, dir_z};
 
 			this->mouse_prev_.x = mouse.x;
 			this->mouse_prev_.y = mouse.y;
@@ -102,31 +102,31 @@ namespace power_ronin
 		}
 
 		this->forward_ = normalize(this->dir_);
-		this->left_ = normalize(cross(this->forward_, math::UP));
+		this->left_ = normalize(cross(this->forward_, {.0f, 1.f, .0f}));
 
 		if (_input.is_key_down(Key::W)) [[likely]]
 		{
-			this->eye_ += SimdVector3<>{speed * _delta_time} * this->forward_;
+			this->eye_ += SVec3<>{speed * _delta_time} * this->forward_;
 		}
 
 		if (_input.is_key_down(Key::A)) [[likely]]
 		{
-			this->eye_ += SimdVector3<>{speed * _delta_time} * this->left_;
+			this->eye_ += SVec3<>{speed * _delta_time} * this->left_;
 		}
 
 		if (_input.is_key_down(Key::S)) [[likely]]
 		{
-			this->eye_ -= SimdVector3<>{speed * _delta_time} * this->forward_;
+			this->eye_ -= SVec3<>{speed * _delta_time} * this->forward_;
 		}
 
 		if (_input.is_key_down(Key::D)) [[likely]]
 		{
-			this->eye_ -= SimdVector3<>{speed * _delta_time} * this->left_;
+			this->eye_ -= SVec3<>{speed * _delta_time} * this->left_;
 		}
 
 		this->at_ = this->eye_ + dir_;
 
-		this->view_ = lookAtLH(this->eye_, this->at_, math::UP);
+		this->view_ = lookAtLH(this->eye_, this->at_, {.0f, 1.f, .0f});
 		this->proj_ = math::perspectiveFovLH<float>(math::radians(this->fov), _viewport_x, _viewport_y, this->near_clip
 		                                            , this->far_clip);
 	}

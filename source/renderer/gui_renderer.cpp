@@ -117,7 +117,7 @@ namespace power_ronin::renderer
 		const auto height = static_cast<std::uint16_t>(io.DisplaySize.y);
 		setViewMode(GUI_VIEW, bgfx::ViewMode::Sequential);
 		{
-			SimdMatrix4x4<> ortho = math::ortho(.0F, static_cast<float>(width), static_cast<float>(height), .0F, .0F,
+			SMat4x4<> ortho = math::ortho(.0F, static_cast<float>(width), static_cast<float>(height), .0F, .0F,
 			                                    1000.F);
 			bgfx::setViewTransform(GUI_VIEW, nullptr, math::value_ptr(ortho));
 			bgfx::setViewRect(GUI_VIEW, 0, 0, width, height);

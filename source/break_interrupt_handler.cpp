@@ -23,14 +23,14 @@
 #include <fstream>
 #include <sstream>
 
-#if SYS_WINDOWS
+#if OS_WINDOWS
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #endif
 
 namespace power_ronin
 {
-#if SYS_WINDOWS
+#if OS_WINDOWS
 #define CALL_FIRST 1
 #define CALL_LAST 0
 

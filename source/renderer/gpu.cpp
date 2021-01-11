@@ -134,8 +134,8 @@ namespace power_ronin::renderer
 		bgfx::frame();
 	}
 
-	void GPU::set_camera(const bgfx::ViewId _view_id, const SimdMatrix4x4<>& _view,
-	                     const SimdMatrix4x4<>& _proj) const noexcept
+	void GPU::set_camera(const bgfx::ViewId _view_id, const SMat4x4<>& _view,
+	                     const SMat4x4<>& _proj) const noexcept
 	{
 		bgfx::setViewTransform(_view_id, value_ptr(_view), value_ptr(_proj));
 	}
@@ -191,7 +191,7 @@ namespace power_ronin::renderer
 		submit(_view_id, _shader, _depth);
 	}
 
-	void GPU::set_viewport(const SimdVector2<> _xy, const SimdVector2<> _wh, const bgfx::ViewId _view_id) const noexcept
+	void GPU::set_viewport(const SVec2<> _xy, const SVec2<> _wh, const bgfx::ViewId _view_id) const noexcept
 	{
 		bgfx::setViewRect(_view_id, _xy.x, _xy.y, _wh.x, _wh.y);
 	}

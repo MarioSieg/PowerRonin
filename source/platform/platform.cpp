@@ -13,10 +13,10 @@
 // // support@kerbogames.com
 // // *******************************************************************************
 
-#include "platform.hpp"
-#include "util.hpp"
 #include "../../include/power_ronin/config.hpp"
 #include "../../include/power_ronin/env.hpp"
+#include "platform.hpp"
+#include "util.hpp"
 #include <cmath>
 #include <iostream>
 
@@ -234,11 +234,11 @@ namespace power_ronin::platform
 		/* Native handle: */
 		void* nat_handle = nullptr;
 
-#if SYS_LINUX
+#if OS_LINUX
 		nat_handle = reinterpret_cast<void*>(reinterpret_cast<std::uintptr_t>(glfwGetX11Window(this->window_)));
-#elif SYS_WINDOWS
+#elif OS_WINDOWS
 		nat_handle = reinterpret_cast<void*>(glfwGetWin32Window(this->window_));
-#elif SYS_MAC
+#elif OS_MAC
 		nat_handle = reinterpret_cast<void*>(glfwGetCocoaWindow(this->window_));
 #endif
 

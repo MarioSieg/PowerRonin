@@ -86,28 +86,28 @@ namespace power_ronin::renderer
 		/// </summary>
 		/// <param name="_value"></param>
 		/// <returns></returns>
-		void set(const SimdVector3<>& _value) const noexcept;
+		void set(const SVec3<>& _value) const noexcept;
 
 		/// <summary>
 		/// Set uniform.
 		/// </summary>
 		/// <param name="_value"></param>
 		/// <returns></returns>
-		void set(const SimdVector4<>& _value) const noexcept;
+		void set(const SVec4<>& _value) const noexcept;
 
 		/// <summary>
 		/// Set uniform.
 		/// </summary>
 		/// <param name="_value"></param>
 		/// <returns></returns>
-		void set(const SimdMatrix3x3<>& _value) const noexcept;
+		void set(const SMat3x3<>& _value) const noexcept;
 
 		/// <summary>
 		/// Set uniform.
 		/// </summary>
 		/// <param name="_value"></param>
 		/// <returns></returns>
-		void set(const SimdMatrix4x4<>& _value) const noexcept;
+		void set(const SMat4x4<>& _value) const noexcept;
 
 		/// <summary>
 		/// Set uniform.

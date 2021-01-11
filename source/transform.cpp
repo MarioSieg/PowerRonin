@@ -17,9 +17,9 @@
 
 namespace power_ronin
 {
-	auto Transform::calculate_matrix() const noexcept -> SimdMatrix4x4<>
+	auto Transform::calculate_matrix() const noexcept -> SMat4x4<>
 	{
-		auto transform = math::identity<SimdMatrix4x4<>>();
+		auto transform = math::identity<SMat4x4<>>();
 		transform = math::scale(transform, this->scale);
 		transform *= mat4_cast(this->rotation);
 		transform = translate(transform, this->position);
@@ -27,33 +27,33 @@ namespace power_ronin
 	}
 
 
-	auto Transform::forward() const noexcept -> SimdVector3<>
+	auto Transform::forward() const noexcept -> SVec3<>
 	{
-		return this->rotation * SimdVector3<>{0, 0, 1};
+		return this->rotation * SVec3<>{0, 0, 1};
 	}
 
-	auto Transform::back() const noexcept -> SimdVector3<>
+	auto Transform::back() const noexcept -> SVec3<>
 	{
-		return this->rotation * SimdVector3<>{0, 0, -1};
+		return this->rotation * SVec3<>{0, 0, -1};
 	}
 
-	auto Transform::up() const noexcept -> SimdVector3<>
+	auto Transform::up() const noexcept -> SVec3<>
 	{
-		return this->rotation * SimdVector3<>{0, 1, 0};
+		return this->rotation * SVec3<>{0, 1, 0};
 	}
 
-	auto Transform::down() const noexcept -> SimdVector3<>
+	auto Transform::down() const noexcept -> SVec3<>
 	{
-		return this->rotation * SimdVector3<>{0, -1, 0};
+		return this->rotation * SVec3<>{0, -1, 0};
 	}
 
-	auto Transform::left() const noexcept -> SimdVector3<>
+	auto Transform::left() const noexcept -> SVec3<>
 	{
-		return this->rotation * SimdVector3<>{-1, 0, 0};
+		return this->rotation * SVec3<>{-1, 0, 0};
 	}
 
-	auto Transform::right() const noexcept -> SimdVector3<>
+	auto Transform::right() const noexcept -> SVec3<>
 	{
-		return this->rotation * SimdVector3<>{1, 0, 0};
+		return this->rotation * SVec3<>{1, 0, 0};
 	}
 }

@@ -32,9 +32,9 @@ enum class System
 	MAC
 };
 
-#define SYS_LINUX false
-#define SYS_WINDOWS false
-#define SYS_MAC false
+#define OS_LINUX false
+#define OS_WINDOWS false
+#define OS_MAC false
 
 /* Contains all supported compiler. */
 enum class Compiler
@@ -62,16 +62,16 @@ enum class Compiler
 [[nodiscard]] constexpr auto determine_system() -> System
 {
 #if defined(__linux__) && !defined(__ANDROID__)
-#undef SYS_LINUX
-#define SYS_LINUX true
+#undef OS_LINUX
+#define OS_LINUX true
 	return System::LINUX;
 #elif defined(_WIN64)
-#undef SYS_WINDOWS
-#define SYS_WINDOWS true
+#undef OS_WINDOWS
+#define OS_WINDOWS true
 	return System::WINDOWS;
 #elif defined(__APPLE__)
-#undef SYS_MAC
-#define SYS_MAC true
+#undef OS_MAC
+#define OS_MAC true
 	return System::MAC;
 #else
 #error "env.hpp: Unknown operating system!"
@@ -180,6 +180,9 @@ constexpr auto MEMORY_KEY = '&';
 #define SIMD_SSE false
 #define SIMD_SSE2 false
 #define SIMD_SSE3 false
+#define SIMD_SSSE3 false
+#define SIMD_SSE4_1 false
+#define SIMD_SSE4_2 false
 #define SIMD_AVX false
 #define SIMD_AVX2 false
 #define SIMD_AVX512 false
@@ -195,8 +198,23 @@ constexpr auto MEMORY_KEY = '&';
 #endif
 
 #if __SSE3__
-#undef SIMD_SEE3
-#define SIMD_SEE3 true
+#undef SIMD_SSE3
+#define SIMD_SSE3 true
+#endif
+
+#if __SSSE3__
+#undef SIMD_SSSE3
+#define SIMD_SSSE3 true
+#endif
+
+#if __SSE4_1__
+#undef SIMD_SSE4_1
+#define SIMD_SSE4_1 true
+#endif
+
+#if __SSE4_2__
+#undef SIMD_SSE4_2
+#define SIMD_SSE4_2 true
 #endif
 
 #if __AVX__
@@ -211,7 +229,7 @@ constexpr auto MEMORY_KEY = '&';
 #endif
 
 
-#if __AVX512__
+#if __AVX512F__
 #undef SIMD_AVX512
 #define SIMD_AVX512 true
 #endif

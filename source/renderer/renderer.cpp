@@ -16,6 +16,7 @@
 #include "renderer.hpp"
 #include "clocks.hpp"
 #include "stats.hpp"
+#include "camera_matrics.hpp"
 #include "../sysclock.hpp"
 #include "../platform/platform.hpp"
 #include "../../include/power_ronin/mathlib.hpp"
@@ -71,7 +72,7 @@ namespace power_ronin::renderer
 		poll_stats(const_cast<Diagnostics&>(_rt.diagnostics()));
 		this->tick_prev_ = update_clocks(const_cast<Chrono&>(_rt.chrono()), this->tick_prev_);
 		this->update_camera(_rt);
-		this->gpu_.set_viewport(math::ZERO, {_rt.config().display.resolution.width, _rt.config().display.resolution.height}, FULLSCREEN_VIEW);
+		this->gpu_.set_viewport(SVec2<>{ .0f }, { _rt.config().display.resolution.width, _rt.config().display.resolution.height }, FULLSCREEN_VIEW);
 		this->gpu_.clear_view(FULLSCREEN_VIEW, BGFX_CLEAR_DEPTH | BGFX_CLEAR_COLOR, 1.F, 0x040404FF);
 		this->gpu_.sort_draw_calls(FULLSCREEN_VIEW);
 		this->gpu_.set_viewport(_rt.render_data().scenery_viewport_position, _rt.render_data().scenery_viewport_size,
@@ -99,10 +100,7 @@ namespace power_ronin::renderer
 		_rt.render_data().editor_camera.update(_rt.input(), _rt.render_data().scenery_viewport_size.x, _rt.render_data().scenery_viewport_size.y,
 		                                       static_cast<float>(_rt.chrono().delta_time));
 		auto& data = _rt.render_data();
-		data.view_matrix = _rt.render_data().editor_camera.view_matrix();
-		data.projection_matrix = _rt.render_data().editor_camera.projection_matrix();
-		data.view_projection_matrix = data.projection_matrix * data.view_matrix;
-		data.camera_frustum.from_camera_matrix(data.view_projection_matrix);
+		calculate_camera_matrices(data);
 		this->gpu_.set_camera(SCENERY_VIEW, data.view_matrix, data.projection_matrix);
 	}
 
@@ -112,7 +110,7 @@ namespace power_ronin::renderer
 		this->gpu_.set_viewport(_data.scenery_viewport_position, _data.scenery_viewport_size, SKYBOX_VIEW);
 
 		// Create transform matrix:
-		auto skybox_matrix = math::identity<SimdMatrix4x4<>>();
+		auto skybox_matrix = math::identity<SMat4x4<>>();
 
 		// Copy and modify view matrix:
 		_data.skybox_view_matrix = _data.view_matrix;
@@ -137,8 +135,8 @@ namespace power_ronin::renderer
 		const float orbit = calculate_sun_orbit(5, math::radians(23.4f));
 		const float hour = _lighting.sun.hour;
 		const float latitude = _lighting.sun.latitude;
-		const auto sun_dir = calculate_sun_dir(hour, latitude, orbit, SimdVector3<>(.0f, 1.f, .0f),
-		                                       SimdVector3<>(1.f, .0f, .0f));
+		const auto sun_dir = calculate_sun_dir(hour, latitude, orbit, SVec3<>(.0f, 1.f, .0f),
+		                                       SVec3<>(1.f, .0f, .0f));
 
 		this->shared_uniforms_.light_dir.set(sun_dir);
 		this->shared_uniforms_.light_color.set(_lighting.sun.color);

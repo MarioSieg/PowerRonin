@@ -17,12 +17,12 @@
 
 namespace power_ronin
 {
-	AABB::AABB(const SimdVector3<>& _min, const SimdVector3<>& _max) noexcept : min(_min), max(_max) { }
+	AABB::AABB(const SVec3<>& _min, const SVec3<>& _max) noexcept : min(_min), max(_max) { }
 
-	AABB::AABB(const std::vector<SimdVector3<>>& _points) noexcept
+	AABB::AABB(const std::vector<SVec3<>>& _points) noexcept
 	{
-		auto $min = SimdVector3<>{std::numeric_limits<float>::min()};
-		auto $max = SimdVector3<>{std::numeric_limits<float>::max()};
+		auto $min = SVec3<>{std::numeric_limits<float>::min()};
+		auto $max = SVec3<>{std::numeric_limits<float>::max()};
 		for (const auto& p : _points)
 		{
 			$min = math::min($min, p);
@@ -32,10 +32,10 @@ namespace power_ronin
 		this->max = $max;
 	}
 
-	AABB::AABB(const SimdVector3<>* const _points, const std::size_t _count) noexcept
+	AABB::AABB(const SVec3<>* const _points, const std::size_t _count) noexcept
 	{
-		auto $min = SimdVector3<>{std::numeric_limits<float>::min()};
-		auto $max = SimdVector3<>{std::numeric_limits<float>::max()};
+		auto $min = SVec3<>{std::numeric_limits<float>::min()};
+		auto $max = SVec3<>{std::numeric_limits<float>::max()};
 		for (std::size_t i = 0; i < _count; ++i)
 		{
 			$min = math::min($min, _points[i]);
@@ -60,17 +60,17 @@ namespace power_ronin
 		return this->max.z - this->min.z;
 	}
 
-	auto AABB::size() const noexcept -> SimdVector3<>
+	auto AABB::size() const noexcept -> SVec3<>
 	{
 		return this->max - this->min;
 	}
 
-	auto AABB::center() const noexcept -> SimdVector3<>
+	auto AABB::center() const noexcept -> SVec3<>
 	{
 		return (this->max + this->min) * .5f;
 	}
 
-	void AABB::corners(SimdVector3<> (&_out)[8]) const noexcept
+	void AABB::corners(SVec3<> (&_out)[8]) const noexcept
 	{
 		_out[0] = {this->min.x, this->max.y, this->max.z};
 		_out[1] = {this->max.x, this->max.y, this->max.z};

@@ -44,18 +44,18 @@ namespace power_ronin
 		~Frustum() = default;
 
 		[[nodiscard]]
-		auto planes() const noexcept -> const SimdVector4<>(&)[6];
+		auto planes() const noexcept -> const SVec4<>(&)[6];
 
 		[[nodiscard]]
-		auto points() const noexcept -> const SimdVector3<>(&)[8];
+		auto points() const noexcept -> const SVec3<>(&)[8];
 
-		void from_camera_matrix(const SimdMatrix4x4<>& _view_proj) noexcept;
+		void from_camera_matrix(const SMat4x4<>& _view_proj) noexcept;
 
 		[[nodiscard]]
 		auto is_aabb_visible(const AABB& _in) const noexcept -> bool;
 
 	private:
-		SimdVector4<> planes_[6] = {};
-		SimdVector3<> points_[8] = {};
+		SVec4<> planes_[6] = {};
+		SVec3<> points_[8] = {};
 	};
 }

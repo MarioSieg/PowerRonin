@@ -28,7 +28,7 @@ namespace power_ronin
 		return ImGui::IsMouseDown(static_cast<ImGuiMouseButton>(_mb));
 	}
 
-	auto Input::mouse_pos() const noexcept -> SimdVector2<>
+	auto Input::mouse_pos() const noexcept -> SVec2<>
 	{
 		const auto position = ImGui::GetMousePos();
 		return {position.x, position.y};

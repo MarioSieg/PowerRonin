@@ -41,20 +41,20 @@ namespace power_ronin
 		struct UnlitTextured final
 		{
 			RRef<Texture> albedo = {};
-			SimdVector4<> tiling_offset = {1.f, 1.f, .0f, .0f};
+			SVec4<> tiling_offset = {1.f, 1.f, .0f, .0f};
 		};
 
 		struct Diffuse final
 		{
 			RRef<Texture> albedo = {};
-			SimdVector4<> tiling_offset = {1.f, 1.f, .0f, .0f};
+			SVec4<> tiling_offset = {1.f, 1.f, .0f, .0f};
 		};
 
 		struct BumpedDiffuse final
 		{
 			RRef<Texture> albedo = {};
 			RRef<Texture> normal = {};
-			SimdVector4<> tiling_offset = {1.f, 1.f, .0f, .0f};
+			SVec4<> tiling_offset = {1.f, 1.f, .0f, .0f};
 		};
 
 		struct StaticSkybox final

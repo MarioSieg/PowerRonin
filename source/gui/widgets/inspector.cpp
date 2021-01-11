@@ -104,7 +104,7 @@ namespace power_ronin::gui::widgets
 
 						DragFloat3("Position", value_ptr(transform.position));
 
-						SimdVector3<> euler_angles = eulerAngles(transform.rotation);
+						SVec3<> euler_angles = eulerAngles(transform.rotation);
 						euler_angles.x = math::degrees(euler_angles.x);
 						euler_angles.y = math::degrees(euler_angles.y);
 						euler_angles.z = math::degrees(euler_angles.z);
@@ -113,7 +113,7 @@ namespace power_ronin::gui::widgets
 							euler_angles.x = math::radians(euler_angles.x);
 							euler_angles.y = math::radians(euler_angles.y);
 							euler_angles.z = math::radians(euler_angles.z);
-							transform.rotation = SimdQuaternion<>(euler_angles);
+							transform.rotation = SQua<>(euler_angles);
 						}
 
 						DragFloat3("Scale ", value_ptr(transform.scale));

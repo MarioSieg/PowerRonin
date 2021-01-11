@@ -19,7 +19,7 @@
 #include "../../extern/infoware/include/infoware/infoware.hpp"
 
 #ifdef GLFW_NATIVE
-#if SYS_WINDOWS
+#if OS_WINDOWS
 #define GLFW_EXPOSE_NATIVE_WIN32
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX

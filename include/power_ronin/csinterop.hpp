@@ -94,9 +94,9 @@ namespace power_ronin
 		CS_float x;
 		CS_float y;
 
-		explicit inline operator SimdVector2<CS_float>() const noexcept
+		explicit inline operator SVec2<CS_float>() const noexcept
 		{
-			return SimdVector2<CS_float>(x, y);
+			return SVec2<CS_float>(x, y);
 		}
 	};
 
@@ -112,9 +112,9 @@ namespace power_ronin
 		CS_float z;
 
 
-		explicit inline operator SimdVector3<CS_float>() const noexcept
+		explicit inline operator SVec3<CS_float>() const noexcept
 		{
-			return SimdVector3<CS_float>(x, y, z);
+			return SVec3<CS_float>(x, y, z);
 		}
 	};
 
@@ -131,9 +131,9 @@ namespace power_ronin
 		CS_float w;
 
 
-		explicit inline operator SimdVector4<CS_float>() const noexcept
+		explicit inline operator SVec4<CS_float>() const noexcept
 		{
-			return SimdVector4<CS_float>(x, y, z, w);
+			return SVec4<CS_float>(x, y, z, w);
 		}
 	};
 

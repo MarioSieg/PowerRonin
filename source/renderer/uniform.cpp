@@ -45,23 +45,23 @@ namespace power_ronin::renderer
 		return this->handle_;
 	}
 
-	void Uniform::set(const SimdVector3<>& _value) const noexcept
+	void Uniform::set(const SVec3<>& _value) const noexcept
 	{
-		const auto x = SimdVector4<>{_value, 1.F};
+		const auto x = SVec4<>{_value, 1.F};
 		bgfx::setUniform(this->handle_, value_ptr(x));
 	}
 
-	void Uniform::set(const SimdVector4<>& _value) const noexcept
+	void Uniform::set(const SVec4<>& _value) const noexcept
 	{
 		bgfx::setUniform(this->handle_, value_ptr(_value));
 	}
 
-	void Uniform::set(const SimdMatrix3x3<>& _value) const noexcept
+	void Uniform::set(const SMat3x3<>& _value) const noexcept
 	{
 		bgfx::setUniform(this->handle_, value_ptr(_value));
 	}
 
-	void Uniform::set(const SimdMatrix4x4<>& _value) const noexcept
+	void Uniform::set(const SMat4x4<>& _value) const noexcept
 	{
 		bgfx::setUniform(this->handle_, value_ptr(_value));
 	}

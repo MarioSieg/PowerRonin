@@ -35,7 +35,7 @@ namespace power_ronin
 			/* Box collider data. */
 			struct
 			{
-				SimdVector3<> half_extents;
+				SVec3<> half_extents;
 			} box = {};
 
 			/* Sphere collider data. */

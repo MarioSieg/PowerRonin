@@ -14,9 +14,9 @@
 // // *******************************************************************************
 
 #include "../../include/power_ronin/break_interrupt_handler.hpp"
-#include "../../include/power_ronin/core/entry.hpp"
-
 #include "../../include/power_ronin/panic_routine.hpp"
+
+#include "../../include/power_ronin/core/entry.hpp"
 #include "../../include/power_ronin/core/kernel.hpp"
 #include "../../include/power_ronin/core/installer.hpp"
 

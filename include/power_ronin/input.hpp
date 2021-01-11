@@ -182,6 +182,6 @@ namespace power_ronin
 
 		[[nodiscard]] auto is_mouse_button_down(MouseButton _mb) const noexcept -> bool;
 
-		[[nodiscard]] auto mouse_pos() const noexcept -> SimdVector2<>;
+		[[nodiscard]] auto mouse_pos() const noexcept -> SVec2<>;
 	};
 }

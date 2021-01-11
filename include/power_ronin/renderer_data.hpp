@@ -27,13 +27,13 @@ namespace power_ronin
 	class RenderData final
 	{
 	public:
-		SimdVector2<> scenery_viewport_size = {.0f, .0f};
-		SimdVector2<> scenery_viewport_position = {.0f, .0f};
-		SimdMatrix4x4<> view_matrix = {};
-		SimdMatrix4x4<> projection_matrix = {};
-		SimdMatrix4x4<> view_projection_matrix = {};
+		SVec2<> scenery_viewport_size = {.0f, .0f};
+		SVec2<> scenery_viewport_position = {.0f, .0f};
+		SMat4x4<> view_matrix = {};
+		SMat4x4<> projection_matrix = {};
+		SMat4x4<> view_projection_matrix = {};
 		Frustum camera_frustum = {};
-		SimdMatrix4x4<> skybox_view_matrix = {};
+		SMat4x4<> skybox_view_matrix = {};
 		EditorCamera editor_camera = {};
 		bool enable_wireframe = false;
 	};

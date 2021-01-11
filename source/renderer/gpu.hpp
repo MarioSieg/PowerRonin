@@ -92,7 +92,7 @@ namespace power_ronin::renderer
 		/// <param name="_proj"></param>
 		/// <param name="_view_id"></param>
 		/// <returns></returns>
-		void set_camera(const bgfx::ViewId _view_id, const SimdMatrix4x4<>& _view, const SimdMatrix4x4<>& _proj) const noexcept;
+		void set_camera(const bgfx::ViewId _view_id, const SMat4x4<>& _view, const SMat4x4<>& _proj) const noexcept;
 
 		/// <summary>
 		/// Set mesh world transform matrix.
@@ -152,6 +152,6 @@ namespace power_ronin::renderer
 		/// <param name="_wh"></param>
 		/// <param name="_view_id"></param>
 		/// <returns></returns>
-		void set_viewport(const SimdVector2<> _xy, const SimdVector2<> _wh, const bgfx::ViewId _view_id) const noexcept;
+		void set_viewport(const SVec2<> _xy, const SVec2<> _wh, const bgfx::ViewId _view_id) const noexcept;
 	};
 }

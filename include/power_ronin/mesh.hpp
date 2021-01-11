@@ -26,10 +26,10 @@ namespace power_ronin
 	/// </summary>
 	struct Vertex final
 	{
-		FixedVector3<> position = {};
-		FixedVector2<> uv = {};
-		FixedVector3<> normal = {};
-		FixedVector3<> tangent = {};
+		FVec3<> position = {};
+		FVec2<> uv = {};
+		FVec3<> normal = {};
+		FVec3<> tangent = {};
 	};
 
 	struct MeshMeta final : ISerializable

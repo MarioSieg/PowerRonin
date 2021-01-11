@@ -112,10 +112,10 @@ namespace power_ronin::renderer
 		const auto viewport_pos_y = static_cast<std::uint16_t>(_runtime.render_data().scenery_viewport_position.y);
 		const auto viewport_width = static_cast<std::uint32_t>(_runtime.render_data().scenery_viewport_size.x);
 		const auto viewport_height = static_cast<std::uint32_t>(_runtime.render_data().scenery_viewport_size.y);
-		const auto forward = normalize(SimdVector3<>(view[2]));
-		const auto left = SimdVector3<>(-view[1][1], -view[2][1], -view[3][1]);
+		const auto forward = normalize(SVec3<>(view[2]));
+		const auto left = SVec3<>(-view[1][1], -view[2][1], -view[3][1]);
 		view = math::inverse(view);
-		const auto pos = SimdVector3<>(view[3][0], view[3][1], view[3][2]);
+		const auto pos = SVec3<>(view[3][0], view[3][1], view[3][2]);
 		const auto fov = math::degrees(std::atan(1.f / proj[1][1]) * 2.f);
 
 		const std::uint16_t pos_x = viewport_pos_x / 8 + 4;

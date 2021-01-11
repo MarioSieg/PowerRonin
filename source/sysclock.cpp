@@ -16,7 +16,7 @@
 #include "sysclock.hpp"
 #include "../include/power_ronin/env.hpp"
 
-#if SYS_WINDOWS
+#if OS_WINDOWS
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #else
@@ -27,7 +27,7 @@ namespace power_ronin
 {
 	auto get_high_precision_counter() noexcept -> std::uint64_t
 	{
-#if SYS_WINDOWS
+#if OS_WINDOWS
 		LARGE_INTEGER li;
 		QueryPerformanceCounter(&li);
 		return static_cast<std::uint64_t>(li.QuadPart);
@@ -40,7 +40,7 @@ namespace power_ronin
 
 	auto get_high_precision_frequency() noexcept -> std::uint64_t
 	{
-#if SYS_WINDOWS
+#if OS_WINDOWS
 		LARGE_INTEGER li;
 		QueryPerformanceFrequency(&li);
 		return li.QuadPart;
