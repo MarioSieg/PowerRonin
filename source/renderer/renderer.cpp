@@ -16,7 +16,7 @@
 #include "renderer.hpp"
 #include "clocks.hpp"
 #include "stats.hpp"
-#include "camera_matrics.hpp"
+#include "camera_matrices.hpp"
 #include "../sysclock.hpp"
 #include "../platform/platform.hpp"
 #include "../../include/power_ronin/mathlib.hpp"
