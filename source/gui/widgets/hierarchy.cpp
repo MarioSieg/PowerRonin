@@ -13,6 +13,8 @@
 // // support@kerbogames.com
 // // *******************************************************************************
 
+#if AUTO_TEC
+
 #include "hierarchy.hpp"
 #include "../gui_headers.hpp"
 #include "../window_names.hpp"
@@ -45,3 +47,5 @@ namespace power_ronin::gui::widgets
 		End();
 	}
 }
+
+#endif

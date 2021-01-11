@@ -108,10 +108,10 @@ namespace power_ronin::renderer
 		const auto& proj = _runtime.render_data().projection_matrix;
 		auto view = _runtime.render_data().view_matrix;
 		constexpr auto byte_2_gb = 1024.f * 1024.f * 1024.f;
-		const auto viewport_pos_x = static_cast<std::uint16_t>(_runtime.render_data().scenery_viewport_position.x);
-		const auto viewport_pos_y = static_cast<std::uint16_t>(_runtime.render_data().scenery_viewport_position.y);
-		const auto viewport_width = static_cast<std::uint32_t>(_runtime.render_data().scenery_viewport_size.x);
-		const auto viewport_height = static_cast<std::uint32_t>(_runtime.render_data().scenery_viewport_size.y);
+		const auto viewport_pos_x = static_cast<std::uint16_t>(_runtime.render_data().primary_viewport.x);
+		const auto viewport_pos_y = static_cast<std::uint16_t>(_runtime.render_data().primary_viewport.y);
+		const auto viewport_width = static_cast<std::uint32_t>(_runtime.render_data().primary_viewport.z);
+		const auto viewport_height = static_cast<std::uint32_t>(_runtime.render_data().primary_viewport.w);
 		const auto forward = normalize(SVec3<>(view[2]));
 		const auto left = SVec3<>(-view[1][1], -view[2][1], -view[3][1]);
 		view = math::inverse(view);

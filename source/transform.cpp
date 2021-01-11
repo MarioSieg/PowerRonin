@@ -17,7 +17,7 @@
 
 namespace power_ronin
 {
-	auto Transform::calculate_matrix() const noexcept -> SMat4x4<>
+	auto Transform::matrix() const noexcept -> SMat4x4<>
 	{
 		auto transform = math::identity<SMat4x4<>>();
 		transform = math::scale(transform, this->scale);

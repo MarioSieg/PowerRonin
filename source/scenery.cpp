@@ -32,6 +32,12 @@ namespace power_ronin
 
 	void Scenery::new_default(ResourceManager& _resource_manager)
 	{
+		// Camera:
+		const auto camera_entity = this->registry_.create();
+		auto& transform = this->registry_.emplace<Transform>(camera_entity);
+		transform.position = {.5f, .0f, -10.f};
+		auto& camera = this->registry_.emplace<Camera>(camera_entity);
+
 		// Create cube:
 		for (auto i = 0, z = 1; i < 8; ++i)
 		{

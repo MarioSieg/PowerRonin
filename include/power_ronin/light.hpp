@@ -25,13 +25,6 @@ namespace power_ronin
 	class Light final
 	{
 	public:
-		Light() noexcept = default;
-		Light(const Light&) noexcept = delete;
-		Light(Light&&) noexcept = default;
-		auto operator=(const Light&) noexcept -> Light& = delete;
-		auto operator=(Light&&) noexcept -> Light& = default;
-		~Light() = default;
-
 		/// <summary>
 		/// The type of the light.
 		/// </summary>

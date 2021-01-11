@@ -118,7 +118,7 @@ namespace power_ronin::renderer
 		setViewMode(GUI_VIEW, bgfx::ViewMode::Sequential);
 		{
 			SMat4x4<> ortho = math::ortho(.0F, static_cast<float>(width), static_cast<float>(height), .0F, .0F,
-			                                    1000.F);
+			                              1000.F);
 			bgfx::setViewTransform(GUI_VIEW, nullptr, math::value_ptr(ortho));
 			bgfx::setViewRect(GUI_VIEW, 0, 0, width, height);
 		}

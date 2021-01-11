@@ -27,13 +27,6 @@ namespace power_ronin
 	class MeshRenderer final
 	{
 	public:
-		MeshRenderer() noexcept = default;
-		MeshRenderer(const MeshRenderer&) noexcept = delete;
-		MeshRenderer(MeshRenderer&&) noexcept = default;
-		auto operator=(const MeshRenderer&) noexcept -> MeshRenderer& = delete;
-		auto operator=(MeshRenderer&&) noexcept -> MeshRenderer& = default;
-		~MeshRenderer() = default;
-
 		RRef<Mesh> mesh = {};
 		RRef<Material> material = {};
 		bool is_visible = true;

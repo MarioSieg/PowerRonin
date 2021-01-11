@@ -54,7 +54,10 @@ namespace power_ronin::gui
 		platform::GuiInput gui_input_ = {};
 		ImGuiContext* gui_context_ = nullptr;
 		ImPlotContext* plot_context_ = nullptr;
-		Editor editor_ = {};
 		Terminal terminal_ = {};
+
+#if AUTO_TEC
+		Editor editor_ = {};
+#endif
 	};
 } // namespace power_ronin::gui // namespace power_ronin::gui

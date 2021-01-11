@@ -13,6 +13,8 @@
 // // support@kerbogames.com
 // // *******************************************************************************
 
+#if AUTO_TEC
+
 #pragma once
 
 namespace power_ronin::gui
@@ -25,3 +27,5 @@ namespace power_ronin::gui
 
 	extern void save_file_dialog(char*& _out, const char* _filter = nullptr, const char* _default_path = nullptr);
 }
+
+#endif

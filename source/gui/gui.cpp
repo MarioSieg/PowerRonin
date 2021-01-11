@@ -76,7 +76,10 @@ namespace power_ronin::gui
 		}
 
 		this->terminal_.initialize(_rt.protocol(), _rt.scripting_protocol());
+
+#if AUTO_TEC
 		this->editor_.initialize(_rt);
+#endif
 
 		return true;
 	}
@@ -91,7 +94,9 @@ namespace power_ronin::gui
 
 	auto Gui::on_post_tick(Runtime& _rt) -> bool
 	{
+#if AUTO_TEC
 		this->editor_.update(_rt, _rt.config().editor.show_terminal);
+#endif
 		if (_rt.input().is_key_down(Key::GRAVE_ACCENT)) [[unlikely]]
 		{
 			_rt.config().editor.show_terminal = true;

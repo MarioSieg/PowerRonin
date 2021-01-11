@@ -27,14 +27,16 @@ namespace power_ronin
 	class RenderData final
 	{
 	public:
-		SVec2<> scenery_viewport_size = {.0f, .0f};
-		SVec2<> scenery_viewport_position = {.0f, .0f};
+		Viewport<> primary_viewport = {};
 		SMat4x4<> view_matrix = {};
 		SMat4x4<> projection_matrix = {};
 		SMat4x4<> view_projection_matrix = {};
 		Frustum camera_frustum = {};
 		SMat4x4<> skybox_view_matrix = {};
+
+#if AUTO_TEC
 		EditorCamera editor_camera = {};
 		bool enable_wireframe = false;
+#endif
 	};
 }

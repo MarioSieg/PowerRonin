@@ -13,6 +13,8 @@
 // // support@kerbogames.com
 // // *******************************************************************************
 
+#if AUTO_TEC
+
 #include "resource_viewer.hpp"
 #include "../font_headers.hpp"
 #include "../gui_headers.hpp"
@@ -127,3 +129,5 @@ namespace power_ronin::gui::widgets
 		End();
 	}
 } // namespace power_ronin::gui::widgets // namespace power_ronin::gui::widgets
+
+#endif

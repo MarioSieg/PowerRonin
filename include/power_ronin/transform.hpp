@@ -22,18 +22,11 @@ namespace power_ronin
 	class Transform final
 	{
 	public:
-		Transform() noexcept = default;
-		Transform(const Transform&) noexcept = delete;
-		Transform(Transform&&) noexcept = default;
-		auto operator=(const Transform&) noexcept -> Transform& = delete;
-		auto operator=(Transform&&) noexcept -> Transform& = default;
-		~Transform() = default;
-
 		SVec3<> position = {.0f, .0f, .0f};
 		SQua<> rotation = {.0f, .0f, .0f, .0f};
 		SVec3<> scale = {1.f, 1.f, 1.f};
 
-		[[nodiscard]] auto calculate_matrix() const noexcept -> SMat4x4<>;
+		[[nodiscard]] auto matrix() const noexcept -> SMat4x4<>;
 		[[nodiscard]] auto forward() const noexcept -> SVec3<>;
 		[[nodiscard]] auto back() const noexcept -> SVec3<>;
 		[[nodiscard]] auto up() const noexcept -> SVec3<>;

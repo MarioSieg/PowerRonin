@@ -13,6 +13,8 @@
 // // support@kerbogames.com
 // // *******************************************************************************
 
+#if AUTO_TEC
+
 #include "file_dialog_tool.hpp"
 #include "../../extern/nativefiledialog/src/include/nfd.h"
 #include <cstddef>
@@ -55,3 +57,5 @@ namespace power_ronin::gui
 		_out = result == NFD_OKAY && path ? path : nullptr;
 	}
 }
+
+#endif

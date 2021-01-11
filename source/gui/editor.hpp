@@ -15,6 +15,8 @@
 
 #pragma once
 
+#if AUTO_TEC
+
 #include "gui_headers.hpp"
 
 #include "widgets/profiler.hpp"
@@ -70,3 +72,5 @@ namespace power_ronin
 		};
 	}
 }
+
+#endif

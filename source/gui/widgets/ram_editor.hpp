@@ -15,6 +15,8 @@
 
 #pragma once
 
+#if AUTO_TEC
+
 #include <stdio.h>      // sprintf, scanf
 #include <stdint.h>     // uint8_t, etc.
 
@@ -846,4 +848,6 @@ struct MemoryEditor
 
 #ifdef _MSC_VER
 #pragma warning (pop)
+#endif
+
 #endif

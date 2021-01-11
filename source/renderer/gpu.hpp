@@ -152,6 +152,6 @@ namespace power_ronin::renderer
 		/// <param name="_wh"></param>
 		/// <param name="_view_id"></param>
 		/// <returns></returns>
-		void set_viewport(const SVec2<> _xy, const SVec2<> _wh, const bgfx::ViewId _view_id) const noexcept;
+		void set_viewport(const SVec4<> _xywh, const bgfx::ViewId _view_id) const noexcept;
 	};
 }

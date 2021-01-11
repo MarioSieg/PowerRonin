@@ -117,5 +117,8 @@ namespace power_ronin
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
 	using Color = SVec4<T>;
 
+	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
+	using Viewport = SVec4<T>;
+
 	// @formatter:on
 } // namespace power_ronin

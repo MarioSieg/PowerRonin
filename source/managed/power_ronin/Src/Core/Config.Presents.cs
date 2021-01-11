@@ -30,7 +30,7 @@ namespace PowerRonin.Core
                 ShowGrid = true,
                 ShowMatrixStats = true,
                 ShowStats = true,
-                ShowTerminal = true,
+                ShowTerminal = false,
                 StatsTextColor = 0xF
             },
             Graphics = new GraphicsConfig
@@ -150,7 +150,7 @@ namespace PowerRonin.Core
                 ShowGrid = false,
                 ShowMatrixStats = true,
                 ShowStats = true,
-                ShowTerminal = true,
+                ShowTerminal = false,
                 StatsTextColor = 0xF
             },
             Graphics = new GraphicsConfig

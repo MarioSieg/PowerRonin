@@ -15,6 +15,8 @@
 
 #pragma once
 
+#if AUTO_TEC
+
 namespace power_ronin
 {
 	class ResourceManager;
@@ -28,3 +30,5 @@ namespace power_ronin
 		};
 	} // namespace gui::widgets
 } // namespace power_ronin // namespace power_ronin
+
+#endif

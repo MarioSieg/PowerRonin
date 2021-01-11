@@ -15,6 +15,8 @@
 
 #pragma once
 
+#if AUTO_TEC
+
 #include "../../../include/power_ronin/ecs.hpp"
 
 namespace power_ronin::gui::widgets
@@ -28,3 +30,5 @@ namespace power_ronin::gui::widgets
 		std::size_t entity_counter = 0;
 	};
 }
+
+#endif

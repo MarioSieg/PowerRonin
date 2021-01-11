@@ -15,6 +15,8 @@
 
 #pragma once
 
+#if AUTO_TEC
+
 namespace power_ronin
 {
 	class RenderData;
@@ -28,3 +30,5 @@ namespace power_ronin::gui::widgets
 		void update(bool& _show, RenderData& _data) const;
 	};
 }
+
+#endif

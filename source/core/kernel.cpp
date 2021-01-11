@@ -57,8 +57,8 @@ namespace power_ronin::core
 		if (this->core_->kernel_state != KernelState::OFFLINE) [[unlikely]]
 		{
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Invalid kernel state!");
-		}	
-		
+		}
+
 		std::filesystem::current_path("../../../");
 
 		const auto tik = std::chrono::high_resolution_clock::now();

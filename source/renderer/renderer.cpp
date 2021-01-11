@@ -16,7 +16,6 @@
 #include "renderer.hpp"
 #include "clocks.hpp"
 #include "stats.hpp"
-#include "camera_matrices.hpp"
 #include "../sysclock.hpp"
 #include "../platform/platform.hpp"
 #include "../../include/power_ronin/mathlib.hpp"
@@ -40,12 +39,12 @@ namespace power_ronin::renderer
 		this->shared_uniforms_.load_all();
 
 		poll_limits(const_cast<Diagnostics&>(_rt.diagnostics()));
-		auto& viewport = _rt.render_data().scenery_viewport_size;
-		if (viewport.x == .0F || viewport.y == .0F) [[likely]]
+		auto& viewport = _rt.render_data().primary_viewport;
+		if (viewport.z == .0F || viewport.w == .0F) [[likely]]
 		{
-			viewport.x = _rt.config().display.resolution.width;
-			viewport.y = _rt.config().display.resolution.height;
-			if (viewport.x == .0F || viewport.y == .0F) [[likely]]
+			viewport.z = _rt.config().display.resolution.width;
+			viewport.w = _rt.config().display.resolution.height;
+			if (viewport.z == .0F || viewport.w == .0F) [[likely]]
 			{
 				return false;
 			}
@@ -61,6 +60,7 @@ namespace power_ronin::renderer
 	/* Prepare frame */
 	auto Renderer::on_pre_tick(Runtime& _rt) -> bool
 	{
+#if AUTO_TEC
 		if (_rt.render_data().enable_wireframe) [[unlikely]]
 		{
 			bgfx::setDebug(BGFX_DEBUG_TEXT | BGFX_DEBUG_WIREFRAME);
@@ -69,14 +69,14 @@ namespace power_ronin::renderer
 		{
 			bgfx::setDebug(BGFX_DEBUG_TEXT);
 		}
+#endif
 		poll_stats(const_cast<Diagnostics&>(_rt.diagnostics()));
 		this->tick_prev_ = update_clocks(const_cast<Chrono&>(_rt.chrono()), this->tick_prev_);
 		this->update_camera(_rt);
-		this->gpu_.set_viewport(SVec2<>{ .0f }, { _rt.config().display.resolution.width, _rt.config().display.resolution.height }, FULLSCREEN_VIEW);
+		this->gpu_.set_viewport(SVec4<>{.0f, .0f, _rt.config().display.resolution.width, _rt.config().display.resolution.height}, FULLSCREEN_VIEW);
 		this->gpu_.clear_view(FULLSCREEN_VIEW, BGFX_CLEAR_DEPTH | BGFX_CLEAR_COLOR, 1.F, 0x040404FF);
 		this->gpu_.sort_draw_calls(FULLSCREEN_VIEW);
-		this->gpu_.set_viewport(_rt.render_data().scenery_viewport_position, _rt.render_data().scenery_viewport_size,
-		                        SCENERY_VIEW);
+		this->gpu_.set_viewport(_rt.render_data().primary_viewport, SCENERY_VIEW);
 		return true;
 	}
 
@@ -86,10 +86,12 @@ namespace power_ronin::renderer
 		this->render_scene(_rt);
 		this->render_skybox(_rt.scenery().config.lighting, _rt.render_data());
 
+#if AUTO_TEC
 		if (_rt.config().editor.show_stats) [[likely]]
 		{
 			render_stats(_rt);
 		}
+#endif
 
 		this->gpu_.end_frame();
 		return true;
@@ -97,17 +99,35 @@ namespace power_ronin::renderer
 
 	void Renderer::update_camera(Runtime& _rt) const
 	{
-		_rt.render_data().editor_camera.update(_rt.input(), _rt.render_data().scenery_viewport_size.x, _rt.render_data().scenery_viewport_size.y,
-		                                       static_cast<float>(_rt.chrono().delta_time));
 		auto& data = _rt.render_data();
-		calculate_camera_matrices(data);
+		auto& current_view = data.view_matrix;
+		auto& current_projection = data.projection_matrix;
+#if AUTO_TEC
+		data.editor_camera.update(_rt.input(), data.primary_viewport.x, data.primary_viewport.y, static_cast<float>(_rt.chrono().delta_time));
+		current_view = data.editor_camera.view_matrix();
+		current_projection = data.editor_camera.projection_matrix();
+#else
+		auto& reg = _rt.scenery().registry();
+		const auto camera_entity = reg.view<Camera, Transform>().front();
+		if (!reg.valid(camera_entity)) [[unlikely]]
+		{
+			return;
+		}
+		const auto& transform = reg.get<Transform>(camera_entity);
+		auto& camera = reg.get<Camera>(camera_entity);
+		camera.recalculate(transform, _rt.render_data());
+		current_view = camera.view_matrix();
+		current_projection = camera.projection_matrix();
+#endif
+		data.view_projection_matrix = data.projection_matrix * data.view_matrix;
+		data.camera_frustum.from_camera_matrix(data.view_projection_matrix);
 		this->gpu_.set_camera(SCENERY_VIEW, data.view_matrix, data.projection_matrix);
 	}
 
 	void Renderer::render_skybox(const Scenery::Configuration::Lighting& _lighting, RenderData& _data) const
 	{
 		this->gpu_.clear_view(SKYBOX_VIEW, BGFX_CLEAR_NONE);
-		this->gpu_.set_viewport(_data.scenery_viewport_position, _data.scenery_viewport_size, SKYBOX_VIEW);
+		this->gpu_.set_viewport(_data.primary_viewport, SKYBOX_VIEW);
 
 		// Create transform matrix:
 		auto skybox_matrix = math::identity<SMat4x4<>>();

@@ -204,7 +204,8 @@ namespace power_ronin::platform
 		proto.info("Initializing window...");
 
 		/* Create window: */
-		this->window_ = glfwCreateWindow(display_settings.resolution.width, display_settings.resolution.height, core::ENGINE_NAME.data(), display_settings.is_full_screen ? primary_monitor : nullptr, nullptr);
+		this->window_ = glfwCreateWindow(display_settings.resolution.width, display_settings.resolution.height, core::ENGINE_NAME.data(), display_settings.is_full_screen ? primary_monitor : nullptr,
+		                                 nullptr);
 
 		if (this->window_ == nullptr) [[unlikely]]
 		{

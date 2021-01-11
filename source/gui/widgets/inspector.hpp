@@ -15,6 +15,8 @@
 
 #pragma once
 
+#if AUTO_TEC
+
 #include "../../../include/power_ronin/ecs.hpp"
 // ReSharper disable once CppUnusedIncludeDirective
 #include "../gui_headers.hpp"
@@ -47,3 +49,5 @@ namespace power_ronin::gui::widgets
 		std::string audio_filter_ = {};
 	};
 }
+
+#endif

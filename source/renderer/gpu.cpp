@@ -142,7 +142,7 @@ namespace power_ronin::renderer
 
 	void GPU::set_transform(const Transform& _transform) const noexcept
 	{
-		bgfx::setTransform(value_ptr(_transform.calculate_matrix()));
+		bgfx::setTransform(value_ptr(_transform.matrix()));
 	}
 
 	void GPU::set_transform(const float (&_matrix)[16]) const noexcept
@@ -191,8 +191,8 @@ namespace power_ronin::renderer
 		submit(_view_id, _shader, _depth);
 	}
 
-	void GPU::set_viewport(const SVec2<> _xy, const SVec2<> _wh, const bgfx::ViewId _view_id) const noexcept
+	void GPU::set_viewport(const SVec4<> _xywh, const bgfx::ViewId _view_id) const noexcept
 	{
-		bgfx::setViewRect(_view_id, _xy.x, _xy.y, _wh.x, _wh.y);
+		bgfx::setViewRect(_view_id, _xywh.x, _xywh.y, _xywh.z, _xywh.w);
 	}
 }

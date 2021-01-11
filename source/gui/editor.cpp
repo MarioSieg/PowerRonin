@@ -13,6 +13,8 @@
 // // support@kerbogames.com
 // // *******************************************************************************
 
+#if AUTO_TEC
+
 #include "editor.hpp"
 #include "gui_headers.hpp"
 #include "font_headers.hpp"
@@ -310,8 +312,8 @@ namespace power_ronin::gui
 		ImGuizmo::BeginFrame();
 		const float x = _data.scenery_viewport_position.x;
 		const float y = _data.scenery_viewport_position.y;
-		const float w = _data.scenery_viewport_size.x;
-		const float h = _data.scenery_viewport_size.y;
+		const float w = _data.primary_viewport.x;
+		const float h = _data.primary_viewport.y;
 		ImGuizmo::SetRect(x, y, w, h);
 		if (_config.editor.show_grid) [[likely]]
 		{
@@ -362,3 +364,5 @@ namespace power_ronin::gui
 		}
 	}
 }
+
+#endif
