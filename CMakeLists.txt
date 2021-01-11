@@ -15,7 +15,7 @@ message("Com: ${CMAKE_CXX_COMPILER_ID}")
 # -march=skylake-avx512
 # -msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mavx -mavx2
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    SET(COVERAGE_COMPILE_FLAGS "-msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mavx -mavx2 -Ofast -MT")
+    SET(COVERAGE_COMPILE_FLAGS "-msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -Ofast -MT")
     SET(COVERAGE_LINK_FLAGS "-flto -MT")
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COVERAGE_COMPILE_FLAGS}")
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COVERAGE_COMPILE_FLAGS}")
