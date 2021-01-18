@@ -34,6 +34,7 @@ namespace power_ronin
 	{
 		// Camera:
 		const auto camera_entity = this->registry_.create();
+		this->registry_.emplace<MetaData>(camera_entity).name = "Main Camera";
 		auto& transform = this->registry_.emplace<Transform>(camera_entity);
 		transform.position = {.5f, .0f, -10.f};
 		auto& camera = this->registry_.emplace<Camera>(camera_entity);

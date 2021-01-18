@@ -82,11 +82,16 @@ namespace power_ronin::gui
 			this->scenery_viewer_.update(this->show_scenery_viewer_, _rt.render_data());
 		}
 
-		const auto selected_entity = this->hierarchy_.selected;
-		auto& registry = _rt.scenery().registry();
+		if(!_rt.is_playing()) [[likely]]
+		{
+			const auto selected_entity = this->hierarchy_.selected;
+			auto& registry = _rt.scenery().registry();
 
-		this->render_manipulator_gizmos(registry.valid(selected_entity) && registry.has<Transform>(selected_entity) ? &registry.get<Transform>(selected_entity) : nullptr, _rt.render_data(),
-		                                _rt.config());
+			this->render_manipulator_gizmos(registry.valid(selected_entity) 
+				&& registry.has<Transform>(selected_entity) 
+				? &registry.get<Transform>(selected_entity) : nullptr, 
+				_rt.render_data(),_rt.config());
+		}
 	}
 
 	void Editor::main_menu(Runtime& _rt, bool& _show_terminal)
@@ -263,11 +268,11 @@ namespace power_ronin::gui
 
 			Separator();
 
-			if (Button(ICON_FA_PLAY)) [[unlikely]]
-			{ }
+			if (Button(_rt.is_playing() ? ICON_FA_STOP : ICON_FA_PLAY)) [[unlikely]]
+			{
+				const_cast<bool&>(_rt.is_playing()) = !_rt.is_playing();
+			}
 			if (Button(ICON_FA_PAUSE)) [[unlikely]]
-			{ }
-			if (Button(ICON_FA_STOP)) [[unlikely]]
 			{ }
 			PopStyleColor();
 			EndMainMenuBar();

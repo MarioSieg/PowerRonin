@@ -102,23 +102,33 @@ namespace power_ronin::renderer
 		auto& data = _rt.render_data();
 		auto& current_view = data.view_matrix;
 		auto& current_projection = data.projection_matrix;
+
 #if AUTO_TEC
-		data.editor_camera.update(_rt.input(), data.primary_viewport.z, data.primary_viewport.w, static_cast<float>(_rt.chrono().delta_time));
-		current_view = data.editor_camera.view_matrix();
-		current_projection = data.editor_camera.projection_matrix();
-#else
-		auto& reg = _rt.scenery().registry();
-		const auto camera_entity = reg.view<Camera, Transform>().front();
-		if (!reg.valid(camera_entity)) [[unlikely]]
+		if (_rt.is_playing()) [[unlikely]]
 		{
-			return;
-		}
-		const auto& transform = reg.get<Transform>(camera_entity);
-		auto& camera = reg.get<Camera>(camera_entity);
-		camera.recalculate(transform, _rt.render_data());
-		current_view = camera.view_matrix();
-		current_projection = camera.projection_matrix();
 #endif
+
+			auto& reg = _rt.scenery().registry();
+			const auto camera_entity = reg.view<Camera, Transform>().front();
+			if (!reg.valid(camera_entity)) [[unlikely]]
+			{
+				return;
+			}
+			const auto& transform = reg.get<Transform>(camera_entity);
+			auto& camera = reg.get<Camera>(camera_entity);
+			camera.recalculate(transform, _rt.render_data());
+			current_view = camera.view_matrix();
+
+#if AUTO_TEC
+		}
+		else 
+		{
+			data.editor_camera.update(_rt.input(), data.primary_viewport.z, data.primary_viewport.w, static_cast<float>(_rt.chrono().delta_time));
+			current_view = data.editor_camera.view_matrix();
+			current_projection = data.editor_camera.projection_matrix();
+		}
+#endif
+
 		data.view_projection_matrix = data.projection_matrix * data.view_matrix;
 		data.camera_frustum.from_camera_matrix(data.view_projection_matrix);
 		this->gpu_.set_camera(SCENERY_VIEW, data.view_matrix, data.projection_matrix);

@@ -14,22 +14,6 @@
 // // *******************************************************************************
 
 #include "../include/power_ronin/runtime.hpp"
-// *******************************************************************************
-// The content of this file includes portions of the KerboGames Dreamcast Technology
-// released in source code form as part of the SDK package.
-// 
-// Commercial License Usage
-// 
-// Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// may use this file in accordance with the end user license agreement provided 
-// with the software or, alternatively, in accordance with the terms contained in a
-// written agreement between you and KerboGames.
-// 
-// Copyright (c) 2013-2020 KerboGames, MarioSieg.
-// support@kerbogames.com
-// *******************************************************************************
-
-#include "../include/power_ronin/runtime.hpp"
 
 namespace power_ronin
 {
@@ -154,4 +138,13 @@ namespace power_ronin
 	{
 		return this->terminal_hook_;
 	}
+
+#if AUTO_TEC
+
+	auto Runtime::is_playing() const& noexcept -> const bool& 
+	{
+		return this->is_playing_;
+	}
+
+#endif
 } // namespace power_ronin // namespace power_ronin

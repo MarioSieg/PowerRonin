@@ -147,6 +147,15 @@ namespace power_ronin
 		/// <returns>The terminal callback hook.</returns>
 		[[nodiscard]] auto terminal_hook() & noexcept -> std::function<void(char*)>&;
 
+#if AUTO_TEC
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>True if the editor is currently in play mode, else false.</returns>
+		[[nodiscard]]
+		auto is_playing() const & noexcept -> const bool&;
+#endif
+
 		Runtime();
 		Runtime(const Runtime&) = delete;
 		Runtime(Runtime&&) noexcept = delete;
@@ -169,5 +178,8 @@ namespace power_ronin
 		Input input_;
 		RenderData render_data_;
 		std::function<void(char*)> terminal_hook_;
+#if AUTO_TEC
+		bool is_playing_ = false;
+#endif
 	};
 } // namespace power_ronin // namespace power_ronin
