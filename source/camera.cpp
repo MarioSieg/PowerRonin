@@ -29,9 +29,8 @@ namespace power_ronin
 
 	void Camera::recalculate(const Transform& _transform, const RenderData& _data) noexcept
 	{
-		const SVec3<> at = {.0f, 0.f, 0.f};
 		const SVec3<> up = {.0f, 1.f, .0f};
-		this->view_ = math::lookAtLH(_transform.position, at, up);
+		this->view_ = math::lookAtLH(_transform.position, _transform.position + _transform.forward(), up);
 		this->projection_ = math::perspectiveFovLH(
 			math::radians(this->fov_y),
 			static_cast<float>(_data.primary_viewport.z),

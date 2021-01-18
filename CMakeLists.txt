@@ -8,13 +8,12 @@ project ("PowerRoninSDK" CXX C ASM)
 
 message("Com: ${CMAKE_CXX_COMPILER_ID}")
 
-# set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 # -march=native
 # -march=skylake-avx512
 # -msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mavx -mavx2
+# -flto
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    SET(COVERAGE_COMPILE_FLAGS "-march=native -Ofast -MT")
-    SET(COVERAGE_LINK_FLAGS "")
+    SET(COVERAGE_COMPILE_FLAGS "-v -march=native -Ofast -MT")
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COVERAGE_COMPILE_FLAGS}")
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COVERAGE_COMPILE_FLAGS}")
     SET(CMAKE_STATIC_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${COVERAGE_LINK_FLAGS}")
