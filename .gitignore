@@ -6,6 +6,7 @@
 /config/
 extern/out/
 /extern/assimp/out/
+/extern/bullet/out/
 /source/managed/dreamcast_runtime/.vs
 /source/managed/dreamcast_runtime/bin
 /source/managed/dreamcast_runtime/obj

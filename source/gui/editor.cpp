@@ -310,10 +310,10 @@ namespace power_ronin::gui
 		}
 		ImGuizmo::Enable(true);
 		ImGuizmo::BeginFrame();
-		const float x = _data.scenery_viewport_position.x;
-		const float y = _data.scenery_viewport_position.y;
-		const float w = _data.primary_viewport.x;
-		const float h = _data.primary_viewport.y;
+		const float x = _data.primary_viewport.x;
+		const float y = _data.primary_viewport.y;
+		const float w = _data.primary_viewport.z;
+		const float h = _data.primary_viewport.w;
 		ImGuizmo::SetRect(x, y, w, h);
 		if (_config.editor.show_grid) [[likely]]
 		{

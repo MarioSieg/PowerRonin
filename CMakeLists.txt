@@ -1,7 +1,6 @@
 ﻿cmake_minimum_required (VERSION 3.8)
 
 message("Initializing PowerRoninSDK CMake")
-
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
@@ -10,13 +9,12 @@ project ("PowerRoninSDK" CXX C ASM)
 message("Com: ${CMAKE_CXX_COMPILER_ID}")
 
 # set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
-
 # -march=native
 # -march=skylake-avx512
 # -msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mavx -mavx2
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    SET(COVERAGE_COMPILE_FLAGS "-msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -Ofast -MT")
-    SET(COVERAGE_LINK_FLAGS "-flto -MT")
+    SET(COVERAGE_COMPILE_FLAGS "-march=native -Ofast -MT")
+    SET(COVERAGE_LINK_FLAGS "")
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COVERAGE_COMPILE_FLAGS}")
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COVERAGE_COMPILE_FLAGS}")
     SET(CMAKE_STATIC_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${COVERAGE_LINK_FLAGS}")
@@ -307,16 +305,18 @@ else()
     endif()
 endif()
 
-add_compile_definitions(AUTO_TEC=false)
+#add_compile_definitions(AUTO_TEC=false)
 add_executable("power_ronin" WIN32 "entry.cpp")
 set_property(TARGET "power_ronin" PROPERTY "MSVC_RUNTIME_LIBRARY" "MultiThreaded")
 target_link_libraries("power_ronin" "power_ronin_lib")
 
-#add_executable("power_ronin_autotec" WIN32 "entry.cpp")
-#add_compile_definitions(AUTO_TEC=true)
-#set_property(TARGET "power_ronin_autotec" PROPERTY "MSVC_RUNTIME_LIBRARY" "MultiThreaded")
-#target_link_libraries("power_ronin_autotec" "power_ronin_lib")
+remove_definitions(AUTO_TEC)
+
+add_compile_definitions(AUTO_TEC=true)
+add_executable("power_ronin_autotec" WIN32 "entry.cpp")
+set_property(TARGET "power_ronin_autotec" PROPERTY "MSVC_RUNTIME_LIBRARY" "MultiThreaded")
+target_link_libraries("power_ronin_autotec" "power_ronin_lib")
 
 # Editor specific libraries:
-#add_subdirectory("${CMAKE_SOURCE_DIR}/extern/nativefiledialog")
-#target_link_libraries("power_ronin_autotec" "nativefiledialog")
+add_subdirectory("${CMAKE_SOURCE_DIR}/extern/nativefiledialog")
+target_link_libraries("power_ronin_autotec" "nativefiledialog")

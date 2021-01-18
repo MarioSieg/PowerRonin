@@ -103,7 +103,7 @@ namespace power_ronin::renderer
 		auto& current_view = data.view_matrix;
 		auto& current_projection = data.projection_matrix;
 #if AUTO_TEC
-		data.editor_camera.update(_rt.input(), data.primary_viewport.x, data.primary_viewport.y, static_cast<float>(_rt.chrono().delta_time));
+		data.editor_camera.update(_rt.input(), data.primary_viewport.z, data.primary_viewport.w, static_cast<float>(_rt.chrono().delta_time));
 		current_view = data.editor_camera.view_matrix();
 		current_projection = data.editor_camera.projection_matrix();
 #else
