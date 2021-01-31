@@ -23,7 +23,7 @@
 #include "uniform.hpp"
 #include "program_loader.hpp"
 
-namespace power_ronin::renderer
+namespace PowerRonin::Renderer
 {
 	/// <summary>
 	/// Base class for all shaders.

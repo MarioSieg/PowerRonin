@@ -19,7 +19,7 @@
 #include "instance_class.hpp"
 #include "environment.hpp"
 
-namespace power_ronin::scripting
+namespace PowerRonin::Scripting
 {
 	class MemberMethod final
 	{

@@ -15,77 +15,78 @@
 
 #include "audio.hpp"
 
-namespace power_ronin::audio
+namespace PowerRonin::Audio
 {
-	Audio::Audio() : ISubsystem("Audio", EVENTS) { }
+	AudioSystem::AudioSystem() : ISubsystem("Audio", EVENTS) { }
 
-	auto Audio::on_pre_startup(Runtime& _rt) -> bool
+	void AudioSystem::OnPreStartup(Runtime& runtime)
 	{
-		auto& proto = _rt.protocol();
+		auto& proto = runtime.Protocol();
 
 		// Create memory manager:
 
 		AK::MemoryMgr::GetDefaultSettings(this->mem_settings_);
-		proto.info("Initializing audio memory manager...");
+		proto.Info("Initializing audio memory manager...");
 		if (AK::MemoryMgr::Init(&this->mem_settings_) != AKRESULT::AK_Success) [[unlikely]]
 		{
-			return false;
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to initialize audio memory manager!");
 		}
 
 		// Create streaming manager:
 
 		AK::StreamMgr::GetDefaultSettings(this->stream_settings_);
-		proto.info("Initializing audio streaming manager...");
+		proto.Info("Initializing audio streaming manager...");
 		if (!AK::StreamMgr::Create(this->stream_settings_)) [[unlikely]]
 		{
-			return false;
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to initialize audio streaming manager!");
 		}
 
 		// Create a streaming device with blocking low-level I/O handshaking:
 
 		AK::StreamMgr::GetDefaultDeviceSettings(this->device_settings_);
-		proto.info("Initializing audio device...");
+		proto.Info("Initializing audio device...");
 		if (this->io_.Init(this->device_settings_) != AKRESULT::AK_Success) [[unlikely]]
 		{
-			return false;
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to initialize audio device!");
 		}
 
 		// Create sound engine:
 
 		AK::SoundEngine::GetDefaultInitSettings(this->init_settings_);
 		AK::SoundEngine::GetDefaultPlatformInitSettings(this->platform_init_settings_);
-		proto.info("Initializing sound engine...");
+		proto.Info("Initializing sound engine...");
 		if (AK::SoundEngine::Init(&this->init_settings_, &this->platform_init_settings_) !=
 			AKRESULT::AK_Success) [[unlikely]]
 		{
-			return false;
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to initialize sound engine!");
 		}
 
 		// Create interactive music engine:
 
 		AK::MusicEngine::GetDefaultInitSettings(this->music_settings_);
-		proto.info("Initializing music engine...");
+		proto.Info("Initializing music engine...");
 		if (AK::MusicEngine::Init(&this->music_settings_) != AKRESULT::AK_Success) [[unlikely]]
 		{
-			return false;
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to initialize music engine!");
 		}
 
 		// Create spatial audio engine:
-		proto.info("Initializing spatial audio...");
+		proto.Info("Initializing spatial audio...");
 		if (AK::SpatialAudio::Init(this->spatial_audio_init_settings_) != AKRESULT::AK_Success) [[unlikely]]
 		{
-			return false;
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to initialize spatial audio!");
 		}
-
-		return true;
 	}
 
-	auto Audio::on_pre_tick(Runtime& _rt) -> bool
+	void AudioSystem::OnPreTick(Runtime& runtime)
 	{
-		return AK::SoundEngine::RenderAudio() == AKRESULT::AK_Success;
+		if (AK::SoundEngine::RenderAudio() != AKRESULT::AK_Success) [[unlikely]]
+		{
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Audio rendering failed!");
+		}
 	}
 
-	auto Audio::on_pre_shutdown(Runtime& _rt) -> bool
+	void AudioSystem::OnPreShutdown(Runtime&)
 	{
 		AK::MusicEngine::Term();
 		AK::SoundEngine::Term();
@@ -94,6 +95,6 @@ namespace power_ronin::audio
 			AK::IAkStreamMgr::Get()->Destroy();
 		}
 		AK::MemoryMgr::Term();
-		return true;
+
 	}
 }

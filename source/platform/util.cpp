@@ -16,7 +16,7 @@
 #include "util.hpp"
 #include "platform_headers.hpp"
 
-namespace power_ronin::platform
+namespace PowerRonin::Platform
 {
 	void center_window(GLFWwindow* const _win, GLFWmonitor* const _monitor)
 	{

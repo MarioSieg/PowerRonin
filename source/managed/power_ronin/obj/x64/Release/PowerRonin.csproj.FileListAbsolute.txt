@@ -1,0 +1,5 @@
+C:\Mario\Projects\PowerRoninSDK\runtime\PowerRonin.xml
+C:\Mario\Projects\PowerRoninSDK\runtime\PowerRonin.dll
+C:\Mario\Projects\PowerRoninSDK\source\managed\power_ronin\obj\x64\Release\PowerRonin.csprojAssemblyReference.cache
+C:\Mario\Projects\PowerRoninSDK\source\managed\power_ronin\obj\x64\Release\PowerRonin.csproj.CoreCompileInputs.cache
+C:\Mario\Projects\PowerRoninSDK\source\managed\power_ronin\obj\x64\Release\PowerRonin.dll

@@ -19,7 +19,7 @@
 #include "../../extern/nativefiledialog/src/include/nfd.h"
 #include <cstddef>
 
-namespace power_ronin::gui
+namespace PowerRonin::Interface
 {
 	void open_file_dialog(char*& _out, const char* const _filter, const char* const _default_path)
 	{

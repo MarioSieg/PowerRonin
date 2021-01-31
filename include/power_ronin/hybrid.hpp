@@ -18,7 +18,7 @@
 #include <type_traits>
 #include "managed_object.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	template <typename RepresentatorMapping>
 	concept HybridCapable = std::is_standard_layout_v<RepresentatorMapping>;
@@ -43,28 +43,28 @@ namespace power_ronin
 		/// </summary>
 		/// <returns>True if the gc ref is pinned, else false.</returns>
 		[[nodiscard]]
-		auto is_pinned() const noexcept -> bool;
+		auto IsPinned() const noexcept -> bool;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns>The gcref (garbage collector reference)</returns>
 		[[nodiscard]]
-		auto handle() const noexcept -> std::uint32_t;
+		auto Handle() const noexcept -> std::uint32_t;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns>The underlying managed object.</returns>
 		[[nodiscard]]
-		auto unwrap() const noexcept -> void*;
+		auto Unwrap() const noexcept -> void*;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns>Unboxes the object and return the data ptr.</returns>
 		[[nodiscard]]
-		auto unbox() const noexcept -> RepresentatorMapping*;
+		auto Unbox() const noexcept -> RepresentatorMapping*;
 
 		/// <summary>
 		/// 
@@ -74,41 +74,41 @@ namespace power_ronin
 		auto operator*() const noexcept -> RepresentatorMapping&;
 
 	private:
-		std::uint32_t handle_ = 0;
-		bool is_pinned_ = false;
+		std::uint32_t handle = 0;
+		bool isPinned = false;
 	};
 
 	template <typename RepresentatorMapping> requires HybridCapable<RepresentatorMapping>
-	inline auto Hybrid<RepresentatorMapping>::handle() const noexcept -> std::uint32_t
+	inline auto Hybrid<RepresentatorMapping>::Handle() const noexcept -> std::uint32_t
 	{
-		return this->handle_;
+		return this->handle;
 	}
 
 	template <typename RepresentatorMapping> requires HybridCapable<RepresentatorMapping>
-	inline auto Hybrid<RepresentatorMapping>::unwrap() const noexcept -> void*
+	inline auto Hybrid<RepresentatorMapping>::Unwrap() const noexcept -> void*
 	{
-		return mo_unwrap(this->handle_);
+		return MoUnwrap(this->handle);
 	}
 
 	template <typename RepresentatorMapping> requires HybridCapable<RepresentatorMapping>
-	inline auto Hybrid<RepresentatorMapping>::unbox() const noexcept -> RepresentatorMapping*
+	inline auto Hybrid<RepresentatorMapping>::Unbox() const noexcept -> RepresentatorMapping*
 	{
-		return static_cast<RepresentatorMapping*>(mo_unbox(this->handle_));
+		return static_cast<RepresentatorMapping*>(MoUnbox(this->handle));
 	}
 
 	template <typename RepresentatorMapping> requires HybridCapable<RepresentatorMapping>
 	inline auto Hybrid<RepresentatorMapping>::operator*() const noexcept -> RepresentatorMapping&
 	{
-		return *static_cast<RepresentatorMapping*>(mo_unbox(this->handle_));
+		return *static_cast<RepresentatorMapping*>(MoUnbox(this->handle));
 	}
 
 	template <typename RepresentatorMapping> requires HybridCapable<RepresentatorMapping>
 	inline Hybrid<RepresentatorMapping>::Hybrid(Hybrid&& _rhs) noexcept
 	{
-		this->handle_ = _rhs.handle_;
-		this->is_pinned_ = _rhs.is_pinned_;
-		_rhs.handle_ = 0;
-		_rhs.is_pinned_ = false;
+		this->handle = _rhs.handle;
+		this->isPinned = _rhs.isPinned;
+		_rhs.handle = 0;
+		_rhs.isPinned = false;
 	}
 
 	template <typename RepresentatorMapping> requires HybridCapable<RepresentatorMapping>
@@ -119,13 +119,13 @@ namespace power_ronin
 			return *this;
 		}
 
-		if (this->handle_) [[unlikely]]
+		if (this->handle) [[unlikely]]
 		{
-			mo_dealloc(this->handle_);
+			MoDealloc(this->handle);
 		}
 
-		this->handle_ = _rhs.handle_;
-		this->is_pinned_ = _rhs.is_pinned_;
+		this->handle = _rhs.handle;
+		this->isPinned = _rhs.isPinned;
 
 		return *this;
 	}
@@ -133,12 +133,12 @@ namespace power_ronin
 	template <typename RepresentatorMapping> requires HybridCapable<RepresentatorMapping>
 	inline Hybrid<RepresentatorMapping>::~Hybrid()
 	{
-		mo_dealloc(this->handle_);
+		MoDealloc(this->handle);
 	}
 
 	template <typename RepresentatorMapping> requires HybridCapable<RepresentatorMapping>
-	inline auto Hybrid<RepresentatorMapping>::is_pinned() const noexcept -> bool
+	inline auto Hybrid<RepresentatorMapping>::IsPinned() const noexcept -> bool
 	{
-		return this->is_pinned_;
+		return this->isPinned;
 	}
 }

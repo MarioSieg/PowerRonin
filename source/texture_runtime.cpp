@@ -23,13 +23,13 @@
 #include "../extern/stb/stb_image.h"
 #include "../include/power_ronin/time_utils.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
-	void Texture::upload()
+	void Texture::Upload()
 	{
-		if (this->is_uploaded_) [[unlikely]]
+		if (this->isUploaded) [[unlikely]]
 		{
-			this->offload();
+			this->Offload();
 		}
 
 		if (this->texels_.empty() || this->width_ == 0u || this->height_ == 0u) [[unlikely]]
@@ -46,7 +46,7 @@ namespace power_ronin
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload texture!");
 		}
 
-		const auto flags = this->meta_data_.is_srgb ? BGFX_TEXTURE_SRGB : BGFX_TEXTURE_NONE;
+		const auto flags = this->metaData.is_srgb ? BGFX_TEXTURE_SRGB : BGFX_TEXTURE_NONE;
 
 		if (!isTextureValid(1, this->is_cubemap_, this->layer_count_, format, flags)) [[unlikely]]
 		{
@@ -67,12 +67,12 @@ namespace power_ronin
 
 		this->volatile_upload_data_.gpu_buffer_id = texture_handle.idx;
 
-		this->is_uploaded_ = true;
+		this->isUploaded = true;
 	}
 
-	void Texture::offload()
+	void Texture::Offload()
 	{
-		if (!this->is_uploaded_) [[unlikely]]
+		if (!this->isUploaded) [[unlikely]]
 		{
 			return;
 		}
@@ -82,19 +82,19 @@ namespace power_ronin
 			destroy(texture_handle);
 			this->volatile_upload_data_.gpu_buffer_id = bgfx::kInvalidHandle;
 		}
-		this->is_uploaded_ = false;
+		this->isUploaded = false;
 	}
 
 	auto TextureImporteur::load(std::filesystem::path&& _path,
 	                            const TextureMeta* const _meta) const -> std::shared_ptr<Texture>
 	{
-		auto self = IResource<TextureMeta>::allocate<Texture>();
+		auto self = IResource<TextureMeta>::Allocate<Texture>();
 
 		const auto ext = _path.extension();
 		if (ext == ".dds" || ext == ".ktx") [[likely]]
 		{
 			Blob blob = {};
-			blob_from_disk(_path, blob);
+			ReadBlobFromDisk(_path, blob);
 			if (blob.empty()) [[unlikely]]
 			{
 				throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load texture from file!");
@@ -177,10 +177,10 @@ namespace power_ronin
 		*/
 
 		self->texels_.shrink_to_fit();
-		self->file_path_ = std::move(_path);
-		self->meta_data_ = _meta ? *_meta : IResource<TextureMeta>::load_meta_or_default(self->file_path_);
+		self->filePath = std::move(_path);
+		self->metaData = _meta ? *_meta : IResource<TextureMeta>::LoadMetaOrDefault(self->filePath);
 
-		self->upload();
+		self->Upload();
 
 		return self;
 	}

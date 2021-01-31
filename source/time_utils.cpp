@@ -17,7 +17,7 @@
 #include "../../include/power_ronin/env.hpp"
 #include <mutex>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	auto safe_localtime(const std::time_t& _time) -> std::tm
 	{

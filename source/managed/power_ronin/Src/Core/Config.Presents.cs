@@ -132,7 +132,7 @@ namespace PowerRonin.Core
                 MaximizeWindow = true,
                 MaxFrameRate = 0,
                 Resolution = new Size2(1920, 1090),
-                VSync = true
+                VSync = false
             },
             Editor = new EditorConfig
             {
@@ -150,7 +150,7 @@ namespace PowerRonin.Core
                 ShowGrid = false,
                 ShowMatrixStats = true,
                 ShowStats = true,
-                ShowTerminal = false,
+                ShowTerminal = true,
                 StatsTextColor = 0xF
             },
             Graphics = new GraphicsConfig
@@ -160,7 +160,7 @@ namespace PowerRonin.Core
                 EnableMaxAnisotropy = false,
                 EnableSRGBBackbuffer = true,
                 GraphicsApi = Helper.SmartDetermineGraphicsApi(),
-                MSAAMode = MsaaMode.Off
+                MSAAMode = MsaaMode.X16
             }
         };
 

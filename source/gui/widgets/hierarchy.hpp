@@ -19,14 +19,14 @@
 
 #include "../../../include/power_ronin/ecs.hpp"
 
-namespace power_ronin::gui::widgets
+namespace PowerRonin::Interface::widgets
 {
 	class Hierarchy final
 	{
 	public:
 		void update(bool& _show, Registry& _registry);
 
-		ERef selected = {};
+		EntityRef selected = {};
 		std::size_t entity_counter = 0;
 	};
 }

@@ -15,70 +15,70 @@
 
 #include "../include/power_ronin/aabb.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
-	AABB::AABB(const SVec3<>& _min, const SVec3<>& _max) noexcept : min(_min), max(_max) { }
+	Aabb::Aabb(const Vector3<>& min, const Vector3<>& max) noexcept : Min(min), Max(max) { }
 
-	AABB::AABB(const std::vector<SVec3<>>& _points) noexcept
+	Aabb::Aabb(const std::vector<Vector3<>>& points) noexcept
 	{
-		auto $min = SVec3<>{std::numeric_limits<float>::min()};
-		auto $max = SVec3<>{std::numeric_limits<float>::max()};
-		for (const auto& p : _points)
+		auto $min = Vector3<>{std::numeric_limits<float>::min()};
+		auto $max = Vector3<>{std::numeric_limits<float>::max()};
+		for (const auto& p : points)
 		{
-			$min = math::min($min, p);
-			$max = math::min($max, p);
+			$min = Math::min($min, p);
+			$max = Math::min($max, p);
 		}
-		this->min = $min;
-		this->max = $max;
+		this->Min = $min;
+		this->Max = $max;
 	}
 
-	AABB::AABB(const SVec3<>* const _points, const std::size_t _count) noexcept
+	Aabb::Aabb(const Vector3<>* const points, const std::size_t count) noexcept
 	{
-		auto $min = SVec3<>{std::numeric_limits<float>::min()};
-		auto $max = SVec3<>{std::numeric_limits<float>::max()};
-		for (std::size_t i = 0; i < _count; ++i)
+		auto $min = Vector3<>{std::numeric_limits<float>::min()};
+		auto $max = Vector3<>{std::numeric_limits<float>::max()};
+		for (std::size_t i = 0; i < count; ++i)
 		{
-			$min = math::min($min, _points[i]);
-			$max = math::min($max, _points[i]);
+			$min = Math::min($min, points[i]);
+			$max = Math::min($max, points[i]);
 		}
-		this->min = $min;
-		this->max = $max;
+		this->Min = $min;
+		this->Max = $max;
 	}
 
-	auto AABB::width() const noexcept -> float
+	auto Aabb::Width() const noexcept -> float
 	{
-		return this->max.x - this->min.x;
+		return this->Max.x - this->Min.x;
 	}
 
-	auto AABB::height() const noexcept -> float
+	auto Aabb::Height() const noexcept -> float
 	{
-		return this->max.y - this->min.y;
+		return this->Max.y - this->Min.y;
 	}
 
-	auto AABB::depth() const noexcept -> float
+	auto Aabb::Depth() const noexcept -> float
 	{
-		return this->max.z - this->min.z;
+		return this->Max.z - this->Min.z;
 	}
 
-	auto AABB::size() const noexcept -> SVec3<>
+	auto Aabb::Size() const noexcept -> Vector3<>
 	{
-		return this->max - this->min;
+		return this->Max - this->Min;
 	}
 
-	auto AABB::center() const noexcept -> SVec3<>
+	auto Aabb::Center() const noexcept -> Vector3<>
 	{
-		return (this->max + this->min) * .5f;
+		return (this->Max + this->Min) * .5f;
 	}
 
-	void AABB::corners(SVec3<> (&_out)[8]) const noexcept
+	void Aabb::Corners(Vector3<> (&out)[8]) const noexcept
 	{
-		_out[0] = {this->min.x, this->max.y, this->max.z};
-		_out[1] = {this->max.x, this->max.y, this->max.z};
-		_out[2] = {this->max.x, this->min.y, this->max.z};
-		_out[3] = {this->min.x, this->min.y, this->max.z};
-		_out[4] = {this->min.x, this->max.y, this->min.z};
-		_out[5] = {this->max.x, this->max.y, this->min.z};
-		_out[6] = {this->max.x, this->min.y, this->min.z};
-		_out[7] = {this->min.x, this->min.y, this->min.z};
+		out[0] = {this->Min.x, this->Max.y, this->Max.z};
+		out[1] = {this->Max.x, this->Max.y, this->Max.z};
+		out[2] = {this->Max.x, this->Min.y, this->Max.z};
+		out[3] = {this->Min.x, this->Min.y, this->Max.z};
+		out[4] = {this->Min.x, this->Max.y, this->Min.z};
+		out[5] = {this->Max.x, this->Max.y, this->Min.z};
+		out[6] = {this->Max.x, this->Min.y, this->Min.z};
+		out[7] = {this->Min.x, this->Min.y, this->Min.z};
 	}
 }

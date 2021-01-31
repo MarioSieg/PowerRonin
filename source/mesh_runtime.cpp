@@ -20,7 +20,7 @@
 #include "../extern/assimp/include/assimp/scene.h"
 #include "../extern/assimp/include/assimp/cimport.h"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	static auto create_vertex_layout() -> bgfx::VertexLayout
 	{
@@ -78,20 +78,20 @@ namespace power_ronin
 		get_bounding_box_for_node(_scene, *_scene.mRootNode, _min, _max, trafo);
 	}
 	
-	void Mesh::upload() {
-		if (this->is_uploaded_) [[unlikely]] {
-			this->offload();
+	void Mesh::Upload() {
+		if (this->isUploaded) [[unlikely]] {
+			this->Offload();
 		}
 
-		if (this->indices_.empty() || this->vertices_.empty()) [[unlikely]] {
+		if (this->indices.empty() || this->vertices.empty()) [[unlikely]] {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload mesh!");
 		}
 
 		static const auto VERTEX_LAYOUT = create_vertex_layout();
 
-		const auto* const index_buffer_mem = bgfx::makeRef(this->indices_.data()
+		const auto* const index_buffer_mem = bgfx::makeRef(this->indices.data()
 		                                                   , static_cast<std::uint32_t>(sizeof(std::uint16_t) * this->
-			                                                   indices_.
+			                                                   indices.
 			                                                   size()), nullptr, nullptr);
 
 		if (index_buffer_mem == nullptr) [[unlikely]] {
@@ -104,8 +104,8 @@ namespace power_ronin
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload mesh!");
 		}
 
-		const auto* const vertex_buffer_mem = bgfx::makeRef(this->vertices_.data()
-		                                                    , static_cast<std::uint32_t>(this->vertices_.size() *
+		const auto* const vertex_buffer_mem = bgfx::makeRef(this->vertices.data()
+		                                                    , static_cast<std::uint32_t>(this->vertices.size() *
 			                                                    VERTEX_LAYOUT.
 			                                                    getStride()), nullptr, nullptr);
 		if (vertex_buffer_mem == nullptr) [[unlikely]] {
@@ -118,33 +118,33 @@ namespace power_ronin
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to upload mesh!");
 		}
 
-		this->volatile_upload_data_.index_buffer_id = index_buffer_handle.idx;
-		this->volatile_upload_data_.vertex_buffer_id = vertex_buffer_handle.idx;
+		this->volatileUploadData.IndexBufferId = index_buffer_handle.idx;
+		this->volatileUploadData.VertexBufferId = vertex_buffer_handle.idx;
 
-		this->is_uploaded_ = true;
+		this->isUploaded = true;
 	}
 
-	void Mesh::offload() {
-	if (!this->is_uploaded_) [[unlikely]] {
+	void Mesh::Offload() {
+	if (!this->isUploaded) [[unlikely]] {
 			return;
 		}
-		const auto vb_handle = bgfx::VertexBufferHandle{this->volatile_upload_data_.vertex_buffer_id};
+		const auto vb_handle = bgfx::VertexBufferHandle{this->volatileUploadData.VertexBufferId};
 		if (isValid(vb_handle)) [[likely]] {
 			destroy(vb_handle);
-			this->volatile_upload_data_.vertex_buffer_id = bgfx::kInvalidHandle;
+			this->volatileUploadData.VertexBufferId = bgfx::kInvalidHandle;
 		}
 
-		const auto ib_handle = bgfx::IndexBufferHandle{this->volatile_upload_data_.index_buffer_id};
+		const auto ib_handle = bgfx::IndexBufferHandle{this->volatileUploadData.IndexBufferId};
 		if (isValid(ib_handle)) [[likely]] {
 			destroy(ib_handle);
-			this->volatile_upload_data_.index_buffer_id = bgfx::kInvalidHandle;
+			this->volatileUploadData.IndexBufferId = bgfx::kInvalidHandle;
 		}
 
-		this->is_uploaded_ = false;
+		this->isUploaded = false;
 	}
 
-	auto MeshImporteur::load(std::filesystem::path&& _path,
-	                         const MeshMeta* const _meta) const -> std::shared_ptr<Mesh> {
+	auto MeshImporteur::load(std::filesystem::path&& path,
+	                         const MeshMeta* const meta) const -> std::shared_ptr<Mesh> {
 		Assimp::Importer importer;
 
 		unsigned flags = aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_ConvertToLeftHanded;
@@ -155,7 +155,7 @@ namespace power_ronin
 		//importer.SetPropertyFloat(AI_CONFIG_GLOBAL_SCALE_FACTOR_KEY, .1f);
 
 		/* We should add some flags here! */
-		const aiScene* const scene = importer.ReadFile(_path.string().c_str(), flags);
+		const aiScene* const scene = importer.ReadFile(path.string().c_str(), flags);
 
 		if (scene == nullptr || !scene->HasMeshes()) [[unlikely]] {
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load mesh from file!");
@@ -183,21 +183,21 @@ namespace power_ronin
 		for (unsigned i = 0; i < mesh->mNumVertices; ++i) {
 			const auto& vertex = mesh->mVertices[i];
 
-			auto o_vertex = Vertex{Vertex{.position = {vertex.x, vertex.y, vertex.z}}};
+			auto o_vertex = Vertex{Vertex{.Position = {vertex.x, vertex.y, vertex.z}}};
 
 			if (mesh->mTextureCoords[0]) [[likely]] {
 				const auto& uv = mesh->mTextureCoords[0][i];
-				o_vertex.uv = {uv.x, uv.y};
+				o_vertex.TexCoords = {uv.x, uv.y};
 			}
 
 			if (mesh->mNormals) [[likely]] {
 				const auto& normal = mesh->mNormals[i];
-				o_vertex.normal = {normal.x, normal.y, normal.z};
+				o_vertex.Normal = {normal.x, normal.y, normal.z};
 			}
 
 			if (mesh->mTangents) [[likely]] {
 				const auto& tangent = mesh->mTangents[i];
-				o_vertex.tangent = {tangent.x, tangent.y, tangent.z};
+				o_vertex.Tangent = {tangent.x, tangent.y, tangent.z};
 			}
 
 			vertices.push_back(o_vertex);
@@ -209,14 +209,14 @@ namespace power_ronin
 		aiVector3D bound_max;
 		get_bounding_box(*scene, bound_min, bound_max);
 
-		auto self = IResource<MeshMeta>::allocate<Mesh>();
-		self->file_path_ = std::move(_path);
-		self->indices_ = std::move(indices);
-		self->vertices_ = std::move(vertices);
-		self->aabb_ = AABB{ {bound_min.x, bound_min.y, bound_min.z}, {bound_max.x, bound_max.y, bound_max.z} };
-		self->meta_data_ = _meta ? *_meta : IResource<MeshMeta>::load_meta_or_default(self->file_path_);
+		auto self = IResource<MeshMeta>::Allocate<Mesh>();
+		self->filePath = std::move(path);
+		self->indices = std::move(indices);
+		self->vertices = std::move(vertices);
+		self->aabb = Aabb{ {bound_min.x, bound_min.y, bound_min.z}, {bound_max.x, bound_max.y, bound_max.z} };
+		self->metaData = meta ? *meta : IResource<MeshMeta>::LoadMetaOrDefault(self->filePath);
 
-		self->upload();
+		self->Upload();
 
 		return self;
 	}

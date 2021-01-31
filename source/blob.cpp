@@ -17,33 +17,33 @@
 #include "../include/power_ronin/env.hpp"
 #include "../include/power_ronin/except.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
-	void blob_from_disk(const std::filesystem::path& _file, Blob& _blob)
+	void ReadBlobFromDisk(const std::filesystem::path& filePath, Blob& out)
 	{
-		const auto path = _file.string();
+		const auto path = filePath.string();
 		FILE* file;
 #if COM_MSVC
 		fopen_s(&file, path.c_str(), "rb");
 #else
-		file = fopen(_file.string().data(), "rb");
+		file = fopen(path.c_str(), "rb");
 #endif
 		if (!file) [[unlikely]]
 		{
-			throw MAKE_FATAL_ENGINE_EXCEPTION("Binary blob read failed: " + _file.string());
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Binary blob read failed: " + filePath.string());
 		}
 		fseek(file, 0, SEEK_END);
 		const long size = ftell(file);
 		if (!size) [[unlikely]]
 		{
-			throw MAKE_FATAL_ENGINE_EXCEPTION("Binary blob read failed: " + _file.string());
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Binary blob read failed: " + filePath.string());
 		}
 		rewind(file);
-		_blob.resize(size);
-		const auto read = fread(_blob.data(), sizeof(std::byte), size, file);
+		out.resize(size);
+		const auto read = fread(out.data(), sizeof(std::byte), size, file);
 		if (static_cast<unsigned long long>(size) != read) [[unlikely]]
 		{
-			throw MAKE_FATAL_ENGINE_EXCEPTION("Binary blob read failed: " + _file.string());
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Binary blob read failed: " + filePath.string());
 		}
 	}
 }

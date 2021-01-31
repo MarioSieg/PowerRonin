@@ -15,11 +15,11 @@
 
 #include "physics.hpp"
 
-namespace power_ronin::physics
+namespace PowerRonin::Physics
 {
-	Physics::Physics() : ISubsystem("Physics", EVENTS) { }
+	PhysicsSystem::PhysicsSystem() : ISubsystem("Physics", EVENTS) { }
 
-	auto Physics::on_pre_startup(Runtime&) -> bool
+	void PhysicsSystem::OnPreStartup(Runtime&)
 	{
 		this->collision_configuration_ = new btDefaultCollisionConfiguration();
 		this->dispatcher_ = new btCollisionDispatcher(this->collision_configuration_);
@@ -29,20 +29,14 @@ namespace power_ronin::physics
 		                                                    this->solver_
 		                                                    , this->collision_configuration_);
 		this->dynamics_world_->setGravity({.0f, -10.f, .0f});
-		return true;
 	}
 
-	auto Physics::on_post_tick(Runtime& _rt) -> bool
+	void PhysicsSystem::OnPostTick(Runtime&)
 	{
-		/* TODO
-		_rt.scenery().registry().view<Transform, Rigidbody, Collider>().each([ ](Transform &_transform, Rigidbody &_rigidbody, Collider &_collider) {
-	  
-		});
-		*/
-		return true;
+		
 	}
 
-	auto Physics::on_pre_shutdown(Runtime&) -> bool
+	void PhysicsSystem::OnPreShutdown(Runtime&)
 	{
 		delete this->dynamics_world_;
 		this->dynamics_world_ = nullptr;
@@ -58,7 +52,5 @@ namespace power_ronin::physics
 
 		delete this->collision_configuration_;
 		this->collision_configuration_ = nullptr;
-
-		return true;
 	}
 }

@@ -18,42 +18,42 @@
 #include "mathtypes.hpp"
 #include <vector>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	/// <summary>
 	/// Represents an axis aligned bounding box.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	struct AABB final
+	struct Aabb final
 	{
-		constexpr AABB() noexcept = default;
-		AABB(const SVec3<>& _min, const SVec3<>& _max) noexcept;
-		explicit AABB(const std::vector<SVec3<>>& _points) noexcept;
-		explicit AABB(const SVec3<>* const _points, const std::size_t _count) noexcept;
-		constexpr AABB(const AABB&) noexcept = default;
-		constexpr AABB(AABB&&) noexcept = default;
-		constexpr auto operator=(const AABB&) noexcept -> AABB& = default;
-		constexpr auto operator=(AABB&&) noexcept -> AABB& = default;
-		~AABB() = default;
+		constexpr Aabb() noexcept = default;
+		Aabb(const Vector3<>& min, const Vector3<>& max) noexcept;
+		explicit Aabb(const std::vector<Vector3<>>& points) noexcept;
+		explicit Aabb(const Vector3<>* const points, const std::size_t count) noexcept;
+		constexpr Aabb(const Aabb&) noexcept = default;
+		constexpr Aabb(Aabb&&) noexcept = default;
+		constexpr auto operator=(const Aabb&) noexcept -> Aabb& = default;
+		constexpr auto operator=(Aabb&&) noexcept -> Aabb& = default;
+		~Aabb() = default;
 
-		SVec3<> min = {};
-		SVec3<> max = {};
-
-		[[nodiscard]]
-		auto width() const noexcept -> float;
+		Vector3<> Min = {};
+		Vector3<> Max = {};
 
 		[[nodiscard]]
-		auto height() const noexcept -> float;
+		auto Width() const noexcept -> float;
 
 		[[nodiscard]]
-		auto depth() const noexcept -> float;
+		auto Height() const noexcept -> float;
 
 		[[nodiscard]]
-		auto size() const noexcept -> SVec3<>;
+		auto Depth() const noexcept -> float;
 
 		[[nodiscard]]
-		auto center() const noexcept -> SVec3<>;
+		auto Size() const noexcept -> Vector3<>;
 
-		void corners(SVec3<> (&_out)[8]) const noexcept;
+		[[nodiscard]]
+		auto Center() const noexcept -> Vector3<>;
+
+		void Corners(Vector3<> (&out)[8]) const noexcept;
 	};
 }

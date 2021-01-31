@@ -18,13 +18,13 @@
 
 #include "bx/math.h"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	auto calculate_sun_dir(float _hour
 	                       , float _latitude
 	                       , const float _delta
-	                       , const SVec3<>& _up
-	                       , const SVec3<>& _north) noexcept -> SVec3<>
+	                       , const Vector3<>& _up
+	                       , const Vector3<>& _north) noexcept -> Vector3<>
 	{
 		/*
 		_latitude = math::radians(_latitude);
@@ -66,7 +66,7 @@ namespace power_ronin
 	auto calculate_sun_orbit(const float _month, const float _ecliptic_obliquity) noexcept -> float
 	{
 		const auto day = 30.f * _month + 15.f;
-		const auto lambda = math::radians(280.46f + 0.9856474f * day);
+		const auto lambda = Math::radians(280.46f + 0.9856474f * day);
 		return std::asin(std::sin(_ecliptic_obliquity) * std::sin(lambda));
 	}
 }

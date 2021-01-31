@@ -24,9 +24,9 @@
 #endif
 
 
-namespace power_ronin
+namespace PowerRonin
 {
-	auto executable_name() -> std::string
+	auto ExecutableName() -> std::string
 	{
 #if OS_WINDOWS
 		char buf[MAX_PATH];
@@ -39,7 +39,7 @@ namespace power_ronin
 #endif
 	}
 
-	auto process_memory_usage() -> std::size_t
+	auto ProcessMemoryUsage() -> std::size_t
 	{
 		return 0;
 	}

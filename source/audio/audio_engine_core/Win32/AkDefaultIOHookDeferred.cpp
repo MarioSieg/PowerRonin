@@ -231,7 +231,7 @@ AKRESULT CAkDefaultIOHookDeferred::Read(
 
 	// If this assert comes up, it might be beacause this hook's GetBlockSize() return value is incompatible 
 	// with the system's handling of file reading for this specific file handle.
-	// If you are using the File Package extension, did you create your package with a compatible
+	// If you are using the File Package extension, did you Create your package with a compatible
 	// block size? It should be a multiple of WIN32_NO_BUFFERING_BLOCK_SIZE. (check -blocksize argument in the File Packager command line)
 	AKASSERT( ( io_transferInfo.uFilePosition % WIN32_NO_BUFFERING_BLOCK_SIZE ) == 0
 			|| !"Requested file position for I/O transfer is inconsistent with block size" );

@@ -16,45 +16,44 @@
 #pragma once
 
 #include "../../include/power_ronin/core/kernel.hpp"
-#include "../../include/power_ronin/flycam.hpp"
 
 #include "gpu.hpp"
 #include "shader_bucket.hpp"
 #include "shared_uniforms.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	class MeshRenderer;
 	class Transform;
 
-	namespace renderer
+	namespace Renderer
 	{
-		class Renderer final : public core::ISubsystem
+		class RenderSystem final : public Core::ISubsystem
 		{
 		public:
 			/* Constructors, assignment operators, destructor */
-			Renderer();
-			Renderer(const Renderer&) = delete;
-			Renderer(Renderer&&) = delete;
-			auto operator=(const Renderer&) -> Renderer& = delete;
-			auto operator=(Renderer&&) -> Renderer& = delete;
-			~Renderer() override = default;
+			RenderSystem();
+			RenderSystem(const RenderSystem&) = delete;
+			RenderSystem(RenderSystem&&) = delete;
+			auto operator=(const RenderSystem&) -> RenderSystem& = delete;
+			auto operator=(RenderSystem&&) -> RenderSystem& = delete;
+			~RenderSystem() override = default;
 
 		private:
 			/* Required kernel events */
-			static constexpr auto EVENTS = core::ServiceEvents::PRE_STARTUP | core::ServiceEvents::PRE_TICK |
-				core::ServiceEvents::POST_TICK | core::ServiceEvents::POST_SHUTDOWN;
+			static constexpr auto EVENTS = Core::ServiceEvents::PreStartup | Core::ServiceEvents::PreTick |
+				Core::ServiceEvents::PostTick | Core::ServiceEvents::PostShutdown;
 
 			/* Kernel events */
-			auto on_pre_startup(Runtime& _rt) -> bool override;
-			auto on_pre_tick(Runtime& _rt) -> bool override;
-			auto on_post_tick([[maybe_unused]] Runtime& _rt) -> bool override;
-			auto on_post_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
+			void OnPreStartup(Runtime& runtime) override;
+			void OnPreTick(Runtime& _rt) override;
+			void OnPostTick([[maybe_unused]] Runtime& _rt) override;
+			void OnPostShutdown([[maybe_unused]] Runtime& _rt) override;
 
 			void render_skybox(const Scenery::Configuration::Lighting& _lighting, RenderData& _data) const;
 			void set_shared_uniforms(const Scenery::Configuration::Lighting& _lighting) const;
 			void render_scene(Runtime& _rt);
-			void update_camera(Runtime& _rt) const;
+			void update_camera(Runtime& runtime) const;
 
 			std::uint64_t tick_prev_ = 0;
 			GPU gpu_ = {};
@@ -62,5 +61,5 @@ namespace power_ronin
 			SharedUniforms shared_uniforms_ = {};
 			bool is_instancing_supported_ = false;
 		};
-	} // namespace power_ronin::renderer // namespace power_ronin::renderer
+	} // namespace PowerRonin::renderer // namespace PowerRonin::renderer
 }

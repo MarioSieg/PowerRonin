@@ -17,7 +17,7 @@
 
 #include <string_view>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	/// <summary>
 	/// Represents the style of a message box.
@@ -27,22 +27,22 @@ namespace power_ronin
 		/// <summary>
 		/// Info style.
 		/// </summary>
-		INFO,
+		Info,
 
 		/// <summary>
 		/// Warning style.
 		/// </summary>
-		WARNING,
+		Warning,
 
 		/// <summary>
 		/// Error style.
 		/// </summary>
-		ERROR,
+		Error,
 
 		/// <summary>
 		/// Question style.
 		/// </summary>
-		QUESTION
+		Question
 	};
 
 	/// <summary>
@@ -53,17 +53,17 @@ namespace power_ronin
 		/// <summary>
 		/// Ok button.
 		/// </summary>
-		OK,
+		Ok,
 
 		/// <summary>
 		/// Ok and cancel button.
 		/// </summary>
-		OK_CANCEL,
+		OkCancel,
 
 		/// <summary>
 		/// Yes and no button.
 		/// </summary>
-		YES_NO
+		YesNo
 	};
 
 	/// <summary>
@@ -74,37 +74,37 @@ namespace power_ronin
 		/// <summary>
 		/// Used pressed ok.
 		/// </summary>
-		OK,
+		Ok,
 
 		/// <summary>
 		/// Used pressed cancel.
 		/// </summary>
-		CANCEL,
+		Cancel,
 
 		/// <summary>
 		/// Used pressed yes.
 		/// </summary>
-		YES,
+		Yes,
 
 		/// <summary>
 		/// Used pressed no.
 		/// </summary>
-		NO,
+		No,
 
 		/// <summary>
 		/// Used pressed none.
 		/// </summary>
-		NONE
+		None
 	};
 
 	/// <summary>
 	/// Shows an os-specific message box.
 	/// </summary>
-	/// <param name="_msg"></param>
-	/// <param name="_title"></param>
-	/// <param name="_style"></param>
-	/// <param name="_buttons"></param>
+	/// <param name="msg"></param>
+	/// <param name="title"></param>
+	/// <param name="style"></param>
+	/// <param name="buttons"></param>
 	/// <returns></returns>
 	[[nodiscard]]
-	extern auto show_message_box(const std::string_view _msg, const std::string_view _title, const MessageBoxStyle _style, const MessageBoxButtons _buttons) -> MessageBoxSelection;
+	extern auto ShowMessageBox(const std::string_view msg, const std::string_view title, const MessageBoxStyle style, const MessageBoxButtons buttons) -> MessageBoxSelection;
 }

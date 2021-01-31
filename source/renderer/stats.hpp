@@ -15,13 +15,13 @@
 
 #pragma once
 
-namespace power_ronin
+namespace PowerRonin
 {
 	class Runtime;
 	class Diagnostics;
 	class AsyncProtocol;
 
-	namespace renderer
+	namespace Renderer
 	{
 		extern void poll_limits(Diagnostics& _diag) noexcept;
 		extern void dump_limits(AsyncProtocol& _proto);

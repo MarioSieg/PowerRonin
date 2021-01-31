@@ -27,7 +27,7 @@
 #include <iomanip>
 #include <string>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	template <typename Mutex = std::mutex>
 	class TerminalSink final : public spdlog::sinks::base_sink<Mutex>
@@ -87,4 +87,4 @@ namespace power_ronin
 		}
 		this->buffer_.clear();
 	}
-} // namespace power_ronin // namespace power_ronin
+} // namespace PowerRonin // namespace PowerRonin

@@ -16,7 +16,7 @@
 #include "../include/power_ronin/scenery.hpp"
 #include "../include/power_ronin/resource_manager.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	auto Scenery::registry() const noexcept -> const Registry&
 	{
@@ -34,15 +34,15 @@ namespace power_ronin
 	{
 		// Camera:
 		const auto camera_entity = this->registry_.create();
-		this->registry_.emplace<MetaData>(camera_entity).name = "Main Camera";
+		this->registry_.emplace<MetaData>(camera_entity).Name = "Main Camera";
 		auto& transform = this->registry_.emplace<Transform>(camera_entity);
 		transform.position = {.5f, .0f, -10.f};
 		auto& camera = this->registry_.emplace<Camera>(camera_entity);
 
 		// Create cube:
-		for (auto i = 0, z = 1; i < 8; ++i)
+		for (auto i = 0, z = 1; i < 128; ++i)
 		{
-			for (auto j = 0; j < 8; ++j, ++z)
+			for (auto j = 0; j < 128; ++j, ++z)
 			{
 				const auto cube = this->registry_.create();
 
@@ -53,25 +53,25 @@ namespace power_ronin
 				auto& renderer = this->registry_.emplace<MeshRenderer>(cube);
 				auto& collider = this->registry_.emplace<Collider>(cube);
 
-				meta.name = "Solider " + std::to_string(z);
+				meta.Name = "Solider " + std::to_string(z);
 				Material::BumpedDiffuse lambert;
-				lambert.albedo = _resource_manager.load<Texture>("examples/soldier_albedo.dds");
+				lambert.Albedo = _resource_manager.Load<Texture>("examples/soldier_albedo.dds");
 				TextureMeta tmeta = {};
 				tmeta.is_srgb = false;
-				lambert.normal = _resource_manager.load<Texture>("examples/soldier_normal.dds", &tmeta);
-				renderer.material = Material::create_from_data(lambert, "soldier", _resource_manager);
-				renderer.mesh = _resource_manager.load<Mesh>("examples/soldier.obj");
+				lambert.Normal = _resource_manager.Load<Texture>("examples/soldier_normal.dds", &tmeta);
+				renderer.Material = Material::CreateFromData(lambert, "soldier", _resource_manager);
+				renderer.Mesh = _resource_manager.Load<Mesh>("examples/soldier.obj");
 			}
 		}
 
 		// Load skybox:
-		this->config.lighting.skybox_material = Material::create_from_data(
-			Material::StaticSkybox{_resource_manager.system_resources.skybox}, "_skybox_", _resource_manager);
-		this->config.lighting.skydome = _resource_manager.system_resources.skydome;
+		this->config.lighting.skybox_material = Material::CreateFromData(
+			Material::StaticSkybox{_resource_manager.SystemResources.SkyBox}, "_skybox_", _resource_manager);
+		this->config.lighting.skydome = _resource_manager.SystemResources.SkyDome;
 	}
 
 	void Scenery::unload_all_entities()
 	{
 		this->registry_.clear();
 	}
-} // namespace power_ronin
+} // namespace PowerRonin

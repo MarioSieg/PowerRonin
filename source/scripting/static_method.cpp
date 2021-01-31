@@ -16,7 +16,7 @@
 #include "static_method.hpp"
 #include "../../include/power_ronin/except.hpp"
 
-namespace power_ronin::scripting
+namespace PowerRonin::Scripting
 {
 	auto StaticMethod::get_handle() const noexcept -> MonoMethod*
 	{

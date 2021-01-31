@@ -17,7 +17,7 @@
 
 #include "aabb.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	/// <summary>
 	/// Represents a view frustum (camera pyramid)
@@ -26,14 +26,14 @@ namespace power_ronin
 	{
 		enum Planes
 		{
-			LEFT = 0,
-			RIGHT,
-			BOTTOM,
-			TOP,
-			NEAR,
-			FAR,
-			COUNT,
-			COMBO = COUNT * (COUNT - 1) / 2
+			Left = 0,
+			Right,
+			Bottom,
+			Top,
+			Near,
+			Far,
+			Count,
+			Combo = Count * (Count - 1) / 2
 		};
 
 		constexpr Frustum() noexcept = default;
@@ -44,18 +44,18 @@ namespace power_ronin
 		~Frustum() = default;
 
 		[[nodiscard]]
-		auto planes() const noexcept -> const SVec4<>(&)[6];
+		auto Planes() const noexcept -> const Vector4<>(&)[6];
 
 		[[nodiscard]]
-		auto points() const noexcept -> const SVec3<>(&)[8];
+		auto Points() const noexcept -> const Vector3<>(&)[8];
 
-		void from_camera_matrix(const SMat4x4<>& _view_proj) noexcept;
+		void FromCameraMatrix(const Matrix4x4<>& viewProj) noexcept;
 
 		[[nodiscard]]
-		auto is_aabb_visible(const AABB& _in) const noexcept -> bool;
+		auto IsAabbVisible(const Aabb& in) const noexcept -> bool;
 
 	private:
-		SVec4<> planes_[6] = {};
-		SVec3<> points_[8] = {};
+		Vector4<> planes[6] = {};
+		Vector3<> points[8] = {};
 	};
 }

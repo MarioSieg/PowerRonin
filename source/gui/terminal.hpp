@@ -19,7 +19,7 @@
 
 #include <array>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	class Runtime;
 	class CmdDB;
@@ -27,7 +27,7 @@ namespace power_ronin
 
 	extern void (*TERMINAL_UPDATE)();
 
-	namespace gui
+	namespace Interface
 	{
 		class Terminal final
 		{
@@ -53,4 +53,4 @@ namespace power_ronin
 			char buffer_[128] = {};
 		};
 	} // namespace gui::widgets // namespace gui::widgets
-} // namespace power_ronin // namespace power_ronin
+} // namespace PowerRonin // namespace PowerRonin

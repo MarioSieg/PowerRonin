@@ -17,7 +17,7 @@
 
 #include "gui_headers.hpp"
 
-namespace power_ronin::gui
+namespace PowerRonin::Interface
 {
 	// utility structure for realtime plot
 	struct ScrollingBuffer final
@@ -42,4 +42,4 @@ namespace power_ronin::gui
 
 		void add_point(float _x, float _y);
 	};
-} // namespace power_ronin::gui::widgets // namespace power_ronin::gui::widgets
+} // namespace PowerRonin::gui::widgets // namespace PowerRonin::gui::widgets

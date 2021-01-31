@@ -17,7 +17,7 @@
 #include <filesystem>
 #include "../../include/power_ronin/except.hpp"
 
-namespace power_ronin::scripting
+namespace PowerRonin::Scripting
 {
 	void Assembly::load(std::string&& _name, RuntimeEnvironment& _env, const int _argc, char** const _argv)
 	{

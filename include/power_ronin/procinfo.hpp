@@ -18,16 +18,16 @@
 #include <string>
 #include <cstddef>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	/// <summary>
 	/// Returns the name of the executable.
 	/// </summary>
-	[[nodiscard]] extern auto executable_name() -> std::string;
+	[[nodiscard]] extern auto ExecutableName() -> std::string;
 
 	/// <summary>
 	///
 	/// </summary>
 	/// <returns>The amount of RAM memory used by the process in bytes.</returns>
-	[[nodiscard]] extern auto process_memory_usage() -> std::size_t;
+	[[nodiscard]] extern auto ProcessMemoryUsage() -> std::size_t;
 }

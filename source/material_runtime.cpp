@@ -15,9 +15,9 @@
 
 #include "../../include/power_ronin/material.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
-	void Material::upload() { }
+	void Material::Upload() { }
 
-	void Material::offload() { }
+	void Material::Offload() { }
 }

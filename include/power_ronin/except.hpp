@@ -17,7 +17,7 @@
 
 #include <stdexcept>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	/// <summary>
 	/// Thrown when a fatal error happens, where the engine cannot continue working.
@@ -26,10 +26,10 @@ namespace power_ronin
 	{
 	public:
 		FatalEngineException();
-		explicit FatalEngineException(const std::string& _msg);
-		explicit FatalEngineException(const char* _msg);
-		FatalEngineException(const char* _msg, int _line, const char* _file);
-		FatalEngineException(const std::string& _msg, int _line, const char* _file);
+		explicit FatalEngineException(const std::string& msg);
+		explicit FatalEngineException(const char* msg);
+		FatalEngineException(const char* msg, int line, const char* file);
+		FatalEngineException(const std::string& msg, int line, const char* file);
 		FatalEngineException(const FatalEngineException&) = default;
 		FatalEngineException(FatalEngineException&&) noexcept = default;
 		auto operator=(const FatalEngineException&) = delete;
@@ -43,8 +43,8 @@ namespace power_ronin
 		[[nodiscard]] auto source_line() const noexcept -> int;
 
 	private:
-		int line_ = 0;
-		const char* file_ = "";
+		int line = 0;
+		const char* file = "";
 	};
 
 	/// If C++20 std::source_location is supported, we no longer need this.

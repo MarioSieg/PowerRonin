@@ -17,7 +17,7 @@
 #include "gui_headers.hpp"
 #include "utils.hpp"
 
-namespace power_ronin::gui
+namespace PowerRonin::Interface
 {
 	void style_blue() noexcept
 	{
@@ -364,4 +364,4 @@ namespace power_ronin::gui
 			case SystemTheme::LIGHT: style_light();
 		}
 	}
-} // namespace power_ronin::gui // namespace power_ronin::gui
+} // namespace PowerRonin::gui // namespace PowerRonin::gui

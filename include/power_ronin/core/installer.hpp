@@ -15,10 +15,10 @@
 
 #pragma once
 
-namespace power_ronin::core
+namespace PowerRonin::Core
 {
 	class Kernel;
 
-	extern auto install_minimal(Kernel& _kernel) -> bool;
-	extern auto install_common(Kernel& _kernel) -> bool;
-} // namespace power_ronin::core
+	extern void InstallMinimal(Kernel& kernel);
+	extern void InstallCommon(Kernel& kernel);
+} // namespace PowerRonin::Core

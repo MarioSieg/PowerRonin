@@ -23,22 +23,22 @@
 #define MAP_BUTTON(NAV_NO, BUTTON_NO)       { if (buttons_count > (BUTTON_NO) && buttons[BUTTON_NO] == GLFW_PRESS) [[unlikely]] io.NavInputs[NAV_NO] = 1.0f; }
 #define MAP_ANALOG(NAV_NO, AXIS_NO, V0, V1) { float v = (axes_count > (AXIS_NO)) ? axes[AXIS_NO] : (V0); v = (v - (V0)) / ((V1) - (V0)); if (v > 1.0f) v = 1.0f; if (io.NavInputs[NAV_NO] < v) io.NavInputs[NAV_NO] = v; }
 
-namespace power_ronin::platform
+namespace PowerRonin::Platform
 {
-	extern void* WINDOW_HANDLE;
-} // namespace power_ronin::platform
+	extern void* WindowHandle;
+} // namespace PowerRonin::platform
 
-namespace power_ronin::platform
+namespace PowerRonin::Platform
 {
 	auto GuiInput::initialize() -> bool
 	{
-		if (WINDOW_HANDLE == nullptr) [[unlikely]]
+		if (WindowHandle == nullptr) [[unlikely]]
 		{
 			return false;
 		}
 
 		MOUSE_STATES = &this->mouse_buttons;
-		this->window = WINDOW_HANDLE;
+		this->window = WindowHandle;
 
 		auto& io = ImGui::GetIO();
 		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
@@ -228,4 +228,4 @@ namespace power_ronin::platform
 			cur = nullptr;
 		}
 	}
-} // namespace power_ronin::platform // namespace power_ronin::platform
+} // namespace PowerRonin::platform // namespace PowerRonin::platform

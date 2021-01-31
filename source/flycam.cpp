@@ -17,117 +17,117 @@
 #include "../../include/power_ronin/runtime.hpp"
 #include "gui/gui_headers.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
-	auto EditorCamera::projection_matrix() const noexcept -> const SMat4x4<>&
+	auto EditorCamera::ProjectionMatrix() const noexcept -> const Matrix4x4<>&
 	{
-		return this->proj_;
+		return this->proj;
 	}
 
-	auto EditorCamera::view_matrix() const noexcept -> const SMat4x4<>&
+	auto EditorCamera::ViewMatrix() const noexcept -> const Matrix4x4<>&
 	{
-		return this->view_;
+		return this->view;
 	}
 
-	auto EditorCamera::position() const noexcept -> const SVec3<>&
+	auto EditorCamera::Position() const noexcept -> const Vector3<>&
 	{
-		return this->eye_;
+		return this->eye;
 	}
 
-	auto EditorCamera::look_at() const noexcept -> const SVec3<>&
+	auto EditorCamera::LookAt() const noexcept -> const Vector3<>&
 	{
-		return this->at_;
+		return this->at;
 	}
 
-	void EditorCamera::look_at(const SVec3<>& _at) noexcept
+	void EditorCamera::LookAt(const Vector3<>& _at) noexcept
 	{
-		this->at_ = _at;
+		this->at = _at;
 	}
 
-	auto EditorCamera::look_at_dir() const noexcept -> const SVec3<>&
+	auto EditorCamera::LookAtDir() const noexcept -> const Vector3<>&
 	{
-		return this->dir_;
+		return this->dir;
 	}
 
-	void EditorCamera::look_at_dir(const SVec3<>& _dir) noexcept
+	void EditorCamera::LookAtDir(const Vector3<>& dir) noexcept
 	{
-		this->dir_ = _dir;
+		this->dir = dir;
 	}
 
-	void EditorCamera::position(const SVec3<>& _position) noexcept
+	void EditorCamera::Position(const Vector3<>& position) noexcept
 	{
-		this->eye_ = _position;
+		this->eye = position;
 	}
 
-	void EditorCamera::update(const Input& _input, const float _viewport_x, const float _viewport_y,
-	                          const float _delta_time)
+	void EditorCamera::Update(const Input& input, const float viewportX, const float viewportY,
+	                          const float deltaTime)
 	{
 		/*[[unlikely]] if (ImGui::IsAnyItemHovered() || ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow)) {
 			return;
 		}*/
-		auto mouse = _input.mouse_pos();
-		const float speed = this->move_speed;
+		auto mouse = input.MousePosition();
+		const float speed = this->MoveSpeed;
 
-		if (_input.is_mouse_button_down(MouseButton::RIGHT)) [[unlikely]]
+		if (input.IsMouseButtonDown(MouseButton::Right)) [[unlikely]]
 		{
-			auto delta_x = mouse.x - this->mouse_prev_.x;
-			auto delta_y = mouse.y - this->mouse_prev_.y;
+			auto delta_x = mouse.x - this->mousePrev.x;
+			auto delta_y = mouse.y - this->mousePrev.y;
 
-			delta_x = delta_x * sensitivity;
-			delta_y = delta_y * sensitivity;
+			delta_x = delta_x * Sensitivity;
+			delta_y = delta_y * Sensitivity;
 
-			this->smooth_mouse_angles_.x = std::lerp(smooth_mouse_angles_.x, delta_x, 1.F / this->smoothness);
-			this->smooth_mouse_angles_.y = std::lerp(smooth_mouse_angles_.y, delta_y, 1.F / this->smoothness);
+			this->smoothMouseAngles.x = std::lerp(smoothMouseAngles.x, delta_x, 1.F / this->Smoothness);
+			this->smoothMouseAngles.y = std::lerp(smoothMouseAngles.y, delta_y, 1.F / this->Smoothness);
 
-			this->mouse_angles_.x += delta_x * _delta_time + this->smooth_mouse_angles_.x;
-			this->mouse_angles_.y -= delta_y * _delta_time + this->smooth_mouse_angles_.y;
+			this->mouseAngles.x += delta_x * deltaTime + this->smoothMouseAngles.x;
+			this->mouseAngles.y -= delta_y * deltaTime + this->smoothMouseAngles.y;
 
-			this->mouse_angles_.y = std::clamp(this->mouse_angles_.y, -this->clamp_y, this->clamp_y);
+			this->mouseAngles.y = std::clamp(this->mouseAngles.y, -this->ClampY, this->ClampY);
 
-			const auto dir_x = math::cos(math::radians(this->mouse_angles_.y)) * math::sin(
-				math::radians(this->mouse_angles_.x));
-			const auto dir_y = math::sin(math::radians(this->mouse_angles_.y));
-			const auto dir_z = math::cos(math::radians(this->mouse_angles_.y)) * math::cos(
-				math::radians(this->mouse_angles_.x));
+			const auto dir_x = Math::cos(Math::radians(this->mouseAngles.y)) * Math::sin(
+				Math::radians(this->mouseAngles.x));
+			const auto dir_y = Math::sin(Math::radians(this->mouseAngles.y));
+			const auto dir_z = Math::cos(Math::radians(this->mouseAngles.y)) * Math::cos(
+				Math::radians(this->mouseAngles.x));
 
-			this->dir_ = SVec3<>{dir_x, dir_y, dir_z};
+			this->dir = Vector3<>{dir_x, dir_y, dir_z};
 
-			this->mouse_prev_.x = mouse.x;
-			this->mouse_prev_.y = mouse.y;
+			this->mousePrev.x = mouse.x;
+			this->mousePrev.y = mouse.y;
 		}
 		else
 		{
-			this->mouse_prev_.x = mouse.x;
-			this->mouse_prev_.y = mouse.y;
+			this->mousePrev.x = mouse.x;
+			this->mousePrev.y = mouse.y;
 		}
 
-		this->forward_ = normalize(this->dir_);
-		this->left_ = normalize(cross(this->forward_, {.0f, 1.f, .0f}));
+		this->forward = normalize(this->dir);
+		this->left = normalize(cross(this->forward, {.0f, 1.f, .0f}));
 
-		if (_input.is_key_down(Key::W)) [[likely]]
+		if (input.IsKeyDown(Key::W)) [[likely]]
 		{
-			this->eye_ += SVec3<>{speed * _delta_time} * this->forward_;
+			this->eye += Vector3<>{speed * deltaTime} * this->forward;
 		}
 
-		if (_input.is_key_down(Key::A)) [[likely]]
+		if (input.IsKeyDown(Key::A)) [[likely]]
 		{
-			this->eye_ += SVec3<>{speed * _delta_time} * this->left_;
+			this->eye += Vector3<>{speed * deltaTime} * this->left;
 		}
 
-		if (_input.is_key_down(Key::S)) [[likely]]
+		if (input.IsKeyDown(Key::S)) [[likely]]
 		{
-			this->eye_ -= SVec3<>{speed * _delta_time} * this->forward_;
+			this->eye -= Vector3<>{speed * deltaTime} * this->forward;
 		}
 
-		if (_input.is_key_down(Key::D)) [[likely]]
+		if (input.IsKeyDown(Key::D)) [[likely]]
 		{
-			this->eye_ -= SVec3<>{speed * _delta_time} * this->left_;
+			this->eye -= Vector3<>{speed * deltaTime} * this->left;
 		}
 
-		this->at_ = this->eye_ + dir_;
+		this->at = this->eye + dir;
 
-		this->view_ = lookAtLH(this->eye_, this->at_, {.0f, 1.f, .0f});
-		this->proj_ = math::perspectiveFovLH<float>(math::radians(this->fov), _viewport_x, _viewport_y, this->near_clip
-		                                            , this->far_clip);
+		this->view = lookAtLH(this->eye, this->at, {.0f, 1.f, .0f});
+		this->proj = Math::perspectiveFovLH<float>(Math::radians(this->Fov), viewportX, viewportY, this->NearClip
+		                                            , this->FarClip);
 	}
 }

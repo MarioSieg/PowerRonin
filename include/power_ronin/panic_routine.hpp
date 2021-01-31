@@ -17,7 +17,7 @@
 
 #include <string_view>
 
-namespace power_ronin
+namespace PowerRonin
 {
-	extern void global_panic_routine(const std::string_view _msg, const std::size_t _line = 0, const std::string_view _file = "Unknown");
+	extern void GlobalPanicRoutine(const std::string_view msg, const std::size_t line = 0, const std::string_view file = "Unknown");
 }

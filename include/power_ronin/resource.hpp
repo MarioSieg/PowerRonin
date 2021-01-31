@@ -21,7 +21,7 @@
 
 #include "except.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	/// <summary>
 	/// Base class for all runtime resources.
@@ -49,31 +49,31 @@ namespace power_ronin
 		/// Upload resource to target subsystem.
 		/// For example: upload texture from RAM to VRAM.
 		/// </summary>
-		virtual void upload() = 0;
+		virtual void Upload() = 0;
 
 		/// <summary>
 		/// Upload resource from target subsystem.
 		/// For example: delete texture from VRAM, but keep it in RAM to upload() it again if needed.
 		/// </summary>
-		virtual void offload() = 0;
+		virtual void Offload() = 0;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns>The file path of the resource.</returns>
-		[[nodiscard]] auto file_path() const noexcept -> const std::filesystem::path&;
+		[[nodiscard]] auto FilePath() const noexcept -> const std::filesystem::path&;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns>True if the resource is currently uploaded, else false..</returns>
-		[[nodiscard]] auto is_uploaded() const noexcept -> bool;
+		[[nodiscard]] auto IsUploaded() const noexcept -> bool;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns>The metadata of the resource.</returns>
-		[[nodiscard]] auto meta_data() const noexcept -> const Meta&;
+		[[nodiscard]] auto MetaData() const noexcept -> const Meta&;
 
 		/// <summary>
 		/// Allocate resource memory.
@@ -82,62 +82,61 @@ namespace power_ronin
 		/// <typeparam name="...Q">The constructor arguments.</typeparam>
 		/// <param name="_x">The constructor arguments.</param>
 		/// <returns>The shared_ptr with the allocated resource.</returns>
-		template <typename T, typename... Q> requires requires
+		template <typename T, typename... Q> requires std::is_base_of_v<IResource<M>, T> && std::is_constructible_v<T, Q...>
+		[[nodiscard]]
+		inline static auto Allocate(Q&&... args) -> std::shared_ptr<T>
 		{
-			requires std::is_base_of_v<IResource<M>, T>; requires std::is_constructible_v<T, Q...>;
-		} [[nodiscard]] inline static auto allocate(Q&&... _x) -> std::shared_ptr<T>
-		{
-			auto* const mem = new(std::nothrow) T(_x...);
+			auto* const mem = new(std::nothrow) T(args...);
 			if (!mem) [[unlikely]] throw MAKE_FATAL_ENGINE_EXCEPTION("Bad allocation!");
 			return std::shared_ptr<T>(mem, [](T*& _y) mutable
 			{
-				if (_y) [[likely]] _y->offload();
+				if (_y) [[likely]] _y->Offload();
 				delete _y, _y = nullptr;
 			});
 		}
 
 		/// <summary>
 		/// Tries to load some resource metadata from a .meta file.
-		/// If it fails, it tries to create the meta file and returns
+		/// If it fails, it tries to Create the meta file and returns
 		/// the default value of Meta.
 		/// </summary>
-		/// <param name="_res">The resource file path..</param>
+		/// <param name="path">The resource file path..</param>
 		/// <returns>The deserialized metadata or the default value.</returns>
-		[[nodiscard]] static auto load_meta_or_default(std::filesystem::path _res) -> Meta;
+		[[nodiscard]] static auto LoadMetaOrDefault(std::filesystem::path path) -> Meta;
 
 	protected:
 		IResource() = default;
-		explicit IResource(Meta&& _meta) noexcept;
-		std::filesystem::path file_path_ = {};
-		bool is_uploaded_ = false;
-		Meta meta_data_ = {};
+		explicit IResource(Meta&& meta) noexcept;
+		std::filesystem::path filePath = {};
+		bool isUploaded = false;
+		Meta metaData = {};
 	};
 
 	template <typename M>
-	inline auto IResource<M>::is_uploaded() const noexcept -> bool
+	inline auto IResource<M>::IsUploaded() const noexcept -> bool
 	{
-		return this->is_uploaded_;
+		return this->isUploaded;
 	}
 
 	template <typename M>
-	inline auto IResource<M>::meta_data() const noexcept -> const Meta&
+	inline auto IResource<M>::MetaData() const noexcept -> const Meta&
 	{
-		return this->meta_data_;
+		return this->metaData;
 	}
 
 	template <typename M>
-	inline auto IResource<M>::file_path() const noexcept -> const std::filesystem::path&
+	inline auto IResource<M>::FilePath() const noexcept -> const std::filesystem::path&
 	{
-		return this->file_path_;
+		return this->filePath;
 	}
 
 	template <typename M>
-	inline auto IResource<M>::load_meta_or_default(std::filesystem::path _res) -> Meta try
+	inline auto IResource<M>::LoadMetaOrDefault(std::filesystem::path path) -> Meta try
 	{
-		_res.replace_extension(METADATA_FILE_EXTENSION);
+		path.replace_extension(METADATA_FILE_EXTENSION);
 		Meta meta = {};
 		auto* const ser = &meta;
-		if (!ser->deserialize_from_file(_res)) [[unlikely]]
+		if (!ser->deserialize_from_file(path)) [[unlikely]]
 		{
 			//auto _ = ser->serialize_to_file(_res); // Create metadata file if it does not exist.
 		}
@@ -149,5 +148,5 @@ namespace power_ronin
 	}
 
 	template <typename M>
-	inline IResource<M>::IResource(Meta&& _meta) noexcept : meta_data_(std::forward(_meta)) { }
-} // namespace power_ronin // namespace power_ronin
+	inline IResource<M>::IResource(Meta&& meta) noexcept : metaData(std::forward(meta)) { }
+} // namespace PowerRonin // namespace PowerRonin

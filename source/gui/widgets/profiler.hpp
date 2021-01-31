@@ -17,12 +17,12 @@
 
 #if AUTO_TEC
 
-namespace power_ronin
+namespace PowerRonin
 {
 	class Chrono;
 	class Diagnostics;
 
-	namespace gui::widgets
+	namespace Interface::widgets
 	{
 		class Profiler final
 		{
@@ -30,6 +30,6 @@ namespace power_ronin
 			void update(bool& _show, const Diagnostics& _diag, const Chrono& _chrono) const;
 		};
 	} // namespace gui::widgets
-} // namespace power_ronin // namespace power_ronin
+} // namespace PowerRonin // namespace PowerRonin
 
 #endif

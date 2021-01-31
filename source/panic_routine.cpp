@@ -22,9 +22,9 @@
 #include <fstream>
 #include <filesystem>
 
-namespace power_ronin
+namespace PowerRonin
 {
-	void global_panic_routine(const std::string_view _msg, const std::size_t _line, const std::string_view _file)
+	void GlobalPanicRoutine(const std::string_view msg, const std::size_t line, const std::string_view file)
 	{
 		if (!std::filesystem::is_directory("crashes")) [[unlikely]]
 		{
@@ -34,23 +34,23 @@ namespace power_ronin
 		const auto now = std::time(nullptr);
 		const auto tm = safe_localtime(now);
 		ss << "crashes/" << std::put_time(&tm, "%d-%m-%Y-%H-%M-%S") << ".crash";
-		std::ofstream file(ss.str());
+		std::ofstream fstream(ss.str());
 		ss.str("");
 
-		ss << "MSG: " << _msg;
-		ss << "\nFile: " << _line;
-		ss << "\nLine: " << _file;
-		ss << "\nDo you want to send the report to KerboGames?";
+		ss << "MSG: " << msg;
+		ss << "\nFile: " << line;
+		ss << "\nLine: " << file;
 
-		const auto msg = ss.str();
+		const auto message = ss.str();
 
-		if (file) [[likely]]
+		if (fstream) [[likely]]
 		{
-			file << msg;
+			fstream << message;
 		}
 
-		std::cerr << msg;
+		std::cerr << message;
 
-		show_message_box(msg, "[Panic Routine] Fatal Engine Error!", MessageBoxStyle::ERROR, MessageBoxButtons::YES_NO);
+		ShowMessageBox(msg, "[Panic Routine] Fatal Engine Error!", MessageBoxStyle::Error, MessageBoxButtons::Ok);
+		std::terminate();
 	}
 }

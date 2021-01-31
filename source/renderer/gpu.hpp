@@ -25,16 +25,16 @@
 #include "gl_headers.hpp"
 #include "uniform.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	class Transform;
 	class MeshRenderer;
 	class Diagnostics;
-	class Config;
+	class SystemConfig;
 	class AsyncProtocol;
 }
 
-namespace power_ronin::renderer
+namespace PowerRonin::Renderer
 {
 	/// <summary>
 	/// Represents a high level GPU which can draw stuff.
@@ -55,7 +55,7 @@ namespace power_ronin::renderer
 		/// <param name="_config"></param>
 		/// <param name="_proto"></param>
 		/// <returns></returns>
-		auto initialize_drivers(const Config& _config, AsyncProtocol& _proto) const -> bool;
+		void initialize_drivers(const SystemConfig& _config, AsyncProtocol& _proto) const;
 
 		/// <summary>
 		/// Shutdown rendering backend.
@@ -92,7 +92,7 @@ namespace power_ronin::renderer
 		/// <param name="_proj"></param>
 		/// <param name="_view_id"></param>
 		/// <returns></returns>
-		void set_camera(const bgfx::ViewId _view_id, const SMat4x4<>& _view, const SMat4x4<>& _proj) const noexcept;
+		void set_camera(const bgfx::ViewId _view_id, const Matrix4x4<>& _view, const Matrix4x4<>& _proj) const noexcept;
 
 		/// <summary>
 		/// Set mesh world transform matrix.
@@ -152,6 +152,6 @@ namespace power_ronin::renderer
 		/// <param name="_wh"></param>
 		/// <param name="_view_id"></param>
 		/// <returns></returns>
-		void set_viewport(const SVec4<> _xywh, const bgfx::ViewId _view_id) const noexcept;
+		void set_viewport(const Vector4<> _xywh, const bgfx::ViewId _view_id) const noexcept;
 	};
 }

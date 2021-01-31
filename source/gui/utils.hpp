@@ -20,7 +20,7 @@
 #include "../renderer/gl_headers.hpp"
 #include <cstdint>
 
-namespace power_ronin::gui
+namespace PowerRonin::Interface
 {
 	constexpr auto imgui_rgba(const std::uint8_t _r
 	                          , const std::uint8_t _g
@@ -156,4 +156,4 @@ namespace power_ronin::gui
 		ImGui::SliderInt(_label, &x, _min, _max, "%d", _flags);
 		_val = static_cast<T>(x);
 	}
-} // namespace power_ronin::gui // namespace power_ronin::gui
+} // namespace PowerRonin::gui // namespace PowerRonin::gui

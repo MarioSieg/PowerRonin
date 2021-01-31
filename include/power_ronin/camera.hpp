@@ -18,7 +18,7 @@
 #include "renderer_data.hpp"
 #include "transform.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	/// <summary>
 	/// A Camera component.
@@ -26,16 +26,10 @@ namespace power_ronin
 	class Camera final
 	{
 	public:
-		float fov_y = 80.F;
-		float near_clip_z = 0.01F;
-		float far_clip_z = 1000.F;
+		float Fov = 80.F;
+		float NearClip = 0.01F;
+		float FarClip = 1000.F;
 
-		[[nodiscard]] auto view_matrix() const noexcept -> const SMat4x4<>&;
-		[[nodiscard]] auto projection_matrix() const noexcept -> const SMat4x4<>&;
-		void recalculate(const Transform& _transform, const RenderData& _data) noexcept;
-
-	private:
-		SMat4x4<> view_ = {};
-		SMat4x4<> projection_ = {};
+		void Recalculate(const Transform& transform, const Vector2<>& viewportSize, Matrix4x4<>& outView, Matrix4x4<>& outProj) noexcept;
 	};
 }

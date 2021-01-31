@@ -17,7 +17,7 @@
 
 #include "font_headers.hpp"
 
-namespace power_ronin::gui
+namespace PowerRonin::Interface
 {
 	// Names for all windows.
 

@@ -28,10 +28,7 @@
 
 using namespace ImGui;
 
-// Pls fix :'(
-extern const float *VIEW, *PROJ;
-
-namespace power_ronin::gui::widgets
+namespace PowerRonin::Interface::widgets
 {
 	void Inspector::initialize()
 	{
@@ -49,14 +46,14 @@ namespace power_ronin::gui::widgets
 			}
 		};
 
-		build_filter_extensions(this->mesh_filer_, Mesh::FILE_EXTENSIONS);
+		build_filter_extensions(this->mesh_filer_, Mesh::FileExtensions);
 		build_filter_extensions(this->texture_filer_, Texture::FILE_EXTENSIONS);
 	}
 
-	void Inspector::update(bool& _show, const ERef _entity, Runtime& _rt)
+	void Inspector::update(bool& _show, const EntityRef _entity, Runtime& _rt)
 	{
-		auto& registry = _rt.scenery().registry();
-		SetNextWindowSize({300, 800}, ImGuiCond_FirstUseEver);
+		auto& registry = _rt.Scenery().registry();
+		SetNextWindowSize({ 300, 800 }, ImGuiCond_FirstUseEver);
 		if (Begin(INSPECTOR_NAME, &_show)) [[likely]]
 		{
 			if (!registry.valid(_entity)) [[unlikely]]
@@ -70,52 +67,52 @@ namespace power_ronin::gui::widgets
 			{
 				if (registry.has<MetaData>(_entity)) [[likely]]
 				{
-					auto& meta = registry.get<MetaData>(_entity);
+					auto & meta = registry.get<MetaData>(_entity);
 					if (CollapsingHeader(ICON_FA_COGS " Metadata", ImGuiTreeNodeFlags_DefaultOpen)) [[likely]]
 					{
-						std::strncpy(this->string_buffer_.data(), meta.name.data(), BUFFER_SIZE);
+						std::strncpy(this->string_buffer_.data(), meta.Name.data(), BUFFER_SIZE);
 						if (InputText("Name", this->string_buffer_.data(), BUFFER_SIZE)) [[unlikely]]
 						{
-							meta.name = this->string_buffer_.data();
+							meta.Name = this->string_buffer_.data();
 						}
 
-						std::strncpy(this->string_buffer_.data(), meta.description.data(), BUFFER_SIZE);
+						std::strncpy(this->string_buffer_.data(), meta.Description.data(), BUFFER_SIZE);
 						if (InputText("Description", this->string_buffer_.data(), BUFFER_SIZE)) [[unlikely]]
 						{
-							meta.description = this->string_buffer_.data();
+							meta.Description = this->string_buffer_.data();
 						}
 
-						int tag = static_cast<int>(meta.tag);
+						int tag = static_cast<int>(meta.Tag);
 						if (InputInt("Tag", &tag)) [[unlikely]]
 						{
-							meta.tag = static_cast<std::uint16_t>(tag);
+							meta.Tag = static_cast<std::uint16_t>(tag);
 						}
 
-						int layer = static_cast<int>(meta.layer);
+						int layer = static_cast<int>(meta.Layer);
 						if (InputInt("Layer", &layer)) [[unlikely]]
 						{
-							meta.layer = static_cast<std::uint16_t>(layer);
+							meta.Layer = static_cast<std::uint16_t>(layer);
 						}
 					}
 				}
 				if (registry.has<Transform>(_entity)) [[likely]]
 				{
-					auto& transform = registry.get<Transform>(_entity);
+					auto & transform = registry.get<Transform>(_entity);
 					if (CollapsingHeader(ICON_FA_MAP_MARKER_ALT " Transform ", ImGuiTreeNodeFlags_DefaultOpen)) [[likely]]
 					{
 
 						DragFloat3("Position", value_ptr(transform.position));
 
-						SVec3<> euler_angles = eulerAngles(transform.rotation);
-						euler_angles.x = math::degrees(euler_angles.x);
-						euler_angles.y = math::degrees(euler_angles.y);
-						euler_angles.z = math::degrees(euler_angles.z);
+						Vector3<> euler_angles = eulerAngles(transform.rotation);
+						euler_angles.x = Math::degrees(euler_angles.x);
+						euler_angles.y = Math::degrees(euler_angles.y);
+						euler_angles.z = Math::degrees(euler_angles.z);
 						if (DragFloat3("Rotation", value_ptr(euler_angles))) [[unlikely]]
 						{
-							euler_angles.x = math::radians(euler_angles.x);
-							euler_angles.y = math::radians(euler_angles.y);
-							euler_angles.z = math::radians(euler_angles.z);
-							transform.rotation = SQua<>(euler_angles);
+							euler_angles.x = Math::radians(euler_angles.x);
+							euler_angles.y = Math::radians(euler_angles.y);
+							euler_angles.z = Math::radians(euler_angles.z);
+							transform.rotation = Quaternion<>(euler_angles);
 						}
 
 						DragFloat3("Scale ", value_ptr(transform.scale));
@@ -123,13 +120,13 @@ namespace power_ronin::gui::widgets
 				}
 				if (registry.has<MeshRenderer>(_entity)) [[likely]]
 				{
-					auto& renderer = registry.get<MeshRenderer>(_entity);
+					auto & renderer = registry.get<MeshRenderer>(_entity);
 					if (CollapsingHeader(ICON_FA_CUBE " Mesh Renderer", ImGuiTreeNodeFlags_DefaultOpen)) [[likely]]
 					{
-						Checkbox("Visible", &renderer.is_visible);
+						Checkbox("Visible", &renderer.IsVisible);
 
 						{
-							const auto file_name = renderer.mesh->file_path().filename().string();
+							const auto file_name = renderer.Mesh->FilePath().filename().string();
 							PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
 							if (Button(file_name.c_str()))
 							{
@@ -137,7 +134,7 @@ namespace power_ronin::gui::widgets
 								open_file_dialog(path, this->mesh_filer_.c_str(), this->current_path_.c_str());
 								if (path) [[likely]]
 								{
-									renderer.mesh = _rt.resource_manager().load<Mesh>(path);
+									renderer.Mesh = _rt.ResourceManager().Load<Mesh>(path);
 								}
 							}
 							PopStyleColor();
@@ -149,99 +146,94 @@ namespace power_ronin::gui::widgets
 					if (CollapsingHeader(ICON_FA_ADJUST " Material", ImGuiTreeNodeFlags_DefaultOpen)) [[likely]]
 					{
 
-						constexpr static const char* const material_names[] = {"Unlit", "Lambert"};
-						/*
-						[[unlikely]] if (BeginCombo("Shader", material_names[current])) {
-							for (int i = 0; i < sizeof material_names / sizeof *material_names; ++i) {
-								if (Selectable(material_names[i], current == i)) {
-									current = i;
-								}
-								if (current == i) {
-									SetItemDefaultFocus();
-								}
-							}
-							EndCombo();
-						}
-						*/
-
-						if (std::holds_alternative<Material::UnlitTextured>(renderer.material->properties))
-						{
-							auto& props = std::get<Material::UnlitTextured>(renderer.material->properties);
-							const auto file_name = props.albedo->file_path().filename().string();
-							PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
-							if (Button(file_name.c_str())) [[unlikely]]
-							{
-								char* path = nullptr;
-								open_file_dialog(path, this->texture_filer_.c_str(), this->current_path_.c_str());
-								if (path) [[likely]]
-								{
-									props.albedo = _rt.resource_manager().load<Texture>(path);
-								}
-							}
-							PopStyleColor();
-							DragFloat2("Tiling", &props.tiling_offset.x);
-							DragFloat2("Offset", &props.tiling_offset.z, .01F, .0F, 1.F);
-						}
-						else if (std::holds_alternative<Material::Diffuse>(renderer.material->properties)) [[likely]]
-						{
-							auto& props = std::get<Material::Diffuse>(renderer.material->properties);
-							const auto file_name = props.albedo->file_path().filename().string();
-							PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
-							if (Button(file_name.c_str())) [[unlikely]]
-							{
-								char* path = nullptr;
-								open_file_dialog(path, this->texture_filer_.c_str(), this->current_path_.c_str());
-								if (path) [[likely]]
-								{
-									props.albedo = _rt.resource_manager().load<Texture>(path);
-								}
-							}
-							PopStyleColor();
-							DragFloat2("Tiling", &props.tiling_offset.x);
-							DragFloat2("Offset", &props.tiling_offset.z, .01F, .0F, 1.F);
-						}
-						else if (std::holds_alternative<Material::BumpedDiffuse>(renderer.material->properties)) [[likely]]
-						{
-							auto& props = std::get<Material::BumpedDiffuse>(renderer.material->properties);
-							const auto albedo_file = props.albedo->file_path().filename().string();
-							const auto normal_file = props.normal->file_path().filename().string();
-							PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
-							if (Button(albedo_file.c_str())) [[unlikely]]
-							{
-								char* path = nullptr;
-								open_file_dialog(path, this->texture_filer_.c_str(), this->current_path_.c_str());
-								if (path) [[likely]]
-								{
-									props.albedo = _rt.resource_manager().load<Texture>(path);
-								}
-							}
-							if (Button(normal_file.c_str())) [[unlikely]]
-							{
-								char* path = nullptr;
-								open_file_dialog(path, this->texture_filer_.c_str(), this->current_path_.c_str());
-								if (path) [[likely]]
-								{
-									props.normal = _rt.resource_manager().load<Texture>(path);
-								}
-							}
-							PopStyleColor();
-							DragFloat2("Tiling", &props.tiling_offset.x);
-							DragFloat2("Offset", &props.tiling_offset.z, .01F, .0F, 1.F);
-						}
-					}
-				}
-
-				if (registry.has<Rigidbody>(_entity)) [[unlikely]]
-				{
-					auto& rigidbody = registry.get<Rigidbody>(_entity);
-					if (CollapsingHeader(ICON_FA_GLOBE " Rigidbody", ImGuiTreeNodeFlags_DefaultOpen)) [[likely]]
+					if (std::holds_alternative<Material::UnlitTextured>(renderer.Material->Properties))
 					{
-						DragFloat("Mass", &rigidbody.mass);
-						Checkbox("Is Kinematic", &rigidbody.is_kinematic);
+						auto& props = std::get<Material::UnlitTextured>(renderer.Material->Properties);
+						const auto file_name = props.Albedo->FilePath().filename().string();
+						PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
+						if (Button(file_name.c_str())) [[unlikely]]
+						{
+							char* path = nullptr;
+							open_file_dialog(path, this->texture_filer_.c_str(), this->current_path_.c_str());
+							if (path) [[likely]]
+							{
+								props.Albedo = _rt.ResourceManager().Load<Texture>(path);
+							}
+						}
+						PopStyleColor();
+						DragFloat2("Tiling", &props.TilingOffset.x);
+						DragFloat2("Offset", &props.TilingOffset.z, .01F, .0F, 1.F);
+					}
+					else if (std::holds_alternative<Material::Diffuse>(renderer.Material->Properties)) [[likely]]
+					{
+						auto& props = std::get<Material::Diffuse>(renderer.Material->Properties);
+						const auto file_name = props.Albedo->FilePath().filename().string();
+						PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
+						if (Button(file_name.c_str())) [[unlikely]]
+						{
+							char* path = nullptr;
+							open_file_dialog(path, this->texture_filer_.c_str(), this->current_path_.c_str());
+							if (path) [[likely]]
+							{
+								props.Albedo = _rt.ResourceManager().Load<Texture>(path);
+							}
+						}
+						PopStyleColor();
+						DragFloat2("Tiling", &props.TilingOffset.x);
+						DragFloat2("Offset", &props.TilingOffset.z, .01F, .0F, 1.F);
+					}
+					else if (std::holds_alternative<Material::BumpedDiffuse>(renderer.Material->Properties)) [[likely]]
+					{
+						auto & props = std::get<Material::BumpedDiffuse>(renderer.Material->Properties);
+						const auto albedo_file = props.Albedo->FilePath().filename().string();
+						const auto normal_file = props.Normal->FilePath().filename().string();
+						PushStyleColor(ImGuiCol_Text, imgui_rgba(120, 212, 255));
+						if (Button(albedo_file.c_str())) [[unlikely]]
+						{
+							char* path = nullptr;
+							open_file_dialog(path, this->texture_filer_.c_str(), this->current_path_.c_str());
+							if (path) [[likely]]
+							{
+								props.Albedo = _rt.ResourceManager().Load<Texture>(path);
+							}
+						}
+						if (Button(normal_file.c_str())) [[unlikely]]
+						{
+							char* path = nullptr;
+							open_file_dialog(path, this->texture_filer_.c_str(), this->current_path_.c_str());
+							if (path) [[likely]]
+							{
+								props.Normal = _rt.ResourceManager().Load<Texture>(path);
+							}
+						}
+						PopStyleColor();
+						DragFloat2("Tiling", &props.TilingOffset.x);
+						DragFloat2("Offset", &props.TilingOffset.z, .01F, .0F, 1.F);
 					}
 				}
-				EndChild();
 			}
+
+			if (registry.has<Camera>(_entity)) [[unlikely]]
+			{
+				auto & camera = registry.get<Camera>(_entity);
+				if (CollapsingHeader(ICON_FA_CAMERA " Camera", ImGuiTreeNodeFlags_DefaultOpen)) [[likely]]
+				{
+					SliderFloat("FOV Y", &camera.Fov, 2.F, 150.F);
+					InputFloat2("Near Far Z Clip", &camera.NearClip);
+				}
+			}
+
+			if (registry.has<Rigidbody>(_entity)) [[unlikely]]
+			{
+				auto & rigidbody = registry.get<Rigidbody>(_entity);
+				if (CollapsingHeader(ICON_FA_GLOBE " Rigidbody", ImGuiTreeNodeFlags_DefaultOpen)) [[likely]]
+				{
+					DragFloat("Mass", &rigidbody.Mass);
+					Checkbox("Is Kinematic", &rigidbody.IsKinematic);
+				}
+			}
+			EndChild();
+		}
 		}
 		End();
 	}

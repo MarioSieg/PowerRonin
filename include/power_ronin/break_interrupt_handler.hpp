@@ -15,7 +15,7 @@
 
 #pragma once
 
-namespace power_ronin
+namespace PowerRonin
 {
 	struct ScopedVectoredExceptionHandler final
 	{
@@ -27,6 +27,6 @@ namespace power_ronin
 		~ScopedVectoredExceptionHandler();
 
 	private:
-		void* handler_ = nullptr;
+		void* handle = nullptr;
 	};
 }

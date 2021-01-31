@@ -23,9 +23,9 @@
 
 using namespace ImGui;
 
-namespace power_ronin::gui::widgets
+namespace PowerRonin::Interface::widgets
 {
-	void ConfigEditor::update(bool& _show, Config& _cfg, Scenery::Configuration& _scenery_config) const
+	void ConfigEditor::update(bool& _show, SystemConfig& _cfg, Scenery::Configuration& _scenery_config) const
 	{
 		SetNextWindowSize({300, 800}, ImGuiCond_FirstUseEver);
 		if (Begin(CONFIG_EDITOR_NAME, &_show)) [[likely]]
@@ -43,48 +43,48 @@ namespace power_ronin::gui::widgets
 			}
 			if (CollapsingHeader(ICON_FA_TV " Display", ImGuiTreeNodeFlags_DefaultOpen)) [[likely]]
 			{
-				Checkbox("Full Screen", &_cfg.display.is_full_screen);
-				Checkbox("Maximized", &_cfg.display.is_maximized);
+				Checkbox("Full Screen", &_cfg.Display.IsFullScreen);
+				Checkbox("Maximized", &_cfg.Display.IsMaximized);
 				int resolution[2] = {
-					static_cast<int>(_cfg.display.resolution.width),
-					static_cast<int>(_cfg.display.resolution.height)
+					static_cast<int>(_cfg.Display.Resolution.Width),
+					static_cast<int>(_cfg.Display.Resolution.Height)
 				};
 				InputInt2("Resolution", resolution);
-				_cfg.display.resolution.width = std::clamp<decltype(_cfg.display.resolution.width)>(resolution[0], 800, std::numeric_limits<std::uint16_t>::max());
-				_cfg.display.resolution.height = std::clamp<decltype(_cfg.display.resolution.height)>(resolution[1], 600, std::numeric_limits<std::uint16_t>::max());
-				Checkbox("VSync", &_cfg.display.vsync);
-				input_integer("Max FPS", _cfg.display.max_framerate);
+				_cfg.Display.Resolution.Width = std::clamp<decltype(_cfg.Display.Resolution.Width)>(resolution[0], 800, std::numeric_limits<std::uint16_t>::max());
+				_cfg.Display.Resolution.Height = std::clamp<decltype(_cfg.Display.Resolution.Height)>(resolution[1], 600, std::numeric_limits<std::uint16_t>::max());
+				Checkbox("VSync", &_cfg.Display.VSync);
+				input_integer("Max FPS", _cfg.Display.MaxFrameRate);
 			}
 			if (CollapsingHeader(ICON_FA_BRUSH " Editor", ImGuiTreeNodeFlags_DefaultOpen)) [[likely]]
 			{
-				slider_integer("Custom Font Size", _cfg.editor.custom_font_size, 10, 28);
-				Checkbox("User Auto Font Size", &_cfg.editor.enable_auto_font_size);
-				if (_cfg.editor.enable_auto_font_size) [[likely]]
+				slider_integer("Custom Font Size", _cfg.Editor.CustomFontSize, 10, 28);
+				Checkbox("User Auto Font Size", &_cfg.Editor.EnableAutoFontSize);
+				if (_cfg.Editor.EnableAutoFontSize) [[likely]]
 				{
-					slider_integer("Auto Font Size Full HD", _cfg.editor.auto_font_size_fhd, 10, 28);
-					slider_integer("Auto Font Size Wide Quad HD", _cfg.editor.auto_font_size_whqh, 10, 28);
-					slider_integer("Auto Font Size Ultra HD 4K", _cfg.editor.auto_font_size_uhd, 10, 28);
+					slider_integer("Auto Font Size Full HD", _cfg.Editor.AutoFontSizeFullHD, 10, 28);
+					slider_integer("Auto Font Size Wide Quad HD", _cfg.Editor.AutoFontSizeWideQuadHD, 10, 28);
+					slider_integer("Auto Font Size Ultra HD 4K", _cfg.Editor.AutoFontSizeUltraHD, 10, 28);
 				}
-				Checkbox("Font Antialiasing", &_cfg.editor.enable_font_anti_aliasing);
-				SliderFloat("UI Transparency", &_cfg.editor.alpha, .1f, 1.f);
-				SliderFloat("UI Rounding", &_cfg.editor.rounding, .0f, 10.f);
-				Checkbox("Show Terminal On Startup", &_cfg.editor.show_terminal);
-				Checkbox("Show Gizmos", &_cfg.editor.show_gizmos);
-				Checkbox("Show Stats", &_cfg.editor.show_stats);
-				Checkbox("Show Matrix Stats", &_cfg.editor.show_matrix_stats);
-				Checkbox("Big Stats Font", &_cfg.editor.show_big_stats);
+				Checkbox("Font Antialiasing", &_cfg.Editor.EnableFontAntiAliasing);
+				SliderFloat("UI Transparency", &_cfg.Editor.Alpha, .1f, 1.f);
+				SliderFloat("UI Rounding", &_cfg.Editor.Rounding, .0f, 10.f);
+				Checkbox("Show Terminal On Startup", &_cfg.Editor.ShowTerminal);
+				Checkbox("Show Gizmos", &_cfg.Editor.ShowGizmos);
+				Checkbox("Show Stats", &_cfg.Editor.ShowStats);
+				Checkbox("Show Matrix Stats", &_cfg.Editor.ShowMatrixStats);
+				Checkbox("Big Stats Font", &_cfg.Editor.ShowBigStats);
 				float col[3] = {};
 				ColorEdit3("Stats Text Color", col);
-				Checkbox("Show Grid", &_cfg.editor.show_grid);
-				DragFloat("Grid Size", &_cfg.editor.grid_size, 1.f, 10000.f);
-				DragFloat3("Grid Center", &_cfg.editor.grid_origin_center.x);
+				Checkbox("Show Grid", &_cfg.Editor.ShowGrid);
+				DragFloat("Grid Size", &_cfg.Editor.GridSize, 1.f, 10000.f);
+				DragFloat3("Grid Center", &_cfg.Editor.GridOriginCenter.X);
 			}
 			if (CollapsingHeader(ICON_FA_IMAGE " Graphics", ImGuiTreeNodeFlags_DefaultOpen)) [[likely]]
 			{
-				Checkbox("High DPI Mode", &_cfg.graphics.enable_high_dpi_mode);
-				Checkbox("SRGB Mode", &_cfg.graphics.enable_srgb_mode);
-				Checkbox("HRD10 Rendering", &_cfg.graphics.enable_hdr10);
-				Checkbox("Max Anisotropy", &_cfg.graphics.enable_max_anisotropy);
+				Checkbox("High DPI Mode", &_cfg.Graphics.EnableHighDpiMode);
+				Checkbox("SRGB Mode", &_cfg.Graphics.EnableSrgbMode);
+				Checkbox("HRD10 Rendering", &_cfg.Graphics.EnableHdr10);
+				Checkbox("Max Anisotropy", &_cfg.Graphics.EnableMaxAnisotropy);
 			}
 		}
 		End();

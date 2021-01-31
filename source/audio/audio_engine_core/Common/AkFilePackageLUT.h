@@ -128,7 +128,7 @@ protected:
 		bool HasFiles() const { return ( m_uNumFiles > 0 ); }
 		AkUInt32 NumFiles() const { return m_uNumFiles; }
 	private:
-		FileLUT();	// Do not create this object, just cast raw data.
+		FileLUT();	// Do not Create this object, just cast raw data.
 		AkUInt32		m_uNumFiles;
 	};
 
@@ -161,7 +161,7 @@ private:
 									// from beginning of the string map.
 			AkUInt32	uID;		// ID.
 		};
-		StringMap();	// Do not create this object, just cast raw data to use GetID().
+		StringMap();	// Do not Create this object, just cast raw data to use GetID().
 		AkUInt32	m_uNumStrings;
 	};
 

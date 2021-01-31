@@ -16,9 +16,9 @@
 #include "../include/power_ronin/interrupt.hpp"
 #include "../include/power_ronin/env.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
-	void interrupt()
+	void Interrupt()
 	{
 #if COM_MSVC
 		__debugbreak();

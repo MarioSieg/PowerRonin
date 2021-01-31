@@ -15,136 +15,31 @@
 
 #include "../include/power_ronin/runtime.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
-	Runtime::Runtime() : protocol_("native"),
-	                     scripting_protocol_("managed"),
-	                     config_(),
-	                     class_db_(),
-	                     resource_manager_(this->protocol_),
-	                     diagnostics_(),
-	                     chrono_(),
-	                     scenery_(),
-	                     input_(),
-	                     render_data_(),
-	                     terminal_hook_(nullptr) { }
+	Runtime::Runtime() : protocol("native"),
+	                     scriptingProtocol("managed"),
+	                     config(),
+	                     resourceManager(this->protocol),
+	                     diagnostics(),
+	                     chrono(),
+	                     scenery(),
+	                     input(),
+	                     renderData(),
+	                     terminalHook(nullptr) { }
 
-	void Runtime::initialize()
+	void Runtime::Initialize()
 	{
-		this->resource_manager_.system_resources.load_all(this->resource_manager_);
-		this->scenery_.initialize();
-		this->scenery_.new_default(this->resource_manager_);
+		this->resourceManager.SystemResources.LoadAll(this->resourceManager);
+		this->scenery.initialize();
+		this->scenery.new_default(this->resourceManager);
 	}
 
-	void Runtime::shutdown()
+	void Runtime::Shutdown()
 	{
-		this->scenery_.unload_all_entities();
-		this->resource_manager_.unload_all_resources();
-		this->protocol_.get_logger()->flush();
-		this->scripting_protocol_.get_logger()->flush();
+		this->scenery.unload_all_entities();
+		this->resourceManager.UnloadAllResources();
+		this->protocol.GetLogger()->flush();
+		this->scriptingProtocol.GetLogger()->flush();
 	}
-
-	auto Runtime::protocol() & noexcept -> AsyncProtocol&
-	{
-		return this->protocol_;
-	}
-
-	auto Runtime::protocol() const & noexcept -> const AsyncProtocol&
-	{
-		return this->protocol_;
-	}
-
-	auto Runtime::config() & noexcept -> Config&
-	{
-		return this->config_;
-	}
-
-	auto Runtime::config() const & noexcept -> const Config&
-	{
-		return this->config_;
-	}
-
-	auto Runtime::class_db() & noexcept -> ClassDB&
-	{
-		return this->class_db_;
-	}
-
-	auto Runtime::class_db() const & noexcept -> const ClassDB&
-	{
-		return this->class_db_;
-	}
-
-	auto Runtime::resource_manager() & noexcept -> ResourceManager&
-	{
-		return this->resource_manager_;
-	}
-
-	auto Runtime::resource_manager() const & noexcept -> const ResourceManager&
-	{
-		return this->resource_manager_;
-	}
-
-	auto Runtime::diagnostics() const & noexcept -> const Diagnostics&
-	{
-		return this->diagnostics_;
-	}
-
-	auto Runtime::chrono() const & noexcept -> const Chrono&
-	{
-		return this->chrono_;
-	}
-
-	auto Runtime::scenery() const & noexcept -> const Scenery&
-	{
-		return this->scenery_;
-	}
-
-	auto Runtime::scenery() & noexcept -> Scenery&
-	{
-		return this->scenery_;
-	}
-
-	auto Runtime::input() const & noexcept -> const Input&
-	{
-		return this->input_;
-	}
-
-	auto Runtime::render_data() const & noexcept -> const RenderData&
-	{
-		return this->render_data_;
-	}
-
-	auto Runtime::render_data() & noexcept -> RenderData&
-	{
-		return this->render_data_;
-	}
-
-	auto Runtime::scripting_protocol() const & noexcept -> const AsyncProtocol&
-	{
-		return this->scripting_protocol_;
-	}
-
-	auto Runtime::scripting_protocol() & noexcept -> AsyncProtocol&
-	{
-		return this->scripting_protocol_;
-	}
-
-	auto Runtime::terminal_hook() const & noexcept -> const std::function<void(char*)>&
-	{
-		return this->terminal_hook_;
-	}
-
-	auto Runtime::terminal_hook() & noexcept -> std::function<void(char*)>&
-	{
-		return this->terminal_hook_;
-	}
-
-#if AUTO_TEC
-
-	auto Runtime::is_playing() const& noexcept -> const bool& 
-	{
-		return this->is_playing_;
-	}
-
-#endif
-} // namespace power_ronin // namespace power_ronin
+}

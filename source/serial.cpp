@@ -17,7 +17,7 @@
 #include "../include/power_ronin/json_impl.hpp"
 #include <fstream>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	auto ISerializable::serialize_to_file(const std::filesystem::path& _path) const -> bool
 	{
@@ -48,4 +48,4 @@ namespace power_ronin
 		this->deserialize(stream);
 		return true;
 	}
-} // namespace power_ronin // namespace power_ronin
+} // namespace PowerRonin // namespace PowerRonin

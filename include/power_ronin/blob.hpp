@@ -18,7 +18,7 @@
 #include <filesystem>
 #include <vector>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	/// <summary>
 	/// Represents a binary large object. (Byte array buffer).
@@ -28,7 +28,7 @@ namespace power_ronin
 	/// <summary>
 	/// Loads a blob from a file.
 	/// </summary>
-	/// <param name="_file"></param>
+	/// <param name="filePath"></param>
 	/// <returns></returns>
-	extern void blob_from_disk(const std::filesystem::path& _file, Blob& _blob);
+	extern void ReadBlobFromDisk(const std::filesystem::path& filePath, Blob& out);
 }

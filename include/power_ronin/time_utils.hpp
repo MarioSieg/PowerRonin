@@ -18,7 +18,7 @@
 #include <ctime>
 #include <string>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	/// <summary>
 	/// Safe alternative for std::localtime

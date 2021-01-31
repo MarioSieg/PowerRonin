@@ -31,7 +31,7 @@
 	
  */
 
-namespace power_ronin
+namespace PowerRonin
 {
 	/// <summary>
 	/// std::visit helper to implement the overload pattern on std::variant

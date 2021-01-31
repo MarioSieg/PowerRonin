@@ -15,7 +15,7 @@
 
 #include "../include/power_ronin/xorshift.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	auto xorshift32() noexcept -> std::uint32_t
 	{
@@ -51,4 +51,4 @@ namespace power_ronin
 		w ^= w >> UINT32_C(13) ^ t ^ t >> UINT32_C(0x8);
 		return w;
 	}
-} // namespace power_ronin // namespace power_ronin
+} // namespace PowerRonin // namespace PowerRonin

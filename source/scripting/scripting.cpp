@@ -17,75 +17,68 @@
 #include "internal_calls.hpp"
 #include "power_ronin.dll.hpp"
 
-namespace power_ronin::scripting
+namespace PowerRonin::Scripting
 {
-	Scripting::Scripting() : ISubsystem("Scripting", EVENTS), runtime_environment_() { }
+	ScriptingSystem::ScriptingSystem() : ISubsystem("Scripting", EVENTS), runtime_environment_() { }
 
-	auto Scripting::on_pre_startup(Runtime& _rt) -> bool
+	void ScriptingSystem::OnPreStartup(Runtime& runtime)
 	{
-		auto& proto = _rt.protocol();
-		const auto lib_dir = _rt.config().scripting.library_dir.string();
-		const auto cfg_dir = _rt.config().scripting.config_dir.string();
+		auto& proto = runtime.Protocol();
+		const auto lib_dir = runtime.Config().Scripting.LibraryDir.string();
+		const auto cfg_dir = runtime.Config().Scripting.ConfigDir.string();
 
-		proto.info("Initializing scripting backend (Mono)...");
-		proto.info("Library dir: {}, config dir: {}", lib_dir, cfg_dir);
+		proto.Info("Initializing scripting backend (Mono)...");
+		proto.Info("Library dir: {}, config dir: {}", lib_dir, cfg_dir);
 
 		this->runtime_environment_.initialize(lib_dir, cfg_dir);
-		this->runtime_environment_.exception_hook = [&_rt](auto* const _ex)
+		this->runtime_environment_.exception_hook = [&runtime](auto* const exception)
 		{
-			default_exception_handler(_rt.scripting_protocol(), _ex);
+			default_exception_handler(runtime.ScriptingProtocol(), exception);
 		};
 
 		this->core_assembly_.load(std::string(ASSEMBLY_NAME_ID), this->runtime_environment_);
 
-		register_basic_internal_calls(_rt);
+		register_basic_internal_calls(runtime);
 
 		this->setup_hooks();
 
-		_rt.terminal_hook() = [this](char* const _str)
+		runtime.TerminalHook() = [this](char* const _str)
 		{
 			void* params[] = {mono_string_new(this->runtime_environment_.get_domain(), _str)};
 			this->command_db_.on_command_enter(this->runtime_environment_, params);
 		};
 
 		this->core_.on_pre_startup(this->runtime_environment_);
-
-		return true;
 	}
 
-	auto Scripting::on_post_startup(Runtime& _rt) -> bool
+	void ScriptingSystem::OnPostStartup(Runtime&)
 	{
 		this->core_.on_post_startup(this->runtime_environment_);
-		return true;
 	}
 
-	auto Scripting::on_pre_tick(Runtime& _rt) -> bool
+	void ScriptingSystem::OnPreTick(Runtime&)
 	{
 		this->core_.on_pre_tick(this->runtime_environment_);
-		return true;
 	}
 
-	auto Scripting::on_post_tick(Runtime& _rt) -> bool
+	void ScriptingSystem::OnPostTick(Runtime&)
 	{
-		this->core_.on_post_tick(this->runtime_environment_);
-		return true;
+		this->core_.on_post_tick(this->runtime_environment_);;
 	}
 
-	auto Scripting::on_pre_shutdown(Runtime& _rt) -> bool
+	void ScriptingSystem::OnPreShutdown(Runtime&)
 	{
 		this->core_.on_pre_shutdown(this->runtime_environment_);
-		return true;
 	}
 
-	auto Scripting::on_post_shutdown(Runtime& _rt) -> bool
+	void ScriptingSystem::OnPostShutdown(Runtime&)
 	{
 		this->core_.on_post_shutdown(this->runtime_environment_);
 		this->core_assembly_.unload();
 		this->runtime_environment_.shutdown();
-		return true;
 	}
 
-	void Scripting::setup_hooks()
+	void ScriptingSystem::setup_hooks()
 	{
 		this->core_.klass.load_from_name(this->core_assembly_, ASSEMBLY_NAMESPACE_ID, CORE_CLASS_ID);
 

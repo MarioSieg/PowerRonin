@@ -16,7 +16,7 @@
 #include "scroll_roll_buffer.hpp"
 #include <cmath>
 
-namespace power_ronin::gui
+namespace PowerRonin::Interface
 {
 	ScrollingBuffer::ScrollingBuffer()
 	{

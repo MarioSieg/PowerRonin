@@ -23,7 +23,7 @@
 
 #include "blob.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	enum class UniformType
 	{
@@ -60,9 +60,9 @@ namespace power_ronin
 
 		[[nodiscard]] auto program_id() const noexcept -> std::uint16_t;
 
-		void upload() override;
+		void Upload() override;
 
-		void offload() override;
+		void Offload() override;
 
 	private:
 		Blob vertex_shader_bytecode_ = {};

@@ -16,22 +16,22 @@
 #include "gui.hpp"
 #include "theme.hpp"
 
-namespace power_ronin::gui
+namespace PowerRonin::Interface
 {
-	Gui::Gui() : ISubsystem("OverlayGui", EVENTS) { }
+	GuiSystem::GuiSystem() : ISubsystem("OverlayGui", EVENTS) { }
 
-	auto Gui::on_pre_startup(Runtime& _rt) -> bool
+	void GuiSystem::OnPreStartup(Runtime& runtime)
 	{
 		this->gui_context_ = ImGui::CreateContext();
 		if (this->gui_context_ == nullptr) [[unlikely]]
 		{
-			return false;
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to create gui context!");
 		}
 
 		this->plot_context_ = ImPlot::CreateContext();
 		if (this->plot_context_ == nullptr) [[unlikely]]
 		{
-			return false;
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to create plot context!");
 		}
 
 		auto& io = ImGui::GetIO();
@@ -39,97 +39,93 @@ namespace power_ronin::gui
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 		//io.MouseDrawCursor = true;
 
-		auto& cfg = _rt.config().editor;
+		auto& cfg = runtime.Config().Editor;
 		style_apply(SystemTheme::DARK);
-		style_antialiasing_apply(cfg.enable_font_anti_aliasing);
-		style_alpha_apply(cfg.alpha);
-		style_rounding_apply(cfg.rounding);
+		style_antialiasing_apply(cfg.EnableFontAntiAliasing);
+		style_alpha_apply(cfg.Alpha);
+		style_rounding_apply(cfg.Rounding);
 
-		if (cfg.enable_auto_font_size) [[likely]]
+		if (cfg.EnableAutoFontSize) [[likely]]
 		{
-			const auto w = _rt.config().display.resolution.width;
-			const auto h = _rt.config().display.resolution.height;
+			const auto w = runtime.Config().Display.Resolution.Width;
+			const auto h = runtime.Config().Display.Resolution.Height;
 			if (w <= 2560 && h <= 1440) [[unlikely]]
 			{
-				cfg.custom_font_size = cfg.auto_font_size_whqh;
+				cfg.CustomFontSize = cfg.AutoFontSizeWideQuadHD;
 			}
 			else if (w <= 3840 && h <= 2160) [[unlikely]]
 			{
-				cfg.custom_font_size = cfg.auto_font_size_uhd;
+				cfg.CustomFontSize = cfg.AutoFontSizeUltraHD;
 			}
 			else
 			{
-				cfg.custom_font_size = cfg.auto_font_size_fhd;
+				cfg.CustomFontSize = cfg.AutoFontSizeFullHD;
 			}
 		}
 
-		cfg.custom_font_size = std::clamp<decltype(cfg.custom_font_size)>(cfg.custom_font_size, 10, 28);
+		cfg.CustomFontSize = std::clamp<decltype(cfg.CustomFontSize)>(cfg.CustomFontSize, 10, 28);
 
 		if (!this->gui_input_.initialize()) [[unlikely]]
 		{
-			return false;
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to initialize input!");
 		}
 
-		if (!this->gui_renderer_.initialize(_rt.config().editor.custom_font_size)) [[unlikely]]
+		if (!this->gui_renderer_.initialize(runtime.Config().Editor.CustomFontSize)) [[unlikely]]
 		{
-			return false;
+				throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to initialize gui renderer!");
 		}
 
-		this->terminal_.initialize(_rt.protocol(), _rt.scripting_protocol());
+		this->terminal_.initialize(runtime.Protocol(), runtime.ScriptingProtocol());
 
 #if AUTO_TEC
-		this->editor_.initialize(_rt);
+		this->editor_.initialize(runtime);
 #endif
-
-		return true;
 	}
 
-	auto Gui::on_pre_tick(Runtime& _rt) -> bool
+	void GuiSystem::OnPreTick(Runtime& runtime)
 	{
-		const auto width = _rt.config().display.resolution.width;
-		const auto height = _rt.config().display.resolution.height;
-		this->begin(width, height);
-		return true;
+		const auto width = runtime.Config().Display.Resolution.Width;
+		const auto height = runtime.Config().Display.Resolution.Height;
+		this->begin(static_cast<std::uint16_t>(width), static_cast<std::uint16_t>(height));
 	}
 
-	auto Gui::on_post_tick(Runtime& _rt) -> bool
+	void GuiSystem::OnPostTick(Runtime& runtime)
 	{
 #if AUTO_TEC
-		this->editor_.update(_rt, _rt.config().editor.show_terminal);
-#endif
-		if (_rt.input().is_key_down(Key::GRAVE_ACCENT)) [[unlikely]]
+		this->editor_.update(runtime, runtime.Config().Editor.ShowTerminal);
+		if (runtime.Input().IsKeyDown(Key::GraveAccent)) [[unlikely]]
 		{
-			_rt.config().editor.show_terminal = true;
+			runtime.Config().Editor.ShowTerminal = true;
 		}
-		if (_rt.config().editor.show_terminal) [[unlikely]]
+		if (runtime.Config().Editor.ShowTerminal) [[unlikely]]
 		{
-			this->terminal_.update(_rt.config().editor.show_terminal, _rt);
+			this->terminal_.update(runtime.Config().Editor.ShowTerminal, runtime);
 		}
 		this->end();
-
-		return true;
+#endif
 	}
 
-	auto Gui::on_pre_shutdown([[maybe_unused]] Runtime&) -> bool
+	void GuiSystem::OnPreShutdown(Runtime&)
 	{
 		this->gui_input_.shutdown();
 		this->gui_renderer_.shutdown();
-		return true;
 	}
 
-	void Gui::begin(const std::uint16_t _width, const std::uint16_t _height)
+	void GuiSystem::begin(const std::uint16_t _width, const std::uint16_t _height)
 	{
 		this->gui_input_.update();
 		ImGui::NewFrame();
 	}
 
-	void Gui::end() const
+	void GuiSystem::end() const
 	{
 		ImGui::EndFrame();
+#if AUTO_TEC
 		ImGui::Render();
 		if (const ImDrawData* const data = ImGui::GetDrawData(); data) [[likely]]
 		{
 			this->gui_renderer_.render(data);
 		}
+#endif
 	}
-} // namespace power_ronin::gui // namespace power_ronin::gui
+} // namespace PowerRonin::gui // namespace PowerRonin::gui

@@ -16,7 +16,7 @@
 #include "../include/power_ronin/texture.hpp"
 #include "../include/power_ronin/json_impl.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	auto get_format_name(const TextureFormat _format) noexcept -> std::string_view
 	{
@@ -112,4 +112,4 @@ namespace power_ronin
 		this->sampler_flags = _j["sampler_flags"];
 		this->is_srgb = _j["is_srgb"];
 	}
-} // namespace power_ronin // namespace power_ronin
+} // namespace PowerRonin // namespace PowerRonin

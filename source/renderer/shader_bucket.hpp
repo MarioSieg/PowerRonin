@@ -20,7 +20,7 @@
 #include "shaders/bumped_diffuse.hpp"
 #include "shaders/skybox.hpp"
 
-namespace power_ronin::renderer
+namespace PowerRonin::Renderer
 {
 	class ShaderBucket final
 	{
@@ -35,10 +35,10 @@ namespace power_ronin::renderer
 		void load_all();
 		void unload_all();
 
-		shaders::UnlitTexturedShader unlit_textured;
-		shaders::DiffuseShader diffuse;
-		shaders::BumpedDiffuseShader bumped_diffuse;
-		shaders::SkyboxShader skybox;
+		Shaders::UnlitTexturedShader unlit_textured;
+		Shaders::DiffuseShader diffuse;
+		Shaders::BumpedDiffuseShader bumped_diffuse;
+		Shaders::SkyboxShader skybox;
 
 	private:
 		GPU& gpu_;

@@ -18,7 +18,7 @@
 #include "blob.hpp"
 #include "resource.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	enum class TextureFormat : std::uint8_t
 	{
@@ -349,9 +349,9 @@ namespace power_ronin
 
 		[[nodiscard]] auto layers_count() const noexcept -> std::uint16_t;
 
-		void upload() override;
+		void Upload() override;
 
-		void offload() override;
+		void Offload() override;
 
 	private:
 		Blob texels_ = {};
@@ -377,4 +377,4 @@ namespace power_ronin
 		auto load(std::filesystem::path&& _path,
 		          const TextureMeta* const _meta = nullptr) const -> std::shared_ptr<Texture>;
 	};
-} // namespace power_ronin // namespace power_ronin
+} // namespace PowerRonin // namespace PowerRonin

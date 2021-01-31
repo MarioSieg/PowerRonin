@@ -18,7 +18,7 @@
 #include "../../include/power_ronin/env.hpp"
 #include "../gui/gui_headers.hpp"
 
-namespace power_ronin::platform
+namespace PowerRonin::Platform
 {
 	bool (*MOUSE_STATES)[5] = nullptr;
 
@@ -74,4 +74,4 @@ namespace power_ronin::platform
 	{
 		ImGui::GetIO().AddInputCharacter(_c);
 	}
-} // namespace power_ronin::platform // namespace power_ronin::platform
+} // namespace PowerRonin::platform // namespace PowerRonin::platform

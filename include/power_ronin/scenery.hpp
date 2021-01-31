@@ -18,7 +18,7 @@
 #include "ecs.hpp"
 #include "comcollections.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	class ResourceManager;
 
@@ -72,13 +72,13 @@ namespace power_ronin
 					/// <summary>
 					/// The color of the sunlight.
 					/// </summary>
-					Color<> color = math::rgba_to_rgba_norm(0xFFFFFFFF);
+					Color<> color = Math::RgbaToRgbaNorm(0xFFFFFFFF);
 				} sun;
 
 				/// <summary>
 				/// Basic constant ambient color.
 				/// </summary>
-				Color<> const_ambient_color = math::rgba_to_rgba_norm(0x14141414);
+				Color<> const_ambient_color = Math::RgbaToRgbaNorm(0x14141414);
 
 				/// <summary>
 				/// The type of the scenery skybox.
@@ -119,4 +119,4 @@ namespace power_ronin
 		void initialize();
 		void new_default(ResourceManager& _resource_manager);
 	};
-} // namespace power_ronin // namespace power_ronin
+} // namespace PowerRonin // namespace PowerRonin

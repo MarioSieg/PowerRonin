@@ -15,12 +15,12 @@
 
 #pragma once
 
-namespace power_ronin
+namespace PowerRonin
 {
 	class Runtime;
 }
 
-namespace power_ronin::scripting
+namespace PowerRonin::Scripting
 {
 	extern void register_basic_internal_calls(Runtime& _rt);
 }

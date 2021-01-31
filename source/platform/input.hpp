@@ -17,7 +17,7 @@
 
 struct GLFWcursor;
 
-namespace power_ronin::platform
+namespace PowerRonin::Platform
 {
 	class GuiInput final
 	{
@@ -36,4 +36,4 @@ namespace power_ronin::platform
 		double timer = .0;
 		void* window = nullptr;
 	};
-} // namespace power_ronin::platform // namespace power_ronin::platform
+} // namespace PowerRonin::platform // namespace PowerRonin::platform

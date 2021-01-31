@@ -21,47 +21,47 @@ struct GLFWwindow;
 struct GLFWmonitor;
 struct GLFWvidmode;
 
-namespace power_ronin::platform
+namespace PowerRonin::Platform
 {
 	/// <summary>
 	/// GLFW window handle.
 	/// </summary>
-	extern void* WINDOW_HANDLE;
+	extern void* WindowHandle;
 
 	/// <summary>
 	/// Global raw window handle. (HWND on Windows).
 	/// </summary>
-	extern void* NATIVE_WINDOW_HANDLE;
+	extern void* NativeWindowHandle;
 
 	/// <summary>
 	/// Manages window and input 
 	/// </summary>
-	class Platform final : public core::ISubsystem
+	class PlatformSystem final : public Core::ISubsystem
 	{
 	public:
 		/* Constructors, assignment operators, destructor */
-		Platform();
-		Platform(const Platform&) = delete;
-		Platform(Platform&&) = delete;
-		auto operator=(const Platform&) -> Platform& = delete;
-		auto operator=(Platform&&) -> Platform& = delete;
-		~Platform() override = default;
+		PlatformSystem();
+		PlatformSystem(const PlatformSystem&) = delete;
+		PlatformSystem(PlatformSystem&&) = delete;
+		auto operator=(const PlatformSystem&) -> PlatformSystem& = delete;
+		auto operator=(PlatformSystem&&) -> PlatformSystem& = delete;
+		~PlatformSystem() override = default;
 
 	private:
 
 		/// <summary>
 		/// Required kernel events
 		/// </summary>
-		static constexpr auto EVENTS = core::ServiceEvents::ALL;
+		static constexpr auto EVENTS = Core::ServiceEvents::All;
 		static constexpr std::string_view TITLE = "Dreamcast Engine";
 
 		/* Kernel events */
-		auto on_pre_startup([[maybe_unused]] Runtime& _rt) -> bool override;
-		auto on_post_startup([[maybe_unused]] Runtime& _rt) -> bool override;
-		auto on_pre_tick([[maybe_unused]] Runtime& _rt) -> bool override;
-		auto on_post_tick([[maybe_unused]] Runtime& _rt) -> bool override;
-		auto on_pre_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
-		auto on_post_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
+		void OnPreStartup(Runtime&) override;
+		void OnPostStartup(Runtime&) override;
+		void OnPreTick(Runtime&) override;
+		void OnPostTick(Runtime&) override;
+		void OnPreShutdown(Runtime&) override;
+		void OnPostShutdown(Runtime&) override;
 
 		/// <summary>
 		/// Primary window handle.
@@ -98,4 +98,4 @@ namespace power_ronin::platform
 		/// </summary>
 		const GLFWvidmode* all_vidmodes_ = nullptr;
 	};
-} // namespace power_ronin::platform // namespace power_ronin::platform
+} // namespace PowerRonin::platform // namespace PowerRonin::platform

@@ -15,160 +15,160 @@
 
 #include "../include/power_ronin/frustum.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
-	template <Frustum::Planes I, Frustum::Planes J>
+	template <enum Frustum::Planes I, enum Frustum::Planes J>
 	struct IJ2K
 	{
 		enum { K = I * (9 - I) / 2 + J - 1 };
 	};
 
-	template <Frustum::Planes A, Frustum::Planes B, Frustum::Planes C>
+	template <enum Frustum::Planes A, enum Frustum::Planes B, enum Frustum::Planes C>
 	[[nodiscard]] static auto intersection(const Frustum& _frustum,
-	                                       const SVec3<>* const _crosses) noexcept -> SVec3<>
+	                                       const Vector3<>* const _crosses) noexcept -> Vector3<>
 	{
-		const auto& planes = _frustum.planes();
-		const auto D = math::dot(SVec3<>(planes[A]), _crosses[IJ2K<B, C>::K]);
-		SVec3<> res = glm::mat3(_crosses[IJ2K<B, C>::K], -_crosses[IJ2K<A, C>::K], _crosses[IJ2K<A, B>::K])
-			* SVec3<>(planes[A].w, planes[B].w, planes[C].w);
+		const auto& planes = _frustum.Planes();
+		const auto D = Math::dot(Vector3<>(planes[A]), _crosses[IJ2K<B, C>::K]);
+		Vector3<> res = glm::mat3(_crosses[IJ2K<B, C>::K], -_crosses[IJ2K<A, C>::K], _crosses[IJ2K<A, B>::K])
+			* Vector3<>(planes[A].w, planes[B].w, planes[C].w);
 		return res * (-1.0f / D);
 	}
 
-	auto Frustum::planes() const noexcept -> const SVec4<>(&)[COUNT]
+	auto Frustum::Planes() const noexcept -> const Vector4<>(&)[Count]
 	{
-		return this->planes_;
+		return this->planes;
 	}
 
-	auto Frustum::points() const noexcept -> const SVec3<>(&)[8]
+	auto Frustum::Points() const noexcept -> const Vector3<>(&)[8]
 	{
-		return this->points_;
+		return this->points;
 	}
 
-	void Frustum::from_camera_matrix(const SMat4x4<>& _view_proj) noexcept
+	void Frustum::FromCameraMatrix(const Matrix4x4<>& viewProj) noexcept
 	{
-		auto matrix = math::transpose(_view_proj);
-		this->planes_[LEFT] = matrix[3] + matrix[0];
-		this->planes_[RIGHT] = matrix[3] - matrix[0];
-		this->planes_[BOTTOM] = matrix[3] + matrix[1];
-		this->planes_[TOP] = matrix[3] - matrix[1];
-		this->planes_[NEAR] = matrix[3] + matrix[2];
-		this->planes_[FAR] = matrix[3] - matrix[2];
+		auto matrix = Math::transpose(viewProj);
+		this->planes[Left] = matrix[3] + matrix[0];
+		this->planes[Right] = matrix[3] - matrix[0];
+		this->planes[Bottom] = matrix[3] + matrix[1];
+		this->planes[Top] = matrix[3] - matrix[1];
+		this->planes[Near] = matrix[3] + matrix[2];
+		this->planes[Far] = matrix[3] - matrix[2];
 
-		SVec3<> crosses[COMBO] = {
-			math::cross(SVec3<>(this->planes_[LEFT]), SVec3<>(this->planes_[RIGHT])),
-			math::cross(SVec3<>(this->planes_[LEFT]), SVec3<>(this->planes_[BOTTOM])),
-			math::cross(SVec3<>(this->planes_[LEFT]), SVec3<>(this->planes_[TOP])),
-			math::cross(SVec3<>(this->planes_[LEFT]), SVec3<>(this->planes_[NEAR])),
-			math::cross(SVec3<>(this->planes_[LEFT]), SVec3<>(this->planes_[FAR])),
-			math::cross(SVec3<>(this->planes_[RIGHT]), SVec3<>(this->planes_[BOTTOM])),
-			math::cross(SVec3<>(this->planes_[RIGHT]), SVec3<>(this->planes_[TOP])),
-			math::cross(SVec3<>(this->planes_[RIGHT]), SVec3<>(this->planes_[NEAR])),
-			math::cross(SVec3<>(this->planes_[RIGHT]), SVec3<>(this->planes_[FAR])),
-			math::cross(SVec3<>(this->planes_[BOTTOM]), SVec3<>(this->planes_[TOP])),
-			math::cross(SVec3<>(this->planes_[BOTTOM]), SVec3<>(this->planes_[NEAR])),
-			math::cross(SVec3<>(this->planes_[BOTTOM]), SVec3<>(this->planes_[FAR])),
-			math::cross(SVec3<>(this->planes_[TOP]), SVec3<>(this->planes_[NEAR])),
-			math::cross(SVec3<>(this->planes_[TOP]), SVec3<>(this->planes_[FAR])),
-			math::cross(SVec3<>(this->planes_[NEAR]), SVec3<>(this->planes_[FAR]))
+		Vector3<> crosses[Combo] = {
+			Math::cross(Vector3<>(this->planes[Left]), Vector3<>(this->planes[Right])),
+			Math::cross(Vector3<>(this->planes[Left]), Vector3<>(this->planes[Bottom])),
+			Math::cross(Vector3<>(this->planes[Left]), Vector3<>(this->planes[Top])),
+			Math::cross(Vector3<>(this->planes[Left]), Vector3<>(this->planes[Near])),
+			Math::cross(Vector3<>(this->planes[Left]), Vector3<>(this->planes[Far])),
+			Math::cross(Vector3<>(this->planes[Right]), Vector3<>(this->planes[Bottom])),
+			Math::cross(Vector3<>(this->planes[Right]), Vector3<>(this->planes[Top])),
+			Math::cross(Vector3<>(this->planes[Right]), Vector3<>(this->planes[Near])),
+			Math::cross(Vector3<>(this->planes[Right]), Vector3<>(this->planes[Far])),
+			Math::cross(Vector3<>(this->planes[Bottom]), Vector3<>(this->planes[Top])),
+			Math::cross(Vector3<>(this->planes[Bottom]), Vector3<>(this->planes[Near])),
+			Math::cross(Vector3<>(this->planes[Bottom]), Vector3<>(this->planes[Far])),
+			Math::cross(Vector3<>(this->planes[Top]), Vector3<>(this->planes[Near])),
+			Math::cross(Vector3<>(this->planes[Top]), Vector3<>(this->planes[Far])),
+			Math::cross(Vector3<>(this->planes[Near]), Vector3<>(this->planes[Far]))
 		};
 
-		this->points_[0] = intersection<LEFT, BOTTOM, NEAR>(*this, crosses);
-		this->points_[1] = intersection<LEFT, TOP, NEAR>(*this, crosses);
-		this->points_[2] = intersection<RIGHT, BOTTOM, NEAR>(*this, crosses);
-		this->points_[3] = intersection<RIGHT, TOP, NEAR>(*this, crosses);
-		this->points_[4] = intersection<LEFT, BOTTOM, FAR>(*this, crosses);
-		this->points_[5] = intersection<LEFT, TOP, FAR>(*this, crosses);
-		this->points_[6] = intersection<RIGHT, BOTTOM, FAR>(*this, crosses);
-		this->points_[7] = intersection<RIGHT, TOP, FAR>(*this, crosses);
+		this->points[0] = intersection<Left, Bottom, Near>(*this, crosses);
+		this->points[1] = intersection<Left, Top, Near>(*this, crosses);
+		this->points[2] = intersection<Right, Bottom, Near>(*this, crosses);
+		this->points[3] = intersection<Right, Top, Near>(*this, crosses);
+		this->points[4] = intersection<Left, Bottom, Far>(*this, crosses);
+		this->points[5] = intersection<Left, Top, Far>(*this, crosses);
+		this->points[6] = intersection<Right, Bottom, Far>(*this, crosses);
+		this->points[7] = intersection<Right, Top, Far>(*this, crosses);
 	}
 
-	auto Frustum::is_aabb_visible(const AABB& _in) const noexcept -> bool
+	auto Frustum::IsAabbVisible(const Aabb& in) const noexcept -> bool
 	{
-		const auto& minp = _in.min;
-		const auto& maxp = _in.max;
+		const auto& minp = in.Min;
+		const auto& maxp = in.Max;
 
-		if (math::dot(this->planes_[0], SVec4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[0], SVec4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[0], SVec4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[0], SVec4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[0], SVec4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[0], SVec4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[0], SVec4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[0], SVec4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
+		if (Math::dot(this->planes[0], Vector4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[0], Vector4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[0], Vector4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[0], Vector4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[0], Vector4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[0], Vector4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[0], Vector4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[0], Vector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
 		{
 			return false;
 		}
 
-		if (math::dot(this->planes_[1], SVec4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[1], SVec4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[1], SVec4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[1], SVec4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[1], SVec4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[1], SVec4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[1], SVec4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[1], SVec4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
+		if (Math::dot(this->planes[1], Vector4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[1], Vector4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[1], Vector4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[1], Vector4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[1], Vector4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[1], Vector4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[1], Vector4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[1], Vector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
 		{
 			return false;
 		}
 
-		if (math::dot(this->planes_[2], SVec4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[2], SVec4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[2], SVec4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[2], SVec4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[2], SVec4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[2], SVec4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[2], SVec4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[2], SVec4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
+		if (Math::dot(this->planes[2], Vector4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[2], Vector4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[2], Vector4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[2], Vector4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[2], Vector4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[2], Vector4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[2], Vector4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[2], Vector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
 		{
 			return false;
 		}
 
-		if (math::dot(this->planes_[3], SVec4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[3], SVec4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[3], SVec4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[3], SVec4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[3], SVec4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[3], SVec4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[3], SVec4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[3], SVec4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
+		if (Math::dot(this->planes[3], Vector4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[3], Vector4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[3], Vector4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[3], Vector4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[3], Vector4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[3], Vector4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[3], Vector4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[3], Vector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
 		{
 			return false;
 		}
 
-		if (math::dot(this->planes_[4], SVec4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[4], SVec4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[4], SVec4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[4], SVec4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[4], SVec4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[4], SVec4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[4], SVec4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[4], SVec4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
+		if (Math::dot(this->planes[4], Vector4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[4], Vector4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[4], Vector4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[4], Vector4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[4], Vector4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[4], Vector4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[4], Vector4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[4], Vector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
 		{
 			return false;
 		}
 
-		if (math::dot(this->planes_[5], SVec4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[5], SVec4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[5], SVec4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[5], SVec4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[5], SVec4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[5], SVec4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[5], SVec4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
-			math::dot(this->planes_[5], SVec4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
+		if (Math::dot(this->planes[5], Vector4<>(minp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[5], Vector4<>(maxp.x, minp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[5], Vector4<>(minp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[5], Vector4<>(maxp.x, maxp.y, minp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[5], Vector4<>(minp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[5], Vector4<>(maxp.x, minp.y, maxp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[5], Vector4<>(minp.x, maxp.y, maxp.z, 1.0f)) < .0F &&
+			Math::dot(this->planes[5], Vector4<>(maxp.x, maxp.y, maxp.z, 1.0f)) < .0F) [[likely]]
 		{
 			return false;
 		}
 
 		std::int_fast32_t out = 0;
 
-		out += this->points_[0].x > maxp.x;
-		out += this->points_[1].x > maxp.x;
-		out += this->points_[2].x > maxp.x;
-		out += this->points_[3].x > maxp.x;
-		out += this->points_[4].x > maxp.x;
-		out += this->points_[5].x > maxp.x;
-		out += this->points_[6].x > maxp.x;
-		out += this->points_[7].x > maxp.x;
+		out += this->points[0].x > maxp.x;
+		out += this->points[1].x > maxp.x;
+		out += this->points[2].x > maxp.x;
+		out += this->points[3].x > maxp.x;
+		out += this->points[4].x > maxp.x;
+		out += this->points[5].x > maxp.x;
+		out += this->points[6].x > maxp.x;
+		out += this->points[7].x > maxp.x;
 
 		if (out == 8) [[likely]]
 		{
@@ -177,14 +177,14 @@ namespace power_ronin
 
 		out = 0;
 
-		out += this->points_[0].x < minp.x;
-		out += this->points_[1].x < minp.x;
-		out += this->points_[2].x < minp.x;
-		out += this->points_[3].x < minp.x;
-		out += this->points_[4].x < minp.x;
-		out += this->points_[5].x < minp.x;
-		out += this->points_[6].x < minp.x;
-		out += this->points_[7].x < minp.x;
+		out += this->points[0].x < minp.x;
+		out += this->points[1].x < minp.x;
+		out += this->points[2].x < minp.x;
+		out += this->points[3].x < minp.x;
+		out += this->points[4].x < minp.x;
+		out += this->points[5].x < minp.x;
+		out += this->points[6].x < minp.x;
+		out += this->points[7].x < minp.x;
 
 		if (out == 8) [[likely]]
 		{
@@ -193,14 +193,14 @@ namespace power_ronin
 
 		out = 0;
 
-		out += this->points_[0].y > maxp.y;
-		out += this->points_[1].y > maxp.y;
-		out += this->points_[2].y > maxp.y;
-		out += this->points_[3].y > maxp.y;
-		out += this->points_[4].y > maxp.y;
-		out += this->points_[5].y > maxp.y;
-		out += this->points_[6].y > maxp.y;
-		out += this->points_[7].y > maxp.y;
+		out += this->points[0].y > maxp.y;
+		out += this->points[1].y > maxp.y;
+		out += this->points[2].y > maxp.y;
+		out += this->points[3].y > maxp.y;
+		out += this->points[4].y > maxp.y;
+		out += this->points[5].y > maxp.y;
+		out += this->points[6].y > maxp.y;
+		out += this->points[7].y > maxp.y;
 
 		if (out == 8) [[likely]]
 		{
@@ -209,14 +209,14 @@ namespace power_ronin
 
 		out = 0;
 
-		out += this->points_[0].y < minp.y;
-		out += this->points_[1].y < minp.y;
-		out += this->points_[2].y < minp.y;
-		out += this->points_[3].y < minp.y;
-		out += this->points_[4].y < minp.y;
-		out += this->points_[5].y < minp.y;
-		out += this->points_[6].y < minp.y;
-		out += this->points_[7].y < minp.y;
+		out += this->points[0].y < minp.y;
+		out += this->points[1].y < minp.y;
+		out += this->points[2].y < minp.y;
+		out += this->points[3].y < minp.y;
+		out += this->points[4].y < minp.y;
+		out += this->points[5].y < minp.y;
+		out += this->points[6].y < minp.y;
+		out += this->points[7].y < minp.y;
 
 		if (out == 8) [[likely]]
 		{
@@ -225,14 +225,14 @@ namespace power_ronin
 
 		out = 0;
 
-		out += this->points_[0].z > maxp.z;
-		out += this->points_[1].z > maxp.z;
-		out += this->points_[2].z > maxp.z;
-		out += this->points_[3].z > maxp.z;
-		out += this->points_[4].z > maxp.z;
-		out += this->points_[5].z > maxp.z;
-		out += this->points_[6].z > maxp.z;
-		out += this->points_[7].z > maxp.z;
+		out += this->points[0].z > maxp.z;
+		out += this->points[1].z > maxp.z;
+		out += this->points[2].z > maxp.z;
+		out += this->points[3].z > maxp.z;
+		out += this->points[4].z > maxp.z;
+		out += this->points[5].z > maxp.z;
+		out += this->points[6].z > maxp.z;
+		out += this->points[7].z > maxp.z;
 
 		if (out == 8) [[likely]]
 		{
@@ -241,14 +241,14 @@ namespace power_ronin
 
 		out = 0;
 
-		out += this->points_[0].z < minp.z;
-		out += this->points_[1].z < minp.z;
-		out += this->points_[2].z < minp.z;
-		out += this->points_[3].z < minp.z;
-		out += this->points_[4].z < minp.z;
-		out += this->points_[5].z < minp.z;
-		out += this->points_[6].z < minp.z;
-		out += this->points_[7].z < minp.z;
+		out += this->points[0].z < minp.z;
+		out += this->points[1].z < minp.z;
+		out += this->points[2].z < minp.z;
+		out += this->points[3].z < minp.z;
+		out += this->points[4].z < minp.z;
+		out += this->points[5].z < minp.z;
+		out += this->points[6].z < minp.z;
+		out += this->points[7].z < minp.z;
 
 		if (out == 8) [[likely]]
 		{

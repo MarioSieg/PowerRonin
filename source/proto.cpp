@@ -23,7 +23,7 @@
 #include <iomanip>
 #include <sstream>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	AsyncProtocol::AsyncProtocol() : AsyncProtocol("engine") { }
 
@@ -31,11 +31,11 @@ namespace power_ronin
 	{
 		if (!spdlog::thread_pool()) [[unlikely]]
 		{
-			spdlog::init_thread_pool(QUEUE_SIZE, THREAD_COUNT);
+			spdlog::init_thread_pool(QueueSize, ThreadCount);
 		}
 		const auto thread_pool = spdlog::thread_pool();
 		auto name = _name;
-		this->core_ = std::make_shared<spdlog::async_logger>(_name, std::make_shared<TerminalSink<>>(std::move(name)),
+		this->core = std::make_shared<spdlog::async_logger>(_name, std::make_shared<TerminalSink<>>(std::move(name)),
 		                                                     thread_pool);
 	}
-} // namespace power_ronin // namespace power_ronin
+} // namespace PowerRonin // namespace PowerRonin

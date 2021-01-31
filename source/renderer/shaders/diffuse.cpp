@@ -15,7 +15,7 @@
 
 #include "diffuse.hpp"
 
-namespace power_ronin::renderer::shaders
+namespace PowerRonin::Renderer::Shaders
 {
 	DiffuseShader::DiffuseShader(GPU& _gpu) noexcept : IShader("diffuse", _gpu) { }
 
@@ -36,8 +36,8 @@ namespace power_ronin::renderer::shaders
 	void DiffuseShader::draw(const Material::Diffuse& _mat, const Mesh& _mesh) const
 	{
 		this->gpu_.set_mesh_buffer(_mesh);
-		this->gpu_.set_texture(_mat.albedo, this->diffuse_texture_sampler_, 0);
-		this->tiling_offset_.set(_mat.tiling_offset);
+		this->gpu_.set_texture(_mat.Albedo, this->diffuse_texture_sampler_, 0);
+		this->tiling_offset_.set(_mat.TilingOffset);
 		this->gpu_.draw(this->program_, SCENERY_VIEW);
 	}
 }

@@ -19,25 +19,25 @@
 #include <limits>
 #include <string_view>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	class Runtime;
 
-	namespace core
+	namespace Core
 	{
 		// Bitmask to subscribe to subsystem events
 		struct ServiceEvents
 		{
 			enum Enum : std::uint8_t
 			{
-				NONE = 0,
-				PRE_STARTUP = 1 << 0,
-				POST_STARTUP = 1 << 1,
-				PRE_TICK = 1 << 2,
-				POST_TICK = 1 << 3,
-				PRE_SHUTDOWN = 1 << 4,
-				POST_SHUTDOWN = 1 << 5,
-				ALL = std::numeric_limits<std::uint8_t>::max()
+				None = 0,
+				PreStartup = 1 << 0,
+				PostStartup = 1 << 1,
+				PreTick = 1 << 2,
+				PostTick = 1 << 3,
+				PreShutdown = 1 << 4,
+				PostShutdown = 1 << 5,
+				All = 0xFF
 			};
 		};
 
@@ -47,17 +47,17 @@ namespace power_ronin
 			friend class Kernel;
 
 		protected:
-			ISubsystem(const std::string_view _name, const std::underlying_type<ServiceEvents::Enum>::type _subscribed_events) noexcept;
+			ISubsystem(const std::string_view name, const std::underlying_type<ServiceEvents::Enum>::type subscribedEvents) noexcept;
 
 		public:
 			/* Name of the subsystem */
-			const std::string_view name;
+			const std::string_view Name;
 
 			/* Subscribed event for this subsystem */
-			const std::underlying_type<ServiceEvents::Enum>::type subscribed_events;
+			const std::underlying_type<ServiceEvents::Enum>::type SubscribedEvents;
 
 			/* 16-bit short UUID for this subsystem */
-			const std::uint_fast16_t id;
+			const std::uint_fast16_t UniqueID;
 
 			/* Delete copy, move constructors and assignment operators */
 			ISubsystem(const ISubsystem&) = delete;
@@ -69,38 +69,35 @@ namespace power_ronin
 			virtual ~ISubsystem() = default;
 
 			/* Returns the kernel event time in ms. */
-			[[nodiscard]] auto pre_startup_time() const noexcept -> double;
+			[[nodiscard]] auto PreStartupTime() const noexcept -> double;
 
 			/* Returns the kernel event time in ms. */
-			[[nodiscard]] auto post_startup_time() const noexcept -> double;
+			[[nodiscard]] auto PostStartupTime() const noexcept -> double;
 
 			/* Returns the kernel event time in ms. */
-			[[nodiscard]] auto pre_shutdown_time() const noexcept -> double;
+			[[nodiscard]] auto PreShutdownTime() const noexcept -> double;
 
 			/* Returns the kernel event time in ms. */
-			[[nodiscard]] auto post_shutdown_time() const noexcept -> double;
-
+			[[nodiscard]] auto PostShutdownTime() const noexcept -> double;
 
 		protected:
-			Kernel* kernel_ = nullptr;
+			virtual void OnPreStartup([[maybe_unused]] Runtime&);
 
-			[[nodiscard]] virtual auto on_pre_startup([[maybe_unused]] Runtime&) -> bool;
+			virtual void OnPostStartup([[maybe_unused]] Runtime&);
 
-			[[nodiscard]] virtual auto on_post_startup([[maybe_unused]] Runtime&) -> bool;
+			virtual void OnPreTick([[maybe_unused]] Runtime&);
 
-			[[nodiscard]] virtual auto on_pre_tick([[maybe_unused]] Runtime&) -> bool;
+			virtual void OnPostTick([[maybe_unused]] Runtime&);
 
-			[[nodiscard]] virtual auto on_post_tick([[maybe_unused]] Runtime&) -> bool;
+			virtual void OnPreShutdown([[maybe_unused]] Runtime&);
 
-			[[nodiscard]] virtual auto on_pre_shutdown([[maybe_unused]] Runtime&) -> bool;
-
-			[[nodiscard]] virtual auto on_post_shutdown([[maybe_unused]] Runtime&) -> bool;
+			virtual void OnPostShutdown([[maybe_unused]] Runtime&);
 
 		private:
-			double pre_startup_time_ = 0.;
-			double post_startup_time_ = 0.;
-			double pre_shutdown_time_ = 0.;
-			double post_shutdown_time_ = 0.;
+			double preStartupTime = 0.;
+			double postStartupTime = 0.;
+			double preShutdownTime = 0.;
+			double postShutdownTime = 0.;
 		};
-	} // namespace core // namespace core
-} // namespace power_ronin // namespace power_ronin
+	} // namespace Core // namespace Core
+} // namespace PowerRonin // namespace PowerRonin

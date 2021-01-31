@@ -16,19 +16,19 @@
 #include "../../include/power_ronin/input.hpp"
 #include "gui/gui_headers.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
-	auto Input::is_key_down(const Key _key) const noexcept -> bool
+	auto Input::IsKeyDown(const Key key) const noexcept -> bool
 	{
-		return ImGui::GetIO().KeysDown[static_cast<std::size_t>(_key)];
+		return ImGui::GetIO().KeysDown[static_cast<std::size_t>(key)];
 	}
 
-	auto Input::is_mouse_button_down(const MouseButton _mb) const noexcept -> bool
+	auto Input::IsMouseButtonDown(const MouseButton mouseButton) const noexcept -> bool
 	{
-		return ImGui::IsMouseDown(static_cast<ImGuiMouseButton>(_mb));
+		return ImGui::IsMouseDown(static_cast<ImGuiMouseButton>(mouseButton));
 	}
 
-	auto Input::mouse_pos() const noexcept -> SVec2<>
+	auto Input::MousePosition() const noexcept -> Vector2<>
 	{
 		const auto position = ImGui::GetMousePos();
 		return {position.x, position.y};

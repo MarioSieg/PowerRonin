@@ -16,7 +16,7 @@
 #include "uniform.hpp"
 #include "../../include/power_ronin/except.hpp"
 
-namespace power_ronin::renderer
+namespace PowerRonin::Renderer
 {
 	Uniform::Uniform(const std::string_view _name, const bgfx::UniformType::Enum _type) noexcept : type_(_type), name_(_name) { }
 
@@ -45,23 +45,23 @@ namespace power_ronin::renderer
 		return this->handle_;
 	}
 
-	void Uniform::set(const SVec3<>& _value) const noexcept
+	void Uniform::set(const Vector3<>& _value) const noexcept
 	{
-		const auto x = SVec4<>{_value, 1.F};
+		const auto x = Vector4<>{_value, 1.F};
 		bgfx::setUniform(this->handle_, value_ptr(x));
 	}
 
-	void Uniform::set(const SVec4<>& _value) const noexcept
+	void Uniform::set(const Vector4<>& _value) const noexcept
 	{
 		bgfx::setUniform(this->handle_, value_ptr(_value));
 	}
 
-	void Uniform::set(const SMat3x3<>& _value) const noexcept
+	void Uniform::set(const Matrix3x3<>& _value) const noexcept
 	{
 		bgfx::setUniform(this->handle_, value_ptr(_value));
 	}
 
-	void Uniform::set(const SMat4x4<>& _value) const noexcept
+	void Uniform::set(const Matrix4x4<>& _value) const noexcept
 	{
 		bgfx::setUniform(this->handle_, value_ptr(_value));
 	}

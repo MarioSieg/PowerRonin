@@ -16,7 +16,7 @@
 #include "member_method.hpp"
 #include "../../include/power_ronin/except.hpp"
 
-namespace power_ronin::scripting
+namespace PowerRonin::Scripting
 {
 	auto MemberMethod::get_handle() const noexcept -> MonoMethod*
 	{

@@ -17,5 +17,5 @@
 
 /* Main function where the dream starts and ends. */
 auto POWER_RONIN_ENTRY(const int _argc, const char** _argv, const char** _envp) -> int {
-	return ::default_power_ronin_entry(_argc, _argv, _envp);
+	return ::PowerRoninEntry(_argc, _argv, _envp);
 }

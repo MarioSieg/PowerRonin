@@ -28,7 +28,7 @@
 #include <Windows.h>
 #endif
 
-namespace power_ronin
+namespace PowerRonin
 {
 #if OS_WINDOWS
 #define CALL_FIRST 1
@@ -69,14 +69,14 @@ namespace power_ronin
 		return EXCEPTION_CONTINUE_EXECUTION;
 	}
 
-	ScopedVectoredExceptionHandler::ScopedVectoredExceptionHandler() : handler_(&handler_)
+	ScopedVectoredExceptionHandler::ScopedVectoredExceptionHandler() : handle(&handle)
 	{
 		AddVectoredExceptionHandler(CALL_FIRST, &handler);
 	}
 
 	ScopedVectoredExceptionHandler::~ScopedVectoredExceptionHandler()
 	{
-		RemoveVectoredExceptionHandler(this->handler_);
+		RemoveVectoredExceptionHandler(this->handle);
 	}
 
 #else

@@ -17,11 +17,11 @@
 
 #if AUTO_TEC
 
-namespace power_ronin
+namespace PowerRonin
 {
 	class ResourceManager;
 
-	namespace gui::widgets
+	namespace Interface::widgets
 	{
 		class ResourceViewer final
 		{
@@ -29,6 +29,6 @@ namespace power_ronin
 			void update(bool& _show, ResourceManager& _rm);
 		};
 	} // namespace gui::widgets
-} // namespace power_ronin // namespace power_ronin
+} // namespace PowerRonin // namespace PowerRonin
 
 #endif

@@ -17,37 +17,37 @@
 #include "../../include/power_ronin/json_impl.hpp"
 #include "../../include/power_ronin/resource_manager.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
-	auto MaterialImporteur::load(std::filesystem::path&& _path
-	                             , const MaterialMeta* const _meta) const -> std::shared_ptr<Material>
+	auto MaterialImporteur::load(std::filesystem::path&& path
+	                             , const MaterialMeta* const meta) const -> std::shared_ptr<Material>
 	{
-		auto self = IResource<MaterialMeta>::allocate<Material>();
+		auto self = IResource<MaterialMeta>::Allocate<Material>();
 		// TODO
-		self->file_path_ = std::move(_path);
-		self->meta_data_ = _meta ? *_meta : IResource<MaterialMeta>::load_meta_or_default(self->file_path_);
+		self->filePath = std::move(path);
+		self->metaData = meta ? *meta : IResource<MaterialMeta>::LoadMetaOrDefault(self->filePath);
 		return self;
 	}
 
-	auto Material::create_from_data(Properties&& _props
-	                                , std::filesystem::path&& _name_path_alias
-	                                , ResourceManager& _rm) -> IRef<Material>
+	auto Material::CreateFromData(MaterialProperties&& props
+	                                , std::filesystem::path&& namePathAlias
+	                                , ResourceManager& resourceManager) -> ResourceRef<Material>
 	{
 		class MaterialFactory final : public ResourceImporteur<MaterialFactory, Material>
 		{
 		public:
-			auto load(Properties&& _props,
-			          std::filesystem::path&& _name_path_alias) const -> std::shared_ptr<Material>
+			auto load(MaterialProperties&& props,
+			          std::filesystem::path&& namePathAlias) const -> std::shared_ptr<Material>
 			{
-				auto self = allocate<Material>();
-				self->properties = std::move(_props);
-				self->file_path_ = std::move(_name_path_alias);
+				auto self = Allocate<Material>();
+				self->Properties = std::move(props);
+				self->filePath = std::move(namePathAlias);
 
 				return self;
 			}
 		};
-		const auto id = HString(_name_path_alias.string().c_str());
-		return const_cast<ResourceCache<Material>&>(_rm.material_cache()).load<MaterialFactory>(
-			id, std::move(_props), std::move(_name_path_alias));
+		const auto id = HashedString(namePathAlias.string().c_str());
+		return const_cast<ResourceCache<Material>&>(resourceManager.MaterialCache()).load<MaterialFactory>(
+			id, std::move(props), std::move(namePathAlias));
 	}
 }

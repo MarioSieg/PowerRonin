@@ -15,11 +15,10 @@
 
 #pragma once
 
-#include "mathlib.hpp"
 #include "frustum.hpp"
 #include "flycam.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	/// <summary>
 	/// Contains states and data for the renderer.
@@ -27,16 +26,16 @@ namespace power_ronin
 	class RenderData final
 	{
 	public:
-		Viewport<> primary_viewport = {};
-		SMat4x4<> view_matrix = {};
-		SMat4x4<> projection_matrix = {};
-		SMat4x4<> view_projection_matrix = {};
-		Frustum camera_frustum = {};
-		SMat4x4<> skybox_view_matrix = {};
+		Viewport<> PrimaryViewport = {};
+		Matrix4x4<> ViewMatrix = {};
+		Matrix4x4<> ProjectionMatrix = {};
+		Matrix4x4<> ViewProjectionMatrix = {};
+		Frustum CameraFrustum = {};
+		Matrix4x4<> SkyboxViewMatrix = {};
 
 #if AUTO_TEC
-		EditorCamera editor_camera = {};
-		bool enable_wireframe = false;
+		EditorCamera EditorCamera = {};
+		bool EnableWireframe = false;
 #endif
 	};
 }

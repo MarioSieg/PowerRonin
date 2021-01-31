@@ -16,7 +16,7 @@
 #include "static_class.hpp"
 #include "assembly.hpp"
 
-namespace power_ronin::scripting
+namespace PowerRonin::Scripting
 {
 	auto StaticClass::get_handle() const noexcept -> MonoClass*
 	{

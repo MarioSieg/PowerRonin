@@ -20,39 +20,36 @@
 #include "../../include/power_ronin/core/kernel.hpp"
 #include "../../include/power_ronin/core/installer.hpp"
 
-using namespace power_ronin;
-using namespace core;
+using namespace PowerRonin;
+using namespace Core;
 
-auto default_power_ronin_entry(int _argc, const char** _argv, const char** _envp) -> int
+auto PowerRoninEntry(const int argc, const char** const  argv, const char** const envp) -> int
 {
 #if !IS_DEBUG
 	try
 	{
 #endif
-		ScopedVectoredExceptionHandler breakpoint_handler = {};
+		ScopedVectoredExceptionHandler breakpointHandler = {};
 
-		auto kernel = Kernel::create(_argc, _argv, _envp);
-		kernel->install_subsystems(&install_common);
-		kernel->startup();
-		kernel->execute();
-		kernel->shutdown();
+		auto kernel = Kernel::Create(argc, argv, envp);
+		kernel->InstallSubsystems(&InstallCommon);
+		kernel->Startup();
+		kernel->Execute();
+		kernel->Shutdown();
 		return 0;
 #if !IS_DEBUG
 	}
 	catch (const FatalEngineException& ex)
 	{
-		global_panic_routine(ex.what(), ex.source_line(), ex.source_file());
-		std::terminate();
+		GlobalPanicRoutine(ex.what(), ex.source_line(), ex.source_file());
 	}
 	catch (const std::runtime_error& ex)
 	{
-		global_panic_routine(ex.what());
-		std::terminate();
+		GlobalPanicRoutine(ex.what());
 	}
 	catch (...)
 	{
-		global_panic_routine("Unknown error!");
-		std::terminate();
+		GlobalPanicRoutine("Unknown error!");
 	}
 #endif
 }

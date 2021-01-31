@@ -17,40 +17,40 @@
 
 #include <cstdint>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	/// <summary>
 	/// Allocate a managed object.
 	/// </summary>
-	/// <param name="_domain">The mono domain.</param>
-	/// <param name="_class">The mono class.</param>
-	/// <param name="_ctor">The constructor method.</param>
-	/// <param name="_ctor_args">The constructor args.</param>
-	/// <param name="_is_pinned">If true object is pinned when using a moving GC.</param>
+	/// <param name="domain">The mono domain.</param>
+	/// <param name="klass">The mono class.</param>
+	/// <param name="ctor">The constructor method.</param>
+	/// <param name="ctorArgs">The constructor args.</param>
+	/// <param name="isPinned">If true object is pinned when using a moving GC.</param>
 	/// <returns>The GC handle.</returns>
 	[[nodiscard]]
-	extern auto mo_alloc(void* const _domain, void* const _class, void* const _ctor = nullptr, void** const _ctor_args = nullptr, const bool _is_pinned = false) -> std::uint32_t;
+	extern auto MoAlloc(void* const domain, void* const klass, void* const ctor = nullptr, void** const ctorArgs = nullptr, const bool isPinned = false) -> std::uint32_t;
 
 	/// <summary>
 	/// Deallocate a managed object.
 	/// </summary>
-	/// <param name="_gc_ref">The gc reference to remove.</param>
+	/// <param name="gcRef">The gc reference to remove.</param>
 	/// <returns></returns>
-	extern void mo_dealloc(std::uint32_t& _gc_ref) noexcept;
+	extern void MoDealloc(std::uint32_t& gcRef) noexcept;
 
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <param name="_gc_ref">The GC handle to unwrap.</param>
+	/// <param name="gcRef">The GC handle to unwrap.</param>
 	/// <returns>The mono object behind the gc handle.</returns>
 	[[nodiscard]]
-	extern auto mo_unwrap(const std::uint32_t _gc_ref) noexcept -> void*;
+	extern auto MoUnwrap(const std::uint32_t gcRef) noexcept -> void*;
 
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <param name="_gc_ref">The GC handle to unbox.</param>
+	/// <param name="gcRef">The GC handle to unbox.</param>
 	/// <returns>The real object behind the mono object and gc handle.</returns>
 	[[nodiscard]]
-	extern auto mo_unbox(const std::uint32_t _gc_ref) noexcept -> void*;
+	extern auto MoUnbox(const std::uint32_t gcRef) noexcept -> void*;
 }

@@ -15,4 +15,4 @@
 
 #include "helpers.hpp"
 
-namespace power_ronin::scripting {}
+namespace PowerRonin::Scripting {}

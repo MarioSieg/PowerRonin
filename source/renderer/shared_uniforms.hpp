@@ -17,7 +17,7 @@
 
 #include "uniform.hpp"
 
-namespace power_ronin::renderer
+namespace PowerRonin::Renderer
 {
 	/// <summary>
 	/// Contains per frame shared uniforms which can be used by all shaders.

@@ -18,7 +18,7 @@
 #include "../../include/power_ronin/except.hpp"
 #include <filesystem>
 
-namespace power_ronin::renderer
+namespace PowerRonin::Renderer
 {
 	auto load_shader_program(const std::string_view _name) -> bgfx::ProgramHandle
 	{
@@ -48,7 +48,7 @@ namespace power_ronin::renderer
 		}
 
 		Blob vs_bytecode;
-		blob_from_disk(file, vs_bytecode);
+		ReadBlobFromDisk(file, vs_bytecode);
 
 		const auto* const vs_mem = bgfx::alloc(static_cast<std::uint32_t>(vs_bytecode.size() * sizeof(std::byte)));
 		memcpy(vs_mem->data, vs_bytecode.data(), vs_bytecode.size() * sizeof(std::byte));
@@ -69,7 +69,7 @@ namespace power_ronin::renderer
 		if (is_regular_file(file.replace_filename("fragment.shc"))) [[likely]]
 		{
 			Blob fs_bytecode = {};
-			blob_from_disk(file, fs_bytecode);
+			ReadBlobFromDisk(file, fs_bytecode);
 
 			const auto* const fs_mem = bgfx::alloc(static_cast<std::uint32_t>(fs_bytecode.size() * sizeof(std::byte)));
 			memcpy(fs_mem->data, fs_bytecode.data(), fs_bytecode.size() * sizeof(std::byte));

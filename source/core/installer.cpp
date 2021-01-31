@@ -22,21 +22,20 @@
 #include "../scripting/scripting.hpp"
 #include "../audio/audio.hpp"
 
-namespace power_ronin::core
+namespace PowerRonin::Core
 {
-	auto install_minimal(Kernel& _kernel) -> bool
+	void InstallMinimal(Kernel& kernel)
 	{
-		return install_common(_kernel);
+		InstallCommon(kernel);
 	}
 
-	auto install_common(Kernel& _kernel) -> bool
+	void InstallCommon(Kernel& kernel)
 	{
-		_kernel.create_install_subsystem<scripting::Scripting>();
-		_kernel.create_install_subsystem<platform::Platform>();
-		_kernel.create_install_subsystem<renderer::Renderer>();
-		_kernel.create_install_subsystem<physics::Physics>();
-		_kernel.create_install_subsystem<audio::Audio>();
-		_kernel.create_install_subsystem<gui::Gui>();
-		return true;
+		kernel.CreateInstallSubsystem<Scripting::ScriptingSystem>();
+		kernel.CreateInstallSubsystem<Platform::PlatformSystem>();
+		kernel.CreateInstallSubsystem<Renderer::RenderSystem>();
+		kernel.CreateInstallSubsystem<Physics::PhysicsSystem>();
+		kernel.CreateInstallSubsystem<Audio::AudioSystem>();
+		kernel.CreateInstallSubsystem<Interface::GuiSystem>();
 	}
-} // namespace power_ronin::core // namespace power_ronin::core
+} // namespace PowerRonin::Core // namespace PowerRonin::Core

@@ -18,101 +18,85 @@
 #include "serial.hpp"
 #include "csinterop.hpp"
 
-#include <cstdint>
-
-namespace power_ronin
+namespace PowerRonin
 {
-	CS_HYBRID_INTEROP("Dreamcast.Core.GraphicsAPI")
-
-	enum class GraphicsBackend: std::uint8_t
+	enum class GraphicsBackend: CSharp::$byte CSHARP_HYBRID_INTEROP("Dreamcast.Core.GraphicsAPI")
 	{
-		DIRECT_3D11 = 0,
-		DIRECT_3D12 = 1,
-		METAL = 2,
-		OPEN_GL = 3,
-		VULKAN = 4
+		Direct3D11 = 0,
+		Direct3D12 = 1,
+		Metal = 2,
+		OpenGl = 3,
+		Vulkan = 4
 	};
 
-	CS_HYBRID_INTEROP("Dreamcast.Core.MsaaMode")
-
-	enum class MsaaMode: std::uint8_t
+	enum class MsaaMode: CSharp::$byte CSHARP_HYBRID_INTEROP("Dreamcast.Core.MsaaMode")
 	{
-		OFF = 1,
+		Off = 1,
 		X2 = 2,
 		X4 = 4,
 		X8 = 8,
 		X16 = 16
 	};
-
-	CS_HYBRID_INTEROP("Dreamcast.Core.DisplayConfig")
-
-	struct DisplayConfig final
+	
+	struct DisplayConfig final CSHARP_HYBRID_INTEROP("Dreamcast.Core.DisplayConfig")
 	{
-		CS_bool is_full_screen;
-		CS_bool is_maximized;
-		CS_Size2 resolution;
-		CS_bool vsync;
-		CS_ushort max_framerate;
+		CSharp::$bool IsFullScreen;
+		CSharp::$bool IsMaximized;
+		CSharp::$Size2 Resolution;
+		CSharp::$bool VSync;
+		CSharp::$ushort MaxFrameRate;
 	};
 
-	CS_HYBRID_INTEROP("Dreamcast.Core.EditorConfig")
-
-	struct EditorConfig final
+	struct EditorConfig final CSHARP_HYBRID_INTEROP("Dreamcast.Core.EditorConfig")
 	{
-		CS_byte custom_font_size;
-		CS_byte auto_font_size_fhd;
-		CS_byte auto_font_size_whqh;
-		CS_byte auto_font_size_uhd;
-		CS_bool enable_auto_font_size;
-		CS_bool enable_font_anti_aliasing;
-		CS_float alpha;
-		CS_float rounding;
-		CS_bool show_terminal;
-		CS_bool show_stats;
-		CS_bool show_matrix_stats;
-		CS_byte stats_text_color;
-		CS_bool show_big_stats;
-		CS_bool show_grid;
-		CS_float grid_size;
-		CS_Vector3 grid_origin_center;
-		CS_bool show_gizmos;
+		CSharp::$byte CustomFontSize;
+		CSharp::$byte AutoFontSizeFullHD;
+		CSharp::$byte AutoFontSizeWideQuadHD;
+		CSharp::$byte AutoFontSizeUltraHD;
+		CSharp::$bool EnableAutoFontSize;
+		CSharp::$bool EnableFontAntiAliasing;
+		CSharp::$float Alpha;
+		CSharp::$float Rounding;
+		CSharp::$bool ShowTerminal;
+		CSharp::$bool ShowStats;
+		CSharp::$bool ShowMatrixStats;
+		CSharp::$byte StatsTextColor;
+		CSharp::$bool ShowBigStats;
+		CSharp::$bool ShowGrid;
+		CSharp::$float GridSize;
+		CSharp::$Vector3 GridOriginCenter;
+		CSharp::$bool ShowGizmos;
 	};
 
-	CS_HYBRID_INTEROP("Dreamcast.Core.EditorConfig")
-
-	struct GraphicsConfig final
+	struct GraphicsConfig final CSHARP_HYBRID_INTEROP("Dreamcast.Core.EditorConfig")
 	{
-		GraphicsBackend graphics_api;
-		MsaaMode msaa_mode;
-		bool enable_high_dpi_mode;
-		bool enable_srgb_mode;
-		bool enable_hdr10;
-		bool enable_max_anisotropy;
+		GraphicsBackend GraphicsApi;
+		MsaaMode MsaaMode;
+		CSharp::$bool EnableHighDpiMode;
+		CSharp::$bool EnableSrgbMode;
+		CSharp::$bool EnableHdr10;
+		CSharp::$bool EnableMaxAnisotropy;
 	};
 
-	struct Scripting final
+	struct ScriptingConfig final
 	{
-		std::filesystem::path config_dir = "runtime/etc";
-		std::filesystem::path library_dir = "runtime/lib";
+		std::filesystem::path ConfigDir = "runtime/etc";
+		std::filesystem::path LibraryDir = "runtime/lib";
 	};
 
-	struct App final
+	struct AppConfig final
 	{
-		std::string app_name = {};
-		std::string app_company = {};
+		std::string AppName = {};
+		std::string AppCompany = {};
 	};
 
-	class Config final
+	class SystemConfig final
 	{
 	public:
-		DisplayConfig display;
-
-		EditorConfig editor;
-
-		GraphicsConfig graphics;
-
-		Scripting scripting;
-
-		App app;
+		DisplayConfig Display = {};
+		EditorConfig Editor = {};
+		GraphicsConfig Graphics = {};
+		ScriptingConfig Scripting = {};
+		AppConfig App = {};
 	};
-} // namespace power_ronin // namespace power_ronin
+} // namespace PowerRonin // namespace PowerRonin

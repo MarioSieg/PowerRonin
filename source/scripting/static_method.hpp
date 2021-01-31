@@ -19,7 +19,7 @@
 #include "static_class.hpp"
 #include "environment.hpp"
 
-namespace power_ronin::scripting
+namespace PowerRonin::Scripting
 {
 	class StaticMethod final
 	{

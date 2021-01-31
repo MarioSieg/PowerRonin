@@ -24,33 +24,33 @@
 
 using namespace ImGui;
 
-namespace power_ronin::gui::widgets
+namespace PowerRonin::Interface::widgets
 {
 	void ResourceViewer::update(bool& _show, ResourceManager& _rm)
 	{
 		SetNextWindowSize({800, 600}, ImGuiCond_FirstUseEver);
 		if (Begin(RESOURCE_VIEWER_NAME, &_show)) [[likely]]
 		{
-			Text("Textures: %u", static_cast<unsigned>(_rm.texture_cache().size()));
+			Text("Textures: %u", static_cast<unsigned>(_rm.TextureCache().size()));
 			SameLine();
-			Text("Meshes: %u", static_cast<unsigned>(_rm.mesh_cache().size()));
+			Text("Meshes: %u", static_cast<unsigned>(_rm.MeshCache().size()));
 			Separator();
 			Spacing();
 			if (CollapsingHeader(ICON_FA_IMAGES " Textures", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				_rm.texture_cache().each([&](const RRef<Texture>& _texture)
+				_rm.TextureCache().each([&](const RRef<Texture>& _texture)
 				{
 					TextUnformatted(ICON_FA_IMAGE);
 					SameLine();
-					TextUnformatted(_texture->file_path().filename().string().c_str());
+					TextUnformatted(_texture->FilePath().filename().string().c_str());
 					if (IsItemHovered())
 					{
 						BeginTooltip();
-						if (_texture->is_uploaded())
+						if (_texture->IsUploaded())
 						{
 							image(_texture, {128.f, 128.f}, {.0f, .0f}, {1.0f, 1.0f});
 						}
-						TextUnformatted(_texture->is_uploaded() ? "Uploaded: yes" : "Uploaded: no");
+						TextUnformatted(_texture->IsUploaded() ? "Uploaded: yes" : "Uploaded: no");
 						Text("Width: %u", _texture->width());
 						Text("Height: %u", _texture->height());
 						Text("Size: %zuB", _texture->storage_size());
@@ -64,20 +64,20 @@ namespace power_ronin::gui::widgets
 			}
 			if (CollapsingHeader(ICON_FA_CUBES " Meshes", ImGuiTreeNodeFlags_DefaultOpen)) [[likely]]
 			{
-				_rm.mesh_cache().each([](const RRef<Mesh>& _mesh)
+				_rm.MeshCache().each([](const RRef<Mesh>& _mesh)
 				{
 					TextUnformatted(ICON_FA_CUBE);
 					SameLine();
-					TextUnformatted(_mesh->file_path().filename().string().c_str());
+					TextUnformatted(_mesh->FilePath().filename().string().c_str());
 					if (IsItemHovered())
 					{
-						const auto size = _mesh->vertices().size() * sizeof(Vertex) + _mesh->indices().size() *
+						const auto size = _mesh->Vertices().size() * sizeof(Vertex) + _mesh->Indices().size() *
 							sizeof(
 								std::uint16_t);
 						BeginTooltip();
-						TextUnformatted(_mesh->is_uploaded() ? "Uploaded: yes" : "Uploaded: no");
-						Text("Vertices: %zu", _mesh->vertices().size());
-						Text("Indices: %zu", _mesh->indices().size());
+						TextUnformatted(_mesh->IsUploaded() ? "Uploaded: yes" : "Uploaded: no");
+						Text("Vertices: %zu", _mesh->Vertices().size());
+						Text("Indices: %zu", _mesh->Indices().size());
 						Text("Size: %zuB", size);
 						EndTooltip();
 					}
@@ -128,6 +128,6 @@ namespace power_ronin::gui::widgets
 		}
 		End();
 	}
-} // namespace power_ronin::gui::widgets // namespace power_ronin::gui::widgets
+} // namespace PowerRonin::gui::widgets // namespace PowerRonin::gui::widgets
 
 #endif

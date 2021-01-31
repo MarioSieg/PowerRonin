@@ -15,28 +15,19 @@
 
 #include "../include/power_ronin/camera.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
-	auto Camera::view_matrix() const noexcept -> const SMat4x4<>&
+	void Camera::Recalculate(const Transform& transform, const Vector2<>& viewportSize, Matrix4x4<>& outView, Matrix4x4<>& outProj) noexcept
 	{
-		return this->view_;
-	}
-
-	auto Camera::projection_matrix() const noexcept -> const SMat4x4<>&
-	{
-		return this->projection_;
-	}
-
-	void Camera::recalculate(const Transform& _transform, const RenderData& _data) noexcept
-	{
-		const SVec3<> up = {.0f, 1.f, .0f};
-		this->view_ = math::lookAtLH(_transform.position, _transform.position + _transform.forward(), up);
-		this->projection_ = math::perspectiveFovLH(
-			math::radians(this->fov_y),
-			static_cast<float>(_data.primary_viewport.z),
-			static_cast<float>(_data.primary_viewport.w),
-			this->near_clip_z,
-			this->far_clip_z
+		const Vector3<> up = {.0f, 1.f, .0f};
+		outView = Math::lookAtLH(transform.position, transform.position + transform.forward(), up);
+		outProj = Math::perspectiveFovLH
+		(
+			Math::radians(this->Fov),
+			static_cast<float>(viewportSize.x),
+			static_cast<float>(viewportSize.y),
+			this->NearClip,
+			this->FarClip
 		);
 	}
 }

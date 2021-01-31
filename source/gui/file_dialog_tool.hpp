@@ -17,7 +17,7 @@
 
 #pragma once
 
-namespace power_ronin::gui
+namespace PowerRonin::Interface
 {
 	extern void open_file_dialog(char*& _out, const char* _filter = nullptr, const char* _default_path = nullptr);
 

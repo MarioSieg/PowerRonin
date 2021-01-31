@@ -15,30 +15,30 @@
 
 #include "../include/power_ronin/mesh.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
-	auto Mesh::indices() const noexcept -> const std::vector<std::uint16_t>&
+	auto Mesh::Indices() const noexcept -> const std::vector<std::uint16_t>&
 	{
-		return this->indices_;
+		return this->indices;
 	}
 
-	auto Mesh::index_buffer_id() const noexcept -> std::uint16_t
+	auto Mesh::IndexBufferId() const noexcept -> std::uint16_t
 	{
-		return this->volatile_upload_data_.index_buffer_id;
+		return this->volatileUploadData.IndexBufferId;
 	}
 
-	auto Mesh::vertices() const noexcept -> const std::vector<Vertex>&
+	auto Mesh::Vertices() const noexcept -> const std::vector<Vertex>&
 	{
-		return this->vertices_;
+		return this->vertices;
 	}
 
-	auto Mesh::vertex_buffer_id() const noexcept -> std::uint16_t
+	auto Mesh::VertexBufferId() const noexcept -> std::uint16_t
 	{
-		return this->volatile_upload_data_.vertex_buffer_id;
+		return this->volatileUploadData.VertexBufferId;
 	}
 
-	auto Mesh::aabb() const noexcept -> const AABB&
+	auto Mesh::Aabb() const noexcept -> const struct Aabb&
 	{
-		return this->aabb_;
+		return this->aabb;
 	}
-} // namespace power_ronin // namespace power_ronin
+} // namespace PowerRonin // namespace PowerRonin

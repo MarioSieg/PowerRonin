@@ -15,4 +15,4 @@
 
 #pragma once
 
-namespace power_ronin::scripting {}
+namespace PowerRonin::Scripting {}

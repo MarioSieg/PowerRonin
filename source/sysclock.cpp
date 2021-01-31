@@ -23,7 +23,7 @@
 #include <sys/time.h>
 #endif
 
-namespace power_ronin
+namespace PowerRonin
 {
 	auto get_high_precision_counter() noexcept -> std::uint64_t
 	{

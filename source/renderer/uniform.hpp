@@ -19,7 +19,7 @@
 #include "gl_headers.hpp"
 #include <string_view>
 
-namespace power_ronin::renderer
+namespace PowerRonin::Renderer
 {
 	/// <summary>
 	/// Represents a uniform.
@@ -86,28 +86,28 @@ namespace power_ronin::renderer
 		/// </summary>
 		/// <param name="_value"></param>
 		/// <returns></returns>
-		void set(const SVec3<>& _value) const noexcept;
+		void set(const Vector3<>& _value) const noexcept;
 
 		/// <summary>
 		/// Set uniform.
 		/// </summary>
 		/// <param name="_value"></param>
 		/// <returns></returns>
-		void set(const SVec4<>& _value) const noexcept;
+		void set(const Vector4<>& _value) const noexcept;
 
 		/// <summary>
 		/// Set uniform.
 		/// </summary>
 		/// <param name="_value"></param>
 		/// <returns></returns>
-		void set(const SMat3x3<>& _value) const noexcept;
+		void set(const Matrix3x3<>& _value) const noexcept;
 
 		/// <summary>
 		/// Set uniform.
 		/// </summary>
 		/// <param name="_value"></param>
 		/// <returns></returns>
-		void set(const SMat4x4<>& _value) const noexcept;
+		void set(const Matrix4x4<>& _value) const noexcept;
 
 		/// <summary>
 		/// Set uniform.

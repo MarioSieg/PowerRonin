@@ -17,21 +17,21 @@
 
 #include "mathlib.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	class Transform final
 	{
 	public:
-		SVec3<> position = {.0f, .0f, .0f};
-		SQua<> rotation = {.0f, .0f, .0f, .0f};
-		SVec3<> scale = {1.f, 1.f, 1.f};
+		Vector3<> position = {.0f, .0f, .0f};
+		Quaternion<> rotation = {.0f, .0f, .0f, .0f};
+		Vector3<> scale = {1.f, 1.f, 1.f};
 
-		[[nodiscard]] auto matrix() const noexcept -> SMat4x4<>;
-		[[nodiscard]] auto forward() const noexcept -> SVec3<>;
-		[[nodiscard]] auto back() const noexcept -> SVec3<>;
-		[[nodiscard]] auto up() const noexcept -> SVec3<>;
-		[[nodiscard]] auto down() const noexcept -> SVec3<>;
-		[[nodiscard]] auto left() const noexcept -> SVec3<>;
-		[[nodiscard]] auto right() const noexcept -> SVec3<>;
+		[[nodiscard]] auto matrix() const noexcept -> Matrix4x4<>;
+		[[nodiscard]] auto forward() const noexcept -> Vector3<>;
+		[[nodiscard]] auto back() const noexcept -> Vector3<>;
+		[[nodiscard]] auto up() const noexcept -> Vector3<>;
+		[[nodiscard]] auto down() const noexcept -> Vector3<>;
+		[[nodiscard]] auto left() const noexcept -> Vector3<>;
+		[[nodiscard]] auto right() const noexcept -> Vector3<>;
 	};
 }

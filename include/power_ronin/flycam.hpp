@@ -17,7 +17,7 @@
 
 #include "mathlib.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	class Input;
 
@@ -27,42 +27,42 @@ namespace power_ronin
 	class EditorCamera final
 	{
 	public:
-		float move_speed = 8.F;
-		float sensitivity = 0.5F;
-		float fov = 80.F;
-		float near_clip = 0.01F;
-		float far_clip = 1000.F;
-		float smoothness = 1.F;
-		float clamp_y = 80.F;
+		float MoveSpeed = 8.F;
+		float Sensitivity = 0.5F;
+		float Fov = 80.F;
+		float NearClip = 0.01F;
+		float FarClip = 1000.F;
+		float Smoothness = 1.F;
+		float ClampY = 80.F;
 
-		[[nodiscard]] auto projection_matrix() const noexcept -> const SMat4x4<>&;
+		[[nodiscard]] auto ProjectionMatrix() const noexcept -> const Matrix4x4<>&;
 
-		[[nodiscard]] auto view_matrix() const noexcept -> const SMat4x4<>&;
+		[[nodiscard]] auto ViewMatrix() const noexcept -> const Matrix4x4<>&;
 
-		[[nodiscard]] auto position() const noexcept -> const SVec3<>&;
+		[[nodiscard]] auto Position() const noexcept -> const Vector3<>&;
 
-		void position(const SVec3<>& _position) noexcept;
+		void Position(const Vector3<>& position) noexcept;
 
-		[[nodiscard]] auto look_at() const noexcept -> const SVec3<>&;
+		[[nodiscard]] auto LookAt() const noexcept -> const Vector3<>&;
 
-		void look_at(const SVec3<>&) noexcept;
+		void LookAt(const Vector3<>&) noexcept;
 
-		[[nodiscard]] auto look_at_dir() const noexcept -> const SVec3<>&;
+		[[nodiscard]] auto LookAtDir() const noexcept -> const Vector3<>&;
 
-		void look_at_dir(const SVec3<>& _dir) noexcept;
+		void LookAtDir(const Vector3<>& dir) noexcept;
 
-		void update(const Input& _input, const float _viewport_x, const float _viewport_y, const float _delta_time);
+		void Update(const Input& input, const float viewportX, const float viewportY, const float deltaTime);
 
 	private:
-		SMat4x4<> view_ = {};
-		SMat4x4<> proj_ = {};
-		SVec3<> eye_ = {};
-		SVec3<> at_ = {};
-		SVec3<> forward_ = {};
-		SVec3<> left_ = {};
-		SVec3<> dir_ = {.0f, .0f, 1.f};
-		SVec2<> mouse_prev_ = {};
-		SVec2<> mouse_angles_ = {};
-		SVec2<> smooth_mouse_angles_ = {};
+		Matrix4x4<> view = {};
+		Matrix4x4<> proj = {};
+		Vector3<> eye = {};
+		Vector3<> at = {};
+		Vector3<> forward = {};
+		Vector3<> left = {};
+		Vector3<> dir = {.0f, .0f, 1.f};
+		Vector2<> mousePrev = {};
+		Vector2<> mouseAngles = {};
+		Vector2<> smoothMouseAngles = {};
 	};
 }

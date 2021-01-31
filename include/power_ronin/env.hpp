@@ -27,9 +27,9 @@
 /* Contains all supported operating systems. */
 enum class System
 {
-	LINUX,
-	WINDOWS,
-	MAC
+	Linux,
+	Windows,
+	Mac
 };
 
 #define OS_LINUX false
@@ -46,7 +46,7 @@ enum class Compiler
 	MSVC,
 
 	/* LLVM Clang */
-	CLANG
+	Clang
 };
 
 /* True if current compiler is GNU compiler collection, else false. */
@@ -59,39 +59,39 @@ enum class Compiler
 #define COM_CLANG false
 
 /* Returns the current operating system. For checks use the "SYSTEM" variable! */
-[[nodiscard]] constexpr auto determine_system() -> System
+[[nodiscard]] constexpr auto DetermineSystem() -> enum System
 {
 #if defined(__linux__) && !defined(__ANDROID__)
 #undef OS_LINUX
 #define OS_LINUX true
-	return System::LINUX;
+	return System::Linux;
 #elif defined(_WIN64)
 #undef OS_WINDOWS
 #define OS_WINDOWS true
-	return System::WINDOWS;
+	return System::Windows;
 #elif defined(__APPLE__)
 #undef OS_MAC
 #define OS_MAC true
-	return System::MAC;
+	return System::Mac;
 #else
 #error "env.hpp: Unknown operating system!"
 #endif
 }
 
 /* Returns the short name of the current operating system. If you need the name, use the "SYSTEM_NAME" variable! */
-[[nodiscard]] constexpr auto determine_system_name() -> std::string_view
+[[nodiscard]] constexpr auto DetermineSystemName() -> std::string_view
 {
-	switch (determine_system())
+	switch (DetermineSystem())
 	{
-		case System::LINUX: return "Linux";
-		case System::WINDOWS: return "Windows";
-		case System::MAC: return "Mac";
+		case System::Linux: return "Linux";
+		case System::Windows: return "Windows";
+		case System::Mac: return "Mac";
 		default: return "Unknown";
 	}
 }
 
 /* Returns the current compiler. For checks use the "COMPILER" variable! */
-[[nodiscard]] constexpr auto determine_compiler() -> Compiler
+[[nodiscard]] constexpr auto DetermineCompiler() -> enum Compiler
 {
 #ifdef __GNUC__
 #undef COM_GCC
@@ -104,47 +104,47 @@ enum class Compiler
 #elif defined(__clang__)
 #undef COM_CLANG
 #define COM_CLANG true
-	return Compiler::CLANG;
+	return Compiler::Clang;
 #else
 #error "env.hpp: Unknown compiler!"
 #endif
 }
 
 /* Returns the short name of the current compiler. If you need the name, use the "COMPILER_NAME" variable! */
-[[nodiscard]] constexpr auto determine_compiler_name() -> std::string_view
+[[nodiscard]] constexpr auto DetermineCompilerName() -> std::string_view
 {
-	switch (determine_compiler())
+	switch (DetermineCompiler())
 	{
 		case Compiler::GCC: return "GCC";
 		case Compiler::MSVC: return "MSVC";
-		case Compiler::CLANG: return "Clang";
+		case Compiler::Clang: return "Clang";
 	}
 }
 
 /* Is set to the current operating system. */
-constexpr auto SYSTEM = determine_system();
+constexpr auto System = DetermineSystem();
 
 /* Is set to the current short operating system name. */
-constexpr auto SYSTEM_NAME = determine_system_name();
+constexpr auto SystemName = DetermineSystemName();
 
 /* Is set to the current compiler. */
-constexpr auto COMPILER = determine_compiler();
+constexpr auto Compiler = DetermineCompiler();
 
 /* Is set to the current compiler name. */
-constexpr auto COMPILER_NAME = determine_compiler_name();
+constexpr auto CompilerName = DetermineCompilerName();
 
 /* Is set to true if debug mode is enabled. */
-constexpr auto DEBUG_MODE = IS_DEBUG;
+constexpr auto DebugMode = IS_DEBUG;
 
 /* Char used to XOR-encrypt memory address prints. */
-constexpr auto MEMORY_KEY = '&';
+constexpr auto MemoryKey = '&';
 
-#define CPU_ARM   false
-#define CPU_JIT   false
-#define CPU_MIPS  false
-#define CPU_PPC   false
-#define CPU_RISCV false
-#define CPU_X86_64   false
+#define CPU_ARM			false
+#define CPU_JIT			false
+#define CPU_MIPS		false
+#define CPU_PPC			false
+#define CPU_RISCV		false
+#define CPU_X86_64		false
 
 #if defined(__arm__)     \
  || defined(__aarch64__) \

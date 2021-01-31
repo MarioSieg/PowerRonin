@@ -66,59 +66,59 @@
 #include "../../extern/glm/glm/gtx/matrix_decompose.hpp"
 #include <cstdint>
 
-namespace power_ronin
+namespace PowerRonin
 {
-	namespace math
+	namespace Math
 	{
 		using namespace glm;
 	}
 
 	// @formatter:off
 
-	constexpr auto ALIGNED_PRECISION = math::aligned_highp;
-	constexpr auto FIXED_PRECISION = math::mediump;
+	constexpr auto AlignedPrecision = Math::aligned_highp;
+	constexpr auto FixedPrecision = Math::mediump;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using SVec2 = math::vec<2, T, ALIGNED_PRECISION>;
+	using Vector2 = Math::vec<2, T, AlignedPrecision>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using SVec3 = math::vec<3, T, ALIGNED_PRECISION>;
+	using Vector3 = Math::vec<3, T, AlignedPrecision>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using SVec4 = math::vec<4, T, ALIGNED_PRECISION>;
+	using Vector4 = Math::vec<4, T, AlignedPrecision>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using SQua = math::qua<T, ALIGNED_PRECISION>;
+	using Quaternion = Math::qua<T, AlignedPrecision>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using SMat3x3 = math::mat<3, 3, T, ALIGNED_PRECISION>;
+	using Matrix3x3 = Math::mat<3, 3, T, AlignedPrecision>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using SMat4x4 = math::mat<4, 4, T, ALIGNED_PRECISION>;
+	using Matrix4x4 = Math::mat<4, 4, T, AlignedPrecision>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using FVec2 = math::vec<2, T, FIXED_PRECISION>;
+	using Vector2Fixed = Math::vec<2, T, FixedPrecision>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using FVec3 = math::vec<3, T, FIXED_PRECISION>;
+	using Vector3Fixed = Math::vec<3, T, FixedPrecision>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using FVec4 = math::vec<4, T, FIXED_PRECISION>;
+	using Vector4Fixed = Math::vec<4, T, FixedPrecision>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using FQua = math::qua<T, FIXED_PRECISION>;
+	using QuaternionFixed = Math::qua<T, FixedPrecision>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using FMat3x3 = math::mat<3, 3, T, FIXED_PRECISION>;
+	using Matrix3x3Fixed = Math::mat<3, 3, T, FixedPrecision>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using FMat4x4 = math::mat<4, 4, T, FIXED_PRECISION>;
+	using Matrix4x4Fixed = Math::mat<4, 4, T, FixedPrecision>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using Color = SVec4<T>;
+	using Color = Vector4<T>;
 
 	template <typename T = float> requires std::is_floating_point_v<T> || std::is_integral_v<T>
-	using Viewport = SVec4<T>;
+	using Viewport = Vector4<T>;
 
 	// @formatter:on
-} // namespace power_ronin
+} // namespace PowerRonin

@@ -22,7 +22,7 @@
 
 using namespace ImGui;
 
-namespace power_ronin::gui::widgets
+namespace PowerRonin::Interface::widgets
 {
 	void SceneryViewer::update(bool& _show, RenderData& _data) const
 	{
@@ -31,10 +31,10 @@ namespace power_ronin::gui::widgets
 			const auto window_size = GetWindowSize();
 			const auto window_pos = GetWindowPos();
 			constexpr auto title_offset = 25;
-			_data.primary_viewport.x = window_pos.x;
-			_data.primary_viewport.y = window_pos.y + title_offset;
-			_data.primary_viewport.z = window_size.x;
-			_data.primary_viewport.w = window_size.y - title_offset;
+			_data.PrimaryViewport.x = window_pos.x;
+			_data.PrimaryViewport.y = window_pos.y + title_offset;
+			_data.PrimaryViewport.z = window_size.x;
+			_data.PrimaryViewport.w = window_size.y - title_offset;
 		}
 		End();
 	}

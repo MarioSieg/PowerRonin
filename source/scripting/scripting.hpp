@@ -22,30 +22,30 @@
 #include "static_class.hpp"
 #include "static_method.hpp"
 
-namespace power_ronin::scripting
+namespace PowerRonin::Scripting
 {
-	class Scripting final : public core::ISubsystem
+	class ScriptingSystem final : public Core::ISubsystem
 	{
 	public:
 		/* Constructors, assignment operators, destructor */
-		Scripting();
-		Scripting(const Scripting&) = delete;
-		Scripting(Scripting&&) = delete;
-		auto operator=(const Scripting&) -> Scripting& = delete;
-		auto operator=(Scripting&&) -> Scripting& = delete;
-		~Scripting() override = default;
+		ScriptingSystem();
+		ScriptingSystem(const ScriptingSystem&) = delete;
+		ScriptingSystem(ScriptingSystem&&) = delete;
+		auto operator=(const ScriptingSystem&) -> ScriptingSystem& = delete;
+		auto operator=(ScriptingSystem&&) -> ScriptingSystem& = delete;
+		~ScriptingSystem() override = default;
 
 	private:
 		/* Required kernel events */
-		static constexpr auto EVENTS = core::ServiceEvents::ALL;
+		static constexpr auto EVENTS = Core::ServiceEvents::All;
 
 		/* Kernel events */
-		auto on_pre_startup([[maybe_unused]] Runtime& _rt) -> bool override;
-		auto on_post_startup([[maybe_unused]] Runtime& _rt) -> bool override;
-		auto on_pre_tick([[maybe_unused]] Runtime& _rt) -> bool override;
-		auto on_post_tick([[maybe_unused]] Runtime& _rt) -> bool override;
-		auto on_pre_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
-		auto on_post_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
+		void OnPreStartup(Runtime&) override;
+		void OnPostStartup(Runtime&) override;
+		void OnPreTick(Runtime&) override;
+		void OnPostTick(Runtime&) override;
+		void OnPreShutdown(Runtime&) override;
+		void OnPostShutdown(Runtime&) override;
 
 		void setup_hooks();
 

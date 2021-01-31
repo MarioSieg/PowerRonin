@@ -17,9 +17,9 @@
 
 #include <string_view>
 
-namespace power_ronin::scripting
+namespace PowerRonin::Scripting
 {
-	constexpr std::string_view ASSEMBLY_NAME_ID = "power_ronin";
+	constexpr std::string_view ASSEMBLY_NAME_ID = "PowerRonin";
 	constexpr std::string_view ASSEMBLY_NAMESPACE_ID = "PowerRonin.Core";
 
 	constexpr std::string_view CORE_CLASS_ID = "Core";

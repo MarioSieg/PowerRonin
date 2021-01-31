@@ -23,7 +23,7 @@
 
 using namespace ImGui;
 
-namespace power_ronin::gui
+namespace PowerRonin::Interface
 {
 	void Editor::initialize([[maybe_unused]] Runtime& _rt)
 	{
@@ -49,17 +49,17 @@ namespace power_ronin::gui
 
 		if (this->show_hierarchy_viewer_) [[likely]]
 		{
-			this->hierarchy_.update(this->show_hierarchy_viewer_, _rt.scenery().registry());
+			this->hierarchy_.update(this->show_hierarchy_viewer_, _rt.Scenery().registry());
 		}
 
 		if (this->show_resource_viewer_) [[unlikely]]
 		{
-			this->resource_viewer_.update(this->show_resource_viewer_, _rt.resource_manager());
+			this->resource_viewer_.update(this->show_resource_viewer_, _rt.ResourceManager());
 		}
 
 		if (this->show_profiler_) [[unlikely]]
 		{
-			this->profiler_.update(this->show_profiler_, _rt.diagnostics(), _rt.chrono());
+			this->profiler_.update(this->show_profiler_, _rt.Diagnostics(), _rt.Chrono());
 		}
 
 		if (this->show_inspector_) [[likely]]
@@ -74,23 +74,23 @@ namespace power_ronin::gui
 
 		if (this->show_config_editor_) [[unlikely]]
 		{
-			this->config_editor_.update(this->show_config_editor_, _rt.config(), _rt.scenery().config);
+			this->config_editor_.update(this->show_config_editor_, _rt.Config(), _rt.Scenery().config);
 		}
 
 		if (this->show_scenery_viewer_) [[likely]]
 		{
-			this->scenery_viewer_.update(this->show_scenery_viewer_, _rt.render_data());
+			this->scenery_viewer_.update(this->show_scenery_viewer_, _rt.RenderData());
 		}
 
-		if(!_rt.is_playing()) [[likely]]
+		if(!_rt.IsPlaying()) [[likely]]
 		{
 			const auto selected_entity = this->hierarchy_.selected;
-			auto& registry = _rt.scenery().registry();
+			auto& registry = _rt.Scenery().registry();
 
 			this->render_manipulator_gizmos(registry.valid(selected_entity) 
 				&& registry.has<Transform>(selected_entity) 
 				? &registry.get<Transform>(selected_entity) : nullptr, 
-				_rt.render_data(),_rt.config());
+				_rt.RenderData(),_rt.Config());
 		}
 	}
 
@@ -108,25 +108,25 @@ namespace power_ronin::gui
 			}
 			if (BeginMenu("Entity")) [[unlikely]]
 			{
-				auto& reg = _rt.scenery().registry();
+				auto& reg = _rt.Scenery().registry();
 				if (MenuItem("Create New"))
 				{
 					const auto new_entity = reg.create();
-					reg.emplace<MetaData>(new_entity).name = "New Entity " + std::to_string(++this->hierarchy_.entity_counter);
+					reg.emplace<MetaData>(new_entity).Name = "New Entity " + std::to_string(++this->hierarchy_.entity_counter);
 					reg.emplace<Transform>(new_entity);
 					this->hierarchy_.selected = new_entity;
 				}
 				if (MenuItem("Create Container"))
 				{
 					const auto new_entity = reg.create();
-					reg.emplace<MetaData>(new_entity).name = "New Entity " + std::to_string(++this->hierarchy_.entity_counter);
+					reg.emplace<MetaData>(new_entity).Name = "New Entity " + std::to_string(++this->hierarchy_.entity_counter);
 				}
 				if (MenuItem("Delete Selected"))
 				{
 					reg.destroy(this->hierarchy_.selected);
-					if (reg.valid(static_cast<ERef>(static_cast<std::uint64_t>(this->hierarchy_.selected) + 1)))
+					if (reg.valid(static_cast<EntityRef>(static_cast<std::uint64_t>(this->hierarchy_.selected) + 1)))
 					{
-						this->hierarchy_.selected = static_cast<ERef>(static_cast<std::uint64_t>(this->hierarchy_.selected) + 1);
+						this->hierarchy_.selected = static_cast<EntityRef>(static_cast<std::uint64_t>(this->hierarchy_.selected) + 1);
 					}
 				}
 				if (MenuItem("Delete All"))
@@ -251,7 +251,7 @@ namespace power_ronin::gui
 
 			if (Button(ICON_FA_TH)) [[unlikely]]
 			{
-				_rt.render_data().enable_wireframe = !_rt.render_data().enable_wireframe;
+				_rt.RenderData().EnableWireframe = !_rt.RenderData().EnableWireframe;
 			}
 
 			if (Button(ICON_FA_MAP_MARKER_SMILE)) [[unlikely]]
@@ -268,9 +268,10 @@ namespace power_ronin::gui
 
 			Separator();
 
-			if (Button(_rt.is_playing() ? ICON_FA_STOP : ICON_FA_PLAY)) [[unlikely]]
+			if (Button(_rt.IsPlaying() ? ICON_FA_STOP : ICON_FA_PLAY) || _rt.IsPlaying() && IsKeyDown(GetKeyIndex(ImGuiKey_Escape))) [[unlikely]]
 			{
-				const_cast<bool&>(_rt.is_playing()) = !_rt.is_playing();
+				const_cast<bool&>(_rt.IsPlaying()) = !_rt.IsPlaying();
+				GetStyle().Alpha = _rt.IsPlaying() ? .1F : 1.F;
 			}
 			if (Button(ICON_FA_PAUSE)) [[unlikely]]
 			{ }
@@ -307,24 +308,24 @@ namespace power_ronin::gui
 		}
 	}
 
-	void Editor::render_manipulator_gizmos(Transform* const _transform, RenderData& _data, const Config& _config) const noexcept
+	void Editor::render_manipulator_gizmos(Transform* const _transform, RenderData& _data, const SystemConfig& _config) const noexcept
 	{
-		if (!_config.editor.show_gizmos) [[unlikely]]
+		if (!_config.Editor.ShowGizmos) [[unlikely]]
 		{
 			return;
 		}
 		ImGuizmo::Enable(true);
 		ImGuizmo::BeginFrame();
-		const float x = _data.primary_viewport.x;
-		const float y = _data.primary_viewport.y;
-		const float w = _data.primary_viewport.z;
-		const float h = _data.primary_viewport.w;
+		const float x = _data.PrimaryViewport.x;
+		const float y = _data.PrimaryViewport.y;
+		const float w = _data.PrimaryViewport.z;
+		const float h = _data.PrimaryViewport.w;
 		ImGuizmo::SetRect(x, y, w, h);
-		if (_config.editor.show_grid) [[likely]]
+		if (_config.Editor.ShowGrid) [[likely]]
 		{
-			auto grid_pos_matrix = math::identity<SMat4x4<>>();
-			grid_pos_matrix = math::translate(grid_pos_matrix, static_cast<SVec3<>>(_config.editor.grid_origin_center));
-			ImGuizmo::DrawGrid(value_ptr(_data.view_matrix), value_ptr(_data.projection_matrix), value_ptr(grid_pos_matrix), _config.editor.grid_size);
+			auto grid_pos_matrix = Math::identity<Matrix4x4<>>();
+			grid_pos_matrix = Math::translate(grid_pos_matrix, static_cast<Vector3<>>(_config.Editor.GridOriginCenter));
+			ImGuizmo::DrawGrid(value_ptr(_data.ViewMatrix), value_ptr(_data.ProjectionMatrix), value_ptr(grid_pos_matrix), _config.Editor.GridSize);
 		}
 
 		if (!_transform) [[unlikely]]
@@ -333,14 +334,14 @@ namespace power_ronin::gui
 		}
 
 		float tmp_matrix[16];
-		auto eulers = math::eulerAngles(_transform->rotation);
+		auto eulers = Math::eulerAngles(_transform->rotation);
 		float mat_rotation[3] = {
-			math::degrees(eulers.x),
-			math::degrees(eulers.y),
-			math::degrees(eulers.z),
+			Math::degrees(eulers.x),
+			Math::degrees(eulers.y),
+			Math::degrees(eulers.z),
 		};
 		ImGuizmo::RecomposeMatrixFromComponents(value_ptr(_transform->position), mat_rotation, value_ptr(_transform->scale), tmp_matrix);
-		Manipulate(value_ptr(_data.view_matrix), value_ptr(_data.projection_matrix), this->gizmo_op_, this->gizmo_mode_, tmp_matrix);
+		Manipulate(value_ptr(_data.ViewMatrix), value_ptr(_data.ProjectionMatrix), this->gizmo_op_, this->gizmo_mode_, tmp_matrix);
 		if (ImGuizmo::IsUsing()) [[unlikely]]
 		{
 			float mat_translation[3], mat_scale[3];
@@ -354,8 +355,8 @@ namespace power_ronin::gui
 					break;
 
 				case ImGuizmo::OPERATION::ROTATE:
-					eulers = SVec3<>{math::radians(mat_rotation[0]), math::radians(mat_rotation[1]), math::radians(mat_rotation[2])};
-					_transform->rotation = SQua<>(eulers);
+					eulers = Vector3<>{Math::radians(mat_rotation[0]), Math::radians(mat_rotation[1]), Math::radians(mat_rotation[2])};
+					_transform->rotation = Quaternion<>(eulers);
 					break;
 
 				case ImGuizmo::OPERATION::SCALE:

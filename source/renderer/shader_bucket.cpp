@@ -15,7 +15,7 @@
 
 #include "shader_bucket.hpp"
 
-namespace power_ronin::renderer
+namespace PowerRonin::Renderer
 {
 	ShaderBucket::ShaderBucket(GPU& _gpu) noexcept : unlit_textured(_gpu), diffuse(_gpu), bumped_diffuse(_gpu), skybox(_gpu),
 	                                                 gpu_(_gpu) { }

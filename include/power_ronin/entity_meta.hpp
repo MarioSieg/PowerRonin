@@ -18,16 +18,16 @@
 #include <string>
 #include <cstdint>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	/* Base metadata component for entities. */
 	class MetaData final
 	{
 	public:
-		std::string name = {};
-		std::string description = {};
-		void* user_data = nullptr;
-		std::uint16_t tag = 0;
-		std::uint16_t layer = 0;
+		std::string Name = {};
+		std::string Description = {};
+		void* UserData = nullptr;
+		std::uint16_t Tag = 0;
+		std::uint16_t Layer = 0;
 	};
 }

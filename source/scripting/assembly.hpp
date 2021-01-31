@@ -20,7 +20,7 @@
 
 #include <string_view>
 
-namespace power_ronin::scripting
+namespace PowerRonin::Scripting
 {
 	/// <summary>
 	/// Represents a managed mono assembly.

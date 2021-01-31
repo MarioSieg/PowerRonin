@@ -19,7 +19,7 @@
 #include "texture.hpp"
 #include <variant>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	class ResourceManager;
 
@@ -40,63 +40,63 @@ namespace power_ronin
 	public:
 		struct UnlitTextured final
 		{
-			RRef<Texture> albedo = {};
-			SVec4<> tiling_offset = {1.f, 1.f, .0f, .0f};
+			RRef<Texture> Albedo = {};
+			Vector4<> TilingOffset = {1.f, 1.f, .0f, .0f};
 		};
 
 		struct Diffuse final
 		{
-			RRef<Texture> albedo = {};
-			SVec4<> tiling_offset = {1.f, 1.f, .0f, .0f};
+			RRef<Texture> Albedo = {};
+			Vector4<> TilingOffset = {1.f, 1.f, .0f, .0f};
 		};
 
 		struct BumpedDiffuse final
 		{
-			RRef<Texture> albedo = {};
-			RRef<Texture> normal = {};
-			SVec4<> tiling_offset = {1.f, 1.f, .0f, .0f};
+			RRef<Texture> Albedo = {};
+			RRef<Texture> Normal = {};
+			Vector4<> TilingOffset = {1.f, 1.f, .0f, .0f};
 		};
 
 		struct StaticSkybox final
 		{
-			RRef<Texture> cubemap = {};
+			RRef<Texture> Cubemap = {};
 		};
 
 		/// <summary>
 		/// Properties are saved inside a type safe union (variant) to safe memory.
 		/// </summary>
-		using Properties = std::variant<UnlitTextured, Diffuse, BumpedDiffuse, StaticSkybox>;
+		using MaterialProperties = std::variant<UnlitTextured, Diffuse, BumpedDiffuse, StaticSkybox>;
 
 		/// <summary>
 		/// All associated file types.
 		/// </summary>
-		static constexpr std::array<std::string_view, 2> FILE_EXTENSION = {".mat", ".bmt"};
+		static constexpr std::array<std::string_view, 2> FileExtension = {".mat", ".bmt"};
 
 		/// <summary>
 		/// Creates a material from preloaded memory data.
 		/// </summary>
-		/// <param name="_props"></param>
-		/// <param name="_name_path_alias"></param>
-		/// <param name="_rm"></param>
+		/// <param name="props"></param>
+		/// <param name="namePathAlias"></param>
+		/// <param name="resourceManager"></param>
 		/// <returns></returns>
-		[[nodiscard]] static auto create_from_data(Properties&& _props
-		                                           , std::filesystem::path&& _name_path_alias
-		                                           , ResourceManager& _rm) -> IRef<Material>;
+		[[nodiscard]] static auto CreateFromData(MaterialProperties&& props
+		                                           , std::filesystem::path&& namePathAlias
+		                                           , ResourceManager& resourceManager) -> ResourceRef<Material>;
 
 		/// <summary>
 		/// NO-OP
 		/// </summary>
-		void upload() override;
+		void Upload() override;
 
 		/// <summary>
 		/// NO-OP
 		/// </summary>
-		void offload() override;
+		void Offload() override;
 
 		/// <summary>
 		/// Material properties.
 		/// </summary>
-		Properties properties = {UnlitTextured{}};
+		MaterialProperties Properties = {UnlitTextured{}};
 	};
 
 	/// <summary>
@@ -106,7 +106,6 @@ namespace power_ronin
 	class MaterialImporteur final : public ResourceImporteur<MaterialImporteur, Material>
 	{
 	public:
-		auto load(std::filesystem::path&& _path,
-		          const MaterialMeta* const _meta = nullptr) const -> std::shared_ptr<Material>;
+		auto load(std::filesystem::path&& path, const MaterialMeta* const meta = nullptr) const -> std::shared_ptr<Material>;
 	};
 }

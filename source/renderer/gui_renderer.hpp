@@ -18,7 +18,7 @@
 #include "gl_headers.hpp"
 #include <cstdint>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	class RenderData;
 }
@@ -26,7 +26,7 @@ namespace power_ronin
 struct ImDrawData;
 struct ImFont;
 
-namespace power_ronin::renderer
+namespace PowerRonin::Renderer
 {
 	class GuiRenderer final
 	{
@@ -44,4 +44,4 @@ namespace power_ronin::renderer
 		bgfx::TextureHandle texture_ = {bgfx::kInvalidHandle};
 		bgfx::UniformHandle image_lod_enabled_ = {bgfx::kInvalidHandle};
 	};
-} // namespace power_ronin::renderer // namespace power_ronin::renderer
+} // namespace PowerRonin::renderer // namespace PowerRonin::renderer

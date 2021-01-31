@@ -20,12 +20,12 @@
 #include "../../../include/power_ronin/config.hpp"
 #include "../../../include/power_ronin/scenery.hpp"
 
-namespace power_ronin::gui::widgets
+namespace PowerRonin::Interface::widgets
 {
 	class ConfigEditor final
 	{
 	public:
-		void update(bool& _show, Config& _cfg, Scenery::Configuration& _scenery_config) const;
+		void update(bool& _show, SystemConfig& _cfg, Scenery::Configuration& _scenery_config) const;
 	};
 }
 

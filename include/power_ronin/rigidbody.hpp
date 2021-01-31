@@ -15,13 +15,13 @@
 
 #pragma once
 
-namespace power_ronin
+namespace PowerRonin
 {
 	/* 3D physics rigidbody */
 	class Rigidbody final
 	{
 	public:
-		float mass = 1.f;
-		bool is_kinematic = false;
+		float Mass = 1.f;
+		bool IsKinematic = false;
 	};
 }

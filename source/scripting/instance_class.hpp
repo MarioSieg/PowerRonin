@@ -18,7 +18,7 @@
 #include "mono_headers.hpp"
 #include <string_view>
 
-namespace power_ronin::scripting
+namespace PowerRonin::Scripting
 {
 	class Assembly;
 	class RuntimeEnvironment;

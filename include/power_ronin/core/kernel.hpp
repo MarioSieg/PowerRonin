@@ -20,19 +20,18 @@
 #include <tuple>
 #include <vector>
 #include <chrono>
-#include <string_view>
 
 #include "subsystem.hpp"
 #include "../runtime.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	class Runtime;
 
-	namespace core
+	namespace Core
 	{
-		constexpr std::string_view ENGINE_NAME = "PowerRonin-Engine";
-		constexpr float ENGINE_VERSION = 0.01f;
+		constexpr std::string_view EngineName = "PowerRonin-Engine";
+		constexpr float EngineVersion = .01F;
 
 		class Kernel;
 		class ISubsystem;
@@ -46,22 +45,22 @@ namespace power_ronin
 		class Kernel
 		{
 		public:
-			[[nodiscard]] static auto create(const int _in_argc, const char** _in_argv, const char** _in_envp) -> std::unique_ptr<Kernel>;
+			[[nodiscard]] static auto Create(const int inArgc, const char** inArgv, const char** inEnvp) -> std::unique_ptr<Kernel>;
 
 			/// <summary>
 			/// Argument count.
 			/// </summary>
-			const int argc;
+			const int ArgCount;
 
 			/// <summary>
 			/// Argument vector.
 			/// </summary>
-			const char* const* const argv;
+			const char* const* const ArgVector;
 
 			/// <summary>
 			/// Environment pointer.
 			/// </summary>
-			const char* const* const envp;
+			const char* const* const EnvPtr;
 
 			/// <summary>
 			/// Delete copy and move constructor and assignment operators.
@@ -92,91 +91,90 @@ namespace power_ronin
 			/// <summary>
 			/// Startup engine.
 			/// </summary>
-			[[nodiscard]] auto startup() const -> std::uint64_t;
+			auto Startup() const -> std::uint64_t;
 
 			/// <summary>
 			/// Enter simulation loop.
 			/// </summary>
-			auto execute() -> std::tuple<std::uint_fast32_t, std::uint8_t, std::uint64_t>;
+			auto Execute() -> std::tuple<std::uint_fast32_t, std::uint8_t, std::uint64_t>;
 
 			/// <summary>
 			/// Shutdown engine.
 			/// </summary>
-			[[nodiscard]] auto shutdown() const -> std::uint64_t;
+			auto Shutdown() const -> std::uint64_t;
 
 			/// <summary>
 			/// Installs a new subsystem to the kernel and initializes all hooks
 			/// </summary>
-			/// <param name="_subsystem"></param>
-			void install_subsystem(std::unique_ptr<ISubsystem>&& _subsystem) const;
+			/// <param name="subSystem"></param>
+			void InstallSubsystem(std::unique_ptr<ISubsystem>&& subSystem) const;
 
 			/// <summary>
 			/// 
 			/// </summary>
 			/// <returns>Returns all installed subsystems.</returns>
-			[[nodiscard]] auto installed_subsystems() const noexcept -> const std::vector<std::tuple<
-				std::uint_fast16_t, std::unique_ptr<ISubsystem>>>&;
+			[[nodiscard]] auto InstalledSubsystems() const noexcept
+				-> const std::vector<std::tuple<std::uint_fast16_t, std::unique_ptr<ISubsystem>>>&;
 
 			/// <summary>
 			/// 
 			/// </summary>
 			/// <returns>Returns the current runtime instance.</returns>
-			[[nodiscard]] auto runtime() const noexcept -> Runtime*;
+			[[nodiscard]] auto Runtime() const noexcept -> class Runtime&;
 
 			/// <summary>
 			/// Allocates and installs the subsystem T.
 			/// </summary>
 			/// <typeparam name="T"></typeparam>
 			/// <typeparam name="...Q"></typeparam>
-			/// <param name="_args"></param>
+			/// <param name="args"></param>
 			/// <returns></returns>
 			template <typename T, typename... Q> requires Subsystem<T>
-			auto create_install_subsystem(Q&&..._args) -> Kernel&;
+			auto CreateInstallSubsystem(Q&&... args) -> Kernel&;
 
 			/// <summary>
 			/// Uninstalls a subsystem and removes all hooks
 			/// </summary>
-			/// <param name="_id"></param>
+			/// <param name="id"></param>
 			/// <returns></returns>
-			[[nodiscard]] auto uninstall_subsystem(std::uint_fast16_t _id) const -> bool;
+			[[nodiscard]] auto UninstallSubsystem(std::uint_fast16_t id) const -> bool;
 
 			/// <summary>
 			/// Returns true if the subsystem is installed, else false
 			/// </summary>
-			/// <param name="_id"></param>
+			/// <param name="id"></param>
 			/// <returns></returns>
-			[[nodiscard]] auto lookup_subsystem(std::uint_fast16_t _id) const -> bool;
+			[[nodiscard]] auto LookupSubsystem(std::uint_fast16_t id) const -> bool;
 
 			/// <summary>
 			/// Install some subsystem via a hook.
 			/// </summary>
-			/// <param name="_hook"></param>
+			/// <param name="installerHook"></param>
 			/// <returns></returns>
-			[[nodiscard]] auto install_subsystems(auto (*const _hook)(Kernel&) -> bool) -> std::size_t;
+			auto InstallSubsystems(const std::function<void(Kernel&)>& installerHook) -> std::size_t;
 
 
 			/// <summary>
 			/// Uninstalls all subsystems
 			/// </summary>
-			void uninstall_all() const;
+			void UninstallAll() const;
 
 		private:
 			/// <summary>
 			/// Create a new kernel instance.
 			/// </summary>
-			explicit Kernel(const int _in_argc, const char** _in_argv, const char** _in_envp);
+			explicit Kernel(const int argc, const char** const argv, const char** const envp);
 
 			struct Core;
-			const std::unique_ptr<Core> core_;
+			const std::unique_ptr<Core> systemHandle;
 		};
 
-		template <typename T, typename... Q> requires Subsystem<T> auto Kernel::create_install_subsystem(
-			Q&&... _args) -> Kernel&
+		template <typename T, typename... Q> requires Subsystem<T>
+		auto Kernel::CreateInstallSubsystem(Q&&... args) -> Kernel&
 		{
-			auto x = std::make_unique<T>(_args...);
-			x->kernel_ = this;
-			this->install_subsystem(std::move(x));
+			auto x = std::make_unique<T>(args...);
+			this->InstallSubsystem(std::move(x));
 			return *this;
 		}
-	} // namespace core // namespace core
-} // namespace power_ronin // namespace power_ronin
+	} // namespace Core // namespace Core
+} // namespace PowerRonin // namespace PowerRonin

@@ -26,16 +26,16 @@
 #include "widgets/config_editor.hpp"
 #include "widgets/scenery_viewer.hpp"
 
-namespace power_ronin::gui::widgets
+namespace PowerRonin::Interface::widgets
 {
 #include "widgets/ram_editor.hpp"
 }
 
-namespace power_ronin
+namespace PowerRonin
 {
 	class Runtime;
 
-	namespace gui
+	namespace Interface
 	{
 		class Editor final
 		{
@@ -46,7 +46,7 @@ namespace power_ronin
 		private:
 			void default_layout() const;
 			void main_menu(Runtime& _rt, bool& _show_terminal);
-			void render_manipulator_gizmos(Transform* const _transform, RenderData& _data, const Config& _config) const noexcept;
+			void render_manipulator_gizmos(Transform* const _transform, RenderData& _data, const SystemConfig& _config) const noexcept;
 
 			/* Widgets: */
 			widgets::ResourceViewer resource_viewer_ = {};

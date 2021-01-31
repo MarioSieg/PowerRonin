@@ -17,7 +17,7 @@
 
 #include "../ishader.hpp"
 
-namespace power_ronin::renderer::shaders
+namespace PowerRonin::Renderer::Shaders
 {
 	class DiffuseShader final : public IShader<Material::Diffuse>
 	{

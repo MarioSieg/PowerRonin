@@ -22,12 +22,12 @@
 
 using namespace ImGui;
 
-namespace power_ronin
+namespace PowerRonin
 {
 	void (*TERMINAL_UPDATE)() = nullptr;
 }
 
-namespace power_ronin::gui
+namespace PowerRonin::Interface
 {
 	void Terminal::update(bool& _show, Runtime& _rt)
 	{
@@ -41,19 +41,19 @@ namespace power_ronin::gui
 				{
 					switch (std::get<1>(msg))
 					{
-							[[unlikely]] case LogLevel::ERROR: PushStyleColor(ImGuiCol_Text, COLOR_ERROR);
+							[[unlikely]] case LogLevel::Error: PushStyleColor(ImGuiCol_Text, COLOR_ERROR);
 							++this->error_messages_count_;
 							break;
-							[[likely]] case LogLevel::INFO: PushStyleColor(ImGuiCol_Text, COLOR_INFO);
+							[[likely]] case LogLevel::Info: PushStyleColor(ImGuiCol_Text, COLOR_INFO);
 							break;
-							[[unlikely]] case LogLevel::DEBUG:
-						case LogLevel::TRACE: PushStyleColor(ImGuiCol_Text, COLOR_TRACE);
+							[[unlikely]] case LogLevel::Debug:
+						case LogLevel::Trace: PushStyleColor(ImGuiCol_Text, COLOR_TRACE);
 							break;
-							[[unlikely]] case LogLevel::CRITICAL:
-						case LogLevel::WARN: PushStyleColor(ImGuiCol_Text, COLOR_WARN);
+							[[unlikely]] case LogLevel::Critical:
+						case LogLevel::Warn: PushStyleColor(ImGuiCol_Text, COLOR_WARN);
 							++this->warning_messages_count_;
 							break;
-						default: case LogLevel::OFF: ;
+						default: case LogLevel::Off: ;
 					}
 					Spacing();
 					TextUnformatted(std::get<0>(msg).c_str());
@@ -146,7 +146,7 @@ namespace power_ronin::gui
 				{
 					if (is_input_valid) [[likely]]
 					{
-						_rt.terminal_hook()(this->buffer_);
+						_rt.TerminalHook()(this->buffer_);
 						memset(this->buffer_, 0, sizeof this->buffer_);
 						this->scroll_ = true;
 						this->history_index_ = 0;
@@ -154,7 +154,7 @@ namespace power_ronin::gui
 					}
 					else
 					{
-						_rt.protocol().error("Invalid input! Type \"help\"!");
+						_rt.Protocol().Error("Invalid input! Type \"help\"!");
 					}
 				}
 				PopItemWidth();
@@ -166,13 +166,13 @@ namespace power_ronin::gui
 	auto Terminal::initialize(const AsyncProtocol& _system_protocol,
 	                          const AsyncProtocol& _scripting_protocol) noexcept -> bool
 	{
-		if (_system_protocol.get_logger()->sinks().empty() || _scripting_protocol.get_logger()->sinks().
+		if (_system_protocol.GetLogger()->sinks().empty() || _scripting_protocol.GetLogger()->sinks().
 		                                                                          empty()) [[unlikely]]
 		{
 			return false;
 		}
-		this->system_protocol_ = dynamic_cast<const TerminalSink<>*>(&*_system_protocol.get_logger()->sinks()[0]);
-		this->scripting_protocol_ = dynamic_cast<const TerminalSink<>*>(&*_scripting_protocol.get_logger()->sinks()[0]);
+		this->system_protocol_ = dynamic_cast<const TerminalSink<>*>(&*_system_protocol.GetLogger()->sinks()[0]);
+		this->scripting_protocol_ = dynamic_cast<const TerminalSink<>*>(&*_scripting_protocol.GetLogger()->sinks()[0]);
 		return this->system_protocol_ && this->scripting_protocol_;
 	}
-} // namespace power_ronin::gui::widgets // namespace power_ronin::gui::widgets
+} // namespace PowerRonin::gui::widgets // namespace PowerRonin::gui::widgets

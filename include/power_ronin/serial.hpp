@@ -18,7 +18,7 @@
 #include "../../extern/json/include/nlohmann/json_fwd.hpp"
 #include <filesystem>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	using JsonStream = nlohmann::basic_json<>;
 
@@ -43,4 +43,4 @@ namespace power_ronin
 
 		virtual auto deserialize_from_file(const std::filesystem::path& _path) -> bool;
 	};
-} // namespace power_ronin // namespace power_ronin
+} // namespace PowerRonin // namespace PowerRonin

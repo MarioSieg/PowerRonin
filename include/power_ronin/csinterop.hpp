@@ -18,138 +18,137 @@
 #include "mathtypes.hpp"
 #include <cstdint>
 
-namespace power_ronin
+namespace PowerRonin::CSharp
 {
 	/// <summary>
 	/// Maps to C# type.
 	/// </summary>
-	using CS_float = float;
-	static_assert(sizeof(CS_float) == 4);
+	using $float = float;
+	static_assert(sizeof($float) == 4);
 
 	/// <summary>
 	/// Maps to C# type.
 	/// </summary>
-	using CS_double = double;
-	static_assert(sizeof(CS_double) == 8);
+	using $double = double;
+	static_assert(sizeof($double) == 8);
 
 	/// <summary>
 	/// Maps to C# type.
 	/// </summary>
-	using CS_bool = bool;
-	static_assert(sizeof(CS_bool) == 1);
+	using $bool = bool;
+	static_assert(sizeof($bool) == 1);
 
 	/// <summary>
 	/// Maps to C# type.
 	/// </summary>
-	using CS_byte = std::uint8_t;
-	static_assert(sizeof(CS_byte) == 1);
+	using $byte = std::uint8_t;
+	static_assert(sizeof($byte) == 1);
 
 	/// <summary>
 	/// Maps to C# type.
 	/// </summary>
-	using CS_sbyte = std::int8_t;
-	static_assert(sizeof(CS_sbyte) == 1);
+	using $sbyte = std::int8_t;
+	static_assert(sizeof($sbyte) == 1);
 
 	/// <summary>
 	/// Maps to C# type.
 	/// </summary>
-	using CS_short = std::int16_t;
-	static_assert(sizeof(CS_short) == 2);
+	using $short = std::int16_t;
+	static_assert(sizeof($short) == 2);
 
 	/// <summary>
 	/// Maps to C# type.
 	/// </summary>
-	using CS_ushort = std::uint16_t;
-	static_assert(sizeof(CS_ushort) == 2);
+	using $ushort = std::uint16_t;
+	static_assert(sizeof($ushort) == 2);
 
 	/// <summary>
 	/// Maps to C# type.
 	/// </summary>
-	using CS_int = std::int32_t;
-	static_assert(sizeof(CS_int) == 4);
+	using $int = std::int32_t;
+	static_assert(sizeof($int) == 4);
 
 	/// <summary>
 	/// Maps to C# type.
 	/// </summary>
-	using CS_uint = std::uint32_t;
-	static_assert(sizeof(CS_uint) == 4);
+	using $uint = std::uint32_t;
+	static_assert(sizeof($uint) == 4);
 
 	/// <summary>
 	/// Maps to C# type.
 	/// </summary>
-	using CS_long = std::int64_t;
-	static_assert(sizeof(CS_long) == 8);
+	using $long = std::int64_t;
+	static_assert(sizeof($long) == 8);
 
 	/// <summary>
 	/// Maps to C# type.
 	/// </summary>
-	using CS_ulong = std::uint64_t;
-	static_assert(sizeof(CS_ulong) == 8);
+	using $ulong = std::uint64_t;
+	static_assert(sizeof($ulong) == 8);
 
 	/// <summary>
 	/// Maps to C# type.
 	/// </summary>
-	struct CS_Vector2 final
+	struct $Vector2 final
 	{
-		CS_float x;
-		CS_float y;
+		$float X;
+		$float Y;
 
-		explicit inline operator SVec2<CS_float>() const noexcept
+		explicit inline operator Vector2<$float>() const noexcept
 		{
-			return SVec2<CS_float>(x, y);
+			return Vector2<$float>(X, Y);
 		}
 	};
 
-	static_assert(sizeof(CS_Vector2) == sizeof(CS_float) * 2);
+	static_assert(sizeof($Vector2) == sizeof($float) * 2);
 
 	/// <summary>
 	/// Maps to C# type.
 	/// </summary>
-	struct CS_Vector3 final
+	struct $Vector3 final
 	{
-		CS_float x;
-		CS_float y;
-		CS_float z;
+		$float X;
+		$float Y;
+		$float Z;
 
 
-		explicit inline operator SVec3<CS_float>() const noexcept
+		explicit inline operator Vector3<$float>() const noexcept
 		{
-			return SVec3<CS_float>(x, y, z);
+			return Vector3<$float>(X, Y, Z);
 		}
 	};
 
-	static_assert(sizeof(CS_Vector3) == sizeof(CS_float) * 3);
+	static_assert(sizeof($Vector3) == sizeof($float) * 3);
 
 	/// <summary>
 	/// Maps to C# type.
 	/// </summary>
-	struct CS_Vector4 final
+	struct $Vector4 final
 	{
-		CS_float x;
-		CS_float y;
-		CS_float z;
-		CS_float w;
+		$float X;
+		$float Y;
+		$float Z;
+		$float W;
 
-
-		explicit inline operator SVec4<CS_float>() const noexcept
+		explicit inline operator Vector4<$float>() const noexcept
 		{
-			return SVec4<CS_float>(x, y, z, w);
+			return Vector4<$float>(X, Y, Z, W);
 		}
 	};
 
-	static_assert(sizeof(CS_Vector4) == sizeof(CS_float) * 4);
+	static_assert(sizeof($Vector4) == sizeof($float) * 4);
 
-	using CS_Quaternion = CS_Vector4;
+	using $Quaternion = $Vector4;
 
-	struct CS_Size2 final
+	struct $Size2 final
 	{
-		CS_uint width;
-		CS_uint height;
+		$uint Width;
+		$uint Height;
 	};
 
-	static_assert(sizeof(CS_Size2) == sizeof(CS_uint) * 2);
+	static_assert(sizeof($Size2) == sizeof($uint) * 2);
 
-	using CS_Size2F = CS_Vector2;
+	using $Size2F = $Vector2;
 
-#define CS_HYBRID_INTEROP(_name)
+#define CSHARP_HYBRID_INTEROP(_name)
 }

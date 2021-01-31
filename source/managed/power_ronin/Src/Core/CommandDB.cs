@@ -6,7 +6,6 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using PowerRonin.Mathematics;
-using PowerRonin.Tools;
 
 namespace PowerRonin.Core
 {
@@ -338,14 +337,6 @@ namespace PowerRonin.Core
                     ParameterCount = 0,
                     RequiresRootPrivileges = false,
                     Executor = delegate { Directory.Delete(Config.ConfigDirectory, true); }
-                },
-                new Command
-                {
-                    Name = "deploy_editor",
-                    Brief = "Builds the editor into the \"bin\" folder.",
-                    ParameterCount = 0,
-                    RequiresRootPrivileges = false,
-                    Executor = delegate { Builder.BuildEditorStandalone(); }
                 }
             });
         }

@@ -24,24 +24,22 @@
 #include "../../include/power_ronin/mesh_renderer.hpp"
 #include "../platform/platform.hpp"
 
-namespace power_ronin::renderer
+namespace PowerRonin::Renderer
 {
-	auto GPU::initialize_drivers(const Config& _config, AsyncProtocol& _proto) const -> bool
+	void GPU::initialize_drivers(const SystemConfig& _config, AsyncProtocol& _proto) const
 	{
-		if (platform::NATIVE_WINDOW_HANDLE == nullptr)
+		if (Platform::NativeWindowHandle == nullptr) [[unlikely]]
 		{
-			_proto.error(
-				"platform::NATIVE_WINDOW_HANDLE was nullptr! Platform system must be initialized before render system!");
-			return false;
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Native window handle was nullptr!");
 		}
 
 		bgfx::Init init{};
 		init.type = bgfx::RendererType::Direct3D11;
-		init.debug = DEBUG_MODE;
-		init.platformData.nwh = platform::NATIVE_WINDOW_HANDLE;
-		init.profile = DEBUG_MODE;
+		init.debug = DebugMode;
+		init.platformData.nwh = Platform::NativeWindowHandle;
+		init.profile = DebugMode;
 
-		switch (_config.graphics.msaa_mode)
+		switch (_config.Graphics.MsaaMode)
 		{
 			case MsaaMode::X2: init.resolution.reset |= BGFX_RESET_MSAA_X2;
 				break;
@@ -53,44 +51,43 @@ namespace power_ronin::renderer
 				break;
 		}
 
-		if (_config.graphics.enable_high_dpi_mode) [[unlikely]]
+		if (_config.Graphics.EnableHighDpiMode) [[likely]]
 		{
 			init.resolution.reset |= BGFX_RESET_HIDPI;
 		}
 
-		if (_config.graphics.enable_srgb_mode) [[likely]]
+		if (_config.Graphics.EnableSrgbMode) [[likely]]
 		{
 			init.resolution.reset |= BGFX_RESET_SRGB_BACKBUFFER;
 		}
 
-		if (_config.graphics.enable_hdr10) [[likely]]
+		if (_config.Graphics.EnableHdr10) [[likely]]
 		{
 			init.resolution.reset |= BGFX_RESET_HDR10;
 		}
 
-		if (_config.graphics.enable_max_anisotropy) [[likely]]
+		if (_config.Graphics.EnableMaxAnisotropy) [[likely]]
 		{
 			init.resolution.reset |= BGFX_RESET_MAXANISOTROPY;
 		}
 
-		if (_config.display.vsync) [[likely]]
+		if (_config.Display.VSync) [[likely]]
 		{
-			init.resolution.reset |= BGFX_RESET_VSYNC;
+			//init.resolution.reset |= BGFX_RESET_VSYNC;
 		}
 
-		init.resolution.width = _config.display.resolution.width;
-		init.resolution.height = _config.display.resolution.height;
+		init.resolution.width = _config.Display.Resolution.Width;
+		init.resolution.height = _config.Display.Resolution.Height;
 
-		if (!bgfx::init(init))
+		if (!bgfx::init(init)) [[unlikely]]
 		{
-			_proto.error("Failed to initialize GPU engine backend!");
-			return false;
+			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to initialize backend renderer!");
 		}
 
 		bgfx::setDebug(BGFX_DEBUG_TEXT);
 
-		_proto.separator();
-		_proto.critical("Initializing GPU engine backend...");
+		_proto.Separator();
+		_proto.Critical("Initializing GPU engine backend...");
 
 		std::array<bgfx::RendererType::Enum, bgfx::RendererType::Count> supported = {};
 		getSupportedRenderers(static_cast<std::uint8_t>(supported.size()), supported.data());
@@ -99,15 +96,13 @@ namespace power_ronin::renderer
 		{
 			if (renderer != bgfx::RendererType::Noop)
 			{
-				_proto.info("Found supported backend API: {}", getRendererName(renderer));
+				_proto.Info("Found supported backend API: {}", getRendererName(renderer));
 			}
 		}
 
-		_proto.info("Using GPU backend API: {}", getRendererName(init.type));
+		_proto.Info("Using GPU backend API: {}", getRendererName(init.type));
 
 		dump_limits(_proto);
-
-		return true;
 	}
 
 	void GPU::shutdown_drivers() const
@@ -134,8 +129,8 @@ namespace power_ronin::renderer
 		bgfx::frame();
 	}
 
-	void GPU::set_camera(const bgfx::ViewId _view_id, const SMat4x4<>& _view,
-	                     const SMat4x4<>& _proj) const noexcept
+	void GPU::set_camera(const bgfx::ViewId _view_id, const Matrix4x4<>& _view,
+	                     const Matrix4x4<>& _proj) const noexcept
 	{
 		bgfx::setViewTransform(_view_id, value_ptr(_view), value_ptr(_proj));
 	}
@@ -159,8 +154,8 @@ namespace power_ronin::renderer
 	{
 		assert(_mesh.is_uploaded());
 
-		const auto vb_buffer = bgfx::VertexBufferHandle{_mesh.vertex_buffer_id()};
-		const auto ib_buffer = bgfx::IndexBufferHandle{_mesh.index_buffer_id()};
+		const auto vb_buffer = bgfx::VertexBufferHandle{_mesh.VertexBufferId()};
+		const auto ib_buffer = bgfx::IndexBufferHandle{_mesh.IndexBufferId()};
 
 		assert(bgfx::isValid(vb_buffer));
 		assert(bgfx::isValid(ib_buffer));
@@ -191,7 +186,7 @@ namespace power_ronin::renderer
 		submit(_view_id, _shader, _depth);
 	}
 
-	void GPU::set_viewport(const SVec4<> _xywh, const bgfx::ViewId _view_id) const noexcept
+	void GPU::set_viewport(const Vector4<> _xywh, const bgfx::ViewId _view_id) const noexcept
 	{
 		bgfx::setViewRect(_view_id, _xywh.x, _xywh.y, _xywh.z, _xywh.w);
 	}

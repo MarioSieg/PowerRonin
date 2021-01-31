@@ -15,7 +15,7 @@
 
 #include "../include/power_ronin/shader.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	auto Shader::vertex_shader_bytecode() const noexcept -> const Blob&
 	{

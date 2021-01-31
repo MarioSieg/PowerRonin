@@ -21,21 +21,21 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	static inline auto get_icon(const MessageBoxStyle _style) noexcept -> UINT
 	{
 		switch (_style)
 		{
-			case MessageBoxStyle::INFO:
+			case MessageBoxStyle::Info:
 				return MB_ICONINFORMATION;
-			case MessageBoxStyle::WARNING:
+			case MessageBoxStyle::Warning:
 				return MB_ICONWARNING;
 #undef ERROR
-			case MessageBoxStyle::ERROR:
+			case MessageBoxStyle::Error:
 #define ERROR 0
 				return MB_ICONERROR;
-			case MessageBoxStyle::QUESTION:
+			case MessageBoxStyle::Question:
 				return MB_ICONQUESTION;
 		}
 	}
@@ -44,11 +44,11 @@ namespace power_ronin
 	{
 		switch (_buttons)
 		{
-			case MessageBoxButtons::OK:
+			case MessageBoxButtons::Ok:
 				return MB_OK;
-			case MessageBoxButtons::OK_CANCEL:
+			case MessageBoxButtons::OkCancel:
 				return MB_OKCANCEL;
-			case MessageBoxButtons::YES_NO:
+			case MessageBoxButtons::YesNo:
 				return MB_YESNO;
 		}
 	}
@@ -58,26 +58,26 @@ namespace power_ronin
 		switch (_response)
 		{
 			case IDOK:
-				return MessageBoxSelection::OK;
+				return MessageBoxSelection::Ok;
 			case IDCANCEL:
-				return MessageBoxSelection::CANCEL;
+				return MessageBoxSelection::Cancel;
 			case IDYES:
-				return MessageBoxSelection::YES;
+				return MessageBoxSelection::Yes;
 			case IDNO:
-				return MessageBoxSelection::NO;
+				return MessageBoxSelection::No;
 			default:
-				return MessageBoxSelection::NONE;
+				return MessageBoxSelection::None;
 		}
 	}
 
-	static inline auto show_message_box(const std::string_view _msg, const std::string_view _title, const MessageBoxStyle _style, const MessageBoxButtons _buttons) -> MessageBoxSelection
+	static inline auto ShowMessageBox(const std::string_view msg, const std::string_view title, const MessageBoxStyle style, const MessageBoxButtons buttons) -> MessageBoxSelection
 	{
 		UINT flags = MB_TASKMODAL;
 
-		flags |= get_icon(_style);
-		flags |= get_buttons(_buttons);
+		flags |= get_icon(style);
+		flags |= get_buttons(buttons);
 
-		return get_selection(MessageBox(nullptr, _msg.data(), _title.data(), flags));
+		return get_selection(MessageBox(nullptr, msg.data(), title.data(), flags));
 	}
 }
 
@@ -87,7 +87,7 @@ namespace power_ronin
 #if OS_LINUX
 #include <gtk/gtk.h>
 
-namespace power_ronin
+namespace PowerRonin
 {
     static inline auto get_icon(const MessageBoxStyle _style) noexcept -> GtkMessageType
     {

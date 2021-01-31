@@ -17,50 +17,50 @@
 
 #include <cstddef>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	class Diagnostics final
 	{
 	public:
 		struct
 		{
-			std::size_t max_vram = 0;
-			std::size_t used_vram = 0;
+			std::size_t MaxVram = 0;
+			std::size_t UsedVram = 0;
 
-			std::size_t max_draw_calls = 0;
-			std::size_t used_draw_calls = 0;
+			std::size_t MaxDrawCalls = 0;
+			std::size_t UsedDrawCalls = 0;
 
-			std::size_t max_blit_calls = 0;
-			std::size_t used_blit_calls = 0;
+			std::size_t MaxBlitCalls = 0;
+			std::size_t UsedBlitCalls = 0;
 
-			std::size_t max_textures = 0;
-			std::size_t used_textures = 0;
+			std::size_t MaxTextures = 0;
+			std::size_t UsedTextures = 0;
 
-			std::size_t max_shaders = 0;
-			std::size_t used_shaders = 0;
+			std::size_t MaxShaders = 0;
+			std::size_t UsedShaders = 0;
 
-			std::size_t max_programs = 0;
-			std::size_t used_programs = 0;
+			std::size_t MaxPrograms = 0;
+			std::size_t UsedPrograms = 0;
 
-			std::size_t max_uniforms = 0;
-			std::size_t used_uniforms = 0;
+			std::size_t MaxUniforms = 0;
+			std::size_t UsedUniforms = 0;
 
-			std::size_t max_vertex_buffers = 0;
-			std::size_t used_vertex_buffers = 0;
+			std::size_t MaxVertexBuffers = 0;
+			std::size_t UsedVertexBuffers = 0;
 
-			std::size_t max_index_buffers = 0;
-			std::size_t used_index_buffers = 0;
+			std::size_t MaxIndexBuffers = 0;
+			std::size_t UsedIndexBuffers = 0;
 
-			std::size_t max_dynamic_vertex_buffers = 0;
-			std::size_t used_dynamic_vertex_buffers = 0;
+			std::size_t MaxDynamicVertexBuffers = 0;
+			std::size_t UsedDynamicVertexBuffers = 0;
 
-			std::size_t max_dynamic_index_buffers = 0;
-			std::size_t used_dynamic_index_buffers = 0;
+			std::size_t MaxDynamicIndexBuffers = 0;
+			std::size_t UsedDynamicIndexBuffers = 0;
 
-			std::size_t max_frame_buffers = 0;
-			std::size_t used_frame_buffers = 0;
+			std::size_t MaxFrameBuffers = 0;
+			std::size_t UsedFrameBuffers = 0;
 
-			std::size_t scenery_mesh_drawcalls = 0;
-		} graphics;
+			std::size_t SceneryMeshDrawCalls = 0;
+		} Graphics = {};
 	};
-} // namespace power_ronin // namespace power_ronin
+} // namespace PowerRonin // namespace PowerRonin

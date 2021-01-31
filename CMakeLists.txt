@@ -27,7 +27,6 @@ set(COMMON_SOURCES
     "include/power_ronin/break_interrupt_handler.hpp" 
     "include/power_ronin/camera.hpp" 
     "include/power_ronin/chrono.hpp" 
-    "include/power_ronin/classdb.hpp" 
     "include/power_ronin/collider.hpp" 
     "include/power_ronin/comcollections.hpp" 
     "include/power_ronin/config.hpp" 
@@ -43,7 +42,7 @@ set(COMMON_SOURCES
     "include/power_ronin/fence.hpp" 
     "include/power_ronin/flycam.hpp" 
     "include/power_ronin/frustum.hpp" 
-    "include/power_ronin/half.hpp" 
+     
     "include/power_ronin/hybrid.hpp"  
     "include/power_ronin/input.hpp" 
     "include/power_ronin/interrupt.hpp"
@@ -56,7 +55,6 @@ set(COMMON_SOURCES
     "include/power_ronin/mesh_renderer.hpp" 
     "include/power_ronin/msgbox.hpp" 
     "include/power_ronin/panic_routine.hpp"
-    "include/power_ronin/pixelformat.hpp" 
     "include/power_ronin/procinfo.hpp"
     "include/power_ronin/proto.hpp" 
     "include/power_ronin/renderer_data.hpp" 
@@ -88,7 +86,6 @@ set(COMMON_SOURCES
     "source/audio/audio_headers.hpp"
     "source/blob.cpp"  
     "source/break_interrupt_handler.cpp" 
-    "source/classdb.cpp"
     "source/core/entry.cpp"
     "source/core/installer.cpp" 
     "source/core/kernel.cpp"
@@ -126,7 +123,6 @@ set(COMMON_SOURCES
     "source/gui/widgets/scenery_viewer.cpp" 
     "source/gui/widgets/scenery_viewer.hpp"
     "source/gui/window_names.hpp" 
-    "source/half.cpp"   
     "source/hybrid.cpp" 
     "source/input.cpp" 
     "source/interrupt.cpp" 
@@ -140,7 +136,7 @@ set(COMMON_SOURCES
     "source/physics/physics.cpp" 
     "source/physics/physics.hpp" 
     "source/physics/physics_headers.hpp"
-    "source/pixelformat.cpp" 
+     
     "source/platform/callback_hooks.cpp"
     "source/platform/callback_hooks.hpp" 
     "source/platform/input.cpp" 
@@ -218,7 +214,7 @@ set(COMMON_SOURCES
     "source/time_utils.cpp" 
     "source/time_utils.cpp" 
     "source/transform.cpp" 
-    "source/xorshift.cpp" "source/camera.cpp")
+    "source/xorshift.cpp" "source/camera.cpp" "source/core/core.cpp" "source/core/core.hpp")
 
 if(WIN32)
     list(APPEND COMMON_SOURCES

@@ -17,13 +17,13 @@
 #include "../include/power_ronin/blob.hpp"
 #include "renderer/gl_headers.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
-	void Shader::upload()
+	void Shader::Upload()
 	{
-		if (this->is_uploaded_) [[unlikely]]
+		if (this->isUploaded) [[unlikely]]
 		{
-			this->offload();
+			this->Offload();
 		}
 
 		if (this->vertex_shader_bytecode_.empty() || this->fragment_shader_bytecode_ && (*this->
@@ -77,10 +77,10 @@ namespace power_ronin
 
 		this->volatile_upload_data_.program_id = shader.idx;
 
-		this->is_uploaded_ = true;
+		this->isUploaded = true;
 	}
 
-	void Shader::offload()
+	void Shader::Offload()
 	{
 		const auto program_handle = bgfx::ProgramHandle{this->volatile_upload_data_.program_id};
 		if (isValid(program_handle)) [[likely]]
@@ -88,7 +88,7 @@ namespace power_ronin
 			destroy(program_handle);
 		}
 		this->volatile_upload_data_.program_id = bgfx::kInvalidHandle;
-		this->is_uploaded_ = false;
+		this->isUploaded = false;
 	}
 
 	auto ShaderImporteur::load(std::filesystem::path&& _path
@@ -100,7 +100,7 @@ namespace power_ronin
 		}
 
 		Blob vs_bytecode = {};
-		blob_from_disk(_path, vs_bytecode);
+		ReadBlobFromDisk(_path, vs_bytecode);
 		if (vs_bytecode.empty()) [[unlikely]]
 		{
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to load shader from file!");
@@ -110,11 +110,11 @@ namespace power_ronin
 		const auto fragment_file = _path.replace_filename("fragment.shc");
 		if (is_regular_file(fragment_file)) [[likely]]
 		{
-			blob_from_disk(fragment_file, fs_bytecode);
+			ReadBlobFromDisk(fragment_file, fs_bytecode);
 		}
 
-		auto self = IResource<ShaderMeta>::allocate<Shader>();
-		self->file_path_ = std::move(_path);
+		auto self = IResource<ShaderMeta>::Allocate<Shader>();
+		self->filePath = std::move(_path);
 		self->vertex_shader_bytecode_ = std::move(vs_bytecode);
 		self->vertex_shader_textcode_ = std::nullopt;
 		self->fragment_shader_bytecode_ = std::nullopt;
@@ -123,9 +123,9 @@ namespace power_ronin
 			self->fragment_shader_bytecode_ = std::move(fs_bytecode);
 		}
 		self->fragment_shader_textcode_ = std::nullopt;
-		self->meta_data_ = _meta ? *_meta : IResource<ShaderMeta>::load_meta_or_default(self->file_path_);
+		self->metaData = _meta ? *_meta : IResource<ShaderMeta>::LoadMetaOrDefault(self->filePath);
 
-		self->upload();
+		self->Upload();
 
 		return self;
 	}
@@ -133,12 +133,12 @@ namespace power_ronin
 	auto ShaderCompiler::load(std::filesystem::path&& _path,
 	                          const ShaderMeta* const _meta) const -> std::shared_ptr<Shader>
 	{
-		auto self = IResource<ShaderMeta>::allocate<Shader>();
+		auto self = IResource<ShaderMeta>::Allocate<Shader>();
 
-		self->file_path_ = std::move(_path);
-		self->meta_data_ = _meta ? *_meta : IResource<ShaderMeta>::load_meta_or_default(self->file_path_);
+		self->filePath = std::move(_path);
+		self->metaData = _meta ? *_meta : IResource<ShaderMeta>::LoadMetaOrDefault(self->filePath);
 
-		self->upload();
+		self->Upload();
 
 		return self;
 	}

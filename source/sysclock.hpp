@@ -17,7 +17,7 @@
 
 #include <cstdint>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	[[nodiscard]] auto get_high_precision_counter() noexcept -> std::uint64_t;
 

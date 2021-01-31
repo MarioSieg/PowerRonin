@@ -17,7 +17,7 @@
 
 #include "mathlib.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	/// <summary>
 	/// Represents a light.
@@ -30,19 +30,19 @@ namespace power_ronin
 		/// </summary>
 		enum class Type
 		{
-			DIRECTIONAL,
-			SPOT,
-			POINT
-		} type = Type::DIRECTIONAL;
+			Directional,
+			Spot,
+			Point
+		} Type = Type::Directional;
 
 		/// <summary>
 		/// The light color.
 		/// </summary>
-		Color<> color = {1.f, 1.f, 1.f, 1.f};
+		Color<> Color = {1.f, 1.f, 1.f, 1.f};
 
 		/// <summary>
 		/// The light intensity in Lux.
 		/// </summary>
-		float intensity = 1.f;
+		float Intensity = 1.f;
 	};
 }

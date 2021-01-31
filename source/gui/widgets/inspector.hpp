@@ -24,14 +24,14 @@
 #include <array>
 #include <filesystem>
 
-namespace power_ronin
+namespace PowerRonin
 {
 	class Runtime;
 	class RenderData;
 	class Transform;
 }
 
-namespace power_ronin::gui::widgets
+namespace PowerRonin::Interface::widgets
 {
 	class Inspector final
 	{
@@ -39,7 +39,7 @@ namespace power_ronin::gui::widgets
 		static constexpr auto BUFFER_SIZE = 256;
 
 		void initialize();
-		void update(bool& _show, ERef _entity, Runtime& _rt);
+		void update(bool& _show, EntityRef _entity, Runtime& _rt);
 
 	private:
 		std::array<char, BUFFER_SIZE> string_buffer_ = {};

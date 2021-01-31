@@ -17,7 +17,7 @@
 
 #include "mathlib.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	/* Represents a physical collider. */
 	class Collider final
@@ -28,21 +28,21 @@ namespace power_ronin
 			/* Box collider data. */
 			struct
 			{
-				SVec3<> half_extents;
-			} box = {};
+				Vector3<> HalfExtents;
+			} Box = {};
 
 			/* Sphere collider data. */
 			struct
 			{
-				float radius = 10.f;
-			} sphere;
-		} data = {.box = {.half_extents = {20.f, 20.f, 20.f}}};
+				float Radius = 10.f;
+			} Sphere;
+		} Data = {.Box = {.HalfExtents = {20.f, 20.f, 20.f}}};
 
 		/* Discriminator */
 		enum class Type : std::uint8_t
 		{
-			BOX,
-			SPHERE
-		} type = Type::BOX;
+			Box,
+			Sphere
+		} Type = Type::Box;
 	};
 }

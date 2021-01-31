@@ -18,7 +18,7 @@
 #include "environment.hpp"
 #include <filesystem>
 
-namespace power_ronin::scripting
+namespace PowerRonin::Scripting
 {
 	void default_exception_handler(AsyncProtocol& _proto, MonoObject* const _ex)
 	{
@@ -27,7 +27,7 @@ namespace power_ronin::scripting
 		if (!ex && mono_msg) [[likely]]
 		{
 			char* const msg = mono_string_to_utf8(mono_msg);
-			_proto.error(msg);
+			_proto.Error(msg);
 			mono_free(msg);
 		}
 	}
@@ -61,7 +61,7 @@ namespace power_ronin::scripting
 			"--optimize=alias-analysis",
 		};
 		mono_jit_parse_options(sizeof jit_options / sizeof *jit_options, const_cast<char**>(jit_options));
-		const auto exe_name = executable_name();
+		const auto exe_name = ExecutableName();
 		this->domain_ = mono_jit_init(exe_name.c_str());
 		if (!this->domain_) [[unlikely]]
 		{

@@ -15,7 +15,7 @@
 
 #include "shared_uniforms.hpp"
 
-namespace power_ronin::renderer
+namespace PowerRonin::Renderer
 {
 	void SharedUniforms::load_all()
 	{

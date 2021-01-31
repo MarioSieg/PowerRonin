@@ -19,7 +19,7 @@
 #include "shader.hpp"
 #include "material.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	/// <summary>
 	/// A mesh renderer component.
@@ -27,9 +27,9 @@ namespace power_ronin
 	class MeshRenderer final
 	{
 	public:
-		RRef<Mesh> mesh = {};
-		RRef<Material> material = {};
-		bool is_visible = true;
-		bool perform_frustum_culling = true;
+		RRef<Mesh> Mesh = {};
+		RRef<Material> Material = {};
+		bool IsVisible = true;
+		bool PerformFrustumCulling = true;
 	};
 }

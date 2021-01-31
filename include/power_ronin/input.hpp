@@ -18,26 +18,26 @@
 #include <cstdint>
 #include "mathlib.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	/* Represents a keyboard key. */
 	enum class Key : std::int16_t
 	{
-		UNKNOWN = - 1
+		Unknown = - 1
 
 		/* Printable keys */
 
 		,
-		SPACE = 32,
-		APOSTROPHE = 39 /* ' */
+		Space = 32,
+		Apostrophe = 39 /* ' */
 		,
-		COMMA = 44 /* , */
+		Comma = 44 /* , */
 		,
-		MINUS = 45 /* - */
+		Minus = 45 /* - */
 		,
-		PERIOD = 46 /* . */
+		Period = 46 /* . */
 		,
-		SLASH = 47 /* / */
+		Slash = 47 /* / */
 		,
 		N0 = 48,
 		N1 = 49,
@@ -49,9 +49,9 @@ namespace power_ronin
 		N7 = 55,
 		N8 = 56,
 		N9 = 57,
-		SEMICOLON = 59 /* ; */
+		Semicolon = 59 /* ; */
 		,
-		EQUAL = 61 /* = */
+		Equal = 61 /* = */
 		,
 		A = 65,
 		B = 66,
@@ -79,40 +79,40 @@ namespace power_ronin
 		X = 88,
 		Y = 89,
 		Z = 90,
-		LEFT_BRACKET = 91 /* [ */
+		LeftBracket = 91 /* [ */
 		,
-		BACKSLASH = 92 /* \ */
+		Backslash = 92 /* \ */
 		,
-		RIGHT_BRACKET = 93 /* ] */
+		RightBracket = 93 /* ] */
 		,
-		GRAVE_ACCENT = 96 /* ` */
+		GraveAccent = 96 /* ` */
 		,
-		WORLD_1 = 161 /* non-US #1 */
+		World1 = 161 /* non-US #1 */
 		,
-		WORLD_2 = 162 /* non-US #2 */
+		World2 = 162 /* non-US #2 */
 
 		/* Function keys */
 
 		,
-		ESCAPE = 256,
-		ENTER = 257,
-		TAB = 258,
-		BACKSPACE = 259,
-		INSERT = 260,
-		DELETE = 261,
-		RIGHT = 262,
-		LEFT = 263,
-		DOWN = 264,
-		UP = 265,
-		PAGE_UP = 266,
-		PAGE_DOWN = 267,
-		HOME = 268,
-		END = 269,
-		CAPS_LOCK = 280,
-		SCROLL_LOCK = 281,
-		NUM_LOCK = 282,
-		PRINT_SCREEN = 283,
-		PAUSE = 284,
+		Escape = 256,
+		Enter = 257,
+		Tab = 258,
+		Backspace = 259,
+		Insert = 260,
+		Delete = 261,
+		Right = 262,
+		Left = 263,
+		Down = 264,
+		Up = 265,
+		PageUp = 266,
+		PageDown = 267,
+		Home = 268,
+		End = 269,
+		CapsLock = 280,
+		ScrollLock = 281,
+		NumLock = 282,
+		PrintScreen = 283,
+		Pause = 284,
 		F1 = 290,
 		F2 = 291,
 		F3 = 292,
@@ -138,50 +138,50 @@ namespace power_ronin
 		F23 = 312,
 		F24 = 313,
 		F25 = 314,
-		KP_0 = 320,
-		KP_1 = 321,
-		KP_2 = 322,
-		KP_3 = 323,
-		KP_4 = 324,
-		KP_5 = 325,
-		KP_6 = 326,
-		KP_7 = 327,
-		KP_8 = 328,
-		KP_9 = 329,
-		KP_DECIMAL = 330,
-		KP_DIVIDE = 331,
-		KP_MULTIPLY = 332,
-		KP_SUBTRACT = 333,
-		KP_ADD = 334,
-		KP_ENTER = 335,
-		KP_EQUAL = 336,
-		LEFT_SHIFT = 340,
-		LEFT_CONTROL = 341,
-		LEFT_ALT = 342,
-		LEFT_SUPER = 343,
-		RIGHT_SHIFT = 344,
-		RIGHT_CONTROL = 345,
-		RIGHT_ALT = 346,
-		RIGHT_SUPER = 347,
-		MENU = 348
+		Keypad0 = 320,
+		Keypad1 = 321,
+		Keypad2 = 322,
+		Keypad3 = 323,
+		Keypad4 = 324,
+		Keypad5 = 325,
+		Keypad6 = 326,
+		Keypad7 = 327,
+		Keypad8 = 328,
+		Keypad9 = 329,
+		KeypadDecimal = 330,
+		KeypadDivide = 331,
+		KeypadMultiply = 332,
+		KeypadSubtract = 333,
+		KeypadAdd = 334,
+		KeypadEnter = 335,
+		KeypadEqual = 336,
+		LeftShift = 340,
+		LeftControl = 341,
+		LeftAlt = 342,
+		LeftSuper = 343,
+		RightShift = 344,
+		RightControl = 345,
+		RightAlt = 346,
+		RightSuper = 347,
+		Menu = 348
 	};
 
 	/* Represents a mouse button. */
 	enum class MouseButton : std::uint8_t
 	{
-		LEFT = 0,
-		RIGHT = 1,
-		MIDDLE = 2,
+		Left = 0,
+		Right = 1,
+		Middle = 2,
 	};
 
 	/* Contains input methods and helpers. */
 	class Input final
 	{
 	public:
-		[[nodiscard]] auto is_key_down(Key _key) const noexcept -> bool;
+		[[nodiscard]] auto IsKeyDown(Key key) const noexcept -> bool;
 
-		[[nodiscard]] auto is_mouse_button_down(MouseButton _mb) const noexcept -> bool;
+		[[nodiscard]] auto IsMouseButtonDown(MouseButton mouseButton) const noexcept -> bool;
 
-		[[nodiscard]] auto mouse_pos() const noexcept -> SVec2<>;
+		[[nodiscard]] auto MousePosition() const noexcept -> Vector2<>;
 	};
 }

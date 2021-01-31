@@ -18,25 +18,25 @@
 #include "../../include/power_ronin/core/kernel.hpp"
 #include "audio_headers.hpp"
 
-namespace power_ronin::audio
+namespace PowerRonin::Audio
 {
-	class Audio final : public core::ISubsystem
+	class AudioSystem final : public Core::ISubsystem
 	{
 	public:
-		Audio();
-		Audio(const Audio&) = delete;
-		Audio(Audio&&) = delete;
-		auto operator=(const Audio&) -> Audio& = delete;
-		auto operator=(Audio&&) -> Audio& = delete;
-		~Audio() override = default;
+		AudioSystem();
+		AudioSystem(const AudioSystem&) = delete;
+		AudioSystem(AudioSystem&&) = delete;
+		auto operator=(const AudioSystem&) -> AudioSystem& = delete;
+		auto operator=(AudioSystem&&) -> AudioSystem& = delete;
+		~AudioSystem() override = default;
 
 	private:
-		static constexpr auto EVENTS = core::ServiceEvents::PRE_STARTUP | core::ServiceEvents::PRE_TICK |
-			core::ServiceEvents::PRE_SHUTDOWN;
+		static constexpr auto EVENTS = Core::ServiceEvents::PreStartup | Core::ServiceEvents::PreTick |
+			Core::ServiceEvents::PreShutdown;
 
-		auto on_pre_startup([[maybe_unused]] Runtime& _rt) -> bool override;
-		auto on_pre_tick([[maybe_unused]] Runtime& _rt) -> bool override;
-		auto on_pre_shutdown([[maybe_unused]] Runtime& _rt) -> bool override;
+		void OnPreStartup(Runtime&) override;
+		void OnPreTick(Runtime&) override;
+		void OnPreShutdown(Runtime&) override;
 
 		AkMemSettings mem_settings_ = {};
 		AkStreamMgrSettings stream_settings_ = {};

@@ -16,20 +16,19 @@
 #pragma once
 
 #include "resource.hpp"
-#include "mathlib.hpp"
 #include "aabb.hpp"
 
-namespace power_ronin
+namespace PowerRonin
 {
 	/// <summary>
 	/// Vertex type.
 	/// </summary>
 	struct Vertex final
 	{
-		FVec3<> position = {};
-		FVec2<> uv = {};
-		FVec3<> normal = {};
-		FVec3<> tangent = {};
+		Vector3Fixed<> Position = {};
+		Vector2Fixed<> TexCoords = {};
+		Vector3Fixed<> Normal = {};
+		Vector3Fixed<> Tangent = {};
 	};
 
 	struct MeshMeta final : ISerializable
@@ -50,7 +49,7 @@ namespace power_ronin
 		/// <summary>
 		/// All associated file types.
 		/// </summary>
-		static constexpr std::array<std::string_view, 37> FILE_EXTENSIONS = {
+		static constexpr std::array<std::string_view, 37> FileExtensions = {
 			".dae", ".blend", ".bvh", ".3ds", ".ase", ".obj", ".ply", ".dxf", ".ifc", ".nff", ".smd", ".vta", ".mdl",
 			".md2", ".md3", ".pk3", ".mdc", ".md5mesh", ".x", ".raw", ".ac", ".stl", ".dxf", ".irrmesh", ".xml", ".off",
 			".ter", ".mdl", ".hmp", ".mesh.xml", ".ms3d", ".lwo", ".lws", ".lxo", ".csm", ".cob", ".scn"
@@ -60,52 +59,52 @@ namespace power_ronin
 		/// 
 		/// </summary>
 		/// <returns>The vector containing all indices.</returns>
-		[[nodiscard]] auto indices() const noexcept -> const std::vector<std::uint16_t>&;
+		[[nodiscard]] auto Indices() const noexcept -> const std::vector<std::uint16_t>&;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns>The index buffer id.</returns>
-		[[nodiscard]] auto index_buffer_id() const noexcept -> std::uint16_t;
+		[[nodiscard]] auto IndexBufferId() const noexcept -> std::uint16_t;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns>The vector containing all vertices.</returns>
-		[[nodiscard]] auto vertices() const noexcept -> const std::vector<Vertex>&;
+		[[nodiscard]] auto Vertices() const noexcept -> const std::vector<Vertex>&;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns>The vertex buffer id.</returns>
-		[[nodiscard]] auto vertex_buffer_id() const noexcept -> std::uint16_t;
+		[[nodiscard]] auto VertexBufferId() const noexcept -> std::uint16_t;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns>The axis aligned bounding box of this mesh.</returns>
-		[[nodiscard]] auto aabb() const noexcept -> const AABB&;
+		[[nodiscard]] auto Aabb() const noexcept -> const struct Aabb&;
 
 		/// <summary>
 		/// Upload mesh data to VRAM. (Still stays in RAM).
 		/// </summary>
-		void upload() override;
+		void Upload() override;
 
 		/// <summary>
 		/// Offload mesh data from VRAM. (Still stays in RAM).
 		/// </summary>
-		void offload() override;
+		void Offload() override;
 
 	private:
-		std::vector<std::uint16_t> indices_ = {};
-		std::vector<Vertex> vertices_ = {};
-		AABB aabb_ = {};
+		std::vector<std::uint16_t> indices = {};
+		std::vector<Vertex> vertices = {};
+		struct Aabb aabb = {};
 
 		struct
 		{
-			std::uint16_t index_buffer_id = 0;
-			std::uint16_t vertex_buffer_id = 0;
-		} volatile_upload_data_;
+			std::uint16_t IndexBufferId = 0;
+			std::uint16_t VertexBufferId = 0;
+		} volatileUploadData;
 	};
 
 	/// <summary>
@@ -114,6 +113,6 @@ namespace power_ronin
 	class MeshImporteur final : public ResourceImporteur<MeshImporteur, Mesh>
 	{
 	public:
-		auto load(std::filesystem::path&& _path, const MeshMeta* const _meta = nullptr) const -> std::shared_ptr<Mesh>;
+		auto load(std::filesystem::path&& path, const MeshMeta* const meta = nullptr) const -> std::shared_ptr<Mesh>;
 	};
-} // namespace power_ronin // namespace power_ronin
+} // namespace PowerRonin // namespace PowerRonin

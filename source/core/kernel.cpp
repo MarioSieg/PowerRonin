@@ -14,47 +14,30 @@
 // // *******************************************************************************
 
 #include "../../include/power_ronin/core/kernel.hpp"
-#include "../../include/power_ronin/core/installer.hpp"
 #include "../../include/power_ronin/env.hpp"
-#include "../../include/power_ronin/time_utils.hpp"
-#include "../../include/power_ronin/break_interrupt_handler.hpp"
-#include "../../include/power_ronin/panic_routine.hpp"
+#include "core.hpp"
 
-namespace power_ronin::core
+namespace PowerRonin::Core
 {
-	//@formatter:off
+	Kernel::Kernel(const int argc, const char** argv, const char** envp) : ArgCount(argc), ArgVector(argv), EnvPtr(envp), systemHandle(std::make_unique<Core>()) { }
 
-	enum class KernelState : std::int_fast32_t
-	{
-		OFFLINE = 0,
-		ONLINE = 1,
-		RUNNING = -1
-	};
-
-	struct Kernel::Core final
-	{
-		KernelState kernel_state = KernelState::OFFLINE;
-		std::vector<std::tuple<std::uint_fast16_t, std::unique_ptr<ISubsystem>>> subsystems = {};
-		Runtime* runtime = nullptr;
-	};
-
-	Kernel::Kernel(const int _in_argc, const char** _in_argv, const char** _in_envp) : argc(_in_argc), argv(_in_argv), envp(_in_envp), core_(std::make_unique<Core>()) { }
-
-	auto Kernel::create(const int _in_argc, const char** _in_argv, const char** _in_envp) -> std::unique_ptr<Kernel>
+	auto Kernel::Create(const int inArgc, const char** inArgv, const char** inEnvp) -> std::unique_ptr<Kernel>
 	{
 		struct Factory final : Kernel
 		{
-			Factory(const int _in_argc, const char** _in_argv, const char** _in_envp) : Kernel(_in_argc, _in_argv, _in_envp) {}
+			Factory(const int inArgc, const char** inArgv, const char** inEnvp) : Kernel(inArgc, inArgv, inEnvp) {}
 		};
-		return std::make_unique<Factory>(_in_argc, _in_argv, _in_envp);
+		return std::make_unique<Factory>(inArgc, inArgv, inEnvp);
 	}
+
+	static void PrintSubsystemInfo(AsyncProtocol& proto, const std::vector<std::tuple<std::uint_fast16_t, std::unique_ptr<ISubsystem>>>& systems);
 
 	Kernel::~Kernel() = default;
 
 	/* Startup runtime */
-	auto Kernel::startup() const -> std::uint64_t
+	auto Kernel::Startup() const -> std::uint64_t
 	{
-		if (this->core_->kernel_state != KernelState::OFFLINE) [[unlikely]]
+		if (this->systemHandle->KernelState != KernelState::Offline) [[unlikely]]
 		{
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Invalid kernel state!");
 		}
@@ -64,92 +47,53 @@ namespace power_ronin::core
 		const auto tik = std::chrono::high_resolution_clock::now();
 
 		/* Allocate state. */
-		this->core_->runtime = new(std::nothrow) Runtime();
-		if (!this->core_->runtime) [[unlikely]]
+		this->systemHandle->Runtime = std::make_unique<class Runtime>();
+		if (!this->systemHandle->Runtime) [[unlikely]]
 		{
 			throw MAKE_FATAL_ENGINE_EXCEPTION("Failed to allocate runtime!");
 		}
 
-		auto& proto = this->core_->runtime->protocol();
+		auto& proto = this->systemHandle->Runtime->Protocol();
 
-		/* Initialize core engine system. Print some basic info. */
-		proto.critical("Initializing {} v.{}", ENGINE_NAME, ENGINE_VERSION);
-		proto.info("System: {}", SYSTEM_NAME);
-		proto.info("Using C++ 20! Compiler: {}", COMPILER_NAME);
+		/* Initialize Core engine system. Print some basic info. */
+		proto.Critical("Initializing {} v.{}", EngineName, EngineVersion);
+		proto.Info("System: {}", SystemName);
+		proto.Info("Using C++ 20! Compiler: {}", CompilerName);
 
-		proto.separator();
+		proto.Separator();
 
-		for (std::size_t i = 0; i < this->core_->subsystems.size(); ++i)
-		{
-			const auto& entry = this->core_->subsystems[i];
-			const auto id = std::get<0>(entry);
-			const auto& sys = std::get<1>(entry);
-			const auto* const name = typeid(decltype(*sys)).name();
-			const auto hash = typeid(decltype(*sys)).hash_code();
-
-			proto.info("Found installed subsystem {} of {}:", i + 1, this->core_->subsystems.size());
-			proto.info("\tID: {:#x}", id);
-			proto.info("\tTypename: {}", name);
-			proto.info("\tHash: {:#x}", hash);
-			proto.info("\tName: {}", sys->name);
-			proto.info("\tMask: {:#08b}", sys->subscribed_events);
-		}
-
-		/* Invoke "on_pre_startup()" on all subsystems, which have this event registered. */
-		for (auto sys = this->core_->subsystems.begin(); sys != this->core_->subsystems.end(); std::advance(sys, 1))
-		{
-			const auto& name = std::get<1>(*sys)->name;
-			proto.critical(R"(Invoking kernel event "on_pre_startup" on subsystem interface "{}"...)", name);
-			const auto tik2 = std::chrono::high_resolution_clock::now();
-			if (std::get<1>(*sys)->subscribed_events & ServiceEvents::PRE_STARTUP && !std::get<1>(*sys)->on_pre_startup(*this->core_->runtime)) [[unlikely]]
-			{
-				throw MAKE_FATAL_ENGINE_EXCEPTION("Bad \"on_pre_startup\" call!");
-			}
-			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
-			proto.info("OK! \"on_pre_startup\" invoked! {}s elapsed!", std::get<1>(*sys)->pre_startup_time_ = dur);
-		}
+		this->systemHandle->PrintSubsystemInfo();
+		this->systemHandle->DispatchPreStartup();
 
 		/* Startup state. */
-		const auto state_clock = std::chrono::high_resolution_clock::now();
-		proto.critical("Starting runtime...");
-		this->core_->runtime->initialize();
-		const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(
-			std::chrono::high_resolution_clock::now() - state_clock).count()) / 1000000.0;
-		proto.critical("State online! Required {}s!", dur);
-		this->core_->kernel_state = KernelState::ONLINE;
+		const auto stateClock = std::chrono::high_resolution_clock::now();
+		proto.Critical("Starting runtime...");
+		this->systemHandle->Runtime->Initialize();
+		const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - stateClock).count()) / 1000000.0;
+		proto.Critical("State online! Required {}s!", dur);
+		this->systemHandle->KernelState = KernelState::Online;
+
 		const auto duration = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik).count();
 
-		/* Invoke "on_post_startup()" on all subsystems, which have this event registered. */
-		for (auto sys = this->core_->subsystems.rbegin(); sys != this->core_->subsystems.rend(); std::advance(sys, 1))
-		{
-			const auto& name = std::get<1>(*sys)->name;
-			proto.critical(R"(Invoking kernel event "on_post_startup" on subsystem interface "{}"...)", name);
-			const auto tik2 = std::chrono::high_resolution_clock::now();
-			if (std::get<1>(*sys)->subscribed_events & ServiceEvents::POST_STARTUP && !std::get<1>(*sys)->on_post_startup(*this->core_->runtime)) [[unlikely]]
-			{
-				throw MAKE_FATAL_ENGINE_EXCEPTION("Bad \"on_post_startup\" call!");
-			}
-			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
-			proto.info("OK! \"on_post_startup\" invoked! {}s elapsed!", std::get<1>(*sys)->post_startup_time_ = dur);
-		}
-
-		proto.separator();
-		proto.info("OK! System online! Boot took {}s!", static_cast<double>(duration) / 1000000.0);
+		this->systemHandle->DispatchPostStartup();
+		
+		proto.Separator();
+		proto.Info("OK! System online! Boot took {}s!", static_cast<double>(duration) / 1000000.0);
 
 		return duration;
 	}
 
 	/* Execute runtime */
-	auto Kernel::execute() -> std::tuple<std::uint_fast32_t, std::uint8_t, std::uint64_t>
+	auto Kernel::Execute() -> std::tuple<std::uint_fast32_t, std::uint8_t, std::uint64_t>
 	{
-		if (this->core_->kernel_state != KernelState::ONLINE || this->core_->runtime == nullptr) [[unlikely]]
+		if (this->systemHandle->KernelState != KernelState::Online || this->systemHandle->Runtime == nullptr) [[unlikely]]
 		{
 			return {0, 0, 0};
 		}
 
-		auto& proto = this->core_->runtime->protocol();
-		proto.info("Entering runtime...");
-		proto.separator();
+		auto& proto = this->systemHandle->Runtime->Protocol();
+		proto.Info("Entering runtime...");
+		proto.Separator();
 
 		const auto tik = std::chrono::high_resolution_clock::now();
 		std::uint_fast32_t cycles = 0;
@@ -158,85 +102,41 @@ namespace power_ronin::core
 		auto tick = [&]() mutable -> bool
 		{
 			++cycles;
-
-			/* Invoke "on_pre_tick()" on all subsystems, which have this event registered. */
-			for (auto sys = this->core_->subsystems.begin(); sys != this->core_->subsystems.end(); std::advance(sys, 1))
-			{
-				if (std::get<1>(*sys)->subscribed_events & ServiceEvents::PRE_TICK && !std::get<1>(*sys)->on_pre_tick(*this->core_->runtime)) [[unlikely]]
-				{
-					return false;
-				}
-			}
-
-			/* Invoke "on_post_tick()" on all subsystems, which have this event registered. */
-			for (auto sys = this->core_->subsystems.rbegin(); sys != this->core_->subsystems.rend(); std::advance(sys, 1))
-			{
-				if (std::get<1>(*sys)->subscribed_events & ServiceEvents::POST_TICK && !std::get<1>(*sys)->on_post_tick(*this->core_->runtime)) [[unlikely]]
-				{
-					return false;
-				}
-			}
-
+			this->systemHandle->DispatchPreTick();
+			this->systemHandle->DispatchPostTick();
 			return true;
 		};
 
 		/* Enter runtime loop */
-		while (tick())[[likely]];
+		while (tick()) [[likely]];
 
 		const auto tok = std::chrono::high_resolution_clock::now();
 		const auto duration = std::chrono::duration_cast<std::chrono::microseconds>(tok - tik).count();
-		proto.info("Terminated runtime! Cycles: {}", cycles);
+		proto.Info("Terminated runtime! Cycles: {}", cycles);
 
 		return {cycles, 0, duration};
 	}
 
 	/* Shutdown runtime */
-	auto Kernel::shutdown() const -> std::uint64_t
+	auto Kernel::Shutdown() const -> std::uint64_t
 	{
-		if (this->core_->kernel_state != KernelState::ONLINE || this->core_->runtime == nullptr) [[unlikely]]
+		if (this->systemHandle->KernelState != KernelState::Online || this->systemHandle->Runtime == nullptr) [[unlikely]]
 		{
 			return 0;
 		}
 
 		const auto tik = std::chrono::high_resolution_clock::now();
-		auto& proto = this->core_->runtime->protocol();
+		auto& proto = this->systemHandle->Runtime->Protocol();
 
 		/* Shutdown state. */
-		proto.critical("Shutting down runtime...");
-		this->core_->runtime->shutdown();
+		proto.Critical("Shutting down runtime...");
+		this->systemHandle->Runtime->Shutdown();
 
-		/* Invoke "on_pre_shutdown()" on all subsystems, which have this event registered. */
-		for (auto sys = this->core_->subsystems.begin(); sys != this->core_->subsystems.end(); ++sys)
-		{
-			const auto tik2 = std::chrono::high_resolution_clock::now();
-			const auto& name = std::get<1>(*sys)->name;
-			proto.critical(R"(Invoking kernel event "on_pre_shutdown" on subsystem interface "{}"...)", name);
-			if (std::get<1>(*sys)->subscribed_events & ServiceEvents::PRE_SHUTDOWN && !std::get<1>(*sys)->on_pre_shutdown(*this->core_->runtime)) [[unlikely]]
-			{
-				throw MAKE_FATAL_ENGINE_EXCEPTION("Bad \"on_pre_shutdown\" call!");
-			}
-			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
-			std::get<1>(*sys)->pre_shutdown_time_ = dur;
-		}
+		this->systemHandle->DispatchPreShutdown();
+		this->systemHandle->DispatchPostShutdown();
 
-		/* Invoke "on_post_shutdown()" on all subsystems, which have this event registered. */
-		for (auto sys = this->core_->subsystems.rbegin(); sys != this->core_->subsystems.rend(); ++sys)
-		{
-			const auto tik2 = std::chrono::high_resolution_clock::now();
-			const auto& name = std::get<1>(*sys)->name;
-			proto.critical(R"(Invoking kernel event "on_post_shutdown" on subsystem interface "{}"...)", name);
-			if (std::get<1>(*sys)->subscribed_events & ServiceEvents::POST_SHUTDOWN && !std::get<1>(*sys)->on_post_shutdown(*this->core_->runtime)) [[unlikely]]
-			{
-				throw MAKE_FATAL_ENGINE_EXCEPTION("Bad \"on_post_shutdown\" call!");
-			}
-			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
-			std::get<1>(*sys)->post_shutdown_time_ = dur;
-		}
-
-		delete this->core_->runtime;
-		this->core_->runtime = nullptr;
-
-		this->core_->kernel_state = KernelState::OFFLINE;
+		this->systemHandle->Runtime.reset();
+		this->systemHandle->KernelState = KernelState::Offline;
 
 		const auto tok = std::chrono::high_resolution_clock::now();
 		const auto duration = std::chrono::duration_cast<std::chrono::microseconds>(tok - tik).count();
@@ -244,37 +144,37 @@ namespace power_ronin::core
 		return duration;
 	}
 
-	auto Kernel::installed_subsystems() const noexcept -> const std::vector<std::tuple<::uint32_t, std::unique_ptr<ISubsystem>>>&
+	auto Kernel::InstalledSubsystems() const noexcept -> const std::vector<std::tuple<::uint32_t, std::unique_ptr<ISubsystem>>>&
 	{
-		return this->core_->subsystems;
+		return this->systemHandle->Subsystems;
 	}
 
-	void Kernel::install_subsystem(std::unique_ptr<ISubsystem>&& _subsystem) const
+	void Kernel::InstallSubsystem(std::unique_ptr<ISubsystem>&& subSystem) const
 	{
 		/* Check if subsystem with id already exists: */
-		for (const auto& sys : this->core_->subsystems)
+		for (const auto& sys : this->systemHandle->Subsystems)
 		{
-			if (std::get<1>(sys)->id == _subsystem->id) [[unlikely]]
+			if (std::get<1>(sys)->UniqueID == subSystem->UniqueID) [[unlikely]]
 			{
 				return;
 			}
 		}
 
-		this->core_->subsystems.emplace_back(std::make_tuple(_subsystem->id, std::move(_subsystem)));
+		this->systemHandle->Subsystems.emplace_back(std::make_tuple(subSystem->UniqueID, std::move(subSystem)));
 	}
 
-	auto Kernel::runtime() const noexcept -> Runtime*
+	auto Kernel::Runtime() const noexcept -> class Runtime&
 	{
-		return this->core_->runtime;
+		return *this->systemHandle->Runtime;
 	}
 
-	auto Kernel::uninstall_subsystem(const std::uint_fast16_t _id) const -> bool
+	auto Kernel::UninstallSubsystem(const std::uint_fast16_t id) const -> bool
 	{
-		for (std::size_t i = 0; i < this->core_->subsystems.size(); ++i)
+		for (std::size_t i = 0; i < this->systemHandle->Subsystems.size(); ++i)
 		{
-			if (std::get<1>(this->core_->subsystems[i])->id == _id) [[likely]]
+			if (std::get<1>(this->systemHandle->Subsystems[i])->UniqueID == id) [[unlikely]]
 			{
-				this->core_->subsystems.erase(this->core_->subsystems.begin() + i);
+				this->systemHandle->Subsystems.erase(this->systemHandle->Subsystems.begin() + i);
 				return true;
 			}
 		}
@@ -283,11 +183,11 @@ namespace power_ronin::core
 		return false;
 	}
 
-	auto Kernel::lookup_subsystem(const std::uint_fast16_t _id) const -> bool
+	auto Kernel::LookupSubsystem(const std::uint_fast16_t id) const -> bool
 	{
-		for (auto& service : this->core_->subsystems)
+		for (auto& service : this->systemHandle->Subsystems)
 		{
-			if (std::get<1>(service)->id == _id) [[likely]]
+			if (std::get<1>(service)->UniqueID == id) [[likely]]
 			{
 				return true;
 			}
@@ -297,19 +197,14 @@ namespace power_ronin::core
 		return false;
 	}
 
-	auto Kernel::install_subsystems(auto (*const _hook)(Kernel&) -> bool) -> std::size_t
+	auto Kernel::InstallSubsystems(const std::function<void(Kernel&)>& installerHook) -> std::size_t
 	{
-		if (_hook) [[likely]]
-		{
-			_hook(*this);
-		}
-		return this->core_->subsystems.size();
+		installerHook(*this);
+		return this->systemHandle->Subsystems.size();
 	}
 
-	void Kernel::uninstall_all() const
+	void Kernel::UninstallAll() const
 	{
-		this->core_->subsystems.clear();
+		this->systemHandle->Subsystems.clear();
 	}
-
-	//@formatter:on
-} // namespace power_ronin::core // namespace power_ronin::core
+} // namespace PowerRonin::Core // namespace PowerRonin::Core

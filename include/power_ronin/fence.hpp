@@ -15,10 +15,10 @@
 
 #pragma once
 
-namespace power_ronin
+namespace PowerRonin
 {
-	extern void read_fence() noexcept;
-	extern void write_fence() noexcept;
-	extern void read_write_fence() noexcept;
-	extern void memory_fence() noexcept;
+	extern void ReadFence() noexcept;
+	extern void WriteFence() noexcept;
+	extern void ReadWriteFence() noexcept;
+	extern void MemoryFence() noexcept;
 }

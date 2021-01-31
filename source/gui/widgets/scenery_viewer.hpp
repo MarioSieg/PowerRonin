@@ -17,12 +17,12 @@
 
 #if AUTO_TEC
 
-namespace power_ronin
+namespace PowerRonin
 {
 	class RenderData;
 }
 
-namespace power_ronin::gui::widgets
+namespace PowerRonin::Interface::widgets
 {
 	class SceneryViewer final
 	{

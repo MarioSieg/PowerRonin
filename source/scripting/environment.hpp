@@ -22,7 +22,7 @@
 #include "../../include/power_ronin/proto.hpp"
 #include "../../include/power_ronin/except.hpp"
 
-namespace power_ronin::scripting
+namespace PowerRonin::Scripting
 {
 	/// <summary>
 	/// Exception hook.

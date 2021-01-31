@@ -17,7 +17,7 @@
 
 #include "gl_headers.hpp"
 
-namespace power_ronin::renderer
+namespace PowerRonin::Renderer
 {
 	/// <summary>
 	/// Fullscreen view for effects and clearing.
