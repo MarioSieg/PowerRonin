@@ -13,7 +13,7 @@
 // support@kerbogames.com
 // *******************************************************************************
 
-#include "include/power_ronin/core/entry.hpp"
+#include "Include/PowerRonin/core/Entry.hpp"
 
 /* Main function where the dream starts and ends. */
 auto POWER_RONIN_ENTRY(const int _argc, const char** _argv, const char** _envp) -> int {

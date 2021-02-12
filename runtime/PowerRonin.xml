@@ -136,11 +136,6 @@
                 Current global system config.
             </summary>
         </member>
-        <member name="T:PowerRonin.Core.CopyDir">
-            <summary>
-                Helper to copy whole directories.
-            </summary>
-        </member>
         <member name="T:PowerRonin.Core.Core">
             <summary>
                 Engine core class.
@@ -222,59 +217,6 @@
             </summary>
             <param name="mouseButton">The mouse button.</param>
             <returns>True if the mouse button is currently pressed, else false.</returns>
-        </member>
-        <member name="T:PowerRonin.Core.RequiredItemType">
-            <summary>
-                Represents the type a required item.
-                Can be a file or a dir.
-            </summary>
-        </member>
-        <member name="F:PowerRonin.Core.RequiredItemType.Directory">
-            <summary>
-                A directory is required.
-            </summary>
-        </member>
-        <member name="F:PowerRonin.Core.RequiredItemType.File">
-            <summary>
-                A file is required.
-            </summary>
-        </member>
-        <member name="T:PowerRonin.Core.MissingAction">
-            <summary>
-                Action to do if an important item is missing.
-            </summary>
-        </member>
-        <member name="F:PowerRonin.Core.MissingAction.Create">
-            <summary>
-                Create the file or directory.
-            </summary>
-        </member>
-        <member name="F:PowerRonin.Core.MissingAction.Error">
-            <summary>
-                Abort the program with a fatal error.
-            </summary>
-        </member>
-        <member name="F:PowerRonin.Core.MissingAction.Ignore">
-            <summary>
-                Ignore it, it's not important or the file/directory is not needed strictly.
-            </summary>
-        </member>
-        <member name="T:PowerRonin.Core.InstallationValidation">
-            <summary>
-                Contains tools to validate an editor and retail installation directory.
-            </summary>
-        </member>
-        <member name="F:PowerRonin.Core.InstallationValidation.RequiredEntries">
-            <summary>
-                All commonly required directories in an editor installation.
-                You can add your own.
-            </summary>
-        </member>
-        <member name="M:PowerRonin.Core.InstallationValidation.Run(System.String)">
-            <summary>
-                Run it in the specified directory.
-            </summary>
-            <param name="directory">Validate the directory.</param>
         </member>
         <member name="T:PowerRonin.Core.Key">
             <summary>

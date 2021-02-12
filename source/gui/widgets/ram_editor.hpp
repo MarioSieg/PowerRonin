@@ -1,27 +1,12 @@
-// // *******************************************************************************
-// // The content of this file includes portions of the KerboGames Power Ronin Technology
-// // released in source code form as part of the SDK package.
-// // 
-// // Commercial License Usage
-// // 
-// // Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// // may use this file in accordance with the end user license agreement provided 
-// // with the software or, alternatively, in accordance with the terms contained in a
-// // written agreement between you and KerboGames.
-// // 
-// // Copyright (c) 2013-2021 KerboGames, MarioSieg.
-// // support@kerbogames.com
-// // *******************************************************************************
-
 #pragma once
 
 #if AUTO_TEC
 
-#include <stdio.h>      // sprintf, scanf
-#include <stdint.h>     // uint8_t, etc.
+#include <cstdio>      // sprintf, scanf
+#include <cstdint>     // uint8_t, etc.
 
 #ifdef _MSC_VER
-#define _PRISizeT   "I"
+#define PRISizeT   "I"
 #define ImSnprintf  _snprintf
 #else
 #define _PRISizeT   "z"
@@ -275,8 +260,8 @@ struct MemoryEditor
 		const ImU32 color_text = ImGui::GetColorU32(ImGuiCol_Text);
 		const ImU32 color_disabled = OptGreyOutZeroes ? ImGui::GetColorU32(ImGuiCol_TextDisabled) : color_text;
 
-		const char* format_address = OptUpperCaseHex ? "%0*" _PRISizeT "X: " : "%0*" _PRISizeT "x: ";
-		const char* format_data = OptUpperCaseHex ? "%0*" _PRISizeT "X" : "%0*" _PRISizeT "x";
+		const char* format_address = OptUpperCaseHex ? "%0*" PRISizeT "X: " : "%0*" PRISizeT "x: ";
+		const char* format_data = OptUpperCaseHex ? "%0*" PRISizeT "X" : "%0*" PRISizeT "x";
 		const char* format_byte = OptUpperCaseHex ? "%02X" : "%02x";
 		const char* format_byte_space = OptUpperCaseHex ? "%02X " : "%02x ";
 
@@ -468,8 +453,8 @@ struct MemoryEditor
 		IM_UNUSED(mem_data);
 		ImGuiStyle& style = ImGui::GetStyle();
 		const char* format_range = OptUpperCaseHex
-			                           ? "Range %0*" _PRISizeT "X..%0*" _PRISizeT "X"
-			                           : "Range %0*" _PRISizeT "x..%0*" _PRISizeT "x";
+			                           ? "Range %0*" PRISizeT "X..%0*" PRISizeT "X"
+			                           : "Range %0*" PRISizeT "x..%0*" PRISizeT "x";
 
 		// Options menu
 		if (ImGui::Button("Options")) ImGui::OpenPopup("context");
@@ -503,7 +488,7 @@ struct MemoryEditor
 		                     , ImGuiInputTextFlags_CharsHexadecimal | ImGuiInputTextFlags_EnterReturnsTrue))
 		{
 			size_t goto_addr;
-			if (sscanf(AddrInputBuf, "%" _PRISizeT "X", &goto_addr) == 1)
+			if (sscanf(AddrInputBuf, "%" PRISizeT "X", &goto_addr) == 1)
 			{
 				GotoAddr = goto_addr - base_display_addr;
 				HighlightMin = HighlightMax = static_cast<size_t>(-1);

@@ -1,25 +1,10 @@
-// // *******************************************************************************
-// // The content of this file includes portions of the KerboGames Power Ronin Technology
-// // released in source code form as part of the SDK package.
-// // 
-// // Commercial License Usage
-// // 
-// // Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// // may use this file in accordance with the end user license agreement provided 
-// // with the software or, alternatively, in accordance with the terms contained in a
-// // written agreement between you and KerboGames.
-// // 
-// // Copyright (c) 2013-2021 KerboGames, MarioSieg.
-// // support@kerbogames.com
-// // *******************************************************************************
-
 #if AUTO_TEC
 
 #include "editor.hpp"
 #include "gui_headers.hpp"
 #include "font_headers.hpp"
 #include "window_names.hpp"
-#include "../../include/power_ronin/runtime.hpp"
+#include "../../Include/PowerRonin/Runtime.hpp"
 
 using namespace ImGui;
 
@@ -82,15 +67,16 @@ namespace PowerRonin::Interface
 			this->scenery_viewer_.update(this->show_scenery_viewer_, _rt.RenderData());
 		}
 
-		if(!_rt.IsPlaying()) [[likely]]
+		if (!_rt.IsPlaying()) [[likely]]
 		{
 			const auto selected_entity = this->hierarchy_.selected;
 			auto& registry = _rt.Scenery().registry();
 
-			this->render_manipulator_gizmos(registry.valid(selected_entity) 
-				&& registry.has<Transform>(selected_entity) 
-				? &registry.get<Transform>(selected_entity) : nullptr, 
-				_rt.RenderData(),_rt.Config());
+			this->render_manipulator_gizmos(registry.valid(selected_entity)
+			                                && registry.has<Transform>(selected_entity)
+				                                ? &registry.get<Transform>(selected_entity)
+				                                : nullptr,
+			                                _rt.RenderData(), _rt.Config());
 		}
 	}
 
@@ -308,7 +294,7 @@ namespace PowerRonin::Interface
 		}
 	}
 
-	void Editor::render_manipulator_gizmos(Transform* const _transform, RenderData& _data, const SystemConfig& _config) const noexcept
+	void Editor::render_manipulator_gizmos(Transform* const _transform, RenderState& _data, const SystemConfig& _config) const noexcept
 	{
 		if (!_config.Editor.ShowGizmos) [[unlikely]]
 		{

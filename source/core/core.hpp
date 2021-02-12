@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../include/power_ronin/core/kernel.hpp"
+#include "../../Include/PowerRonin/core/Kernel.hpp"
 
 namespace PowerRonin::Core
 {

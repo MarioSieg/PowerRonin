@@ -1,23 +1,8 @@
-// // *******************************************************************************
-// // The content of this file includes portions of the KerboGames Power Ronin Technology
-// // released in source code form as part of the SDK package.
-// // 
-// // Commercial License Usage
-// // 
-// // Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// // may use this file in accordance with the end user license agreement provided 
-// // with the software or, alternatively, in accordance with the terms contained in a
-// // written agreement between you and KerboGames.
-// // 
-// // Copyright (c) 2013-2021 KerboGames, MarioSieg.
-// // support@kerbogames.com
-// // *******************************************************************************
-
 #pragma once
 
 #include "../extern/spdlog/include/spdlog/sinks/base_sink.h"
-#include "../include/power_ronin/proto.hpp"
-#include "../include/power_ronin/time_utils.hpp"
+#include "../Include/PowerRonin/Protocol.hpp"
+#include "../Include/PowerRonin/TimeUtils.hpp"
 #include <mutex>
 #include <string>
 #include <tuple>
@@ -43,8 +28,8 @@ namespace PowerRonin
 		[[nodiscard]] auto string_buffer() const noexcept -> const std::vector<std::tuple<std::string, LogLevel>>&;
 
 	protected:
-		void sink_it_(const spdlog::details::log_msg& _msg) override;
-		void flush_() override;
+		virtual void sink_it_(const spdlog::details::log_msg& _msg) override;
+		virtual void flush_() override;
 		std::vector<std::tuple<std::string, LogLevel>> buffer_ = {};
 		std::string file_name_ = {};
 	};

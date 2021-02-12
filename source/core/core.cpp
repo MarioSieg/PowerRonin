@@ -37,7 +37,7 @@ namespace PowerRonin::Core
 			this->Runtime->Protocol().Info("OK! \"on_pre_startup\" invoked! {}s elapsed!", std::get<1>(*sys)->preStartupTime = dur);
 		}
 	}
-	
+
 	void Kernel::Core::DispatchPostStartup()
 	{
 		for (auto sys = this->Subsystems.rbegin(); sys != this->Subsystems.rend(); std::advance(sys, 1))
@@ -53,7 +53,7 @@ namespace PowerRonin::Core
 			this->Runtime->Protocol().Info("OK! \"on_post_startup\" invoked! {}s elapsed!", std::get<1>(*sys)->postStartupTime = dur);
 		}
 	}
-	
+
 	void Kernel::Core::DispatchPreTick()
 	{
 		for (auto sys = this->Subsystems.begin(); sys != this->Subsystems.end(); std::advance(sys, 1))
@@ -64,7 +64,7 @@ namespace PowerRonin::Core
 			}
 		}
 	}
-	
+
 	void Kernel::Core::DispatchPostTick()
 	{
 		for (auto sys = this->Subsystems.rbegin(); sys != this->Subsystems.rend(); std::advance(sys, 1))
@@ -75,22 +75,22 @@ namespace PowerRonin::Core
 			}
 		}
 	}
-	
+
 	void Kernel::Core::DispatchPreShutdown()
 	{
-		for (auto sys = this->Subsystems.begin(); sys != this->Subsystems.end(); ++sys)
+		for (auto& Subsystem : this->Subsystems)
 		{
 			const auto tik2 = std::chrono::high_resolution_clock::now();
-			const auto& name = std::get<1>(*sys)->Name;
-			if (std::get<1>(*sys)->SubscribedEvents & ServiceEvents::PreShutdown) [[likely]]
+			const auto& name = std::get<1>(Subsystem)->Name;
+			if (std::get<1>(Subsystem)->SubscribedEvents & ServiceEvents::PreShutdown) [[likely]]
 			{
-				std::get<1>(*sys)->OnPreShutdown(*this->Runtime);
+				std::get<1>(Subsystem)->OnPreShutdown(*this->Runtime);
 			}
 			const auto dur = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - tik2).count()) / 1000000.0;
-			std::get<1>(*sys)->preShutdownTime = dur;
+			std::get<1>(Subsystem)->preShutdownTime = dur;
 		}
 	}
-	
+
 	void Kernel::Core::DispatchPostShutdown()
 	{
 		for (auto sys = this->Subsystems.rbegin(); sys != this->Subsystems.rend(); ++sys)

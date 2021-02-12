@@ -1,22 +1,7 @@
-// // *******************************************************************************
-// // The content of this file includes portions of the KerboGames Power Ronin Technology
-// // released in source code form as part of the SDK package.
-// // 
-// // Commercial License Usage
-// // 
-// // Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// // may use this file in accordance with the end user license agreement provided 
-// // with the software or, alternatively, in accordance with the terms contained in a
-// // written agreement between you and KerboGames.
-// // 
-// // Copyright (c) 2013-2021 KerboGames, MarioSieg.
-// // support@kerbogames.com
-// // *******************************************************************************
-
 #include "gui_renderer.hpp"
 #include "renderer.hpp"
 #include "utils.hpp"
-#include "../../include/power_ronin/mathlib.hpp"
+#include "../../Include/PowerRonin/MathLib.hpp"
 #include "../gui/font_headers.hpp"
 #include "../gui/gui_headers.hpp"
 #include "../renderer/program_loader.hpp"
@@ -118,7 +103,7 @@ namespace PowerRonin::Renderer
 		setViewMode(GUI_VIEW, bgfx::ViewMode::Sequential);
 		{
 			Matrix4x4<> ortho = Math::ortho(.0F, static_cast<float>(width), static_cast<float>(height), .0F, .0F,
-			                              1000.F);
+			                                1000.F);
 			bgfx::setViewTransform(GUI_VIEW, nullptr, Math::value_ptr(ortho));
 			bgfx::setViewRect(GUI_VIEW, 0, 0, width, height);
 		}

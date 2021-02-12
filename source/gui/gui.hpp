@@ -1,21 +1,6 @@
-// // *******************************************************************************
-// // The content of this file includes portions of the KerboGames Power Ronin Technology
-// // released in source code form as part of the SDK package.
-// // 
-// // Commercial License Usage
-// // 
-// // Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// // may use this file in accordance with the end user license agreement provided 
-// // with the software or, alternatively, in accordance with the terms contained in a
-// // written agreement between you and KerboGames.
-// // 
-// // Copyright (c) 2013-2021 KerboGames, MarioSieg.
-// // support@kerbogames.com
-// // *******************************************************************************
-
 #pragma once
 
-#include "../../include/power_ronin/core/kernel.hpp"
+#include "../../Include/PowerRonin/core/Kernel.hpp"
 #include "../platform/input.hpp"
 #include "../renderer/gui_renderer.hpp"
 
@@ -42,10 +27,10 @@ namespace PowerRonin::Interface
 			Core::ServiceEvents::PostTick | Core::ServiceEvents::PreShutdown;
 
 		/* Kernel events */
-		void OnPreStartup(Runtime&) override;
-		void OnPreTick(Runtime&) override;
-		void OnPostTick(Runtime&) override;
-		void OnPreShutdown(Runtime&) override;
+		virtual void OnPreStartup(Runtime&) override;
+		virtual void OnPreTick(Runtime&) override;
+		virtual void OnPostTick(Runtime&) override;
+		virtual void OnPreShutdown(Runtime&) override;
 
 		void begin(std::uint16_t _width, std::uint16_t _height);
 		void end() const;

@@ -11,7 +11,6 @@ namespace PowerRonin.Core
         {
             CommandDB.RegisterCommonCommands();
             CommandDB.Execute("info");
-            InstallationValidation.Run(Directory.GetCurrentDirectory());
             Serializer.SetupFormatter();
             Config.Current.Deserialize();
             Config.Current.ApplyAll();

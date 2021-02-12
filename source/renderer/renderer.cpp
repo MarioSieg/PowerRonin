@@ -1,28 +1,13 @@
-// // *******************************************************************************
-// // The content of this file includes portions of the KerboGames Power Ronin Technology
-// // released in source code form as part of the SDK package.
-// // 
-// // Commercial License Usage
-// // 
-// // Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// // may use this file in accordance with the end user license agreement provided 
-// // with the software or, alternatively, in accordance with the terms contained in a
-// // written agreement between you and KerboGames.
-// // 
-// // Copyright (c) 2013-2021 KerboGames, MarioSieg.
-// // support@kerbogames.com
-// // *******************************************************************************
-
 #include "renderer.hpp"
 #include "clocks.hpp"
 #include "stats.hpp"
 #include "../sysclock.hpp"
 #include "../platform/platform.hpp"
-#include "../../include/power_ronin/mathlib.hpp"
-#include "../../include/power_ronin/transform.hpp"
-#include "../../include/power_ronin/mesh_renderer.hpp"
-#include "../../include/power_ronin/variant_visit_overloader.hpp"
-#include "../../include/power_ronin/sun.hpp"
+#include "../../Include/PowerRonin/MathLib.hpp"
+#include "../../Include/PowerRonin/Transform.hpp"
+#include "../../Include/PowerRonin/MeshRenderer.hpp"
+#include "../../Include/PowerRonin/VisitOverload.hpp"
+#include "../../Include/PowerRonin/Sun.hpp"
 
 namespace PowerRonin::Renderer
 {
@@ -112,7 +97,7 @@ namespace PowerRonin::Renderer
 
 #if AUTO_TEC
 		}
-		else 
+		else
 		{
 			data.EditorCamera.Update(runtime.Input(), data.PrimaryViewport.z, data.PrimaryViewport.w, static_cast<float>(runtime.Chrono().DeltaTime));
 			current_view = data.EditorCamera.ViewMatrix();
@@ -125,7 +110,7 @@ namespace PowerRonin::Renderer
 		this->gpu_.set_camera(SCENERY_VIEW, data.ViewMatrix, data.ProjectionMatrix);
 	}
 
-	void RenderSystem::render_skybox(const Scenery::Configuration::Lighting& _lighting, RenderData& _data) const
+	void RenderSystem::render_skybox(const Scenery::Configuration::Lighting& _lighting, RenderState& _data) const
 	{
 		this->gpu_.clear_view(SKYBOX_VIEW, BGFX_CLEAR_NONE);
 		this->gpu_.set_viewport(_data.PrimaryViewport, SKYBOX_VIEW);

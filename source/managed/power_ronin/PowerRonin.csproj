@@ -78,7 +78,6 @@
     <Compile Include="Src\Core\Command.cs" />
     <Compile Include="Src\Core\CommandDB.cs" />
     <Compile Include="Src\Core\Config.cs" />
-    <Compile Include="Src\Core\CopyDir.cs" />
     <Compile Include="Src\Core\Core.cs" />
     <Compile Include="Src\Core\DisplayConfig.cs" />
     <Compile Include="Src\Core\EditorConfig.cs" />
@@ -86,7 +85,6 @@
     <Compile Include="Src\Core\GraphicsAPI.cs" />
     <Compile Include="Src\Core\GraphicsConfig.cs" />
     <Compile Include="Src\Core\Input.cs" />
-    <Compile Include="Src\Core\InstallationValidation.cs" />
     <Compile Include="Src\Core\Key.cs" />
     <Compile Include="Src\Core\LogLevel.cs" />
     <Compile Include="Src\Core\MouseButton.cs" />
@@ -425,9 +423,7 @@
     <Compile Include="Src\Schedulers\Util\ScheduleCollection.cs" />
     <Compile Include="Src\Schedulers\Util\TimeOfDayRunnableCalculator.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Src\Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

@@ -1,27 +1,12 @@
-// // *******************************************************************************
-// // The content of this file includes portions of the KerboGames Power Ronin Technology
-// // released in source code form as part of the SDK package.
-// // 
-// // Commercial License Usage
-// // 
-// // Licensees holding valid commercial licenses to the KerboGames Dreamcast Technology
-// // may use this file in accordance with the end user license agreement provided 
-// // with the software or, alternatively, in accordance with the terms contained in a
-// // written agreement between you and KerboGames.
-// // 
-// // Copyright (c) 2013-2021 KerboGames, MarioSieg.
-// // support@kerbogames.com
-// // *******************************************************************************
-
-#include "../include/power_ronin/texture.hpp"
-#include "../include/power_ronin/resource_manager.hpp"
-#include "../include/power_ronin/blob.hpp"
+#include "../Include/PowerRonin/Texture.hpp"
+#include "../Include/PowerRonin/ResourceManager.hpp"
+#include "../Include/PowerRonin/Blob.hpp"
 
 #include "../extern/bgfx/bgfx/include/bgfx/bgfx.h"
 #include "../extern/bgfx/bimg/include/bimg/bimg.h"
 #include "../extern/bgfx/bx/include/bx/allocator.h"
 #include "../extern/stb/stb_image.h"
-#include "../include/power_ronin/time_utils.hpp"
+#include "../Include/PowerRonin/TimeUtils.hpp"
 
 namespace PowerRonin
 {
